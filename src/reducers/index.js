@@ -1,0 +1,18 @@
+import { combineReducers } from 'redux';
+import AppState from './AppState';
+import QueryState from './QueryState';
+import AutoSuggest from './AutoSuggest';
+import Guide from './Guide';
+import Device from './Device';
+import Intl from './Intl';
+import Timestamp from './Timestamp';
+
+export default combineReducers({
+  AppState,
+  QueryState,
+  AutoSuggest,
+  Guide,
+  Device,
+  Intl,
+  Timestamp,
+})

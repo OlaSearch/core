@@ -1,0 +1,68 @@
+# OlaSearch
+OlaSearch is a fully customisable front-end search interface that brings your information collection to life
+
+## Todo
+
+- [x] Search history
+- [x] i18n Translations - React-intl
+- [ ] Contextual Information - Send Device data and Location data to Solr. Add Device State
+- [x] URL Routing with _.debounce
+- [x] Guide tooltips
+- [x] Visualizations should respect Range boundaries for Rating/Range inputs
+- [x] Voice Search - Only supported in Chrome desktop
+- [x] Selected facets should be Immutable (It is immutable. ShouldComponentUpdate will work, but there is no multiple renders, hence no performance loss)
+- [x] Tests
+- [x] Move Adapters and HTTP services to NPM packages
+- [ ] Move components to config file
+- [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
+
+## Features
+
+### Search
+
+1. Framework agnostic - OlaSearch is Javascript based, hence can run on any back-end languages
+2. Works with Solr, Elastic Search, Sharepoint
+3. Server-side rendering using Node
+
+### Components
+
+1. Guided Search - a step-by-step way to introduce faceting
+2. AutoSuggest
+3. Faceting
+4. Search Snippet Customization
+5. Spell Suggestions
+5. Range, Checkbox, Star rating, Tabs for Facets
+6. Visualization
+7. Sort results based on relevancy and fields
+8. Speech Input
+9. Bookmark search results
+10. Store and Save search history and query
+11. Show different sets of facets based on user-selection
+12. Share search results via E-mail or to other social networks
+13. Infinite scroll with Load more
+14. Highlighting results
+
+## Javascript stack
+
+1. React 0.14 with ES6 and webpack
+2. Redux
+3. React-intl for translations and formatting
+
+
+## Packaging/Bundling
+
+1. Core Files
+	- Services	
+	- Actions
+	- Reducers
+	- Middleware
+	- React
+	- ReactDOM
+	- Decorators
+
+2. Components
+	- All components
+
+## License
+
+Copyright OlaSearch Pte Ltd 2015
