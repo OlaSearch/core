@@ -110,7 +110,7 @@ export default class Tabs extends React.Component{
 
 		return (
 			<nav className="ola-tabs">
-				<a 
+				<button 
 					className={klassTab}
 					onClick = { () => {
 						this.handleRemoveFacet(tab)
@@ -118,7 +118,7 @@ export default class Tabs extends React.Component{
 				>
 					All
 					<span className="ola-search-facet-count">{totalCount}</span>
-				</a>
+				</button>
 				{tabs.map( (value, idx) => {
 
 					var klass = classNames({
@@ -127,7 +127,7 @@ export default class Tabs extends React.Component{
 					});
 
 					return (
-						<a 
+						<button 
 							className = {klass}
 							key = {idx} 
 							onClick = {() => {							
@@ -135,7 +135,7 @@ export default class Tabs extends React.Component{
 							}}>
 							{ getDisplayName(config.facetNames, value.name) }
 							<span className="ola-search-facet-count">{value.count}</span>
-						</a>
+						</button>
 					)
 				})}
 			</nav>

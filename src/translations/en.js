@@ -1,5 +1,5 @@
 export default {
-	locales: "en",
+	locales: "en-US",
 	messages: {
 		"title": "Movies",
 		"refineResults": "Refine your results",

@@ -29,4 +29,4 @@ const createOlaStore = (options) => {
 		)(createStore)(reducers)
 }
 
-export default { createOlaStore: createOlaStore }
+export default { createOlaStore }

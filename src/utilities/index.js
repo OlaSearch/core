@@ -111,7 +111,7 @@ var utilities = {
 				if( result[type] != rule[type]) matched = false
 			}
 
-			if(matched) return rules[i].snippet
+			if(matched) return rules[i].template
 		}
 
 		return false;

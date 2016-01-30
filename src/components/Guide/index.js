@@ -37,9 +37,11 @@ export default class Guide extends React.Component{
 	componentDidMount(){
 
 		var { config } = this.context;
-		var { dispatch } = this.props;
+		var { dispatch, name } = this.props;
 
-		var questions = config.facets.filter( (facet) => !!facet.question);
+		if(!config.guides.hasOwnProperty(name)) throw new Error('Guide error: Cannot find ' + name + ' in config file');
+
+		var questions = config.guides[name].filter( (facet) => !!facet.question);
         
         var fields = questions.map( (q) => q.name);
         

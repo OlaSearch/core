@@ -50,27 +50,26 @@ export default (state = initialState, action) => {
 
 		case types.REQUEST_GUIDE_SUCCESS:
             
-            var fl = action.fl;
+            var { fl, index, facets } = action;
             if(!fl) return { ...state, isLoading: false }
             
-            var _facet = action.facets.filter( (f) => f.name == fl)
-                        .reduce( (a, b) => a);
-            
-            var _stateFacet = state.facets.slice(0)
-            
-            _stateFacet[ action.index ] = _facet;
+            var activeFacet = facets.filter( (f) => f.name == fl).reduce( (a, b) => a);
             
 			return {
 				...state,
 				isLoading: false,
-                facets: _stateFacet
+                facets: [
+                    ...state.facets.slice(0, index),
+                    {...state.facets[index], values: activeFacet.values },
+                    ...state.facets.slice(index + 1)                
+                ]
             }
         
         case types.REPLACE_FACET_GUIDE:
             var { value, facet } = action;
 
 			var { name, displayName, type, multiSelect, template, label } = facet;
-			var fq = state.query.facet_query;
+			var fq = state.query.facet_query.slice(0);
 
 			var index = checkIfFacetExists(fq, name);
 			
@@ -93,7 +92,8 @@ export default (state = initialState, action) => {
             };
         
         case types.CLEAR_FACET_AFTER_INDEX:
-            var { facet_query } = state.query;
+            
+            var { facet_query } = Object.assign({}, state.query);
             
             facet_query.splice(action.index + 1, facet_query.length)
             

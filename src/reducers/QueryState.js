@@ -16,6 +16,31 @@ export default (state = initialState, action) => {
 	
 	switch(action.type){
 
+		case types.ADD_FILTER:
+			return {
+				...state,
+				filters: [ ...state.filters, action.payload]
+			}
+
+		case types.REMOVE_FILTER:
+			var { name, value} = action.payload;
+			var filters = [
+					...state.filters.filter( 
+						(filter) => filter.name != name
+					)
+				];
+
+			return {
+				...state,
+				filters: filters
+			}
+
+		case types.CLEAR_FILTERS:
+			return {
+				...state,
+				filters: []
+			}
+
 		case types.UPDATE_STATE_FROM_QUERY:
 			return {
 				...parseQueryString(initialState, action.config),

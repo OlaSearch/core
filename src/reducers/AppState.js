@@ -135,6 +135,12 @@ export default (state = initialState, action) => {
 				...state,
 				history: []
 			}
+
+		case types.SET_LOCALE:
+			return {
+				...state,
+				locale: action.payload
+			}
 		
 		default:
 			return state;

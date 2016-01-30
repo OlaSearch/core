@@ -22,6 +22,33 @@ export function updateQueryTerm(term){
 	}
 }
 
+export function addFilter( payload ){
+	return {
+		type: types.ADD_FILTER,
+		payload
+	}
+}
+
+export function removeFilter( payload ){
+	return {
+		type: types.REMOVE_FILTER,
+		payload
+	}
+}
+
+export function clearFilters(){
+	return {
+		type: types.CLEAR_FILTERS
+	}
+}
+
+export function setLocale( payload ){
+	return {
+		type: types.SET_LOCALE,
+		payload
+	}
+}
+
 export function clearQueryTerm(){
 
 	return {

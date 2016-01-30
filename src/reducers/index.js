@@ -4,7 +4,6 @@ import QueryState from './QueryState';
 import AutoSuggest from './AutoSuggest';
 import Guide from './Guide';
 import Device from './Device';
-import Intl from './Intl';
 import Timestamp from './Timestamp';
 
 export default combineReducers({
@@ -12,7 +11,6 @@ export default combineReducers({
   QueryState,
   AutoSuggest,
   Guide,
-  Device,
-  Intl,
+  Device,  
   Timestamp,
 })

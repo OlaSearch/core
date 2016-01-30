@@ -118,7 +118,7 @@ function createOlaMiddleWare(options = {}){
 				},
 				error => {
 
-					console.error(error.status + ' The server could not be reached');
+					throw new Error(error.status + ' The server could not be reached');
 
 					dispatch({
 						...payload,

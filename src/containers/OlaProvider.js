@@ -20,7 +20,7 @@ export default class OlaProvider extends React.Component{
 		if( !config || !parser || !queryBuilder || !searchService){
 
 			var namePart = this.constructor.displayName ? " of " + this.constructor.displayName : "";
-			throw new Error("Could not find config or parser on this.props" + namePart);
+			throw new Error("Could not find config, parser, queryBuilder, searchService on this.props" + namePart);
 		}
 
 		/* Store */
@@ -38,10 +38,12 @@ export default class OlaProvider extends React.Component{
 	
 	render(){
 
+		var { translations, children, lang } = this.props;
+
 		return (
 				<Provider store = { this.olaStore }>
-					<OlaIntlProvider>
-						{this.props.children}
+					<OlaIntlProvider translations = { translations } lang = { lang }>
+						{ children }
 					</OlaIntlProvider>
 				</Provider>
 		)

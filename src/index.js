@@ -53,8 +53,7 @@ module.exports = {
 		AutoSuggest: require('./actions/AutoSuggest'),
 		Bookmarks: require('./actions/Bookmarks'),
 		Guide: require('./actions/Guide'),
-        Search: require('./actions/Search'),
-        Intl: require('./actions/Intl'),
+        Search: require('./actions/Search'),        
 		History: require('./actions/History'),
 	},
     SnippetActions: {
