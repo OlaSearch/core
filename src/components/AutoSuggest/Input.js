@@ -35,6 +35,15 @@ export default class Input extends React.Component{
 
 	};
 
+	onKeyUp = ( event ) => {
+
+		if(event.which == 27){
+
+			this.props.onClear()
+			
+		}
+	};
+
 	render(){
 		
 		var {
@@ -64,7 +73,8 @@ export default class Input extends React.Component{
 					autoCorrect = "off"
 					autoCapitalize = "off" 
 					spellCheck = "false"
-					placeholder = {placeholder}
+					placeholder = { placeholder }
+					onKeyUp = { this.onKeyUp}
 				/>
 				{button}
 

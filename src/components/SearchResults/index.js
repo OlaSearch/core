@@ -12,6 +12,7 @@ export default class SearchResults extends React.Component{
 		results: React.PropTypes.array.isRequired,
 		bookmarks: React.PropTypes.array,
 		dispatch: React.PropTypes.func,
+		isLoading: React.PropTypes.string,
 	};
 
 	static contextTypes = {
@@ -27,7 +28,7 @@ export default class SearchResults extends React.Component{
 	}
 
 	render(){
-
+		
 		let { results, dispatch, bookmarks, components, isAutocomplete } = this.props;		
 		let { snippetRules, defaultSnippet } = this.context.config;		
 

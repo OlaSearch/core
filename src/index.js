@@ -9,7 +9,7 @@
  * Actions, Dispatcher, Config File
  *
  * ReactDOM.render( 
- * 	<OlaProvider> 
+ * 	<OlaProvider config, parser, searchServices, queryBuilder, store > 
  * 		<YourComponent /> 
  * 	</OlaProvider>, 
  * 	document.getElementById('root'))
@@ -48,7 +48,11 @@ module.exports = {
 	SpellSuggest: require('./components/SpellSuggestions/SpellSuggestion'),
 	TermSuggest: require('./components/SpellSuggestions/TermSuggestion'),
 	Pagination: require('./components/Pagination'),
-	SearchFilters: require('./components/SearchFilters'),
+    SearchFooter: require('./components/SearchFooter'),
+    SearchFilters: require('./components/SearchFilters'),
+    SearchResults: require('./components/SearchResults'),
+	Tabs: require('./components/FacetFilters/Tabs'),
+    SelectedFilters: require('./components/SelectedFilters'),
 	Actions: {
 		AutoSuggest: require('./actions/AutoSuggest'),
 		Bookmarks: require('./actions/Bookmarks'),
@@ -75,5 +79,7 @@ module.exports = {
     Decorators: {
         OlaRoute: require('./decorators/OlaRoute'),
         OlaFacetToggle: require('./decorators/OlaFacetToggle'),
-    }
+    },
+    createStore: require('./store'),
+    olaState: require('./reducers'),
 }

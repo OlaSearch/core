@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux'
-import { createOlaStore } from './../store';
 import OlaIntlProvider from './OlaIntlProvider';
 
 export default class OlaProvider extends React.Component{
@@ -15,18 +14,14 @@ export default class OlaProvider extends React.Component{
 
 		super(props)
 
-		var { config, parser, queryBuilder, searchService } =  this.props;
+		var { config, parser, queryBuilder, searchService, store } =  this.props;
 
-		if( !config || !parser || !queryBuilder || !searchService){
+		if( !config || !parser || !queryBuilder || !searchService || !store){
 
 			var namePart = this.constructor.displayName ? " of " + this.constructor.displayName : "";
-			throw new Error("Could not find config, parser, queryBuilder, searchService on this.props" + namePart);
+			throw new Error("Could not find config, parser, queryBuilder, searchService, store on this.props " + namePart);
 		}
-
-		/* Store */
 		
-		this.olaStore = createOlaStore( this.props )
-
 	}
 
 	getChildContext(){
@@ -38,10 +33,10 @@ export default class OlaProvider extends React.Component{
 	
 	render(){
 
-		var { translations, children, lang } = this.props;
+		var { translations, children, lang, store } = this.props;
 
 		return (
-				<Provider store = { this.olaStore }>
+				<Provider store = { store }>
 					<OlaIntlProvider translations = { translations } lang = { lang }>
 						{ children }
 					</OlaIntlProvider>

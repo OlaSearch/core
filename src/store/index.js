@@ -1,5 +1,4 @@
-import { compose, createStore, applyMiddleware } from 'redux';
-import reducers from './../reducers/index';
+import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import createOlaMiddleWare from './../middleware/OlaMiddleware';
@@ -18,6 +17,7 @@ const logger = createLogger({
 const createOlaStore = (options) => {
 
 		let olaMiddleWare = createOlaMiddleWare(options)
+		let reducers  = combineReducers(options.reducers)
 
 		if(process.env.NODE_ENV === 'production'){
 			return applyMiddleware(thunk, olaMiddleWare)(createStore)(reducers)
@@ -26,7 +26,7 @@ const createOlaStore = (options) => {
 		return compose(
 			applyMiddleware(thunk, olaMiddleWare, logger),
 			window.devToolsExtension ? window.devToolsExtension() : f => f
-		)(createStore)(reducers)
+		)(createStore)( reducers )
 }
 
-export default { createOlaStore }
+export default createOlaStore

@@ -28,7 +28,7 @@ export default class InstantSearchForm extends React.Component{
 	};
 
 	static propTypes = {
-		dispatch: React.PropTypes.func,
+		dispatch: React.PropTypes.func.isRequired,
 		q: React.PropTypes.string,
 		placeholder: React.PropTypes.string,
 		spellSuggestions: React.PropTypes.array,		
