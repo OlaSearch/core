@@ -5,7 +5,6 @@ import {
 	changePage, 
 	clearQueryTerm 
 	} from './../actions/Search';
-import SpellSuggestion from './SpellSuggestions/SpellSuggestion';
 import Bookmarks from './Bookmarks';
 import History from './History';
 import SpeechInput from './Speech';

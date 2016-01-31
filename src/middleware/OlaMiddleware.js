@@ -1,4 +1,14 @@
-function createOlaMiddleWare(options = {}){	
+/**
+ * [createOlaMiddleWare description]
+ * @param  {Object} options
+ * options = {
+ * 	parser,
+ * 	queryBuilder,
+ * 	config,
+ * 	searchService
+ * }
+ */
+export default function createOlaMiddleWare(options = {}){	
 	
 	return ({ dispatch, getState }) => (next) => (action) => {
 			const {
@@ -131,6 +141,3 @@ function createOlaMiddleWare(options = {}){
 	}
 
 }
-
-
-export default createOlaMiddleWare;
