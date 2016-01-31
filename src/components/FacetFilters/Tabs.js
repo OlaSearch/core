@@ -129,6 +129,7 @@ export default class Tabs extends React.Component{
 					return (
 						<button 
 							className = {klass}
+							type = 'button'
 							key = {idx} 
 							onClick = {() => {							
 								this.handleReplaceFacet(tab, value.name)

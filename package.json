@@ -67,13 +67,8 @@
     "redux": "^3.0.5",
     "redux-logger": "^2.3.1",
     "redux-thunk": "^1.0.3",
-    "c3": "git+https://github.com/masayuki0812/c3.git",
-    "classnames": "^2.2.3",
-    "nouislider": "^8.2.1",
-    "react-modal": "^0.6.1",
-    "react-mq": "github:rmdort/react-mq",
-    "react-onclickoutside": "^4.5.0",
-    "react-list": "^0.7.12"
+    "c3": "git+https://github.com/masayuki0812/c3.git",    
+    "react-modal": "^0.6.1"
   },
   "dependencies": {        
     "intl": "^1.0.1",
@@ -82,6 +77,11 @@
     "jquery-param": "^0.2.0",    
     "query-string": "^3.0.0",
     "ramda": "^0.19.1",
-    "react-intl": "^2.0.0-beta-2"
+    "react-intl": "^2.0.0-beta-2",
+    "react-mq": "github:rmdort/react-mq",
+    "react-onclickoutside": "^4.5.0",
+    "react-list": "^0.7.12",
+    "classnames": "^2.2.3",
+    "nouislider": "^8.2.1"
   }
 }

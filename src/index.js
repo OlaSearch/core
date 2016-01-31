@@ -73,6 +73,15 @@ module.exports = {
 		Trailer: require('./components/Snippets/Fields/Trailer'),
 		Year: require('./components/Snippets/Fields/Year'),
 	},
+    FacetFilters: {
+        Boolean: require('./components/FacetFilters/Boolean'),
+        Checkbox: require('./components/FacetFilters/Checkbox'),
+        DateRange: require('./components/FacetFilters/DateRange'),
+        Default: require('./components/FacetFilters/Default'),
+        Range: require('./components/FacetFilters/Range'),
+        Rating: require('./components/FacetFilters/Rating'),
+        Tabs: require('./components/FacetFilters/Tabs'),
+    },
 	Snippets: {
 		Default: require('./components/Snippets/Default')
 	},
@@ -81,5 +90,6 @@ module.exports = {
         OlaFacetToggle: require('./decorators/OlaFacetToggle'),
     },
     createStore: require('./store'),
-    olaState: require('./reducers'),
+    olaReducer: require('./reducers'),
+    createOlaMiddleWare: require('./middleware/OlaMiddleWare'),
 }
