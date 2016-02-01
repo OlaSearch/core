@@ -1,7 +1,7 @@
 import React from 'react';
 // import Modal from 'react-modal';
 import { modal as customStyles} from './../../../constants/styles';
-import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
 import param from 'jquery-param';
 
 export default class Trailer extends React.Component{

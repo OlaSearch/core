@@ -1,7 +1,7 @@
 import expect from 'expect'
 import reducer from './../../src/reducers/Guide'
 import * as types from './../../src/constants/ActionTypes'
-import config from './../../src/config';
+import config from './../../src/CONFIG.SAMPLE';
 
 var questions = config.facets.filter( (facet) => facet.question);
 var fields = questions.map( (q) => q.name);
