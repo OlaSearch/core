@@ -20,7 +20,6 @@ import PieChart from './../components/Visualization/PieChart';
 import { OlaRoute } from './../decorators/OlaRoute';
 import { initSearch } from './../actions/Search';
 import classNames from 'classnames';
-import LocaleSelector from './../components/Intl/LocaleSelector';
 import { FormattedMessage } from 'react-intl';
 import PerPage from './../components/PerPage';
 

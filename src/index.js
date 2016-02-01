@@ -87,8 +87,7 @@ module.exports = {
     Decorators: {
         OlaRoute: require('./decorators/OlaRoute'),
         OlaFacetToggle: require('./decorators/OlaFacetToggle'),
-    },
-    createStore: require('./store'),
+    },    
     olaReducer: require('./reducers'),
     createOlaMiddleWare: require('./middleware/createOlaMiddleWare'),
 }
