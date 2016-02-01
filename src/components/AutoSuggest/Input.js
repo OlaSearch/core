@@ -24,7 +24,7 @@ export default class Input extends React.Component{
 		
 		this.props.onClear()
 
-		setTimeout( () => this.refs.Input.focus(), 100 );
+		setTimeout( () => this.refs.Input.focus(), 0 );
 	};
 
 	onFocus = (event) => {
@@ -55,7 +55,7 @@ export default class Input extends React.Component{
 		/* Show clear or submit button */
 
 		var button = q
-			? <button type="button" className="ola-clear-button" onClick = {this.onClear}></button>
+			? <button type="reset" className="ola-clear-button" onClick = {this.onClear}></button>
 			: <button type="submit" className="ola-search-button"></button>;
 
 		return (

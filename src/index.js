@@ -69,8 +69,7 @@ module.exports = {
 		Rating: require('./components/Snippets/Fields/Rating'),
 		Summary: require('./components/Snippets/Fields/Summary'),
 		Thumbnail: require('./components/Snippets/Fields/Thumbnail'),
-		Title: require('./components/Snippets/Fields/Title'),
-		Trailer: require('./components/Snippets/Fields/Trailer'),
+		Title: require('./components/Snippets/Fields/Title'),		
 		Year: require('./components/Snippets/Fields/Year'),
 	},
     FacetFilters: {
@@ -91,5 +90,5 @@ module.exports = {
     },
     createStore: require('./store'),
     olaReducer: require('./reducers'),
-    createOlaMiddleWare: require('./middleware/OlaMiddleWare'),
+    createOlaMiddleWare: require('./middleware/createOlaMiddleWare'),
 }

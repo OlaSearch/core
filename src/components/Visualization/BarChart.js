@@ -2,6 +2,7 @@
 Example:
 <BarChart 
 	facets = {facet}						
+	facetName = 'year_i'
 	selected = {selected}
 	dispatch = {dispatch}
 	sampleSize = { 10000 }
@@ -19,7 +20,7 @@ Example:
 */
 
 import React from 'react';
-import c3 from 'c3';
+// import c3 from 'c3';
 import { addFacet, replaceFacet, executeSearch } from './../../actions/Search';
 
 export default class BarChart extends React.Component{

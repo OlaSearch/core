@@ -17,7 +17,11 @@ export default class Range extends React.Component{
 
     static defaultProps = {
 		step: 1,
-		showHistogram: false
+		showHistogram: false,
+		pips: [0,26,44.5,63,81.5,100],
+		pipsDensity: 4,
+		pipsMode: 'positions',
+		showPips: true,
     };
 
 	onChange = (facet, value) => {
@@ -94,7 +98,11 @@ export default class Range extends React.Component{
 
 		var {
 			facet,			
-			step
+			step,
+			showPips,
+			pips,
+			pipsDensity,
+			pipsMode,
 		} = this.props;
 
 		var options = this.getSliderValues(this.props);
@@ -115,9 +123,9 @@ export default class Range extends React.Component{
 			this.refs.slider.removeAttribute('disabled')
 		}
 
-		/* Initialize Slider */
-        
-		this.slider = noUiSlider.create( this.refs.slider , {
+		/* Slider options */
+
+		var sliderOptions  = {
 			start: value,
 			step: step,
 			connect: singleHandle? 'lower' : true,
@@ -129,8 +137,21 @@ export default class Range extends React.Component{
 			format: {
 				to: ( value ) => Math.floor(value),
 				from: ( value ) => Math.floor(value)
+			}			
+		};
+
+		var pipsOptions = showPips? {
+			pips: {				
+				mode: pipsMode,
+				values: pips,
+				density: pipsDensity,
+				stepped: true
 			}
-		});
+		} : {};
+
+		/* Initialize Slider */
+        
+		this.slider = noUiSlider.create( this.refs.slider , {...sliderOptions, ...pipsOptions });
 
 		/* Bind to onchange */
 

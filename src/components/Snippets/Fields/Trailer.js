@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 import { modal as customStyles} from './../../../constants/styles';
 import fetch from 'isomorphic-fetch';
 import param from 'jquery-param';

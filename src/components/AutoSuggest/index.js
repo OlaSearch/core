@@ -18,6 +18,7 @@ export default class AutoSuggest extends React.Component{
 		AutoSuggest: React.PropTypes.object.isRequired,
 		bookmarks: React.PropTypes.array,
 		dispatch: React.PropTypes.func.isRequired,
+		onSubmit: React.PropTypes.func
 	};
 
 	static defaultProps = {
@@ -68,9 +69,11 @@ export default class AutoSuggest extends React.Component{
 
 		var { q } = this.props.AutoSuggest.query;
 
-		var { searchUrl, dispatch } = this.props;
+		var { searchUrl, dispatch, onSubmit } = this.props;
 
 		dispatch(closeAutoSuggest())
+
+		onSubmit && onSubmit.call(this, q)
 
 		window.location.href = searchUrl + 'q=' + q
 	};

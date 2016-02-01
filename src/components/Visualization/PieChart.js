@@ -1,5 +1,5 @@
 import React from 'react';
-import c3 from 'c3';
+// import c3 from 'c3';
 import { addFacet, replaceFacet, executeSearch } from './../../actions/Search';
 import { union, difference } from 'ramda';
 
@@ -7,7 +7,8 @@ export default class PieChart extends React.Component{
 	
 	static defaultProps = {		
 		title: 'Movies by genre',
-		type: 'pie'		
+		type: 'pie',
+		facetName: ''
 	};
 
 	onSelect(facet, value){

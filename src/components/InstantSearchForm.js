@@ -67,7 +67,7 @@ export default class InstantSearchForm extends React.Component{
 		} = this.props;
 
 		let button = q
-			? <button type="button" className="ola-clear-button" onClick = {this.onClear}  aria-label="Clear"></button>
+			? <button type="reset" className="ola-clear-button" onClick = {this.onClear}  aria-label="Clear"></button>
 			: <button type="button" className="ola-search-button" onClick = {this.onClear} aria-label="Submit"></button>;
 
 

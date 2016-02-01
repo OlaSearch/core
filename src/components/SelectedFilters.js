@@ -1,5 +1,5 @@
 import React from 'react';
-import { removeFacet, executeSearch } from './../actions/Search';
+import { removeFacet, executeSearch, clearQueryTerm } from './../actions/Search';
 import Tag from './Misc/Tag';
 import Tooltip from './Guide/Tooltip';
 import qs from 'query-string';
@@ -20,7 +20,13 @@ export default class SelectedFilters extends React.Component{
 
 	static propTypes: {
 		facets: React.PropTypes.array.isRequired,
-		dispatch: React.PropTypes.func
+		dispatch: React.PropTypes.func,
+		q: React.PropTypes.string,
+		showQuery: React.PropTypes.boolean
+	};
+
+	static defaultProps = {
+		showQuery: false
 	};
 
 	handleRemoveFacat(facet, value){
@@ -41,14 +47,15 @@ export default class SelectedFilters extends React.Component{
 	render(){
 
 		var {
-			facets,			
-		} = this.props;
+			facets,
+			showQuery,
+			q,
+			dispatch
+		} = this.props;		
 
 		var {
 			showGuidePopover
-		} = this.state;
-		
-		if(!facets.length) return null;
+		} = this.state;		
 
 		return (
 			<div className="ola-facet-tags">				
@@ -57,6 +64,18 @@ export default class SelectedFilters extends React.Component{
 					isShown = {showGuidePopover} 
 					onClose = {this.closeGuidePopover} 
 				/>
+
+				{showQuery && q
+					? <div className="ola-facet-tag">
+						<span className="ola-facet-tag-name">{q}</span>
+						<button className="ola-facet-tag-remove" onClick = { () => {
+
+							dispatch( clearQueryTerm() )
+							dispatch( executeSearch() )
+						}}></button>
+					</div>
+					: null
+				}
 
 				{facets.map( (facet, idx) => {
 
