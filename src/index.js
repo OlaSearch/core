@@ -44,7 +44,7 @@ module.exports = {
 	AutoSuggest  : require('./components/AutoSuggest'),
 	Guide: require('./components/Guide'),
 	Search: require('./containers/Search'),
-	InstantSearch: require('./components/InstantSearchForm'),
+	InstantSearchForm: require('./components/InstantSearchForm'),
 	SpellSuggestion: require('./components/SpellSuggestions/SpellSuggestion'),
 	TermSuggestion: require('./components/SpellSuggestions/TermSuggestion'),
     Pagination: require('./components/Pagination'),
