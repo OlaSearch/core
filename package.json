@@ -66,9 +66,7 @@
     "react-redux": "^4.0.6",
     "redux": "^3.0.5",
     "redux-logger": "^2.3.1",
-    "redux-thunk": "^1.0.3",
-    "c3": "git+https://github.com/masayuki0812/c3.git",    
-    "react-modal": "^0.6.1"
+    "redux-thunk": "^1.0.3"        
   },
   "dependencies": {        
     "intl": "^1.0.1",
