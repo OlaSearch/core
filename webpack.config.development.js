@@ -12,12 +12,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/static/'
-  },
-  resolve: {
-    alias: {      
-      'olasearch': path.join(__dirname, './src')
-    }
-  },
+  },  
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()

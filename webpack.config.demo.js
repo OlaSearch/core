@@ -23,13 +23,7 @@ module.exports = {
         warnings: false
       }
     })
-  ],
-  resolve: {
-    alias: {
-      'olasearch': path.join(__dirname, './src')
-    },
-    extensions: ['', '.js', '.jsx']
-  },
+  ],  
   module: {
     loaders: [{
       test: /\.js$/,
