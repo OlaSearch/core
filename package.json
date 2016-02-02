@@ -42,7 +42,7 @@
     "babel-preset-stage-0": "^6.3.13",    
     "babel-preset-react-hmre": "^1.0.0",
     "expect": "^1.13.4",    
-    "jsdom": "^7.2.2",
+    "jsdom": "^8.0.2",
     "mocha": "^2.3.4",
     "react-addons-test-utils": "^0.14.6",    
     "rimraf": "^2.5.0",
@@ -53,7 +53,7 @@
     "eventsource-polyfill": "^0.9.6",
     "expose-loader": "^0.7.1",
     "express": "^4.13.3",    
-    "webpack": "^1.12.9",
+    "webpack": "^2.0.6-beta",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"
   },
