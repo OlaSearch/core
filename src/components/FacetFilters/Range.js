@@ -21,7 +21,7 @@ export default class Range extends React.Component{
 		pips: [0,26,44.5,63,81.5,100],
 		pipsDensity: 4,
 		pipsMode: 'positions',
-		showPips: true,
+		showPips: false,
     };
 
 	onChange = (facet, value) => {
