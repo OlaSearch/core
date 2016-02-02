@@ -4,7 +4,6 @@ import Bookmark from './Actions/Bookmark';
 import Title from './Fields/Title';
 import Thumbnail from './Fields/Thumbnail';
 import Rating from './Fields/Rating';
-import Trailer from './Fields/Trailer';
 import Summary from './Fields/Summary';
 
 class Default extends React.Component{
@@ -41,14 +40,7 @@ class Default extends React.Component{
 						thumbnail = {result.thumbnail}
 						thumbnail_mobile = {result.thumbnail_mobile}
 					/>
-
-					{!isAutocomplete
-						? <Trailer 
-							title = {result.title}
-							year = {result.year}
-							/>
-						: null
-					}
+					
 				</div>
 				<div className="ola-snippet-content">
 

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	locales: "en-US",
 	messages: {
 		"title": "Movies",
