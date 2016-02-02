@@ -134,4 +134,4 @@ function mapStateToProps( state ){
 	}
 }
 
-export default connect( mapStateToProps )( listensToClickOutside( AutoSuggest ) )
+module.exports = connect( mapStateToProps )( listensToClickOutside( AutoSuggest ) )

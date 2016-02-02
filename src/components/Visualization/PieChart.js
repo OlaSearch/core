@@ -3,7 +3,7 @@ import React from 'react';
 import { addFacet, replaceFacet, executeSearch } from './../../actions/Search';
 import { union, difference } from 'ramda';
 
-export default class PieChart extends React.Component{
+class PieChart extends React.Component{
 	
 	static defaultProps = {		
 		title: 'Movies by genre',
@@ -108,3 +108,6 @@ export default class PieChart extends React.Component{
 		)
 	}
 }
+
+
+module.exports = PieChart

@@ -94,4 +94,4 @@ function mapStateToProps( state ){
 	}
 }
 
-export default connect( mapStateToProps )( listensToClickOutside( Bookmarks ) )
+module.exports = connect( mapStateToProps )( listensToClickOutside( Bookmarks ) )

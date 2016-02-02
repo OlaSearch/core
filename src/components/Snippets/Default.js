@@ -7,7 +7,7 @@ import Rating from './Fields/Rating';
 import Trailer from './Fields/Trailer';
 import Summary from './Fields/Summary';
 
-export default class Default extends React.Component{
+class Default extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -76,3 +76,5 @@ export default class Default extends React.Component{
 		)
 	}
 }
+
+module.exports = Default

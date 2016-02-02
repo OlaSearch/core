@@ -184,4 +184,4 @@ class Range extends React.Component{
 	}
 };
 
-export default FacetToggle( Range )
+module.exports = FacetToggle( Range )

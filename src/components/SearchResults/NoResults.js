@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class NoResults extends React.Component{	
+class NoResults extends React.Component{	
 
 	static propTypes = {
 		results: React.PropTypes.array,
@@ -21,3 +21,5 @@ export default class NoResults extends React.Component{
 		)
 	}
 }
+
+module.exports = NoResults

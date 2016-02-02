@@ -274,4 +274,4 @@ class Dropdown extends React.Component{
 }
 
 
-export default listensToClickOutside( Dropdown )
+module.exports = listensToClickOutside( Dropdown )

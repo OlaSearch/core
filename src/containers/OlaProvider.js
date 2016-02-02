@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux'
 import OlaIntlProvider from './OlaIntlProvider';
 
-export default class OlaProvider extends React.Component{
+class OlaProvider extends React.Component{
 	
 	static displayName = 'OlaProvider';
 
@@ -44,3 +44,5 @@ export default class OlaProvider extends React.Component{
 		)
 	}
 }
+
+module.exports = OlaProvider;

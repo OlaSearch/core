@@ -44,4 +44,4 @@ class DateRange extends React.Component{
 	}
 }
 
-export default FacetToggle( DateRange )
+module.exports = FacetToggle( DateRange )

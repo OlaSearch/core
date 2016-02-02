@@ -7,7 +7,7 @@ import FacetBoolean from './FacetFilters/Boolean';
 import DateRange from './FacetFilters/DateRange';
 import { flatten } from 'ramda';
 
-export default class SearchFilters extends React.Component{
+class SearchFilters extends React.Component{
 	
 	static contextTypes = {
 		config: React.PropTypes.object
@@ -114,3 +114,5 @@ export default class SearchFilters extends React.Component{
 		)
 	}
 }
+
+module.exports = SearchFilters

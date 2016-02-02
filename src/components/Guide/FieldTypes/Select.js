@@ -1,7 +1,7 @@
 import React from 'react';
 import { getValuesFromSelect } from './../../../utilities';
 
-export default class Select extends React.Component{
+class Select extends React.Component{
 
 	onChange = (event) => {
 
@@ -39,3 +39,5 @@ export default class Select extends React.Component{
 		)
 	}
 }
+
+module.exports = Select

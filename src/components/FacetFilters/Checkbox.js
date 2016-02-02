@@ -158,4 +158,4 @@ class Default extends React.Component{
 	}
 }
 
-export default FacetToggle ( Default )
+module.exports = FacetToggle ( Default )

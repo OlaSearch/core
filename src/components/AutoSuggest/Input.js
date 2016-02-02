@@ -2,7 +2,7 @@ import React from 'react';
 import Bookmarks from './../Bookmarks';
 import SpeechInput from './../Speech';
 
-export default class Input extends React.Component{
+class Input extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -95,3 +95,5 @@ export default class Input extends React.Component{
 		)
 	}
 };
+
+module.exports = Input

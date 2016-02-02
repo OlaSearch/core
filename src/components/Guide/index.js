@@ -158,4 +158,4 @@ function mapStateToProps( state ){
 	}
 }
 
-export default connect( mapStateToProps )( Guide )
+module.exports = connect( mapStateToProps )( Guide )

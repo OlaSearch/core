@@ -23,7 +23,7 @@ import React from 'react';
 // import c3 from 'c3';
 import { addFacet, replaceFacet, executeSearch } from './../../actions/Search';
 
-export default class BarChart extends React.Component{
+class BarChart extends React.Component{
 	
 	static defaultProps = {
 		title: 'Movies by year',
@@ -212,3 +212,5 @@ export default class BarChart extends React.Component{
 		)
 	}
 }
+
+module.exports = BarChart

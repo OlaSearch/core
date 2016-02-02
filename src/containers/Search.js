@@ -259,4 +259,4 @@ function mapStateToProps( state ){
 	}
 }
 
-export default connect( mapStateToProps )( OlaRoute( Search ) )
+module.exports = connect( mapStateToProps )( OlaRoute( Search ) )

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Dropdown from './FieldTypes/Dropdown';
 
-export default class Question extends React.Component{
+class Question extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -67,3 +67,5 @@ export default class Question extends React.Component{
 		)
 	}
 };
+
+module.exports = Question

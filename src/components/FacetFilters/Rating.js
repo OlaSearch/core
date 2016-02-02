@@ -97,4 +97,4 @@ class Rating extends React.Component{
 	}
 }
 
-export default FacetToggle( Rating )
+module.exports = FacetToggle( Rating )

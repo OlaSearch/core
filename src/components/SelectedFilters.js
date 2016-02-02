@@ -4,7 +4,7 @@ import Tag from './Misc/Tag';
 import Tooltip from './Guide/Tooltip';
 import qs from 'query-string';
 
-export default class SelectedFilters extends React.Component{
+class SelectedFilters extends React.Component{
 	
 	constructor(props){
 		super(props)
@@ -106,3 +106,6 @@ export default class SelectedFilters extends React.Component{
 		)
 	}
 }
+
+
+module.exports = SelectedFilters

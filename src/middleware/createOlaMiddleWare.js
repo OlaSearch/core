@@ -8,7 +8,7 @@
  * 	searchService
  * }
  */
-export default function createOlaMiddleWare(options = {}){	
+module.exports = function(options = {}){	
 	
 	return ({ dispatch, getState }) => (next) => (action) => {
 			const {

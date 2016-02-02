@@ -102,4 +102,4 @@ function mapStateToProps( state ){
 	}
 }
 
-export default connect( mapStateToProps )( listensToClickOutside(History) )
+module.exports = connect( mapStateToProps )( listensToClickOutside(History) )

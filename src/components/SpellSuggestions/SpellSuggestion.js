@@ -1,7 +1,7 @@
 import React from 'react';
 import { updateQueryTerm, executeSearch } from './../../actions/Search';
 
-export default class SpellSuggestion extends React.Component{
+class SpellSuggestion extends React.Component{
 	
 	constructor(props){
 		super(props)
@@ -63,3 +63,5 @@ export default class SpellSuggestion extends React.Component{
 		)
 	}
 }
+
+module.exports = SpellSuggestion

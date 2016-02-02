@@ -6,7 +6,7 @@ import enLocaleData from 'react-intl/lib/locale-data/en';
 
 addLocaleData(enLocaleData);
 
-export default class OlaIntlProvider extends React.Component{
+class OlaIntlProvider extends React.Component{
 
 	static defaultProps = {
 		lang: 'en',
@@ -26,3 +26,5 @@ export default class OlaIntlProvider extends React.Component{
 		)
 	}
 };
+
+module.exports = OlaIntlProvider;

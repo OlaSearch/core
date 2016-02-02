@@ -4,7 +4,7 @@ import LoadMore from './InfiniteScroll/LoadMore';
 import * as SearchActionCreators from './../actions/Search';
 import { bindActionCreators } from 'redux';
 
-export default class SearchFooter extends React.Component{
+class SearchFooter extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -35,3 +35,5 @@ export default class SearchFooter extends React.Component{
 
 	}
 }
+
+module.exports = SearchFooter

@@ -12,7 +12,7 @@ import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search
 import classNames from 'classnames';
 import { getDisplayName } from './../../utilities';
 
-export default class Tabs extends React.Component{
+class Tabs extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -143,3 +143,5 @@ export default class Tabs extends React.Component{
 		)
 	}
 }
+
+module.exports = Tabs

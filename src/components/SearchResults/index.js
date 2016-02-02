@@ -2,7 +2,7 @@ import React from 'react';
 import SnippetDefault from './../Snippets/Default';
 import { getMatchingSnippet } from './../../utilities';
 
-export default class SearchResults extends React.Component{
+class SearchResults extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -54,3 +54,6 @@ export default class SearchResults extends React.Component{
 
 	}
 }
+
+
+module.exports = SearchResults

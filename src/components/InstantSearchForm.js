@@ -10,7 +10,7 @@ import History from './History';
 import SpeechInput from './Speech';
 import { debounce } from './../utilities';
 
-export default class InstantSearchForm extends React.Component{
+class InstantSearchForm extends React.Component{
 
 	constructor(props, context){
 		super(props)
@@ -120,3 +120,5 @@ export default class InstantSearchForm extends React.Component{
 		)
 	}
 }
+
+module.exports = InstantSearchForm

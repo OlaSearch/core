@@ -60,4 +60,4 @@ class FacetBoolean extends React.Component{
 	}
 }
 
-export default FacetToggle( FacetBoolean )
+module.exports = FacetToggle( FacetBoolean )
