@@ -6,8 +6,7 @@ import { FacetToggle } from './../../decorators/OlaFacetToggle';
 import classNames from 'classnames';
 import Histogram from './Histogram';
 
-@FacetToggle
-export default class Range extends React.Component{
+class Range extends React.Component{
 	
     static propTypes = {
         dispatch: React.PropTypes.func.isRequired,
@@ -184,3 +183,5 @@ export default class Range extends React.Component{
 		)
 	}
 };
+
+export default FacetToggle( Range )

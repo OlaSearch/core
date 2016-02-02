@@ -4,8 +4,7 @@ import ReactList from 'react-list';
 import listensToClickOutside from 'react-onclickoutside/decorator';
 import classNames from 'classnames';
 
-@listensToClickOutside()
-export default class Dropdown extends React.Component{
+class Dropdown extends React.Component{
 	
 	constructor(props){
 		super(props)		
@@ -273,3 +272,6 @@ export default class Dropdown extends React.Component{
 		)
 	}
 }
+
+
+export default listensToClickOutside( Dropdown )

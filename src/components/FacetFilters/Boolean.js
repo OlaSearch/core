@@ -2,8 +2,7 @@ import React from 'react';
 import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search';
 import { FacetToggle } from './../../decorators/OlaFacetToggle';
 
-@FacetToggle
-export default class FacetBoolean extends React.Component{
+class FacetBoolean extends React.Component{
     static propTypes = {
         dispatch: React.PropTypes.func.isRequired,
         facet: React.PropTypes.object.isRequired,
@@ -60,3 +59,5 @@ export default class FacetBoolean extends React.Component{
 		)
 	}
 }
+
+export default FacetToggle( FacetBoolean )

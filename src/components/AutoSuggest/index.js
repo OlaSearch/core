@@ -7,12 +7,7 @@ import Input from './Input';
 import TermSuggestion from './../SpellSuggestions/TermSuggestion';
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion';
 
-@connect( state => ({
-	AutoSuggest: state.AutoSuggest,
-	bookmarks: state.AppState.bookmarks,
-}))
-@listensToClickOutside()
-export default class AutoSuggest extends React.Component{	
+class AutoSuggest extends React.Component{	
 	
 	static propTypes = {
 		AutoSuggest: React.PropTypes.object.isRequired,
@@ -130,3 +125,13 @@ export default class AutoSuggest extends React.Component{
 		)
 	}
 }
+
+function mapStateToProps( state ){
+
+	return {
+		AutoSuggest: state.AutoSuggest,
+		bookmarks: state.AppState.bookmarks,
+	}
+}
+
+export default connect( mapStateToProps )( listensToClickOutside( AutoSuggest ) )

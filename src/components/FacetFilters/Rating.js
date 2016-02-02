@@ -4,8 +4,7 @@ import { FacetToggle } from './../../decorators/OlaFacetToggle';
 import classNames from 'classnames';
 import { parseRangeValues } from './../../utilities';
 
-@FacetToggle
-export default class Rating extends React.Component{
+class Rating extends React.Component{
 	
     static propTypes = {
         dispatch: React.PropTypes.func.isRequired,
@@ -97,3 +96,5 @@ export default class Rating extends React.Component{
 		)
 	}
 }
+
+export default FacetToggle( Rating )

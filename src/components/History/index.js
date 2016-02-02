@@ -5,11 +5,7 @@ import listensToClickOutside from 'react-onclickoutside/decorator';
 import HistoryItem from './HistoryItem';
 import classNames from 'classnames';
 
-@connect( state => ({
-    history: state.AppState.history
-}))
-@listensToClickOutside()
-export default class History extends React.Component{
+class History extends React.Component{
 	
 	static propTypes = {
 		dispatch: React.PropTypes.func.isRequired,
@@ -98,3 +94,12 @@ export default class History extends React.Component{
 		)
 	}
 }
+
+function mapStateToProps( state ){
+
+	return {
+		history: state.AppState.history
+	}
+}
+
+export default connect( mapStateToProps )( listensToClickOutside(History) )

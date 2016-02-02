@@ -2,8 +2,7 @@ import React from 'react';
 import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search';
 import { FacetToggle } from './../../decorators/OlaFacetToggle';
 
-@FacetToggle
-export default class DateRange extends React.Component{
+class DateRange extends React.Component{
     
     static propTypes = {
         dispatch: React.PropTypes.func.isRequired,
@@ -44,3 +43,5 @@ export default class DateRange extends React.Component{
 		)
 	}
 }
+
+export default FacetToggle( DateRange )

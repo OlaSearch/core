@@ -10,11 +10,7 @@ import {
 import Question from './Question';
 import { buildQueryString } from './../../services/urlSync';
 
-@connect( state => ({
-	Guide: state.Guide,
-	Device: state.Device
-}))
-export default class Guide extends React.Component{
+class Guide extends React.Component{
 	constructor(props){
 		super(props)
 	}
@@ -152,3 +148,14 @@ export default class Guide extends React.Component{
 		)
 	}
 }
+
+
+function mapStateToProps( state ){
+
+	return {
+		Guide: state.Guide,
+		Device: state.Device
+	}
+}
+
+export default connect( mapStateToProps )( Guide )

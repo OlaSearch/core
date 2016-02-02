@@ -4,8 +4,7 @@ import { FacetToggle } from './../../decorators/OlaFacetToggle';
 import classNames from 'classnames';
 import ReactList from 'react-list';
 
-@FacetToggle
-export default class Default extends React.Component{
+class Default extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -158,3 +157,5 @@ export default class Default extends React.Component{
 		)
 	}
 }
+
+export default FacetToggle ( Default )

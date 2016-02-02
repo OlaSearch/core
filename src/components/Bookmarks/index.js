@@ -5,11 +5,7 @@ import listensToClickOutside from 'react-onclickoutside/decorator';
 import Bookmark from './Bookmark';
 import classNames from 'classnames';
 
-@connect( state => ({
-	bookmarks: state.AppState.bookmarks,
-}))
-@listensToClickOutside()
-export default class Bookmarks extends React.Component{	
+class Bookmarks extends React.Component{	
 	static propTypes = {
 		dispatch: React.PropTypes.func.isRequired,
 		bookmarks: React.PropTypes.array.isRequired
@@ -89,3 +85,13 @@ export default class Bookmarks extends React.Component{
 		)
 	}
 }
+
+
+function mapStateToProps( state ){
+
+	return {
+		bookmarks: state.AppState.bookmarks
+	}
+}
+
+export default connect( mapStateToProps )( listensToClickOutside( Bookmarks ) )

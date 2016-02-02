@@ -23,13 +23,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import PerPage from './../components/PerPage';
 
-@connect( state => ({
-	AppState: state.AppState,
-	QueryState: state.QueryState,
-	Device: state.Device
-}))
-@OlaRoute
-export default class Search extends React.Component{
+class Search extends React.Component{
 
 	constructor(props){
 		super(props)
@@ -254,3 +248,15 @@ export default class Search extends React.Component{
 		)
 	}
 }
+
+
+function mapStateToProps( state ){
+
+	return {
+		AppState: state.AppState,
+		QueryState: state.QueryState,
+		Device: state.Device
+	}
+}
+
+export default connect( mapStateToProps )( OlaRoute( Search ) )
