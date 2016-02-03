@@ -74,7 +74,7 @@
     "react-intl": "^2.0.0-beta-2",
     "react-mq": "github:rmdort/react-mq",
     "react-onclickoutside": "^4.5.0",
-    "react-list": "^0.7.12",
+    "react-list": "^0.7.13",
     "classnames": "^2.2.3",
     "nouislider": "^8.2.1"
   }
