@@ -8,7 +8,7 @@
  *	/>
  */
 import React from 'react';
-import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search';
+import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search';
 import classNames from 'classnames';
 import { getDisplayName } from './../../utilities';
 
@@ -28,11 +28,23 @@ class Tabs extends React.Component{
 		dispatch: React.PropTypes.func.isRequired,
 	};
 
+	static defaultProps = {
+		resetFacetsOnSelect: true
+	};
+
 	handleReplaceFacet = (facet, value) => {
 
-		this.props.dispatch(replaceFacet(facet, value))
+		/**
+		 * Remove facets that are not in this tab
+		 */
+		
+		var { dispatch, resetFacetsOnSelect } = this.props;
+		
+		if(resetFacetsOnSelect) dispatch( removeAllFacets() )
 
-		this.props.dispatch(executeSearch())
+		dispatch(replaceFacet(facet, value))
+
+		dispatch(executeSearch())
 
 	};
 

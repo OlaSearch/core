@@ -16,8 +16,6 @@ class Default extends React.Component{
 		}
 	}
 
-	static displayName = "Asdas";
-
     static propTypes = {
         dispatch: React.PropTypes.func.isRequired,
         selected: React.PropTypes.array.isRequired,
