@@ -26,6 +26,7 @@ class Tabs extends React.Component{
 		facets: React.PropTypes.array.isRequired,
 		selected: React.PropTypes.array.isRequired,
 		dispatch: React.PropTypes.func.isRequired,
+		resetFacetsOnSelect: React.PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -50,9 +51,13 @@ class Tabs extends React.Component{
 
 	handleRemoveFacet = (facet) => {
 
-		this.props.dispatch( removeFacet(facet) )
+		var { dispatch, resetFacetsOnSelect } = this.props;
 
-		this.props.dispatch( executeSearch() )
+		if(resetFacetsOnSelect) dispatch( removeAllFacets() )
+
+		dispatch( removeFacet(facet) )
+
+		dispatch( executeSearch() )
 	};
 
 	getTabsForDisplay = (values) => {
@@ -133,9 +138,11 @@ class Tabs extends React.Component{
 				</button>
 				{tabs.map( (value, idx) => {
 
+					var isActive = selectedItems.indexOf(value.name) != -1;
+
 					var klass = classNames({
 						'ola-tabs-label': true,
-						'ola-tab-active': selectedItems.indexOf(value.name) != -1
+						'ola-tab-active': isActive
 					});
 
 					return (
@@ -143,10 +150,12 @@ class Tabs extends React.Component{
 							className = {klass}
 							type = 'button'
 							key = {idx} 
-							onClick = {() => {							
-								this.handleReplaceFacet(tab, value.name)
+							onClick = {() => {
+								
+								if(!isActive) this.handleReplaceFacet(tab, value.name)
+
 							}}>
-							{ getDisplayName(config.facetNames, value.name) }
+							<span className="ola-tab-name">{ getDisplayName(config.facetNames, value.name) }</span>
 							<span className="ola-search-facet-count">{value.count}</span>
 						</button>
 					)

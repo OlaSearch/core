@@ -29,7 +29,7 @@ class SearchResults extends React.Component{
 
 	render(){
 		
-		let { results, dispatch, bookmarks, components, isAutocomplete } = this.props;		
+		let { results, dispatch, bookmarks, components, isAutosuggest } = this.props;		
 		let { snippetRules, defaultSnippet } = this.context.config;		
 
 		return (
@@ -44,7 +44,7 @@ class SearchResults extends React.Component{
 							key = {idx} 
 							dispatch = {dispatch} 
 							bookmarks = {bookmarks}
-							isAutocomplete = { isAutocomplete }
+							isAutosuggest = { isAutosuggest }
 						/>
 					)
 					
