@@ -61,7 +61,7 @@ class Pagination extends React.Component{
 		actions.executeSearch()
 	}
 
-	createPageList(start, end, limit, left, right, ellipsis){
+	createPageList(start = 1, end, limit, left, right, ellipsis){
 
 		var list = [];
 
@@ -129,8 +129,7 @@ class Pagination extends React.Component{
 							className={klass}
 							key = {idx}
 							onClick = { () => {
-								if(page == ellipsis) return;
-								this.selectPage(page)
+								if(page != ellipsis)  this.selectPage(page)
 							}}
 						>{page}</button>
 					)

@@ -1,10 +1,6 @@
 import React from 'react';
 
-const TermSuggestion = (props) => {
-		
-	var {
-		term
-	} = props;
+const TermSuggestion = ( { term }) => {
 
 	if(!term) return <noscript />;
 

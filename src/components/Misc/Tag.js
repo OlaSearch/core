@@ -4,9 +4,7 @@ import { supplant, getDisplayName } from './../../utilities';
 const Tag = (props, context) => {	
 	
 	var displayName = '';
-
 	var { name, onRemove, facet } = props;
-
 	var { type, label, template } = facet
 
 	switch(type){
@@ -14,8 +12,8 @@ const Tag = (props, context) => {
 		case 'range':
             if(typeof name == 'string') {
                 displayName = name;
-            }else{
-			    var from = name[0], to = name[1];			
+            }else{            	
+			    var [ from, to ] = name;
 			    displayName = supplant(template, {from, to})
             }
 			break;

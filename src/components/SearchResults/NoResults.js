@@ -15,7 +15,7 @@ class NoResults extends React.Component{
 		if(results.length || isLoading) return null;
 
 		return (
-			<div className="ola-snippet">
+			<div className="ola-snippet ola-snippet-noresults">
 				No results found matching <strong>{ q }</strong>
 			</div>
 		)

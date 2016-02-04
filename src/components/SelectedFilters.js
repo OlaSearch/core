@@ -29,7 +29,7 @@ class SelectedFilters extends React.Component{
 		showQuery: false
 	};
 
-	handleRemoveFacat(facet, value){
+	handleRemoveFacet = (facet, value) => {
 
 		this.props.dispatch(removeFacet( facet, value ))
 
@@ -88,7 +88,7 @@ class SelectedFilters extends React.Component{
 
 							{tags.map( (value, index) => {
 
-								var removeFacet = this.handleRemoveFacat.bind(this, facet, value)
+								var removeFacet = this.handleRemoveFacet.bind(this, facet, value)
 
 								return (
 									<Tag 

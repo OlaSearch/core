@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Directions = (props) => {
-
-	var { latlong } = props;
+const Directions = ( { latlong } ) => {
 
 	if(!latlong) return <noscript />
 

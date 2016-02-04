@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Share = (props) => {
-
-	var { result } = props;
+const Share = ( { result }) => {
 
 	var { title, url } = result;
 

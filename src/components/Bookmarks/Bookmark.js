@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Bookmark = ( { bookmark, onRemove} ) => {
+const Bookmark = ( { bookmark, onRemove } ) => {
 
 	return (
 		<div className="ola-module-item">

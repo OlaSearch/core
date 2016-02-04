@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Year = (props) => {
-
-	var { year } = props;
+const Year = ( { year }) => {
 
 	if(!year) return <noscript />
 	

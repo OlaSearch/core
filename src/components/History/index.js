@@ -61,13 +61,18 @@ class History extends React.Component{
 				<button 
 					type="button" 
 					className="ola-link-history" 
-					onClick = {this.toggleVisibility} aria-label="Show history">
-				</button>
+					onClick = {this.toggleVisibility} 
+					aria-label="Show history" />
 				
 				<div className={klass}>
 					<div className="ola-module-title">
 						<span>History </span>
-						<button type="button" className="ola-fake-button ola-clear" onClick = {this.clearHistory}>(clear)</button>
+						<button 
+							type="button" 
+							className="ola-fake-button ola-clear" 
+							onClick = {this.clearHistory}>
+							(clear)
+						</button>
 					</div>
 					<div className="ola-module-body">
 						
@@ -77,16 +82,7 @@ class History extends React.Component{
 						  </div> 
 						 : null}
 
-						{history.map( (item, idx) => {
-
-							return (
-								<HistoryItem 
-									history = {item}
-									key = {idx}
-								/>
-							)
-
-						})}
+						{ history.map( (item, idx) =>  <HistoryItem history = {item} key = {idx} /> ) }
 						
 					</div>
 				</div>

@@ -120,9 +120,11 @@ class Tabs extends React.Component{
 		
 		/* Class for all tab */
 
+		var isAllSelected = !selectedFacets.length;
+
 		var klassTab = classNames({
 			'ola-tabs-label': true,
-			'ola-tab-active': !selectedFacets.length
+			'ola-tab-active': isAllSelected
 		});
 
 		return (
@@ -130,7 +132,7 @@ class Tabs extends React.Component{
 				<button 
 					className={klassTab}
 					onClick = { () => {
-						this.handleRemoveFacet(tab)
+						if(!isAllSelected) this.handleRemoveFacet(tab)
 					}}
 				>
 					All

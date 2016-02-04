@@ -32,7 +32,7 @@ class OlaProvider extends React.Component{
 	}
 	
 	render(){
-
+		
 		var { translations, children, lang, store } = this.props;
 
 		return (

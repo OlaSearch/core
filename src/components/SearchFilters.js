@@ -49,10 +49,10 @@ class SearchFilters extends React.Component{
 		return names;
 	};
 
-	// shouldComponentUpdate( nextProps ){
+	shouldComponentUpdate( nextProps ){
 		
-	// 	return this.props.facets != nextProps.facets || this.props.selected != nextProps.selected
-	// }
+		return this.props.facets != nextProps.facets || this.props.selected != nextProps.selected
+	}
 	
 	render(){
 

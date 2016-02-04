@@ -63,14 +63,14 @@ var urlSync = {
 		
 			var fq = facetQuery.map( (item) => {
 
-				var hay = item.split(':'),
-					name = hay[0],
-					value = hay[1].split(',');
+				var [ name, value ] = item.split(':')
+				
+				value = value.split(',');
 
-				var facet = config.facets.filter( (facet) => facet.name == name)[0];
+				var facet = config.facets.filter( (facet) => facet.name == name).reduce( (a, b) => a);
 				var { type } = facet;
 
-				if( (type == 'range' || type == 'rating')
+				if( (type == 'range' || type == 'rating' || type == 'daterange')
 					&& value.length > 1){
 										
 					value = parseRangeValues(value)

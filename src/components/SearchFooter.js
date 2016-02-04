@@ -4,36 +4,28 @@ import LoadMore from './InfiniteScroll/LoadMore';
 import * as SearchActionCreators from './../actions/Search';
 import { bindActionCreators } from 'redux';
 
-class SearchFooter extends React.Component{
-
-	constructor(props){
-		super(props)
-	}
-
-	static contextTypes = {
-		config: React.PropTypes.object
-	};
-
-	render(){
+const SearchFooter = ( props, context) => {
 		
-		let { infiniteScroll } = this.context.config;
+	let { infiniteScroll } = context.config;
 
-		let { isPhone, dispatch } = this.props;
+	let { isPhone, dispatch } = props;
 
-		let boundActionCreators = bindActionCreators(SearchActionCreators, dispatch);
+	let boundActionCreators = bindActionCreators(SearchActionCreators, dispatch);
 
-		if(infiniteScroll || isPhone){
-
-			return (
-				<LoadMore {...this.props} actions = {boundActionCreators} />
-			)
-		}
+	if(infiniteScroll || isPhone){
 
 		return (
-			<Pagination {...this.props} actions = {boundActionCreators} />
+			<LoadMore {...props} actions = {boundActionCreators} />
 		)
-
 	}
+
+	return (
+		<Pagination {...props} actions = {boundActionCreators} />
+	)
 }
+
+SearchFooter.contextTypes = {
+	config: React.PropTypes.object
+};
 
 module.exports = SearchFooter

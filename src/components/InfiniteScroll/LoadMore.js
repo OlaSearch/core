@@ -7,7 +7,12 @@ const LoadMore = (props) => {
 	if(currentPage * perPage > totalResults) return <noscript />
 
 	return (
-		<button type="button" className="ola-link-load-more" onClick = { () => actions.loadMore() }>Load more</button>
+		<button 
+			type="button" 
+			className="ola-link-load-more" 
+			onClick = { () => actions.loadMore() }>
+			Load more
+		</button>
 	)
 }
 

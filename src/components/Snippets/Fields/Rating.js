@@ -1,8 +1,6 @@
 import React from 'react';
 
-var Rating = (props) => {
-
-	let {rating} = props;
+var Rating = ( { rating }) => {
 
 	let normalized = rating/20;
 

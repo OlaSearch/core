@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Phone = (props) => {
-
-	var { phone } = props;
+const Phone = ( { phone }) => {
 
 	if(!phone) return <noscript />
 
