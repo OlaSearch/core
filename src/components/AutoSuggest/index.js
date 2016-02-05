@@ -1,24 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import listensToClickOutside from 'react-onclickoutside/decorator';
-import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest,	} from './../../actions/AutoSuggest';
+import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest,	addFacet } from './../../actions/AutoSuggest';
 import Suggestions from './Suggestions';
 import Input from './Input';
 import TermSuggestion from './../SpellSuggestions/TermSuggestion';
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion';
+import FacetSuggestion from './FacetSuggestion';
+import { buildQueryString } from './../../services/urlSync';
 
 class AutoSuggest extends React.Component{	
 	
 	static propTypes = {
 		AutoSuggest: React.PropTypes.object.isRequired,
 		bookmarks: React.PropTypes.array,
+		showFacetSuggestions: React.PropTypes.bool,
 		dispatch: React.PropTypes.func.isRequired,
 		onSubmit: React.PropTypes.func
 	};
 
 	static defaultProps = {
 		showBookmarks: true,
-		searchUrl: 'search.html?'
+		searchUrl: 'search.html?',
+		showFacetSuggestions: false,
 	};
 
 	handleClickOutside = (event) => {
@@ -57,12 +61,12 @@ class AutoSuggest extends React.Component{
 
 		this.handleViewAll();
 
-		event.preventDefault();
+		event && event.preventDefault();
 	};
 
 	handleViewAll = () => {
 
-		var { q } = this.props.AutoSuggest.query;
+		var { q, facet_query } = this.props.AutoSuggest.query;
 
 		var { searchUrl, dispatch, onSubmit } = this.props;
 
@@ -70,16 +74,16 @@ class AutoSuggest extends React.Component{
 
 		onSubmit && onSubmit.call(this, q)
 
-		window.location.href = searchUrl + 'q=' + q
+		window.location.href = searchUrl + buildQueryString( { q: q, facet_query: facet_query })
 	};
 
-	render(){
-
+	render(){		
 		var {
 			dispatch,
 			AutoSuggest,
 			bookmarks,
 			components,
+			showFacetSuggestions,
 		} = this.props;
 
 		var {
@@ -89,7 +93,10 @@ class AutoSuggest extends React.Component{
 			suggestedTerm,
 			isOpen,
             totalResults,
+            facets,
 		} = AutoSuggest;
+
+		var { q } = query;
 
 		var klass = 'ola-suggestions' + (isOpen? '': ' js-hide');
 
@@ -97,12 +104,26 @@ class AutoSuggest extends React.Component{
 			<form className="ola-autosuggest" onSubmit = {this.onSubmit}>
 				<div className="ola-autosuggest-container">
 					<Input
-						q = {query.q}
+						q = {q}
 						onChange = {this.onChange}
 						onClear = {this.onClear}
 					/>
 
 					<div className={klass}>
+						
+						{ showFacetSuggestions
+							? <FacetSuggestion
+									facets = { facets }
+									query = { query }
+									name = 'genres_sm'
+									dispatch = { dispatch }
+									onSubmit = { this.onSubmit }
+									addFacet = { addFacet }
+									suggestedTerm = { suggestedTerm }
+								/>
+							: null
+						}
+
 						<TermSuggestion term = {suggestedTerm} />
 				
 						<SpellSuggestion 

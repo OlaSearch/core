@@ -5,9 +5,11 @@ var initialState = {
 		q: '',
 		per_page: 20,
 		page: 1,
+		facet_query: []
 	},
 	totalResults: 0,
-	results: [],	
+	results: [],
+	facets: [],
 	spellSuggestions: [],
 	suggestedTerm: '',
 	isLoading: false,
@@ -40,6 +42,7 @@ export default (state = initialState, action) => {
 			var {
 				spellSuggestions,
 				results,
+				facets,
 				totalResults,
 				suggestedTerm
 			} = action;
@@ -47,6 +50,7 @@ export default (state = initialState, action) => {
 			return {
 				...state, 
 				results,
+				facets,
 				spellSuggestions,
 				totalResults,
 				isLoading: false,
@@ -65,6 +69,23 @@ export default (state = initialState, action) => {
 				...state,
 				isOpen: false
 			}
+
+
+		case types.ADD_FACET_AUTOSUGGEST:
+            var { value, facet } = action;
+
+			var { name, displayName, type, multiSelect, template, label } = facet;			
+
+            return {
+                ...state,
+                query: {
+                    ...state.query,
+                    facet_query: [ {
+						name, type, displayName, multiSelect, template, label,
+						selected: [value]
+					}]
+                }
+            };
 
 		default:
 			return state;
