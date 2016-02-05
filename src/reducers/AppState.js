@@ -129,7 +129,7 @@ export default (state = initialState, action) => {
 		
 		case types.CLEAR_HISTORY:
 			
-			storage.set('history', []);
+			// storage.set('history', []);
 			
 			return {
 				...state,

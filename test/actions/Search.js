@@ -6,7 +6,6 @@ describe('Search Actions', () => {
 
 	it('should call initSearch', () => {
 		
-
 		expect(true)
 	})
 	
@@ -28,6 +27,15 @@ describe('Search Actions', () => {
 			type: types.CLEAR_QUERY_TERM			
 		}
 		expect(actions.clearQueryTerm()).toEqual(expectedAction)
+	})
+
+	it('should addFilter()', () => {
+		
+		const expectedAction = {
+			type: types.ADD_FILTER,
+			payload: {}
+		}
+		expect(actions.addFilter({})).toEqual(expectedAction)
 	})
 
 });

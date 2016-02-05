@@ -1,7 +1,7 @@
 module.exports = {
 	get: function(key){
 
-		if(localStorage.getItem(key)){
+		if(window.localStorage.getItem(key)){
 			return JSON.parse(localStorage.getItem(key))
 		}
 
@@ -9,6 +9,6 @@ module.exports = {
 	},
 	set: function(key, value){
 
-		localStorage.setItem(key, JSON.stringify(value))
+		window.localStorage.setItem(key, JSON.stringify(value))
 	}
 }
