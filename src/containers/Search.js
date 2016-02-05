@@ -15,8 +15,6 @@ import TermSuggestion from './../components/SpellSuggestions/TermSuggestion';
 import SpellSuggestion from './../components/SpellSuggestions/SpellSuggestion';
 import Sort from './../components/Sort';
 import SearchFooter from './../components/SearchFooter';
-import BarChart from './../components/Visualization/BarChart';
-import PieChart from './../components/Visualization/PieChart';
 import { OlaRoute } from './../decorators/OlaRoute';
 import { initSearch } from './../actions/Search';
 import classNames from 'classnames';
@@ -29,7 +27,7 @@ class Search extends React.Component{
 		super(props)
 
 		this.state = {
-			showChart: false
+			isSidebarOpen: false
 		}
 	}	
 
@@ -43,13 +41,6 @@ class Search extends React.Component{
 
 	}
 	
-	toggleChart = () => {
-		
-		this.setState({
-			showChart: !this.state.showChart
-		})
-
-	};
 
 	toggleSidebar = () => {
 
@@ -93,37 +84,11 @@ class Search extends React.Component{
 			isTablet
 		} = Device;
 
-		var {
-			showChart,
+		var {			
 			isSidebarOpen,
 		} = this.state;
 
 
-		var charts = showChart? (
-			<div>
-				<BarChart 
-					facets = {facets}
-					facetName = 'year_i'
-					selected = {facet_query}
-					dispatch = {dispatch}
-					/>
-				<BarChart 
-					facets = {facets}
-					facetName = 'year_i'
-					selected = {facet_query}
-					dispatch = {dispatch}
-					type = 'line'
-					/>
-
-				<PieChart 
-					facets = {facets}
-					facetName = 'genres_sm'
-					selected = {facet_query}
-					dispatch = {dispatch}
-					multiple = {false}
-					/>
-			</div>
-		): <div />;
 
 		var klassSearchContainer = classNames({
 			'ola-search-container': true,
@@ -178,11 +143,7 @@ class Search extends React.Component{
 								selected = {sort}
 								/>
 
-							<a className="ola-show-viz-link" onClick = {this.toggleChart}>
-								<em className="ion-arrow-graph-up-right" />
-								<span> {showChart? 'Hide charts': 'Show charts'}</span>
-							</a>
-
+							
 								
 							<SearchTitle 
 								totalResults = {totalResults} 
@@ -214,8 +175,7 @@ class Search extends React.Component{
 							dispatch = {dispatch} 
 							referrer = {referrer}
 						/>
-						
-						{charts}
+												
 
 						<Error 
 							error = {error}
