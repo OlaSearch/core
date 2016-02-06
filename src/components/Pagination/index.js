@@ -13,12 +13,14 @@ class Pagination extends React.Component{
 		perPage : 10,
 		currentPage: 1,
 		totalResults: 0,
+		scrollIntoView: true
 	};
 
 	static propTypes = {
 	    totalResults: React.PropTypes.number.isRequired,
 	    currentPage: React.PropTypes.any,
 	    perPage: React.PropTypes.any.isRequired,
+	    scrollIntoView: React.PropTypes.bool,
 	    actions: React.PropTypes.shape({
 			changePage: React.PropTypes.func.isRequired,
 			executeSearch: React.PropTypes.func.isRequired
@@ -54,14 +56,16 @@ class Pagination extends React.Component{
 
 	selectPage(page){
 
-		var { actions } = this.props;
+		var { actions, scrollIntoView } = this.props;
+
+		if( scrollIntoView) this.refs.pagination.parentNode.scrollIntoView()
 
 		actions.changePage(page)
 
 		actions.executeSearch()
 	}
 
-	createPageList(start = 1, end, limit, left, right, ellipsis){
+	createPageList(start, end, limit, left, right, ellipsis){
 
 		var list = [];
 
@@ -114,7 +118,7 @@ class Pagination extends React.Component{
 		});
 
 		return (
-			<nav className="ola-pagination">
+			<nav className="ola-pagination" ref="pagination">
 				<button className={prevPageClass} onClick = { this.prevPage }>Previous</button>
 				{pages.map( (page, idx) => {
 

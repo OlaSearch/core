@@ -96,4 +96,5 @@ module.exports = {
     },    
     olaReducer: require('./reducers'),
     createOlaMiddleWare: require('./middleware/createOlaMiddleWare'),
+    ReactIntl: require('react-intl'),
 }
