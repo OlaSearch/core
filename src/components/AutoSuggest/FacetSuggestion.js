@@ -2,9 +2,7 @@ import React from 'react';
 
 const FacetSuggestion = ( props ) => {
 
-    var { facets, query, name, addFacet, dispatch, onSubmit, limit, suggestedTerm } = props;
-
-    if(suggestedTerm) return <noscript />
+    var { facets, query, name, addFacet, dispatch, onSubmit, limit } = props;
 
     var facet = facets.filter( item => item.name == name);
     var values = []
@@ -19,9 +17,10 @@ const FacetSuggestion = ( props ) => {
             {values.map( (value, idx) => {
 
                 return (
-                    <div
+                    <button
                         className="ola-facet-suggestion"
                         key = { idx }
+                        tabIndex = {0}
                         onClick = { () => {
 
                             dispatch( addFacet(facet[0], value.name) )
@@ -33,7 +32,7 @@ const FacetSuggestion = ( props ) => {
                         }}
                         >
                         <strong>{ q }</strong> in {value.name}
-                    </div>
+                    </button>
                 )
             })}
         </div>

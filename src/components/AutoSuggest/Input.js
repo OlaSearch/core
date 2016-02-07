@@ -37,10 +37,23 @@ class Input extends React.Component{
 
 	onKeyUp = ( event ) => {
 
-		if(event.which == 27){
+		switch( event.which ){
 
-			this.props.onClear()
-			
+			case 27: // Esc
+				this.props.onClear();
+				break;	
+			case 38: // Up
+				
+				break;
+
+			case 40: // Down
+				break;
+
+			case 9: // Tab
+				break;
+			case 13: // Enter
+				break;
+
 		}
 	};
 

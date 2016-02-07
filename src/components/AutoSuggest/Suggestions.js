@@ -12,9 +12,7 @@ const Suggestions = (props) => {
 	} = props;
 	
 	return (
-		<div className="ola-suggestions-wrapper">			
-			<SearchResults isAutosuggest = { true }  { ...props } />
-		</div>
+		<SearchResults isAutosuggest = { true }  { ...props } />
 	)
 
 };

@@ -9,7 +9,15 @@ import SpellSuggestion from './../SpellSuggestions/SpellSuggestion';
 import FacetSuggestion from './FacetSuggestion';
 import { buildQueryString } from './../../services/urlSync';
 
-class AutoSuggest extends React.Component{	
+class AutoSuggest extends React.Component{
+
+	constructor(props){
+		super(props)
+
+		this.state = {
+			activeSuggest: 0
+		}
+	}
 	
 	static propTypes = {
 		AutoSuggest: React.PropTypes.object.isRequired,
@@ -100,6 +108,8 @@ class AutoSuggest extends React.Component{
 
 		var klass = 'ola-suggestions' + (isOpen? '': ' js-hide');
 
+		var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length;
+
 		return (
 			<form className="ola-autosuggest" onSubmit = {this.onSubmit}>
 				<div className="ola-autosuggest-container">
@@ -109,20 +119,7 @@ class AutoSuggest extends React.Component{
 						onClear = {this.onClear}
 					/>
 
-					<div className={klass}>
-						
-						{ showFacetSuggestions
-							? <FacetSuggestion
-									facets = { facets }
-									query = { query }
-									name = 'genres_sm'
-									dispatch = { dispatch }
-									onSubmit = { this.onSubmit }
-									addFacet = { addFacet }
-									suggestedTerm = { suggestedTerm }
-								/>
-							: null
-						}
+					<div className={klass}>						
 
 						<TermSuggestion term = {suggestedTerm} />
 				
@@ -131,14 +128,29 @@ class AutoSuggest extends React.Component{
 							onChange = {this.onChange}
 							totalResults = {totalResults}
 							dispatch = {dispatch}
-						/>	
-						<Suggestions 
-							results = {results} 
-							isOpen = {isOpen}
-							dispatch = {dispatch}
-							bookmarks = {bookmarks}
-							components = { components }
 						/>
+
+						<div className="ola-suggestions-wrapper">
+
+							{ shouldShowFacetSuggestions
+								? <FacetSuggestion
+										facets = { facets }
+										query = { query }
+										name = 'genres_sm'
+										dispatch = { dispatch }
+										onSubmit = { this.onSubmit }
+										addFacet = { addFacet }
+									/>
+								: null
+							}
+							<Suggestions 
+								results = {results} 
+								isOpen = {isOpen}
+								dispatch = {dispatch}
+								bookmarks = {bookmarks}
+								components = { components }
+							/>
+						</div>
 						<a className="ola-autosuggest-all" onClick = {this.handleViewAll}>View all results</a>
 					</div>
 				</div>
