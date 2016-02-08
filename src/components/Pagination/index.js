@@ -68,7 +68,7 @@ class Pagination extends React.Component{
 	createPageList(start, end, limit, left, right, ellipsis){
 
 		var list = [];
-
+		
 		for(var i = start; i <= end; i ++){
 			
 			if( i == 1

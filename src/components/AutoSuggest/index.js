@@ -13,10 +13,6 @@ class AutoSuggest extends React.Component{
 
 	constructor(props){
 		super(props)
-
-		this.state = {
-			activeSuggest: 0
-		}
 	}
 	
 	static propTypes = {

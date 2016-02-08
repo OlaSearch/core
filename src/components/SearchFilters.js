@@ -77,8 +77,8 @@ class SearchFilters extends React.Component{
 					/* Recalculate Selected values */
 
 					var selectedFacets = selected
-								.filter( (item) => item.name == facet.name)
-								.map( (item) => item.selected),
+								.filter( item => item.name == facet.name)
+								.map( item => item.selected),
 						selectedItems = flatten(selectedFacets);
 
 					var passProps = {

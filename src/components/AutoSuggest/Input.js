@@ -35,18 +35,19 @@ class Input extends React.Component{
 
 	};
 
-	onKeyUp = ( event ) => {
+	onKeyDown = ( event ) => {
+
+		var { onClear } = this.props
 
 		switch( event.which ){
 
 			case 27: // Esc
-				this.props.onClear();
+				onClear();
 				break;	
-			case 38: // Up
-				
+			case 38: // Up				
 				break;
 
-			case 40: // Down
+			case 40: // Down				
 				break;
 
 			case 9: // Tab
@@ -87,7 +88,7 @@ class Input extends React.Component{
 					autoCapitalize = "off" 
 					spellCheck = "false"
 					placeholder = { placeholder }
-					onKeyUp = { this.onKeyUp}
+					onKeyDown = { this.onKeyDown }
 				/>
 				{button}
 

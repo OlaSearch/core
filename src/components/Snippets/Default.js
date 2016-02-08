@@ -29,7 +29,7 @@ class Default extends React.Component{
 
 		var {
 			result,			
-			isAutocomplete,
+			isAutosuggest,
 			showSummary
 		} = this.props;
 

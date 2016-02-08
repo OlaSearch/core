@@ -31,7 +31,7 @@ const Tag = (props, context) => {
 	return (
 		<div className="ola-facet-tag">
 			<span className="ola-facet-tag-name">{displayName}</span>
-			<button className="ola-facet-tag-remove" onClick = {onRemove}></button>
+			<button className="ola-facet-tag-remove" onClick = {onRemove}><span>Remove</span></button>
 		</div>
 	)
 }

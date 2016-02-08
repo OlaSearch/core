@@ -11,6 +11,7 @@ const Bookmark = ( { bookmark, onRemove } ) => {
 				onClick = {onRemove}
 				aria-label="Remove bookmark"
 				>
+				<span>Remove</span>
 			</button>
 		</div>
 	)

@@ -3,16 +3,12 @@ import SnippetDefault from './../Snippets/Default';
 import SearchResults from './../SearchResults';
 
 const Suggestions = (props) => {
-		
-	var {
-		results,			
-		dispatch,
-		bookmarks,
-		components
-	} = props;
 	
 	return (
-		<SearchResults isAutosuggest = { true }  { ...props } />
+		<SearchResults 
+			isAutosuggest = { true }  
+			{ ...props }			
+		/>
 	)
 
 };
