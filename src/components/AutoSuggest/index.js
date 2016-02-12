@@ -8,6 +8,7 @@ import TermSuggestion from './../SpellSuggestions/TermSuggestion';
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion';
 import FacetSuggestion from './FacetSuggestion';
 import { buildQueryString } from './../../services/urlSync';
+import scrollIntoView from 'dom-scroll-into-view';
 
 class AutoSuggest extends React.Component{
 
@@ -27,6 +28,8 @@ class AutoSuggest extends React.Component{
 		showBookmarks: true,
 		searchUrl: 'search.html?',
 		showFacetSuggestions: false,
+		classNames: '.ola-snippet, .ola-facet-suggestion',
+		activeClassName: 'ola-active',
 	};
 
 	handleClickOutside = (event) => {
@@ -60,8 +63,54 @@ class AutoSuggest extends React.Component{
 		this.props.dispatch(clearQueryTerm());
 
 	};
+
+	onMove = ( direction ) => {
+
+		var { classNames, activeClassName } = this.props;
+		var { suggestionsContainer } = this.refs;
+		var fullClass = '.' + classNames;
+		var fullActiveClass = '.' + activeClassName;
+
+		var nodes = suggestionsContainer.querySelectorAll(classNames);
+		
+		if(!nodes.length) return;
+
+		var target = suggestionsContainer.querySelector(fullActiveClass);
+		var index = target? [].indexOf.call(nodes, target) : -1 ;
+		var next;
+		var clearActive = ( nodes ) => {
+			for(var i = 0; i < nodes.length; i++){
+				nodes[i].classList.remove(activeClassName)
+			}
+		}
+		
+		switch(direction){
+
+			case 'up':
+				clearActive(nodes)
+				next = nodes[Math.max(0, --index)]
+				next.classList.add(activeClassName)
+				break;
+			default:
+				clearActive(nodes)
+				next = nodes[Math.min(nodes.length - 1, ++index)]
+				next.classList.add(activeClassName);
+				break;
+		}
+		
+		scrollIntoView( next, suggestionsContainer, { onlyScrollIfNeeded: true})
+	};
 	
 	onSubmit = (event) => {
+
+		/* Check if there is active class */
+
+		var target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName);
+
+		if(target){
+			return target.nodeName == 'A'? target.click() : target.querySelector('a').click()
+		}
+
 
 		this.handleViewAll();
 
@@ -107,12 +156,14 @@ class AutoSuggest extends React.Component{
 		var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length;
 
 		return (
-			<form className="ola-autosuggest" onSubmit = {this.onSubmit}>
+			<div className="ola-autosuggest">
 				<div className="ola-autosuggest-container">
 					<Input
 						q = {q}
 						onChange = {this.onChange}
 						onClear = {this.onClear}
+						onMove = { this.onMove}
+						onSubmit = { this.onSubmit }
 					/>
 
 					<div className={klass}>						
@@ -126,7 +177,7 @@ class AutoSuggest extends React.Component{
 							dispatch = {dispatch}
 						/>
 
-						<div className="ola-suggestions-wrapper">
+						<div className="ola-suggestions-wrapper" ref="suggestionsContainer">
 
 							{ shouldShowFacetSuggestions
 								? <FacetSuggestion
@@ -134,7 +185,7 @@ class AutoSuggest extends React.Component{
 										query = { query }
 										name = 'genres_sm'
 										dispatch = { dispatch }
-										onSubmit = { this.onSubmit }
+										onSubmit = { this.handleViewAll }
 										addFacet = { addFacet }
 									/>
 								: null
@@ -150,7 +201,7 @@ class AutoSuggest extends React.Component{
 						<a className="ola-autosuggest-all" onClick = {this.handleViewAll}>View all results</a>
 					</div>
 				</div>
-			</form>
+			</div>
 		)
 	}
 }

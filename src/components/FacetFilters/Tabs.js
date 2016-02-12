@@ -113,7 +113,6 @@ class Tabs extends React.Component{
 					.map( (item) => item.selected),
 			selectedItems = [].concat.apply([], selectedFacets);
 
-
 		/* Calculate Total for All Tab */
 		
 		var totalCount = values.reduce( (acc, obj) => acc + obj.count, 0);

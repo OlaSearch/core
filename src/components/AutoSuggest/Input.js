@@ -37,22 +37,25 @@ class Input extends React.Component{
 
 	onKeyDown = ( event ) => {
 
-		var { onClear } = this.props
+		var { onClear, onMove, onSubmit } = this.props
 
 		switch( event.which ){
 
 			case 27: // Esc
 				onClear();
 				break;	
-			case 38: // Up				
+			case 38: // Up
+				onMove('up')
 				break;
 
-			case 40: // Down				
+			case 40: // Down
+				onMove('down')
 				break;
 
 			case 9: // Tab
 				break;
 			case 13: // Enter
+				onSubmit()
 				break;
 
 		}

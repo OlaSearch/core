@@ -17,7 +17,7 @@ const FacetSuggestion = ( props ) => {
             {values.map( (value, idx) => {
 
                 return (
-                    <button
+                    <a
                         className="ola-facet-suggestion"
                         key = { idx }
                         tabIndex = {0}
@@ -32,7 +32,7 @@ const FacetSuggestion = ( props ) => {
                         }}
                         >
                         <strong>{ q }</strong> in {value.name}
-                    </button>
+                    </a>
                 )
             })}
         </div>
