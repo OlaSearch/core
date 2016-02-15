@@ -117,8 +117,8 @@ var utilities = {
 		return false;
 	},
 	generateSlug: function( value ){
-
-		return value.toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+		
+		return value.toString().toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 	}
 };
 
