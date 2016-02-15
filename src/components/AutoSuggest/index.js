@@ -35,10 +35,11 @@ class AutoSuggest extends React.Component{
 	handleClickOutside = (event) => {
 
 		var { isOpen } = this.props.AutoSuggest;
+		var { dispatch } = this.props;
 		
 		if(isOpen){
 
-			this.props.dispatch(closeAutoSuggest())
+			dispatch(closeAutoSuggest())
 
 		}
 		
@@ -66,20 +67,20 @@ class AutoSuggest extends React.Component{
 
 	onMove = ( direction ) => {
 
-		var { classNames, activeClassName } = this.props;
-		var { suggestionsContainer } = this.refs;
-		var fullClass = '.' + classNames;
-		var fullActiveClass = '.' + activeClassName;
+		let { classNames, activeClassName } = this.props;
+		let { suggestionsContainer } = this.refs;
+		let fullClass = '.' + classNames;
+		let fullActiveClass = '.' + activeClassName;
 
-		var nodes = suggestionsContainer.querySelectorAll(classNames);
+		let nodes = suggestionsContainer.querySelectorAll(classNames);
 		
 		if(!nodes.length) return;
 
-		var target = suggestionsContainer.querySelector(fullActiveClass);
-		var index = target? [].indexOf.call(nodes, target) : -1 ;
-		var next;
+		let target = suggestionsContainer.querySelector(fullActiveClass);
+		let index = target? [].indexOf.call(nodes, target) : -1 ;
+		let next;
 		var clearActive = ( nodes ) => {
-			for(var i = 0; i < nodes.length; i++){
+			for(let i = 0; i < nodes.length; i++){
 				nodes[i].classList.remove(activeClassName)
 			}
 		}
@@ -91,7 +92,7 @@ class AutoSuggest extends React.Component{
 				next = nodes[Math.max(0, --index)]
 				next.classList.add(activeClassName)
 				break;
-			default:
+			case 'down':
 				clearActive(nodes)
 				next = nodes[Math.min(nodes.length - 1, ++index)]
 				next.classList.add(activeClassName);
@@ -105,10 +106,12 @@ class AutoSuggest extends React.Component{
 
 		/* Check if there is active class */
 
-		var target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName);
+		let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName);
 
 		if(target){
-			return target.nodeName == 'A'? target.click() : target.querySelector('a').click()
+			let linkTarget = target.nodeName == 'A'? target: target.querySelector('a'); 
+			if(linkTarget) linkTarget.click();
+			return ;
 		}
 
 

@@ -14,7 +14,7 @@ class OlaProvider extends React.Component{
 
 		super(props)
 
-		var { config, parser, queryBuilder, searchService, store } =  this.props;
+		var { config, parser, queryBuilder, searchService, store } =  props;
 
 		if( !config || !parser || !queryBuilder || !searchService || !store){
 

@@ -66,14 +66,15 @@ class Input extends React.Component{
 		var {
 			q,
 			onChange,
-			placeholder
+			placeholder,
+			onSubmit
 		} = this.props;
         
 		/* Show clear or submit button */
 
 		var button = q
 			? <button type="reset" className="ola-clear-button" onClick = {this.onClear}></button>
-			: <button type="submit" className="ola-search-button"></button>;
+			: <button type="submit" className="ola-search-button" onClick = { onSubmit}></button>;
 
 		return (
 			<div className="ola-search-form-container">

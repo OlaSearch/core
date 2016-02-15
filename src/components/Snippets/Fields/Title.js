@@ -2,7 +2,9 @@ import React from 'react';
 import Year from './Year';
 import { createHTMLMarkup } from './../../../utilities';
 
-var Title = ( { result }) => {
+var Title = ( props ) => {
+
+	var { result, isLink } = props;
 
 	var {
 		year,
@@ -24,10 +26,17 @@ var Title = ( { result }) => {
 
 	return (
 		<h3 className="ola-field ola-field-title">
-			<a href={url} dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
-			<Year year = {year} />
+			{ isLink
+				? <a href={url} dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
+				: <div dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
+			}
+			{props.children}
 		</h3>
 	)
 };
+
+Title.defaultProps = {
+	isLink: true
+}
 
 module.exports = Title;

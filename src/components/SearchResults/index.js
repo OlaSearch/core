@@ -35,16 +35,11 @@ class SearchResults extends React.Component{
 
 	render(){
 		
-		let { results, category, ...props } = this.props;		
+		let { results, ...props } = this.props;		
 		let { snippetRules, defaultSnippet } = this.context.config;		
 		
-		/* Add category names */
-		
-		let categories = flatten( category.map( item => item.selected) );
-		let klass = classNames('ola-results', categories.map( item => 'ola-section-' + generateSlug(item)));
-		
 		return (
-			<div className={klass}>
+			<div className="ola-results">
 				{results.map( (result, idx) => {
 
 					let OlaSnippet = getMatchingSnippet( snippetRules , result ) || defaultSnippet || SnippetDefault

@@ -153,7 +153,7 @@ class Tabs extends React.Component{
 							key = {idx} 
 							onClick = {() => {
 								
-								if(!isActive) this.handleReplaceFacet(tab, value.name)
+								if(!isActive && value.count) this.handleReplaceFacet(tab, value.name)
 
 							}}>
 							<span className="ola-tab-name">{ getDisplayName(config.facetNames, value.name) }</span>

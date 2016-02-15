@@ -8,14 +8,14 @@ class Dropdown extends React.Component{
 	
 	constructor(props){
 		super(props)		
-	}
 
-	state = {
-		filterText: '',
-		isOpen: false,
-		curIndex: 0,
-		selectedText: this.props.item.defaultValue
-	};
+		this.state = {
+			filterText: '',
+			isOpen: false,
+			curIndex: 0,
+			selectedText: props.item? props.item.defaultValue : ''
+		}
+	}	
 
 	handleClickOutside = (event) => {
 

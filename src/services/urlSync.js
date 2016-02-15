@@ -5,12 +5,16 @@ var urlSync = {
 	character: '?',
 	pushState: function(qs) {
 		
-		window.history.pushState(null, '', urlSync.character + urlSync.buildQueryString(qs))
+		if(history.pushState){
+			window.history.pushState(null, '', urlSync.character + urlSync.buildQueryString(qs))
+		}
 
 	},
 	replaceState: function(qs) {
 		
-		window.history.replaceState(null, '', urlSync.character + urlSync.buildQueryString(qs));
+		if(history.replaceState){
+			window.history.replaceState(null, '', urlSync.character + urlSync.buildQueryString(qs));
+		}
 	},
 	buildQueryString: function(params){
 

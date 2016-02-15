@@ -68,10 +68,12 @@ class SearchFilters extends React.Component{
 
 		/* Exclude tabs and agree with `facetsToDisplay` */
 
-		facets = facets.filter( facet => !facet.tab && facetsToDisplay.indexOf(facet.name) != -1);		
+		facets = facets.filter( facet => !facet.tab && facetsToDisplay.indexOf(facet.name) != -1);
+
+		if(!facets.length) return null;
 
 		return (
-			<div>
+			<div className="ola-search-filters">
 				{facets.map( (facet, index) => {
 
 					/* Recalculate Selected values */
