@@ -1,5 +1,5 @@
 import React from 'react';
-import Media from 'react-mq';
+import Media from 'react-responsive';
 
 const Thumbnail = (props, context) => {	
 
@@ -9,6 +9,12 @@ const Thumbnail = (props, context) => {
 		thumbnail,
 		thumbnail_mobile
 	} = props;
+
+	if(!thumbnail_mobile){
+		return (
+			<img className="ola-snippet-image" src={thumbnail} width="158" alt="" />
+		)
+	}
 	
 	return (
 		<div>
