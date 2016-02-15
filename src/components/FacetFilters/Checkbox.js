@@ -16,7 +16,8 @@ class Default extends React.Component{
 	}
 
 	static defaultProps = {
-		limit: 6
+		limit: 6,
+		listType: 'uniform'
 	};
 	
     static propTypes = {
@@ -66,6 +67,7 @@ class Default extends React.Component{
 			isCollapsed,
 			toggleDisplay,
 			limit,
+			listType,
 		} = this.props;
 
 		var {
@@ -147,7 +149,7 @@ class Default extends React.Component{
 									)
 								}}
 								length={ size }
-								type='variable'
+								type={ listType }
 							/>
 						</div>
 						

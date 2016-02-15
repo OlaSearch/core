@@ -36,11 +36,13 @@ class OlaProvider extends React.Component{
 		var { translations, children, lang, store } = this.props;
 
 		return (
+			<div className="ola-search">
 				<Provider store = { store }>
 					<OlaIntlProvider translations = { translations } lang = { lang }>
 						{ children }
 					</OlaIntlProvider>
 				</Provider>
+			</div>
 		)
 	}
 }

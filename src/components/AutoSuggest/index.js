@@ -218,7 +218,7 @@ function mapStateToProps( state ){
 
 	return {
 		AutoSuggest: state.AutoSuggest,
-		bookmarks: state.AppState.bookmarks,
+		bookmarks: state.AppState.bookmarks
 	}
 }
 

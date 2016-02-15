@@ -28,7 +28,7 @@ var Title = ( props ) => {
 		<h3 className="ola-field ola-field-title">
 			{ isLink
 				? <a href={url} dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
-				: <div dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
+				: <span dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
 			}
 			{props.children}
 		</h3>

@@ -128,7 +128,7 @@ class Tabs extends React.Component{
 
 		return (
 			<nav className="ola-tabs">
-				<button 
+				<a 
 					className={klassTab}
 					onClick = { () => {
 						if(!isAllSelected) this.handleRemoveFacet(tab)
@@ -136,7 +136,7 @@ class Tabs extends React.Component{
 				>
 					All
 					<span className="ola-search-facet-count">{totalCount}</span>
-				</button>
+				</a>
 				{tabs.map( (value, idx) => {
 
 					var isActive = selectedItems.indexOf(value.name) != -1;
@@ -147,7 +147,7 @@ class Tabs extends React.Component{
 					});
 
 					return (
-						<button 
+						<a 
 							className = {klass}
 							type = 'button'
 							key = {idx} 
@@ -158,7 +158,7 @@ class Tabs extends React.Component{
 							}}>
 							<span className="ola-tab-name">{ getDisplayName(config.facetNames, value.name) }</span>
 							<span className="ola-search-facet-count">{value.count}</span>
-						</button>
+						</a>
 					)
 				})}
 			</nav>

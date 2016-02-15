@@ -38,7 +38,7 @@ class FacetBoolean extends React.Component{
 
 		if(!facet.values.length) return null;
 
-		var { displayName } = facet;
+		var { displayName, template } = facet;
 
 		return (
 			<div className="ola-facet">
@@ -53,7 +53,7 @@ class FacetBoolean extends React.Component{
 
 						}}
 					/>
-					{displayName}
+					{template}
 				</label>
 			</div>
 		)

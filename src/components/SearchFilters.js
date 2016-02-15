@@ -16,7 +16,12 @@ class SearchFilters extends React.Component{
 	static propTypes = {
 		facets: React.PropTypes.array.isRequired,
 		selected: React.PropTypes.array.isRequired,
-		dispatch: React.PropTypes.func
+		dispatch: React.PropTypes.func,
+		conditional: React.PropTypes.bool
+	};
+
+	static defaultProps = {
+		conditional: true
 	};
 
 	getFacetsToDisplay = (selected) => {
@@ -59,17 +64,24 @@ class SearchFilters extends React.Component{
 		var {
 			facets,
 			dispatch,
-			selected
+			selected,
+			conditional,
+			listType
 		} = this.props;
 		
-		/* Facet names to display */
+		if(conditional){
+			
+			/* Facet names to display */
 
-		var facetsToDisplay = this.getFacetsToDisplay(selected);
+			var facetsToDisplay = this.getFacetsToDisplay(selected);
 
-		/* Exclude tabs and agree with `facetsToDisplay` */
+			/* Exclude tabs and agree with `facetsToDisplay` */
 
-		facets = facets.filter( facet => !facet.tab && facetsToDisplay.indexOf(facet.name) != -1);
+			facets = facets.filter( facet => !facet.tab && facetsToDisplay.indexOf(facet.name) != -1);
 
+		}
+
+		
 		if(!facets.length) return null;
 
 		return (
@@ -88,6 +100,7 @@ class SearchFilters extends React.Component{
 						dispatch,
 						selected: selectedItems,
 						key: index,
+						listType,
 					};
 
 					switch(facet.type){

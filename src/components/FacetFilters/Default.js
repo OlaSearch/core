@@ -27,6 +27,7 @@ class Default extends React.Component{
 		limit: 5,
 		showMoreText: 'Show more',
 		showLessText: 'Show fewer',
+		listType: 'uniform'
 	};
 
 
@@ -79,6 +80,7 @@ class Default extends React.Component{
 			toggleDisplay,
 			showMoreText,
 			showLessText,
+			listType,
 		} = this.props;
 
 		var {
@@ -106,7 +108,7 @@ class Default extends React.Component{
 		if(!showMore) values = values.slice(0, limit)		
 		
 		var showMoreLink = shouldDisplayShowMore 
-			? <button className="ola-link-show-more" onClick = {this.toggleshowMore}>{showMore? showLessText : showMoreText}</button> 
+			? <button className="ola-btn ola-link-show-more" onClick = {this.toggleshowMore}>{showMore? showLessText : showMoreText}</button> 
 			: null;
 
 		var klass = classNames({
@@ -153,7 +155,7 @@ class Default extends React.Component{
 									
 									return (
 										<button
-											className= 'ola-facet-link'
+											className= 'ola-btn ola-facet-link'
 											type = "button"
 											key = {key}
 											onClick = {handleAddFacet}
@@ -164,7 +166,7 @@ class Default extends React.Component{
 									)
 								}}
 								length={values.length}
-								type='uniform'
+								type={ listType }
 							/>
 						</div>
 						
