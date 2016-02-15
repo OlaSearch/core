@@ -29,6 +29,8 @@ class Input extends React.Component{
 
 	onFocus = (event) => {
 
+		this.props.onFocus.call(this, event)
+
 		if(!event.target.value) return;
 		
 		this.props.onChange.call(this, event.target.value);
@@ -67,7 +69,8 @@ class Input extends React.Component{
 			q,
 			onChange,
 			placeholder,
-			onSubmit
+			onSubmit,
+			onBlur
 		} = this.props;
         
 		/* Show clear or submit button */
@@ -87,6 +90,7 @@ class Input extends React.Component{
 						onChange.call(this, event.target.value)
 					}}
 					onFocus = {this.onFocus}
+					onBlur = {onBlur}
 					autoComplete = "off" 
 					autoCorrect = "off"
 					autoCapitalize = "off" 

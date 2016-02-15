@@ -9,6 +9,7 @@ import SpellSuggestion from './../SpellSuggestions/SpellSuggestion';
 import FacetSuggestion from './FacetSuggestion';
 import { buildQueryString } from './../../services/urlSync';
 import scrollIntoView from 'dom-scroll-into-view';
+import classNames from 'classnames';
 
 class AutoSuggest extends React.Component{
 
@@ -140,6 +141,8 @@ class AutoSuggest extends React.Component{
 			bookmarks,
 			components,
 			showFacetSuggestions,
+			onFocus,
+			onBlur,
 		} = this.props;
 
 		var {
@@ -154,7 +157,7 @@ class AutoSuggest extends React.Component{
 
 		var { q } = query;
 
-		var klass = 'ola-suggestions' + (isOpen? '': ' js-hide');
+		var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen });
 
 		var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length;
 
@@ -167,6 +170,8 @@ class AutoSuggest extends React.Component{
 						onClear = {this.onClear}
 						onMove = { this.onMove}
 						onSubmit = { this.onSubmit }
+						onFocus = { onFocus }
+						onBlur = { onBlur }
 					/>
 
 					<div className={klass}>						

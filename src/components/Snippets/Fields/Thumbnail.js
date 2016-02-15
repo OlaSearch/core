@@ -19,10 +19,10 @@ const Thumbnail = (props, context) => {
 	return (
 		<div>
 			<Media query={mediaQuery.tablet}>
-				<img className="ola-snippet-image-desktop" src={thumbnail} width="158" alt="" />
+				<img className="ola-img ola-snippet-image-desktop" src={thumbnail} width="158" alt="" />
 			</Media>
 			<Media query={mediaQuery.mobile}>
-				<img className="ola-snippet-image-mobile" src={thumbnail_mobile} width="320" alt="" />
+				<img className="ola-img ola-snippet-image-mobile" src={thumbnail_mobile} width="320" alt="" />
 			</Media>
 		</div>
 	)

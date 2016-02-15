@@ -47,21 +47,16 @@ var SpeechInput = React.createClass({
 
 					if(result.isFinal){
 						this.props.onFinalResult.call(this, item.transcript)
-
-//						this.setState({
-//							isRecording: false
-//						})
 					}
 
 				})
-				break;	      
-		  default: console.log( 'Unhandled event:', event )
+				break;		  
 		}
 	},
 	render: function(){
 		var { isRecording } = this.state;
 		
-		var klassName = 'ola-fake-button ola-link-speech' + (isRecording? ' ola-link-speech-stop': '');
+		var klassName = 'ola-link-speech' + (isRecording? ' ola-link-speech-stop': '');
 
 		var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
