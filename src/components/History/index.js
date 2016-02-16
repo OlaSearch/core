@@ -53,7 +53,7 @@ class History extends React.Component{
 
 		var klass = classNames({
 			'ola-module': true,
-			'js-hide': !isOpen
+			'ola-js-hide': !isOpen
 		});
 		
 		return (

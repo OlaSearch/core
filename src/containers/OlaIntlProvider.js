@@ -17,10 +17,10 @@ class OlaIntlProvider extends React.Component{
 		
 		var { translations, lang, children } = this.props;
 		var activeTranslation = lang && translations? translations[lang] : {};
-		var { locales, messages } = { ...defaultTranslations[lang], ...activeTranslation}
-
+		var { locales, messages, formats } = { ...defaultTranslations[lang], ...activeTranslation}
+		
 		return (
-			<IntlProvider locale = { locales }  messages = { messages }>				
+			<IntlProvider locale = { locales }  messages = { messages } formats = { formats }>				
 				{ React.cloneElement(children, this.props) }				
 			</IntlProvider>
 		)

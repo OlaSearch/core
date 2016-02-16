@@ -2,9 +2,16 @@ import React from 'react';
 
 const Bookmark = ( { bookmark, onRemove } ) => {
 
+	let { url, title } = bookmark;
+
+	let isValidUrl = url && url.indexOf('http') != -1;
+
 	return (
 		<div className="ola-module-item">
-			<a href={bookmark.url}>{bookmark.title}</a>
+			{ isValidUrl
+				?  <a href={url}>{title}</a>
+				: <span>{ title }</span>
+			}
 			<button
 				type="button"
 				className="ola-module-clear"

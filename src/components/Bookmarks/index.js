@@ -4,6 +4,7 @@ import { removeBookmark } from './../../actions/Bookmarks';
 import listensToClickOutside from 'react-onclickoutside/decorator';
 import Bookmark from './Bookmark';
 import classNames from 'classnames';
+import SearchResults from './../SearchResults';
 
 class Bookmarks extends React.Component{	
 	static propTypes = {
@@ -42,6 +43,7 @@ class Bookmarks extends React.Component{
 
 		var {
 			bookmarks,
+			dispatch
 		} = this.props;
 
 		var {
@@ -50,7 +52,7 @@ class Bookmarks extends React.Component{
 
 		var klass = classNames({
 			'ola-module': true,
-			'js-hide': !isOpen
+			'ola-js-hide': !isOpen
 		});
 		
 		return (
@@ -61,23 +63,13 @@ class Bookmarks extends React.Component{
 					<div className="ola-module-title">Bookmarks</div>
 					<div className="ola-module-body">
 						
-						{!bookmarks.length
-						 ? <div className="ola-module-item">
-							Your bookmarks will show here.
-						  </div> 
-						 : null}
 
-						{bookmarks.map( (bookmark, idx) => {
-
-							return (
-								<Bookmark 
-									bookmark = {bookmark}
-									onRemove = {this.onRemove.bind(this, bookmark)}
-									key = {idx}
-								/>
-							)
-
-						})}
+						<SearchResults
+							bookmarks = { bookmarks}
+							results = { bookmarks }
+							dispatch = { dispatch }
+							isBookmark = { true }							
+						/>						
 						
 					</div>
 				</div>

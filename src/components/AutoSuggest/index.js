@@ -22,7 +22,8 @@ class AutoSuggest extends React.Component{
 		bookmarks: React.PropTypes.array,
 		showFacetSuggestions: React.PropTypes.bool,
 		dispatch: React.PropTypes.func.isRequired,
-		onSubmit: React.PropTypes.func
+		onSubmit: React.PropTypes.func,
+		viewAllClassName: React.PropTypes.string
 	};
 
 	static defaultProps = {
@@ -31,6 +32,7 @@ class AutoSuggest extends React.Component{
 		showFacetSuggestions: false,
 		classNames: '.ola-snippet, .ola-facet-suggestion',
 		activeClassName: 'ola-active',
+		viewAllClassName: 'ola-autosuggest-all'
 	};
 
 	handleClickOutside = (event) => {
@@ -143,6 +145,7 @@ class AutoSuggest extends React.Component{
 			showFacetSuggestions,
 			onFocus,
 			onBlur,
+			viewAllClassName,
 		} = this.props;
 
 		var {
@@ -206,7 +209,7 @@ class AutoSuggest extends React.Component{
 								components = { components }
 							/>
 						</div>
-						<a className="ola-autosuggest-all" onClick = {this.handleViewAll}>View all results</a>
+						<a className={ viewAllClassName } onClick = {this.handleViewAll}>View all results</a>
 					</div>
 				</div>
 			</div>

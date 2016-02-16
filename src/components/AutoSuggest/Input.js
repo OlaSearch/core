@@ -30,7 +30,7 @@ class Input extends React.Component{
 
 	onFocus = (event) => {
 
-		this.props.onFocus.call(this, event)
+		this.props.onFocus && this.props.onFocus.call(this, event)
 
 		if(!event.target.value) return;
 		

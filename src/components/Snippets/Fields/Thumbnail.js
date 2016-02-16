@@ -7,22 +7,24 @@ const Thumbnail = (props, context) => {
 
 	var {
 		thumbnail,
-		thumbnail_mobile
+		thumbnail_mobile,
+		width,
+		...rest
 	} = props;
 
 	if(!thumbnail_mobile){
 		return (
-			<img className="ola-snippet-image" src={thumbnail} width="158" alt="" />
+			<img className="ola-img" {...rest} src={thumbnail} width="158" alt="" />
 		)
 	}
 	
 	return (
 		<div>
 			<Media query={mediaQuery.tablet}>
-				<img className="ola-img ola-snippet-image-desktop" src={thumbnail} width="158" alt="" />
+				<img className="ola-img ola-img-desktop" {...rest} src={thumbnail} alt="" />
 			</Media>
 			<Media query={mediaQuery.mobile}>
-				<img className="ola-img ola-snippet-image-mobile" src={thumbnail_mobile} width="320" alt="" />
+				<img className="ola-img ola-img-mobile" {...rest} src={thumbnail_mobile} alt="" />
 			</Media>
 		</div>
 	)

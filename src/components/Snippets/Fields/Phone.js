@@ -1,12 +1,14 @@
 import React from 'react';
 
-const Phone = ( { phone, title }) => {
+const Phone = ( props) => {
+
+    var { phone, title, ...rest} = props;
 
 	if(!phone) return <noscript />
 
 	var url = 'tel://' + phone;
 	
-	return <a href={url} className="ola-btn ola-btn-call">{ title } </a>;
+	return <a href={url} className="ola-btn ola-btn-call" {...rest}>{ title } </a>;
 }
 
 Phone.defaultProps = {

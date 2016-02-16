@@ -64,7 +64,7 @@ export default (state = initialState, action) => {
 
 		case types.ADD_BOOKMARK:
 
-			var _bookmarks = [...state.bookmarks, action.snippet];
+			var _bookmarks = [action.snippet, ...state.bookmarks];
 
 			storage.set('bookmarks', _bookmarks);
 

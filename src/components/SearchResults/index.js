@@ -14,7 +14,7 @@ class SearchResults extends React.Component{
 		results: React.PropTypes.array.isRequired,
 		bookmarks: React.PropTypes.array,
 		dispatch: React.PropTypes.func,
-		isLoading: React.PropTypes.string,
+		isLoading: React.PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -35,8 +35,12 @@ class SearchResults extends React.Component{
 
 	render(){
 		
-		let { results, ...props } = this.props;		
-		let { snippetRules, defaultSnippet } = this.context.config;		
+		let { results, isLoading, ...props } = this.props;		
+		let { snippetRules, defaultSnippet, noResultsSnippet : NoResultsSnippet } = this.context.config;
+		
+		if(!results.length && !isLoading){
+			return <NoResultsSnippet {...props} />
+		}
 		
 		return (
 			<div className="ola-results">
