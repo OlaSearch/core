@@ -19,7 +19,8 @@ class InstantSearchForm extends React.Component{
 	}
 	
 	static defaultProps = {
-		placeholder: "Enter keywords"
+		placeholder: "Enter keywords",
+		minCharacters: 0
 	};
 
 	static contextTypes = {
@@ -29,14 +30,17 @@ class InstantSearchForm extends React.Component{
 	static propTypes = {
 		dispatch: React.PropTypes.func.isRequired,
 		q: React.PropTypes.string,
-		placeholder: React.PropTypes.string		
+		placeholder: React.PropTypes.string,
+		minCharacters: React.PropTypes.number
 	};
 
 	onChange = (term) => {
 
-		var { dispatch } = this.props;
+		var { dispatch, minCharacters } = this.props;		
 
-		dispatch( updateQueryTerm(term) );	
+		dispatch( updateQueryTerm(term) );
+
+		if(term && term.length < minCharacters) return;
 
 		this.instantSearchDebounce();	
 	};

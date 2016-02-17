@@ -10,7 +10,12 @@ class SpellSuggestion extends React.Component{
 	static propTypes = {
 		suggestions: React.PropTypes.array.isRequired,
 		totalResults: React.PropTypes.number.isRequired,
-		dispatch: React.PropTypes.func.isRequired
+		dispatch: React.PropTypes.func.isRequired,
+		showCount: React.PropTypes.bool
+	};
+
+	static defaultProps = {
+		showCount: true
 	};
 
 	onChange = (term) => {
@@ -28,6 +33,7 @@ class SpellSuggestion extends React.Component{
 			suggestions,
 			onChange,
 			totalResults,
+			showCount,
 		} = this.props;
 
 		if(!suggestions.length) return null;
@@ -53,7 +59,7 @@ class SpellSuggestion extends React.Component{
 								}}
 							>
 								<span className="ola-spell-term">{item.term}</span>
-								<span className="ola-spell-count">{item.count}</span>
+								{ showCount? <span className="ola-spell-count">{item.count}</span> : null}
 							</button> 
 						)
 						
