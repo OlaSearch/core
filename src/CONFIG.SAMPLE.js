@@ -17,6 +17,9 @@ module.exports = {
 		search: 'http://52.76.48.148:8983/solr/rt/select',
 		suggest: 'http://52.76.48.148:8983/solr/rt/autosuggest' 
 	},
+	defaultSnippet: 'Snippet',   
+    noResultsSnippet: 'NoResultsSnippet',
+    searchPageUrl: 'search.html',
 	mapping: [
 		{
 			name: 'q',

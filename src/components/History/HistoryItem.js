@@ -1,8 +1,8 @@
 import React from 'react';
 
-const HistoryItem = ( { history, searchUrl }) => {
+const HistoryItem = ( { history, searchPageUrl }) => {
 
-    var url = searchUrl + history.url;
+    var url = searchPageUrl + history.url;
 
 	return (
 		<div className="ola-module-item">

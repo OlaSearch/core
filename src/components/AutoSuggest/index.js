@@ -31,9 +31,12 @@ class AutoSuggest extends React.Component{
 		placeholder: React.PropTypes.string,
 	};
 
+	static contextTypes = {
+		config: React.PropTypes.object
+	};
+
 	static defaultProps = {
-		showBookmarks: true,
-		searchUrl: 'search.html?',
+		showBookmarks: true,		
 		showFacetSuggestions: false,
 		classNames: '.ola-snippet, .ola-facet-suggestion',
 		activeClassName: 'ola-active',
@@ -48,11 +51,11 @@ class AutoSuggest extends React.Component{
 		
 		if(isOpen){
 
-			dispatch(closeAutoSuggest())			
+			dispatch(closeAutoSuggest())
 
 		}
 
-		this.onBlur()
+		this.onBlur.call(this)
 		
 	};
 	
@@ -135,13 +138,15 @@ class AutoSuggest extends React.Component{
 
 		var { q, facet_query } = this.props.AutoSuggest.query;
 
-		var { searchUrl, dispatch, onSubmit } = this.props;
+		var { dispatch, onSubmit } = this.props;
+
+		var { searchPageUrl } = this.context.config;
 
 		dispatch(closeAutoSuggest())
 
 		onSubmit && onSubmit.call(this, q)
 
-		window.location.href = searchUrl + '?' + buildQueryString( { q: q, facet_query: facet_query })
+		window.location.href = searchPageUrl + '?' + buildQueryString( { q: q, facet_query: facet_query })
 	};
 
 	onFocus = (event) => {
@@ -172,8 +177,7 @@ class AutoSuggest extends React.Component{
 			onFocus,
 			onBlur,
 			viewAllClassName,
-			placeholder,
-			searchUrl
+			placeholder,			
 		} = this.props;
 
 		var {
@@ -211,8 +215,7 @@ class AutoSuggest extends React.Component{
 						onSubmit = { this.onSubmit }
 						onFocus = { this.onFocus }						
 						placeholder = { placeholder }
-						handleClickOutside = { this.handleClickOutside}
-						searchUrl = { searchUrl }
+						handleClickOutside = { this.handleClickOutside }						
 					/>
 
 					<div className={klass}>						

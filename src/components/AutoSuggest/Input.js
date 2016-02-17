@@ -74,15 +74,18 @@ class Input extends React.Component{
 			onChange,
 			placeholder,
 			onSubmit,
-			onBlur,
-			searchUrl
+			onBlur,			
 		} = this.props;
         
 		/* Show clear or submit button */
 
+		// var button = q
+		// 	? <button type="reset" className="ola-btn ola-clear-button" onClick = {this.onClear}></button>
+		// 	: <button type="submit" className="ola-btn ola-search-button" onClick = { onSubmit}></button>;
+		
 		var button = q
 			? <button type="reset" className="ola-btn ola-clear-button" onClick = {this.onClear}></button>
-			: <button type="submit" className="ola-btn ola-search-button" onClick = { onSubmit}></button>;
+			: <div className="ola-btn ola-search-button" onClick = { () => this.refs.Input.focus() } />;
 
 		return (
 			<div className="ola-search-form-container">
@@ -119,7 +122,7 @@ class Input extends React.Component{
 
 				<Bookmarks />
 
-				<History searchUrl = { searchUrl } />
+				<History />
 			</div>
 		)
 	}

@@ -97,7 +97,7 @@ class InstantSearchForm extends React.Component{
 
 					<Bookmarks />
 						
-					<History />
+					<History searchUrl = { this.props.searchUrl} />
 
 					<SpeechInput 
 						onResult = { (value, confidence) => {

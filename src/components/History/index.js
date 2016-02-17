@@ -21,6 +21,10 @@ class History extends React.Component{
 		}
 	}
 
+	static contextTypes = {
+		config: React.PropTypes.object
+	};
+
 	handleClickOutside = (event) => {
 		
 		this.setState({
@@ -44,9 +48,12 @@ class History extends React.Component{
 	render(){
 
 		var {
-			history,
-			searchUrl,		
+			history,			
 		} = this.props;
+
+		var {
+			searchPageUrl
+		} = this.context.config;
 
 		var {
 			isOpen
@@ -83,7 +90,7 @@ class History extends React.Component{
 						  </div> 
 						 : null}
 
-						{ history.map( (item, idx) =>  <HistoryItem searchUrl = { searchUrl } history = {item} key = {idx} /> ) }
+						{ history.map( (item, idx) =>  <HistoryItem searchPageUrl = { searchPageUrl } history = {item} key = {idx} /> ) }
 						
 					</div>
 				</div>

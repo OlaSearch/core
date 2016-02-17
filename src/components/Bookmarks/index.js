@@ -68,7 +68,7 @@ class Bookmarks extends React.Component{
 							bookmarks = { bookmarks}
 							results = { bookmarks }
 							dispatch = { dispatch }
-							isBookmark = { true }							
+							isBookmark = { true }					
 						/>						
 						
 					</div>

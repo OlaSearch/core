@@ -14,7 +14,7 @@ class SearchResults extends React.Component{
 		results: React.PropTypes.array.isRequired,
 		bookmarks: React.PropTypes.array,
 		dispatch: React.PropTypes.func,
-		isLoading: React.PropTypes.bool,
+		isLoading: React.PropTypes.bool
 	};
 
 	static defaultProps = {
