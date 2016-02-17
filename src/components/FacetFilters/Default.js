@@ -4,6 +4,7 @@ import Tag from './../Misc/Tag';
 import ReactList from 'react-list';
 import { FacetToggle } from './../../decorators/OlaFacetToggle';
 import classNames from 'classnames';
+import { getDisplayName } from './../../utilities';
 
 class Default extends React.Component{
 
@@ -22,6 +23,10 @@ class Default extends React.Component{
         facet: React.PropTypes.object.isRequired,
         limit: React.PropTypes.number.isRequired,
     };
+
+    static contextTypes = {
+		config: React.PropTypes.object
+	};
 
     static defaultProps = {
 		limit: 5,
@@ -71,6 +76,8 @@ class Default extends React.Component{
 			filterText,
 			showMore,
 		} = this.state;
+
+		var { config } = this.context;
 
 		var {
 			facet,
@@ -151,6 +158,7 @@ class Default extends React.Component{
 								itemRenderer={ (index, key) => {
 									
 									var { name, count } = values[index];
+									/* var displayName = getDisplayName(config.facetNames, name); */
 									var handleAddFacet = this.handleAddFacet.bind(this, facet, name);
 									
 									return (

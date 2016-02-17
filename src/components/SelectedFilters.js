@@ -55,7 +55,9 @@ class SelectedFilters extends React.Component{
 
 		var {
 			showGuidePopover
-		} = this.state;		
+		} = this.state;
+
+		if(!facets.length && !q) return null
 
 		return (
 			<div className="ola-facet-tags">				

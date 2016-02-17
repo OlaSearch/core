@@ -11,17 +11,20 @@ class Input extends React.Component{
 
 	static propTypes = {
 		q: React.PropTypes.string,
-		onChange: React.PropTypes.func,
-		placeholder: React.PropTypes.string
+		onChange: React.PropTypes.func		
 	};
 
-	static defaultProps = { 
-		placeholder: 'Enter keywords'
-	};
 	
 	onClear = (event) => {
 
 		event && event.preventDefault()
+	
+		/* Do not call blur event when its a button */		
+		if(event.target.nodeName == 'INPUT' && !event.target.value) {
+			event.target.blur()
+			this.props.handleClickOutside.call(this, event)
+			return ;
+		}		
 		
 		this.props.onClear()
 
@@ -45,7 +48,7 @@ class Input extends React.Component{
 		switch( event.which ){
 
 			case 27: // Esc
-				onClear();
+				this.onClear.call(this, event);
 				break;	
 			case 38: // Up
 				onMove('up')
@@ -71,7 +74,8 @@ class Input extends React.Component{
 			onChange,
 			placeholder,
 			onSubmit,
-			onBlur
+			onBlur,
+			searchUrl
 		} = this.props;
         
 		/* Show clear or submit button */
@@ -115,7 +119,7 @@ class Input extends React.Component{
 
 				<Bookmarks />
 
-				<History />
+				<History searchUrl = { searchUrl } />
 			</div>
 		)
 	}

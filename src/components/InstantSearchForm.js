@@ -29,8 +29,7 @@ class InstantSearchForm extends React.Component{
 	static propTypes = {
 		dispatch: React.PropTypes.func.isRequired,
 		q: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-		spellSuggestions: React.PropTypes.array,		
+		placeholder: React.PropTypes.string		
 	};
 
 	onChange = (term) => {

@@ -44,7 +44,8 @@ class History extends React.Component{
 	render(){
 
 		var {
-			history,			
+			history,
+			searchUrl,		
 		} = this.props;
 
 		var {
@@ -82,7 +83,7 @@ class History extends React.Component{
 						  </div> 
 						 : null}
 
-						{ history.map( (item, idx) =>  <HistoryItem history = {item} key = {idx} /> ) }
+						{ history.map( (item, idx) =>  <HistoryItem searchUrl = { searchUrl } history = {item} key = {idx} /> ) }
 						
 					</div>
 				</div>

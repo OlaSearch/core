@@ -1,10 +1,12 @@
 import React from 'react';
 
-const HistoryItem = ( { history }) => {
+const HistoryItem = ( { history, searchUrl }) => {
+
+    var url = searchUrl + history.url;
 
 	return (
 		<div className="ola-module-item">
-			<a href={history.url}>{history.q}</a>			
+			<a href={url}>{history.q}</a>			
 			{history.facets.map( (facet, idx) =>  <span key= {idx} className="ola-search-facet-count">{facet}</span> )}
 		</div>
 	)

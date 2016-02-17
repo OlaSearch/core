@@ -15,6 +15,10 @@ class AutoSuggest extends React.Component{
 
 	constructor(props){
 		super(props)
+
+		this.state = {
+			isFocused: false
+		}
 	}
 	
 	static propTypes = {
@@ -23,7 +27,8 @@ class AutoSuggest extends React.Component{
 		showFacetSuggestions: React.PropTypes.bool,
 		dispatch: React.PropTypes.func.isRequired,
 		onSubmit: React.PropTypes.func,
-		viewAllClassName: React.PropTypes.string
+		viewAllClassName: React.PropTypes.string,
+		placeholder: React.PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -32,7 +37,8 @@ class AutoSuggest extends React.Component{
 		showFacetSuggestions: false,
 		classNames: '.ola-snippet, .ola-facet-suggestion',
 		activeClassName: 'ola-active',
-		viewAllClassName: 'ola-autosuggest-all'
+		viewAllClassName: 'ola-autosuggest-all',
+		placeholder: 'Enter keywords',
 	};
 
 	handleClickOutside = (event) => {
@@ -42,9 +48,11 @@ class AutoSuggest extends React.Component{
 		
 		if(isOpen){
 
-			dispatch(closeAutoSuggest())
+			dispatch(closeAutoSuggest())			
 
 		}
+
+		this.onBlur()
 		
 	};
 	
@@ -133,7 +141,25 @@ class AutoSuggest extends React.Component{
 
 		onSubmit && onSubmit.call(this, q)
 
-		window.location.href = searchUrl + buildQueryString( { q: q, facet_query: facet_query })
+		window.location.href = searchUrl + '?' + buildQueryString( { q: q, facet_query: facet_query })
+	};
+
+	onFocus = (event) => {
+
+		this.setState({
+			isFocused: true
+		})
+
+		this.props.onFocus && this.props.onFocus.call(this, event)
+	};
+
+	onBlur = (event) => {
+
+		this.setState({
+			isFocused: false
+		})
+
+		this.props.onBlur && this.props.onBlur.call(this, event)
 	};
 
 	render(){		
@@ -146,7 +172,13 @@ class AutoSuggest extends React.Component{
 			onFocus,
 			onBlur,
 			viewAllClassName,
+			placeholder,
+			searchUrl
 		} = this.props;
+
+		var {
+			isFocused
+		} = this.state;
 
 		var {
 			results,
@@ -161,11 +193,15 @@ class AutoSuggest extends React.Component{
 		var { q } = query;
 
 		var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen });
+		var klassContainer = classNames('ola-autosuggest', {
+			'ola-autosuggest-focus': isFocused,
+			'ola-autosuggest-blur': !isFocused
+		})
 
 		var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length;
 
 		return (
-			<div className="ola-autosuggest">
+			<div className={klassContainer}>
 				<div className="ola-autosuggest-container">
 					<Input
 						q = {q}
@@ -173,8 +209,10 @@ class AutoSuggest extends React.Component{
 						onClear = {this.onClear}
 						onMove = { this.onMove}
 						onSubmit = { this.onSubmit }
-						onFocus = { onFocus }
-						onBlur = { onBlur }
+						onFocus = { this.onFocus }						
+						placeholder = { placeholder }
+						handleClickOutside = { this.handleClickOutside}
+						searchUrl = { searchUrl }
 					/>
 
 					<div className={klass}>						

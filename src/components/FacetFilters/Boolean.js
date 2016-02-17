@@ -1,6 +1,7 @@
 import React from 'react';
 import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search';
 import { FacetToggle } from './../../decorators/OlaFacetToggle';
+import classNames from 'classnames';
 
 class FacetBoolean extends React.Component{
     static propTypes = {
@@ -33,28 +34,37 @@ class FacetBoolean extends React.Component{
 
 		var {
 			facet,			
-			selected
+			selected,
+			toggleDisplay,
+			isCollapsed
 		} = this.props;
 
 		if(!facet.values.length) return null;
 
 		var { displayName, template } = facet;
 
+		var klass = classNames({
+			'ola-facet': true,
+			'ola-facet-collapsed': isCollapsed
+		});
+
 		return (
-			<div className="ola-facet">
-				<h4 className="ola-facet-title">{displayName}</h4>
-				<label className="ola-checkbox ola-checkbox-label">
-					<input 
-						type="checkbox"
-						checked = {!!selected.length}
-						onChange = { (event)=> {
+			<div className={klass}>
+				<h4 className="ola-facet-title" onClick = { toggleDisplay }>{displayName}</h4>
+				<div className="ola-facet-wrapper">
+					<label className="ola-checkbox ola-checkbox-label">
+						<input 
+							type="checkbox"
+							checked = {!!selected.length}
+							onChange = { (event)=> {
 
-							this.onChange.call(this, facet, event)
+								this.onChange.call(this, facet, event)
 
-						}}
-					/>
-					{template}
-				</label>
+							}}
+						/>
+						{template}
+					</label>
+				</div>
 			</div>
 		)
 	}
