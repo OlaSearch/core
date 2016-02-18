@@ -1,5 +1,6 @@
 import React from 'react';
 import SnippetDefault from './../Snippets/Default';
+import NoResults from './../Snippets/NoResults';
 import { getMatchingSnippet, generateSlug } from './../../utilities';
 import classNames from 'classnames';
 import { flatten } from 'ramda';
@@ -35,11 +36,12 @@ class SearchResults extends React.Component{
 
 	render(){
 		
-		let { results, isLoading, ...props } = this.props;		
-		let { snippetRules, defaultSnippet, noResultsSnippet : NoResultsSnippet } = this.context.config;
+		let { results, isLoading, ...rest } = this.props;		
+		let { snippetRules, defaultSnippet, noResultsSnippet } = this.context.config;
+		let NoResultsSnippet = noResultsSnippet || NoResults;
 		
 		if(!results.length && !isLoading){
-			return <NoResultsSnippet {...props} />
+			return <NoResultsSnippet {...this.props} />
 		}
 		
 		return (
@@ -52,7 +54,7 @@ class SearchResults extends React.Component{
 						<OlaSnippet
 							result = {result}
 							key = {idx}
-							{...props}
+							{...rest}
 						/>
 					)
 					
