@@ -63,6 +63,16 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 2. Components
 	- All components
 
+
+## Polyfills
+
+1. - Event
+2. - CustomEvent
+3. Element.prototype.classList
+4. Object.assign
+5. requestAnimationFrame
+6. ~html5-elements
+
 ## License
 
 Copyright OlaSearch Pte Ltd 2015

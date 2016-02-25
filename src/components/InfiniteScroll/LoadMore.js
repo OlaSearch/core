@@ -4,7 +4,7 @@ const LoadMore = (props) => {
 
 	var { totalResults, currentPage, perPage, actions } = props;
 
-	if(currentPage * perPage > totalResults) return <noscript />
+	if(currentPage * perPage >= totalResults) return <noscript />
 
 	return (
 		<button 

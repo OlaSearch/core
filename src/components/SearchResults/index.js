@@ -1,9 +1,7 @@
 import React from 'react';
 import SnippetDefault from './../Snippets/Default';
 import NoResults from './../Snippets/NoResults';
-import { getMatchingSnippet, generateSlug } from './../../utilities';
-import classNames from 'classnames';
-import { flatten } from 'ramda';
+import { getMatchingSnippet } from './../../utilities';
 
 class SearchResults extends React.Component{
 
@@ -16,10 +14,6 @@ class SearchResults extends React.Component{
 		bookmarks: React.PropTypes.array,
 		dispatch: React.PropTypes.func,
 		isLoading: React.PropTypes.bool
-	};
-
-	static defaultProps = {
-		category: []
 	};
 
 	static contextTypes = {

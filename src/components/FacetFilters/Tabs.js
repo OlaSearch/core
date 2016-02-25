@@ -109,8 +109,8 @@ class Tabs extends React.Component{
 		var tabs = this.getTabsForDisplay(values);
 
 		var selectedFacets = selected
-					.filter( (item) => item.name == tab.name)
-					.map( (item) => item.selected),
+					.filter( item => item.name == tab.name)
+					.map( item => item.selected),
 			selectedItems = [].concat.apply([], selectedFacets);
 
 		/* Calculate Total for All Tab */

@@ -59,7 +59,7 @@ class SpellSuggestion extends React.Component{
 								}}
 							>
 								<span className="ola-spell-term">{item.term}</span>
-								{ showCount? <span className="ola-spell-count">{item.count}</span> : null}
+								{ showCount && <span className="ola-spell-count">{item.count}</span> }
 							</button> 
 						)
 						

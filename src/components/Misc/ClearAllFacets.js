@@ -1,9 +1,7 @@
 import React from 'react';
 import { removeAllFacets, executeSearch } from './../../actions/Search';
 
-const ClearAllFacets = (props) => {
-
-	var { dispatch, selected } = props;
+const ClearAllFacets = ( { selected, dispatch }) => {
 
 	if(!selected.length) return <noscript />;
 

@@ -22,6 +22,7 @@ class Default extends React.Component{
         selected: React.PropTypes.array.isRequired,
         facet: React.PropTypes.object.isRequired,
         limit: React.PropTypes.number.isRequired,
+        showSelectedFacetItem: React.PropTypes.bool
     };
 
     static contextTypes = {
@@ -32,7 +33,8 @@ class Default extends React.Component{
 		limit: 5,
 		showMoreText: 'Show more',
 		showLessText: 'Show fewer',
-		listType: 'uniform'
+		listType: 'uniform',
+		showSelectedFacetItem: false
 	};
 
 
@@ -88,6 +90,7 @@ class Default extends React.Component{
 			showMoreText,
 			showLessText,
 			listType,
+			showSelectedFacetItem,
 		} = this.props;
 
 		var {
@@ -102,9 +105,16 @@ class Default extends React.Component{
 		
 		values = values
 			.filter( (item) => item.name.match( new RegExp(filter, 'i') ))
-			.filter( (item) => selected.indexOf(item.name) == -1)
+
+
+		if( !showSelectedFacetItem ) values = values.filter( (item) => selected.indexOf(item.name) == -1)
 
 		var size = values.length;
+
+		/**
+		 * Helper method to check if the checkbox should be `checked`		 
+		 */
+		var isSelected = (name) => selected.indexOf(name) > -1;
 
 		/* Should display show more link */
 
@@ -159,11 +169,12 @@ class Default extends React.Component{
 									
 									var { name, count } = values[index];
 									/* var displayName = getDisplayName(config.facetNames, name); */
-									var handleAddFacet = this.handleAddFacet.bind(this, facet, name);
+									var handleAddFacet = isSelected( name )? null : this.handleAddFacet.bind(this, facet, name);
+									var itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected( name )})
 									
 									return (
 										<button
-											className= 'ola-btn ola-facet-link'
+											className= {itemKlass}
 											type = "button"
 											key = {key}
 											onClick = {handleAddFacet}
