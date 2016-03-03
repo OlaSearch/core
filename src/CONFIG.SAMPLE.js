@@ -24,6 +24,7 @@ module.exports = {
         headers: {}
     },
 	logger: {
+		enabled: true,
 		url: 'http://54.169.244.143:8080/',
 		headers: {
 			"Authorization": "Basic b2xhOm9sYTIwMTY="

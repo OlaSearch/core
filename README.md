@@ -5,7 +5,7 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 
 - [x] Search history
 - [x] i18n Translations - React-intl
-- [ ] Contextual Information - Send Device data and Location data to Solr. Add Device State
+- [x] Contextual Information - Send Device data and Location data to Solr. Add Device State
 - [x] URL Routing with _.debounce
 - [x] Guide tooltips
 - [x] Visualizations should respect Range boundaries for Rating/Range inputs
@@ -13,7 +13,7 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 - [x] Selected facets should be Immutable (It is immutable. ShouldComponentUpdate will work, but there is no multiple renders, hence no performance loss)
 - [x] Tests
 - [x] Move Adapters and HTTP services to NPM packages
-- [ ] Move components to config file
+- [x] Move components to config file
 - [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
 
 ## Features
@@ -62,6 +62,20 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 
 2. Components
 	- All components
+
+## Sending logs
+
+Sending logs are handled by the Search adapter. To enable logging, add the below to the config file
+
+````
+logger: {
+    enabled: true,
+    url: 'http://54.169.244.143:8080/',
+    headers: {
+        "Authorization": "Basic b2xhOm9sYTIwMTY="
+    }
+},
+````
 
 
 ## Polyfills
