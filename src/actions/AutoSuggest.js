@@ -22,7 +22,7 @@ export function executeAutoSuggest(){
 	    	],
 	    	query: query,
 			api: 'suggest',
-	    	payload: { },	    	
+	    	payload: { },
 	    	executeFromSpellSuggest: executeFromSpellSuggest
 	  	})
 

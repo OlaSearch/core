@@ -13,7 +13,8 @@ var initialState = {
 	spellSuggestions: [],
 	suggestedTerm: '',
 	isLoading: false,
-	isOpen: false
+	isOpen: false,
+	qt: null,
 }
 
 export default (state = initialState, action) => {
@@ -44,7 +45,8 @@ export default (state = initialState, action) => {
 				results,
 				facets,
 				totalResults,
-				suggestedTerm
+				suggestedTerm,
+				qt
 			} = action;
 
 			return {
@@ -55,6 +57,7 @@ export default (state = initialState, action) => {
 				totalResults,
 				isLoading: false,
 				suggestedTerm,
+				qt,
 				isOpen: !!results.length || !!spellSuggestions.length || !!suggestedTerm
 			};
 

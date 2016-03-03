@@ -65,6 +65,7 @@ module.exports = {
 		Guide: require('./actions/Guide'),
         Search: require('./actions/Search'),        
 		History: require('./actions/History'),
+        Logger: require('./actions/Logger')
 	},
     SnippetActions: {
         Bookmark: require('./components/Snippets/Actions/Bookmark')
@@ -95,7 +96,8 @@ module.exports = {
         OlaFacetToggle: require('./decorators/OlaFacetToggle'),
     },    
     olaReducer: require('./reducers'),
-    createOlaMiddleWare: require('./middleware/createOlaMiddleWare'),
+    createOlaMiddleware: require('./middleware/createOlaMiddleware'),
+    createLoggerMiddleware: require('./middleware/createLoggerMiddleware'),
     ReactIntl: require('react-intl'),
     utilities: require('./utilities')
 }

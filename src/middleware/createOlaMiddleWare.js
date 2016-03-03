@@ -8,6 +8,9 @@
  * 	searchService
  * }
  */
+
+import { log } from './../actions/Logger';
+
 module.exports = function(options = {}){	
 	
 	return ({ dispatch, getState }) => (next) => (action) => {
@@ -15,9 +18,9 @@ module.exports = function(options = {}){
 				types,
 				api,
 				query,
-				payload = {},				
+				payload = {},
 				executeFromSpellSuggest,
-				suggestedTerm,				
+				suggestedTerm,
 			} = action
 
 			const {
@@ -28,8 +31,10 @@ module.exports = function(options = {}){
 			} = options
 
 			if(!parser || !queryBuilder || !config || !searchService){
-				throw new Error('No searchAdapter or searchService or config file present in OlaMiddleWare options')
+				throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
 			}
+
+			const { logger } = config;
 
 			if (!types) {
 				// Normal action: pass it on
@@ -64,15 +69,15 @@ module.exports = function(options = {}){
 			switch( api ){				
 
 				case 'suggest':
-					CALL_API = () => searchService.suggest( config.api.suggest, params, config.mappingAutoSuggest );
+					CALL_API = () => searchService.suggest( params, config.mappingAutoSuggest );
 					break;
 
 				case 'get':
-					CALL_API = () => searchService.get( config.api.suggest, params );
+					CALL_API = () => searchService.get( params );
 					break;
 
 				default:
-					CALL_API = () => searchService.search( config.api.search, params );
+					CALL_API = () => searchService.search( params );
 					break;
 			}
 
@@ -96,6 +101,7 @@ module.exports = function(options = {}){
 					var spellSuggestions = parser.normalizeSpellSuggestions(response);					
 					var totalResults = parser.normalizeTotalResults(response);					
 					var facets = parser.normalizeFacets(response);
+					var qt = parser.queryTime(response);
 					var type  = successType;
 
 					/**
@@ -122,19 +128,30 @@ module.exports = function(options = {}){
 						facets,
 						type,
 						suggestedTerm,
+						qt,
 						appendResult: payload.appendResult,
 						error: null
 					})
+
+					/**
+					 * Logger
+					 * Parameters
+					 * Q or C
+					 * results
+					 * eventSource
+					 */
+					
+					logger && logger.enabled && dispatch( log('Q', null, api ) )
 				},
 				error => {
-
-					throw new Error(error.status + ' The server could not be reached');
 
 					dispatch({
 						...payload,
 						error: error,
 						type: failureType
 					})
+
+					throw new Error(error.status + ' The server could not be reached');
 
 				}
 			)		

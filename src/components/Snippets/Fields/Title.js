@@ -1,42 +1,56 @@
 import React from 'react';
 import Year from './Year';
 import { createHTMLMarkup } from './../../../utilities';
+import { log } from './../../../actions/Logger';
 
-var Title = ( props ) => {
+class Title extends React.Component{
 
-	var { result, isLink } = props;
+	static defaultProps = {
+		isLink: true
+	};
 
-	var {
-		year,
-		title,
-		url,
-		highlighting,
-	} = result;
-	
-	/* Check for highlighting */
+	static contextTypes = {
+		store: React.PropTypes.object
+	};
 
-	if(highlighting){
+	logClick = (event) => {
 
-		var { title: highlighted_title } = highlighting;
+		this.context.store.dispatch( log('C', this.props.result) )
 		
-		if(typeof highlighted_title == 'object') {
-			title = highlighted_title[0];
-		}
-	}
+	};
 
-	return (
-		<h3 className="ola-field ola-field-title">
-			{ isLink
-				? <a href={url} dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
-				: <span dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
+	render(){
+		
+		var { result, isLink, children } = this.props;
+
+		var {
+			year,
+			title,
+			url,
+			highlighting,
+		} = result;
+		
+		/* Check for highlighting */
+
+		if(highlighting){
+
+			var { title: highlighted_title } = highlighting;
+			
+			if(typeof highlighted_title == 'object') {
+				title = highlighted_title[0];
 			}
-			{props.children}
-		</h3>
-	)
-};
+		}
 
-Title.defaultProps = {
-	isLink: true
+		return (
+			<h3 className="ola-field ola-field-title">
+				{ isLink
+					? <a href={url} onClick = { this.logClick } dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
+					: <span dangerouslySetInnerHTML = { createHTMLMarkup( title) } />
+				}
+				{children}
+			</h3>
+		)
+	}
 }
 
 module.exports = Title;

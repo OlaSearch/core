@@ -11,12 +11,10 @@ export function addHistory(query){
 		
 		if(!q || !totalResults) return;
 		
-		dispatch (
-			{
-				type: types.ADD_HISTORY,
-				query
-			}
-		)
+		dispatch ({
+			type: types.ADD_HISTORY,
+			query
+		})
 	}
 }
 

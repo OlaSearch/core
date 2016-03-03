@@ -13,7 +13,8 @@ var initialState = {
 	bookmarks: storage.get('bookmarks') || [],
 	history: storage.get('history') || [],
 	locale: 'en-US',
-	error: null
+	error: null,
+	qt: null,
 }
 
 export default (state = initialState, action) => {
@@ -47,6 +48,7 @@ export default (state = initialState, action) => {
 				spellSuggestions: action.spellSuggestions,
 				totalResults: action.totalResults,
 				suggestedTerm: action.suggestedTerm,
+				qt: action.qt,
 				isLoading: false
 			};
 
@@ -92,7 +94,7 @@ export default (state = initialState, action) => {
 			
 			var query = {...action.query};
 			
-			var { q } = query;
+			var { q, facet_query } = query;
 			
 			/* Remove Page, perPage and referrer */
 			
