@@ -5,6 +5,7 @@ import Range from './FacetFilters/Range';
 import Rating from './FacetFilters/Rating';
 import FacetBoolean from './FacetFilters/Boolean';
 import DateRange from './FacetFilters/DateRange';
+import TagCloud from './FacetFilters/TagCloud';
 import { flatten } from 'ramda';
 
 class SearchFilters extends React.Component{
@@ -118,6 +119,9 @@ class SearchFilters extends React.Component{
 
 						case 'daterange':
 							return <DateRange {...passProps} />
+
+						case 'tagcloud':
+							return <TagCloud { ...passProps} />
 
 						default:
 							return <Default {...passProps} />

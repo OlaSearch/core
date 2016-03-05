@@ -40,13 +40,15 @@ class Default extends React.Component{
 
 	handleAddFacet = (facet, value) => {
 
+		var { dispatch } = this.props;
+
 		this.setState({
 			filterText: ''
 		});
 
-		this.props.dispatch(addFacet(facet, value))
+		dispatch(addFacet(facet, value))
 
-		this.props.dispatch(executeSearch())
+		dispatch(executeSearch())
 
 	};
 	
