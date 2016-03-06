@@ -85,7 +85,7 @@ class Input extends React.Component{
 		
 		var button = q
 			? <button type="reset" className="ola-btn ola-clear-button" onClick = {this.onClear}></button>
-			: <div className="ola-btn ola-search-button" onClick = { () => this.refs.Input.focus() } />;
+			: <button type="button" className="ola-btn ola-search-button" onClick = { () => this.refs.Input.focus() } />;
 
 		return (
 			<div className="ola-search-form-container">

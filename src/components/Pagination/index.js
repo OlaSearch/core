@@ -13,14 +13,14 @@ class Pagination extends React.Component{
 		perPage : 10,
 		currentPage: 1,
 		totalResults: 0,
-		scrollIntoView: true
+		onChangePage: null
 	};
 
 	static propTypes = {
 	    totalResults: React.PropTypes.number.isRequired,
 	    currentPage: React.PropTypes.any,
 	    perPage: React.PropTypes.any.isRequired,
-	    scrollIntoView: React.PropTypes.bool,
+	    onChangePage: React.PropTypes.func,
 	    actions: React.PropTypes.shape({
 			changePage: React.PropTypes.func.isRequired,
 			executeSearch: React.PropTypes.func.isRequired
@@ -56,9 +56,9 @@ class Pagination extends React.Component{
 
 	selectPage(page){
 
-		var { actions, scrollIntoView } = this.props;
+		var { actions, onChangePage } = this.props;
 
-		if( scrollIntoView) this.refs.pagination.parentNode.scrollIntoView()
+		onChangePage?  onChangePage.call(this) : this.refs.pagination.parentNode.scrollIntoView()
 
 		actions.changePage(page)
 
