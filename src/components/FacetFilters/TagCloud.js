@@ -40,19 +40,14 @@ class TagCloud extends React.Component{
                 <div className="ola-facet-wrapper">
                     { values.map ( value => {
 
-                        var { name, count } = value;
+                        var { name, count} = props;    
+                        var size = (count == min) ? fontSizeMin : ( count / max ) * (fontSizeMax - fontSizeMin) + fontSizeMin;
                         var handleAddFacet = this.handleAddFacet.bind(this, facet, name);
 
                         return (
-                            <TagCloudItem 
-                                name = { name} 
-                                count = { count }
-                                min = { min }
-                                max = { max }
-                                fontSizeMin = { fontSizeMin }
-                                fontSizeMax = { fontSizeMax }
-                                handleAddFacet = { handleAddFacet }
-                            />
+                            <span style = {{ fontSize: size + 'px'}} onClick = { handleAddFacet}> 
+                                { name}, 
+                            </span>
                         )
                     })}
                 </div>
@@ -60,19 +55,5 @@ class TagCloud extends React.Component{
         )
     }
 };
-
-
-const TagCloudItem = ( props ) => {
-
-    var { name, count, min, max, fontSizeMax, fontSizeMin, handleAddFacet } = props;    
-    var size = (count == min) ? fontSizeMin : ( count / max ) * (fontSizeMax - fontSizeMin) + fontSizeMin;
-
-
-    return (
-        <span style = {{ fontSize: size + 'px'}} onClick = { handleAddFacet}> 
-            { name}, 
-        </span>
-    )
-}
 
 module.exports = FacetToggle( TagCloud )
