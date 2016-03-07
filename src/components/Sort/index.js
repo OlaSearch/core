@@ -11,6 +11,7 @@ const Sort = (props, context) => {
 		<div className="ola-sort">
 			<label>Sort by </label>
 			<select
+				className="ola-sort-select"
 				value = {selected}
 				onChange = { (event) => {
 					

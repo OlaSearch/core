@@ -1,5 +1,4 @@
 import React from 'react';
-import { getValuesFromSelect } from './../../../utilities';
 import ReactList from 'react-list';
 import listensToClickOutside from 'react-onclickoutside/decorator';
 import classNames from 'classnames';

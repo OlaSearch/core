@@ -32,7 +32,7 @@ class Range extends React.Component{
 		this.props.dispatch(executeSearch())
 	};
 
-	componentDidUpdate(prevProps){
+	componentDidUpdate(){
 	
 		var options = this.getSliderValues(this.props);
 		var { step } = this.props;
@@ -155,6 +155,10 @@ class Range extends React.Component{
 		/* Bind to onchange */
 
 		this.slider.on('change', (value) => this.onChange(facet, value))
+	}
+
+	componentWillUnmount(){
+		this.slider.destroy()
 	}
 
 	render(){

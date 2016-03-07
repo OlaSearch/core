@@ -45,6 +45,11 @@ class History extends React.Component{
 		this.props.dispatch( clearHistory() )
 	};
 
+	shouldComponentUpdate( nextProps, nextState){
+
+		return nextProps.history !== this.props.history || nextState.isOpen != this.state.isOpen
+	}
+
 	render(){
 
 		var {

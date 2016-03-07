@@ -14,8 +14,6 @@ class Histogram extends React.Component{
 		/* Sort data */
 		data = data.sort( (a, b) => a.name - b.name )
 
-		// console.log(data.length)
-
 		return (
 			<div className="ola-histogram">
 				{data.map( (item, idx) => {
