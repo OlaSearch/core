@@ -15,6 +15,7 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 - [x] Move Adapters and HTTP services to NPM packages
 - [x] Move components to config file
 - [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
+- [x] Added tag cloud
 
 ## Features
 
