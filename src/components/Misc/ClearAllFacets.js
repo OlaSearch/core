@@ -3,7 +3,7 @@ import { removeAllFacets, executeSearch } from './../../actions/Search';
 
 const ClearAllFacets = ( { selected, dispatch }) => {
 
-	if(!selected.length) return <noscript />;
+	if(!selected.length) return null;
 
 	return (
 
