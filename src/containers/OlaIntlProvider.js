@@ -2,9 +2,9 @@ import React from 'react';
 import * as defaultTranslations from './../translations';
 import { connect } from 'react-redux';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import enLocaleData from 'react-intl/lib/locale-data/en';
+// import enLocaleData from 'react-intl/locale-data/en';
 
-addLocaleData(enLocaleData);
+// addLocaleData(enLocaleData)
 
 class OlaIntlProvider extends React.Component{
 
@@ -21,7 +21,7 @@ class OlaIntlProvider extends React.Component{
 		
 		return (
 			<IntlProvider locale = { locales }  messages = { messages } formats = { formats }>				
-				{ React.cloneElement(children, this.props) }				
+				{ children }				
 			</IntlProvider>
 		)
 	}
