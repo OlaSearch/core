@@ -180,14 +180,9 @@ class Search extends React.Component{
 						<Error 
 							error = {error}
 						/>
-
-						<NoResults
-							results = {results}
-							q = {q}
-							isLoading = {isLoading}
-						/>
 						
 						<SearchResults 
+							q = {q}
 							results = {results}
 							bookmarks = {bookmarks}
 							dispatch = {dispatch} 
