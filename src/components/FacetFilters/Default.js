@@ -106,7 +106,7 @@ class Default extends React.Component{
 		/* Filter values */
 		
 		values = values
-			.filter( (item) => item.name.match( new RegExp(filter, 'i') ))
+			.filter( (item) => item.name.toString().match( new RegExp(filter, 'i') ))
 
 
 		if( !showSelectedFacetItem ) values = values.filter( (item) => selected.indexOf(item.name) == -1)

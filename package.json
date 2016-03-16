@@ -19,8 +19,8 @@
     "test": "BABEL_ENV=production mocha --compilers js:babel-core/register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
   },
-  "engines" : { 
-    "node" : ">=0.12",
+  "engines": {
+    "node": ">=0.12",
     "npm": ">=3"
   },
   "repository": {
@@ -73,6 +73,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
+    "date-format-lite": "^0.7.4",
     "dom-scroll-into-view": "^1.1.0",
     "intl": "^1.0.1",
     "intl-locales-supported": "^1.0.0",

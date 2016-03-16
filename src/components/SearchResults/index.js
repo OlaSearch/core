@@ -25,6 +25,7 @@ class SearchResults extends React.Component{
 		return (
 			this.props.results != nextProps.results
 			|| this.props.bookmarks != nextProps.bookmarks
+			|| this.props.isLoading != nextProps.isLoading
 		)
 	}
 

@@ -143,7 +143,7 @@ class Default extends React.Component{
 													}
 												}}
 												/>
-											<span>{name}</span>
+											<span className="ola-search-facet-name" title= { name } >{name}</span>
 											<span className="ola-search-facet-count">{count}</span>
 										</label>
 									)

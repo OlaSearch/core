@@ -78,7 +78,8 @@ module.exports = {
 		HighlightedField: require('./components/Snippets/Fields/HighlightedField'),
 		Thumbnail: require('./components/Snippets/Fields/Thumbnail'),
 		Title: require('./components/Snippets/Fields/Title'),		
-		Year: require('./components/Snippets/Fields/Year'),
+        Year: require('./components/Snippets/Fields/Year'),
+		DateField: require('./components/Snippets/Fields/Date'),
 	},
     FacetFilters: {
         Boolean: require('./components/FacetFilters/Boolean'),
@@ -100,5 +101,6 @@ module.exports = {
     createOlaMiddleware: require('./middleware/createOlaMiddleware'),
     createLoggerMiddleware: require('./middleware/createLoggerMiddleware'),
     ReactIntl: require('react-intl'),
-    utilities: require('./utilities')
+    utilities: require('./utilities'),
+    DateParser: require('./utilities/dateParser')
 }

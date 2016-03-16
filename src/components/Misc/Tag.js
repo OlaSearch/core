@@ -1,21 +1,34 @@
 import React from 'react';
 import { supplant, getDisplayName } from './../../utilities';
+import DateParser from './../../utilities/dateParser';
 
 const Tag = (props, context) => {	
 	
 	var displayName = '';
 	var { name, onRemove, facet } = props;
-	var { type, label, template } = facet
+	var { type, label, template, } = facet
+	var { dateFormat} = context.config;
 
 	switch(type){
 
-		case 'range':
+		case 'range':		
             if(typeof name == 'string') {
                 displayName = name;
             }else{            	
 			    var [ from, to ] = name;
 			    displayName = supplant(template, {from, to})
             }
+			break;
+
+		case 'daterange':
+			var [ from, to ] = name;
+			
+			var fromDate = new Date( parseInt(from) )
+			var toDate = new Date( parseInt(to) )
+			displayName = supplant(template, {
+				from: DateParser.format(fromDate, dateFormat) , 
+				to: DateParser.format(toDate, dateFormat)
+			})
 			break;
 
 		case 'rating':

@@ -10,8 +10,8 @@ const HighlightedField = ( { field, result, length} ) => {
     var fieldContent = result[field];
 
     /* Check for highlighting */
-
-    if(highlighting){
+    
+    if(highlighting && field in highlighting){
 
         var highlight_content = highlighting[field];
 
@@ -19,7 +19,7 @@ const HighlightedField = ( { field, result, length} ) => {
             fieldContent = highlight_content.join('<br />...');
         }
         
-    }else if(fieldContent.length > length){
+    }else if(fieldContent && fieldContent.length > length){
         fieldContent = fieldContent.substr(0, length).split(" ").slice(0, -1).join(" ") + "...";
     }
     

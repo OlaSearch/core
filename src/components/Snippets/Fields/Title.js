@@ -21,7 +21,7 @@ class Title extends React.Component{
 
 	render(){
 		
-		var { result, isLink, children } = this.props;
+		var { result, isLink, children, baseUrl } = this.props;
 
 		var {
 			year,
@@ -29,6 +29,8 @@ class Title extends React.Component{
 			url,
 			highlighting,
 		} = result;
+
+		if(baseUrl) url = baseUrl + url;
 		
 		/* Check for highlighting */
 
