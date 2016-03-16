@@ -17,6 +17,7 @@ class Guide extends React.Component{
 
 	static propTypes = {
 		index: React.PropTypes.number,
+		name: React.PropTypes.string.isRequired,
 		searchUrl: React.PropTypes.string
 	};
 
@@ -119,14 +120,16 @@ class Guide extends React.Component{
 
 				{list.map( (item, idx) => {
 				
-					return <Question 
+					return (
+						<Question 
 							item = {item} 
 							key = {idx} 
 							index = {idx} 
 							onChange = {this.handleChange}
 							active = { idx === index}
 							device = { Device }
-							/>
+						/>
+					)
 				})}
 				
 				{ isLastIndex
