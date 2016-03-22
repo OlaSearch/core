@@ -17,22 +17,48 @@ export default (state = initialState, action) => {
 	switch(action.type){
 
 		case types.ADD_FILTER:
-			return {
-				...state,
-				filters: [ ...state.filters, action.payload]
+			/* Remove duplicate */
+
+			var { filter, value } = action.payload;			
+			var { name } = filter;
+			var index = checkIfFacetExists( state.filters, name );
+			var filterObject = { ...filter, value };
+
+			if(index == null){
+
+				return {
+					...state,
+					filters: [ ...state.filters, filterObject]
+				}
+			}else{
+
+				/* Update the value */
+
+				var newFilter = state.filters.slice(0);
+				newFilter[ index ].value = value
+
+				return {
+					...state,
+					filters: newFilter,
+					page: 1
+				}
 			}
+			
 
 		case types.REMOVE_FILTER:
-			var { name, value} = action.payload;
+			
+			var { name } = action.payload;
+
 			var filters = [
 					...state.filters.filter( 
-						(filter) => filter.name != name
+						filter => filter.name != name
 					)
 				];
 
 			return {
 				...state,
-				filters: filters
+				filters: filters,
+				page: 1
 			}
 
 		case types.CLEAR_FILTERS:

@@ -25,8 +25,19 @@ var urlSync = {
 			var name = i,
 				value = params[i];
 
-			if(name == 'facet_query'){				
+			if(name == 'facet_query'){
 				value = value.map( (item) => item.name + ':' + item.selected)				
+			}
+
+			if(name == 'filters'){				
+				value = value.map( (item) => {
+					
+					var { name, value } = item;
+
+					if(typeof value == 'object') value = queryString.stringify( value )
+
+					return name + ':' + value
+				})
 			}
 
 			/**
@@ -58,10 +69,15 @@ var urlSync = {
 	parseQueryString: function(initialState, config){
 
 		var qs = queryString.parse(window.location.search);
+
+		/**
+		 * Facets		 
+		 */
 		
 		if(qs.hasOwnProperty('facet_query')){
 			
 			var facetQuery = qs.facet_query;
+			var { facets : configFacets } = config;
 
 			if(typeof facetQuery == 'string') facetQuery = JSON.parse("[\"" + facetQuery + "\"]")
 		
@@ -71,7 +87,7 @@ var urlSync = {
 				
 				value = value.split(',');
 
-				var facet = config.facets.filter( (facet) => facet.name == name).reduce( (a, b) => a);
+				var facet = configFacets.filter( (facet) => facet.name == name).reduce( (a, b) => a);
 				var { type } = facet;
 
 				if( (type == 'range' || type == 'rating' || type == 'daterange')
@@ -92,6 +108,39 @@ var urlSync = {
 			qs = {
 				...qs,
 				facet_query: fq
+			}
+		}
+
+		/**
+		 * Filters
+		 * Field level filtering
+		 */
+		if(qs.hasOwnProperty('filters')){
+
+			var { filters } = qs;
+			var { filters: configFilters } = config;
+
+			if(typeof filters == 'string') filters = JSON.parse("[\"" + filters + "\"]")
+
+			var filterQuery = filters.map( filter => {
+
+				var [ name, value ] = filter.split(':')
+
+				/* Parse query string */
+
+				if(value.indexOf('=') != -1) value = queryString.parse( value );
+
+				var currentFilter = configFilters.filter( filter => filter.name == name ).reduce( (a, b) => a)
+
+				return {
+					...currentFilter,
+					value: value
+				}
+			})
+
+			qs = {
+				...qs,
+				filters: filterQuery
 			}
 		}
 		

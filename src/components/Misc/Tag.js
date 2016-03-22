@@ -36,6 +36,10 @@ const Tag = (props, context) => {
 			displayName = label[index]
 			break;
 
+		case 'geo_distance':
+			displayName = name
+			break;
+
 		default:
 			displayName = getDisplayName( context.config.facetNames, name) ;
 			break;

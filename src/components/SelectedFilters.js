@@ -1,5 +1,5 @@
 import React from 'react';
-import { removeFacet, executeSearch, clearQueryTerm } from './../actions/Search';
+import { removeFacet, executeSearch, clearQueryTerm, removeFilter } from './../actions/Search';
 import Tag from './Misc/Tag';
 import Tooltip from './Guide/Tooltip';
 import qs from 'query-string';
@@ -50,14 +50,15 @@ class SelectedFilters extends React.Component{
 			facets,
 			showQuery,
 			q,
-			dispatch
+			dispatch,
+			filters,
 		} = this.props;		
 
 		var {
 			showGuidePopover
 		} = this.state;
 
-		if(!facets.length && !q) return null
+		if(!facets.length && !q && !filters.length) return null
 
 		return (
 			<div className="ola-facet-tags">				
@@ -102,6 +103,26 @@ class SelectedFilters extends React.Component{
 								)
 							})}
 						</div>
+					)
+				})}
+
+
+				{filters.map( (filter,idx) => {
+
+					var { field, type } = filter
+
+					return (
+						<Tag 
+							key = { idx }
+							
+							onRemove = {() => {
+								dispatch( removeFilter(filter) )
+
+								dispatch( executeSearch() )
+							}} 
+							name = {field}
+							facet = { filter }
+						/>
 					)
 				})}
 			</div>

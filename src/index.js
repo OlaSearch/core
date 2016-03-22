@@ -56,6 +56,7 @@ module.exports = {
     SearchTitle: require('./components/SearchTitle'),
     ClearAllFacets: require('./components/Misc/ClearAllFacets'),
     Error: require('./components/Misc/Error'),
+    Map: require('./components/Map'),
 	Tabs: require('./components/FacetFilters/Tabs'),
     SelectedFilters: require('./components/SelectedFilters'),
     Sort: require('./components/Sort'),
