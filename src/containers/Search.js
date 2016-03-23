@@ -1,217 +1,194 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import InstantSearchForm from './../components/InstantSearchForm';
-import SearchResults from './../components/SearchResults';
-import NoResults from './../components/SearchResults/NoResults';
-import SearchFilters from './../components/SearchFilters';
-import SelectedFilters from './../components/SelectedFilters';
-import Tabs from './../components/FacetFilters/Tabs';
-import AutoSuggest from './../components/AutoSuggest';
-import Pagination from './../components/Pagination';
-import SearchTitle from './../components/SearchTitle';
-import ClearAllFacets from './../components/Misc/ClearAllFacets';
-import Error from './../components/Misc/Error';
-import TermSuggestion from './../components/SpellSuggestions/TermSuggestion';
-import SpellSuggestion from './../components/SpellSuggestions/SpellSuggestion';
-import Sort from './../components/Sort';
-import SearchFooter from './../components/SearchFooter';
-import { OlaRoute } from './../decorators/OlaRoute';
-import { initSearch } from './../actions/Search';
-import classNames from 'classnames';
-import { FormattedMessage } from 'react-intl';
-import PerPage from './../components/PerPage';
+import React from 'react'
+import { connect } from 'react-redux'
+import InstantSearchForm from './../components/InstantSearchForm'
+import SearchResults from './../components/SearchResults'
+import SearchFilters from './../components/SearchFilters'
+import SelectedFilters from './../components/SelectedFilters'
+import Tabs from './../components/FacetFilters/Tabs'
+import SearchTitle from './../components/SearchTitle'
+import ClearAllFacets from './../components/Misc/ClearAllFacets'
+import Error from './../components/Misc/Error'
+import TermSuggestion from './../components/SpellSuggestions/TermSuggestion'
+import SpellSuggestion from './../components/SpellSuggestions/SpellSuggestion'
+import Sort from './../components/Sort'
+import SearchFooter from './../components/SearchFooter'
+import { OlaRoute } from './../decorators/OlaRoute'
+import { initSearch } from './../actions/Search'
+import classNames from 'classnames'
+import { FormattedMessage } from 'react-intl'
 
-class Search extends React.Component{
+class Search extends React.Component {
+  constructor (props) {
+    super(props)
 
-	constructor(props){
-		super(props)
+    this.state = {
+      isSidebarOpen: false
+    }
+  }
 
-		this.state = {
-			isSidebarOpen: false
-		}
-	}	
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
 
-	static contextTypes = {
-		config: React.PropTypes.object
-	};
+  componentDidMount () {
+    this.props.dispatch(initSearch({ config: this.context.config }))
+  }
 
-	componentDidMount(){
-		
-		this.props.dispatch( initSearch( { config: this.context.config }) )		
+  toggleSidebar = () => {
+    this.setState({
+      isSidebarOpen: !this.state.isSidebarOpen
+    })
+  };
 
-	}
-	
+  render () {
+    var {
+      dispatch,
+      AppState,
+      QueryState,
+      components,
+      Device
+    } = this.props
 
-	toggleSidebar = () => {
+    var {
+      results,
+      facets,
+      suggestedTerm,
+      spellSuggestions,
+      bookmarks,
+      totalResults,
+      error
+    } = AppState
 
-		this.setState({
-			isSidebarOpen: !this.state.isSidebarOpen
-		})
-	};
+    var {
+      q,
+      facet_query,
+      page,
+      per_page,
+      sort,
+      referrer
+    } = QueryState
 
-	render(){
-		
-		var {
-			dispatch,		
-			AppState,
-			QueryState,
-			components,
-			Device,
-		} = this.props;
-		
-		var {
-			results,
-			facets,
-			isLoading,
-			suggestedTerm,
-			spellSuggestions,
-			bookmarks,
-			totalResults,
-			error,
-		} = AppState;
+    var {
+      isPhone
+    } = Device
 
-		var {
-			q,
-			facet_query,
-			page,
-			per_page,
-			sort,
-			referrer,
-		} = QueryState;
+    var {
+      isSidebarOpen
+    } = this.state
 
-		var {
-			isPhone,
-			isTablet
-		} = Device;
+    var klassSearchContainer = classNames({
+      'ola-search-container': true,
+      'ola-sidebar-open': isSidebarOpen
+    })
 
-		var {			
-			isSidebarOpen,
-		} = this.state;
+    var klassModal = classNames({
+      'ola-modal-background': true,
+      'ola-modal-hide': !isSidebarOpen,
+      'ola-modal-show': isSidebarOpen
+    })
 
+    return (
+      <div>
+        <div className={klassModal} onClick={this.toggleSidebar} />
+        <div className='ola-form-container ola-header-section'>
 
+          <a href='index.html' className='ola-logo'></a>
 
-		var klassSearchContainer = classNames({
-			'ola-search-container': true,
-			'ola-sidebar-open': isSidebarOpen
-		});
+          <InstantSearchForm
+            q={q}
+            dispatch={dispatch}
+            spellSuggestions={spellSuggestions}
+          />
+        </div>
 
-		var klassModal = classNames({
-			'ola-modal-background': true,
-			'ola-modal-hide': !isSidebarOpen,
-			'ola-modal-show': isSidebarOpen
-		})
-        
-		return (
-			<div>
-				<div className={klassModal} onClick = { this.toggleSidebar } />
-				<div className="ola-form-container ola-header-section">
-					
-					<a href="index.html" className="ola-logo"></a>
-					
-					<InstantSearchForm 
-						q = {q} 
-						dispatch = {dispatch} 
-						spellSuggestions = {spellSuggestions}
-					/>
+        <div className={klassSearchContainer}>
 
-				</div>				
-				
-				<div className={klassSearchContainer}>
+          <button type='button' className='ola-link-open-filter' onClick={this.toggleSidebar}></button>
 
-					<button type="button" className="ola-link-open-filter" onClick = { this.toggleSidebar}></button>
+          <div className='ola-sidebar'>
 
-					<div className="ola-sidebar">
+            <h3><FormattedMessage id='refineResults' /></h3>
 
-						<h3><FormattedMessage id="refineResults" /></h3>
+            <ClearAllFacets
+              dispatch={dispatch}
+              selected={facet_query}
+            />
 
-						<ClearAllFacets 
-							dispatch = {dispatch} 
-							selected = {facet_query}
-							/>
+            <SearchFilters
+              facets={facets}
+              selected={facet_query}
+              dispatch={dispatch} />
+          </div>
 
-						<SearchFilters 
-							facets = {facets} 
-							selected = {facet_query}
-							dispatch = {dispatch} />
+          <div className='ola-results-container'>
+            <div className='ola-title-container'>
+              <Sort
+                dispatch={dispatch}
+                selected={sort}
+              />
 
-					</div>
+              <SearchTitle
+                totalResults={totalResults}
+                page={page}
+                perPage={per_page}
+              />
 
-					<div className="ola-results-container">
-						<div className="ola-title-container">
-							<Sort 
-								dispatch = {dispatch}
-								selected = {sort}
-								/>
+              <TermSuggestion
+                term={suggestedTerm}
+                q={q}
+                />
 
-							
-								
-							<SearchTitle 
-								totalResults = {totalResults} 
-								page = {page}
-								perPage = {per_page}
-							/>
+              <SpellSuggestion
+                suggestions={spellSuggestions}
+                totalResults={totalResults}
+                dispatch={dispatch}
+              />
+            </div>
 
-							<TermSuggestion 
-								term = {suggestedTerm} 
-								q = {q}
-								/>
+            <Tabs
+              facets={facets}
+              dispatch={dispatch}
+              selected={facet_query}
+            />
 
-							<SpellSuggestion 
-								suggestions = {spellSuggestions} 
-								totalResults = {totalResults}
-								dispatch = {dispatch}
-							/>
-						</div>
+            <SelectedFilters
+              facets={facet_query}
+              dispatch={dispatch}
+              referrer={referrer}
+            />
 
-						<Tabs 
-							facets = {facets} 
-							dispatch = {dispatch}
-							selected = {facet_query}
-						/>
+            <Error
+              error={error}
+            />
 
+            <SearchResults
+              q={q}
+              results={results}
+              bookmarks={bookmarks}
+              dispatch={dispatch}
+              components={components}
+            />
 
-						<SelectedFilters 
-							facets = {facet_query} 
-							dispatch = {dispatch} 
-							referrer = {referrer}
-						/>
-												
-
-						<Error 
-							error = {error}
-						/>
-						
-						<SearchResults 
-							q = {q}
-							results = {results}
-							bookmarks = {bookmarks}
-							dispatch = {dispatch} 
-							components = { components }
-						/>
-
-						<SearchFooter
-							totalResults = {totalResults} 
-							currentPage = {page} 
-							perPage = {per_page} 
-							dispatch = { dispatch }
-							isPhone = { isPhone }
-							/>
-					</div>
-				</div>
-
-			</div>
-		)
-	}
+            <SearchFooter
+              totalResults={totalResults}
+              currentPage={page}
+              perPage={per_page}
+              dispatch={dispatch}
+              isPhone={isPhone}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
-
-function mapStateToProps( state ){
-
-	return {
-		AppState: state.AppState,
-		QueryState: state.QueryState,
-		Device: state.Device
-	}
+function mapStateToProps (state) {
+  return {
+    AppState: state.AppState,
+    QueryState: state.QueryState,
+    Device: state.Device
+  }
 }
 
-module.exports = connect( mapStateToProps )( OlaRoute( Search ) )
+module.exports = connect(mapStateToProps)(OlaRoute(Search))

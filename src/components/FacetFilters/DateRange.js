@@ -1,89 +1,84 @@
-import React from 'react';
-import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search';
-import { FacetToggle } from './../../decorators/OlaFacetToggle';
-import DateParser from './../../utilities/dateParser';
-import classNames from 'classnames';
+import React from 'react'
+import { replaceFacet, executeSearch } from './../../actions/Search'
+import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import DateParser from './../../utilities/dateParser'
+import classNames from 'classnames'
 
-class DateRange extends React.Component{
-    
-    static propTypes = {
-        dispatch: React.PropTypes.func.isRequired,
-        facet: React.PropTypes.object.isRequired,
-        selected: React.PropTypes.array.isRequired
-    };
+class DateRange extends React.Component {
 
-	onChange = () => {
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    facet: React.PropTypes.object.isRequired,
+    selected: React.PropTypes.array.isRequired
+  };
 
-		var fromDate = new Date( this.refs.fromDate.value ).getTime(),
-			toDate = new Date( this.refs.toDate.value).getTime();
+  onChange = () => {
+    let fromDate = new Date(this.refs.fromDate.value).getTime()
+    let toDate = new Date(this.refs.toDate.value).getTime()
 
-		var { facet, dispatch } = this.props;
+    let { facet, dispatch } = this.props
 
-		dispatch(replaceFacet(facet, [ fromDate, toDate ]))
+    dispatch(replaceFacet(facet, [ fromDate, toDate ]))
 
-		dispatch(executeSearch())
-	};
+    dispatch(executeSearch())
+  };
 
-	format = ( date ) => {
+  format = (date) => {
+    var d = new Date(parseInt(date))
 
-		var d = new Date(parseInt(date));
-		
-		return DateParser.format(d, 'YYYY-MM-DD')
+    return DateParser.format(d, 'YYYY-MM-DD')
+  };
 
-	};
+  render () {
+    let {
+      facet,
+      selected,
+      isCollapsed,
+      toggleDisplay
+    } = this.props
 
-	render(){
+    let [ from, to ] = selected
+    let { values } = facet
+    let dates = values.map((value) => value.name)
+    let min = Math.min.apply(this, dates)
+    let max = Math.max.apply(this, dates)
 
-		var {
-			facet,			
-			selected,
-			isCollapsed,
-			toggleDisplay,
-		} = this.props;
+    let defaultFrom = from || min
+    let defaultTo = to || max
 
-		var [ from, to ] = selected;
-		var { values } = facet;
-		var dates =  values.map( value => value.name )
-		var min = Math.min.apply(this, dates)
-		var max = Math.max.apply(this, dates)
+    let klass = classNames({
+      'ola-facet': true,
+      'ola-facet-collapsed': isCollapsed
+    })
 
-		
-		var defaultFrom = from? from : min;
-		var defaultTo = to? to: max;
-
-		var klass = classNames({
-			'ola-facet': true,
-			'ola-facet-collapsed': isCollapsed
-		});
-
-		return (
-			<div className={klass}>
-				<h4 className="ola-facet-title" onClick = {toggleDisplay}>{facet.displayName}</h4>
-				<div className="ola-facet-wrapper">
-					<label className="ola-label">
-						From
-						<input 
-							type="date" 
-							value = { this.format( defaultFrom ) }
-							min = { this.format( min ) }
-							ref = 'fromDate'
-							onChange = { this.onChange }
-						/>
-					</label>
-					<label className="ola-label">
-						To
-						<input 
-							type="date" 
-							ref = 'toDate'
-							max = { this.format( max ) }
-							value = { this.format( defaultTo ) }
-							onChange = { this.onChange }
-						/>
-					</label>
-				</div>
-			</div>
-		)
-	}
+    return (
+      <div className={klass}>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+        <div className='ola-facet-wrapper'>
+          <label className='ola-label'>
+            From
+            <input
+              type='date'
+              value={this.format(defaultFrom)}
+              min={this.format(min)}
+              ref='fromDate'
+              onChange={this.onChange}
+            />
+          </label>
+          <label className='ola-label'>
+            To
+            <input
+              type='date'
+              ref='toDate'
+              max={this.format(max)}
+              value={this.format(defaultTo)}
+              onChange={this.onChange}
+            />
+          </label>
+        </div>
+      </div>
+    )
+  }
 }
 
-module.exports = FacetToggle( DateRange )
+module.exports = FacetToggle(DateRange)

@@ -1,37 +1,34 @@
-import React from 'react';
-import { createHTMLMarkup } from './../../../utilities';
+import React from 'react'
+import { createHTMLMarkup } from './../../../utilities'
 
-const Summary = ( { result, length} ) => {
+const Summary = ({ result, length }) => {
+  var { summary, highlighting } = result
 
-	var { summary, highlighting } = result;
+  if (!summary) return <noscript />
 
-	if(!summary) return <noscript />
+  /* Check for highlighting */
 
-	/* Check for highlighting */
+  if (highlighting) {
+    var { summary: highlighted_summary } = highlighting
 
-	if(highlighting){
+    if (typeof highlighted_summary === 'object') {
+      summary = highlighted_summary.join('<br />...')
+    }
+  } else if (summary.length > length) {
+    summary = summary.substr(0, length).split(' ').slice(0, -1).join(' ') + '...'
+  }
 
-		var { summary: highlighted_summary } = highlighting;
-
-		if(typeof highlighted_summary == 'object') {
-			summary = highlighted_summary.join('<br />...');
-		}
-		
-	}else if(summary.length > length){
-		summary = summary.substr(0, length).split(" ").slice(0, -1).join(" ") + "...";
-	}
-	
-	return (
-		<div className="ola-field ola-field-summary" dangerouslySetInnerHTML = { createHTMLMarkup( summary) } />
-	)
-};
+  return (
+    <div className='ola-field ola-field-summary' dangerouslySetInnerHTML={createHTMLMarkup(summary)} />
+  )
+}
 
 Summary.defaultProps = {
-	length: 200
+  length: 200
 }
 
 Summary.propTypes = {
-	length: React.PropTypes.number
+  length: React.PropTypes.number
 }
 
 module.exports = Summary

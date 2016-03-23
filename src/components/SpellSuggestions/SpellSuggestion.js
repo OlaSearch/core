@@ -1,73 +1,63 @@
-import React from 'react';
-import { updateQueryTerm, executeSearch } from './../../actions/Search';
+import React from 'react'
+import { updateQueryTerm, executeSearch } from './../../actions/Search'
 
-class SpellSuggestion extends React.Component{
-	
-	constructor(props){
-		super(props)
-	}
-	
-	static propTypes = {
-		suggestions: React.PropTypes.array.isRequired,
-		totalResults: React.PropTypes.number.isRequired,
-		dispatch: React.PropTypes.func.isRequired,
-		showCount: React.PropTypes.bool
-	};
+class SpellSuggestion extends React.Component {
+  static propTypes = {
+    suggestions: React.PropTypes.array.isRequired,
+    totalResults: React.PropTypes.number.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+    showCount: React.PropTypes.bool
+  };
 
-	static defaultProps = {
-		showCount: true
-	};
+  static defaultProps = {
+    showCount: true
+  };
 
-	onChange = (term) => {
+  onChange = (term) => {
+    var { dispatch } = this.props
 
-		var { dispatch } = this.props;
+    dispatch(updateQueryTerm(term))
 
-		dispatch( updateQueryTerm(term) );
+    dispatch(executeSearch())
+  };
 
-		dispatch( executeSearch() );
-	};
+  render () {
+    var {
+      suggestions,
+      onChange,
+      totalResults,
+      showCount
+    } = this.props
 
-	render(){
+    if (!suggestions.length) return null
 
-		var {
-			suggestions,
-			onChange,
-			totalResults,
-			showCount,
-		} = this.props;
+    var max = suggestions.reduce((a, b) => a.count > b.count ? a : b)
 
-		if(!suggestions.length) return null;
+    /* Check if Current results is less than the suggestions */
 
-		var max = suggestions.reduce( (a, b) => a.count > b.count? a: b);
+    if (totalResults >= max.count) return null
 
-		/* Check if Current results is less than the suggestions */
-
-		if(totalResults >= max.count) return null;
-
-		return (
-			<div className="ola-spell-suggestion">
-				<span>Did you mean</span>
-				{suggestions.map( (item, idx) => {
-
-						return (
-							<button
-								type="button"
-								className="ola-btn ola-spell-links"
-								key = {idx}
-								onClick = {() => {
-									onChange? onChange(item.term) : this.onChange(item.term)
-								}}
-							>
-								<span className="ola-spell-term">{item.term}</span>
-								{ showCount && <span className="ola-spell-count">{item.count}</span> }
-							</button> 
-						)
-						
-					}
-				)}
-			</div>
-		)
-	}
+    return (
+      <div className='ola-spell-suggestion'>
+        <span>Did you mean</span>
+        {suggestions.map((item, idx) => {
+          return (
+            <button
+              type='button'
+              className='ola-btn ola-spell-links'
+              key={idx}
+              onClick={() => {
+                onChange ? onChange(item.term) : this.onChange(item.term)
+              }}
+            >
+              <span className='ola-spell-term'>{item.term}</span>
+              {showCount && <span className='ola-spell-count'>{item.count}</span>}
+            </button>
+          )
+        })}
+      </div>
+    )
+  }
 }
 
 module.exports = SpellSuggestion

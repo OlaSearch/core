@@ -1,37 +1,26 @@
-import React from 'react';
-import { initSearch } from './../actions/Search';
+import React from 'react'
+import { initSearch } from './../actions/Search'
 
-export var OlaRoute = ComposedComponent => class extends React.Component {
-	
-	static displayName = 'OlaRoute';
+export var OlaRoute = (ComposedComponent) => class extends React.Component {
+  static displayName = 'OlaRoute'
 
-	constructor(props) {
-		super(props)
-	}
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
 
-	static contextTypes = {
-		config: React.PropTypes.object
-	};
+  componentWillMount () {
+    window.addEventListener('popstate', this.onPopState)
+  }
 
-	componentWillMount(){
+  componentWillUnmount () {
+    window.removeEventListener('popstate', this.onPopState)
+  }
 
-		window.addEventListener('popstate', this.onPopState);
+  onPopState = () => {
+    this.props.dispatch(initSearch({ config: this.context.config }))
+  };
 
-	}
-
-	componentWillUnmount(){
-
-		window.removeEventListener('popstate', this.onPopState);
-	}
-
-	onPopState = () => {
-		
-		this.props.dispatch( initSearch( { config: this.context.config }) )
-		
-	};
-
-	render() {
-
-		return <ComposedComponent {...this.props} />
-	}
-};
+  render () {
+    return <ComposedComponent {...this.props} />
+  }
+}

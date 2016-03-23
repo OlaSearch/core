@@ -1,64 +1,51 @@
-import React from 'react';
-import SnippetDefault from './../Snippets/Default';
-import NoResults from './../Snippets/NoResults';
-import { getMatchingSnippet } from './../../utilities';
+import React from 'react'
+import SnippetDefault from './../Snippets/Default'
+import NoResults from './../Snippets/NoResults'
+import { getMatchingSnippet } from './../../utilities'
 
-class SearchResults extends React.Component{
+class SearchResults extends React.Component {
+  static propTypes = {
+    results: React.PropTypes.array.isRequired,
+    bookmarks: React.PropTypes.array,
+    dispatch: React.PropTypes.func,
+    isLoading: React.PropTypes.bool
+  };
 
-	constructor(props){
-		super(props)
-	}
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
 
-	static propTypes = {
-		results: React.PropTypes.array.isRequired,
-		bookmarks: React.PropTypes.array,
-		dispatch: React.PropTypes.func,
-		isLoading: React.PropTypes.bool
-	};
+  shouldComponentUpdate (nextProps) {
+    return (
+      this.props.results !== nextProps.results ||
+      this.props.bookmarks !== nextProps.bookmarks ||
+      this.props.isLoading !== nextProps.isLoading
+    )
+  }
 
-	static contextTypes = {
-		config: React.PropTypes.object
-	};
+  render () {
+    let { results, isLoading, ...rest } = this.props
+    let { snippetRules, defaultSnippet, noResultsSnippet } = this.context.config
+    let NoResultsSnippet = noResultsSnippet || NoResults
 
-	shouldComponentUpdate( nextProps ){
+    if (!results.length && !isLoading) return <NoResultsSnippet {...this.props} />
 
-		return (
-			this.props.results != nextProps.results
-			|| this.props.bookmarks != nextProps.bookmarks
-			|| this.props.isLoading != nextProps.isLoading
-		)
-	}
+    return (
+      <div className='ola-results'>
+        {results.map((result, idx) => {
+          let OlaSnippet = getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetDefault
 
-	render(){
-		
-		let { results, isLoading, ...rest } = this.props;		
-		let { snippetRules, defaultSnippet, noResultsSnippet } = this.context.config;
-		let NoResultsSnippet = noResultsSnippet || NoResults;
-		
-		if(!results.length && !isLoading){
-			return <NoResultsSnippet {...this.props} />
-		}
-		
-		return (
-			<div className="ola-results">
-				{results.map( (result, idx) => {
-
-					let OlaSnippet = getMatchingSnippet( snippetRules , result ) || defaultSnippet || SnippetDefault
-					
-					return (
-						<OlaSnippet
-							result = {result}
-							key = {idx}
-							{...rest}
-						/>
-					)
-					
-				})}
-			</div>
-		)
-
-	}
+          return (
+            <OlaSnippet
+              result={result}
+              key={idx}
+              {...rest}
+            />
+          )
+        })}
+      </div>
+    )
+  }
 }
-
 
 module.exports = SearchResults

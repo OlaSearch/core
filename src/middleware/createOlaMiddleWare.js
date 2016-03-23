@@ -2,159 +2,147 @@
  * [createOlaMiddleWare description]
  * @param  {Object} options
  * options = {
- * 	parser,
- * 	queryBuilder,
- * 	config,
- * 	searchService
+ *  parser,
+ *  queryBuilder,
+ *  config,
+ *  searchService
  * }
  */
 
-import { log } from './../actions/Logger';
+import { log } from './../actions/Logger'
 
-module.exports = function(options = {}){	
-	
-	return ({ dispatch, getState }) => (next) => (action) => {
-			const {
-				types,
-				api,
-				query,
-				payload = {},
-				executeFromSpellSuggest,
-				suggestedTerm,
-			} = action
+module.exports = (options = {}) => {
+  return ({ dispatch, getState }) => (next) => (action) => {
+    const {
+      types,
+      api,
+      query,
+      payload = {},
+      executeFromSpellSuggest,
+      suggestedTerm
+    } = action
 
-			const {
-				parser,
-				queryBuilder,
-				config,
-				searchService,
-			} = options
+    const {
+      parser,
+      queryBuilder,
+      config,
+      searchService
+    } = options
 
-			if(!parser || !queryBuilder || !config || !searchService){
-				throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
-			}
+    if (!parser || !queryBuilder || !config || !searchService) {
+      throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
+    }
 
-			const { logger } = config;
+    const { logger } = config
 
-			if (!types) {
-				// Normal action: pass it on
-				return next(action)
-			}
-			
-			if (
-				!Array.isArray(types) ||
-				!types.length > 1 ||
-				!types.every(type => typeof type === 'string')
-			) {
-				throw new Error('Expected an array of three string types.')
-			}
+    if (!types) {
+      // Normal action: pass it on
+      return next(action)
+    }
 
-			const [ requestType, successType, failureType ] = types
+    if (
+      !Array.isArray(types) ||
+      !types.length > 1 ||
+      !types.every((type) => typeof type === 'string')
+    ) {
+      throw new Error('Expected an array of three string types.')
+    }
 
-			dispatch({
-				...payload,
-				type: requestType
-			})
+    const [ requestType, successType, failureType ] = types
 
-			/* Add timestamp to query */
-			
-			var timestampedQuery = {
-				...query, 
-				timestamp: getState().Timestamp.timestamp 
-			};
-			
-			var CALL_API,
-				params = queryBuilder.transform(timestampedQuery, api == 'suggest'? config.mappingAutoSuggest : null);			
+    dispatch({
+      ...payload,
+      type: requestType
+    })
 
-			switch( api ){				
+    /* Add timestamp to query */
 
-				case 'suggest':
-					CALL_API = () => searchService.suggest( params, config.mappingAutoSuggest );
-					break;
+    var timestampedQuery = {
+      ...query,
+      timestamp: getState().Timestamp.timestamp
+    }
 
-				case 'get':
-					CALL_API = () => searchService.get( params );
-					break;
+    var CALL_API
+    var params = queryBuilder.transform(timestampedQuery, api === 'suggest' ? config.mappingAutoSuggest : null)
 
-				default:
-					CALL_API = () => searchService.search( params );
-					break;
-			}
+    switch (api) {
+      case 'suggest':
+        CALL_API = () => searchService.suggest(params, config.mappingAutoSuggest)
+        break
 
-			if (typeof CALL_API !== 'function') {
-				throw new Error('Expected CALL_API to be a function.')
-			}
-								
-			
-			return CALL_API().then(
-				response => {
-					
-					var timestampFromResponse = parseInt(parser.requestParameters(response).timestamp);					
-					
-					if(timestampFromResponse && getState().Timestamp.timestamp != timestampFromResponse) {
-						return;
-					}
+      case 'get':
+        CALL_API = () => searchService.get(params)
+        break
 
-					/* Parse only when the timestamp matches */
+      default:
+        CALL_API = () => searchService.search(params)
+        break
+    }
 
-					var results = parser.normalizeResults(response);
-					var spellSuggestions = parser.normalizeSpellSuggestions(response);					
-					var totalResults = parser.normalizeTotalResults(response);					
-					var facets = parser.normalizeFacets(response);
-					var qt = parser.queryTime(response);
-					var type  = successType;
+    if (typeof CALL_API !== 'function') {
+      throw new Error('Expected CALL_API to be a function.')
+    }
 
-					/**
-					 * Check if 
-					 * Total results = 0 && Has Spell Suggestions
-					 */
-					
-					if(totalResults == 0 && spellSuggestions.length){
-						
-						return dispatch(
-							executeFromSpellSuggest({
-								suggestedTerm: spellSuggestions[0].term,
-								...payload
-							})
-						);
-						
-					}
+    return CALL_API().then(
+      (response) => {
+        var timestampFromResponse = parseInt(parser.requestParameters(response).timestamp)
 
-					dispatch({
-						...payload,
-						results,
-						spellSuggestions,
-						totalResults,
-						facets,
-						type,
-						suggestedTerm,
-						qt,
-						appendResult: payload.appendResult,
-						error: null
-					})
+        if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
 
-					/**
-					 * Logger
-					 * Parameters
-					 * Q or C
-					 * results
-					 * eventSource
-					 */
-					
-					logger && logger.enabled && dispatch( log('Q', null, api ) )
-				},
-				error => {
+        /* Parse only when the timestamp matches */
 
-					dispatch({
-						...payload,
-						error: error,
-						type: failureType
-					})
+        var results = parser.normalizeResults(response)
+        var spellSuggestions = parser.normalizeSpellSuggestions(response)
+        var totalResults = parser.normalizeTotalResults(response)
+        var facets = parser.normalizeFacets(response)
+        var qt = parser.queryTime(response)
+        var type = successType
 
-					throw new Error(error.status + ' The server could not be reached');
+        /**
+         * Check if
+         * Total results = 0 && Has Spell Suggestions
+         */
 
-				}
-			)		
-	}
+        if (totalResults === 0 && spellSuggestions.length) {
+          return dispatch(
+            executeFromSpellSuggest({
+              suggestedTerm: spellSuggestions[0].term,
+              ...payload
+            })
+          )
+        }
 
+        dispatch({
+          ...payload,
+          results,
+          spellSuggestions,
+          totalResults,
+          facets,
+          type,
+          suggestedTerm,
+          qt,
+          appendResult: payload.appendResult,
+          error: null
+        })
+
+        /**
+         * Logger
+         * Parameters
+         * Q or C
+         * results
+         * eventSource
+         */
+        logger && logger.enabled && dispatch(log('Q', null, api))
+      },
+      (error) => {
+        dispatch({
+          ...payload,
+          error: error,
+          type: failureType
+        })
+
+        throw new Error(error.status + ' The server could not be reached')
+      }
+    )
+  }
 }

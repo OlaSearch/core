@@ -1,148 +1,129 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from 'react'
+import classNames from 'classnames'
 
-class Pagination extends React.Component{
-	constructor(props){
-		super(props);		
-	}
+class Pagination extends React.Component {
+  static defaultProps = {
+    ellipsis: '...',
+    edges: 2,
+    limit: 10,
+    perPage: 10,
+    currentPage: 1,
+    totalResults: 0,
+    onChangePage: null
+  };
 
-	static defaultProps = {
-		ellipsis: '...',
-		edges   : 2,
-		limit   : 10,
-		perPage : 10,
-		currentPage: 1,
-		totalResults: 0,
-		onChangePage: null
-	};
+  static propTypes = {
+    totalResults: React.PropTypes.number.isRequired,
+    currentPage: React.PropTypes.any,
+    perPage: React.PropTypes.any.isRequired,
+    onChangePage: React.PropTypes.func,
+    actions: React.PropTypes.shape({
+      changePage: React.PropTypes.func.isRequired,
+      executeSearch: React.PropTypes.func.isRequired
+    })
+  };
 
-	static propTypes = {
-	    totalResults: React.PropTypes.number.isRequired,
-	    currentPage: React.PropTypes.any,
-	    perPage: React.PropTypes.any.isRequired,
-	    onChangePage: React.PropTypes.func,
-	    actions: React.PropTypes.shape({
-			changePage: React.PropTypes.func.isRequired,
-			executeSearch: React.PropTypes.func.isRequired
-		})
-	};
+  prevPage = () => {
+    var { currentPage } = this.props
 
-	prevPage = () => {
+    --currentPage
 
-		var { currentPage } = this.props;
-		
-		--currentPage;
+    if (currentPage < 1) currentPage = 1
 
-		if(currentPage < 1){
-            currentPage = 1
-        }
-		
-		this.selectPage(currentPage)
-	};
+    this.selectPage(currentPage)
+  };
 
-	nextPage = () => {
+  nextPage = () => {
+    var { currentPage, totalResults, perPage } = this.props
+    var totalPages = Math.ceil(totalResults / perPage)
 
-		var { currentPage, totalResults, perPage } = this.props,
-			totalPages = Math.ceil(totalResults/perPage)
-		
-		++currentPage;
+    ++currentPage
 
-		if(currentPage > totalPages){
-            currentPage = totalPages;
-        }
-		
-		this.selectPage(currentPage)
-	};
+    if (currentPage > totalPages) currentPage = totalPages
 
-	selectPage(page){
+    this.selectPage(currentPage)
+  };
 
-		var { actions, onChangePage } = this.props;
+  selectPage (page) {
+    var { actions, onChangePage } = this.props
 
-		onChangePage?  onChangePage.call(this) : this.refs.pagination.parentNode.scrollIntoView()
+    onChangePage
+      ? onChangePage.call(this)
+      : this.refs.pagination.parentNode.scrollIntoView()
 
-		actions.changePage(page)
+    actions.changePage(page)
 
-		actions.executeSearch()
-	}
+    actions.executeSearch()
+  }
 
-	createPageList(start, end, limit, left, right, ellipsis){
+  createPageList (start, end, limit, left, right, ellipsis) {
+    var list = []
+    for (var i = start; i <= end; i++) {
+      if (i === 1 ||
+        i === parseInt(end) ||
+        end < limit) {
+        list.push(i)
+      } else {
+        if (i === (right + 1) || i === (left - 1)) list.push(ellipsis)
 
-		var list = [];
-		
-		for(var i = start; i <= end; i ++){
-			
-			if( i == 1
-				|| i == parseInt(end)
-				|| end < limit){
+        if (i <= right && i >= left) list.push(i)
+      }
+    }
 
-				list.push(i)
+    return list
+  }
 
-			} else{
+  render () {
+    var {
+      totalResults,
+      perPage,
+      currentPage,
+      edges,
+      limit,
+      ellipsis
+    } = this.props
 
-				if(i == (right + 1) || i == (left - 1)) list.push(ellipsis)
+    var totalPages = Math.ceil(totalResults / perPage)
 
-				if( i <= right && i >= left) list.push(i)
-			}
-		}
+    var start = 1
+    var left = Math.max(parseInt(currentPage) - edges, 0)
+    var right = Math.min(parseInt(currentPage) + edges, totalPages)
 
-		return list;
-	}
+    var pages = this.createPageList(start, totalPages, limit, left, right, ellipsis)
 
-	render(){
+    var prevPageClass = classNames('ola-page ola-page-previous', {
+      'ola-page-disabled': currentPage === 1
+    })
 
-		var {
-			totalResults,
-			perPage,
-			currentPage,
-			edges,
-			limit,
-			ellipsis
-		} = this.props;
+    var nextPageClass = classNames({
+      'ola-page ola-page-next': true,
+      'ola-page-disabled': currentPage === totalPages
+    })
 
-		var totalPages = Math.ceil(totalResults/perPage);
+    return (
+      <nav className='ola-pagination' ref='pagination'>
+        <button className={prevPageClass} onClick={this.prevPage}>Previous</button>
+        {pages.map((page, idx) => {
+          var klass = classNames({
+            'ola-page': true,
+            'ola-page-current': currentPage === page,
+            'ola-page-ellipsis': page === ellipsis
+          })
 
-		var start = 1,			
-			left = Math.max(parseInt(currentPage) - edges, 0),
-			right = Math.min(parseInt(currentPage) + edges, totalPages);
-		
-		var pages = this.createPageList(start, totalPages, limit, left, right, ellipsis);
-
-		var prevPageClass = classNames({
-			'ola-page ola-page-previous': true,
-			'ola-page-disabled': currentPage == 1
-		});
-
-		var nextPageClass = classNames({
-			'ola-page ola-page-next': true,
-			'ola-page-disabled': currentPage == totalPages
-		});
-
-		return (
-			<nav className="ola-pagination" ref="pagination">
-				<button className={prevPageClass} onClick = { this.prevPage }>Previous</button>
-				{pages.map( (page, idx) => {
-
-					var klass = classNames({
-						'ola-page': true,
-						'ola-page-current': currentPage == page,
-						'ola-page-ellipsis': page == ellipsis
-					})
-
-					return (
-						<button
-							className={klass}
-							key = {idx}
-							onClick = { () => {
-								if(page != ellipsis)  this.selectPage(page)
-							}}
-						>{page}</button>
-					)
-				})}
-				<button className={nextPageClass} onClick = { this.nextPage }>Next</button>
-			</nav>
-		)
-	}
+          return (
+            <button
+              className={klass}
+              key={idx}
+              onClick={() => {
+                if (page !== ellipsis) this.selectPage(page)
+              }}
+            >{page}</button>
+          )
+        })}
+        <button className={nextPageClass} onClick={this.nextPage}>Next</button>
+      </nav>
+    )
+  }
 }
-
 
 module.exports = Pagination

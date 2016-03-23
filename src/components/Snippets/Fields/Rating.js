@@ -1,32 +1,31 @@
-import React from 'react';
+import React from 'react'
 
-var Rating = ( { rating }) => {
+var Rating = ({ rating }) => {
+  let normalized = rating / 20
 
-	let normalized = rating/20;
+  let star = []
 
-	let star = [];
+  let total = Math.max(Math.ceil(normalized), 1)
 
-	let total = Math.max(Math.ceil(normalized), 1);
-	
-	for(let i = 0; i < total; i++){
-		star.push(
-			<em key = {i} className="ion ion-ios-star ola-rating-active" />
-		)
-	}
+  for (let i = 0; i < total; i++) {
+    star.push(
+      <em key={i} className='ion ion-ios-star ola-rating-active' />
+    )
+  }
 
-	for(let i = total; i < 5; i++){
-		star.push(
-			<em key = {i} className="ion ion-ios-star ola-rating-inactive" />
-		)
-	}
+  for (let i = total; i < 5; i++) {
+    star.push(
+      <em key={i} className='ion ion-ios-star ola-rating-inactive' />
+    )
+  }
 
-	if(!star.length) star = <em className="ion ion-ios-star" />;
-	
-	return (
-		<div className="ola-snippet-rating">
-			{star}
-		</div>
-	)
-};
+  if (!star.length) star = <em className='ion ion-ios-star' />
 
-module.exports = Rating;
+  return (
+    <div className='ola-snippet-rating'>
+      {star}
+    </div>
+  )
+}
+
+module.exports = Rating

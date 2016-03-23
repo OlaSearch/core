@@ -1,15 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-const TermSuggestion = ( { term }) => {
+const TermSuggestion = ({ term }) => {
+  if (!term) return <noscript />
 
-	if(!term) return <noscript />;
+  return (
+    <div className='ola-term-suggestion'>
+      Showing results for <strong>{term}</strong>
+    </div>
+  )
+}
 
-	return (
-		<div className="ola-term-suggestion">
-			Showing results for <strong>{term}</strong>
-		</div>
-	)
-		
-};
-
-module.exports = TermSuggestion;
+module.exports = TermSuggestion

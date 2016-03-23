@@ -1,202 +1,189 @@
-import React from 'react';
-import { addFacet, removeFacet, executeSearch } from './../../actions/Search';
-import Tag from './../Misc/Tag';
-import ReactList from 'react-list';
-import { FacetToggle } from './../../decorators/OlaFacetToggle';
-import classNames from 'classnames';
-import { getDisplayName } from './../../utilities';
+import React from 'react'
+import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
+import Tag from './../Misc/Tag'
+import ReactList from 'react-list'
+import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import classNames from 'classnames'
+// import { getDisplayName } from './../../utilities'
 
-class Default extends React.Component{
+class Default extends React.Component {
 
-	constructor(props){
-		super(props)
+  constructor (props) {
+    super(props)
 
-		this.state = {
-			filterText: '',
-			showMore: false
-		}
-	}
+    this.state = {
+      filterText: '',
+      showMore: false
+    }
+  }
 
-    static propTypes = {
-        dispatch: React.PropTypes.func.isRequired,
-        selected: React.PropTypes.array.isRequired,
-        facet: React.PropTypes.object.isRequired,
-        limit: React.PropTypes.number.isRequired,
-        showSelectedFacetItem: React.PropTypes.bool
-    };
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    selected: React.PropTypes.array.isRequired,
+    facet: React.PropTypes.object.isRequired,
+    limit: React.PropTypes.number.isRequired,
+    showSelectedFacetItem: React.PropTypes.bool
+  };
 
-    static contextTypes = {
-		config: React.PropTypes.object
-	};
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
 
-    static defaultProps = {
-		limit: 5,
-		showMoreText: 'Show more',
-		showLessText: 'Show fewer',
-		listType: 'uniform',
-		showSelectedFacetItem: false
-	};
+  static defaultProps = {
+    limit: 5,
+    showMoreText: 'Show more',
+    showLessText: 'Show fewer',
+    listType: 'uniform',
+    showSelectedFacetItem: false
+  };
 
+  handleAddFacet = (facet, value) => {
+    var { dispatch } = this.props
 
-	handleAddFacet = (facet, value) => {
+    this.setState({
+      filterText: ''
+    })
 
-		var { dispatch } = this.props;
+    dispatch(addFacet(facet, value))
 
-		this.setState({
-			filterText: ''
-		});
+    dispatch(executeSearch())
+  };
 
-		dispatch(addFacet(facet, value))
+  handleRemoveFacat = (facet, value) => {
+    var { dispatch } = this.props
+    dispatch(removeFacet(facet, value))
 
-		dispatch(executeSearch())
+    dispatch(executeSearch())
+  };
 
-	};
-	
-	handleRemoveFacat = (facet, value) => {
+  toggleshowMore = () => {
+    this.setState({
+      showMore: !this.state.showMore
+    })
+  };
 
-		this.props.dispatch(removeFacet( facet, value ))
+  onChangeFilterText = (event) => {
+    this.setState({
+      filterText: event.target.value
+    })
+  };
 
-		this.props.dispatch(executeSearch())
+  render () {
+    var {
+      filterText,
+      showMore
+    } = this.state
 
-	};
+    var {
+      facet,
+      limit,
+      selected,
+      isCollapsed,
+      toggleDisplay,
+      showMoreText,
+      showLessText,
+      listType,
+      showSelectedFacetItem
+    } = this.props
 
-	toggleshowMore = () => {
+    var {
+      values
+    } = facet
 
-		this.setState({
-			showMore: !this.state.showMore
-		})
-	};
+    /* Lowercase */
 
-	onChangeFilterText = (event) => {
+    var filter = filterText.toLowerCase()
 
-		this.setState({
-			filterText: event.target.value
-		})
-	};
+    /* Filter values */
 
-	render(){
-		
-		var {
-			filterText,
-			showMore,
-		} = this.state;
+    values = values.filter((item) => item.name.toString().match(new RegExp(filter, 'i')))
 
-		var { config } = this.context;
+    if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 
-		var {
-			facet,
-			limit,
-			selected,
-			isCollapsed,
-			toggleDisplay,
-			showMoreText,
-			showLessText,
-			listType,
-			showSelectedFacetItem,
-		} = this.props;
+    var size = values.length
 
-		var {
-			values,
-		} = facet;
+    /**
+     * Helper method to check if the checkbox should be `checked`
+     */
+    var isSelected = (name) => selected.indexOf(name) > -1
 
-		/* Lowercase */
+    /* Should display show more link */
 
-		var filter = filterText.toLowerCase();		
+    var shouldDisplayShowMore = size > limit
 
-		/* Filter values */
-		
-		values = values
-			.filter( (item) => item.name.toString().match( new RegExp(filter, 'i') ))
+    /* Show more */
 
+    if (!showMore) values = values.slice(0, limit)
 
-		if( !showSelectedFacetItem ) values = values.filter( (item) => selected.indexOf(item.name) == -1)
+    var showMoreLink = shouldDisplayShowMore
+      ? <button className='ola-btn ola-link-show-more' onClick={this.toggleshowMore}>{showMore ? showLessText : showMoreText}</button>
+      : null
 
-		var size = values.length;
+    var klass = classNames({
+      'ola-facet': true,
+      'ola-facet-collapsed': isCollapsed
+    })
 
-		/**
-		 * Helper method to check if the checkbox should be `checked`		 
-		 */
-		var isSelected = (name) => selected.indexOf(name) > -1;
+    return (
+      <div className={klass}>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+        <div className='ola-facet-wrapper'>
+          <input
+            type='text'
+            className='ola-text-input ola-facet-filter-input'
+            value={filterText}
+            placeholder='Filter'
+            arial-label='Input'
+            onChange={this.onChangeFilterText}
+          />
 
-		/* Should display show more link */
+          <div className='ola-facet-tags-selected'>
+            {selected.map((item, idx) => {
+              var removeFacet = this.handleRemoveFacat.bind(this, facet, item)
+              return (
+                <Tag
+                  onRemove={removeFacet}
+                  name={item}
+                  facet={facet}
+                  key={idx}
+                />
+              )
+            })}
+          </div>
 
-		var shouldDisplayShowMore = size > limit;		
-		
-		/* Show more */
+          <div className='ola-facet-list'>
 
-		if(!showMore) values = values.slice(0, limit)		
-		
-		var showMoreLink = shouldDisplayShowMore 
-			? <button className="ola-btn ola-link-show-more" onClick = {this.toggleshowMore}>{showMore? showLessText : showMoreText}</button> 
-			: null;
+            <div className='ola-facet-scroll-list'>
+              <ReactList
+                itemRenderer={(index, key) => {
+                  var { name, count } = values[index]
+                  /* var displayName = getDisplayName(config.facetNames, name); */
+                  var handleAddFacet = isSelected(name) ? null : this.handleAddFacet.bind(this, facet, name)
+                  var itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected(name) })
 
-		var klass = classNames({
-			'ola-facet': true,
-			'ola-facet-collapsed': isCollapsed
-		});
-		
-		return (
-			<div className={klass}>
-				<h4 className="ola-facet-title" onClick = {toggleDisplay}>{facet.displayName}</h4>
-				<div className="ola-facet-wrapper">
-					<input 
-						type="text"
-						className="ola-text-input ola-facet-filter-input"
-						value = {filterText}
-						placeholder = "Filter"
-						arial-label="Input"
-						onChange = {this.onChangeFilterText}
-					/>
+                  return (
+                    <button
+                      className={itemKlass}
+                      type='button'
+                      key={key}
+                      onClick={handleAddFacet}
+                    >
+                      <span className='ola-search-facet-count'>{count}</span>
+                      <span className='ola-search-facet-name'>{name}</span>
+                    </button>
+                  )
+                }}
+                length={values.length}
+                type={listType}
+              />
+            </div>
 
-					<div className="ola-facet-tags-selected">
-						{selected.map( (item, idx) => {
-
-							var removeFacet = this.handleRemoveFacat.bind(this, facet, item)
-
-							return <Tag
-									onRemove = {removeFacet} 
-									name = {item}
-									facet = { facet }
-									key = {idx}
-								/>
-						})}
-					</div>
-
-
-					<div className="ola-facet-list">					
-
-						<div className="ola-facet-scroll-list">
-							<ReactList
-								itemRenderer={ (index, key) => {
-									
-									var { name, count } = values[index];
-									/* var displayName = getDisplayName(config.facetNames, name); */
-									var handleAddFacet = isSelected( name )? null : this.handleAddFacet.bind(this, facet, name);
-									var itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected( name )})
-									
-									return (
-										<button
-											className= {itemKlass}
-											type = "button"
-											key = {key}
-											onClick = {handleAddFacet}
-										>
-											<span className="ola-search-facet-count">{ count }</span>
-											<span className="ola-search-facet-name">{ name }</span>											
-										</button>
-									)
-								}}
-								length={values.length}
-								type={ listType }
-							/>
-						</div>
-						
-						{showMoreLink}
-					</div>
-				</div>
-			</div>
-		)
-	}
+            {showMoreLink}
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
-module.exports = FacetToggle( Default )
+module.exports = FacetToggle(Default)

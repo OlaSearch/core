@@ -1,139 +1,124 @@
-import React from 'react';
-import { removeFacet, executeSearch, clearQueryTerm, removeFilter } from './../actions/Search';
-import Tag from './Misc/Tag';
-import Tooltip from './Guide/Tooltip';
-import qs from 'query-string';
+import React from 'react'
+import { removeFacet, executeSearch, clearQueryTerm, removeFilter } from './../actions/Search'
+import Tag from './Misc/Tag'
+import Tooltip from './Guide/Tooltip'
+import qs from 'query-string'
 
-class SelectedFilters extends React.Component{
-	
-	constructor(props){
-		super(props)
+class SelectedFilters extends React.Component {
+  constructor (props) {
+    super(props)
 
-		/* Parse queryString to get the referrer */
-		
-		var qString = qs.parse(location.search);
-		
-		this.state = {
-			showGuidePopover: !!qString.referrer
-		}
-	}
+    /* Parse queryString to get the referrer */
 
-	static propTypes: {
-		facets: React.PropTypes.array.isRequired,
-		dispatch: React.PropTypes.func,
-		q: React.PropTypes.string,
-		showQuery: React.PropTypes.boolean
-	};
+    var qString = qs.parse(window.location.search)
 
-	static defaultProps = {
-		showQuery: false,
-		filters: []
-	};
+    this.state = {
+      showGuidePopover: !!qString.referrer
+    }
+  }
 
-	handleRemoveFacet = (facet, value) => {
+  static propTypes: {
+    facets: React.PropTypes.array.isRequired,
+    dispatch: React.PropTypes.func,
+    q: React.PropTypes.string,
+    showQuery: React.PropTypes.boolean
+  };
 
-		this.props.dispatch(removeFacet( facet, value ))
+  static defaultProps = {
+    showQuery: false,
+    filters: []
+  };
 
-		this.props.dispatch(executeSearch())
+  handleRemoveFacet = (facet, value) => {
+    let { dispatch } = this.props
+    dispatch(removeFacet(facet, value))
 
-	};
+    dispatch(executeSearch())
+  };
 
-	closeGuidePopover = () => {
+  closeGuidePopover = () => {
+    this.setState({
+      showGuidePopover: false
+    })
+  };
 
-		this.setState({
-			showGuidePopover: false
-		})
-	};
+  render () {
+    var {
+      facets,
+      showQuery,
+      q,
+      dispatch,
+      filters
+    } = this.props
 
-	render(){
+    var {
+      showGuidePopover
+    } = this.state
 
-		var {
-			facets,
-			showQuery,
-			q,
-			dispatch,
-			filters,
-		} = this.props;		
+    if (!facets &&
+      !facets.length &&
+      !q &&
+      !filters &&
+      !filters.length) return null
 
-		var {
-			showGuidePopover
-		} = this.state;
+    return (
+      <div className='ola-facet-tags'>
+        <Tooltip
+          isShown={showGuidePopover}
+          onClose={this.closeGuidePopover}
+        />
 
-		if(!facets && 
-			!facets.length && 
-			!q && 
-			!filters && 
-			!filters.length) return null
+        {showQuery && q
+          ? <div className='ola-facet-tag'>
+            <span className='ola-facet-tag-name'>{q}</span>
+            <button className='ola-facet-tag-remove' onClick={() => {
+              dispatch(clearQueryTerm())
+              dispatch(executeSearch())
+            }}></button>
+          </div>
+          : null
+        }
 
-		return (
-			<div className="ola-facet-tags">				
-				
-				<Tooltip 
-					isShown = {showGuidePopover} 
-					onClose = {this.closeGuidePopover} 
-				/>
+        {facets.map((facet, idx) => {
+          var { selected: tags } = facet
 
-				{showQuery && q
-					? <div className="ola-facet-tag">
-						<span className="ola-facet-tag-name">{q}</span>
-						<button className="ola-facet-tag-remove" onClick = { () => {
+          return (
+            <div key={idx} className='ola-facet-tags-group'>
+              <span className='ola-facet-tags-heading'>{facet.displayName}: </span>
+              {tags.map((value, index) => {
+                var removeFacet = this.handleRemoveFacet.bind(this, facet, value)
+                return (
+                  <Tag
+                    key={index}
+                    onRemove={removeFacet}
+                    name={value}
+                    facet={facet}
+                  />
+                )
+              })}
+            </div>
+          )
+        })}
 
-							dispatch( clearQueryTerm() )
-							dispatch( executeSearch() )
-						}}></button>
-					</div>
-					: null
-				}
+        {filters.map((filter, idx) => {
+          var { field } = filter
 
-				{facets.map( (facet, idx) => {
+          return (
+            <Tag
+              key={idx}
+              onRemove={() => {
+                dispatch(removeFilter(filter))
 
-					var { selected : tags, type, label } = facet;					
-					
-					return (
-						<div key = {idx} className="ola-facet-tags-group">
-							
-							<span className="ola-facet-tags-heading">{facet.displayName}: </span>
-
-							{tags.map( (value, index) => {
-
-								var removeFacet = this.handleRemoveFacet.bind(this, facet, value)
-
-								return (
-									<Tag 
-										key = {index}
-										onRemove = {removeFacet} 
-										name = {value}
-										facet = { facet }
-									/>
-								)
-							})}
-						</div>
-					)
-				})}
-
-
-				{filters.map( (filter,idx) => {
-
-					var { field, type } = filter
-
-					return (
-						<Tag 
-							key = { idx }
-							
-							onRemove = {() => {
-								dispatch( removeFilter(filter) )
-
-								dispatch( executeSearch() )
-							}} 
-							name = {field}
-							facet = { filter }
-						/>
-					)
-				})}
-			</div>
-		)
-	}
+                dispatch(executeSearch())
+              }}
+              name={field}
+              facet={filter}
+            />
+          )
+        })}
+      </div>
+    )
+  }
 }
-
 
 module.exports = SelectedFilters

@@ -1,36 +1,34 @@
-import React from 'react';
+import React from 'react'
 
-class Histogram extends React.Component{
+class Histogram extends React.Component {
 
-	render(){
+  render () {
+    var { data } = this.props
 
-		var { data } = this.props;
+    if (!data.length) return null
 
-		if(!data.length) return null;
+    var max = data.reduce((a, b) => a.count > b.count ? a : b)
+    // var min = data.reduce((a, b) => a.count < b.count ? a : b)
 
-		var max = data.reduce( (a, b) => a.count > b.count? a: b);
-		var min = data.reduce( (a, b) => a.count < b.count? a: b);
+    /* Sort data */
+    data = data.sort((a, b) => a.name - b.name)
 
-		/* Sort data */
-		data = data.sort( (a, b) => a.name - b.name )
-
-		return (
-			<div className="ola-histogram">
-				{data.map( (item, idx) => {
-					
-					return (
-						<div 
-							key = { idx }
-							className="ola-histogram-bar"
-							style={{
-								height:`${( item.count/max.count)*100}%`
-							}}
-						/ >
-					)
-				})}
-			</div>
-		)
-	}
+    return (
+      <div className='ola-histogram'>
+        {data.map((item, idx) => {
+          return (
+            <div
+              key={idx}
+              className='ola-histogram-bar'
+              style={{
+                height: `${(item.count / max.count) * 100}%`
+              }}
+            />
+          )
+        })}
+      </div>
+    )
+  }
 }
 
 module.exports = Histogram

@@ -1,96 +1,93 @@
-import types from './../constants/ActionTypes';
+import types from './../constants/ActionTypes'
 
 var initialState = {
-	query : {
-		q: '',
-		per_page: 20,
-		page: 1,
-		facet_query: []
-	},
-	totalResults: 0,
-	results: [],
-	facets: [],
-	spellSuggestions: [],
-	suggestedTerm: '',
-	isLoading: false,
-	isOpen: false,
-	qt: null,
+  query: {
+    q: '',
+    per_page: 20,
+    page: 1,
+    facet_query: []
+  },
+  totalResults: 0,
+  results: [],
+  facets: [],
+  spellSuggestions: [],
+  suggestedTerm: '',
+  isLoading: false,
+  isOpen: false,
+  qt: null
 }
 
 export default (state = initialState, action) => {
-	
-	switch(action.type){
+  switch (action.type) {
+    case types.UPDATE_QUERY_TERM_AUTOSUGGEST:
+      return {
+        ...state,
+        query: {
+          ...state.query,
+          q: action.term
+        }
+      }
 
-		case types.UPDATE_QUERY_TERM_AUTOSUGGEST:
-			return {
-				...state,
-				query: {
-					...state.query, q: action.term
-				}
-			};
+    case types.CLEAR_QUERY_TERM_AUTOSUGGEST:
+      return initialState
 
-		case types.CLEAR_QUERY_TERM_AUTOSUGGEST:
-			return initialState;
+    case types.REQUEST_AUTOSUGGEST:
+      return {
+        ...state,
+        isLoading: true
+      }
 
-		case types.REQUEST_AUTOSUGGEST:
-			return {
-				...state,
-				isLoading: true
-			};
-		
-		case types.REQUEST_AUTOSUGGEST_SUCCESS:
+    case types.REQUEST_AUTOSUGGEST_SUCCESS:
 
-			var {
-				spellSuggestions,
-				results,
-				facets,
-				totalResults,
-				suggestedTerm,
-				qt
-			} = action;
+      var {
+        spellSuggestions,
+        results,
+        facets,
+        totalResults,
+        suggestedTerm,
+        qt
+      } = action
 
-			return {
-				...state, 
-				results,
-				facets,
-				spellSuggestions,
-				totalResults,
-				isLoading: false,
-				suggestedTerm,
-				qt,
-				isOpen: !!results.length || !!spellSuggestions.length || !!suggestedTerm
-			};
+      return {
+        ...state,
+        results,
+        facets,
+        spellSuggestions,
+        totalResults,
+        isLoading: false,
+        suggestedTerm,
+        qt,
+        isOpen: !!results.length || !!spellSuggestions.length || !!suggestedTerm
+      }
 
-		case types.OPEN_AUTOSUGGEST:
-			return {
-				...state,
-				isOpen: true
-			};
+    case types.OPEN_AUTOSUGGEST:
+      return {
+        ...state,
+        isOpen: true
+      }
 
-		case types.CLOSE_AUTOSUGGEST:
-			return {
-				...state,
-				isOpen: false
-			}
+    case types.CLOSE_AUTOSUGGEST:
+      return {
+        ...state,
+        isOpen: false
+      }
 
+    case types.ADD_FACET_AUTOSUGGEST:
+      var { value, facet } = action
+      var { name, displayName, type, multiSelect, template, label } = facet
 
-		case types.ADD_FACET_AUTOSUGGEST:
-            var { value, facet } = action;
+      return {
+        ...state,
+        query: {
+          ...state.query,
+          facet_query: [{
+            name, type, displayName, multiSelect, template, label,
+            selected: [value]
+          }]
+        }
+      }
 
-			var { name, displayName, type, multiSelect, template, label } = facet;			
-
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    facet_query: [ {
-						name, type, displayName, multiSelect, template, label,
-						selected: [value]
-					}]
-                }
-            };
-
-		default:
-			return state;
-	}
+    default:
+      return state
+  }
 }

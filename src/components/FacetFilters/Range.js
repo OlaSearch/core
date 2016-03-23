@@ -1,191 +1,180 @@
-import React from 'react';
-import { replaceFacet, executeSearch } from './../../actions/Search';
-import { flatten } from 'ramda';
-import noUiSlider from 'nouislider';
-import { FacetToggle } from './../../decorators/OlaFacetToggle';
-import classNames from 'classnames';
-import Histogram from './Histogram';
+import React from 'react'
+import { replaceFacet, executeSearch } from './../../actions/Search'
+import { flatten } from 'ramda'
+import noUiSlider from 'nouislider'
+import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import classNames from 'classnames'
+import Histogram from './Histogram'
 
-class Range extends React.Component{
-	
-    static propTypes = {
-        dispatch: React.PropTypes.func.isRequired,
-        selected: React.PropTypes.array.isRequired,
-        facet: React.PropTypes.object.isRequired,
-    };
+class Range extends React.Component {
 
-    static defaultProps = {
-		step: 1,
-		showHistogram: false,
-		pips: [0,26,44.5,63,81.5,100],
-		pipsDensity: 4,
-		pipsMode: 'positions',
-		showPips: false,
-    };
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    selected: React.PropTypes.array.isRequired,
+    facet: React.PropTypes.object.isRequired
+  };
 
-	onChange = (facet, value) => {
-		
-		if(typeof value == 'string' || value.length == 1) value = [0, value[0]]
+  static defaultProps = {
+    step: 1,
+    showHistogram: false,
+    pips: [0, 26, 44.5, 63, 81.5, 100],
+    pipsDensity: 4,
+    pipsMode: 'positions',
+    showPips: false
+  };
 
-		this.props.dispatch(replaceFacet(facet, value))
+  onChange = (facet, value) => {
+    var { dispatch } = this.props
 
-		this.props.dispatch(executeSearch())
-	};
+    if (typeof value === 'string' || value.length === 1) value = [0, value[0]]
 
-	componentDidUpdate(){
-	
-		var options = this.getSliderValues(this.props);
-		var { step } = this.props;
-		var { min, max, value } = options;
-		
-		/**
-		 * Check if min, max is the same, then disable the slider
-		 */
-		
-		if (min == max) {
-			min -= 60;
-			max += 60;
-			step = 60;			
-			
-			this.refs.slider.setAttribute('disabled', true)
-		}else{
+    dispatch(replaceFacet(facet, value))
 
-			this.refs.slider.removeAttribute('disabled')
-		}
+    dispatch(executeSearch())
+  };
 
-		this.refs.slider.noUiSlider.updateOptions({
-			step: step,
-			range: {
-				min: min,
-				max: max
-			}
-		});
+  componentDidUpdate () {
+    var options = this.getSliderValues(this.props)
+    var { step } = this.props
+    var { min, max, value } = options
 
-		this.refs.slider.noUiSlider.set(value)
+    /**
+     * Check if min, max is the same, then disable the slider
+     */
 
-	}
+    if (min === max) {
+      min -= 60
+      max += 60
+      step = 60
 
-	getSliderValues(props){
+      this.refs.slider.setAttribute('disabled', true)
+    } else this.refs.slider.removeAttribute('disabled')
 
-		var {facet, selected} = props;
+    this.refs.slider.noUiSlider.updateOptions({
+      step: step,
+      range: {
+        min: min,
+        max: max
+      }
+    })
 
-		var { values, singleHandle } = facet;
+    this.refs.slider.noUiSlider.set(value)
+  }
 
-		var values = values.map( (value) => value.name);
-		var min = 0, max = 0;
-		
-		if(values.length){
-			min = Math.min(...values);
-			max = Math.max(...values);
-		}
-				
-		var arr = flatten(selected);
-		
-		var value = arr && arr.length? arr : [min, max];
+  getSliderValues (props) {
+    var {facet, selected} = props
 
-		/* If Slider only has 1 handle */
+    var { values, singleHandle } = facet
+    var min = 0
+    var max = 0
 
-		if(singleHandle){
-			value = arr && arr.length? arr[1] : [max]
-		}
+    values = values.map((value) => value.name)
 
-		return {min, max, value}
+    if (values.length) {
+      min = Math.min(...values)
+      max = Math.max(...values)
+    }
 
-	}
+    var arr = flatten(selected)
 
-	componentDidMount(){
+    var value = arr && arr.length ? arr : [min, max]
 
-		var {
-			facet,			
-			step,
-			showPips,
-			pips,
-			pipsDensity,
-			pipsMode,
-		} = this.props;
+    /* If Slider only has 1 handle */
 
-		var options = this.getSliderValues(this.props);
+    if (singleHandle) {
+      value = arr && arr.length ? arr[1] : [max]
+    }
 
-		var { singleHandle } = facet;
+    return {min, max, value}
+  }
 
-		var {min, max, value} = options;
-		
-		if (min == max) {
-			min -= 60; 
-			max += 60; 
-			step = 60;
-			
-			this.refs.slider.setAttribute('disabled', true)
-		}
-		else{
+  componentDidMount () {
+    var {
+      facet,
+      step,
+      showPips,
+      pips,
+      pipsDensity,
+      pipsMode
+    } = this.props
 
-			this.refs.slider.removeAttribute('disabled')
-		}
+    var options = this.getSliderValues(this.props)
 
-		/* Slider options */
+    var { singleHandle } = facet
 
-		var sliderOptions  = {
-			start: value,
-			step: step,
-			connect: singleHandle? 'lower' : true,
-			tooltips: true,
-			range: {
-				'min':  min,
-				'max':  max
-			},
-			format: {
-				to: ( value ) => Math.floor(value),
-				from: ( value ) => Math.floor(value)
-			}			
-		};
+    var {min, max, value} = options
 
-		var pipsOptions = showPips? {
-			pips: {				
-				mode: pipsMode,
-				values: pips,
-				density: pipsDensity,
-				stepped: true
-			}
-		} : {};
+    if (min === max) {
+      min -= 60
+      max += 60
+      step = 60
 
-		/* Initialize Slider */
-        
-		this.slider = noUiSlider.create( this.refs.slider , {...sliderOptions, ...pipsOptions });
+      this.refs.slider.setAttribute('disabled', true)
+    } else this.refs.slider.removeAttribute('disabled')
 
-		/* Bind to onchange */
+    /* Slider options */
 
-		this.slider.on('change', (value) => this.onChange(facet, value))
-	}
+    var sliderOptions = {
+      start: value,
+      step: step,
+      connect: singleHandle ? 'lower' : true,
+      tooltips: true,
+      range: {
+        'min': min,
+        'max': max
+      },
+      format: {
+        to: (value) => Math.floor(value),
+        from: (value) => Math.floor(value)
+      }
+    }
 
-	componentWillUnmount(){
-		this.slider.destroy()
-	}
+    var pipsOptions = showPips ? {
+      pips: {
+        mode: pipsMode,
+        values: pips,
+        density: pipsDensity,
+        stepped: true
+      }
+    } : {}
 
-	render(){
+    /* Initialize Slider */
 
-		var { facet, isCollapsed, toggleDisplay, showHistogram } = this.props;		
-		var { values } = facet;
-		
-		var klass = classNames({
-			'ola-facet': true,
-			'ola-facet-collapsed': isCollapsed
-		});
+    this.slider = noUiSlider.create(this.refs.slider, { ...sliderOptions, ...pipsOptions })
 
-		return (
-			<div className={klass}>
-				<h4 className="ola-facet-title" onClick = {toggleDisplay}>{facet.displayName}</h4>
-				<div className="ola-facet-wrapper">
-					{ showHistogram
-						? <Histogram data = { values } />
-						: null
-					}
-					<div className="ola-slider">
-						<div ref = 'slider' />
-					</div>
-				</div>
-			</div>
-		)
-	}
+    /* Bind to onchange */
+
+    this.slider.on('change', (value) => this.onChange(facet, value))
+  }
+
+  componentWillUnmount () {
+    this.slider.destroy()
+  }
+
+  render () {
+    var { facet, isCollapsed, toggleDisplay, showHistogram } = this.props
+    var { values } = facet
+
+    var klass = classNames({
+      'ola-facet': true,
+      'ola-facet-collapsed': isCollapsed
+    })
+
+    return (
+      <div className={klass}>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+        <div className='ola-facet-wrapper'>
+          {showHistogram
+            ? <Histogram data={values} />
+            : null
+          }
+          <div className='ola-slider'>
+            <div ref='slider' />
+          </div>
+        </div>
+      </div>
+    )
+  }
 };
 
-module.exports = FacetToggle( Range )
+module.exports = FacetToggle(Range)

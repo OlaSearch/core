@@ -1,78 +1,71 @@
-import React from 'react';
+import React from 'react'
 
 var SpeechInput = React.createClass({
-	getInitialState: function(){
+  getInitialState: function () {
+    return {
+      isRecording: false
+    }
+  },
+  onLaunch: function () {
+    var { isRecording } = this.state
 
-		return {
-			isRecording: false
-		}
-	},
-	onLaunch: function(){
+    this.setState({
+      isRecording: !isRecording
+    })
 
-		var { isRecording } = this.state;
+    if (isRecording) {
+      this.recog.stop()
+      return
+    }
 
-		this.setState({
-			isRecording: !isRecording
-		})
+    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
-		if(isRecording){
-			this.recog.stop();
-			return ;
-		}
+    this.recog = new SpeechRecognition()
 
-		var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    this.recog.lang = 'en'
+    this.recog.continuous = true
+    this.recog.interimResults = true
+    this.recog.serviceURI = 'wami.csail.mit.edu'
 
-		this.recog = new SpeechRecognition()
+    this.recog.addEventListener('result', this.handleEvent)
 
-		this.recog.lang = 'en'
-		this.recog.continuous = true
-		this.recog.interimResults = true
-		this.recog.serviceURI = 'wami.csail.mit.edu'
+    this.recog.start()
+  },
+  handleEvent: function (event) {
+    switch (event && event.type) {
+      case 'result':
+        window.requestAnimationFrame(() => {
+          var result = event.results[ event.resultIndex ]
+          var item = result[0]
 
-		this.recog.addEventListener( 'result', this.handleEvent )
+          this.props.onResult.call(this, item.transcript, item.confidence)
 
-		this.recog.start()
+          if (result.isFinal) {
+            this.props.onFinalResult.call(this, item.transcript)
+          }
+        })
+        break
+    }
+  },
+  render: function () {
+    var { isRecording } = this.state
 
-	},
-	handleEvent: function(event){
-		
-		switch( event && event.type ) {
-		  case 'result': 
-				window.requestAnimationFrame( () => {
-	  
-					var result = event.results[ event.resultIndex ]
-					var item = result[0]
+    var klassName = 'ola-link-speech' + (isRecording ? ' ola-link-speech-stop' : '')
 
-					this.props.onResult.call(this, item.transcript, item.confidence)
+    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
-					if(result.isFinal){
-						this.props.onFinalResult.call(this, item.transcript)
-					}
+    if (!SpeechRecognition) return null
 
-				})
-				break;		  
-		}
-	},
-	render: function(){
-		var { isRecording } = this.state;
-		
-		var klassName = 'ola-link-speech' + (isRecording? ' ola-link-speech-stop': '');
+    return (
+      <div>
+        <button
+          type='button'
+          className={klassName}
+          onClick={this.onLaunch}
+          aria-label='Press to speak'></button>
+      </div>
+    )
+  }
+})
 
-		var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-		if(!SpeechRecognition) return null;
-
-		return (
-			<div>
-				<button
-					type="button" 
-					className={klassName}
-					onClick = {this.onLaunch}
-					aria-label="Press to speak"
-					></button>
-			</div>
-		)
-	}
-});
-
-module.exports = SpeechInput;
+module.exports = SpeechInput

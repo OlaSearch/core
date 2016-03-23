@@ -1,10 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-const Year = ( { year }) => {
+const Year = ({ year }) => {
+  if (!year) return <noscript />
 
-	if(!year) return <noscript />
-	
-	return <span> ({year})</span>
+  return <span>({year})</span>
 }
 
 module.exports = Year

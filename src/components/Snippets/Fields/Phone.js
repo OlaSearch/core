@@ -1,18 +1,17 @@
-import React from 'react';
+import React from 'react'
 
-const Phone = ( props) => {
+const Phone = (props) => {
+  var { phone, title, ...rest } = props
 
-    var { phone, title, ...rest} = props;
+  if (!phone) return <noscript />
 
-	if(!phone) return <noscript />
+  var url = 'tel://' + phone
 
-	var url = 'tel://' + phone;
-	
-	return <a href={url} className="ola-btn ola-btn-call" {...rest}>{ title } </a>;
+  return <a href={url} className='ola-btn ola-btn-call' {...rest}>{title}</a>
 }
 
 Phone.defaultProps = {
-    title: 'Call'
+  title: 'Call'
 }
 
 module.exports = Phone

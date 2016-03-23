@@ -1,72 +1,58 @@
-import React from 'react';
-import { arrayJoin } from './../../utilities';
-import Bookmark from './Actions/Bookmark';
-import Title from './Fields/Title';
-import Thumbnail from './Fields/Thumbnail';
-import Rating from './Fields/Rating';
-import Summary from './Fields/Summary';
+import React from 'react'
+import { arrayJoin } from './../../utilities'
+import Bookmark from './Actions/Bookmark'
+import Title from './Fields/Title'
+import Thumbnail from './Fields/Thumbnail'
+import Rating from './Fields/Rating'
+import Summary from './Fields/Summary'
 
-class Default extends React.Component{
+class Default extends React.Component {
+  static defaultProps = {
+    showTrailer: true,
+    showSummary: true,
+    isAutosuggest: false
+  };
 
-	constructor(props){
-		super(props)
-	}
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    result: React.PropTypes.object,
+    bookmarks: React.PropTypes.array
+  };
 
-	static defaultProps = {
-		showTrailer: true,
-		showSummary: true
-	};
-	
-	static propTypes = {
-		dispatch: React.PropTypes.func.isRequired,
-		result: React.PropTypes.object,
-		bookmarks: React.PropTypes.array
-	};
+  render () {
+    var {
+      result,
+      showSummary
+    } = this.props
 
-	static displayName = "DefaultSnippet";
+    return (
+      <div className='ola-snippet'>
+        <div className='ola-snippet-image'>
+          <Thumbnail
+            thumbnail={result.thumbnail}
+            thumbnail_mobile={result.thumbnail_mobile}
+          />
+        </div>
+        <div className='ola-snippet-content'>
+          <div className='ola-snippet-actions'>
+            <Bookmark {...this.props} />
+          </div>
+          <Title result={result} />
+          <Rating
+            rating={result.star_rating}
+          />
 
-	render(){
+          {showSummary
+            ? <Summary result={result} />
+            : null
+          }
 
-		var {
-			result,			
-			isAutosuggest,
-			showSummary
-		} = this.props;
+          {result.directors ? <p>{arrayJoin('By ', result.directors)}</p> : null}
 
-		return (
-			<div className="ola-snippet">
-				<div className="ola-snippet-image">
-					<Thumbnail
-						thumbnail = {result.thumbnail}
-						thumbnail_mobile = {result.thumbnail_mobile}
-					/>
-					
-				</div>
-				<div className="ola-snippet-content">
-
-					<div className="ola-snippet-actions">
-						<Bookmark {...this.props} />
-					</div>
-
-					<Title
-						result = {result}
-						/>					
-
-					<Rating
-						rating = {result.star_rating}
-						/>
-
-					{ showSummary
-						? <Summary result = { result } />
-						: null
-					}
-
-					{result.directors? <p>{arrayJoin('By ', result.directors)}</p> : null}
-
-				</div>
-			</div>
-		)
-	}
+        </div>
+      </div>
+    )
+  }
 }
 
 module.exports = Default

@@ -1,136 +1,126 @@
-import React from 'react';
-import Default from './FacetFilters/Default';
-import FacetCheckbox from './FacetFilters/Checkbox';
-import Range from './FacetFilters/Range';
-import Rating from './FacetFilters/Rating';
-import FacetBoolean from './FacetFilters/Boolean';
-import DateRange from './FacetFilters/DateRange';
-import TagCloud from './FacetFilters/TagCloud';
-import { flatten } from 'ramda';
+import React from 'react'
+import Default from './FacetFilters/Default'
+import FacetCheckbox from './FacetFilters/Checkbox'
+import Range from './FacetFilters/Range'
+import Rating from './FacetFilters/Rating'
+import FacetBoolean from './FacetFilters/Boolean'
+import DateRange from './FacetFilters/DateRange'
+import TagCloud from './FacetFilters/TagCloud'
+import { flatten } from 'ramda'
 
-class SearchFilters extends React.Component{
-	
-	static contextTypes = {
-		config: React.PropTypes.object
-	};
+class SearchFilters extends React.Component {
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
 
-	static propTypes = {
-		facets: React.PropTypes.array.isRequired,
-		selected: React.PropTypes.array.isRequired,
-		dispatch: React.PropTypes.func,
-		conditional: React.PropTypes.bool,
-		showSelectedFacetItem: React.PropTypes.bool,
-	};
+  static propTypes = {
+    facets: React.PropTypes.array.isRequired,
+    selected: React.PropTypes.array.isRequired,
+    dispatch: React.PropTypes.func,
+    conditional: React.PropTypes.bool,
+    showSelectedFacetItem: React.PropTypes.bool
+  };
 
-	static defaultProps = {
-		conditional: true
-	};
+  static defaultProps = {
+    conditional: true
+  };
 
-	getFacetsToDisplay = (selected) => {
+  getFacetsToDisplay = (selected) => {
+    var {
+      facetsToDisplay
+    } = this.context.config
 
-		var {
-			facetsToDisplay
-		} = this.context.config;
+    var selections = flatten(selected.map((item) => item.selected))
 
-		var selections = flatten(selected.map( item => item.selected))
+    var names = []
+    var defaultNames = facetsToDisplay['*']
+    var hasKey = false
 
-		var names = [],
-			defaultNames = facetsToDisplay['*'],
-			hasKey = false;
-		
-		/* Loop through selections and find Facets to display */
+    /* Loop through selections and find Facets to display */
 
-		selections.forEach( (item) => {			
-			if(facetsToDisplay.hasOwnProperty(item)){
-				names = facetsToDisplay[item]
-				hasKey = true;
-			}
-		});
+    selections.forEach((item) => {
+      if (facetsToDisplay.hasOwnProperty(item)) {
+        names = facetsToDisplay[item]
+        hasKey = true
+      }
+    })
 
-		/* If there are no keys in `facetsToDisplay` Return all facets */
+    /* If there are no keys in `facetsToDisplay` Return all facets */
 
-		if(!hasKey) return defaultNames
+    if (!hasKey) return defaultNames
 
-		/* Found */
-	
-		return names;
-	};
+    /* Found */
 
-	shouldComponentUpdate( nextProps ){
-		
-		return this.props.facets != nextProps.facets || this.props.selected != nextProps.selected
-	}
-	
-	render(){
+    return names
+  };
 
-		var {
-			facets,			
-			selected,
-			conditional,
-			...props
-		} = this.props;
-		
-		if(conditional){
-			
-			/* Facet names to display */
+  shouldComponentUpdate (nextProps) {
+    return this.props.facets !== nextProps.facets || this.props.selected !== nextProps.selected
+  }
 
-			var facetsToDisplay = this.getFacetsToDisplay(selected);
+  render () {
+    var {
+      facets,
+      selected,
+      conditional,
+      ...props
+    } = this.props
 
-			/* Exclude tabs and agree with `facetsToDisplay` */
+    if (conditional) {
+      /* Facet names to display */
 
-			facets = facets.filter( facet => !facet.tab && facetsToDisplay.indexOf(facet.name) != -1);
+      var facetsToDisplay = this.getFacetsToDisplay(selected)
 
-		}
+      /* Exclude tabs and agree with `facetsToDisplay` */
 
-		
-		if(!facets.length) return null;
+      facets = facets.filter((facet) => !facet.tab && facetsToDisplay.indexOf(facet.name) !== -1)
+    }
 
-		return (
-			<div className="ola-search-filters">
-				{facets.map( (facet, index) => {
+    if (!facets.length) return null
 
-					/* Recalculate Selected values */
+    return (
+      <div className='ola-search-filters'>
+        {facets.map((facet, index) => {
+          /* Recalculate Selected values */
 
-					var selectedFacets = selected
-								.filter( item => item.name == facet.name)
-								.map( item => item.selected),
-						selectedItems = flatten(selectedFacets);
+          var selectedFacets = selected
+                .filter((item) => item.name === facet.name)
+                .map((item) => item.selected)
+          var selectedItems = flatten(selectedFacets)
 
-					var passProps = {
-						facet, 						
-						selected: selectedItems,
-						key: index,
-						...props
-					};
+          var passProps = {
+            facet,
+            selected: selectedItems,
+            key: index,
+            ...props
+          }
 
-					switch(facet.type){
+          switch (facet.type) {
+            case 'checkbox':
+              return <FacetCheckbox {...passProps} />
 
-						case 'checkbox':
-							return <FacetCheckbox {...passProps} />
+            case 'range':
+              return <Range {...passProps} />
 
-						case 'range':
-							return <Range {...passProps} />
+            case 'rating':
+              return <Rating {...passProps} />
 
-						case 'rating':
-							return <Rating {...passProps} />
+            case 'boolean':
+              return <FacetBoolean {...passProps} />
 
-						case 'boolean':
-							return <FacetBoolean {...passProps} />
+            case 'daterange':
+              return <DateRange {...passProps} />
 
-						case 'daterange':
-							return <DateRange {...passProps} />
+            case 'tagcloud':
+              return <TagCloud { ...passProps} />
 
-						case 'tagcloud':
-							return <TagCloud { ...passProps} />
-
-						default:
-							return <Default {...passProps} />
-					}
-
-				})}
-			</div>
-		)
-	}
+            default:
+              return <Default {...passProps} />
+          }
+        })}
+      </div>
+    )
+  }
 }
 
 module.exports = SearchFilters
