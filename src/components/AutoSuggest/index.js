@@ -1,269 +1,255 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import listensToClickOutside from 'react-onclickoutside/decorator';
-import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest,	addFacet } from './../../actions/AutoSuggest';
-import Suggestions from './Suggestions';
-import Input from './Input';
-import TermSuggestion from './../SpellSuggestions/TermSuggestion';
-import SpellSuggestion from './../SpellSuggestions/SpellSuggestion';
-import FacetSuggestion from './FacetSuggestion';
-import { buildQueryString } from './../../services/urlSync';
-import scrollIntoView from 'dom-scroll-into-view';
-import classNames from 'classnames';
+import React from 'react'
+import { connect } from 'react-redux'
+import listensToClickOutside from 'react-onclickoutside/decorator'
+import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, addFacet } from './../../actions/AutoSuggest'
+import Suggestions from './Suggestions'
+import Input from './Input'
+import TermSuggestion from './../SpellSuggestions/TermSuggestion'
+import SpellSuggestion from './../SpellSuggestions/SpellSuggestion'
+import FacetSuggestion from './FacetSuggestion'
+import { buildQueryString } from './../../services/urlSync'
+import scrollIntoView from 'dom-scroll-into-view'
+import classNames from 'classnames'
 
-class AutoSuggest extends React.Component{
+class AutoSuggest extends React.Component {
 
-	constructor(props){
-		super(props)
+  constructor (props) {
+    super(props)
 
-		this.state = {
-			isFocused: false
-		}
-	}
-	
-	static propTypes = {
-		AutoSuggest: React.PropTypes.object.isRequired,
-		bookmarks: React.PropTypes.array,
-		showFacetSuggestions: React.PropTypes.bool,
-		dispatch: React.PropTypes.func.isRequired,
-		onSubmit: React.PropTypes.func,
-		viewAllClassName: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-	};
+    this.state = {
+      isFocused: false
+    }
+  }
 
-	static contextTypes = {
-		config: React.PropTypes.object
-	};
+  static propTypes = {
+    AutoSuggest: React.PropTypes.object.isRequired,
+    bookmarks: React.PropTypes.array,
+    showFacetSuggestions: React.PropTypes.bool,
+    dispatch: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func,
+    viewAllClassName: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    facetSuggestionName: React.PropTypes.string
+  };
 
-	static defaultProps = {
-		showBookmarks: true,		
-		showFacetSuggestions: false,
-		classNames: '.ola-snippet, .ola-facet-suggestion',
-		activeClassName: 'ola-active',
-		viewAllClassName: 'ola-autosuggest-all',
-		placeholder: 'Enter keywords',
-	};
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
 
-	handleClickOutside = (event) => {
+  static defaultProps = {
+    showBookmarks: true,
+    showFacetSuggestions: false,
+    classNames: '.ola-snippet, .ola-facet-suggestion',
+    activeClassName: 'ola-active',
+    viewAllClassName: 'ola-autosuggest-all',
+    placeholder: 'Enter keywords',
+    facetSuggestionName: 'genres_sm'
+  };
 
-		var { isOpen } = this.props.AutoSuggest;
-		var { dispatch } = this.props;
-		
-		if(isOpen){
+  handleClickOutside = (event) => {
+    var { isOpen } = this.props.AutoSuggest
+    var { dispatch } = this.props
 
-			dispatch(closeAutoSuggest())
+    if (isOpen) {
+      dispatch(closeAutoSuggest())
+    }
 
-		}
+    this.onBlur()
+  };
 
-		this.onBlur.call(this)
-		
-	};
-	
-	onChange = (term) => {
+  onChange = (term) => {
+    var { dispatch } = this.props
 
-		var { dispatch } = this.props;
+    if (!term) {
+      return dispatch(clearQueryTerm())
+    }
 
-		if(!term) {
+    dispatch(updateQueryTerm(term))
 
-			return dispatch(clearQueryTerm());
-		}
+    dispatch(executeAutoSuggest())
+  };
 
-		dispatch(updateQueryTerm(term));
+  onClear = () => {
+    this.props.dispatch(clearQueryTerm())
+  };
 
-		dispatch(executeAutoSuggest());
-	};
+  onMove = (direction) => {
+    let { classNames, activeClassName } = this.props
+    let { suggestionsContainer } = this.refs
+    let fullActiveClass = '.' + activeClassName
 
-	onClear = () => {
+    let nodes = suggestionsContainer.querySelectorAll(classNames)
 
-		this.props.dispatch(clearQueryTerm());
+    if (!nodes.length) return
 
-	};
+    let target = suggestionsContainer.querySelector(fullActiveClass)
+    let index = target ? [].indexOf.call(nodes, target) : -1
+    let next
+    var clearActive = (nodes) => {
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].classList.remove(activeClassName)
+      }
+    }
 
-	onMove = ( direction ) => {
+    switch (direction) {
+      case 'up':
+        clearActive(nodes)
+        next = nodes[Math.max(0, --index)]
+        next.classList.add(activeClassName)
+        break
 
-		let { classNames, activeClassName } = this.props;
-		let { suggestionsContainer } = this.refs;
-		let fullClass = '.' + classNames;
-		let fullActiveClass = '.' + activeClassName;
+      case 'down':
+        clearActive(nodes)
+        next = nodes[Math.min(nodes.length - 1, ++index)]
+        next.classList.add(activeClassName)
+        break
+    }
 
-		let nodes = suggestionsContainer.querySelectorAll(classNames);
-		
-		if(!nodes.length) return;
+    scrollIntoView(next, suggestionsContainer, {
+      onlyScrollIfNeeded: true
+    })
+  };
 
-		let target = suggestionsContainer.querySelector(fullActiveClass);
-		let index = target? [].indexOf.call(nodes, target) : -1 ;
-		let next;
-		var clearActive = ( nodes ) => {
-			for(let i = 0; i < nodes.length; i++){
-				nodes[i].classList.remove(activeClassName)
-			}
-		}
-		
-		switch(direction){
+  onSubmit = (event) => {
+    /* Check if there is active class */
 
-			case 'up':
-				clearActive(nodes)
-				next = nodes[Math.max(0, --index)]
-				next.classList.add(activeClassName)
-				break;
-			case 'down':
-				clearActive(nodes)
-				next = nodes[Math.min(nodes.length - 1, ++index)]
-				next.classList.add(activeClassName);
-				break;
-		}
-		
-		scrollIntoView( next, suggestionsContainer, { onlyScrollIfNeeded: true})
-	};
-	
-	onSubmit = (event) => {
+    let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName)
 
-		/* Check if there is active class */
+    if (target) {
+      let linkTarget = target.nodeName === 'A' ? target : target.querySelector('a')
+      if (linkTarget) linkTarget.click()
+      return
+    }
 
-		let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName);
+    this.handleViewAll()
 
-		if(target){
-			let linkTarget = target.nodeName == 'A'? target: target.querySelector('a'); 
-			if(linkTarget) linkTarget.click();
-			return ;
-		}
+    event && event.preventDefault()
+  };
 
+  handleViewAll = () => {
+    var { q, facet_query } = this.props.AutoSuggest.query
 
-		this.handleViewAll();
+    var { dispatch, onSubmit } = this.props
 
-		event && event.preventDefault();
-	};
+    var { searchPageUrl } = this.context.config
 
-	handleViewAll = () => {
+    dispatch(closeAutoSuggest())
 
-		var { q, facet_query } = this.props.AutoSuggest.query;
+    onSubmit && onSubmit.call(this, q)
 
-		var { dispatch, onSubmit } = this.props;
+    window.location.href = searchPageUrl + '?' + buildQueryString({ q, facet_query })
+  };
 
-		var { searchPageUrl } = this.context.config;
+  onFocus = (event) => {
+    this.setState({
+      isFocused: true
+    })
 
-		dispatch(closeAutoSuggest())
+    this.props.onFocus && this.props.onFocus.call(this, event)
+  };
 
-		onSubmit && onSubmit.call(this, q)
+  onBlur = (event) => {
+    this.setState({
+      isFocused: false
+    })
 
-		window.location.href = searchPageUrl + '?' + buildQueryString( { q: q, facet_query: facet_query })
-	};
+    this.props.onBlur && this.props.onBlur.call(this, event)
+  };
 
-	onFocus = (event) => {
+  render () {
+    var {
+      dispatch,
+      AutoSuggest,
+      bookmarks,
+      components,
+      showFacetSuggestions,
+      viewAllClassName,
+      placeholder,
+      facetSuggestionName
+    } = this.props
 
-		this.setState({
-			isFocused: true
-		})
+    var {
+      isFocused
+    } = this.state
 
-		this.props.onFocus && this.props.onFocus.call(this, event)
-	};
+    var {
+      results,
+      query,
+      spellSuggestions,
+      suggestedTerm,
+      isOpen,
+      totalResults,
+      facets
+    } = AutoSuggest
 
-	onBlur = (event) => {
+    var { q } = query
 
-		this.setState({
-			isFocused: false
-		})
+    var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
+    var klassContainer = classNames('ola-autosuggest', {
+      'ola-autosuggest-focus': isFocused,
+      'ola-autosuggest-blur': !isFocused
+    })
 
-		this.props.onBlur && this.props.onBlur.call(this, event)
-	};
+    var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length
 
-	render(){		
-		var {
-			dispatch,
-			AutoSuggest,
-			bookmarks,
-			components,
-			showFacetSuggestions,
-			onFocus,
-			onBlur,
-			viewAllClassName,
-			placeholder,			
-		} = this.props;
+    return (
+      <div className={klassContainer}>
+        <div className='ola-autosuggest-container'>
+          <Input
+            q={q}
+            onChange={this.onChange}
+            onClear={this.onClear}
+            onMove={this.onMove}
+            onSubmit={this.onSubmit}
+            onFocus={this.onFocus}
+            placeholder={placeholder}
+            handleClickOutside={this.handleClickOutside}
+          />
+          <div className={klass}>
+            <TermSuggestion term={suggestedTerm} />
+            <SpellSuggestion
+              suggestions={spellSuggestions}
+              onChange={this.onChange}
+              totalResults={totalResults}
+              dispatch={dispatch}
+            />
 
-		var {
-			isFocused
-		} = this.state;
+            <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
 
-		var {
-			results,
-			query,
-			spellSuggestions,
-			suggestedTerm,
-			isOpen,
-            totalResults,
-            facets,
-		} = AutoSuggest;
-
-		var { q } = query;
-
-		var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen });
-		var klassContainer = classNames('ola-autosuggest', {
-			'ola-autosuggest-focus': isFocused,
-			'ola-autosuggest-blur': !isFocused
-		})
-
-		var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length;
-
-		return (
-			<div className={klassContainer}>
-				<div className="ola-autosuggest-container">
-					<Input
-						q = {q}
-						onChange = {this.onChange}
-						onClear = {this.onClear}
-						onMove = { this.onMove}
-						onSubmit = { this.onSubmit }
-						onFocus = { this.onFocus }						
-						placeholder = { placeholder }
-						handleClickOutside = { this.handleClickOutside }						
-					/>
-
-					<div className={klass}>						
-
-						<TermSuggestion term = {suggestedTerm} />
-				
-						<SpellSuggestion 
-							suggestions = {spellSuggestions} 
-							onChange = {this.onChange}
-							totalResults = {totalResults}
-							dispatch = {dispatch}
-						/>
-
-						<div className="ola-suggestions-wrapper" ref="suggestionsContainer">
-
-							{ shouldShowFacetSuggestions
-								? <FacetSuggestion
-										facets = { facets }
-										query = { query }
-										name = 'genres_sm'
-										dispatch = { dispatch }
-										onSubmit = { this.handleViewAll }
-										addFacet = { addFacet }
-									/>
-								: null
-							}
-							<Suggestions 
-								results = {results} 
-								isOpen = {isOpen}
-								dispatch = {dispatch}
-								bookmarks = {bookmarks}
-								components = { components }
-							/>
-						</div>
-						<a className={ viewAllClassName } onClick = {this.handleViewAll}>View all results</a>
-					</div>
-				</div>
-			</div>
-		)
-	}
+              {shouldShowFacetSuggestions &&
+                <FacetSuggestion
+                  facets={facets}
+                  query={query}
+                  name={facetSuggestionName}
+                  dispatch={dispatch}
+                  onSubmit={this.handleViewAll}
+                  addFacet={addFacet}
+                />
+              }
+              <Suggestions
+                results={results}
+                isOpen={isOpen}
+                dispatch={dispatch}
+                bookmarks={bookmarks}
+                components={components}
+              />
+            </div>
+            <a
+              className={viewAllClassName}
+              onClick={this.handleViewAll}
+            >View all results</a>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
-function mapStateToProps( state ){
-
-	return {
-		AutoSuggest: state.AutoSuggest,
-		bookmarks: state.AppState.bookmarks
-	}
+function mapStateToProps (state) {
+  return {
+    AutoSuggest: state.AutoSuggest,
+    bookmarks: state.AppState.bookmarks
+  }
 }
 
-module.exports = connect( mapStateToProps )( listensToClickOutside( AutoSuggest ) )
+module.exports = connect(mapStateToProps)(listensToClickOutside(AutoSuggest))

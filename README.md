@@ -17,6 +17,20 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 - [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
 - [x] Added tag cloud
 
+## Coding collaboration guidelines
+
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
+Please use Javascript Standard Guide [https://github.com/feross/standard](https://github.com/feross/standard)
+
+Always run
+
+````
+npm run standard
+````
+
+And fixing any JS style issues before committing files
+
 ## Features
 
 ### Search

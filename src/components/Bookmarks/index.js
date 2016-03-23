@@ -32,7 +32,7 @@ class Bookmarks extends React.Component {
   };
 
   onRemove = (bookmark) => {
-    var {dispatch} = this.props
+    var { dispatch } = this.props
     dispatch(removeBookmark(bookmark))
   };
   render () {
