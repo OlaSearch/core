@@ -36,6 +36,9 @@
     "url": "https://github.com/olasearch/core/issues"
   },
   "homepage": "https://github.com/olasearch/core",
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "devDependencies": {
     "babel-cli": "^6.6.5",
     "babel-core": "^6.6.4",
