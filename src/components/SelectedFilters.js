@@ -26,7 +26,8 @@ class SelectedFilters extends React.Component{
 	};
 
 	static defaultProps = {
-		showQuery: false
+		showQuery: false,
+		filters: []
 	};
 
 	handleRemoveFacet = (facet, value) => {
@@ -58,7 +59,11 @@ class SelectedFilters extends React.Component{
 			showGuidePopover
 		} = this.state;
 
-		if(!facets.length && !q && !filters.length) return null
+		if(!facets && 
+			!facets.length && 
+			!q && 
+			!filters && 
+			!filters.length) return null
 
 		return (
 			<div className="ola-facet-tags">				

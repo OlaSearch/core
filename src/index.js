@@ -55,8 +55,7 @@ module.exports = {
     NoResults: require('./components/SearchResults/NoResults'),
     SearchTitle: require('./components/SearchTitle'),
     ClearAllFacets: require('./components/Misc/ClearAllFacets'),
-    Error: require('./components/Misc/Error'),
-    Map: require('./components/Map'),
+    Error: require('./components/Misc/Error'),    
 	Tabs: require('./components/FacetFilters/Tabs'),
     SelectedFilters: require('./components/SelectedFilters'),
     Sort: require('./components/Sort'),
@@ -96,7 +95,7 @@ module.exports = {
 	},
     Decorators: {
         OlaRoute: require('./decorators/OlaRoute'),
-        OlaFacetToggle: require('./decorators/OlaFacetToggle'),
+        OlaFacetToggle: require('./decorators/OlaFacetToggle')        
     },    
     olaReducer: require('./reducers'),
     createOlaMiddleware: require('./middleware/createOlaMiddleware'),

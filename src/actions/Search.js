@@ -1,13 +1,16 @@
 import types from './../constants/ActionTypes';
 import { addHistory } from './History';
-import { pushState } from './../services/urlSync';
+import { pushState } from './../services/URLSync';
 import { debounce } from './../utilities';
 
 /* Update Browser URL */
-const updateUrl = debounce(pushState, 300);
+const updateURL = debounce(pushState, 300);
 
 /* Adds to History */
 const addToHistory = debounce(addOlaHistory, 600);
+
+/* Should route change */
+var globalRouteChange = true;
 
 export function addOlaHistory(dispatchInstance, query){	
 
@@ -101,7 +104,7 @@ export function executeSearch(payload){
 			
 			/* Update Browser URL */
 			
-			updateUrl(query)
+			globalRouteChange && updateURL(query)
 			
 			/* Add History */
 			
@@ -230,29 +233,37 @@ export function updateStateFromQuery( config ){
 	}
 }
 
-function writeCookie(name,value,days) {
-    var date, expires;
-    if (days) {
-        date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        expires = "; expires=" + date.toGMTString();
-            }else{
-        expires = "";
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
+// function writeCookie(name,value,days) {
+//     var date, expires;
+//     if (days) {
+//         date = new Date();
+//         date.setTime(date.getTime()+(days*24*60*60*1000));
+//         expires = "; expires=" + date.toGMTString();
+//             }else{
+//         expires = "";
+//     }
+//     document.cookie = name + "=" + value + expires + "; path=/";
+// }
 
 export function initSearch( options ){
 	
 	return (dispatch, getState) => {
 
-		var { config } = options;
+		var { config, urlSync } = options;
 
-		writeCookie('olasearch-cookie', Math.random())
+		/* Should Ola Search read state from query string */
+		
+		var shouldSyncURL = urlSync == undefined || urlSync? true : false;
+
+		// writeCookie('olasearch-cookie', Math.random())
 		
 		/* Always pass configuration to @parseQueryString handler */
 
-		dispatch(updateStateFromQuery( config ))
+		shouldSyncURL && dispatch( updateStateFromQuery( config ))
+		
+		/* Global setting */
+		
+		globalRouteChange = shouldSyncURL;
 
 		/* Disable Route change initally */
 

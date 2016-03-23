@@ -22,13 +22,12 @@ export default (state = initialState, action) => {
 			var { filter, value } = action.payload;			
 			var { name } = filter;
 			var index = checkIfFacetExists( state.filters, name );
-			var filterObject = { ...filter, value };
 
 			if(index == null){
 
 				return {
 					...state,
-					filters: [ ...state.filters, filterObject]
+					filters: [ ...state.filters, { ...filter, value }]
 				}
 			}else{
 
@@ -49,15 +48,9 @@ export default (state = initialState, action) => {
 			
 			var { name } = action.payload;
 
-			var filters = [
-					...state.filters.filter( 
-						filter => filter.name != name
-					)
-				];
-
 			return {
 				...state,
-				filters: filters,
+				filters: state.filters.filter( item => item.name != name ),
 				page: 1
 			}
 
