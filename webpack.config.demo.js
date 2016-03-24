@@ -1,13 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
-module.exports = {  
+module.exports = {
   entry: [
     './index'
   ],
   output: {
     path: path.join(__dirname, 'demo'),
-    filename: 'olasearch.demo.min.js',    
+    filename: 'olasearch.demo.min.js',
     library: 'OlaSearch',
     libraryTarget: 'umd'
   },
@@ -23,13 +23,14 @@ module.exports = {
         warnings: false
       }
     })
-  ],  
+  ],
   module: {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel'],
       include: path.join(__dirname, './'),
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules|bower_components)/
     }]
   }
-};
+}
+

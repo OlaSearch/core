@@ -17,9 +17,9 @@ export default (state = initialState, action) => {
     case types.ADD_FILTER:
       /* Remove duplicate */
 
-      var { filter, value } = action.payload
-      var { name } = filter
-      var index = checkIfFacetExists(state.filters, name)
+      let { filter, value } = action.payload
+      let { name } = filter
+      let index = checkIfFacetExists(state.filters, name)
 
       if (index == null) {
         return {
@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       } else {
         /* Update the value */
 
-        var newFilter = state.filters.slice(0)
+        let newFilter = state.filters.slice(0)
         newFilter[ index ].value = value
 
         return {

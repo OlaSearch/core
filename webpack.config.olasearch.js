@@ -1,17 +1,17 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   entry: [
-    './olasearch.config',
+    './olasearch.config'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'config.min.js',
-    publicPath: '/dist/',   
-    library: '__OLA_CONFIG__' ,
+    publicPath: '/dist/',
+    library: '__OLA_CONFIG__',
     libraryTarget: 'umd'
-  },  
+  },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
@@ -34,8 +34,9 @@ module.exports = {
     }
     ]
   },
-  externals: {    
-    "react": "React",
-    "react-dom": "ReactDOM"
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
-};
+}
+

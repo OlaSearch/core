@@ -1,9 +1,9 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   devtool: 'eval',
-  entry: [    
+  entry: [
     'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
     './index'
@@ -12,7 +12,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/static/'
-  },  
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
@@ -25,7 +25,8 @@ module.exports = {
       exclude: /(node_modules|bower_components)/
     },
     { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' },
-    { test: /\.css$/, loader: "style-loader!css-loader" },
+    { test: /\.css$/, loader: 'style-loader!css-loader' }
     ]
   }
-};
+}
+

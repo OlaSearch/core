@@ -18,7 +18,7 @@
     "lint": "eslint src",
     "test": "BABEL_ENV=production mocha --compilers js:babel-core/register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
-    "standard": "standard src/components/FacetFilters/Boolean.js --verbose | snazzy"
+    "standard": "standard --verbose | snazzy"
   },
   "engines": {
     "node": ">=0.12",
@@ -38,7 +38,13 @@
   },
   "homepage": "https://github.com/olasearch/core",
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "ignore": [
+      "/test",
+      "/lib",
+      "/node_modules",
+      "/src/reducers/QueryState.js"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -64,6 +70,8 @@
     "jsdom": "^8.1.0",
     "mocha": "^2.3.4",
     "rimraf": "^2.5.0",
+    "snazzy": "^3.0.0",
+    "standard": "^6.0.8",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.9.1"

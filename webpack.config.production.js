@@ -1,7 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
-module.exports = {  
+module.exports = {
   entry: [
     './src/index'
   ],
@@ -30,8 +30,9 @@ module.exports = {
       include: path.join(__dirname, 'src')
     }]
   },
-  externals: {    
-    "react": "React",
-    "react-dom": "ReactDOM"    
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
-};
+}
+
