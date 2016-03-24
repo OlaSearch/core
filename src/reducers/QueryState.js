@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        filters: state.filters.filter((item) => item.name !== name ),
+        filters: state.filters.filter((item) => item.name !== name),
         page: 1
       }
 
@@ -89,9 +89,7 @@ export default (state = initialState, action) => {
        * Always convert Array to strings
        * [1, 2] => ["1", "2"]
        */
-      if(value instanceof Array){
-        value = castNumberToStringArray(value)
-      }
+      if (value instanceof Array) value = castNumberToStringArray(value)
 
       if (index == null) {
         fq.push({
@@ -113,26 +111,22 @@ export default (state = initialState, action) => {
       var fq = state.facet_query.slice(0)
       var { value, facet } = action
 
-      if(value instanceof Array){
-        value = castNumberToStringArray(value)
-      }
+      if (value instanceof Array) value = castNumberToStringArray(value)
 
-      for (var i = fq.length - 1; i >= 0; i--){
-
+      for (var i = fq.length - 1; i >= 0; i--) {
         var cur = fq[i]
         var { selected } = cur
 
-        if (cur.name === facet.name){
-
+        if (cur.name === facet.name) {
           /* Remove selections if No value is supplied */
 
-          if (!value) selected = [];
+          if (!value) selected = []
 
           selected.splice(
             indexOf(value, selected), 1
           )
 
-          if (!selected.length)  fq = [ ...fq.slice(0, i), ...fq.slice(i + 1) ]
+          if (!selected.length) fq = [ ...fq.slice(0, i), ...fq.slice(i + 1) ]
         }
       }
 
@@ -140,7 +134,7 @@ export default (state = initialState, action) => {
         ...state,
         facet_query: fq,
         page: 1
-      };
+      }
 
     case types.REPLACE_FACET:
 

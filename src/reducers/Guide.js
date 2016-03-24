@@ -69,15 +69,15 @@ export default (state = initialState, action) => {
       var { value, facet } = action
       var { name, displayName, type, multiSelect, template, label } = facet
       var fq = state.query.facet_query.slice(0)
-      var index = checkIfFacetExists(fq, name)
+      var idx = checkIfFacetExists(fq, name)
 
-      if (index == null) {
+      if (idx == null) {
         fq.push({
           name, type, displayName, multiSelect, template, label,
           selected: [value]
         })
       } else {
-        fq[index].selected = [value]
+        fq[idx].selected = [value]
       }
 
       return {
