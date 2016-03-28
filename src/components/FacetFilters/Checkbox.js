@@ -3,6 +3,7 @@ import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import ReactList from 'react-list'
+import { getDisplayName } from './../../utilities'
 
 class Default extends React.Component {
 
@@ -18,6 +19,10 @@ class Default extends React.Component {
   static defaultProps = {
     limit: 6,
     listType: 'uniform'
+  };
+
+  static contextTypes = {
+    config: React.PropTypes.object
   };
 
   static propTypes = {
@@ -68,6 +73,8 @@ class Default extends React.Component {
       values
     } = facet
 
+    var { config } = this.context
+
     /* Lowercase */
 
     var filter = filterText.toLowerCase()
@@ -116,6 +123,7 @@ class Default extends React.Component {
                   var handleAddFacet = this.handleAddFacet.bind(this, facet, name)
                   var handleRemoveFacet = this.handleRemoveFacet.bind(this, facet, name)
                   var isActive = isSelected(name)
+                  var displayName = getDisplayName(config.facetNames, name)
                   var labelKlass = classNames({
                     'ola-checkbox ola-checkbox-label': true,
                     'ola-checkbox-active': isActive
@@ -136,8 +144,8 @@ class Default extends React.Component {
                         />
                       <span
                         className='ola-search-facet-name'
-                        title={name}
-                      >{name}</span>
+                        title={displayName}
+                      >{displayName}</span>
                       <span
                         className='ola-search-facet-count'
                       >{count}</span>

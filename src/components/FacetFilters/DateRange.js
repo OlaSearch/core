@@ -55,8 +55,8 @@ class DateRange extends React.Component {
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
-          <label className='ola-label'>
-            From
+          <label className='ola-label ola-label-date'>
+            <span>From</span>
             <input
               type='date'
               value={this.format(defaultFrom)}
@@ -65,8 +65,8 @@ class DateRange extends React.Component {
               onChange={this.onChange}
             />
           </label>
-          <label className='ola-label'>
-            To
+          <label className='ola-label ola-label-date'>
+            <span>To</span>
             <input
               type='date'
               ref='toDate'

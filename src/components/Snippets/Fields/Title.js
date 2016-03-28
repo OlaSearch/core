@@ -12,6 +12,11 @@ class Title extends React.Component {
   };
 
   logClick = (event) => {
+
+    var { onClick } = this.props
+
+    if (onClick) onClick(event)
+
     this.context.store.dispatch(log('C', this.props.result))
   };
 
