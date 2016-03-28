@@ -5,7 +5,7 @@ import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
 
 class DateRange extends React.Component {
-  constructor(props){
+  constructor (props) {
     super(props)
     this.state = {
       isCustomActive: false
@@ -108,10 +108,10 @@ class DateRange extends React.Component {
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
-          <ul className="ola-date-list">
+          <ul className='ola-date-list'>
             <li>
               <button
-                className="ola-btn-unstyled ola-btn-date-select"
+                className='ola-btn-unstyled ola-btn-date-select'
                 onClick={(event) => {
                   this.onDateSelect('current_year')
                 }}
@@ -119,7 +119,7 @@ class DateRange extends React.Component {
             </li>
             <li>
               <button
-                className="ola-btn-unstyled ola-btn-date-select"
+                className='ola-btn-unstyled ola-btn-date-select'
                 onClick={(event) => {
                   this.onDateSelect('last_year')
                 }}
@@ -127,7 +127,7 @@ class DateRange extends React.Component {
             </li>
             <li>
               <button
-                className="ola-btn-unstyled ola-btn-date-select"
+                className='ola-btn-unstyled ola-btn-date-select'
                 onClick={(event) => {
                   this.onDateSelect('last_3_years')
                 }}
@@ -135,7 +135,7 @@ class DateRange extends React.Component {
             </li>
             <li>
               <button
-                className="ola-btn-unstyled ola-btn-date-select"
+                className='ola-btn-unstyled ola-btn-date-select'
                 onClick={(event) => {
                   this.onDateSelect('last_5_years')
                 }}
@@ -143,10 +143,10 @@ class DateRange extends React.Component {
             </li>
             <li className={customKlass}>
               <button
-                className="ola-btn-unstyled ola-btn-date-select"
-                onClick = {this.activateCustom}
+                className='ola-btn-unstyled ola-btn-date-select'
+                onClick={this.activateCustom}
                 >Custom</button>
-              <div className="ola-date-custom-input">
+              <div className='ola-date-custom-input'>
                 <label className='ola-label ola-label-date'>
                   <span>From</span>
                   <input

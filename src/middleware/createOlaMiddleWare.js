@@ -65,18 +65,23 @@ module.exports = (options = {}) => {
     var CALL_API
     var params = queryBuilder.transform(timestampedQuery, api === 'suggest' ? config.mappingAutoSuggest : null)
 
-    switch (api) {
-      case 'suggest':
-        CALL_API = () => searchService.suggest(params, config.mappingAutoSuggest)
-        break
+    if (typeof api === 'function') {
+      /* Returns a promise */
+      CALL_API = () => api(params)
+    } else {
+      switch (api) {
+        case 'suggest':
+          CALL_API = () => searchService.suggest(params, config.mappingAutoSuggest)
+          break
 
-      case 'get':
-        CALL_API = () => searchService.get(params)
-        break
+        case 'get':
+          CALL_API = () => searchService.get(params)
+          break
 
-      default:
-        CALL_API = () => searchService.search(params)
-        break
+        default:
+          CALL_API = () => searchService.search(params)
+          break
+      }
     }
 
     if (typeof CALL_API !== 'function') {
@@ -103,7 +108,7 @@ module.exports = (options = {}) => {
          * Total results = 0 && Has Spell Suggestions
          */
 
-        if (totalResults === 0 && spellSuggestions.length) {
+        if (totalResults === 0 && spellSuggestions.length && executeFromSpellSuggest) {
           return dispatch(
             executeFromSpellSuggest({
               suggestedTerm: spellSuggestions[0].term,
