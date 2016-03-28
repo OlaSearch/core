@@ -83,21 +83,22 @@ class Pagination extends React.Component {
       ellipsis
     } = this.props
 
+    let currentPageInt = parseInt(currentPage)
     var totalPages = Math.ceil(totalResults / perPage)
 
     var start = 1
-    var left = Math.max(parseInt(currentPage) - edges, 0)
-    var right = Math.min(parseInt(currentPage) + edges, totalPages)
+    var left = Math.max(currentPageInt - edges, 0)
+    var right = Math.min(currentPageInt + edges, totalPages)
 
     var pages = this.createPageList(start, totalPages, limit, left, right, ellipsis)
 
     var prevPageClass = classNames('ola-page ola-page-previous', {
-      'ola-page-disabled': currentPage === 1
+      'ola-page-disabled': currentPageInt === 1
     })
 
     var nextPageClass = classNames({
       'ola-page ola-page-next': true,
-      'ola-page-disabled': currentPage === totalPages
+      'ola-page-disabled': currentPageInt === totalPages
     })
 
     return (
@@ -106,7 +107,7 @@ class Pagination extends React.Component {
         {pages.map((page, idx) => {
           var klass = classNames({
             'ola-page': true,
-            'ola-page-current': currentPage === page,
+            'ola-page-current': currentPageInt === page,
             'ola-page-ellipsis': page === ellipsis
           })
 

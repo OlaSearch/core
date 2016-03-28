@@ -12,7 +12,6 @@ class Title extends React.Component {
   };
 
   logClick = (event) => {
-
     var { onClick } = this.props
 
     if (onClick) onClick(event)

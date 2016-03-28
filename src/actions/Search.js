@@ -225,11 +225,11 @@ export function updateStateFromQuery (config) {
 
 export function initSearch (options) {
   return (dispatch, getState) => {
-    var { config, urlSync } = options
+    let { config, urlSync } = options
 
     /* Should Ola Search read state from query string */
 
-    var shouldSyncURL = urlSync === undefined || urlSync
+    let shouldSyncURL = urlSync === undefined || urlSync
 
     // writeCookie('olasearch-cookie', Math.random())
 
@@ -240,6 +240,15 @@ export function initSearch (options) {
     /* Global setting */
 
     globalRouteChange = shouldSyncURL
+
+    /* Bootstrap by adding filters */
+
+    let { filters } = config
+
+    filters.forEach((filter) => {
+      let { value } = filter
+      if (value) dispatch(addFilter({ filter, value }))
+    })
 
     /* Disable Route change initally */
 
