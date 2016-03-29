@@ -17,20 +17,20 @@ export default (state = initialState, action) => {
     case types.ADD_FILTER:
       /* Remove duplicate */
 
-      let { filter, value } = action.payload
+      let { filter, selected } = action.payload
       let { name } = filter
       let index = checkIfFacetExists(state.filters, name)
 
       if (index == null) {
         return {
           ...state,
-          filters: [ ...state.filters, { ...filter, value } ]
+          filters: [ ...state.filters, { ...filter, selected } ]
         }
       } else {
         /* Update the value */
 
         let newFilter = state.filters.slice(0)
-        newFilter[ index ].value = value
+        newFilter[ index ].selected = selected
 
         return {
           ...state,
@@ -80,10 +80,10 @@ export default (state = initialState, action) => {
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
 
       var { value, facet } = action
-      var { name, displayName, type, multiSelect, template, label } = facet
+      var { values, ...rest } = facet
 
       var fq = state.facet_query.slice(0)
-      var index = checkIfFacetExists(fq, name)
+      var index = checkIfFacetExists(fq, facet.name)
 
       /**
        * Always convert Array to strings
@@ -93,7 +93,7 @@ export default (state = initialState, action) => {
 
       if (index == null) {
         fq.push({
-          name, type, displayName, multiSelect, template, label,
+          ...rest,
           selected: [value]
         })
       } else {
@@ -142,13 +142,13 @@ export default (state = initialState, action) => {
 
       var { value, facet } = action
 
-      var { name, displayName, type, multiSelect, template, label } = facet
+      var { values, ...reset } = facet
       var fq = state.facet_query.slice(0)
-      var index = checkIfFacetExists(fq, name)
+      var index = checkIfFacetExists(fq, facet.name)
 
       if (index == null) {
         fq = [...fq, {
-          name, type, displayName, multiSelect, template, label,
+          ...rest,
           selected: [value]
         }]
       } else {

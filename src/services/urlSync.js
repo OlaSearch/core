@@ -26,11 +26,11 @@ var urlSync = {
 
       if (name === 'filters') {
         value = value.map((item) => {
-          var { name, value } = item
+          var { name, selected } = item
 
-          if (typeof value === 'object') value = queryString.stringify(value)
+          if (typeof selected === 'object') selected = queryString.stringify(selected)
 
-          return name + ':' + value
+          return name + ':' + selected
         })
       }
 

@@ -246,8 +246,8 @@ export function initSearch (options) {
     let { filters } = config
 
     filters.forEach((filter) => {
-      let { value } = filter
-      if (value) dispatch(addFilter({ filter, value }))
+      let { selected } = filter
+      if (selected) dispatch(addFilter({ filter, selected }))
     })
 
     /* Disable Route change initally */

@@ -38,6 +38,10 @@ const Tag = (props, context) => {
       displayName = name
       break
 
+    case 'boolean':
+      displayName = facet.valueDisplayName || getDisplayName(context.config.facetNames, name)
+      break
+
     default:
       displayName = getDisplayName(context.config.facetNames, name)
       break
