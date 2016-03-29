@@ -142,7 +142,7 @@ export default (state = initialState, action) => {
 
       var { value, facet } = action
 
-      var { values, ...reset } = facet
+      var { values, ...rest } = facet
       var fq = state.facet_query.slice(0)
       var index = checkIfFacetExists(fq, facet.name)
 

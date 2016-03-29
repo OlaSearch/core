@@ -115,7 +115,7 @@ var urlSync = {
 
         return {
           ...currentFilter,
-          value: value
+          selected: value
         }
       })
 

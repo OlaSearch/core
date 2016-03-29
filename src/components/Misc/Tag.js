@@ -35,7 +35,7 @@ const Tag = (props, context) => {
       break
 
     case 'geo_distance':
-      displayName = name
+      displayName = facet.displayName || name
       break
 
     case 'boolean':

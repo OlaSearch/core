@@ -33,7 +33,8 @@ export default (state = initialState, action) => {
         return {
           ...state,
           results: [ ...state.results, ...action.results ],
-          isLoading: false
+          isLoading: false,
+          error: null
         }
       }
 
@@ -45,7 +46,8 @@ export default (state = initialState, action) => {
         totalResults: action.totalResults,
         suggestedTerm: action.suggestedTerm,
         qt: action.qt,
-        isLoading: false
+        isLoading: false,
+        error: null
       }
 
     case types.REQUEST_SEARCH_FAILURE:
