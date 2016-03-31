@@ -49,10 +49,13 @@ class TagCloud extends React.Component {
           {values.map((value, idx) => {
             var { name, count } = value
             var size = (count === min) ? fontSizeMin : (count / max) * (fontSizeMax - fontSizeMin) + fontSizeMin
-            var handleAddFacet = this.handleAddFacet.bind(this, facet, name)
 
             return (
-              <button className='ola-btn-tag' key={idx} style={{ fontSize: size + 'px' }} onClick={handleAddFacet}>
+              <button
+                className='ola-btn-tag'
+                key={idx}
+                style={{ fontSize: size + 'px' }}
+                onClick={() => this.handleAddFacet(facet, name)}>
                 {name}
               </button>
             )

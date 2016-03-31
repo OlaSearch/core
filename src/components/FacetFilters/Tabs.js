@@ -11,12 +11,9 @@ import React from 'react'
 import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
+import invariant from 'invariant'
 
 class Tabs extends React.Component {
-
-  static contextTypes = {
-    config: React.PropTypes.object
-  };
 
   static propTypes = {
     facets: React.PropTypes.array.isRequired,
@@ -53,15 +50,17 @@ class Tabs extends React.Component {
     dispatch(executeSearch())
   };
 
-  getTabsForDisplay = (values) => {
+  getTabsForDisplay = (tab, values) => {
     var {
       tabsToDisplay
-    } = this.context.config
+    } = tab
+
+    invariant(tabsToDisplay, 'tabsToDisplay is required. It should be part of the individual facet')
 
     var tabs = []
 
     for (var i = 0; i < tabsToDisplay.length; i++) {
-      var tab = values.filter((item) => item.name === tabsToDisplay[i])
+      let tab = values.filter((item) => item.name === tabsToDisplay[i])
 
       if (tab.length) {
         tabs.push({
@@ -85,8 +84,6 @@ class Tabs extends React.Component {
       selected
     } = this.props
 
-    var { config } = this.context
-
     var facet = facets.filter((item) => item.tab)
 
     /* Return null if there is no facets */
@@ -94,9 +91,10 @@ class Tabs extends React.Component {
     if (!facet.length) return null
 
     var tab = facet[0]
+    var { facetNames } = tab
     var values = [].concat.apply([], facet.map((item) => item.values))
 
-    var tabs = this.getTabsForDisplay(values)
+    var tabs = this.getTabsForDisplay(tab, values)
 
     var selectedFacets = selected.filter((item) => item.name === tab.name).map((item) => item.selected)
     var selectedItems = [].concat.apply([], selectedFacets)
@@ -141,7 +139,7 @@ class Tabs extends React.Component {
               onClick={() => {
                 if (!isActive && value.count) this.handleReplaceFacet(tab, value.name)
               }}>
-              <span className='ola-tab-name'>{getDisplayName(config.facetNames, value.name)}</span>
+              <span className='ola-tab-name'>{getDisplayName(facetNames, value.name)}</span>
               <span className='ola-search-facet-count'>{value.count}</span>
             </a>
           )

@@ -86,11 +86,10 @@ class SelectedFilters extends React.Component {
             <div key={idx} className='ola-facet-tags-group'>
               <span className='ola-facet-tags-heading'>{facet.displayName}: </span>
               {tags.map((value, index) => {
-                var removeFacet = this.handleRemoveFacet.bind(this, facet, value)
                 return (
                   <Tag
                     key={index}
-                    onRemove={removeFacet}
+                    onRemove={() => this.handleRemoveFacet(facet, value)}
                     name={value}
                     facet={facet}
                   />

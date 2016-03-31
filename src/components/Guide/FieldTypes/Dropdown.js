@@ -215,7 +215,6 @@ class Dropdown extends React.Component {
               initialIndex={selectedIndex}
               itemRenderer={(idx, key) => {
                 var name = values[idx].name
-                var selectItem = this.selectItem.bind(this, name, idx)
                 var klassName = classNames({
                   'ola-dropdown-item': true,
                   'ola-dropdown-item-active': selectedIndex === idx,
@@ -226,7 +225,7 @@ class Dropdown extends React.Component {
                   <a
                     key={key}
                     className={klassName}
-                    onMouseDown={selectItem}
+                    onMouseDown={() => this.selectItem(name, idx)}
                   >
                     {name}
                   </a>

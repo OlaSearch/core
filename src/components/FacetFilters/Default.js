@@ -4,7 +4,7 @@ import Tag from './../Misc/Tag'
 import ReactList from 'react-list'
 import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
-// import { getDisplayName } from './../../utilities'
+import { getDisplayName } from './../../utilities'
 
 class Default extends React.Component {
 
@@ -23,10 +23,6 @@ class Default extends React.Component {
     facet: React.PropTypes.object.isRequired,
     limit: React.PropTypes.number.isRequired,
     showSelectedFacetItem: React.PropTypes.bool
-  };
-
-  static contextTypes = {
-    config: React.PropTypes.object
   };
 
   static defaultProps = {
@@ -87,7 +83,8 @@ class Default extends React.Component {
     } = this.props
 
     var {
-      values
+      values,
+      facetNames
     } = facet
 
     /* Lowercase */
@@ -139,10 +136,9 @@ class Default extends React.Component {
 
           <div className='ola-facet-tags-selected'>
             {selected.map((item, idx) => {
-              var removeFacet = this.handleRemoveFacat.bind(this, facet, item)
               return (
                 <Tag
-                  onRemove={removeFacet}
+                  onRemove={() => this.handleRemoveFacat(facet, item)}
                   name={item}
                   facet={facet}
                   key={idx}
@@ -157,8 +153,7 @@ class Default extends React.Component {
               <ReactList
                 itemRenderer={(index, key) => {
                   var { name, count } = values[index]
-                  /* var displayName = getDisplayName(config.facetNames, name); */
-                  var handleAddFacet = isSelected(name) ? null : this.handleAddFacet.bind(this, facet, name)
+                  var displayName = getDisplayName(facetNames, name)
                   var itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected(name) })
 
                   return (
@@ -166,10 +161,12 @@ class Default extends React.Component {
                       className={itemKlass}
                       type='button'
                       key={key}
-                      onClick={handleAddFacet}
+                      onClick={() => {
+                        !isSelected(name) && this.handleAddFacet(facet, name)
+                      }}
                     >
                       <span className='ola-search-facet-count'>{count}</span>
-                      <span className='ola-search-facet-name'>{name}</span>
+                      <span className='ola-search-facet-name'>{displayName}</span>
                     </button>
                   )
                 }}

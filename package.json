@@ -89,6 +89,7 @@
     "dom-scroll-into-view": "^1.1.0",
     "intl": "^1.0.1",
     "intl-locales-supported": "^1.0.0",
+    "invariant": "^2.2.1",
     "ismobilejs": "^0.3.9",
     "jquery-param": "^0.2.0",
     "nouislider": "^8.3.0",

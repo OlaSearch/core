@@ -21,10 +21,6 @@ class Default extends React.Component {
     listType: 'uniform'
   };
 
-  static contextTypes = {
-    config: React.PropTypes.object
-  };
-
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     selected: React.PropTypes.array.isRequired,
@@ -70,10 +66,9 @@ class Default extends React.Component {
     } = this.props
 
     var {
-      values
+      values,
+      facetNames
     } = facet
-
-    var { config } = this.context
 
     /* Lowercase */
 
@@ -83,7 +78,7 @@ class Default extends React.Component {
 
     /* Filter values */
 
-    values = values.filter((item) => item.name.match(new RegExp(filter, 'i')))
+    values = values.filter((item) => item.name.toString().match(new RegExp(filter, 'i')))
 
     var size = values.length
 
@@ -120,10 +115,8 @@ class Default extends React.Component {
               <ReactList
                 itemRenderer={(index, key) => {
                   var { name, count } = values[index]
-                  var handleAddFacet = this.handleAddFacet.bind(this, facet, name)
-                  var handleRemoveFacet = this.handleRemoveFacet.bind(this, facet, name)
                   var isActive = isSelected(name)
-                  var displayName = getDisplayName(config.facetNames, name)
+                  var displayName = getDisplayName(facetNames, name)
                   var labelKlass = classNames({
                     'ola-checkbox ola-checkbox-label': true,
                     'ola-checkbox-active': isActive
@@ -136,9 +129,9 @@ class Default extends React.Component {
                         checked={isActive}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            handleAddFacet()
+                            this.handleAddFacet(facet, name)
                           } else {
-                            handleRemoveFacet()
+                            this.handleRemoveFacet(facet, name)
                           }
                         }}
                         />

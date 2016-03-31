@@ -5,8 +5,7 @@ import DateParser from './../../utilities/dateParser'
 const Tag = (props, context) => {
   var displayName = ''
   var { name, onRemove, facet } = props
-  var { type, label, template } = facet
-  var { dateFormat } = context.config
+  var { type, label, template, facetNames, dateFormat } = facet
 
   switch (type) {
     case 'range':
@@ -39,11 +38,11 @@ const Tag = (props, context) => {
       break
 
     case 'boolean':
-      displayName = facet.valueDisplayName || getDisplayName(context.config.facetNames, name)
+      displayName = facet.valueDisplayName || getDisplayName(facetNames, name)
       break
 
     default:
-      displayName = getDisplayName(context.config.facetNames, name)
+      displayName = getDisplayName(facetNames, name)
       break
   }
 
@@ -56,16 +55,9 @@ const Tag = (props, context) => {
 }
 
 Tag.propTypes = {
-  name: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.array
-  ]),
+  name: React.PropTypes.any,
   onRemove: React.PropTypes.func,
   facet: React.PropTypes.object
-}
-
-Tag.contextTypes = {
-  config: React.PropTypes.object
 }
 
 module.exports = Tag
