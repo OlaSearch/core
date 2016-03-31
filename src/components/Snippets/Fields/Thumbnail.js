@@ -12,7 +12,7 @@ const Thumbnail = (props, context) => {
 
   if (!thumbnail_mobile) {
     return (
-      <img className='ola-img' {...rest} src={thumbnail} width='158' alt='' />
+      <img className='ola-img' {...rest} src={thumbnail} alt='' />
     )
   }
 
