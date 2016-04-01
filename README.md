@@ -22,11 +22,13 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 Please use Javascript Standard Guide [https://github.com/feross/standard](https://github.com/feross/standard)
+Please use eslint guidelines in `.eslintrc`
 
 Always run
 
 ````
 npm run standard
+npm run lint
 ````
 
 And fixing any JS style issues before committing files
