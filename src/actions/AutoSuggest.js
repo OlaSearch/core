@@ -17,10 +17,10 @@ export function executeAutoSuggest () {
         types.REQUEST_AUTOSUGGEST_SUCCESS,
         types.REQUEST_AUTOSUGGEST_FAILURE
       ],
-      query: query,
+      query,
       api: 'suggest',
       payload: {},
-      executeFromSpellSuggest: executeFromSpellSuggest
+      executeFromSpellSuggest
     })
   }
 }
@@ -40,10 +40,10 @@ export function executeFromSpellSuggest (payload) {
         types.REQUEST_AUTOSUGGEST_SUCCESS,
         types.REQUEST_AUTOSUGGEST_FAILURE
       ],
-      query: query,
+      query,
       api: 'suggest',
       payload: {},
-      suggestedTerm: suggestedTerm
+      suggestedTerm
     })
   }
 }

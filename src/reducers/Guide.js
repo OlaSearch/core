@@ -98,7 +98,7 @@ export default (state = initialState, action) => {
         ...state,
         query: {
           ...state.query,
-          facet_query: facet_query
+          facet_query
         }
       }
 

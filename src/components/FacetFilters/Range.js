@@ -51,10 +51,10 @@ class Range extends React.Component {
     } else this.refs.slider.removeAttribute('disabled')
 
     this.refs.slider.noUiSlider.updateOptions({
-      step: step,
+      step,
       range: {
-        min: min,
-        max: max
+        min,
+        max
       }
     })
 
@@ -116,12 +116,12 @@ class Range extends React.Component {
 
     var sliderOptions = {
       start: value,
-      step: step,
+      step,
       connect: singleHandle ? 'lower' : true,
       tooltips: true,
       range: {
-        'min': min,
-        'max': max
+        min,
+        max
       },
       format: {
         to: (value) => Math.floor(value),

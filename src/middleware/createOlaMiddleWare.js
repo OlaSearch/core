@@ -62,33 +62,33 @@ module.exports = (options = {}) => {
       timestamp: getState().Timestamp.timestamp
     }
 
-    var CALL_API
+    var callApi
     var params = queryBuilder.transform(timestampedQuery, api === 'suggest' ? config.mappingAutoSuggest : null)
 
     if (typeof api === 'function') {
       /* Returns a promise */
-      CALL_API = () => api(params)
+      callApi = () => api(params)
     } else {
       switch (api) {
         case 'suggest':
-          CALL_API = () => searchService.suggest(params, config.mappingAutoSuggest)
+          callApi = () => searchService.suggest(params, config.mappingAutoSuggest)
           break
 
         case 'get':
-          CALL_API = () => searchService.get(params)
+          callApi = () => searchService.get(params)
           break
 
         default:
-          CALL_API = () => searchService.search(params)
+          callApi = () => searchService.search(params)
           break
       }
     }
 
-    if (typeof CALL_API !== 'function') {
-      throw new Error('Expected CALL_API to be a function.')
+    if (typeof callApi !== 'function') {
+      throw new Error('Expected callApi to be a function.')
     }
 
-    return CALL_API().then(
+    return callApi().then(
       (response) => {
         var timestampFromResponse = parseInt(parser.requestParameters(response).timestamp)
 
@@ -142,7 +142,7 @@ module.exports = (options = {}) => {
       (error) => {
         dispatch({
           ...payload,
-          error: error,
+          error,
           type: failureType
         })
 

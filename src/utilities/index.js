@@ -1,14 +1,14 @@
 var utilities = {
-  supplant: function (s, d) {
+  supplant (s, d) {
     for (var p in d) {
       s = s.replace(new RegExp('{' + p + '}', 'g'), d[p])
     }
     return s
   },
-  arrayJoin: function (suffix, arr, separator = ', ') {
+  arrayJoin (suffix, arr, separator = ', ') {
     return arr ? suffix + arr.join(separator) : null
   },
-  checkIfFacetExists: function (facets, name) {
+  checkIfFacetExists (facets, name) {
     for (var i = 0; i < facets.length; i++) {
       if (facets[i].name === name) {
         return i
@@ -17,7 +17,7 @@ var utilities = {
 
     return null
   },
-  getValuesFromSelect: function (select) {
+  getValuesFromSelect (select) {
     var result = []
     var options = select && select.options
     var opt
@@ -35,7 +35,7 @@ var utilities = {
   now: Date.now || function () {
     return new Date().getTime()
   },
-  debounce: function (func, wait, immediate) {
+  debounce (func, wait, immediate) {
     var timeout, args, context, timestamp, result
 
     var later = function () {
@@ -66,7 +66,7 @@ var utilities = {
       return result
     }
   },
-  parseRangeValues: function (value) {
+  parseRangeValues (value) {
     /* [1, 2, 3, 4] => [1, 2], [3, 4] */
 
     var valueArray = []
@@ -78,20 +78,20 @@ var utilities = {
 
     return valueArray
   },
-  castNumberToStringArray: function (numberArray) {
+  castNumberToStringArray (numberArray) {
     return numberArray.map((item) => item.toString())
   },
-  createHTMLMarkup: function (html) {
+  createHTMLMarkup (html) {
     return { __html: html }
   },
-  getDisplayName: function (haystack, needle) {
+  getDisplayName (haystack, needle) {
     if (!haystack) return needle
 
     if (haystack[needle]) return haystack[needle]
 
     return needle
   },
-  getMatchingSnippet: function (rules, result) {
+  getMatchingSnippet (rules, result) {
     if (!rules) return false
 
     for (var i = 0; i < rules.length; i++) {
@@ -106,7 +106,7 @@ var utilities = {
 
     return false
   },
-  generateSlug: function (value) {
+  generateSlug (value) {
     return value.toString().toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
   }
 }

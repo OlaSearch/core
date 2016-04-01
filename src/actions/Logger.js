@@ -29,7 +29,7 @@ function submitLog () {
   dispatch({
     log: true,
     type: 'SEND_LOG',
-    eventType: eventType,
+    eventType,
     result,
     eventSource,
     state: getState()

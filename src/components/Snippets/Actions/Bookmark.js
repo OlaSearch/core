@@ -2,9 +2,8 @@ import React from 'react'
 import { addBookmark, removeBookmark } from './../../../actions/Bookmarks'
 
 const BookmarkActions = (props) => {
-  var { bookmarks, result, dispatch } = props
-
-  var isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id).length
+  let { bookmarks, result, dispatch } = props
+  let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id).length
 
   if (isBookmarked) {
     return (

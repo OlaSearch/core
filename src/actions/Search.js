@@ -83,10 +83,10 @@ export function executeSearch (payload) {
         types.REQUEST_SEARCH_SUCCESS,
         types.REQUEST_SEARCH_FAILURE
       ],
-      query: query,
+      query,
       api: 'search',
-      payload: payload,
-      executeFromSpellSuggest: executeFromSpellSuggest
+      payload,
+      executeFromSpellSuggest
     })
 
     /**
@@ -122,10 +122,10 @@ export function executeFromSpellSuggest (payload) {
         types.REQUEST_SEARCH_FAILURE
       ],
       shouldCallAPI: (state) => true,
-      query: query,
+      query,
       api: 'search',
-      payload: payload,
-      suggestedTerm: suggestedTerm
+      payload,
+      suggestedTerm
     })
   }
 }

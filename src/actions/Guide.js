@@ -17,9 +17,9 @@ export function executeSearch (payload) {
         types.REQUEST_GUIDE_SUCCESS,
         types.REQUEST_GUIDE_FAILURE
       ],
-      query: query,
+      query,
       api: 'search',
-      payload: payload
+      payload
     })
   }
 }

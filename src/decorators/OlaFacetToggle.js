@@ -1,6 +1,6 @@
 import React from 'react'
 
-export var FacetToggle = (ComposedComponent) => class extends React.Component {
+export var facetToggle = (ComposedComponent) => class extends React.Component {
   static displayName = 'OlaFacetToggle'
 
   constructor (props) {

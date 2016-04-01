@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        bookmarks: bookmarks
+        bookmarks
       }
 
     case types.REMOVE_BOOKMARK:
@@ -114,7 +114,7 @@ export default (state = initialState, action) => {
       if (exists.length) return state
 
       var _history = [{
-        q: q,
+        q,
         url: hashCharacter + buildQueryString(query),
         dateAdded: new Date().getTime(),
         facets

@@ -62,7 +62,6 @@ class DateRange extends React.Component {
         fromDate = new Date(year - 5, 0, 1).getTime()
         toDate = new Date(year, 11, 31).getTime()
         break
-
     }
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
@@ -112,33 +111,25 @@ class DateRange extends React.Component {
             <li>
               <button
                 className='ola-btn-unstyled ola-btn-date-select'
-                onClick={(event) => {
-                  this.onDateSelect('current_year')
-                }}
+                onClick={() => this.onDateSelect('current_year')}
                 >This year</button>
             </li>
             <li>
               <button
                 className='ola-btn-unstyled ola-btn-date-select'
-                onClick={(event) => {
-                  this.onDateSelect('last_year')
-                }}
+                onClick={() => this.onDateSelect('last_year')}
                 >Last year</button>
             </li>
             <li>
               <button
                 className='ola-btn-unstyled ola-btn-date-select'
-                onClick={(event) => {
-                  this.onDateSelect('last_3_years')
-                }}
+                onClick={() => this.onDateSelect('last_3_years')}
                 >Last 3 years</button>
             </li>
             <li>
               <button
                 className='ola-btn-unstyled ola-btn-date-select'
-                onClick={(event) => {
-                  this.onDateSelect('last_5_years')
-                }}
+                onClick={() => this.onDateSelect('last_5_years')}
                 >Last 5 years</button>
             </li>
             <li className={customKlass}>

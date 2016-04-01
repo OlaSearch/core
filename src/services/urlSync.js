@@ -3,17 +3,17 @@ import { parseRangeValues } from './../utilities'
 
 var urlSync = {
   character: '?',
-  pushState: function (qs) {
+  pushState (qs) {
     if (window.history.pushState) {
       window.history.pushState(null, '', urlSync.character + urlSync.buildQueryString(qs))
     }
   },
-  replaceState: function (qs) {
+  replaceState (qs) {
     if (window.history.replaceState) {
       window.history.replaceState(null, '', urlSync.character + urlSync.buildQueryString(qs))
     }
   },
-  buildQueryString: function (params) {
+  buildQueryString (params) {
     var str = []
 
     for (var i in params) {
@@ -55,7 +55,7 @@ var urlSync = {
 
     return str.join('&')
   },
-  parseQueryString: function (initialState, config) {
+  parseQueryString (initialState, config) {
     var qs = queryString.parse(window.location.search)
 
     /**
