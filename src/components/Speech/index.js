@@ -1,42 +1,56 @@
 import React from 'react'
+import classnames from 'classnames'
 
-var SpeechInput = React.createClass({
-  getInitialState: function () {
-    return {
-      isRecording: false
+class SpeechInput extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      isRecording: false,
+      isSpeechSupported: window.SpeechRecognition || window.webkitSpeechRecognition
     }
-  },
-  onLaunch: function () {
-    var { isRecording } = this.state
+  }
+
+  static defaultProps = {
+    lang: 'en',
+    continuous: true,
+    interimResults: true
+  };
+
+  onLaunch = () => {
+    let { isRecording } = this.state
+    let { lang, continuous, interimResults } = this.props
 
     this.setState({
       isRecording: !isRecording
     })
 
-    if (isRecording) {
+    if (isRecording && this.recog) {
       this.recog.stop()
       return
     }
 
-    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
     this.recog = new SpeechRecognition()
 
-    this.recog.lang = 'en'
-    this.recog.continuous = true
-    this.recog.interimResults = true
+    this.recog.lang = lang
+    this.recog.continuous = continuous
+    this.recog.interimResults = interimResults
     this.recog.serviceURI = 'wami.csail.mit.edu'
 
+    /* Add event listener for onresult event */
     this.recog.addEventListener('result', this.handleEvent)
 
+    /* Start recognizing */
     this.recog.start()
-  },
-  handleEvent: function (event) {
+  };
+
+  handleEvent = (event) => {
     switch (event && event.type) {
       case 'result':
         window.requestAnimationFrame(() => {
-          var result = event.results[ event.resultIndex ]
-          var item = result[0]
+          let result = event.results[ event.resultIndex ]
+          let item = result[0]
 
           this.props.onResult.call(this, item.transcript, item.confidence)
 
@@ -46,15 +60,16 @@ var SpeechInput = React.createClass({
         })
         break
     }
-  },
-  render: function () {
-    var { isRecording } = this.state
+  };
 
-    var klassName = 'ola-link-speech' + (isRecording ? ' ola-link-speech-stop' : '')
+  render () {
+    let { isRecording, isSpeechSupported } = this.state
 
-    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!isSpeechSupported) return null
 
-    if (!SpeechRecognition) return null
+    let klassName = classnames('ola-link-speech', {
+      'ola-link-speech-stop': isRecording
+    })
 
     return (
       <div>
@@ -66,6 +81,6 @@ var SpeechInput = React.createClass({
       </div>
     )
   }
-})
+}
 
 module.exports = SpeechInput

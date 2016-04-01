@@ -1,33 +1,8 @@
 import { debounce } from './../utilities'
 
 /**
- * Tracks
- *
- * 1. Search results - Success
- * 2. Zero results
- * 3. Zero results with suggested Term
- * Sample Requests
-var data = {
-  userid: null,
-  username: null,
-  history: history.slice(0, 5),
-  query: q,
-  ...facets,
-  page: page,
-  suggested_term: suggestedTerm,
-  qt,
-  total_results: totalResults,
-  userAgent: navigator.userAgent,
-  platform: navigator.platform,
-  appCodeName: navigator.appCodeName,
-  appName: navigator.appName,
-  screenWidth: window.screen.width,
-  screenHeight: window.screen.height,
-  devicePixelRatio: window.devicePixelRatio,
-  clientHeight: document.documentElement.clientHeight,
-  clientWidth: document.documentElement.clientWidth
-}
-*/
+ * Ola Logger Middleware intercepts this dispatch event and calls the loggerService
+ */
 
 var debounceLogger = debounce(submitLog, 1000)
 
