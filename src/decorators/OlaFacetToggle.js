@@ -1,8 +1,6 @@
 import React from 'react'
 
-export var facetToggle = (ComposedComponent) => class extends React.Component {
-  static displayName = 'OlaFacetToggle'
-
+export var FacetToggle = (ComposedComponent) => class extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -14,7 +12,7 @@ export var facetToggle = (ComposedComponent) => class extends React.Component {
     this.setState({
       isCollapsed: !this.state.isCollapsed
     })
-  }
+  };
 
   render () {
     return <ComposedComponent {...this.props} isCollapsed={this.state.isCollapsed} toggleDisplay={this.toggleDisplay} />

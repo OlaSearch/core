@@ -17,11 +17,11 @@ export default (state = initialState, action) => {
     case types.ADD_FILTER:
       /* Remove duplicate */
 
-      let { filter, selected } = action.payload
-      let { name } = filter
-      let index = checkIfFacetExists(state.filters, name)
+      var { filter, selected } = action.payload
+      var { name } = filter
+      var index = checkIfFacetExists(state.filters, name)
 
-      if (index == null) {
+      if (index === null) {
         return {
           ...state,
           filters: [ ...state.filters, { ...filter, selected } ]
@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
       } else {
         /* Update the value */
 
-        let newFilter = state.filters.slice(0)
+        var newFilter = state.filters.slice(0)
         newFilter[ index ].selected = selected
 
         return {
@@ -40,7 +40,6 @@ export default (state = initialState, action) => {
       }
 
     case types.REMOVE_FILTER:
-
       var { name } = action.payload
 
       return {
@@ -76,7 +75,6 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_FACET:
-
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
 
       var { value, facet } = action
@@ -91,7 +89,7 @@ export default (state = initialState, action) => {
        */
       if (value instanceof Array) value = castNumberToStringArray(value)
 
-      if (index == null) {
+      if (index === null) {
         fq.push({
           ...rest,
           selected: [value]
@@ -107,7 +105,6 @@ export default (state = initialState, action) => {
       }
 
     case types.REMOVE_FACET:
-
       var fq = state.facet_query.slice(0)
       var { value, facet } = action
 
@@ -137,7 +134,6 @@ export default (state = initialState, action) => {
       }
 
     case types.REPLACE_FACET:
-
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
 
       var { value, facet } = action
@@ -146,7 +142,7 @@ export default (state = initialState, action) => {
       var fq = state.facet_query.slice(0)
       var index = checkIfFacetExists(fq, facet.name)
 
-      if (index == null) {
+      if (index === null) {
         fq = [...fq, {
           ...rest,
           selected: [value]
