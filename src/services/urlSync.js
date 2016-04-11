@@ -3,14 +3,19 @@ import { parseRangeValues } from './../utilities'
 
 var urlSync = {
   character: '?',
-  pushState (qs) {
+  pushState (qs, type) {
+    var char = urlSync.getHistoryCharacter(type)
     if (window.history.pushState) {
-      window.history.pushState(null, '', urlSync.character + urlSync.buildQueryString(qs))
+      window.history.pushState(null, '', char + urlSync.buildQueryString(qs))
     }
   },
-  replaceState (qs) {
+  getHistoryCharacter (type) {
+    return type == 'pushState' ? '?' : '#/?'
+  },
+  replaceState (qs, type) {
+    var char = urlSync.getHistoryCharacter(type)
     if (window.history.replaceState) {
-      window.history.replaceState(null, '', urlSync.character + urlSync.buildQueryString(qs))
+      window.history.replaceState(null, '', char + urlSync.buildQueryString(qs))
     }
   },
   buildQueryString (params) {
@@ -56,7 +61,8 @@ var urlSync = {
     return str.join('&')
   },
   parseQueryString (initialState, config) {
-    var qs = queryString.parse(window.location.search)
+    let loc = config.history ? config.history == 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
+    var qs = queryString.parse(loc)
 
     /**
      * Facets

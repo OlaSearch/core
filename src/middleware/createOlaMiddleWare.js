@@ -71,15 +71,19 @@ module.exports = (options = {}) => {
     } else {
       switch (api) {
         case 'suggest':
-          callApi = () => searchService.suggest(params, config.mappingAutoSuggest)
+          callApi = () => searchService[api](params, config.mappingAutoSuggest)
           break
 
         case 'get':
-          callApi = () => searchService.get(params)
+          callApi = () => searchService[api](params)
+          break
+
+        case 'search':
+          callApi = () => searchService[api](params)
           break
 
         default:
-          callApi = () => searchService.search(params)
+          callApi = () => searchService.hasOwnProperty(api) ? searchService[api](params) : null
           break
       }
     }

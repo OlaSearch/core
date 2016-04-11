@@ -7,7 +7,7 @@ import Input from './Input'
 import TermSuggestion from './../SpellSuggestions/TermSuggestion'
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion'
 import FacetSuggestion from './FacetSuggestion'
-import { buildQueryString } from './../../services/urlSync'
+import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 
@@ -111,6 +111,7 @@ class AutoSuggest extends React.Component {
   };
 
   onSubmit = (event) => {
+    let { dispatch } = this.props
     /* Check if there is active class */
 
     let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName)
@@ -118,6 +119,8 @@ class AutoSuggest extends React.Component {
     if (target) {
       let linkTarget = target.nodeName === 'A' ? target : target.querySelector('a')
       if (linkTarget) linkTarget.click()
+      dispatch(closeAutoSuggest())
+      dispatch(clearQueryTerm())
       return
     }
 
@@ -131,13 +134,13 @@ class AutoSuggest extends React.Component {
 
     var { dispatch, onSubmit } = this.props
 
-    var { searchPageUrl } = this.context.config
+    var { searchPageUrl, history } = this.context.config
 
     dispatch(closeAutoSuggest())
 
     onSubmit && onSubmit.call(this, q)
 
-    window.location.href = searchPageUrl + '?' + buildQueryString({ q, facet_query })
+    window.location.href = searchPageUrl + getHistoryCharacter(history) + buildQueryString({ q, facet_query })
   };
 
   onFocus = (event) => {

@@ -3,15 +3,20 @@ import { initSearch } from './../actions/Search'
 
 export var OlaRoute = (ComposedComponent) => class extends React.Component {
   static contextTypes = {
-    config: React.PropTypes.object
+    config: React.PropTypes.object,
+    router: React.PropTypes.object
   };
 
   componentWillMount () {
-    window.addEventListener('popstate', this.onPopState)
+    if (!this.context.router) window.addEventListener('popstate', this.onPopState)
   }
 
   componentWillUnmount () {
-    window.removeEventListener('popstate', this.onPopState)
+    if (!this.context.router) window.removeEventListener('popstate', this.onPopState)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.context.router && this.props.location.search !== nextProps.location.search) this.onPopState()
   }
 
   onPopState = () => {

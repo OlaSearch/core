@@ -12,6 +12,10 @@ const addToHistory = debounce(addOlaHistory, 600)
 /* Should route change */
 var globalRouteChange = true
 
+/* URL Parameter */
+
+var historyType  = 'pushState'
+
 export function addOlaHistory (dispatchInstance, query) {
   dispatchInstance(addHistory(query))
 }
@@ -97,7 +101,7 @@ export function executeSearch (payload) {
     if (!payload || payload.routeChange) {
       /* Update Browser URL */
 
-      globalRouteChange && updateURL(query)
+      globalRouteChange && updateURL(query, historyType)
 
       /* Add History */
 
@@ -226,10 +230,13 @@ export function updateStateFromQuery (config) {
 export function initSearch (options) {
   return (dispatch, getState) => {
     let { config, urlSync } = options
+    let { history } = config
 
     /* Should Ola Search read state from query string */
 
     let shouldSyncURL = urlSync === undefined || urlSync
+
+    historyType = history ? history : historyType
 
     // writeCookie('olasearch-cookie', Math.random())
 
