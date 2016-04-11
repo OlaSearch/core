@@ -41,7 +41,6 @@ if (global.Intl) {
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
   AutoSuggest: require('./components/AutoSuggest'),
-  Guide: require('./components/Guide'),
   Search: require('./containers/Search'),
   InstantSearchForm: require('./components/InstantSearchForm'),
   SpellSuggestion: require('./components/SpellSuggestions/SpellSuggestion'),
@@ -61,7 +60,6 @@ module.exports = {
   Actions: {
     AutoSuggest: require('./actions/AutoSuggest'),
     Bookmarks: require('./actions/Bookmarks'),
-    Guide: require('./actions/Guide'),
     Search: require('./actions/Search'),
     History: require('./actions/History'),
     Logger: require('./actions/Logger')
