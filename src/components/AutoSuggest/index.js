@@ -111,16 +111,15 @@ class AutoSuggest extends React.Component {
   };
 
   onSubmit = (event) => {
-    let { dispatch } = this.props
     /* Check if there is active class */
 
     let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName)
 
     if (target) {
       let linkTarget = target.nodeName === 'A' ? target : target.querySelector('a')
+
       if (linkTarget) linkTarget.click()
-      dispatch(closeAutoSuggest())
-      dispatch(clearQueryTerm())
+
       return
     }
 
@@ -136,11 +135,11 @@ class AutoSuggest extends React.Component {
 
     var { searchPageUrl, history } = this.context.config
 
-    dispatch(closeAutoSuggest())
-
     onSubmit && onSubmit.call(this, q)
 
     window.location.href = searchPageUrl + getHistoryCharacter(history) + buildQueryString({ q, facet_query })
+
+    dispatch(closeAutoSuggest())
   };
 
   onFocus = (event) => {

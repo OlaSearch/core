@@ -10,7 +10,7 @@ var urlSync = {
     }
   },
   getHistoryCharacter (type) {
-    return type == 'pushState' ? '?' : '#/?'
+    return type === 'pushState' ? '?' : '#/?'
   },
   replaceState (qs, type) {
     var char = urlSync.getHistoryCharacter(type)
@@ -61,7 +61,7 @@ var urlSync = {
     return str.join('&')
   },
   parseQueryString (initialState, config) {
-    let loc = config.history ? config.history == 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
+    let loc = config.history ? config.history === 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
     var qs = queryString.parse(loc)
 
     /**

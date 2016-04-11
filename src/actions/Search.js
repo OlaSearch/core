@@ -14,7 +14,7 @@ var globalRouteChange = true
 
 /* URL Parameter */
 
-var historyType  = 'pushState'
+var historyType = 'pushState'
 
 export function addOlaHistory (dispatchInstance, query) {
   dispatchInstance(addHistory(query))
@@ -236,7 +236,7 @@ export function initSearch (options) {
 
     let shouldSyncURL = urlSync === undefined || urlSync
 
-    historyType = history ? history : historyType
+    historyType = history || historyType
 
     // writeCookie('olasearch-cookie', Math.random())
 
