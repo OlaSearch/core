@@ -1,7 +1,7 @@
 import React from 'react'
 import { removeFacet, executeSearch, clearQueryTerm, removeFilter } from './../actions/Search'
 import Tag from './Misc/Tag'
-import Tooltip from './Guide/Tooltip'
+import Tooltip from './Misc/Tooltip'
 import qs from 'query-string'
 
 class SelectedFilters extends React.Component {
