@@ -46,9 +46,7 @@ class SpellSuggestion extends React.Component {
               type='button'
               className='ola-btn ola-spell-links'
               key={idx}
-              onClick={() => {
-                onChange ? onChange(item.term) : this.onChange(item.term)
-              }}
+              onClick={() => onChange ? onChange(item.term) : this.onChange(item.term)}
             >
               <span className='ola-spell-term'>{item.term}</span>
               {showCount && <span className='ola-spell-count'>{item.count}</span>}

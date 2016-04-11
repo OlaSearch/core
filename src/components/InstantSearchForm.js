@@ -95,8 +95,6 @@ class InstantSearchForm extends React.Component {
 
           <SpeechInput
             onResult={(value, confidence) => {
-              // this.refs.Input.value = value
-
               dispatch(updateQueryTerm(value))
 
               dispatch(executeSearch())

@@ -10,9 +10,10 @@ class FacetBoolean extends React.Component {
     selected: React.PropTypes.array.isRequired
   };
 
-  onChange = (facet, event) => {
+  onChange = (event) => {
     var {
-      dispatch
+      dispatch,
+      facet
     } = this.props
 
     if (event.target.checked) {
@@ -49,9 +50,7 @@ class FacetBoolean extends React.Component {
             <input
               type='checkbox'
               checked={!!selected.length}
-              onChange={(event) => {
-                this.onChange(facet, event)
-              }}
+              onChange={this.onChange}
             />
             {template}
           </label>

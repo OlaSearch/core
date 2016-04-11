@@ -33,8 +33,8 @@ class Default extends React.Component {
     showSelectedFacetItem: false
   };
 
-  handleAddFacet = (facet, value) => {
-    var { dispatch } = this.props
+  handleAddFacet = (value) => {
+    var { dispatch, facet } = this.props
 
     this.setState({
       filterText: ''
@@ -45,8 +45,8 @@ class Default extends React.Component {
     dispatch(executeSearch())
   };
 
-  handleRemoveFacat = (facet, value) => {
-    var { dispatch } = this.props
+  handleRemoveFacat = (value) => {
+    var { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
 
     dispatch(executeSearch())
@@ -138,7 +138,7 @@ class Default extends React.Component {
             {selected.map((item, idx) => {
               return (
                 <Tag
-                  onRemove={() => this.handleRemoveFacat(facet, item)}
+                  onRemove={() => this.handleRemoveFacat(item)}
                   name={item}
                   facet={facet}
                   key={idx}
@@ -154,20 +154,15 @@ class Default extends React.Component {
                 itemRenderer={(index, key) => {
                   var { name, count } = values[index]
                   var displayName = getDisplayName(facetNames, name)
-                  var itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected(name) })
-
                   return (
-                    <button
-                      className={itemKlass}
-                      type='button'
+                    <Item
                       key={key}
-                      onClick={() => {
-                        !isSelected(name) && this.handleAddFacet(facet, name)
-                      }}
-                    >
-                      <span className='ola-search-facet-count'>{count}</span>
-                      <span className='ola-search-facet-name'>{displayName}</span>
-                    </button>
+                      isSelected={isSelected(name)}
+                      name={name}
+                      count={count}
+                      displayName={displayName}
+                      onItemClick={this.handleAddFacet}
+                    />
                   )
                 }}
                 length={values.length}
@@ -179,6 +174,31 @@ class Default extends React.Component {
           </div>
         </div>
       </div>
+    )
+  }
+}
+
+/**
+ * Facet item component
+ */
+
+class Item extends React.Component {
+  handleClick = () => {
+    this.props.onItemClick(this.props.name)
+  };
+  render () {
+    let { count, displayName, isSelected } = this.props
+    let itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected })
+
+    return (
+      <button
+        className={itemKlass}
+        type='button'
+        onClick={this.handleClick}
+      >
+        <span className='ola-search-facet-count'>{count}</span>
+        <span className='ola-search-facet-name'>{displayName}</span>
+      </button>
     )
   }
 }
