@@ -58,12 +58,12 @@ module.exports = (options = {}) => {
 
     /* Add timestamp to query */
 
-    var timestampObj = {
+    let timestampObj = {
       timestamp: getState().Timestamp.timestamp
     }
 
     let callApi
-    var params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null)
+    let params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null)
 
     if (typeof api === 'function') {
       /* Returns a promise */
