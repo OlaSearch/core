@@ -10,6 +10,7 @@
  */
 
 import { log } from './../actions/Logger'
+import querystring from 'query-string'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -57,13 +58,12 @@ module.exports = (options = {}) => {
 
     /* Add timestamp to query */
 
-    var timestampedQuery = {
-      ...query,
+    var timestampObj = {
       timestamp: getState().Timestamp.timestamp
     }
 
     var callApi
-    var params = queryBuilder.transform(timestampedQuery, api === 'suggest' ? config.mappingAutoSuggest : null)
+    var params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null)
 
     if (typeof api === 'function') {
       /* Returns a promise */
@@ -71,19 +71,19 @@ module.exports = (options = {}) => {
     } else {
       switch (api) {
         case 'suggest':
-          callApi = () => searchService[api](params, config.mappingAutoSuggest)
+          callApi = () => searchService[api](timestampObj, params)
           break
 
         case 'get':
-          callApi = () => searchService[api](params)
+          callApi = () => searchService[api](timestampObj, params)
           break
 
         case 'search':
-          callApi = () => searchService[api](params)
+          callApi = () => searchService[api](timestampObj, params)
           break
 
         default:
-          callApi = () => searchService.hasOwnProperty(api) ? searchService[api](params) : null
+          callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params) : null
           break
       }
     }
@@ -93,8 +93,9 @@ module.exports = (options = {}) => {
     }
 
     return callApi().then(
-      (response) => {
-        var timestampFromResponse = parseInt(parser.requestParameters(response).timestamp)
+      (response, xhr) => {
+        var responseURL = xhr.responseURL.split('?').pop()
+        var timestampFromResponse = parseInt(querystring.parse(responseURL).timestamp)
 
         if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
 

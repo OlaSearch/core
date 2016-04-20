@@ -68,7 +68,7 @@ var urlSync = {
      * Facets
      */
 
-    if (qs.hasOwnProperty('facet_query')) {
+    if (qs.facet_query) {
       var facetQuery = qs.facet_query
       var { facets: configFacets } = config
 
@@ -104,7 +104,7 @@ var urlSync = {
      * Filters
      * Field level filtering
      */
-    if (qs.hasOwnProperty('filters')) {
+    if (qs.filters) {
       var { filters } = qs
       var { filters: configFilters } = config
 

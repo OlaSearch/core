@@ -91,7 +91,7 @@
     "ismobilejs": "^0.3.9",
     "jquery-param": "^0.2.0",
     "nouislider": "^8.3.0",
-    "query-string": "^3.0.1",
+    "query-string": "^4.1.0",
     "ramda": "^0.19.1",
     "react-intl": "^2.0.0-rc-1",
     "react-list": "^0.7.13",
