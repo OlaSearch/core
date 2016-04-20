@@ -62,51 +62,36 @@ module.exports = (options = {}) => {
       timestamp: getState().Timestamp.timestamp
     }
 
-    var callApi
+    let callApi
     var params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null)
 
     if (typeof api === 'function') {
       /* Returns a promise */
       callApi = () => api(params)
     } else {
-      switch (api) {
-        case 'suggest':
-          callApi = () => searchService[api](timestampObj, params)
-          break
-
-        case 'get':
-          callApi = () => searchService[api](timestampObj, params)
-          break
-
-        case 'search':
-          callApi = () => searchService[api](timestampObj, params)
-          break
-
-        default:
-          callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params) : null
-          break
-      }
+      callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params) : null
     }
 
     if (typeof callApi !== 'function') {
-      throw new Error('Expected callApi to be a function.')
+      throw new Error('Expected callApi to be a function. Check your dispatch call.')
     }
 
     return callApi().then(
       (response, xhr) => {
-        var responseURL = xhr.responseURL.split('?').pop()
-        var timestampFromResponse = parseInt(querystring.parse(responseURL).timestamp)
-
-        if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
+        if (xhr && 'responseURL' in xhr) {
+          let responseURL = xhr.responseURL.split('?').pop()
+          let timestampFromResponse = parseInt(querystring.parse(responseURL).timestamp)
+          if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
+        }
 
         /* Parse only when the timestamp matches */
 
-        var results = parser.normalizeResults(response)
-        var spellSuggestions = parser.normalizeSpellSuggestions(response)
-        var totalResults = parser.normalizeTotalResults(response)
-        var facets = parser.normalizeFacets(response)
-        var qt = parser.queryTime(response)
-        var type = successType
+        let results = parser.normalizeResults(response)
+        let spellSuggestions = parser.normalizeSpellSuggestions(response)
+        let totalResults = parser.normalizeTotalResults(response)
+        let facets = parser.normalizeFacets(response)
+        let qt = parser.queryTime(response)
+        let type = successType
 
         /**
          * Check if
@@ -150,8 +135,6 @@ module.exports = (options = {}) => {
           error,
           type: failureType
         })
-
-        throw new Error(error.status + ' The server could not be reached')
       }
     )
   }
