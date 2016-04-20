@@ -20,13 +20,14 @@ class Title extends React.Component {
   };
 
   render () {
-    var { result, isLink, children, baseUrl } = this.props
+    var { result, isLink, children, baseUrl, url } = this.props
 
     var {
       title,
-      url,
       highlighting
     } = result
+
+    if (!url) url = result.url
 
     if (baseUrl) url = baseUrl + url
 

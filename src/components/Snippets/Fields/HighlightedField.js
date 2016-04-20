@@ -20,8 +20,12 @@ const HighlightedField = ({ field, result, length }) => {
     fieldContent = fieldContent.substr(0, length).split(' ').slice(0, -1).join(' ') + '...'
   }
 
+  let klass = `ola-field ola-field-highlighted-field ola-field-${field}`
+
+  if (!fieldContent) return <noscript />
+
   return (
-    <div className='ola-field ola-field-highlighted-field' dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />
+    <div className={klass} dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />
   )
 }
 
