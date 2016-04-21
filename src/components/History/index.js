@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { clearHistory } from './../../actions/History'
-import listensToClickOutside from 'react-onclickoutside/decorator'
+import listensToClickOutside from 'react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
 

@@ -1,42 +1,59 @@
 import React from 'react'
+import { flatten } from 'ramda'
 
-const FacetSuggestion = (props) => {
-  var { facets, query, name, addFacet, dispatch, onSubmit, limit } = props
+class FacetSuggestion extends React.Component {
+  onItemClick = (facet, value) => {
+    let { dispatch, addFacet, onSubmit } = this.props
+    dispatch(addFacet(facet, value.name))
 
-  var facet = facets.filter((item) => item.name === name)
-  var values = []
-    .concat
-    .apply([], facet.map((item) => item.values))
-    .splice(0, limit)
+    /* Prevent race condition */
 
-  var { q } = query
+    setTimeout(() => { onSubmit && onSubmit() }, 0)
+  };
+  render () {
+    let { facets, query, name, limit } = this.props
+    let facet = facets.filter((item) => item.name === name)
+    let values = flatten(facet.map((item) => item.values)).splice(0, limit)
+    let { q } = query
 
-  return (
-    <div className='ola-facet-suggestions'>
-      {values.map((value, idx) => {
-        return (
-          <a
-            className='ola-facet-suggestion'
-            key={idx}
-            tabIndex={0}
-            onClick={() => {
-              dispatch(addFacet(facet[0], value.name))
-
-              /* Prevent race condition */
-
-              setTimeout(() => { onSubmit && onSubmit() }, 0)
-            }}
-          >
-            <strong>{q}</strong> in {value.name}
-          </a>
-        )
-      })}
-    </div>
-  )
+    return (
+      <div className='ola-facet-suggestions'>
+        {values.map((value, idx) => {
+          return (
+            <FacetSuggestionItem
+              key={idx}
+              facet={facet[0]}
+              value={value}
+              q={q}
+              onItemClick={this.onItemClick}
+            />
+          )
+        })}
+      </div>
+    )
+  }
 }
 
 FacetSuggestion.defaultProps = {
   limit: 3
+}
+
+class FacetSuggestionItem extends React.Component {
+  handleClick = () => {
+    this.props.onItemClick(this.props.facet, this.props.value)
+  };
+  render () {
+    const { q, value } = this.props
+    return (
+      <a
+        className='ola-facet-suggestion'
+        tabIndex={0}
+        onClick={this.handleClick}
+      >
+        <strong>{q}</strong> in {value.name}
+      </a>
+    )
+  }
 }
 
 module.exports = FacetSuggestion

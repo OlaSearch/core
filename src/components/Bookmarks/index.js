@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { removeBookmark } from './../../actions/Bookmarks'
-import listensToClickOutside from 'react-onclickoutside/decorator'
+import listensToClickOutside from 'react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
 

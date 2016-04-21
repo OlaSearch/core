@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import listensToClickOutside from 'react-onclickoutside/decorator'
+import listensToClickOutside from 'react-onclickoutside'
 import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, addFacet } from './../../actions/AutoSuggest'
 import Suggestions from './Suggestions'
 import Input from './Input'
