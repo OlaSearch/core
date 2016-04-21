@@ -4,6 +4,7 @@ import { flatten } from 'ramda'
 class FacetSuggestion extends React.Component {
   onItemClick = (facet, value) => {
     let { dispatch, addFacet, onSubmit } = this.props
+
     dispatch(addFacet(facet, value.name))
 
     /* Prevent race condition */
