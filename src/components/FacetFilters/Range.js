@@ -16,7 +16,7 @@ class Range extends React.Component {
 
   static defaultProps = {
     step: 1,
-    showHistogram: true,
+    showHistogram: false,
     pips: [0, 26, 44.5, 63, 81.5, 100],
     pipsDensity: 4,
     pipsMode: 'positions',
@@ -164,10 +164,7 @@ class Range extends React.Component {
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
-          {showHistogram
-            ? <Histogram data={values} />
-            : null
-          }
+          {showHistogram && <Histogram data={values} />}
           <div className='ola-slider'>
             <div ref='slider' />
           </div>

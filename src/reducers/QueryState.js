@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
 import { parseQueryString } from './../services/urlSync'
 import { checkIfFacetExists, castNumberToStringArray } from './../utilities'
-import { indexOf } from 'ramda'
+import { indexOf, omit } from 'ramda'
 
 var initialState = {
   q: '',
@@ -18,8 +18,7 @@ export default (state = initialState, action) => {
       /* Remove duplicate */
 
       var { filter, selected } = action.payload
-      var { name } = filter
-      var index = checkIfFacetExists(state.filters, name)
+      var index = checkIfFacetExists(state.filters, filter.name)
 
       if (index === null) {
         return {
@@ -78,8 +77,7 @@ export default (state = initialState, action) => {
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
 
       var { value, facet } = action
-      var { values, ...rest } = facet
-
+      var props = omit('values', facet)
       var fq = state.facet_query.slice(0)
       var index = checkIfFacetExists(fq, facet.name)
 
@@ -91,7 +89,7 @@ export default (state = initialState, action) => {
 
       if (index === null) {
         fq.push({
-          ...rest,
+          ...props,
           selected: [value]
         })
       } else {
@@ -137,14 +135,13 @@ export default (state = initialState, action) => {
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
 
       var { value, facet } = action
-
-      var { values, ...rest } = facet
+      var props = omit('values', facet)
       var fq = state.facet_query.slice(0)
       var index = checkIfFacetExists(fq, facet.name)
 
       if (index === null) {
         fq = [...fq, {
-          ...rest,
+          ...props,
           selected: [value]
         }]
       } else {

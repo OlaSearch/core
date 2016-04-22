@@ -41,8 +41,7 @@
     "ignore": [
       "/test",
       "/lib",
-      "/node_modules",
-      "/src/reducers/QueryState.js"
+      "/node_modules"
     ]
   },
   "devDependencies": {
