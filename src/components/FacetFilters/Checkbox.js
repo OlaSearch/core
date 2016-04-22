@@ -51,6 +51,10 @@ class Default extends React.Component {
     })
   };
 
+  isSelected = (name) => {
+    return this.props.selected.indexOf(name) > -1
+  };
+
   render () {
     var {
       filterText
@@ -58,7 +62,6 @@ class Default extends React.Component {
 
     var {
       facet,
-      selected,
       isCollapsed,
       toggleDisplay,
       limit,
@@ -66,8 +69,7 @@ class Default extends React.Component {
     } = this.props
 
     var {
-      values,
-      facetNames
+      values
     } = facet
 
     /* Lowercase */
@@ -81,11 +83,6 @@ class Default extends React.Component {
     values = values.filter((item) => item.name.toString().match(new RegExp(filter, 'i')))
 
     var size = values.length
-
-    /**
-     * Helper method to check if the checkbox should be `checked`
-     */
-    var isSelected = (name) => selected.indexOf(name) > -1
 
     var klass = classNames({
       'ola-facet': true,
@@ -115,34 +112,18 @@ class Default extends React.Component {
               <ReactList
                 itemRenderer={(index, key) => {
                   var { name, count } = values[index]
-                  var isActive = isSelected(name)
-                  var displayName = getDisplayName(facetNames, name)
-                  var labelKlass = classNames({
-                    'ola-checkbox ola-checkbox-label': true,
-                    'ola-checkbox-active': isActive
-                  })
+                  var isActive = this.isSelected(name)
 
                   return (
-                    <label className={labelKlass} key={index}>
-                      <input
-                        type='checkbox'
-                        checked={isActive}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            this.handleAddFacet(facet, name)
-                          } else {
-                            this.handleRemoveFacet(facet, name)
-                          }
-                        }}
-                        />
-                      <span
-                        className='ola-search-facet-name'
-                        title={displayName}
-                      >{displayName}</span>
-                      <span
-                        className='ola-search-facet-count'
-                      >{count}</span>
-                    </label>
+                    <CheckBoxItem
+                      key={index}
+                      facet={facet}
+                      name={name}
+                      count={count}
+                      handleAddFacet={this.handleAddFacet}
+                      handleRemoveFacet={this.handleRemoveFacet}
+                      isActive={isActive}
+                    />
                   )
                 }}
                 length={size}
@@ -153,6 +134,46 @@ class Default extends React.Component {
           </div>
         </div>
       </div>
+    )
+  }
+}
+
+/**
+ * Checkbox Item
+ * JSX No Bind
+ */
+class CheckBoxItem extends React.Component {
+  onChecked = (event) => {
+    let { facet, name, handleAddFacet, handleRemoveFacet } = this.props
+    if (event.target.checked) {
+      handleAddFacet(facet, name)
+    } else {
+      handleRemoveFacet(facet, name)
+    }
+  }
+  render () {
+    const { isActive, facet, count, name } = this.props
+    let { facetNames } = facet
+    let labelKlass = classNames({
+      'ola-checkbox ola-checkbox-label': true,
+      'ola-checkbox-active': isActive
+    })
+    let displayName = getDisplayName(facetNames, name)
+    return (
+      <label className={labelKlass}>
+        <input
+          type='checkbox'
+          checked={isActive}
+          onChange={this.onChecked}
+          />
+        <span
+          className='ola-search-facet-name'
+          title={displayName}
+        >{displayName}</span>
+        <span
+          className='ola-search-facet-count'
+        >{count}</span>
+      </label>
     )
   }
 }

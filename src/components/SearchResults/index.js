@@ -2,6 +2,7 @@ import React from 'react'
 import SnippetDefault from './../Snippets/Default'
 import NoResults from './../Snippets/NoResults'
 import { getMatchingSnippet } from './../../utilities'
+import classNames from 'classnames'
 
 class SearchResults extends React.Component {
   static propTypes = {
@@ -24,14 +25,14 @@ class SearchResults extends React.Component {
   }
 
   render () {
-    let { results, isLoading, ...rest } = this.props
+    let { results, isLoading, className, ...rest } = this.props
     let { snippetRules, defaultSnippet, noResultsSnippet } = this.context.config
     let NoResultsSnippet = noResultsSnippet || NoResults
-
+    let klass = classNames('ola-results', className)
     if (!results.length && !isLoading) return <NoResultsSnippet {...this.props} />
 
     return (
-      <div className='ola-results'>
+      <div className={klass}>
         {results.map((result, idx) => {
           let OlaSnippet = getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetDefault
 

@@ -1,20 +1,28 @@
 import React from 'react'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
 
-const ClearAllFacets = ({ selected, dispatch }) => {
-  if (!selected.length) return <noscript />
+class ClearAllFacets extends React.Component {
+  handleClick = () => {
+    let { dispatch } = this.props
 
-  return (
-    <button
-      type='button'
-      className='ola-link-clear-all-filters'
-      onClick={() => {
-        dispatch(removeAllFacets())
+    dispatch(removeAllFacets())
+    dispatch(executeSearch())
+  };
+  shouldComponentUpdate (nextProps) {
+    return nextProps.selected !== this.props.selected
+  }
+  render () {
+    let { selected } = this.props
+    if (!selected.length) return null
 
-        dispatch(executeSearch())
-      }}
-    >Clear all filters</button>
-  )
+    return (
+      <button
+        type='button'
+        className='ola-link-clear-all-filters'
+        onClick={this.handleClick}
+      >Clear all filters</button>
+    )
+  }
 }
 
 module.exports = ClearAllFacets

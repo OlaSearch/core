@@ -1,28 +1,34 @@
 import React from 'react'
 import { changeSort, executeSearch } from './../../actions/Search'
 
-const Sort = (props, context) => {
-  let { sortBy } = context.config
+class Sort extends React.Component {
+  handleChange = (event) => {
+    let { dispatch } = this.props
 
-  let { dispatch, selected } = props
+    dispatch(changeSort(event.target.value))
+    dispatch(executeSearch())
+  };
+  shouldComponentUpdate (nextProps) {
+    return nextProps.selected !== this.props.selected
+  }
+  render () {
+    let { sortBy } = this.context.config
+    let { selected } = this.props
 
-  return (
-    <div className='ola-sort'>
-      <label>Sort by </label>
-      <select
-        className='ola-sort-select'
-        value={selected}
-        onChange={(event) => {
-          dispatch(changeSort(event.target.value))
-
-          dispatch(executeSearch())
-        }}
-        >
-        <option value=''>Relevance</option>
-        {sortBy.map((sort, idx) => <option key={idx} value={sort.value}>{sort.name}</option>)}
-      </select>
-    </div>
-  )
+    return (
+      <div className='ola-sort'>
+        <label>Sort by </label>
+        <select
+          className='ola-sort-select'
+          value={selected}
+          onChange={this.handleChange}
+          >
+          <option value=''>Relevance</option>
+          {sortBy.map((sort, idx) => <option key={idx} value={sort.value}>{sort.name}</option>)}
+        </select>
+      </div>
+    )
+  }
 }
 
 Sort.propTypes = {

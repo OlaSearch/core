@@ -16,7 +16,7 @@ class Range extends React.Component {
 
   static defaultProps = {
     step: 1,
-    showHistogram: false,
+    showHistogram: true,
     pips: [0, 26, 44.5, 63, 81.5, 100],
     pipsDensity: 4,
     pipsMode: 'positions',

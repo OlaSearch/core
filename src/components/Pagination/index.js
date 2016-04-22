@@ -44,7 +44,7 @@ class Pagination extends React.Component {
     this.selectPage(currentPage)
   };
 
-  selectPage (page) {
+  selectPage = (page) => {
     var { actions, onChangePage } = this.props
 
     onChangePage
@@ -74,7 +74,7 @@ class Pagination extends React.Component {
   }
 
   render () {
-    var {
+    let {
       totalResults,
       perPage,
       currentPage,
@@ -84,19 +84,17 @@ class Pagination extends React.Component {
     } = this.props
 
     let currentPageInt = parseInt(currentPage)
-    var totalPages = Math.ceil(totalResults / perPage)
+    let totalPages = Math.ceil(totalResults / perPage)
+    let start = 1
+    let left = Math.max(currentPageInt - edges, 0)
+    let right = Math.min(currentPageInt + edges, totalPages)
+    let pages = this.createPageList(start, totalPages, limit, left, right, ellipsis)
 
-    var start = 1
-    var left = Math.max(currentPageInt - edges, 0)
-    var right = Math.min(currentPageInt + edges, totalPages)
-
-    var pages = this.createPageList(start, totalPages, limit, left, right, ellipsis)
-
-    var prevPageClass = classNames('ola-page ola-page-previous', {
+    let prevPageClass = classNames('ola-page ola-page-previous', {
       'ola-page-disabled': currentPageInt === 1
     })
 
-    var nextPageClass = classNames({
+    let nextPageClass = classNames({
       'ola-page ola-page-next': true,
       'ola-page-disabled': currentPageInt === totalPages
     })
@@ -105,24 +103,42 @@ class Pagination extends React.Component {
       <nav className='ola-pagination' ref='pagination'>
         <button className={prevPageClass} onClick={this.prevPage}>Previous</button>
         {pages.map((page, idx) => {
-          var klass = classNames({
-            'ola-page': true,
-            'ola-page-current': currentPageInt === page,
-            'ola-page-ellipsis': page === ellipsis
-          })
-
           return (
-            <button
-              className={klass}
+            <PageNumber
+              selectPage={this.selectPage}
+              page={page}
               key={idx}
-              onClick={() => {
-                if (page !== ellipsis) this.selectPage(page)
-              }}
-            >{page}</button>
+              currentPage={currentPageInt}
+            />
           )
         })}
         <button className={nextPageClass} onClick={this.nextPage}>Next</button>
       </nav>
+    )
+  }
+}
+
+/**
+ * Page Number
+ */
+class PageNumber extends React.Component {
+  handleClick = () => {
+    let { page } = this.props
+
+    if (!isNaN(page)) this.props.selectPage(page)
+  };
+  render () {
+    let { page, currentPage } = this.props
+    let klass = classNames({
+      'ola-page': true,
+      'ola-page-current': currentPage === page,
+      'ola-page-ellipsis': isNaN(page)
+    })
+    return (
+      <button
+        className={klass}
+        onClick={this.handleClick}
+      >{page}</button>
     )
   }
 }

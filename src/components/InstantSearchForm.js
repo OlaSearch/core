@@ -32,14 +32,16 @@ class InstantSearchForm extends React.Component {
     minCharacters: React.PropTypes.number
   };
 
-  onChange = (term) => {
-    var { dispatch, minCharacters } = this.props
+  onChange = (arg) => {
+    let { dispatch, minCharacters } = this.props
+    let isEvent = !!arg.target
+    let term = isEvent ? arg.target.value : arg
 
     dispatch(updateQueryTerm(term))
 
-    if (term && term.length < minCharacters) return
+    if (isEvent && term && term.length < minCharacters) return
 
-    this.instantSearchDebounce()
+    isEvent ? this.instantSearchDebounce() : dispatch(executeSearch())
   };
 
   onClear = () => {
@@ -59,7 +61,6 @@ class InstantSearchForm extends React.Component {
   render () {
     let {
       placeholder,
-      dispatch,
       q
     } = this.props
 
@@ -83,9 +84,7 @@ class InstantSearchForm extends React.Component {
             spellCheck='false'
             onFocus={this.props.onFocus}
             onBlur={this.props.onBlur}
-            onChange={(event) => {
-              this.onChange(event.target.value)
-            }}
+            onChange={this.onChange}
           />
           {button}
 
@@ -94,16 +93,8 @@ class InstantSearchForm extends React.Component {
           <History searchUrl={this.props.searchUrl} />
 
           <SpeechInput
-            onResult={(value, confidence) => {
-              dispatch(updateQueryTerm(value))
-
-              dispatch(executeSearch())
-            }}
-            onFinalResult={(value) => {
-              dispatch(updateQueryTerm(value))
-
-              dispatch(executeSearch())
-            }}
+            onResult={this.onChange}
+            onFinalResult={this.onChange}
           />
         </div>
       </form>

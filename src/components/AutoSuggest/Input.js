@@ -4,7 +4,6 @@ import History from './../History'
 import SpeechInput from './../Speech'
 
 class Input extends React.Component {
-
   static propTypes = {
     q: React.PropTypes.string,
     onChange: React.PropTypes.func
@@ -16,7 +15,7 @@ class Input extends React.Component {
     /* Do not call blur event when its a button */
     if (event.target.nodeName === 'INPUT' && !event.target.value) {
       event.target.blur()
-      this.props.handleClickOutside.call(this, event)
+      this.props.handleClickOutside(event)
       return
     }
 
@@ -26,11 +25,11 @@ class Input extends React.Component {
   };
 
   onFocus = (event) => {
-    this.props.onFocus && this.props.onFocus.call(this, event)
+    this.props.onFocus && this.props.onFocus(event)
 
     if (!event.target.value) return
 
-    this.props.onChange.call(this, event.target.value)
+    this.props.onChange(event.target.value)
   };
 
   onKeyDown = (event) => {
@@ -57,23 +56,26 @@ class Input extends React.Component {
     }
   };
 
+  onSearchButtonClick = () => {
+    this.refs.Input.focus()
+  };
+
+  handleInputChange = (arg) => {
+    this.props.onChange(arg.target ? arg.target.value : arg)
+  };
+
   render () {
     var {
       q,
-      onChange,
       placeholder,
       onBlur
     } = this.props
 
     /* Show clear or submit button */
 
-    // var button = q
-    //  ? <button type="reset" className="ola-btn ola-clear-button" onClick = {this.onClear}></button>
-    //  : <button type="submit" className="ola-btn ola-search-button" onClick = { onSubmit}></button>
-
     var button = q
       ? <button type='reset' className='ola-btn ola-clear-button' onClick={this.onClear}></button>
-      : <button type='button' className='ola-btn ola-search-button' onClick={() => this.refs.Input.focus()} />
+      : <button type='button' className='ola-btn ola-search-button' onClick={this.onSearchButtonClick} />
 
     return (
       <div className='ola-search-form-container'>
@@ -82,9 +84,7 @@ class Input extends React.Component {
           type='text'
           value={q}
           className='ola-text-input ola-text-input-round'
-          onChange={(event) => {
-            onChange.call(this, event.target.value)
-          }}
+          onChange={this.handleInputChange}
           onFocus={this.onFocus}
           onBlur={onBlur}
           autoComplete='off'
@@ -97,12 +97,8 @@ class Input extends React.Component {
         {button}
 
         <SpeechInput
-          onResult={(value, confidence) => {
-            onChange.call(this, value)
-          }}
-          onFinalResult={(value) => {
-            onChange.call(this, value)
-          }}
+          onResult={this.handleInputChange}
+          onFinalResult={this.handleInputChange}
         />
 
         <Bookmarks />

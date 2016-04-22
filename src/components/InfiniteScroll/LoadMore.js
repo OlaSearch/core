@@ -9,7 +9,7 @@ const LoadMore = (props) => {
     <button
       type='button'
       className='ola-link-load-more'
-      onClick={() => actions.loadMore()}
+      onClick={actions.loadMore}
     >
       Load more
     </button>

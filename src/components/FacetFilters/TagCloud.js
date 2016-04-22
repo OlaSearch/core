@@ -47,23 +47,47 @@ class TagCloud extends React.Component {
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
           {values.map((value, idx) => {
-            var { name, count } = value
-            var size = (count === min) ? fontSizeMin : (count / max) * (fontSizeMax - fontSizeMin) + fontSizeMin
-
             return (
-              <button
-                className='ola-btn-tag'
+              <TagCloudItem
                 key={idx}
-                style={{ fontSize: size + 'px' }}
-                onClick={() => this.handleAddFacet(facet, name)}>
-                {name}
-              </button>
+                value={value}
+                facet={facet}
+                min={min}
+                max={max}
+                fontSizeMax={fontSizeMax}
+                fontSizeMin={fontSizeMin}
+                onSelect={this.handleAddFacet}
+              />
             )
           })}
         </div>
       </div>
     )
   }
-};
+}
+
+/**
+ * Tag cloud item
+ */
+class TagCloudItem extends React.Component {
+  handleClick = () => {
+    let { facet, value } = this.props
+    let { name } = value
+    this.props.onSelect(facet, name)
+  }
+  render () {
+    let { value, min, max, fontSizeMin, fontSizeMax } = this.props
+    let { name, count } = value
+    let size = (count === min) ? fontSizeMin : (count / max) * (fontSizeMax - fontSizeMin) + fontSizeMin
+    return (
+      <button
+        className='ola-btn-tag'
+        style={{ fontSize: size + 'px' }}
+        onClick={this.handleClick}>
+        {name}
+      </button>
+    )
+  }
+}
 
 module.exports = FacetToggle(TagCloud)

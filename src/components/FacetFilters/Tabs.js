@@ -12,6 +12,7 @@ import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import invariant from 'invariant'
+import { flatten } from 'ramda'
 
 class Tabs extends React.Component {
 
@@ -91,13 +92,12 @@ class Tabs extends React.Component {
     if (!facet.length) return null
 
     var tab = facet[0]
-    var { facetNames } = tab
-    var values = [].concat.apply([], facet.map((item) => item.values))
+    var values = flatten(facet.map((item) => item.values))
 
     var tabs = this.getTabsForDisplay(tab, values)
 
     var selectedFacets = selected.filter((item) => item.name === tab.name).map((item) => item.selected)
-    var selectedItems = [].concat.apply([], selectedFacets)
+    var selectedItems = flatten(selectedFacets)
 
     /* Calculate Total for All Tab */
 
@@ -125,26 +125,46 @@ class Tabs extends React.Component {
         </a>
         {tabs.map((value, idx) => {
           var isActive = selectedItems.indexOf(value.name) !== -1
-
-          var klass = classNames({
-            'ola-tabs-label': true,
-            'ola-tab-active': isActive
-          })
-
           return (
-            <a
-              className={klass}
-              type='button'
+            <TabItem
               key={idx}
-              onClick={() => {
-                if (!isActive && value.count) this.handleReplaceFacet(tab, value.name)
-              }}>
-              <span className='ola-tab-name'>{getDisplayName(facetNames, value.name)}</span>
-              <span className='ola-search-facet-count'>{value.count}</span>
-            </a>
+              facet={tab}
+              value={value}
+              handleClick={this.handleReplaceFacet}
+              isActive={isActive}
+            />
           )
         })}
       </nav>
+    )
+  }
+}
+
+/**
+ * Tab Item
+ */
+class TabItem extends React.Component {
+  handleClick = () => {
+    let { facet, value, isActive } = this.props
+    let { name, count } = value
+    if (!isActive && count) this.props.handleClick(facet, name)
+  };
+  render () {
+    let { isActive, value, facet } = this.props
+    let { name, count } = value
+    let { facetNames } = facet
+    let klass = classNames({
+      'ola-tabs-label': true,
+      'ola-tab-active': isActive
+    })
+    return (
+      <a
+        className={klass}
+        type='button'
+        onClick={this.handleClick}>
+        <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
+        <span className='ola-search-facet-count'>{count}</span>
+      </a>
     )
   }
 }

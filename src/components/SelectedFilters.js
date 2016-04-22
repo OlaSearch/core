@@ -42,6 +42,13 @@ class SelectedFilters extends React.Component {
     })
   };
 
+  onRemoveQueryTag = () => {
+    let { dispatch } = this.props
+
+    dispatch(clearQueryTerm())
+    dispatch(executeSearch())
+  };
+
   render () {
     var {
       facets,
@@ -71,10 +78,7 @@ class SelectedFilters extends React.Component {
         {showQuery && q
           ? <div className='ola-facet-tag'>
             <span className='ola-facet-tag-name'>{q}</span>
-            <button className='ola-facet-tag-remove' onClick={() => {
-              dispatch(clearQueryTerm())
-              dispatch(executeSearch())
-            }}></button>
+            <button className='ola-facet-tag-remove' onClick={this.onRemoveQueryTag}></button>
           </div>
           : null
         }

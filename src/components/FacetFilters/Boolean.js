@@ -42,6 +42,8 @@ class FacetBoolean extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
 
+    let isChecked = !!selected.length
+
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
@@ -49,7 +51,7 @@ class FacetBoolean extends React.Component {
           <label className='ola-checkbox ola-checkbox-label'>
             <input
               type='checkbox'
-              checked={!!selected.length}
+              checked={isChecked}
               onChange={this.onChange}
             />
             {template}

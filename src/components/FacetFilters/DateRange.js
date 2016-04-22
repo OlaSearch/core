@@ -109,28 +109,32 @@ class DateRange extends React.Component {
         <div className='ola-facet-wrapper'>
           <ul className='ola-date-list'>
             <li>
-              <button
-                className='ola-btn-unstyled ola-btn-date-select'
-                onClick={() => this.onDateSelect('current_year')}
-                >This year</button>
+              <DateLabel
+                value='current_year'
+                label='This year'
+                onSelect={this.onDateSelect}
+              />
             </li>
             <li>
-              <button
-                className='ola-btn-unstyled ola-btn-date-select'
-                onClick={() => this.onDateSelect('last_year')}
-                >Last year</button>
+              <DateLabel
+                value='last_year'
+                label='Last year'
+                onSelect={this.onDateSelect}
+              />
             </li>
             <li>
-              <button
-                className='ola-btn-unstyled ola-btn-date-select'
-                onClick={() => this.onDateSelect('last_3_years')}
-                >Last 3 years</button>
+              <DateLabel
+                value='last_3_years'
+                label='Last 3 years'
+                onSelect={this.onDateSelect}
+              />
             </li>
             <li>
-              <button
-                className='ola-btn-unstyled ola-btn-date-select'
-                onClick={() => this.onDateSelect('last_5_years')}
-                >Last 5 years</button>
+              <DateLabel
+                value='last_5_years'
+                label='Last 5 years'
+                onSelect={this.onDateSelect}
+              />
             </li>
             <li className={customKlass}>
               <button
@@ -163,6 +167,24 @@ class DateRange extends React.Component {
           </ul>
         </div>
       </div>
+    )
+  }
+}
+
+/**
+ * Date label
+ */
+class DateLabel extends React.Component {
+  handleClick = () => {
+    this.props.onSelect(this.props.value)
+  };
+  render () {
+    var { label } = this.props
+    return (
+      <button
+        className='ola-btn-unstyled ola-btn-date-select'
+        onClick={this.handleClick}
+        >{label}</button>
     )
   }
 }

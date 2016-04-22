@@ -15,8 +15,8 @@ const SearchTitle = (props, context) => {
 
   return (
     <h3 className='ola-search-heading'>
-      <span><FormattedMessage id='title' /></span>
-      <small>
+      <span className='ola-search-heading-title'><FormattedMessage id='title' /></span>
+      <small className='ola-search-heading-number'>
         <FormattedMessage
           id='showing'
           values={{

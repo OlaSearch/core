@@ -20,11 +20,12 @@ class SpellSuggestion extends React.Component {
 
     dispatch(executeSearch())
   };
-
+  handleClick = (term) => {
+    this.props.onChange ? this.props.onChange(term) : this.onChange(term)
+  };
   render () {
     var {
       suggestions,
-      onChange,
       totalResults,
       showCount
     } = this.props
@@ -42,18 +43,35 @@ class SpellSuggestion extends React.Component {
         <span>Did you mean</span>
         {suggestions.map((item, idx) => {
           return (
-            <button
-              type='button'
-              className='ola-btn ola-spell-links'
+            <TermItem
+              handleClick={this.handleClick}
+              showCount={showCount}
+              item={item}
               key={idx}
-              onClick={() => onChange ? onChange(item.term) : this.onChange(item.term)}
-            >
-              <span className='ola-spell-term'>{item.term}</span>
-              {showCount && <span className='ola-spell-count'>{item.count}</span>}
-            </button>
+            />
           )
         })}
       </div>
+    )
+  }
+}
+
+class TermItem extends React.Component {
+  handleClick = () => {
+    this.props.handleClick(this.props.item.term)
+  };
+  render () {
+    let { item, showCount } = this.props
+    let { term, count } = item
+    return (
+      <button
+        type='button'
+        className='ola-btn ola-spell-links'
+        onClick={this.handleClick}
+      >
+        <span className='ola-spell-term'>{term}</span>
+        {showCount && <span className='ola-spell-count'>{count}</span>}
+      </button>
     )
   }
 }
