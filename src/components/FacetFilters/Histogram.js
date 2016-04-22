@@ -1,6 +1,9 @@
 import React from 'react'
 
 class Histogram extends React.Component {
+  shouldComponentUpdate (nextProps) {
+    return nextProps.data !== this.props.data
+  }
   render () {
     var { data } = this.props
 
@@ -15,12 +18,13 @@ class Histogram extends React.Component {
     return (
       <div className='ola-histogram'>
         {data.map((item, idx) => {
+          let height = (item.count - min.count) / (max.count - min.count) * 100
           return (
             <div
               key={idx}
               className='ola-histogram-bar'
               style={{
-                height: `${(item.count - min.count) / (max.count - min.count) * 100}%`
+                height: `${height}%`
               }}
             />
           )
