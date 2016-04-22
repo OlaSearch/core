@@ -3,7 +3,6 @@ import Media from 'react-responsive'
 
 const Thumbnail = (props, context) => {
   var { mediaQuery } = context.config
-
   var {
     thumbnail,
     thumbnail_mobile,

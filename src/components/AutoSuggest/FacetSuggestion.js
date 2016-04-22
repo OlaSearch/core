@@ -11,6 +11,9 @@ class FacetSuggestion extends React.Component {
 
     setTimeout(() => { onSubmit && onSubmit() }, 0)
   };
+  shouldComponentUpdate (nextProps) {
+    return nextProps.facets !== this.props.facets
+  }
   render () {
     let { facets, query, name, limit } = this.props
     let facet = facets.filter((item) => item.name === name)

@@ -12,6 +12,10 @@ class Rating extends React.Component {
     facet: React.PropTypes.object.isRequired
   };
 
+  static defaultProps = {
+    gap: 20
+  }
+
   handleFacet = (event) => {
     var { dispatch, facet } = this.props
 
@@ -30,18 +34,14 @@ class Rating extends React.Component {
   };
 
   render () {
-    var { facet, selected, isCollapsed, toggleDisplay } = this.props
-
+    var { facet, selected, isCollapsed, toggleDisplay, gap } = this.props
     var { values } = facet
 
     /* Seleced - [1,2,3,4] => [ [1, 2], [3, 4]];*/
 
     var selectedArray = parseRangeValues(selected)
-
     var bounds = selectedArray.map((item) => parseInt(item[0]))
-
     var isSelected = (name) => bounds.indexOf(parseInt(name)) > -1
-
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
@@ -54,7 +54,7 @@ class Rating extends React.Component {
           <div className='ola-facet-list'>
             {values.map((value, idx) => {
               var stars = []
-              var normalized = Math.max(Math.ceil(parseInt(value.name) / 20), 0) + 1
+              var normalized = Math.max(Math.ceil(parseInt(value.name) / gap), 0) + 1
               var isActive = isSelected(value.name)
               var labelKlass = classNames({
                 'ola-checkbox ola-checkbox-label': true,

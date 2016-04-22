@@ -6,9 +6,7 @@ import { bindActionCreators } from 'redux'
 
 const SearchFooter = (props, context) => {
   let { infiniteScroll } = context.config
-
   let { isPhone, dispatch } = props
-
   let boundActionCreators = bindActionCreators(SearchActionCreators, dispatch)
 
   if (infiniteScroll || isPhone) {

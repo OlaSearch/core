@@ -16,6 +16,10 @@ class SpeechInput extends React.Component {
     interimResults: true
   };
 
+  shouldComponentUpdate (nextProps, nextState) {
+    return nextState.isRecording !== this.state.isRecording
+  }
+
   onLaunch = () => {
     let { isRecording } = this.state
     let { lang, continuous, interimResults } = this.props

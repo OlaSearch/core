@@ -16,15 +16,14 @@ class Range extends React.Component {
 
   static defaultProps = {
     step: 1,
-    showHistogram: false,
     pips: [0, 26, 44.5, 63, 81.5, 100],
     pipsDensity: 4,
     pipsMode: 'positions',
     showPips: false
   };
 
-  onChange = (facet, value) => {
-    var { dispatch } = this.props
+  onChange = (value) => {
+    var { facet, dispatch } = this.props
 
     if (typeof value === 'string' || value.length === 1) value = [0, value[0]]
 
@@ -76,7 +75,6 @@ class Range extends React.Component {
     }
 
     var arr = flatten(selected)
-
     var value = arr && arr.length ? arr : [min, max]
 
     /* If Slider only has 1 handle */
@@ -144,7 +142,7 @@ class Range extends React.Component {
 
     /* Bind to onchange */
 
-    this.slider.on('change', (value) => this.onChange(facet, value))
+    this.slider.on('change', this.onChange)
   }
 
   componentWillUnmount () {
@@ -152,9 +150,8 @@ class Range extends React.Component {
   }
 
   render () {
-    var { facet, isCollapsed, toggleDisplay, showHistogram } = this.props
-    var { values } = facet
-
+    var { facet, isCollapsed, toggleDisplay } = this.props
+    var { displayName, values, showHistogram } = facet
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
@@ -162,7 +159,7 @@ class Range extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
         <div className='ola-facet-wrapper'>
           {showHistogram && <Histogram data={values} />}
           <div className='ola-slider'>

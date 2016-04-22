@@ -23,6 +23,10 @@ class SpellSuggestion extends React.Component {
   handleClick = (term) => {
     this.props.onChange ? this.props.onChange(term) : this.onChange(term)
   };
+
+  shouldComponentUpdate (nextProps) {
+    return nextProps.suggestions !== this.props.suggestions
+  }
   render () {
     var {
       suggestions,
@@ -56,6 +60,9 @@ class SpellSuggestion extends React.Component {
   }
 }
 
+/**
+ * Spell suggestion term
+ */
 class TermItem extends React.Component {
   handleClick = () => {
     this.props.handleClick(this.props.item.term)

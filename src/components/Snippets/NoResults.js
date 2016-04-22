@@ -6,7 +6,6 @@ class NoResults extends React.Component {
     isLoading: React.PropTypes.bool,
     q: React.PropTypes.string
   }
-
   render () {
     var { results, isLoading, q } = this.props
 

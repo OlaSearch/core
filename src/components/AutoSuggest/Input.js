@@ -63,7 +63,9 @@ class Input extends React.Component {
   handleInputChange = (arg) => {
     this.props.onChange(arg.target ? arg.target.value : arg)
   };
-
+  shouldComponentUpdate (nextProps) {
+    return nextProps.q !== this.props.q
+  }
   render () {
     var {
       q,

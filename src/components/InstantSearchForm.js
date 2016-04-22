@@ -54,9 +54,7 @@ class InstantSearchForm extends React.Component {
     dispatch(executeSearch())
   };
 
-  onSubmit = (event) => {
-    event.preventDefault()
-  };
+  onSubmit = (event) => event.preventDefault()
 
   render () {
     let {

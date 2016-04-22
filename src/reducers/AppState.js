@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
 import storage from './../services/storage'
 import { buildQueryString, character as hashCharacter } from './../services/urlSync'
-import { flatten, equals } from 'ramda'
+import { flatten, equals, omit } from 'ramda'
 
 var initialState = {
   totalResults: 0,
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
 
     case types.REQUEST_SEARCH_SUCCESS:
 
-      var { results, appendResult } = action
+      var { results, appendResult, spellSuggestions, qt, suggestedTerm, totalResults, facets } = action
 
       if (appendResult) {
         return {
@@ -41,11 +41,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         results,
-        facets: action.facets,
-        spellSuggestions: action.spellSuggestions,
-        totalResults: action.totalResults,
-        suggestedTerm: action.suggestedTerm,
-        qt: action.qt,
+        facets,
+        spellSuggestions: spellSuggestions.length ? spellSuggestions : state.spellSuggestions,
+        totalResults,
+        suggestedTerm,
+        qt,
         isLoading: false,
         error: null
       }
@@ -90,15 +90,9 @@ export default (state = initialState, action) => {
 
     case types.ADD_HISTORY:
 
-      var query = {...action.query}
+      var query = omit(['page', 'per_page', 'referrer'], action.query)
 
       var { q, facet_query } = query
-
-      /* Remove Page, perPage and referrer */
-
-      delete query['page']
-      delete query['per_page']
-      delete query['referrer']
 
       /* Get selected facets */
 
@@ -113,18 +107,18 @@ export default (state = initialState, action) => {
 
       if (exists.length) return state
 
-      var _history = [{
+      var history = [{
         q,
         url: hashCharacter + buildQueryString(query),
         dateAdded: new Date().getTime(),
         facets
       }, ...state.history]
 
-      storage.set('history', _history)
+      storage.set('history', history)
 
       return {
         ...state,
-        history: _history
+        history
       }
 
     case types.CLEAR_HISTORY:

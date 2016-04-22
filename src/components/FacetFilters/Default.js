@@ -63,7 +63,6 @@ class Default extends React.Component {
       filterText: event.target.value
     })
   };
-
   render () {
     var {
       filterText,
