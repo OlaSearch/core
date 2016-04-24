@@ -95,9 +95,8 @@ class SearchFilters extends React.Component {
             key: index,
             ...props
           }
-          
+
           var { type, rangeType } = facet
-          
 
           switch (type) {
             case 'checkbox':
