@@ -1,6 +1,6 @@
 import React from 'react'
-import { createHTMLMarkup } from './../../../utilities'
-import { log } from './../../../actions/Logger'
+import { createHTMLMarkup } from './../../utilities'
+import { log } from './../../actions/Logger'
 
 class Title extends React.Component {
   static defaultProps = {

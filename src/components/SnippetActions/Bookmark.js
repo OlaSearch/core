@@ -1,5 +1,5 @@
 import React from 'react'
-import { addBookmark, removeBookmark } from './../../../actions/Bookmarks'
+import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
 
 class BookmarkActions extends React.Component {
   addBookmark = () => {

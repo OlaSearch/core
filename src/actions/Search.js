@@ -208,6 +208,15 @@ export function changeSort (sort) {
   }
 }
 
+/* Change view */
+
+export function changeView (view) {
+  return {
+    type: types.CHANGE_VIEW,
+    view
+  }
+}
+
 export function updateStateFromQuery (config) {
   return {
     type: types.UPDATE_STATE_FROM_QUERY,

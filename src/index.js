@@ -65,18 +65,19 @@ module.exports = {
     Logger: require('./actions/Logger')
   },
   SnippetActions: {
-    Bookmark: require('./components/Snippets/Actions/Bookmark')
+    Bookmark: require('./components/SnippetActions/Bookmark'),
+    Share: require('./components/SnippetActions/Share')
   },
   Fields: {
-    Direction: require('./components/Snippets/Fields/Direction'),
-    Phone: require('./components/Snippets/Fields/Phone'),
-    Rating: require('./components/Snippets/Fields/Rating'),
-    Summary: require('./components/Snippets/Fields/Summary'),
-    HighlightedField: require('./components/Snippets/Fields/HighlightedField'),
-    Thumbnail: require('./components/Snippets/Fields/Thumbnail'),
-    Title: require('./components/Snippets/Fields/Title'),
-    Year: require('./components/Snippets/Fields/Year'),
-    DateField: require('./components/Snippets/Fields/Date')
+    Direction: require('./components/Fields/Direction'),
+    Phone: require('./components/Fields/Phone'),
+    Rating: require('./components/Fields/Rating'),
+    Summary: require('./components/Fields/Summary'),
+    HighlightedField: require('./components/Fields/HighlightedField'),
+    Thumbnail: require('./components/Fields/Thumbnail'),
+    Title: require('./components/Fields/Title'),
+    Year: require('./components/Fields/Year'),
+    DateField: require('./components/Fields/Date')
   },
   FacetFilters: {
     Boolean: require('./components/FacetFilters/Boolean'),

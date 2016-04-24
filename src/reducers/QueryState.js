@@ -9,7 +9,8 @@ var initialState = {
   per_page: 10,
   facet_query: [],
   sort: '',
-  filters: []
+  filters: [],
+  view: ''
 }
 
 export default (state = initialState, action) => {
@@ -55,7 +56,7 @@ export default (state = initialState, action) => {
 
     case types.UPDATE_STATE_FROM_QUERY:
       return {
-        ...parseQueryString(initialState, action.config),
+        ...parseQueryString(state, action.config),
         referrer: ''
       }
 
@@ -179,6 +180,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         per_page: action.perPage
+      }
+
+    case types.CHANGE_VIEW:
+      return {
+        ...state,
+        view: action.view
       }
 
     default:

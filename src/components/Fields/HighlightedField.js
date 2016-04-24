@@ -1,5 +1,5 @@
 import React from 'react'
-import { createHTMLMarkup } from './../../../utilities'
+import { createHTMLMarkup } from './../../utilities'
 
 const HighlightedField = ({ field, result, length }) => {
   var { highlighting } = result

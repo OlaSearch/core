@@ -23,9 +23,8 @@ var urlSync = {
   buildQueryString (params) {
     var str = []
 
-    for (var i in params) {
-      var name = i
-      var value = params[i]
+    for (var name in params) {
+      var value = params[name]
 
       if (name === 'facet_query') {
         value = value.map((item) => item.name + ':' + item.selected)
@@ -46,14 +45,14 @@ var urlSync = {
        */
 
       if (Array.isArray(value)) {
-        for (var j = 0; j < value.length; j++) {
+        for (var i = 0; i < value.length; i++) {
           str.push(
             encodeURIComponent(name) + '=' +
-            encodeURIComponent(value[j])
+            encodeURIComponent(value[i])
           )
         }
       } else {
-        str.push(
+        value && str.push(
           encodeURIComponent(name) + '=' +
           encodeURIComponent(value)
         )

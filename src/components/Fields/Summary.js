@@ -1,5 +1,5 @@
 import React from 'react'
-import { createHTMLMarkup } from './../../../utilities'
+import { createHTMLMarkup } from './../../utilities'
 
 const Summary = ({ result, length }) => {
   var { summary, highlighting } = result

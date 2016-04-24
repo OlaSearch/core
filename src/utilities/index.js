@@ -6,6 +6,7 @@ const utilities = {
     return s
   },
   arrayJoin (suffix, arr, separator = ', ') {
+    if (!Array.isArray(arr)) return arr
     return arr ? suffix + arr.join(separator) : null
   },
   checkIfFacetExists (facets, name) {
@@ -73,7 +74,7 @@ const utilities = {
     var len = value.length
 
     for (var i = 0; i < len; i += 2) {
-      valueArray.push([ value[ i ], value[ i + 1 ] ])
+      valueArray.push([ value[i], value[i + 1] ])
     }
 
     return valueArray
@@ -93,17 +94,15 @@ const utilities = {
   },
   getMatchingSnippet (rules, result) {
     if (!rules) return false
-
     for (var i = 0; i < rules.length; i++) {
       var rule = rules[i].rules
       var matched = true
-      for (var type in rule) {
-        if (result[type] !== rule[type]) matched = false
+      for (var field in rule) {
+        if (result[field] !== rule[field]) matched = false
       }
 
       if (matched) return rules[i].template
     }
-
     return false
   },
   generateSlug (value) {

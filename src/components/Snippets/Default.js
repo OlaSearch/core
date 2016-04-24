@@ -1,10 +1,10 @@
 import React from 'react'
 import { arrayJoin } from './../../utilities'
-import Bookmark from './Actions/Bookmark'
-import Title from './Fields/Title'
-import Thumbnail from './Fields/Thumbnail'
-import Rating from './Fields/Rating'
-import Summary from './Fields/Summary'
+import Bookmark from './../SnippetActions/Bookmark'
+import Title from './../Fields/Title'
+import Thumbnail from './../Fields/Thumbnail'
+import Rating from './../Fields/Rating'
+import Summary from './../Fields/Summary'
 
 class Default extends React.Component {
   static defaultProps = {

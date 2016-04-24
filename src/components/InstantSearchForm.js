@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  updateQueryTerm,
-  executeSearch,
-  clearQueryTerm
-  } from './../actions/Search'
+import { updateQueryTerm, executeSearch, clearQueryTerm } from './../actions/Search'
 import Bookmarks from './Bookmarks'
 import History from './History'
 import SpeechInput from './Speech'

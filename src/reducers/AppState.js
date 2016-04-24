@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
         ...state,
         results,
         facets,
-        spellSuggestions: spellSuggestions.length ? spellSuggestions : state.spellSuggestions,
+        spellSuggestions,
         totalResults,
         suggestedTerm,
         qt,

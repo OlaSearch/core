@@ -1,5 +1,5 @@
 import React from 'react'
-import DateParser from './../../../utilities/dateParser'
+import DateParser from './../../utilities/dateParser'
 
 const DateField = ({ date, format }) => {
   let formattedDate = DateParser.format(date, format)
