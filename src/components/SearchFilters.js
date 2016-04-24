@@ -2,6 +2,7 @@ import React from 'react'
 import Default from './FacetFilters/Default'
 import FacetCheckbox from './FacetFilters/Checkbox'
 import Range from './FacetFilters/Range'
+import RangeNumeric from './FacetFilters/RangeNumeric'
 import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
 import DateRange from './FacetFilters/DateRange'
@@ -94,12 +95,16 @@ class SearchFilters extends React.Component {
             key: index,
             ...props
           }
+          
+          var { type, rangeType } = facet
+          
 
-          switch (facet.type) {
+          switch (type) {
             case 'checkbox':
               return <FacetCheckbox {...passProps} />
 
             case 'range':
+              if (rangeType === 'numeric') return <RangeNumeric {...passProps} />
               return <Range {...passProps} />
 
             case 'rating':
