@@ -1,13 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
-const SearchTitle = (props, context) => {
-  let {
-    totalResults,
-    page,
-    perPage
-  } = props
-
+const SearchTitle = ({ totalResults, page, perPage }, context) => {
   let currentIdx = Math.min(((page - 1) * perPage) + 1, totalResults)
   let lastIdx = Math.min(totalResults, currentIdx + parseInt(perPage) - 1)
 

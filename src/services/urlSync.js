@@ -1,6 +1,8 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
 
+const RANGE_FACETS = ['range', 'rating', 'daterange'];
+
 var urlSync = {
   character: '?',
   pushState (qs, type) {
@@ -75,14 +77,14 @@ var urlSync = {
       if (typeof facetQuery === 'string') facetQuery = JSON.parse('[\"' + facetQuery + '\"]')
 
       var fq = facetQuery.map((item) => {
-        var [ name, value ] = item.split(':')
+        let [ name, value ] = item.split(':')
 
         value = value.split(',')
 
-        var facet = configFacets.filter((facet) => facet.name === name).reduce((a, b) => a)
-        var { type } = facet
-
-        if ((type === 'range' || type === 'rating' || type === 'daterange') && value.length > 1) {
+        let facet = configFacets.filter((facet) => facet.name === name).reduce((a, b) => a)
+        let { type } = facet
+        
+        if (RANGE_FACETS.indexOf(type) != -1 && value.length > 1) {
           value = parseRangeValues(value)
         }
 
