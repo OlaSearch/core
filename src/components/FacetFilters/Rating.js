@@ -12,15 +12,11 @@ class Rating extends React.Component {
     facet: React.PropTypes.object.isRequired
   };
 
-  static defaultProps = {
-    gap: 20
-  }
-
   handleFacet = (event) => {
     var { dispatch, facet } = this.props
 
     var min = parseInt(event.target.value, 10)
-    var value = [min, min + facet.gap]
+    var value = [min, min + facet.interval]
 
     if (event.target.checked) {
       dispatch(addFacet(facet, value))
@@ -32,16 +28,16 @@ class Rating extends React.Component {
 
     dispatch(executeSearch())
   };
+  isSelected = (name) => {
+    /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]];*/
+    let selectedArray = parseRangeValues(this.props.selected)
+    let bounds = selectedArray.map((item) => parseInt(item[0]))
 
+    return bounds.indexOf(parseInt(name)) > -1
+  };
   render () {
-    var { facet, selected, isCollapsed, toggleDisplay, gap } = this.props
-    var { values } = facet
-
-    /* Seleced - [1,2,3,4] => [ [1, 2], [3, 4]];*/
-
-    var selectedArray = parseRangeValues(selected)
-    var bounds = selectedArray.map((item) => parseInt(item[0]))
-    var isSelected = (name) => bounds.indexOf(parseInt(name)) > -1
+    var { facet, isCollapsed, toggleDisplay } = this.props
+    var { values, interval } = facet
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
@@ -54,8 +50,8 @@ class Rating extends React.Component {
           <div className='ola-facet-list'>
             {values.map((value, idx) => {
               var stars = []
-              var normalized = Math.max(Math.ceil(parseInt(value.name) / gap), 0) + 1
-              var isActive = isSelected(value.name)
+              var normalized = Math.max(Math.ceil(parseInt(value.name) / interval), 0) + 1
+              var isActive = this.isSelected(value.name)
               var labelKlass = classNames({
                 'ola-checkbox ola-checkbox-label': true,
                 'ola-checkbox-active': isActive
@@ -77,9 +73,7 @@ class Rating extends React.Component {
                     checked={isActive}
                   />
                   {stars}
-                  <span className='ola-search-facet-count'>
-                    {value.count}
-                  </span>
+                  <span className='ola-search-facet-count'>{value.count}</span>
                 </label>
               )
             })}
