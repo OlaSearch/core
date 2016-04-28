@@ -84,21 +84,29 @@ class SearchFilters extends React.Component {
         {facets.map((facet, index) => {
           /* Recalculate Selected values */
 
-          var selectedFacets = selected
+          let selectedFacets = selected
                 .filter((item) => item.name === facet.name)
                 .map((item) => item.selected)
-          var selectedItems = flatten(selectedFacets)
+          let selectedItems = flatten(selectedFacets)
 
-          var passProps = {
+          let passProps = {
             facet,
             selected: selectedItems,
             key: index,
             ...props
           }
 
-          var { type, rangeType } = facet
+          let { type, rangeType, displayType } = facet
+           
+           /**
+            * `displayType` should have precedence
+            * For Solr: Range queries are slower and can lead to Null values in bar charts
+            * Hence the facet type can be a string but it filter can be displayed as range
+            */
+            
+          let facetDisplayType = displayType || type
 
-          switch (type) {
+          switch (facetDisplayType) {
             case 'checkbox':
               return <FacetCheckbox {...passProps} />
 
