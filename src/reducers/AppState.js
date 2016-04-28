@@ -96,12 +96,12 @@ export default (state = initialState, action) => {
 
       /* Get selected facets */
 
-      var facets = flatten(facet_query.map((item) => item.selected))
+      var activeFacets = flatten(facet_query.map((item) => item.selected))
 
       /* Check if it already exists */
 
       var exists = state.history
-        .filter((item) => item.q === q && equals(item.facets, facets))
+        .filter((item) => item.q === q && equals(item.facets, activeFacets))
 
       /* Check if history already exists */
 
@@ -111,7 +111,7 @@ export default (state = initialState, action) => {
         q,
         url: hashCharacter + buildQueryString(query),
         dateAdded: new Date().getTime(),
-        facets
+        facets: activeFacets
       }, ...state.history]
 
       storage.set('history', history)
@@ -131,9 +131,10 @@ export default (state = initialState, action) => {
       }
 
     case types.SET_LOCALE:
+      var { locale } = action
       return {
         ...state,
-        locale: action.payload
+        locale
       }
 
     default:

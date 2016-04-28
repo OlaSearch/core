@@ -13,13 +13,16 @@ var initialState = {
   view: ''
 }
 
+/* Prevents redeclared variables for `JS Standard` compatiblity */
+var fq, facet, value, index, props
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_FILTER:
       /* Remove duplicate */
 
-      var { filter, selected } = action.payload
-      var index = checkIfFacetExists(state.filters, filter.name)
+      let { filter, selected } = action.payload
+      index = checkIfFacetExists(state.filters, filter.name)
 
       if (index === null) {
         return {
@@ -29,7 +32,7 @@ export default (state = initialState, action) => {
       } else {
         /* Update the value */
 
-        var newFilter = state.filters.slice(0)
+        let newFilter = state.filters.slice(0)
         newFilter[ index ].selected = selected
 
         return {
@@ -76,11 +79,11 @@ export default (state = initialState, action) => {
 
     case types.ADD_FACET:
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
-
-      var { value, facet } = action
-      var props = omit('values', facet)
-      var fq = state.facet_query.slice(0)
-      var index = checkIfFacetExists(fq, facet.name)
+      value = action.value
+      facet = action.facet
+      props = omit('values', facet)
+      fq = state.facet_query.slice(0)
+      index = checkIfFacetExists(fq, facet.name)
 
       /**
        * Always convert Array to strings
@@ -104,14 +107,15 @@ export default (state = initialState, action) => {
       }
 
     case types.REMOVE_FACET:
-      var fq = state.facet_query.slice(0)
-      var { value, facet } = action
+      fq = state.facet_query.slice(0)
+      value = action.value
+      facet = action.facet
 
       if (value instanceof Array) value = castNumberToStringArray(value)
 
       for (var i = fq.length - 1; i >= 0; i--) {
-        var cur = fq[i]
-        var { selected } = cur
+        let cur = fq[i]
+        let { selected } = cur
 
         if (cur.name === facet.name) {
           /* Remove selections if No value is supplied */
@@ -135,10 +139,11 @@ export default (state = initialState, action) => {
     case types.REPLACE_FACET:
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
 
-      var { value, facet } = action
-      var props = omit('values', facet)
-      var fq = state.facet_query.slice(0)
-      var index = checkIfFacetExists(fq, facet.name)
+      value = action.value
+      facet = action.facet
+      props = omit('values', facet)
+      fq = state.facet_query.slice(0)
+      index = checkIfFacetExists(fq, facet.name)
 
       if (index === null) {
         fq = [...fq, {

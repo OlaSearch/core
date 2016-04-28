@@ -47,10 +47,10 @@ export function clearFilters () {
   }
 }
 
-export function setLocale (payload) {
+export function setLocale (locale) {
   return {
     type: types.SET_LOCALE,
-    payload
+    locale
   }
 }
 

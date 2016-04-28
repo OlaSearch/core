@@ -37,6 +37,8 @@ class InstantSearchForm extends React.Component {
 
     if (isEvent && term && term.length < minCharacters) return
 
+    !isEvent && this.refs.Input.focus()
+
     isEvent ? this.instantSearchDebounce() : dispatch(executeSearch())
   };
 

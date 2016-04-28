@@ -96,7 +96,7 @@ class Pagination extends React.Component {
 
     let nextPageClass = classNames({
       'ola-page ola-page-next': true,
-      'ola-page-disabled': currentPageInt === totalPages
+      'ola-page-disabled': currentPageInt === totalPages || !totalPages
     })
 
     return (
