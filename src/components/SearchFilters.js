@@ -96,17 +96,9 @@ class SearchFilters extends React.Component {
             ...props
           }
 
-          let { type, rangeType, displayType } = facet
-           
-           /**
-            * `displayType` should have precedence
-            * For Solr: Range queries are slower and can lead to Null values in bar charts
-            * Hence the facet type can be a string but it filter can be displayed as range
-            */
-            
-          let facetDisplayType = displayType || type
+          let { type, rangeType } = facet
 
-          switch (facetDisplayType) {
+          switch (type) {
             case 'checkbox':
               return <FacetCheckbox {...passProps} />
 

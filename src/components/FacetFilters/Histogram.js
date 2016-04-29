@@ -14,7 +14,6 @@ class Histogram extends React.Component {
 
     let max = data.reduce((a, b) => a.count > b.count ? a : b)
     let min = data.reduce((a, b) => a.count < b.count ? a : b)
-    
     let { count: maxCount } = max
     let { count: minCount } = min
 
