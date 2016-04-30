@@ -5,6 +5,7 @@ import noUiSlider from 'nouislider'
 import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import Histogram from './Histogram'
+import DateParser from './../../utilities/dateParser'
 
 class Range extends React.Component {
 
@@ -98,7 +99,7 @@ class Range extends React.Component {
 
     var options = this.getSliderValues(this.props)
 
-    var { singleHandle } = facet
+    var { singleHandle, type, dateFormat } = facet
 
     var {min, max, value} = options
 
@@ -109,6 +110,14 @@ class Range extends React.Component {
 
       this.refs.slider.setAttribute('disabled', true)
     } else this.refs.slider.removeAttribute('disabled')
+    
+    /* Tooltip format */
+    
+    var formatTooltip = {
+      to: (value) => {
+        return type === 'daterange' ? DateParser.format(value, dateFormat) : value
+      }
+    }
 
     /* Slider options */
 
@@ -116,7 +125,7 @@ class Range extends React.Component {
       start: value,
       step,
       connect: singleHandle ? 'lower' : true,
-      tooltips: true,
+      tooltips: [formatTooltip, formatTooltip],
       range: {
         min,
         max

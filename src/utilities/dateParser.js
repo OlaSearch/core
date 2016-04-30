@@ -92,7 +92,11 @@ var DateParser = {
         zoneIn = (match[8] | 0) + ((match[9] | 0) / (match[8] < 0 ? -60 : 60))
       }
     } else date.setTime(num < 4294967296 ? num * 1000 : num)
-
+    
+    if(inputDate < 0){
+      date = new Date(parseFloat(inputDate))
+    }
+    
     if (zoneIn !== undef) date.setTime(date - (60 * zoneIn + date.getTimezoneOffset()) * 60000)
 
     return format ? this.format(date, format, zoneOut) : date

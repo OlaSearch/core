@@ -6,6 +6,7 @@ import RangeNumeric from './FacetFilters/RangeNumeric'
 import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
 import DateRange from './FacetFilters/DateRange'
+import DateRangePicker from './FacetFilters/DateRangePicker'
 import TagCloud from './FacetFilters/TagCloud'
 import { flatten } from 'ramda'
 
@@ -103,6 +104,7 @@ class SearchFilters extends React.Component {
               return <FacetCheckbox {...passProps} />
 
             case 'range':
+            case 'daterange':
               if (rangeType === 'numeric') return <RangeNumeric {...passProps} />
               return <Range {...passProps} />
 
@@ -112,8 +114,8 @@ class SearchFilters extends React.Component {
             case 'boolean':
               return <FacetBoolean {...passProps} />
 
-            case 'daterange':
-              return <DateRange {...passProps} />
+            case 'daterangepicker':
+              return <DateRangePicker {...passProps} />
 
             case 'tagcloud':
               return <TagCloud { ...passProps} />

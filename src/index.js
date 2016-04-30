@@ -82,7 +82,7 @@ module.exports = {
   FacetFilters: {
     Boolean: require('./components/FacetFilters/Boolean'),
     Checkbox: require('./components/FacetFilters/Checkbox'),
-    DateRange: require('./components/FacetFilters/DateRange'),
+    DatePicker: require('./components/FacetFilters/DateRangePicker'),
     Default: require('./components/FacetFilters/Default'),
     Range: require('./components/FacetFilters/Range'),
     Rating: require('./components/FacetFilters/Rating'),
