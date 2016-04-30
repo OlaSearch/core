@@ -1,6 +1,6 @@
 import React from 'react'
 
-export var FacetToggle = (ComposedComponent) => class extends React.Component {
+export const FacetToggle = (ComposedComponent) => class extends React.Component {
   constructor (props) {
     super(props)
     this.state = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { initSearch } from './../actions/Search'
 
-export var OlaRoute = (ComposedComponent) => class extends React.Component {
+export const OlaRoute = (ComposedComponent) => class extends React.Component {
   static contextTypes = {
     config: React.PropTypes.object,
     router: React.PropTypes.object
