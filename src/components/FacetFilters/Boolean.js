@@ -11,7 +11,7 @@ class FacetBoolean extends React.Component {
   };
 
   onChange = (event) => {
-    var {
+    let {
       dispatch,
       facet
     } = this.props
@@ -19,7 +19,7 @@ class FacetBoolean extends React.Component {
     if (event.target.checked) {
       dispatch(replaceFacet(facet, 'true'))
     } else {
-      dispatch(removeFacet(facet, 'true'))
+      dispatch(removeFacet(facet))
     }
 
     dispatch(executeSearch())

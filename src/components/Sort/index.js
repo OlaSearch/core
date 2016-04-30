@@ -2,6 +2,15 @@ import React from 'react'
 import { changeSort, executeSearch } from './../../actions/Search'
 
 class Sort extends React.Component {
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    selected: React.PropTypes.string.isRequired
+  };
+
+  static contextTypes = {
+    config: React.PropTypes.object
+  };
+
   handleChange = (event) => {
     let { dispatch } = this.props
 
@@ -31,13 +40,5 @@ class Sort extends React.Component {
   }
 }
 
-Sort.propTypes = {
-  dispatch: React.PropTypes.func.isRequired,
-  selected: React.PropTypes.string.isRequired
-}
-
-Sort.contextTypes = {
-  config: React.PropTypes.object
-}
-
 module.exports = Sort
+

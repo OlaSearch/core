@@ -125,7 +125,7 @@ class Range extends React.Component {
       start: value,
       step,
       connect: singleHandle ? 'lower' : true,
-      tooltips: [formatTooltip, formatTooltip],
+      tooltips: singleHandle ? [formatTooltip] : [formatTooltip, formatTooltip],
       range: {
         min,
         max

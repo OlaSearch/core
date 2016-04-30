@@ -1,23 +1,30 @@
 import React from 'react'
-import { flatten } from 'ramda'
+import R from 'ramda'
+import { addFacet } from './../../actions/AutoSuggest'
 
 class FacetSuggestion extends React.Component {
-  onItemClick = (facet, value) => {
-    let { dispatch, addFacet, onSubmit } = this.props
+  static defaultProps = {
+    limit: 3
+  };
+  onItemClick = (facet, name) => {
+    let { dispatch, onSubmit } = this.props
 
-    dispatch(addFacet(facet, value.name))
+    dispatch(addFacet(facet, name))
 
     /* Prevent race condition */
 
-    setTimeout(() => { onSubmit && onSubmit() }, 0)
+    setTimeout(() => onSubmit && onSubmit())
   };
   shouldComponentUpdate (nextProps) {
     return nextProps.facets !== this.props.facets
   }
   render () {
     let { facets, query, name, limit } = this.props
-    let facet = facets.filter((item) => item.name === name)
-    let values = flatten(facet.map((item) => item.values)).splice(0, limit)
+    let facet = R.find(R.propEq('name', name))(facets)
+
+    if (!facet) return null
+
+    let values = facet.values.splice(0, limit)
     let { q } = query
 
     return (
@@ -26,8 +33,8 @@ class FacetSuggestion extends React.Component {
           return (
             <FacetSuggestionItem
               key={idx}
-              facet={facet[0]}
-              value={value}
+              facet={facet}
+              name={value.name}
               q={q}
               onItemClick={this.onItemClick}
             />
@@ -38,23 +45,22 @@ class FacetSuggestion extends React.Component {
   }
 }
 
-FacetSuggestion.defaultProps = {
-  limit: 3
-}
-
+/**
+ * Facet suggestion item
+ */
 class FacetSuggestionItem extends React.Component {
   handleClick = () => {
-    this.props.onItemClick(this.props.facet, this.props.value)
+    this.props.onItemClick(this.props.facet, this.props.name)
   };
   render () {
-    const { q, value } = this.props
+    const { q, name } = this.props
     return (
       <a
         className='ola-facet-suggestion'
         tabIndex={0}
         onClick={this.handleClick}
       >
-        <strong>{q}</strong> in {value.name}
+        <strong>{q}</strong> in {name}
       </a>
     )
   }

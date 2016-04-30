@@ -108,8 +108,8 @@ export default (state = initialState, action) => {
 
     case types.REMOVE_FACET:
       fq = state.facet_query.slice(0)
-      value = action.value
       facet = action.facet
+      value = action.value
 
       if (value instanceof Array) value = castNumberToStringArray(value)
 

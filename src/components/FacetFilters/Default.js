@@ -34,7 +34,7 @@ class Default extends React.Component {
   };
 
   handleAddFacet = (value) => {
-    var { dispatch, facet } = this.props
+    let { dispatch, facet } = this.props
 
     this.setState({
       filterText: ''
@@ -46,9 +46,8 @@ class Default extends React.Component {
   };
 
   handleRemoveFacat = (value) => {
-    var { dispatch, facet } = this.props
+    let { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
-
     dispatch(executeSearch())
   };
 
@@ -63,6 +62,11 @@ class Default extends React.Component {
       filterText: event.target.value
     })
   };
+
+  isSelected = (name) => {
+    return this.props.selected.indexOf(name) > -1
+  };
+
   render () {
     var {
       filterText,
@@ -97,11 +101,6 @@ class Default extends React.Component {
     if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 
     var size = values.length
-
-    /**
-     * Helper method to check if the checkbox should be `checked`
-     */
-    var isSelected = (name) => selected.indexOf(name) > -1
 
     /* Should display show more link */
 
@@ -156,7 +155,7 @@ class Default extends React.Component {
                   return (
                     <Item
                       key={key}
-                      isSelected={isSelected(name)}
+                      isSelected={this.isSelected(name)}
                       name={name}
                       count={count}
                       displayName={displayName}

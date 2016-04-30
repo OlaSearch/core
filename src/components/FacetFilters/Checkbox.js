@@ -6,10 +6,8 @@ import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
 
 class Default extends React.Component {
-
   constructor (props) {
     super(props)
-
     this.state = {
       filterText: '',
       showMore: false
@@ -40,9 +38,9 @@ class Default extends React.Component {
   };
 
   handleRemoveFacet = (facet, value) => {
-    this.props.dispatch(removeFacet(facet, value))
-
-    this.props.dispatch(executeSearch())
+    let { dispatch } = this.props
+    dispatch(removeFacet(facet, value))
+    dispatch(executeSearch())
   };
 
   onChangeFilterText = (event) => {
@@ -69,7 +67,8 @@ class Default extends React.Component {
     } = this.props
 
     var {
-      values
+      values,
+      displayName
     } = facet
 
     /* Lowercase */
@@ -102,7 +101,7 @@ class Default extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
         <div className='ola-facet-wrapper'>
 
           {filterInput}
@@ -166,13 +165,8 @@ class CheckBoxItem extends React.Component {
           checked={isActive}
           onChange={this.onChecked}
           />
-        <span
-          className='ola-search-facet-name'
-          title={displayName}
-        >{displayName}</span>
-        <span
-          className='ola-search-facet-count'
-        >{count}</span>
+        <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
+        <span className='ola-search-facet-count'>{count}</span>
       </label>
     )
   }

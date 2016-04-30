@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
-import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, addFacet } from './../../actions/AutoSuggest'
-import Suggestions from './Suggestions'
+import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest } from './../../actions/AutoSuggest'
+import SearchResults from './../SearchResults'
 import Input from './Input'
 import TermSuggestion from './../SpellSuggestions/TermSuggestion'
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion'
@@ -10,15 +10,20 @@ import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
+import invariant from 'invariant'
 
 class AutoSuggest extends React.Component {
-
   constructor (props) {
     super(props)
-
     this.state = {
       isFocused: false
     }
+
+    /**
+     * Invariants
+     */
+    let { showFacetSuggestions, facetSuggestionName } = props
+    showFacetSuggestions && invariant(facetSuggestionName, 'facetSuggestionName is not defined')
   }
 
   static propTypes = {
@@ -43,7 +48,7 @@ class AutoSuggest extends React.Component {
     activeClassName: 'ola-active',
     viewAllClassName: 'ola-autosuggest-all',
     placeholder: 'Enter keywords',
-    facetSuggestionName: 'genres_sm'
+    facetSuggestionName: ''
   };
 
   handleClickOutside = (event) => {
@@ -73,11 +78,15 @@ class AutoSuggest extends React.Component {
     this.props.dispatch(clearQueryTerm())
   };
 
+  clearActiveClass = (nodes, className) => {
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.remove(className)
+    }
+  };
   onMove = (direction) => {
     let { classNames, activeClassName } = this.props
     let { suggestionsContainer } = this.refs
     let fullActiveClass = '.' + activeClassName
-
     let nodes = suggestionsContainer.querySelectorAll(classNames)
 
     if (!nodes.length) return
@@ -85,21 +94,16 @@ class AutoSuggest extends React.Component {
     let target = suggestionsContainer.querySelector(fullActiveClass)
     let index = target ? [].indexOf.call(nodes, target) : -1
     let next
-    var clearActive = (nodes) => {
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].classList.remove(activeClassName)
-      }
-    }
 
     switch (direction) {
       case 'up':
-        clearActive(nodes)
+        this.clearActiveClass(nodes, activeClassName)
         next = nodes[Math.max(0, --index)]
         next.classList.add(activeClassName)
         break
 
       case 'down':
-        clearActive(nodes)
+        this.clearActiveClass(nodes, activeClassName)
         next = nodes[Math.min(nodes.length - 1, ++index)]
         next.classList.add(activeClassName)
         break
@@ -129,16 +133,16 @@ class AutoSuggest extends React.Component {
   };
 
   handleViewAll = () => {
-    var { q, facet_query } = this.props.AutoSuggest.query
+    let { q, facet_query } = this.props.AutoSuggest.query
+    let { dispatch, onSubmit } = this.props
+    let { searchPageUrl, history } = this.context.config
 
-    var { dispatch, onSubmit } = this.props
+    onSubmit && onSubmit(q)
 
-    var { searchPageUrl, history } = this.context.config
-
-    onSubmit && onSubmit.call(this, q)
-
+    /* Redirect to search results page */
     window.location.href = searchPageUrl + getHistoryCharacter(history) + buildQueryString({ q, facet_query })
 
+    /* Close autosuggest */
     dispatch(closeAutoSuggest())
   };
 
@@ -163,7 +167,6 @@ class AutoSuggest extends React.Component {
       dispatch,
       AutoSuggest,
       bookmarks,
-      components,
       showFacetSuggestions,
       viewAllClassName,
       placeholder,
@@ -225,15 +228,14 @@ class AutoSuggest extends React.Component {
                   name={facetSuggestionName}
                   dispatch={dispatch}
                   onSubmit={this.handleViewAll}
-                  addFacet={addFacet}
                 />
               }
-              <Suggestions
+              <SearchResults
                 results={results}
                 isOpen={isOpen}
                 dispatch={dispatch}
                 bookmarks={bookmarks}
-                components={components}
+                isAutosuggest
               />
             </div>
             <a
