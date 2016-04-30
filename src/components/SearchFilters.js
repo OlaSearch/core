@@ -105,6 +105,7 @@ class SearchFilters extends React.Component {
             case 'range':
             case 'daterange':
               if (rangeType === 'numeric') return <RangeNumeric {...passProps} />
+              if (rangeType === 'daterangepicker') return <DateRangePicker {...passProps} />
               return <Range {...passProps} />
 
             case 'rating':
@@ -112,9 +113,6 @@ class SearchFilters extends React.Component {
 
             case 'boolean':
               return <FacetBoolean {...passProps} />
-
-            case 'daterangepicker':
-              return <DateRangePicker {...passProps} />
 
             case 'tagcloud':
               return <TagCloud { ...passProps} />

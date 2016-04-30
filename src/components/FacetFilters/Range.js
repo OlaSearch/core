@@ -110,9 +110,9 @@ class Range extends React.Component {
 
       this.refs.slider.setAttribute('disabled', true)
     } else this.refs.slider.removeAttribute('disabled')
-    
+
     /* Tooltip format */
-    
+
     var formatTooltip = {
       to: (value) => {
         return type === 'daterange' ? DateParser.format(value, dateFormat) : value
