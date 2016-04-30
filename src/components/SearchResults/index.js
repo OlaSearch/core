@@ -35,10 +35,12 @@ class SearchResults extends React.Component {
       <div className={klass}>
         {results.map((result, idx) => {
           let OlaSnippet = getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetDefault
+          let { id } = result
+          let key = id || idx
           return (
             <OlaSnippet
               result={result}
-              key={idx}
+              key={key}
               {...rest}
             />
           )
