@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import { addFacet, executeSearch } from './../../actions/Search'
 
 class TagCloud extends React.Component {
-
   static defaultProps = {
     fontSizeMin: 16,
     fontSizeMax: 24,

@@ -94,10 +94,10 @@ const utilities = {
   },
   getMatchingSnippet (rules, result) {
     if (!rules) return false
-    for (var i = 0; i < rules.length; i++) {
-      var rule = rules[i].rules
-      var matched = true
-      for (var field in rule) {
+    for (let i = 0; i < rules.length; i++) {
+      let rule = rules[i].rules
+      let matched = true
+      for (let field in rule) {
         if (result[field] !== rule[field]) matched = false
       }
 

@@ -1,8 +1,6 @@
 import React from 'react'
 
-const LoadMore = (props) => {
-  var { totalResults, currentPage, perPage, actions } = props
-
+const LoadMore = ({ totalResults, currentPage, perPage, actions }) => {
   if (currentPage * perPage >= totalResults) return <noscript />
 
   return (

@@ -2,14 +2,14 @@ import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
 
 const Summary = ({ result, length }) => {
-  var { summary, highlighting } = result
+  let { summary, highlighting } = result
 
   if (!summary) return <noscript />
 
   /* Check for highlighting */
 
   if (highlighting) {
-    var { summary: highlighted_summary } = highlighting
+    let { summary: highlighted_summary } = highlighting
 
     if (typeof highlighted_summary === 'object') {
       summary = highlighted_summary.join('<br />...')

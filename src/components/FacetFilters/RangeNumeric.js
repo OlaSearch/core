@@ -12,7 +12,6 @@ class RangeNumeric extends React.Component {
     } else {
       dispatch(replaceFacet(facet, [from, to]))
     }
-
     dispatch(executeSearch())
   };
   render () {

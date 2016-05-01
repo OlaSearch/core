@@ -8,7 +8,7 @@ class DateRange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isCustomActive: false
+      isCustomDateActive: false
     }
   }
 
@@ -29,9 +29,9 @@ class DateRange extends React.Component {
     dispatch(executeSearch())
   };
 
-  activateCustom = () => {
+  activateCustomDateEntry = () => {
     this.setState({
-      isCustomActive: !this.state.isCustomActive
+      isCustomDateActive: !this.state.isCustomDateActive
     })
   };
 
@@ -83,7 +83,7 @@ class DateRange extends React.Component {
       toggleDisplay
     } = this.props
 
-    let { isCustomActive } = this.state
+    let { isCustomDateActive } = this.state
 
     let [ from, to ] = selected
     let { values } = facet
@@ -100,7 +100,7 @@ class DateRange extends React.Component {
     })
 
     let customKlass = classNames('ola-date-custom', {
-      'ola-custom-active': isCustomActive
+      'ola-custom-active': isCustomDateActive
     })
 
     return (
@@ -139,7 +139,7 @@ class DateRange extends React.Component {
             <li className={customKlass}>
               <button
                 className='ola-btn-unstyled ola-btn-date-select'
-                onClick={this.activateCustom}
+                onClick={this.activateCustomDateEntry}
                 >Custom</button>
               <div className='ola-date-custom-input'>
                 <label className='ola-label ola-label-date'>

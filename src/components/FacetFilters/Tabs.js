@@ -1,18 +1,9 @@
-/**
- * Usage
- *
- * <Tabs
- *    facets = {facets}
- *    dispatch = {dispatch}
- *    selected = {facet_query}
- *  />
- */
 import React from 'react'
 import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import invariant from 'invariant'
-import { flatten } from 'ramda'
+import R from 'ramda'
 
 class Tabs extends React.Component {
 
@@ -85,19 +76,17 @@ class Tabs extends React.Component {
       selected
     } = this.props
 
-    var facet = facets.filter((item) => item.tab)
+    var facet = R.find(R.propEq('tab', true))(facets)
 
     /* Return null if there is no facets */
 
-    if (!facet.length) return null
+    if (!facet) return null
 
-    var tab = facet[0]
-    var values = flatten(facet.map((item) => item.values))
+    var { values } = facet
+    var tabs = this.getTabsForDisplay(facet, values)
 
-    var tabs = this.getTabsForDisplay(tab, values)
-
-    var selectedFacets = selected.filter((item) => item.name === tab.name).map((item) => item.selected)
-    var selectedItems = flatten(selectedFacets)
+    var selectedFacets = selected.filter((item) => item.name === facet.name).map((item) => item.selected)
+    var selectedItems = R.flatten(selectedFacets)
 
     /* Calculate Total for All Tab */
 
@@ -117,7 +106,7 @@ class Tabs extends React.Component {
         <a
           className={klassTab}
           onClick={() => {
-            if (!isAllSelected) this.handleRemoveFacet(tab)
+            if (!isAllSelected) this.handleRemoveFacet(facet)
           }}
         >
           All
@@ -128,7 +117,7 @@ class Tabs extends React.Component {
           return (
             <TabItem
               key={idx}
-              facet={tab}
+              facet={facet}
               value={value}
               handleClick={this.handleReplaceFacet}
               isActive={isActive}

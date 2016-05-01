@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { parseRangeValues } from './../../utilities'
 
 class Rating extends React.Component {
-
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     selected: React.PropTypes.array.isRequired,
@@ -28,11 +27,8 @@ class Rating extends React.Component {
 
     dispatch(executeSearch())
   };
-  isSelected = (name) => {
+  isSelected = (bounds, name) => {
     /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]];*/
-    let selectedArray = parseRangeValues(this.props.selected)
-    let bounds = selectedArray.map((item) => parseInt(item[0]))
-
     return bounds.indexOf(parseInt(name)) > -1
   };
   render () {
@@ -43,6 +39,10 @@ class Rating extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
 
+    /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]];*/
+    var selectedArray = parseRangeValues(this.props.selected)
+    var bounds = selectedArray.map((item) => parseInt(item[0]))
+
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
@@ -51,7 +51,7 @@ class Rating extends React.Component {
             {values.map((value, idx) => {
               var stars = []
               var normalized = Math.max(Math.ceil(parseInt(value.name) / interval), 0) + 1
-              var isActive = this.isSelected(value.name)
+              var isActive = this.isSelected(bounds, value.name)
               var labelKlass = classNames({
                 'ola-checkbox ola-checkbox-label': true,
                 'ola-checkbox-active': isActive
@@ -62,10 +62,7 @@ class Rating extends React.Component {
               }
 
               return (
-                <label
-                  key={idx}
-                  className={labelKlass}
-                  >
+                <label key={idx} className={labelKlass}>
                   <input
                     type='checkbox'
                     value={value.name}

@@ -4,7 +4,7 @@ const Rating = ({ rating, interval }) => {
   let normalized = rating / interval
   let star = []
   let total = Math.max(Math.ceil(normalized), 1)
-  let maxInterval = 100/interval
+  let maxInterval = 100 / interval
 
   for (let i = 0; i < total; i++) {
     star.push(

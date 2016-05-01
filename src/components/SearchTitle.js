@@ -7,18 +7,17 @@ const SearchTitle = ({ totalResults, page, perPage }, context) => {
 
   if (context.config.infiniteScroll) currentIdx = 1
 
+  let values = {
+    current: currentIdx,
+    next: lastIdx,
+    total: totalResults
+  }
+
   return (
     <h3 className='ola-search-heading'>
       <span className='ola-search-heading-title'><FormattedMessage id='title' /></span>
       <small className='ola-search-heading-number'>
-        <FormattedMessage
-          id='showing'
-          values={{
-            current: currentIdx,
-            next: lastIdx,
-            total: totalResults
-          }}
-        />
+        <FormattedMessage id='showing' values={values} />
       </small>
     </h3>
   )
