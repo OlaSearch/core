@@ -52,8 +52,8 @@ class AutoSuggest extends React.Component {
   };
 
   handleClickOutside = (event) => {
-    var { isOpen } = this.props.AutoSuggest
-    var { dispatch } = this.props
+    let { isOpen } = this.props.AutoSuggest
+    let { dispatch } = this.props
 
     if (isOpen) {
       dispatch(closeAutoSuggest())
@@ -63,7 +63,7 @@ class AutoSuggest extends React.Component {
   };
 
   onChange = (term) => {
-    var { dispatch } = this.props
+    let { dispatch } = this.props
 
     if (!term) {
       return dispatch(clearQueryTerm())
@@ -83,7 +83,7 @@ class AutoSuggest extends React.Component {
       nodes[i].classList.remove(className)
     }
   };
-  onMove = (direction) => {
+  onKeyDown = (direction) => {
     let { classNames, activeClassName } = this.props
     let { suggestionsContainer } = this.refs
     let fullActiveClass = '.' + activeClassName
@@ -121,7 +121,6 @@ class AutoSuggest extends React.Component {
 
     if (target) {
       let linkTarget = target.nodeName === 'A' ? target : target.querySelector('a')
-
       if (linkTarget) linkTarget.click()
 
       return
@@ -137,13 +136,13 @@ class AutoSuggest extends React.Component {
     let { dispatch, onSubmit } = this.props
     let { searchPageUrl, history } = this.context.config
 
-    onSubmit && onSubmit(q)
+    /* Close autosuggest */
+    dispatch(closeAutoSuggest())
+
+    if (onSubmit) return onSubmit(q)
 
     /* Redirect to search results page */
     window.location.href = searchPageUrl + getHistoryCharacter(history) + buildQueryString({ q, facet_query })
-
-    /* Close autosuggest */
-    dispatch(closeAutoSuggest())
   };
 
   onFocus = (event) => {
@@ -151,7 +150,7 @@ class AutoSuggest extends React.Component {
       isFocused: true
     })
 
-    this.props.onFocus && this.props.onFocus.call(this, event)
+    this.props.onFocus && this.props.onFocus(event)
   };
 
   onBlur = (event) => {
@@ -159,7 +158,7 @@ class AutoSuggest extends React.Component {
       isFocused: false
     })
 
-    this.props.onBlur && this.props.onBlur.call(this, event)
+    this.props.onBlur && this.props.onBlur(event)
   };
 
   render () {
@@ -204,7 +203,7 @@ class AutoSuggest extends React.Component {
             q={q}
             onChange={this.onChange}
             onClear={this.onClear}
-            onMove={this.onMove}
+            onKeyDown={this.onKeyDown}
             onSubmit={this.onSubmit}
             onFocus={this.onFocus}
             placeholder={placeholder}
@@ -212,6 +211,7 @@ class AutoSuggest extends React.Component {
           />
           <div className={klass}>
             <TermSuggestion term={suggestedTerm} />
+
             <SpellSuggestion
               suggestions={spellSuggestions}
               onChange={this.onChange}

@@ -1,11 +1,10 @@
 import React from 'react'
 
-var Rating = ({ rating }) => {
-  let normalized = rating / 20
-
+const Rating = ({ rating, interval }) => {
+  let normalized = rating / interval
   let star = []
-
   let total = Math.max(Math.ceil(normalized), 1)
+  let maxInterval = 100/interval
 
   for (let i = 0; i < total; i++) {
     star.push(
@@ -13,7 +12,7 @@ var Rating = ({ rating }) => {
     )
   }
 
-  for (let i = total; i < 5; i++) {
+  for (let i = total; i < maxInterval; i++) {
     star.push(
       <em key={i} className='ion ion-ios-star ola-rating-inactive' />
     )
@@ -26,6 +25,10 @@ var Rating = ({ rating }) => {
       {star}
     </div>
   )
+}
+
+Rating.defaultProps = {
+  interval: 20
 }
 
 module.exports = Rating

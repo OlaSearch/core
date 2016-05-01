@@ -33,7 +33,7 @@ class Input extends React.Component {
   };
 
   onKeyDown = (event) => {
-    var { onMove, onSubmit } = this.props
+    var { onKeyDown, onSubmit } = this.props
 
     switch (event.which) {
 
@@ -41,11 +41,11 @@ class Input extends React.Component {
         this.onClear(event)
         break
       case 38: // Up
-        onMove('up')
+        onKeyDown('up')
         break
 
       case 40: // Down
-        onMove('down')
+        onKeyDown('down')
         break
 
       case 9: // Tab

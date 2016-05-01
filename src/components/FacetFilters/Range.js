@@ -115,7 +115,7 @@ class Range extends React.Component {
 
     var formatTooltip = {
       to: (value) => {
-        return type === 'daterange' ? DateParser.format(value, dateFormat) : value
+        return type === 'daterange' ? DateParser.format(value, dateFormat) : Math.floor(value)
       }
     }
 

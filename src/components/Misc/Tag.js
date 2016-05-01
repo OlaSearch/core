@@ -5,7 +5,7 @@ import DateParser from './../../utilities/dateParser'
 const Tag = (props, context) => {
   var displayName = ''
   var { name, onRemove, facet } = props
-  var { type, label, template, facetNames, dateFormat } = facet
+  var { type, label, template, facetNames, dateFormat, interval } = facet
 
   switch (type) {
     case 'range':
@@ -29,7 +29,7 @@ const Tag = (props, context) => {
       break
 
     case 'rating':
-      let index = name[0] / 20
+      let index = name[0] / interval
       displayName = label[index]
       break
 
