@@ -6,7 +6,7 @@ import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 
-class Default extends React.Component {
+class LinkFilter extends React.Component {
 
   constructor (props) {
     super(props)
@@ -201,4 +201,4 @@ class Item extends React.Component {
   }
 }
 
-module.exports = FacetToggle(Default)
+module.exports = FacetToggle(LinkFilter)

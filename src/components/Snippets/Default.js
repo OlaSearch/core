@@ -6,7 +6,7 @@ import Thumbnail from './../Fields/Thumbnail'
 import Rating from './../Fields/Rating'
 import Summary from './../Fields/Summary'
 
-class Default extends React.Component {
+class DefaultSnippet extends React.Component {
   static defaultProps = {
     showTrailer: true,
     showSummary: true,
@@ -55,4 +55,4 @@ class Default extends React.Component {
   }
 }
 
-module.exports = Default
+module.exports = DefaultSnippet

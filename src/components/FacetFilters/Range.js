@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import Histogram from './Histogram'
 import DateParser from './../../utilities/dateParser'
 
-class Range extends React.Component {
+class RangeFilter extends React.Component {
 
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
@@ -180,4 +180,4 @@ class Range extends React.Component {
   }
 };
 
-module.exports = FacetToggle(Range)
+module.exports = FacetToggle(RangeFilter)

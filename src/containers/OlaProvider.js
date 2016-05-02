@@ -4,7 +4,7 @@ import OlaIntlProvider from './OlaIntlProvider'
 
 class OlaProvider extends React.Component {
   static childContextTypes = {
-    config: React.PropTypes.object
+    config: React.PropTypes.object.isRequired
   };
 
   constructor (props) {

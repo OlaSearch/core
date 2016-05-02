@@ -8,7 +8,7 @@ class SearchResults extends React.Component {
   static propTypes = {
     results: React.PropTypes.array.isRequired,
     bookmarks: React.PropTypes.array,
-    dispatch: React.PropTypes.func,
+    dispatch: React.PropTypes.func.isRequired,
     isLoading: React.PropTypes.bool
   };
 

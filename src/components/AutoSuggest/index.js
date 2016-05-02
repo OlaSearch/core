@@ -22,8 +22,7 @@ class AutoSuggest extends React.Component {
     /**
      * Invariants
      */
-    let { showFacetSuggestions, facetSuggestionName } = props
-    showFacetSuggestions && invariant(facetSuggestionName, 'facetSuggestionName is not defined')
+    props.showFacetSuggestions && invariant(props.facetSuggestionName, 'facetSuggestionName is not defined')
   }
 
   static propTypes = {
@@ -65,9 +64,7 @@ class AutoSuggest extends React.Component {
   onChange = (term) => {
     let { dispatch } = this.props
 
-    if (!term) {
-      return dispatch(clearQueryTerm())
-    }
+    if (!term) return dispatch(clearQueryTerm())
 
     dispatch(updateQueryTerm(term))
 
@@ -83,6 +80,7 @@ class AutoSuggest extends React.Component {
       nodes[i].classList.remove(className)
     }
   };
+
   onKeyDown = (direction) => {
     let { classNames, activeClassName } = this.props
     let { suggestionsContainer } = this.refs

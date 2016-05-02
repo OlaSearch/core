@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
 
-class Default extends React.Component {
+class CheckboxFilter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -172,4 +172,4 @@ class CheckBoxItem extends React.Component {
   }
 }
 
-module.exports = FacetToggle(Default)
+module.exports = FacetToggle(CheckboxFilter)

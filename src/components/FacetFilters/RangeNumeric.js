@@ -3,7 +3,7 @@ import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import { replaceFacet, removeFacet, executeSearch } from './../../actions/Search'
 import classNames from 'classnames'
 
-class RangeNumeric extends React.Component {
+class RangeNumericFilter extends React.Component {
   handleClick = (from, to) => {
     let { facet, dispatch } = this.props
 
@@ -69,4 +69,4 @@ class RangeNumericItem extends React.Component {
   }
 }
 
-module.exports = FacetToggle(RangeNumeric)
+module.exports = FacetToggle(RangeNumericFilter)

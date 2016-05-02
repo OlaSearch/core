@@ -24,7 +24,7 @@ class Pagination extends React.Component {
   };
 
   prevPage = () => {
-    var { currentPage } = this.props
+    let { currentPage } = this.props
 
     --currentPage
 
@@ -34,8 +34,8 @@ class Pagination extends React.Component {
   };
 
   nextPage = () => {
-    var { currentPage, totalResults, perPage } = this.props
-    var totalPages = Math.ceil(totalResults / perPage)
+    let { currentPage, totalResults, perPage } = this.props
+    let totalPages = Math.ceil(totalResults / perPage)
 
     ++currentPage
 
@@ -45,10 +45,10 @@ class Pagination extends React.Component {
   };
 
   selectPage = (page) => {
-    var { actions, onChangePage } = this.props
+    let { actions, onChangePage } = this.props
 
     onChangePage
-      ? onChangePage.call(this)
+      ? onChangePage()
       : this.refs.pagination.parentNode.scrollIntoView()
 
     actions.changePage(page)
@@ -57,8 +57,8 @@ class Pagination extends React.Component {
   }
 
   createPageList (start, end, limit, left, right, ellipsis) {
-    var list = []
-    for (var i = start; i <= end; i++) {
+    let list = []
+    for (let i = start; i <= end; i++) {
       if (i === 1 ||
         i === parseInt(end) ||
         end < limit) {

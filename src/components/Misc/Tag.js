@@ -12,8 +12,8 @@ const Tag = (props, context) => {
       if (typeof name === 'string') {
         displayName = name
       } else {
-        let [ from, to ] = name
-        displayName = supplant(template, { from, to })
+        let [from, to] = name
+        displayName = supplant(template, {from, to})
       }
       break
 

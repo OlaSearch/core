@@ -5,7 +5,7 @@ import { getDisplayName } from './../../utilities'
 import invariant from 'invariant'
 import R from 'ramda'
 
-class Tabs extends React.Component {
+class TabsFilter extends React.Component {
 
   static propTypes = {
     facets: React.PropTypes.array.isRequired,
@@ -158,4 +158,4 @@ class TabItem extends React.Component {
   }
 }
 
-module.exports = Tabs
+module.exports = TabsFilter

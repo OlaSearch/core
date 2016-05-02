@@ -4,7 +4,7 @@ import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { parseRangeValues } from './../../utilities'
 
-class Rating extends React.Component {
+class RatingFilter extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     selected: React.PropTypes.array.isRequired,
@@ -81,4 +81,4 @@ class Rating extends React.Component {
   }
 }
 
-module.exports = FacetToggle(Rating)
+module.exports = FacetToggle(RatingFilter)
