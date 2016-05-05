@@ -167,7 +167,8 @@ class AutoSuggest extends React.Component {
       showFacetSuggestions,
       viewAllClassName,
       placeholder,
-      facetSuggestionName
+      facetSuggestionName,
+      className
     } = this.props
 
     var {
@@ -187,7 +188,7 @@ class AutoSuggest extends React.Component {
     var { q } = query
 
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
-    var klassContainer = classNames('ola-autosuggest', {
+    var klassContainer = classNames('ola-autosuggest', className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused
     })

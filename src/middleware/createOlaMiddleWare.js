@@ -62,8 +62,11 @@ module.exports = (options = {}) => {
       timestamp: getState().Timestamp.timestamp
     }
 
+    /* ACL Rules */
+
+    let acl = getState().Acl
     let callApi
-    let params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null)
+    let params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null, acl)
 
     if (typeof api === 'function') {
       /* Returns a promise */
