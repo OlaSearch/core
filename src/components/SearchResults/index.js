@@ -13,7 +13,7 @@ class SearchResults extends React.Component {
   };
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
   };
 
   shouldComponentUpdate (nextProps) {
@@ -30,7 +30,6 @@ class SearchResults extends React.Component {
     let NoResultsSnippet = noResultsSnippet || NoResults
     let klass = classNames('ola-results', className)
     if (!results.length && !isLoading) return <NoResultsSnippet {...this.props} />
-
     return (
       <div className={klass}>
         {results.map((result, idx) => {

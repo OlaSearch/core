@@ -28,7 +28,7 @@ const Thumbnail = (props, context) => {
 }
 
 Thumbnail.contextTypes = {
-  config: React.PropTypes.object
+  config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
 }
 
 Thumbnail.propTypes = {

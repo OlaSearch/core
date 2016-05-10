@@ -37,7 +37,7 @@ class AutoSuggest extends React.Component {
   };
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
   };
 
   static defaultProps = {

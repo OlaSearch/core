@@ -23,23 +23,30 @@ module.exports = (options = {}) => {
       suggestedTerm
     } = action
 
-    const {
+    if (!types) {
+      // Normal action: pass it on
+      return next(action)
+    }
+
+    let {
       parser,
       queryBuilder,
       config,
       searchService
     } = options
 
+    if (typeof config === 'function') {
+      config = config(getState)
+      parser = new parser(config)
+      queryBuilder = new queryBuilder(config)
+      searchService = new searchService(config)
+    }
+
     if (!parser || !queryBuilder || !config || !searchService) {
       throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
     }
 
     const { logger } = config
-
-    if (!types) {
-      // Normal action: pass it on
-      return next(action)
-    }
 
     if (
       !Array.isArray(types) ||

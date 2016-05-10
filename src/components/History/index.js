@@ -20,7 +20,7 @@ class History extends React.Component {
   }
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
   };
 
   handleClickOutside = (event) => {
