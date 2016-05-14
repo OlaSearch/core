@@ -46,7 +46,7 @@ module.exports = (options = {}) => {
       throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
     }
 
-    const { logger } = config
+    const { logger, proxy } = config
 
     if (
       !Array.isArray(types) ||
@@ -70,10 +70,11 @@ module.exports = (options = {}) => {
     }
 
     /* ACL Rules */
-
     let acl = getState().Acl
     let callApi
-    let params = queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null, acl)
+    let params = proxy
+      ? { ...query, api }
+      : queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null, acl)
 
     if (typeof api === 'function') {
       /* Returns a promise */
@@ -96,11 +97,16 @@ module.exports = (options = {}) => {
 
         /* Parse only when the timestamp matches */
 
-        let results = parser.normalizeResults(response)
-        let spellSuggestions = parser.normalizeSpellSuggestions(response)
-        let totalResults = parser.normalizeTotalResults(response)
-        let facets = parser.normalizeFacets(response)
-        let qt = parser.queryTime(response)
+        if (!proxy) {
+          var results = parser.normalizeResults(response)
+          var spellSuggestions = parser.normalizeSpellSuggestions(response)
+          var totalResults = parser.normalizeTotalResults(response)
+          var facets = parser.normalizeFacets(response)
+          var qt = parser.queryTime(response)
+        } else {
+          var { results, spellSuggestions, totalResults, facets, qt } = response
+        }
+
         let type = successType
 
         /**
