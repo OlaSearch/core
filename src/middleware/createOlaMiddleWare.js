@@ -35,14 +35,26 @@ module.exports = (options = {}) => {
       searchService
     } = options
 
+    /**
+     * When config is a function, Ola Search expects
+     *  engineConfiguration
+     *  engineConfig = {
+     *    solr: { parser, queryBuilder, searchService },
+     *    elastic: { parser, queryBuilder, searchService }
+     *  }
+     * search_engine_type: 'solr|elastic'
+     * @param  {[type]} typeof config        [description]
+     * @return {[type]}        [description]
+     */
     if (typeof config === 'function') {
       config = config(getState)
-      parser = new parser(config)
-      queryBuilder = new queryBuilder(config)
-      searchService = new searchService(config)
+      let { engineConfig } = options
+      parser = new engineConfig[config.search_engine_type].parser(config)
+      queryBuilder = new engineConfig[config.search_engine_type].queryBuilder(config)
+      searchService = new engineConfig[config.search_engine_type].searchService(config)
     }
 
-    if (!parser || !queryBuilder || !config || !searchService) {
+    if (!config) {
       throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
     }
 
