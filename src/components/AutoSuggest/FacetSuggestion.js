@@ -1,6 +1,5 @@
 import React from 'react'
-import find from 'ramda/src/find'
-import propEq from 'ramda/src/propEq'
+import { find, propEq } from 'ramda'
 import { addFacet } from './../../actions/AutoSuggest'
 
 class FacetSuggestion extends React.Component {

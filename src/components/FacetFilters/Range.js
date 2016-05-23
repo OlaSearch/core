@@ -1,6 +1,6 @@
 import React from 'react'
 import { replaceFacet, executeSearch } from './../../actions/Search'
-import flatten from 'ramda/src/flatten'
+import { flatten } from 'ramda'
 import noUiSlider from 'nouislider'
 import { FacetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'

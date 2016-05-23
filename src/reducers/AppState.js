@@ -1,9 +1,7 @@
 import types from './../constants/ActionTypes'
 import storage from './../services/storage'
 import { buildQueryString, character as hashCharacter } from './../services/urlSync'
-import flatten from 'ramda/src/flatten'
-import equals from 'ramda/src/equals'
-import omit from 'ramda/src/omit'
+import { flatten, equals, omit } from 'ramda'
 
 var initialState = {
   totalResults: 0,
