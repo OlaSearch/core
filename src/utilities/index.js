@@ -97,10 +97,16 @@ const utilities = {
     for (let i = 0; i < rules.length; i++) {
       let rule = rules[i].rules
       let matched = true
-      for (let field in rule) {
-        if (result[field] !== rule[field]) matched = false
+      if (Array.isArray(rule)) {
+        for (let j = 0; j < rule.length; j++) {
+          let { field, value } = rule[i]
+          if (result[field] !== value) matched = false
+        }
+      } else {
+        for (let field in rule) {
+          if (result[field] !== rule[field]) matched = false
+        }
       }
-
       if (matched) return rules[i].template
     }
     return false
