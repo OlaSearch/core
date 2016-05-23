@@ -1,5 +1,6 @@
 import React from 'react'
-import R from 'ramda'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 import { addFacet } from './../../actions/AutoSuggest'
 
 class FacetSuggestion extends React.Component {
@@ -20,7 +21,7 @@ class FacetSuggestion extends React.Component {
   }
   render () {
     let { facets, query, name, limit } = this.props
-    let facet = R.find(R.propEq('name', name))(facets)
+    let facet = find(propEq('name', name))(facets)
 
     if (!facet) return null
 

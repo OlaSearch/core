@@ -3,7 +3,9 @@ import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import invariant from 'invariant'
-import R from 'ramda'
+import flatten from 'ramda/src/flatten'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 
 class TabsFilter extends React.Component {
 
@@ -76,7 +78,7 @@ class TabsFilter extends React.Component {
       selected
     } = this.props
 
-    var facet = R.find(R.propEq('tab', true))(facets)
+    var facet = find(propEq('tab', true))(facets)
 
     /* Return null if there is no facets */
 
@@ -86,7 +88,7 @@ class TabsFilter extends React.Component {
     var tabs = this.getTabsForDisplay(facet, values)
 
     var selectedFacets = selected.filter((item) => item.name === facet.name).map((item) => item.selected)
-    var selectedItems = R.flatten(selectedFacets)
+    var selectedItems = flatten(selectedFacets)
 
     /* Calculate Total for All Tab */
 
