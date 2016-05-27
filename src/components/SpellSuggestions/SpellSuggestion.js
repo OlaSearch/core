@@ -10,7 +10,8 @@ class SpellSuggestion extends React.Component {
   };
 
   static defaultProps = {
-    showCount: true
+    showCount: true,
+    alwaysVisible: false
   };
 
   onChange = (term) => {
@@ -31,7 +32,8 @@ class SpellSuggestion extends React.Component {
     var {
       suggestions,
       totalResults,
-      showCount
+      showCount,
+      alwaysVisible
     } = this.props
 
     if (!suggestions.length) return null
@@ -40,7 +42,7 @@ class SpellSuggestion extends React.Component {
 
     /* Check if Current results is less than the suggestions */
 
-    if (totalResults >= max.count) return null
+    if (totalResults >= max.count && !alwaysVisible) return null
 
     return (
       <div className='ola-spell-suggestion'>
@@ -73,7 +75,7 @@ class TermItem extends React.Component {
     return (
       <button
         type='button'
-        className='ola-btn ola-spell-links'
+        className='ola-spell-links'
         onClick={this.handleClick}
       >
         <span className='ola-spell-term'>{term}</span>

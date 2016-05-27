@@ -239,7 +239,7 @@ class AutoSuggest extends React.Component {
             </div>
             <a
               className={viewAllClassName}
-              onClick={this.handleViewAll}
+              onMouseDown={this.handleViewAll}
             >View all results</a>
           </div>
         </div>

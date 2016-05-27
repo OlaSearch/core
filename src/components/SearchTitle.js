@@ -8,9 +8,9 @@ const SearchTitle = ({ totalResults, page, perPage }, context) => {
   if (context.config.infiniteScroll) currentIdx = 1
 
   let values = {
-    current: currentIdx,
-    next: lastIdx,
-    total: totalResults
+    current: currentIdx.toString(),
+    next: lastIdx.toString(),
+    total: totalResults.toString()
   }
 
   return (

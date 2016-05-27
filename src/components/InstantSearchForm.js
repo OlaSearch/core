@@ -4,6 +4,7 @@ import Bookmarks from './Bookmarks'
 import History from './History'
 import SpeechInput from './Speech'
 import { debounce } from './../utilities'
+import GeoLocation from './Geo/GeoLocation'
 
 class InstantSearchForm extends React.Component {
   constructor (props, context) {
@@ -14,7 +15,8 @@ class InstantSearchForm extends React.Component {
 
   static defaultProps = {
     placeholder: 'Enter keywords',
-    minCharacters: 0
+    minCharacters: 0,
+    showGeoLocation: false
   };
 
   static contextTypes = {
@@ -57,7 +59,8 @@ class InstantSearchForm extends React.Component {
   render () {
     let {
       placeholder,
-      q
+      q,
+      showGeoLocation
     } = this.props
 
     let button = q
@@ -85,6 +88,15 @@ class InstantSearchForm extends React.Component {
           {button}
 
           <Bookmarks />
+
+          {showGeoLocation &&
+            <GeoLocation
+              active={false}
+              onSuccess={this.props.onGeoLocationSuccess}
+              onFailure={this.props.onGeoLocationFailure}
+              onDisable={this.props.onGeoLocationDisable}
+            />
+          }
 
           <History searchUrl={this.props.searchUrl} />
 

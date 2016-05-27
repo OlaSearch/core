@@ -29,6 +29,8 @@ class TabsFilter extends React.Component {
 
     dispatch(replaceFacet(facet, value))
 
+    this.props.beforeSelect && this.props.beforeSelect(facet, value)
+
     dispatch(executeSearch())
   };
 
@@ -38,6 +40,8 @@ class TabsFilter extends React.Component {
     if (resetFacetsOnSelect) dispatch(removeAllFacets())
 
     dispatch(removeFacet(facet))
+
+    this.props.beforeSelect && this.props.beforeSelect(facet)
 
     dispatch(executeSearch())
   };

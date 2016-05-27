@@ -18,6 +18,7 @@ module.exports = (options = {}) => {
       types,
       api,
       query,
+      context,
       payload = {},
       executeFromSpellSuggest,
       suggestedTerm
@@ -86,7 +87,7 @@ module.exports = (options = {}) => {
     let callApi
     let params = proxy
       ? { ...query, api }
-      : queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null, acl)
+      : queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null, acl, context)
 
     if (typeof api === 'function') {
       /* Returns a promise */

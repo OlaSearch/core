@@ -77,8 +77,10 @@ module.exports = {
     Thumbnail: require('./components/Fields/Thumbnail'),
     Title: require('./components/Fields/Title'),
     Year: require('./components/Fields/Year'),
-    DateField: require('./components/Fields/Date')
+    DateField: require('./components/Fields/Date'),
+    Map: require('./components/Fields/ImageMap')
   },
+  GeoLocation: require('./components/Geo/GeoLocation'),
   FacetFilters: {
     Boolean: require('./components/FacetFilters/Boolean'),
     Checkbox: require('./components/FacetFilters/Checkbox'),

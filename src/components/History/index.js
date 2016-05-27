@@ -45,7 +45,8 @@ class History extends React.Component {
 
   render () {
     var {
-      history
+      history,
+      emptyHistoryText
     } = this.props
 
     var {
@@ -66,7 +67,7 @@ class History extends React.Component {
         <button
           type='button'
           className='ola-link-history'
-          onClick={this.toggleVisibility}
+          onMouseDown={this.toggleVisibility}
           aria-label='Show history'
         />
         <div className={klass}>
@@ -75,14 +76,14 @@ class History extends React.Component {
             <button
               type='button'
               className='ola-fake-button ola-clear'
-              onClick={this.clearHistory}>
+              onMouseDown={this.clearHistory}>
               (clear)
             </button>
           </div>
           <div className='ola-module-body'>
             {!history.length
              ? <div className='ola-module-item'>
-              Your history will show here.
+              {emptyHistoryText}
              </div>
             : null}
 
@@ -97,7 +98,8 @@ class History extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    history: state.AppState.history
+    history: state.AppState.history,
+    emptyHistoryText: 'Your search history will show here'
   }
 }
 

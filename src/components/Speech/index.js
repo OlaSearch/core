@@ -45,10 +45,17 @@ class SpeechInput extends React.Component {
     /* Add event listener for onresult event */
     this.recog.addEventListener('result', this.handleEvent)
     // this.recog.addEventListener('end', () => console.warn('end'))
-    this.recog.addEventListener('error', (err) => console.warn(err))
+    this.recog.addEventListener('error', this.handleError)
 
     /* Start recognizing */
     this.recog.start()
+  };
+
+  handleError = (err) => {
+    this.setState({
+      isRecording: false
+    })
+    console.warn(err)
   };
 
   handleEvent = (event) => {
@@ -82,7 +89,7 @@ class SpeechInput extends React.Component {
         <button
           type='button'
           className={klassName}
-          onClick={this.onLaunch}
+          onMouseDown={this.onLaunch}
           aria-label='Press to speak'></button>
       </div>
     )

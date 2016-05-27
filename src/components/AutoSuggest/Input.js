@@ -76,8 +76,8 @@ class Input extends React.Component {
     /* Show clear or submit button */
 
     var button = q
-      ? <button type='reset' className='ola-btn ola-clear-button' onClick={this.onClear}></button>
-      : <button type='button' className='ola-btn ola-search-button' onClick={this.onSearchButtonClick} />
+      ? <button type='reset' className='ola-clear-button' onMouseDown={this.onClear}></button>
+      : <button type='button' className='ola-search-button' onMouseDown={this.onSearchButtonClick} />
 
     return (
       <div className='ola-search-form-container'>

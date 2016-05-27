@@ -80,6 +80,7 @@ export function executeSearch (payload) {
     /* Check if there is a suggested term */
 
     var query = getState().QueryState
+    var context = getState().Context
 
     dispatch({
       types: [
@@ -88,6 +89,7 @@ export function executeSearch (payload) {
         types.REQUEST_SEARCH_FAILURE
       ],
       query,
+      context,
       api: 'search',
       payload,
       executeFromSpellSuggest
@@ -118,6 +120,7 @@ export function executeFromSpellSuggest (payload) {
       ...getState().QueryState,
       q: suggestedTerm
     }
+    var context = getState().Context
 
     dispatch({
       types: [
@@ -127,6 +130,7 @@ export function executeFromSpellSuggest (payload) {
       ],
       shouldCallAPI: (state) => true,
       query,
+      context,
       api: 'search',
       payload,
       suggestedTerm
@@ -221,6 +225,34 @@ export function updateStateFromQuery (config) {
   return {
     type: types.UPDATE_STATE_FROM_QUERY,
     config
+  }
+}
+
+export function addDynamicField (name, value) {
+  return {
+    type: types.ADD_DYNAMIC_FIELD,
+    name, value
+  }
+}
+
+export function removeDynamicField (name) {
+  return {
+    type: types.REMOVE_DYNAMIC_FIELD,
+    name
+  }
+}
+
+export function addContext (contextType, value) {
+  return {
+    type: types.ADD_CONTEXT,
+    contextType, value
+  }
+}
+
+export function removeContext (contextType) {
+  return {
+    type: types.REMOVE_CONTEXT,
+    contextType
   }
 }
 
