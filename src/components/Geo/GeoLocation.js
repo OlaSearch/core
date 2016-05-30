@@ -55,7 +55,7 @@ class GeoLocation extends React.Component {
       'ola-link-geo-requesting': isRequesting,
       'ola-link-geo-active': active || !!Context.location
     })
-    return <button className={klass} onMouseDown={this.getLocation}><span>Get my location</span></button>
+    return <button className={klass} onClick={this.getLocation}><span>Get my location</span></button>
   }
 }
 

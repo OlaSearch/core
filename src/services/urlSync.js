@@ -25,7 +25,6 @@ var urlSync = {
 
     for (var name in params) {
       var value = params[name]
-
       if (name === 'facet_query') {
         value = value.map((item) => item.name + ':' + item.selected)
       }
@@ -64,6 +63,16 @@ var urlSync = {
   parseQueryString (initialState, config) {
     let loc = config.history ? config.history === 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
     var qs = queryString.parse(loc)
+
+    /**
+     * Validate query string
+     */
+
+    for (let p in qs) {
+      if((p === 'page' || p === 'per_page') && isNaN(qs[p])) {
+        qs[p] = initialState[p]
+      }
+    }
 
     /**
      * Facets

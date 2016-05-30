@@ -67,7 +67,7 @@ class History extends React.Component {
         <button
           type='button'
           className='ola-link-history'
-          onMouseDown={this.toggleVisibility}
+          onClick={this.toggleVisibility}
           aria-label='Show history'
         />
         <div className={klass}>
@@ -76,7 +76,7 @@ class History extends React.Component {
             <button
               type='button'
               className='ola-fake-button ola-clear'
-              onMouseDown={this.clearHistory}>
+              onClick={this.clearHistory}>
               (clear)
             </button>
           </div>

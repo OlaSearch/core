@@ -64,7 +64,7 @@ class InstantSearchForm extends React.Component {
     } = this.props
 
     let button = q
-      ? <button type='reset' className='ola-clear-button' onClick={this.onClear} aria-label='Clear'></button>
+      ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear'></button>
       : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit'></button>
 
     return (
@@ -95,6 +95,7 @@ class InstantSearchForm extends React.Component {
               onSuccess={this.props.onGeoLocationSuccess}
               onFailure={this.props.onGeoLocationFailure}
               onDisable={this.props.onGeoLocationDisable}
+              onError={this.props.onGeoError}
             />
           }
 

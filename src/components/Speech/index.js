@@ -89,7 +89,7 @@ class SpeechInput extends React.Component {
         <button
           type='button'
           className={klassName}
-          onMouseDown={this.onLaunch}
+          onClick={this.onLaunch}
           aria-label='Press to speak'></button>
       </div>
     )

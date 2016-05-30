@@ -28,7 +28,7 @@ class BookmarkActions extends React.Component {
           type='button'
           className='ola-link-bookmark-action action-remove'
           title='Remove from bookmarks'
-          onMouseDown={this.removeBookmark}>
+          onClick={this.removeBookmark}>
           <span>Remove Bookmark</span>
         </button>
       )
@@ -38,7 +38,7 @@ class BookmarkActions extends React.Component {
           type='button'
           className='ola-link-bookmark-action'
           title='Add to bookmarks'
-          onMouseDown={this.addBookmark}>
+          onClick={this.addBookmark}>
           <span>Add Bookmark</span>
         </button>
       )
