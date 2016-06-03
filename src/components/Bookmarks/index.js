@@ -55,8 +55,9 @@ class Bookmarks extends React.Component {
           type='button'
           className='ola-link-bookmark'
           onClick={this.toggleVisibility}
-          aria-label='Show bookmarks'
-        ></button>
+        >
+          <span className='ola-btn-hint hint--top' aria-label='Bookmarks' />
+        </button>
         <div className={klass}>
           <div className='ola-module-title'>Bookmarks</div>
           <div className='ola-module-body'>

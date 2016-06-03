@@ -70,3 +70,9 @@ export function addFacet (facet, value) {
     facet, value
   }
 }
+
+export function terminateAutoSuggest () {
+  return {
+    type: types.TERMINATE_AUTOSUGGEST
+  }
+}

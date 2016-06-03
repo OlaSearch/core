@@ -1,7 +1,7 @@
 module.exports = {
   locales: 'en-US',
   messages: {
-    'title': 'Movies',
+    'title': 'Collection',
     'refineResults': 'Refine your results',
     'showing': 'Showing {current} - {next} of {total}'
   }

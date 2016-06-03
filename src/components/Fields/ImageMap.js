@@ -10,7 +10,6 @@ const Map = (props) => {
   let map = `https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=200x200&maptype=roadmap&markers=color:blue|label:A|${latlong}&key=${apiKey}`
 
   return (
-    <div className='ola-snippet-image ola-snippet-image-map'>
       <a
         href={url}
         className='field field-url'
@@ -20,7 +19,6 @@ const Map = (props) => {
           thumbnail_mobile={map}
         />
       </a>
-    </div>
   )
 }
 

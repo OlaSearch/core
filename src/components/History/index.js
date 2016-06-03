@@ -68,8 +68,9 @@ class History extends React.Component {
           type='button'
           className='ola-link-history'
           onClick={this.toggleVisibility}
-          aria-label='Show history'
-        />
+        >
+          <span className='ola-btn-hint hint--top' aria-label='Search history' />
+        </button>
         <div className={klass}>
           <div className='ola-module-title'>
             <span>History </span>

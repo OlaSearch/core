@@ -193,6 +193,9 @@ export default (state = initialState, action) => {
         view: action.view
       }
 
+    case types.TERMINATE_SEARCH:
+      return initialState
+
     default:
       return state
   }

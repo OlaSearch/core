@@ -137,6 +137,9 @@ export default (state = initialState, action) => {
         locale
       }
 
+    case types.TERMINATE_SEARCH:
+      return initialState
+
     default:
       return state
   }

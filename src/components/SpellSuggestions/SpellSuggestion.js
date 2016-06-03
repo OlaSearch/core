@@ -10,7 +10,7 @@ class SpellSuggestion extends React.Component {
   };
 
   static defaultProps = {
-    showCount: true,
+    showCount: false,
     alwaysVisible: false
   };
 

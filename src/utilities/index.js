@@ -99,12 +99,14 @@ const utilities = {
       let matched = true
       if (Array.isArray(rule)) {
         for (let j = 0; j < rule.length; j++) {
-          let { field, value } = rule[i]
-          if (result[field] !== value) matched = false
+          let { field, value } = rule[j]
+          let fieldValue = result[field]
+          if (!fieldValue || fieldValue && !fieldValue.toString().match(new RegExp(value, 'gi'))) matched = false
         }
       } else {
         for (let field in rule) {
-          if (result[field] !== rule[field]) matched = false
+          let fieldValue = result[field]
+          if (!fieldValue || fieldValue && !fieldValue.toString().match(new RegExp(rule[field], 'gi'))) matched = false
         }
       }
       if (matched) return rules[i].template
@@ -113,6 +115,11 @@ const utilities = {
   },
   generateSlug (value) {
     return value.toString().toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+  },
+  checkForAllowedCharacters (query, characters) {
+    if (!query || !characters) return true
+    let _regExp = new RegExp(characters, 'gi')
+    return _regExp.test(query)
   }
 }
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
-import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest } from './../../actions/AutoSuggest'
+import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, terminateAutoSuggest } from './../../actions/AutoSuggest'
 import SearchResults from './../SearchResults'
 import Input from './Input'
 import TermSuggestion from './../SpellSuggestions/TermSuggestion'
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion'
 import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
+import { checkForAllowedCharacters } from './../../utilities'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import invariant from 'invariant'
@@ -65,6 +66,13 @@ class AutoSuggest extends React.Component {
     let { dispatch } = this.props
 
     if (!term) return dispatch(clearQueryTerm())
+
+    let { allowedCharacters } = this.context.config
+
+    if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
+      dispatch(terminateAutoSuggest())
+      return
+    }
 
     dispatch(updateQueryTerm(term))
 

@@ -53,6 +53,7 @@ module.exports = {
   NoResults: require('./components/Snippets/NoResults'),
   SearchTitle: require('./components/SearchTitle'),
   ClearAllFacets: require('./components/Misc/ClearAllFacets'),
+  PopularKeywords: require('./components/Misc/PopularKeywords'),
   Error: require('./components/Misc/Error'),
   Tabs: require('./components/FacetFilters/Tabs'),
   SelectedFilters: require('./components/SelectedFilters'),

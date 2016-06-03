@@ -87,6 +87,9 @@ export default (state = initialState, action) => {
         }
       }
 
+    case types.TERMINATE_AUTOSUGGEST:
+      return initialState
+
     default:
       return state
   }

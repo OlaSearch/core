@@ -51,11 +51,17 @@ class GeoLocation extends React.Component {
   render () {
     let { Context } = this.props
     let { isRequesting, active } = this.state
+    let isGeoEnabled = active || !!Context.location
     let klass = classNames('ola-link-geo', {
       'ola-link-geo-requesting': isRequesting,
-      'ola-link-geo-active': active || !!Context.location
+      'ola-link-geo-active': isGeoEnabled
     })
-    return <button className={klass} onClick={this.getLocation}><span>Get my location</span></button>
+    let title = isGeoEnabled ? 'Stop using my location' : 'Use my location'
+    return (
+      <button className={klass} onClick={this.getLocation}>
+        <span className='ola-btn-hint hint--top' aria-label={title} />
+      </button>
+    )
   }
 }
 

@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
 import { addHistory } from './History'
 import { pushState } from './../services/urlSync'
-import { debounce } from './../utilities'
+import { debounce, checkForAllowedCharacters } from './../utilities'
 
 /* Update Browser URL */
 const updateURL = debounce(pushState, 300)
@@ -11,6 +11,10 @@ const addToHistory = debounce(addOlaHistory, 600)
 
 /* Should route change */
 var globalRouteChange = true
+
+/* Allowed characters */
+
+var allowedCharacters = null
 
 /* URL Parameter */
 
@@ -82,6 +86,10 @@ export function executeSearch (payload) {
     var query = getState().QueryState
     var context = getState().Context
 
+    if (allowedCharacters && !checkForAllowedCharacters(query.q, allowedCharacters)) {
+      return dispatch(terminateSearch())
+    }
+
     dispatch({
       types: [
         types.REQUEST_SEARCH,
@@ -135,6 +143,12 @@ export function executeFromSpellSuggest (payload) {
       payload,
       suggestedTerm
     })
+  }
+}
+
+export function terminateSearch () {
+  return {
+    type: types.TERMINATE_SEARCH
   }
 }
 
@@ -284,6 +298,9 @@ export function initSearch (options) {
     /* Always pass configuration to @parseQueryString handler */
 
     shouldSyncURL && dispatch(updateStateFromQuery(config))
+
+    /* Set global variable */
+    allowedCharacters = config.allowedCharacters
 
     /* Global setting */
 
