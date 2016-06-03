@@ -2,7 +2,7 @@ import React from 'react'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import Tag from './../Misc/Tag'
 import ReactList from 'react-list'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 
@@ -67,6 +67,23 @@ class LinkFilter extends React.Component {
     return this.props.selected.indexOf(name) > -1
   };
 
+  itemRenderer = (values, index, key) => {
+    let { name, count } = values[index]
+    let { facet: { facetNames }} = this.props
+    let isSelected = this.isSelected(name)
+    let displayName = getDisplayName(facetNames, name)
+    return (
+      <Item
+        key={key}
+        isSelected={isSelected}
+        name={name}
+        count={count}
+        displayName={displayName}
+        onItemClick={this.handleAddFacet}
+      />
+    )
+  };
+
   render () {
     var {
       filterText,
@@ -119,6 +136,8 @@ class LinkFilter extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
 
+    var itemRendererBound = this.itemRenderer.bind(this, values)
+
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
@@ -149,20 +168,7 @@ class LinkFilter extends React.Component {
 
             <div className='ola-facet-scroll-list'>
               <ReactList
-                itemRenderer={(index, key) => {
-                  var { name, count } = values[index]
-                  var displayName = getDisplayName(facetNames, name)
-                  return (
-                    <Item
-                      key={key}
-                      isSelected={this.isSelected(name)}
-                      name={name}
-                      count={count}
-                      displayName={displayName}
-                      onItemClick={this.handleAddFacet}
-                    />
-                  )
-                }}
+                itemRenderer={itemRendererBound}
                 length={values.length}
                 type={listType}
               />
@@ -201,4 +207,4 @@ class Item extends React.Component {
   }
 }
 
-module.exports = FacetToggle(LinkFilter)
+module.exports = facetToggle(LinkFilter)

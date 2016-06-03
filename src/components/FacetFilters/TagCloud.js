@@ -1,5 +1,5 @@
 import React from 'react'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { addFacet, executeSearch } from './../../actions/Search'
 
@@ -89,4 +89,4 @@ class TagCloudItem extends React.Component {
   }
 }
 
-module.exports = FacetToggle(TagCloud)
+module.exports = facetToggle(TagCloud)

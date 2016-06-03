@@ -5,7 +5,7 @@ import { removeContext } from './../../actions/Search'
 
 class GeoLocation extends React.Component {
   static defaultProps = {
-    active: false,
+    active: false
   };
   constructor (props) {
     super(props)
@@ -65,7 +65,7 @@ class GeoLocation extends React.Component {
   }
 }
 
-function mapStateToProps( state ){
+function mapStateToProps (state) {
   return {
     Context: state.Context
   }

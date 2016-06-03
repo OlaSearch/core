@@ -89,8 +89,7 @@ class TabsFilter extends React.Component {
     var { values } = facet
     var tabs = this.getTabsForDisplay(facet, values)
 
-    var selectedFacets = selected.filter((item) => item.name === facet.name).map((item) => item.selected)
-    var selectedItems = flatten(selectedFacets)
+    var selectedItems = flatten(selected.filter((item) => item.name === facet.name).map((item) => item.selected))
 
     /* Calculate Total for All Tab */
 
@@ -98,7 +97,7 @@ class TabsFilter extends React.Component {
 
     /* Class for all tab */
 
-    var isAllSelected = !selectedFacets.length
+    var isAllSelected = !selectedItems.length
 
     var klassTab = classNames({
       'ola-tabs-label': true,

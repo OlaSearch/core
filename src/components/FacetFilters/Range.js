@@ -2,7 +2,7 @@ import React from 'react'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import { flatten } from 'ramda'
 import noUiSlider from 'nouislider'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import Histogram from './Histogram'
 import DateParser from './../../utilities/dateParser'
@@ -180,4 +180,4 @@ class RangeFilter extends React.Component {
   }
 };
 
-module.exports = FacetToggle(RangeFilter)
+module.exports = facetToggle(RangeFilter)

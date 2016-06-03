@@ -1,5 +1,5 @@
 import React from 'react'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import { replaceFacet, removeFacet, executeSearch } from './../../actions/Search'
 import classNames from 'classnames'
 
@@ -69,4 +69,4 @@ class RangeNumericItem extends React.Component {
   }
 }
 
-module.exports = FacetToggle(RangeNumericFilter)
+module.exports = facetToggle(RangeNumericFilter)

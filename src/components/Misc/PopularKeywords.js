@@ -18,7 +18,7 @@ const PopularKeywords = ({ label, onClick }, context) => {
   )
 }
 
-class PopularKeywordItem extends React.Component{
+class PopularKeywordItem extends React.Component {
   onClick = () => {
     this.props.onClick(this.props.keyword)
   };

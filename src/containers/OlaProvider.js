@@ -15,9 +15,9 @@ class OlaProvider extends React.Component {
     }
   }
   getChildContext () {
-    let { config, store } = this.props
+    let { config } = this.props
     return {
-      config: config
+      config
     }
   }
   render () {

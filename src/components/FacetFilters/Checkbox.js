@@ -1,6 +1,6 @@
 import React from 'react'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
@@ -53,6 +53,24 @@ class CheckboxFilter extends React.Component {
     return this.props.selected.indexOf(name) > -1
   };
 
+  itemRenderer = (values, index, key) => {
+    let { facet } = this.props
+    let { name, count } = values[index]
+    let isActive = this.isSelected(name)
+
+    return (
+      <CheckBoxItem
+        key={index}
+        facet={facet}
+        name={name}
+        count={count}
+        handleAddFacet={this.handleAddFacet}
+        handleRemoveFacet={this.handleRemoveFacet}
+        isActive={isActive}
+      />
+    )
+  };
+
   render () {
     var {
       filterText
@@ -99,6 +117,8 @@ class CheckboxFilter extends React.Component {
         />
         : null)
 
+    var itemRendererBound = this.itemRenderer.bind(this, values)
+
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
@@ -109,22 +129,7 @@ class CheckboxFilter extends React.Component {
 
             <div className='ola-facet-scroll-list'>
               <ReactList
-                itemRenderer={(index, key) => {
-                  var { name, count } = values[index]
-                  var isActive = this.isSelected(name)
-
-                  return (
-                    <CheckBoxItem
-                      key={index}
-                      facet={facet}
-                      name={name}
-                      count={count}
-                      handleAddFacet={this.handleAddFacet}
-                      handleRemoveFacet={this.handleRemoveFacet}
-                      isActive={isActive}
-                    />
-                  )
-                }}
+                itemRenderer={itemRendererBound}
                 length={size}
                 type={listType}
               />
@@ -172,4 +177,4 @@ class CheckBoxItem extends React.Component {
   }
 }
 
-module.exports = FacetToggle(CheckboxFilter)
+module.exports = facetToggle(CheckboxFilter)

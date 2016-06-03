@@ -69,5 +69,5 @@ module.exports = {
   /* Context */
 
   ADD_CONTEXT: 'ADD_CONTEXT',
-  REMOVE_CONTEXT: 'REMOVE_CONTEXT',
+  REMOVE_CONTEXT: 'REMOVE_CONTEXT'
 }

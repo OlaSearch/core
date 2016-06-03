@@ -10,15 +10,15 @@ const Map = (props) => {
   let map = `https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=200x200&maptype=roadmap&markers=color:blue|label:A|${latlong}&key=${apiKey}`
 
   return (
-      <a
-        href={url}
-        className='field field-url'
-      >
-        <Thumbnail
-          thumbnail={map}
-          thumbnail_mobile={map}
-        />
-      </a>
+    <a
+      href={url}
+      className='field field-url'
+    >
+      <Thumbnail
+        thumbnail={map}
+        thumbnail_mobile={map}
+      />
+    </a>
   )
 }
 

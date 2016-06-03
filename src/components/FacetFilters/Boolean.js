@@ -1,6 +1,6 @@
 import React from 'react'
 import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 
 class BooleanFilter extends React.Component {
@@ -62,4 +62,4 @@ class BooleanFilter extends React.Component {
   }
 }
 
-module.exports = FacetToggle(BooleanFilter)
+module.exports = facetToggle(BooleanFilter)

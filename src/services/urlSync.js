@@ -69,7 +69,7 @@ var urlSync = {
      */
 
     for (let p in qs) {
-      if((p === 'page' || p === 'per_page') && isNaN(qs[p])) {
+      if ((p === 'page' || p === 'per_page') && isNaN(qs[p])) {
         qs[p] = initialState[p]
       }
     }
@@ -82,7 +82,7 @@ var urlSync = {
       var facetQuery = qs.facet_query
       var { facets: configFacets } = config
 
-      if (typeof facetQuery === 'string') facetQuery = JSON.parse('[\"' + facetQuery + '\"]')
+      if (typeof facetQuery === 'string') facetQuery = JSON.parse('["' + facetQuery + '"]')
 
       var fq = facetQuery.map((item) => {
         let [ name, value ] = item.split(':')
@@ -117,7 +117,7 @@ var urlSync = {
       var { filters } = qs
       var { filters: configFilters } = config
 
-      if (typeof filters === 'string') filters = JSON.parse('[\"' + filters + '\"]')
+      if (typeof filters === 'string') filters = JSON.parse('["' + filters + '"]')
 
       var filterQuery = filters.map((filter) => {
         var [ name, value ] = filter.split(':')

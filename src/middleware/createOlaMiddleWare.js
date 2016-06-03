@@ -109,15 +109,23 @@ module.exports = (options = {}) => {
         }
 
         /* Parse only when the timestamp matches */
-
+        var results
+        var spellSuggestions
+        var totalResults
+        var facets
+        var qt
         if (!proxy) {
-          var results = parser.normalizeResults(response)
-          var spellSuggestions = parser.normalizeSpellSuggestions(response)
-          var totalResults = parser.normalizeTotalResults(response)
-          var facets = parser.normalizeFacets(response)
-          var qt = parser.queryTime(response)
+          results = parser.normalizeResults(response)
+          spellSuggestions = parser.normalizeSpellSuggestions(response)
+          totalResults = parser.normalizeTotalResults(response)
+          facets = parser.normalizeFacets(response)
+          qt = parser.queryTime(response)
         } else {
-          var { results, spellSuggestions, totalResults, facets, qt } = response
+          results = response.results
+          spellSuggestions = results.spellSuggestions
+          totalResults = results.totalResults
+          facets = results.facets
+          qt = results.qt
         }
 
         let type = successType

@@ -1,6 +1,6 @@
 import React from 'react'
 import { replaceFacet, executeSearch } from './../../actions/Search'
-import { FacetToggle } from './../../decorators/OlaFacetToggle'
+import { facetToggle } from './../../decorators/OlaFacetToggle'
 import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
 
@@ -189,4 +189,4 @@ class DateLabel extends React.Component {
   }
 }
 
-module.exports = FacetToggle(DateRange)
+module.exports = facetToggle(DateRange)
