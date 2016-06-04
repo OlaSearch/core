@@ -50,9 +50,9 @@ module.exports = (options = {}) => {
     if (typeof config === 'function') {
       config = config(getState)
       let { engineConfig } = options
-      parser = new engineConfig[config.search_engine_type].parser(config)
-      queryBuilder = new engineConfig[config.search_engine_type].queryBuilder(config)
-      searchService = new engineConfig[config.search_engine_type].searchService(config)
+      parser = new engineConfig[config.search_engine_type].Parser(config)
+      queryBuilder = new engineConfig[config.search_engine_type].QueryBuilder(config)
+      searchService = new engineConfig[config.search_engine_type].SearchService(config)
     }
 
     if (!config) {

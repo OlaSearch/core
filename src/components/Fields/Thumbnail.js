@@ -5,11 +5,11 @@ const Thumbnail = (props, context) => {
   var { mediaQuery } = context.config
   var {
     thumbnail,
-    thumbnail_mobile,
+    thumbnail_mobile: thumbnailMobile,
     ...rest
   } = props
 
-  if (!thumbnail_mobile) {
+  if (!thumbnailMobile) {
     return (
       <img className='ola-img' {...rest} src={thumbnail} alt='' />
     )
@@ -21,7 +21,7 @@ const Thumbnail = (props, context) => {
         <img className='ola-img ola-img-desktop' {...rest} src={thumbnail} alt='' />
       </Media>
       <Media query={mediaQuery.mobile}>
-        <img className='ola-img ola-img-mobile' {...rest} src={thumbnail_mobile} alt='' />
+        <img className='ola-img ola-img-mobile' {...rest} src={thumbnailMobile} alt='' />
       </Media>
     </div>
   )

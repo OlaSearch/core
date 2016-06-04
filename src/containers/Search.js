@@ -61,9 +61,9 @@ class Search extends React.Component {
 
     var {
       q,
-      facet_query,
+      facet_query: facetQuery,
       page,
-      per_page,
+      per_page: perPage,
       sort,
       referrer
     } = QueryState
@@ -111,12 +111,12 @@ class Search extends React.Component {
 
             <ClearAllFacets
               dispatch={dispatch}
-              selected={facet_query}
+              selected={facetQuery}
             />
 
             <SearchFilters
               facets={facets}
-              selected={facet_query}
+              selected={facetQuery}
               dispatch={dispatch} />
           </div>
 
@@ -130,7 +130,7 @@ class Search extends React.Component {
               <SearchTitle
                 totalResults={totalResults}
                 page={page}
-                perPage={per_page}
+                perPage={perPage}
               />
 
               <TermSuggestion
@@ -148,11 +148,11 @@ class Search extends React.Component {
             <Tabs
               facets={facets}
               dispatch={dispatch}
-              selected={facet_query}
+              selected={facetQuery}
             />
 
             <SelectedFilters
-              facets={facet_query}
+              facets={facetQuery}
               dispatch={dispatch}
               referrer={referrer}
             />
@@ -172,7 +172,7 @@ class Search extends React.Component {
             <SearchFooter
               totalResults={totalResults}
               currentPage={page}
-              perPage={per_page}
+              perPage={perPage}
               dispatch={dispatch}
               isPhone={isPhone}
             />

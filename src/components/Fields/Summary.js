@@ -9,10 +9,10 @@ const Summary = ({ result, length }) => {
   /* Check for highlighting */
 
   if (highlighting) {
-    let { summary: highlighted_summary } = highlighting
+    let { summary: highlightedSummary } = highlighting
 
-    if (typeof highlighted_summary === 'object') {
-      summary = highlighted_summary.join('<br />...')
+    if (typeof highlightedSummary === 'object') {
+      summary = highlightedSummary.join('<br />...')
     }
   } else if (summary.length > length) {
     summary = summary.substr(0, length).split(' ').slice(0, -1).join(' ') + '...'

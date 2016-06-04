@@ -69,7 +69,7 @@ class LinkFilter extends React.Component {
 
   itemRenderer = (values, index, key) => {
     let { name, count } = values[index]
-    let { facet: { facetNames }} = this.props
+    let { facet: { facetNames } } = this.props
     let isSelected = this.isSelected(name)
     let displayName = getDisplayName(facetNames, name)
     return (
@@ -103,8 +103,7 @@ class LinkFilter extends React.Component {
     } = this.props
 
     var {
-      values,
-      facetNames
+      values
     } = facet
 
     /* Lowercase */

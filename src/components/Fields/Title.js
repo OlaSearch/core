@@ -34,9 +34,9 @@ class Title extends React.Component {
     /* Check for highlighting */
 
     if (highlighting) {
-      var { title: highlighted_title } = highlighting
+      var { title: highlightedTitle } = highlighting
 
-      if (typeof highlighted_title === 'object') title = highlighted_title[0]
+      if (typeof highlightedTitle === 'object') title = highlightedTitle[0]
     }
 
     return (
