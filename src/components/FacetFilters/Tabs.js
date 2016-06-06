@@ -73,7 +73,6 @@ class TabsFilter extends React.Component {
 
     return tabs
   };
-
   render () {
     var {
       facets,
@@ -104,17 +103,16 @@ class TabsFilter extends React.Component {
       'ola-tab-active': isAllSelected
     })
 
+    // var handleRemoveFacet = this.onClearFacets.bind(this, isAllSelected)
+
     return (
       <nav className='ola-tabs'>
-        <a
-          className={klassTab}
-          onClick={() => {
-            if (!isAllSelected) this.handleRemoveFacet(facet)
-          }}
-        >
-          All
-          <span className='ola-search-facet-count'>{totalCount}</span>
-        </a>
+        <TabItemAll
+          isSelected={isAllSelected}
+          facet={facet}
+          totalCount={totalCount}
+          handleClick={this.handleRemoveFacet}
+        />
         {tabs.map((value, idx) => {
           var isActive = selectedItems.indexOf(value.name) !== -1
           return (
@@ -128,6 +126,32 @@ class TabsFilter extends React.Component {
           )
         })}
       </nav>
+    )
+  }
+}
+
+/**
+ * Tag Item All
+ */
+
+class TabItemAll extends React.Component {
+  handleClick = () => {
+    if (!this.props.isSelected) this.props.handleClick(this.props.facet)
+  };
+  render () {
+    let { isSelected, totalCount } = this.props
+    var klassTab = classNames({
+      'ola-tabs-label': true,
+      'ola-tab-active': isSelected
+    })
+    return (
+      <a
+        className={klassTab}
+        onClick={this.handleClick}
+      >
+        All
+        <span className='ola-search-facet-count'>{totalCount}</span>
+      </a>
     )
   }
 }

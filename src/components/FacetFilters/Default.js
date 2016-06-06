@@ -45,7 +45,7 @@ class LinkFilter extends React.Component {
     dispatch(executeSearch())
   };
 
-  handleRemoveFacat = (value) => {
+  handleRemoveFacet = (value) => {
     let { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
     dispatch(executeSearch())
@@ -153,10 +153,10 @@ class LinkFilter extends React.Component {
           <div className='ola-facet-tags-selected'>
             {selected.map((item, idx) => {
               return (
-                <Tag
-                  onRemove={() => this.handleRemoveFacat(item)}
+                <SelectedItem
                   name={item}
                   facet={facet}
+                  handleRemove={this.handleRemoveFacet}
                   key={idx}
                 />
               )
@@ -202,6 +202,26 @@ class Item extends React.Component {
         <span className='ola-search-facet-count'>{count}</span>
         <span className='ola-search-facet-name'>{displayName}</span>
       </button>
+    )
+  }
+}
+
+/**
+ * Selected Tag
+ */
+
+class SelectedItem extends React.Component {
+  handleRemove = () => {
+    this.props.handleRemove(this.props.name)
+  };
+  render () {
+    let { name, facet } = this.props
+    return (
+      <Tag
+        onRemove={this.handleRemove}
+        name={name}
+        facet={facet}
+      />
     )
   }
 }

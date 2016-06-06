@@ -9,8 +9,9 @@ export function updateQueryTerm (term) {
 
 export function executeAutoSuggest () {
   return (dispatch, getState) => {
-    var { query } = getState().AutoSuggest
-    var context = getState().Context
+    var state = getState()
+    var { query } = state.AutoSuggest
+    var context = state.Context
 
     dispatch({
       types: [
@@ -30,12 +31,12 @@ export function executeAutoSuggest () {
 export function executeFromSpellSuggest (payload) {
   return (dispatch, getState) => {
     var { suggestedTerm } = payload
-
+    var state = getState()
     var query = {
-      ...getState().AutoSuggest.query,
+      ...state.AutoSuggest.query,
       q: suggestedTerm
     }
-    var context = getState().Context
+    var context = state.Context
 
     dispatch({
       types: [

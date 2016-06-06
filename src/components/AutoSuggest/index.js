@@ -69,14 +69,13 @@ class AutoSuggest extends React.Component {
 
     let { allowedCharacters } = this.context.config
 
-    if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
-      dispatch(terminateAutoSuggest())
-      return
-    }
-
     dispatch(updateQueryTerm(term))
 
-    dispatch(executeAutoSuggest())
+    if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
+      dispatch(terminateAutoSuggest())
+    } else {
+      dispatch(executeAutoSuggest())
+    }
   };
 
   onClear = () => {

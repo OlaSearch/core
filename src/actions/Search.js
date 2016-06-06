@@ -82,9 +82,9 @@ export function loadMore () {
 export function executeSearch (payload) {
   return (dispatch, getState) => {
     /* Check if there is a suggested term */
-
-    var query = getState().QueryState
-    var context = getState().Context
+    var state = getState()
+    var query = state.QueryState
+    var context = state.Context
 
     if (allowedCharacters && !checkForAllowedCharacters(query.q, allowedCharacters)) {
       return dispatch(terminateSearch())
@@ -123,12 +123,12 @@ export function executeSearch (payload) {
 export function executeFromSpellSuggest (payload) {
   return (dispatch, getState) => {
     var { suggestedTerm } = payload
-
+    var state = getState()
     var query = {
-      ...getState().QueryState,
+      ...state.QueryState,
       q: suggestedTerm
     }
-    var context = getState().Context
+    var context = state.Context
 
     dispatch({
       types: [
@@ -242,34 +242,6 @@ export function updateStateFromQuery (config) {
   }
 }
 
-export function addDynamicField (name, value) {
-  return {
-    type: types.ADD_DYNAMIC_FIELD,
-    name, value
-  }
-}
-
-export function removeDynamicField (name) {
-  return {
-    type: types.REMOVE_DYNAMIC_FIELD,
-    name
-  }
-}
-
-export function addContext (contextType, value) {
-  return {
-    type: types.ADD_CONTEXT,
-    contextType, value
-  }
-}
-
-export function removeContext (contextType) {
-  return {
-    type: types.REMOVE_CONTEXT,
-    contextType
-  }
-}
-
 // function writeCookie(name,value,days) {
 //     var date, expires;
 //     if (days) {
@@ -307,7 +279,6 @@ export function initSearch (options) {
     globalRouteChange = shouldSyncURL
 
     /* Bootstrap by adding filters */
-
     let { filters } = config
 
     filters.forEach((filter) => {

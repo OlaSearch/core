@@ -35,7 +35,6 @@ class Title extends React.Component {
 
     if (highlighting) {
       var { title: highlightedTitle } = highlighting
-
       if (typeof highlightedTitle === 'object') title = highlightedTitle[0]
     }
 

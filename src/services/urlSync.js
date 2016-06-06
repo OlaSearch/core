@@ -1,7 +1,6 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
-
-const RANGE_FACETS = ['range', 'rating', 'daterange']
+import { RANGE_FACETS } from './../constants/Settings'
 
 var urlSync = {
   character: '?',
@@ -63,6 +62,10 @@ var urlSync = {
   parseQueryString (initialState, config) {
     let loc = config.history ? config.history === 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
     var qs = queryString.parse(loc)
+    var facetQuery = qs.facet_query
+    var filters = qs.filters
+    var facetQueryObject = {}
+    var filtersObject = {}
 
     /**
      * Validate query string
@@ -78,15 +81,13 @@ var urlSync = {
      * Facets
      */
 
-    if (qs.facet_query) {
-      var facetQuery = qs.facet_query
+    if (facetQuery) {
       var { facets: configFacets } = config
 
       if (typeof facetQuery === 'string') facetQuery = JSON.parse('["' + facetQuery + '"]')
 
       var fq = facetQuery.map((item) => {
         let [ name, value ] = item.split(':')
-
         value = value.split(',')
 
         let facet = configFacets.filter((facet) => facet.name === name).reduce((a, b) => a)
@@ -103,8 +104,7 @@ var urlSync = {
 
       /* Extend */
 
-      qs = {
-        ...qs,
+      facetQueryObject = {
         facet_query: fq
       }
     }
@@ -113,8 +113,7 @@ var urlSync = {
      * Filters
      * Field level filtering
      */
-    if (qs.filters) {
-      var { filters } = qs
+    if (filters) {
       var { filters: configFilters } = config
 
       if (typeof filters === 'string') filters = JSON.parse('["' + filters + '"]')
@@ -134,15 +133,16 @@ var urlSync = {
         }
       })
 
-      qs = {
-        ...qs,
+      filtersObject = {
         filters: filterQuery
       }
     }
 
     return {
       ...initialState,
-      ...qs
+      ...qs,
+      ...facetQueryObject,
+      ...filtersObject
     }
   }
 }

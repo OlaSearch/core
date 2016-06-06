@@ -48,7 +48,10 @@ class SelectedFilters extends React.Component {
     dispatch(clearQueryTerm())
     dispatch(executeSearch())
   };
-
+  handleRemoveFilter = (filter) => {
+    dispatch(removeFilter(filter))
+    dispatch(executeSearch())
+  };
   render () {
     var {
       facets,
@@ -91,11 +94,11 @@ class SelectedFilters extends React.Component {
               <span className='ola-facet-tags-heading'>{facet.displayName}: </span>
               {tags.map((value, index) => {
                 return (
-                  <Tag
-                    key={index}
-                    onRemove={() => this.handleRemoveFacet(facet, value)}
+                  <SelectedItem
                     name={value}
                     facet={facet}
+                    handleRemove={this.handleRemoveFacet}
+                    key={index}
                   />
                 )
               })}
@@ -107,19 +110,55 @@ class SelectedFilters extends React.Component {
           var { field } = filter
 
           return (
-            <Tag
-              key={idx}
-              onRemove={() => {
-                dispatch(removeFilter(filter))
-
-                dispatch(executeSearch())
-              }}
+            <SelectedFilterItem
               name={field}
               facet={filter}
+              handleRemove={this.handleRemoveFilter}
+              key={idx}
             />
           )
         })}
       </div>
+    )
+  }
+}
+
+/**
+ * Selected Tag
+ */
+
+class SelectedItem extends React.Component {
+  handleRemove = () => {
+    this.props.handleRemove(this.props.facet, this.props.name)
+  };
+  render () {
+    let { name, facet } = this.props
+    return (
+      <Tag
+        onRemove={this.handleRemove}
+        name={name}
+        facet={facet}
+      />
+    )
+  }
+}
+
+/**
+ * Selected Tag
+ */
+
+class SelectedFilterItem extends React.Component {
+  handleRemove = () => {
+    this.props.handleRemove(this.props.facet)
+  };
+  render () {
+    let { name, facet } = this.props
+    return (
+      <Tag
+        onRemove={this.handleRemove}
+        name={name}
+        facet={facet}
+      />
     )
   }
 }
