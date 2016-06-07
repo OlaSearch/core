@@ -98,13 +98,6 @@ class TabsFilter extends React.Component {
 
     var isAllSelected = !selectedItems.length
 
-    var klassTab = classNames({
-      'ola-tabs-label': true,
-      'ola-tab-active': isAllSelected
-    })
-
-    // var handleRemoveFacet = this.onClearFacets.bind(this, isAllSelected)
-
     return (
       <nav className='ola-tabs'>
         <TabItemAll

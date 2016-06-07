@@ -2,16 +2,22 @@ import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
-import { indexOf } from 'ramda'
+import { once } from 'ramda'
 
 class GeoLocation extends React.Component {
   static defaultProps = {
     active: false,
-    keywords: '\\b(atm|branch|branches)\\b'
+    textRequesting: 'Getting your current location',
+    textEnabled: 'Stop using current location',
+    textPrompt: 'Use my current location'
+  };
+  static contextTypes = {
+    config: React.PropTypes.object
   };
   constructor (props) {
     super(props)
     if (props.active) this.getLocation()
+    this._debouceLocation = once(this.requestGeoLocation)
   }
   componentDidUpdate (nextProps) {
     if (nextProps.active !== this.props.active && nextProps.active) {
@@ -21,19 +27,31 @@ class GeoLocation extends React.Component {
 
     this.prompt(nextProps)
   }
+  shouldComponentUpdate (nextProps) {
+    return (
+      nextProps.Context !== this.props.Context ||
+      nextProps.QueryState.q !== this.props.QueryState.q ||
+      nextProps.AppState.isLoading === this.props.AppState.isLoading
+    )
+  }
+  requestGeoLocation = () => {
+    this.props.dispatch(requestGeoLocation(this.onSuccess, this.onError))
+  };
   prompt = (props) => {
     let _props = props || this.props
     let { q } = _props.QueryState
     let { isLoading } = _props.AppState
     let { location, isRequestingLocation, hasRequestedLocation } = _props.Context
+    let geoLocationKeywords = this.context.config
 
     if (!location &&
       !isLoading &&
       !isRequestingLocation &&
       !hasRequestedLocation &&
-      q.match(new RegExp(_props.keywords,'gi'))) {
+      geoLocationKeywords &&
+      q.match(new RegExp(geoLocationKeywords, 'gi'))) {
       /* Prompt and asl */
-      this.props.dispatch(requestGeoLocation(this.onSuccess, this.onError))
+      this._debouceLocation()
     }
   };
   getLocation = () => {
@@ -53,7 +71,7 @@ class GeoLocation extends React.Component {
     this.props.onError && this.props.onError(results)
   };
   render () {
-    let { Context, active } = this.props
+    let { Context, active, textPrompt, textRequesting, textEnabled } = this.props
     let { isRequestingLocation } = Context
     let isGeoEnabled = active || !!Context.location
     let klass = classNames('ola-link-geo', {
@@ -63,7 +81,7 @@ class GeoLocation extends React.Component {
     let hintklass = classNames('ola-btn-hint hint--top', {
       'hint--always': isRequestingLocation
     })
-    let title = isRequestingLocation ? 'Getting your current location' : isGeoEnabled ? 'Stop using current location' : 'Use my current location'
+    let title = isRequestingLocation ? textRequesting : isGeoEnabled ? textEnabled : textPrompt
     return (
       <button className={klass} onClick={this.getLocation}>
         <span className={hintklass} aria-label={title} />

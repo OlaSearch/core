@@ -49,6 +49,7 @@ class SelectedFilters extends React.Component {
     dispatch(executeSearch())
   };
   handleRemoveFilter = (filter) => {
+    let { dispatch } = this.props
     dispatch(removeFilter(filter))
     dispatch(executeSearch())
   };
@@ -57,7 +58,6 @@ class SelectedFilters extends React.Component {
       facets,
       showQuery,
       q,
-      dispatch,
       filters
     } = this.props
 

@@ -2,7 +2,7 @@ import types from './../constants/ActionTypes'
 import storage from './../services/storage'
 
 const CONTEXT_STORAGE_KEY = 'ola_context'
-const STORAGE_TTL = 1/24/60 * 5 /* Days */
+const STORAGE_TTL = 1 / 24 / 60 * 5 /* Days */
 
 var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
 var initialState = valueFromStorage
@@ -25,11 +25,10 @@ export default (state = initialState, action) => {
     case types.REQUEST_GEO_LOCATION_SUCCESS:
       let { coords } = action.payload
       let { latitude, longitude } = coords
-
       _state = {
         ...state,
         isRequestingLocation: false,
-        location: `${latitude},${longitude}`,
+        location: `${latitude},${longitude}`
       }
       storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
       return _state
@@ -57,10 +56,10 @@ export default (state = initialState, action) => {
           ...state,
           location: null,
           fields: [],
-          hasRequestedLocation: state.location ? true : false
+          hasRequestedLocation: !!state.location
         }
       }
-      storage.cookies.remove(CONTEXT_STORAGE_KEY)
+      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
       return _state
 
     case types.ADD_DYNAMIC_FIELD:
