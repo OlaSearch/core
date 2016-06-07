@@ -1,10 +1,11 @@
 import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
+import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const HighlightedField = ({ field, result, length }) => {
   var { highlighting } = result
 
-  if (!field) return <noscript />
+  if (!field) return NO_SCRIPT_TAG
 
   var fieldContent = result[field]
 
@@ -22,7 +23,7 @@ const HighlightedField = ({ field, result, length }) => {
 
   let klass = `ola-field ola-field-highlighted-field ola-field-${field}`
 
-  if (!fieldContent) return <noscript />
+  if (!fieldContent) return NO_SCRIPT_TAG
 
   return (
     <div className={klass} dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />

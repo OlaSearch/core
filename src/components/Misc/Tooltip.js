@@ -1,7 +1,8 @@
 import React from 'react'
+import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const Tooltip = (props) => {
-  if (!props.isShown) return <noscript />
+  if (!props.isShown) return NO_SCRIPT_TAG
 
   let { onClose, content } = props
 

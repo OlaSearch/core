@@ -2,6 +2,7 @@ import React from 'react'
 import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
 import { facetToggle } from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
+import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 class BooleanFilter extends React.Component {
   static propTypes = {
@@ -33,7 +34,7 @@ class BooleanFilter extends React.Component {
       isCollapsed
     } = this.props
 
-    if (!facet.values.length) return null
+    if (!facet.values.length) return NO_SCRIPT_TAG
 
     var { displayName, template } = facet
 

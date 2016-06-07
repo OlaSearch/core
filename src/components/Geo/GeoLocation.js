@@ -42,7 +42,7 @@ class GeoLocation extends React.Component {
     let { q } = _props.QueryState
     let { isLoading } = _props.AppState
     let { location, isRequestingLocation, hasRequestedLocation } = _props.Context
-    let geoLocationKeywords = this.context.config
+    let { geoLocationKeywords } = this.context.config
 
     if (!location &&
       !isLoading &&

@@ -1,9 +1,8 @@
 {
   "presets": ["react", "es2015", "stage-0"],
-  "plugins": ["transform-es3-member-expression-literals", "transform-es3-property-literals", "transform-object-set-prototype-of-to-assign"],
+  "plugins": ["transform-es3-member-expression-literals", "transform-es3-property-literals", "transform-object-set-prototype-of-to-assign", "transform-react-remove-prop-types", "transform-react-constant-elements"],
   "env": {
     "development": {
-      "presets": ["react-hmre"]
     }
   }
 }

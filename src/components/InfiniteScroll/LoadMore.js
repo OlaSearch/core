@@ -1,7 +1,8 @@
 import React from 'react'
+import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const LoadMore = ({ totalResults, currentPage, perPage, actions }) => {
-  if (currentPage * perPage >= totalResults) return <noscript />
+  if (currentPage * perPage >= totalResults) return NO_SCRIPT_TAG
 
   return (
     <button

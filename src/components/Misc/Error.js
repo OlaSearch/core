@@ -1,7 +1,8 @@
 import React from 'react'
+import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const Error = ({ error, title }) => {
-  if (!error) return <noscript />
+  if (!error) return NO_SCRIPT_TAG
 
   var message = ''
 
