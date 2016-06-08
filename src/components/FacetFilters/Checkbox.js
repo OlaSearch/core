@@ -106,16 +106,16 @@ class CheckboxFilter extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
 
-    var filterInput = (originalSize > limit
-        ? <input
-          type='text'
-          className='ola-text-input ola-facet-filter-input'
-          value={filterText}
-          placeholder='Filter'
-          arial-label='Input'
-          onChange={this.onChangeFilterText}
-        />
-        : null)
+    var filterInput = originalSize > limit
+      ? <input
+        type='text'
+        className='ola-text-input ola-facet-filter-input'
+        value={filterText}
+        placeholder='Filter'
+        arial-label='Input'
+        onChange={this.onChangeFilterText}
+      />
+      : null
 
     var itemRendererBound = this.itemRenderer.bind(this, values)
 
@@ -156,7 +156,7 @@ class CheckBoxItem extends React.Component {
     }
   }
   render () {
-    const { isActive, facet, count, name } = this.props
+    let { isActive, facet, count, name } = this.props
     let { facetNames } = facet
     let labelKlass = classNames({
       'ola-checkbox ola-checkbox-label': true,

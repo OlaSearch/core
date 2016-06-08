@@ -50,7 +50,7 @@ class GeoLocation extends React.Component {
       !hasRequestedLocation &&
       geoLocationKeywords &&
       q.match(new RegExp(geoLocationKeywords, 'gi'))) {
-      /* Prompt and asl */
+      /* Prompt and ask for location */
       this._debouceLocation()
     }
   };
@@ -71,6 +71,8 @@ class GeoLocation extends React.Component {
     this.props.onError && this.props.onError(results)
   };
   render () {
+    if (!('geolocation' in navigator)) return null
+
     let { Context, active, textPrompt, textRequesting, textEnabled } = this.props
     let { isRequestingLocation } = Context
     let isGeoEnabled = active || !!Context.location

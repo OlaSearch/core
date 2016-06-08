@@ -1,14 +1,4 @@
-/**
- * [createOlaMiddleWare description]
- * @param  {Object} options
- * options = {
- *  parser,
- *  queryBuilder,
- *  config,
- *  searchService
- * }
- */
-
+/* Create middleware */
 import { log } from './../actions/Logger'
 import querystring from 'query-string'
 

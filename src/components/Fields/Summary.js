@@ -1,11 +1,10 @@
 import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const Summary = ({ result, length, ellipsis }) => {
   let { summary, highlighting } = result
 
-  if (!summary) return NO_SCRIPT_TAG
+  if (!summary) return null
 
   /* Check for highlighting */
 

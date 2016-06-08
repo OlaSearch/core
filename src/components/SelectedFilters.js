@@ -32,7 +32,6 @@ class SelectedFilters extends React.Component {
   handleRemoveFacet = (facet, value) => {
     let { dispatch } = this.props
     dispatch(removeFacet(facet, value))
-
     dispatch(executeSearch())
   };
 
@@ -44,7 +43,6 @@ class SelectedFilters extends React.Component {
 
   onRemoveQueryTag = () => {
     let { dispatch } = this.props
-
     dispatch(clearQueryTerm())
     dispatch(executeSearch())
   };

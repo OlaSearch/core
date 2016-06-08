@@ -18,6 +18,17 @@ const PopularKeywords = ({ label, onClick }, context) => {
   )
 }
 
+PopularKeywords.contextTypes = {
+  config: React.PropTypes.object
+}
+
+PopularKeywords.defaultProps = {
+  label: 'Popular keywords: '
+}
+
+/**
+ * Item
+ */
 class PopularKeywordItem extends React.Component {
   onClick = () => {
     this.props.onClick(this.props.keyword)
@@ -32,14 +43,6 @@ class PopularKeywordItem extends React.Component {
       </div>
     )
   }
-}
-
-PopularKeywords.contextTypes = {
-  config: React.PropTypes.object
-}
-
-PopularKeywords.defaultProps = {
-  label: 'Popular keywords: '
 }
 
 module.exports = PopularKeywords

@@ -1,11 +1,11 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
-const SearchTitle = ({ totalResults, page, perPage }, context) => {
+const SearchTitle = ({ totalResults, page, perPage, isPhone }, context) => {
   let currentIdx = Math.min(((page - 1) * perPage) + 1, totalResults)
   let lastIdx = Math.min(totalResults, currentIdx + parseInt(perPage) - 1)
 
-  if (context.config.infiniteScroll) currentIdx = 1
+  if (context.config.infiniteScroll || isPhone) currentIdx = 1
 
   let values = {
     current: currentIdx.toString(),

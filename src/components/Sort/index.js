@@ -13,7 +13,6 @@ class Sort extends React.Component {
 
   handleChange = (event) => {
     let { dispatch } = this.props
-
     dispatch(changeSort(event.target.value))
     dispatch(executeSearch())
   };

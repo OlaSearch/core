@@ -1,11 +1,7 @@
 import React from 'react'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
-const Tooltip = (props) => {
-  if (!props.isShown) return NO_SCRIPT_TAG
-
-  let { onClose, content } = props
-
+const Tooltip = ({ isShown, onClose, content }) => {
+  if (!isShown) return null
   return (
     <div className='ola-tooltip-holder'>
       <div className='ola-tooltip-content'>
