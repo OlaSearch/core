@@ -11,6 +11,10 @@ class History extends React.Component {
     history: React.PropTypes.array.isRequired
   };
 
+  static defaultProps = {
+    emptyHistoryText: 'Your search history will show here'
+  };
+
   constructor (props) {
     super(props)
 
@@ -82,11 +86,11 @@ class History extends React.Component {
             </button>
           </div>
           <div className='ola-module-body'>
-            {!history.length
-             ? <div className='ola-module-item'>
-              {emptyHistoryText}
-             </div>
-            : null}
+            {!history.length &&
+              <div className='ola-module-item'>
+                {emptyHistoryText}
+              </div>
+            }
 
             {history.map((item, idx) => <HistoryItem searchPageUrl={searchPageUrl} history={item} key={idx} />)}
 
@@ -99,8 +103,7 @@ class History extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    history: state.AppState.history,
-    emptyHistoryText: 'Your search history will show here'
+    history: state.AppState.history
   }
 }
 

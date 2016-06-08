@@ -9,7 +9,6 @@ class SelectedFilters extends React.Component {
     super(props)
 
     /* Parse queryString to get the referrer */
-
     var qString = qs.parse(window.location.search)
 
     this.state = {

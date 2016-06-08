@@ -1,6 +1,7 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS } from './../constants/Settings'
+import R from 'ramda'
 
 var urlSync = {
   character: '?',
@@ -114,8 +115,6 @@ var urlSync = {
      * Field level filtering
      */
     if (filters) {
-      var { filters: configFilters } = config
-
       if (typeof filters === 'string') filters = JSON.parse('["' + filters + '"]')
 
       var filterQuery = filters.map((filter) => {
@@ -125,7 +124,7 @@ var urlSync = {
 
         if (value.indexOf('=') !== -1) value = queryString.parse(value)
 
-        var currentFilter = configFilters.filter((filter) => filter.name === name).reduce((a, b) => a)
+        var currentFilter = R.find(R.propEq('name', name))(config.filters)
 
         return {
           ...currentFilter,

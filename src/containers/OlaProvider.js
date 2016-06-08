@@ -10,14 +10,13 @@ class OlaProvider extends React.Component {
     super(props)
     let { config, store } = props
     if (!config || !store) {
-      var namePart = this.constructor.displayName ? ' of ' + this.constructor.displayName : ''
+      let namePart = this.constructor.displayName ? ' of ' + this.constructor.displayName : ''
       throw new Error('Could not find config or store on this.props ' + namePart)
     }
   }
   getChildContext () {
-    let { config } = this.props
     return {
-      config
+      config: this.props.config
     }
   }
   render () {
