@@ -3,7 +3,9 @@ import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import invariant from 'invariant'
-import { flatten, find, propEq } from 'ramda'
+import flatten from 'ramda/src/flatten'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 
 class TabsFilter extends React.Component {
 

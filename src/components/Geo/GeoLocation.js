@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
-import { once } from 'ramda'
+import once from 'ramda/src/once'
 
 class GeoLocation extends React.Component {
   static defaultProps = {

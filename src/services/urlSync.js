@@ -1,7 +1,8 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS } from './../constants/Settings'
-import R from 'ramda'
+import propEq from 'ramda/src/propEq'
+import find from 'ramda/src/find'
 
 var urlSync = {
   character: '?',
@@ -124,7 +125,7 @@ var urlSync = {
 
         if (value.indexOf('=') !== -1) value = queryString.parse(value)
 
-        var currentFilter = R.find(R.propEq('name', name))(config.filters)
+        var currentFilter = find(propEq('name', name))(config.filters)
 
         return {
           ...currentFilter,

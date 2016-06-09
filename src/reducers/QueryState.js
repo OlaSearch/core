@@ -1,7 +1,8 @@
 import types from './../constants/ActionTypes'
 import { parseQueryString } from './../services/urlSync'
 import { checkIfFacetExists, castNumberToStringArray } from './../utilities'
-import { indexOf, omit } from 'ramda'
+import indexOf from 'ramda/src/indexOf'
+import omit from 'ramda/src/omit'
 
 var initialState = {
   q: '',

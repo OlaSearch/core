@@ -7,7 +7,7 @@ import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
 import DateRangePicker from './FacetFilters/DateRangePicker'
 import TagCloud from './FacetFilters/TagCloud'
-import { flatten } from 'ramda'
+import flatten from 'ramda/src/flatten'
 
 class SearchFilters extends React.Component {
   static contextTypes = {
