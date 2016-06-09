@@ -17,7 +17,12 @@ class BookmarkActions extends React.Component {
     result: React.PropTypes.object,
     dispatch: React.PropTypes.func
   };
-
+  shouldComponentUpdate (nextProps) {
+    return (
+      this.props.bookmarks !== nextProps.bookmarks ||
+      this.props.result.id !== nextProps.result.id
+    )
+  }
   render () {
     let { bookmarks, result } = this.props
     let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id).length

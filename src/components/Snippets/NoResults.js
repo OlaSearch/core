@@ -1,9 +1,8 @@
 import React from 'react'
 
-const NoResults = (props) => {
-  var { results, isLoading, q, isBookmark } = props
+const NoResults = ({results, isLoading, q, isBookmark}) => {
   if (results.length || isLoading) return null
-  let message = `No results found matching ${q}. Please try again.`
+  let message = <span>No results found matching <strong>{q}</strong>. Please try again.</span>
   if (isBookmark) {
     message = 'You do not have any bookmarks. Click on the heart icon to add one.'
   }

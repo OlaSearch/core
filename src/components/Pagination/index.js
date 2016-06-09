@@ -72,7 +72,13 @@ class Pagination extends React.Component {
 
     return list
   }
-
+  shouldComponentUpdate (nextProps) {
+    return (
+      this.props.totalResults !== nextProps.totalResults ||
+      this.props.currentPage !== nextProps.currentPage ||
+      this.props.perPage !== nextProps.perPage
+    )
+  }
   render () {
     let {
       totalResults,
@@ -127,6 +133,12 @@ class PageNumber extends React.Component {
 
     if (!isNaN(page)) this.props.selectPage(page)
   };
+  shouldComponentUpdate (nextProps) {
+    return (
+      this.props.page !== nextProps.page ||
+      this.props.currentPage !== nextProps.currentPage
+    )
+  }
   render () {
     let { page, currentPage } = this.props
     let klass = classNames({

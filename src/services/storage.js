@@ -7,7 +7,7 @@ module.exports = {
     return false
   },
   set (key, value) {
-    window.localStorage.setItem(key, JSON.stringify(value))
+    if ('localStorage' in window) window.localStorage.setItem(key, JSON.stringify(value))
   },
   cookies: {
     set (name, value, days) {

@@ -17,7 +17,8 @@ class SelectedFilters extends React.Component {
   }
 
   static propTypes: {
-    facets: React.PropTypes.array.isRequired,
+    facets: React.PropTypes.array,
+    filters: React.PropTypes.array,
     dispatch: React.PropTypes.func,
     q: React.PropTypes.string,
     showQuery: React.PropTypes.boolean
@@ -25,7 +26,8 @@ class SelectedFilters extends React.Component {
 
   static defaultProps = {
     showQuery: false,
-    filters: []
+    filters: [],
+    facets: []
   };
 
   handleRemoveFacet = (facet, value) => {
@@ -50,6 +52,14 @@ class SelectedFilters extends React.Component {
     dispatch(removeFilter(filter))
     dispatch(executeSearch())
   };
+  shouldComponentUpdate (nextProps, nextState) {
+    return (
+      this.props.facets !== nextProps.facets ||
+      this.props.q !== nextProps.q ||
+      this.props.filters !== nextProps.filters ||
+      this.state.showGuidePopover !== nextState.showGuidePopover
+    )
+  }
   render () {
     var {
       facets,
@@ -62,10 +72,8 @@ class SelectedFilters extends React.Component {
       showGuidePopover
     } = this.state
 
-    if (!facets &&
-      !facets.length &&
+    if (!facets.length &&
       !q &&
-      !filters &&
       !filters.length) return null
 
     return (
@@ -74,7 +82,6 @@ class SelectedFilters extends React.Component {
           isShown={showGuidePopover}
           onClose={this.closeGuidePopover}
         />
-
         {showQuery && q
           ? <div className='ola-facet-tag'>
             <span className='ola-facet-tag-name'>{q}</span>
@@ -82,7 +89,6 @@ class SelectedFilters extends React.Component {
           </div>
           : null
         }
-
         {facets.map((facet, idx) => {
           var { selected: tags } = facet
 
@@ -102,14 +108,10 @@ class SelectedFilters extends React.Component {
             </div>
           )
         })}
-
         {filters.map((filter, idx) => {
-          var { field } = filter
-
           return (
             <SelectedFilterItem
-              name={field}
-              facet={filter}
+              filter={filter}
               handleRemove={this.handleRemoveFilter}
               key={idx}
             />
@@ -146,15 +148,16 @@ class SelectedItem extends React.Component {
 
 class SelectedFilterItem extends React.Component {
   handleRemove = () => {
-    this.props.handleRemove(this.props.facet)
+    this.props.handleRemove(this.props.filter)
   };
   render () {
-    let { name, facet } = this.props
+    let { filter } = this.props
+    let { name } = filter
     return (
       <Tag
         onRemove={this.handleRemove}
         name={name}
-        facet={facet}
+        facet={filter}
       />
     )
   }

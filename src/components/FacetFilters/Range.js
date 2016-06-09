@@ -158,6 +158,13 @@ class RangeFilter extends React.Component {
     this.slider.destroy()
   }
 
+  shouldComponentUpdate (nextProps) {
+    return (
+      this.props.facet !== nextProps.facet ||
+      this.props.isCollapsed !== nextProps.isCollapsed ||
+      this.props.selected !== nextProps.selected
+    )
+  }
   render () {
     var { facet, isCollapsed, toggleDisplay } = this.props
     var { displayName, values, showHistogram } = facet

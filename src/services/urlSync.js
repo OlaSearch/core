@@ -64,8 +64,7 @@ var urlSync = {
   parseQueryString (initialState, config) {
     let loc = config.history ? config.history === 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
     var qs = queryString.parse(loc)
-    var facetQuery = qs.facet_query
-    var filters = qs.filters
+    var { filters, facet_query: facetQuery } = qs
     var facetQueryObject = {}
     var filtersObject = {}
 
@@ -74,8 +73,12 @@ var urlSync = {
      */
 
     for (let p in qs) {
-      if ((p === 'page' || p === 'per_page') && isNaN(qs[p])) {
-        qs[p] = initialState[p]
+      if ((p === 'page' || p === 'per_page')) {
+        if (isNaN(qs[p])) {
+          qs[p] = initialState[p]
+        } else {
+          qs[p] = parseInt(qs[p])
+        }
       }
     }
 

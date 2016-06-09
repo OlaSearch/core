@@ -4,6 +4,7 @@ import { removeBookmark } from './../../actions/Bookmarks'
 import listensToClickOutside from 'react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
+import NoResults from './../Snippets/NoResults'
 
 class Bookmarks extends React.Component {
   static propTypes = {
@@ -30,7 +31,12 @@ class Bookmarks extends React.Component {
       isOpen: !this.state.isOpen
     })
   };
-
+  shouldComponentUpdate (nextProps, nextState) {
+    return (
+      this.props.bookmarks !== nextProps.bookmarks ||
+      this.state.isOpen !== nextState.isOpen
+    )
+  }
   onRemove = (bookmark) => {
     this.props.dispatch(removeBookmark(bookmark))
   };
@@ -61,6 +67,10 @@ class Bookmarks extends React.Component {
         <div className={klass}>
           <div className='ola-module-title'>Bookmarks</div>
           <div className='ola-module-body'>
+            <NoResults
+              results={bookmarks}
+              isBookmark
+            />
             <SearchResults
               bookmarks={bookmarks}
               results={bookmarks}

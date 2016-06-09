@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import InstantSearchForm from './../components/InstantSearchForm'
+import NoResults from './../components/Snippets/NoResults'
 import SearchResults from './../components/SearchResults'
 import SearchFilters from './../components/SearchFilters'
 import SelectedFilters from './../components/SelectedFilters'
@@ -56,7 +57,8 @@ class Search extends React.Component {
       spellSuggestions,
       bookmarks,
       totalResults,
-      error
+      error,
+      isLoading
     } = AppState
 
     var {
@@ -159,6 +161,11 @@ class Search extends React.Component {
 
             <Error
               error={error}
+            />
+
+            <NoResults
+              results={results}
+              isLoading={isLoading}
             />
 
             <SearchResults
