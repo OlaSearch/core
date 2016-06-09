@@ -106,13 +106,8 @@ class LinkFilter extends React.Component {
       values
     } = facet
 
-    /* Lowercase */
-
-    var filter = filterText.toLowerCase()
-
     /* Filter values */
-
-    values = values.filter((item) => item.name.toString().match(new RegExp(filter, 'i')))
+    values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
 
     if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 

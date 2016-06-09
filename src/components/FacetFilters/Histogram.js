@@ -1,11 +1,6 @@
 import React from 'react'
 
 class Histogram extends React.Component {
-  static defaultProps = {
-    min: null,
-    max: null
-  };
-
   shouldComponentUpdate (nextProps) {
     return nextProps.data !== this.props.data
   }

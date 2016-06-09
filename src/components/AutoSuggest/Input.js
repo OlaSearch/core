@@ -57,9 +57,7 @@ class Input extends React.Component {
   };
 
   onSearchButtonClick = () => {
-    this.refs.Input.focus()
-
-    this.props.onSearchButtonClick && this.props.onSearchButtonClick()
+    return this.props.onSearchButtonClick ? this.props.onSearchButtonClick() : this.refs.Input.focus()
   };
 
   handleInputChange = (arg) => {

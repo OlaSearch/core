@@ -89,15 +89,11 @@ class CheckboxFilter extends React.Component {
       displayName
     } = facet
 
-    /* Lowercase */
-
-    var filter = filterText.toLowerCase()
-
     var originalSize = values.length
 
     /* Filter values */
 
-    values = values.filter((item) => item.name.toString().match(new RegExp(filter, 'i')))
+    values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
 
     var size = values.length
 
