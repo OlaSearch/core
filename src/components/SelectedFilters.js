@@ -2,14 +2,14 @@ import React from 'react'
 import { removeFacet, executeSearch, clearQueryTerm, removeFilter } from './../actions/Search'
 import Tag from './Misc/Tag'
 import Tooltip from './Misc/Tooltip'
-import qs from 'query-string'
+import queryString from 'query-string'
 
 class SelectedFilters extends React.Component {
   constructor (props) {
     super(props)
 
     /* Parse queryString to get the referrer */
-    var qString = qs.parse(window.location.search)
+    var qString = queryString.parse(window.location.search)
 
     this.state = {
       showGuidePopover: !!qString.referrer

@@ -1,6 +1,6 @@
 /* Create middleware */
 import { log } from './../actions/Logger'
-import querystring from 'query-string'
+import queryString from 'query-string'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -94,7 +94,7 @@ module.exports = (options = {}) => {
       (response, xhr) => {
         if (xhr && 'responseURL' in xhr) {
           let responseURL = xhr.responseURL.split('?').pop()
-          let timestampFromResponse = parseInt(querystring.parse(responseURL).timestamp)
+          let timestampFromResponse = parseInt(queryString.parse(responseURL).timestamp)
           if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
         }
 
