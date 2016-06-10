@@ -1,9 +1,7 @@
 import React from 'react'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const TermSuggestion = ({ term }) => {
-  if (!term) return NO_SCRIPT_TAG
-
+  if (!term) return null
   return (
     <div className='ola-term-suggestion'>
       Showing results for <strong>{term}</strong>

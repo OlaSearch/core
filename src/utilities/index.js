@@ -1,3 +1,5 @@
+import flatten from 'ramda/src/flatten'
+
 const utilities = {
   supplant (s, d) {
     for (var p in d) {
@@ -120,6 +122,30 @@ const utilities = {
     if (!query || !characters) return true
     let _regExp = new RegExp(characters, 'gi')
     return _regExp.test(query)
+  },
+  getFacetsToDisplay (selected, facets, facetsToDisplay) {
+
+    var selections = flatten(selected.map((item) => item.selected))
+    var names = []
+    var defaultNames = facetsToDisplay['*']
+    var hasKey = false
+
+    /* Loop through selections and find Facets to display */
+
+    selections.forEach((item) => {
+      if (facetsToDisplay.hasOwnProperty(item)) {
+        names = facetsToDisplay[item]
+        hasKey = true
+      }
+    })
+
+    /* If there are no keys in `facetsToDisplay` Return all facets */
+
+    if (!hasKey) names = defaultNames
+
+    /* Found */
+
+    return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
   }
 }
 

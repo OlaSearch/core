@@ -8,6 +8,8 @@ import FacetBoolean from './FacetFilters/Boolean'
 import DateRangePicker from './FacetFilters/DateRangePicker'
 import TagCloud from './FacetFilters/TagCloud'
 import flatten from 'ramda/src/flatten'
+import classNames from 'classnames'
+import { getFacetsToDisplay } from './../utilities'
 
 class SearchFilters extends React.Component {
   static contextTypes = {
@@ -26,37 +28,11 @@ class SearchFilters extends React.Component {
     conditional: true
   };
 
-  getFacetsToDisplay = (selected) => {
-    var {
-      facetsToDisplay
-    } = this.context.config
-
-    var selections = flatten(selected.map((item) => item.selected))
-
-    var names = []
-    var defaultNames = facetsToDisplay['*']
-    var hasKey = false
-
-    /* Loop through selections and find Facets to display */
-
-    selections.forEach((item) => {
-      if (facetsToDisplay.hasOwnProperty(item)) {
-        names = facetsToDisplay[item]
-        hasKey = true
-      }
-    })
-
-    /* If there are no keys in `facetsToDisplay` Return all facets */
-
-    if (!hasKey) return defaultNames
-
-    /* Found */
-
-    return names
-  };
-
   shouldComponentUpdate (nextProps) {
-    return this.props.facets !== nextProps.facets || this.props.selected !== nextProps.selected
+    return (
+      this.props.facets !== nextProps.facets ||
+      this.props.selected !== nextProps.selected
+    )
   }
 
   render () {
@@ -64,63 +40,68 @@ class SearchFilters extends React.Component {
       facets,
       selected,
       conditional,
+      className,
       ...props
     } = this.props
 
+    /* Check for facets to display conditional */
     if (conditional) {
-      /* Facet names to display */
+      /* Agree with `facetsToDisplay` */
+      facets = getFacetsToDisplay(selected, facets, this.context.config.facetsToDisplay)
 
-      var facetsToDisplay = this.getFacetsToDisplay(selected)
-
-      /* Exclude tabs and agree with `facetsToDisplay` */
-
-      facets = facets.filter((facet) => !facet.tab && facetsToDisplay.indexOf(facet.name) !== -1)
+    } else {
+      /* Remove tabs */
+      facets = facets.filter((facet) => !facet.tab)
     }
 
     if (!facets.length) return null
 
+    let parentClass = classNames('ola-search-filters', className)
+
     return (
-      <div className='ola-search-filters'>
-        {facets.map((facet, index) => {
-          /* Recalculate Selected values */
+      <div className={parentClass}>
+        <div className='ola-search-filters-inner'>
+          {facets.map((facet, index) => {
+            /* Recalculate Selected values */
 
-          let selectedFacets = selected
-                .filter((item) => item.name === facet.name)
-                .map((item) => item.selected)
-          let selectedItems = flatten(selectedFacets)
+            let selectedFacets = selected
+                  .filter((item) => item.name === facet.name)
+                  .map((item) => item.selected)
+            let selectedItems = flatten(selectedFacets)
 
-          let passProps = {
-            facet,
-            selected: selectedItems,
-            key: index,
-            ...props
-          }
+            let passProps = {
+              facet,
+              selected: selectedItems,
+              key: index,
+              ...props
+            }
 
-          let { type, rangeType } = facet
+            let { type, rangeType } = facet
 
-          switch (type) {
-            case 'checkbox':
-              return <FacetCheckbox {...passProps} />
+            switch (type) {
+              case 'checkbox':
+                return <FacetCheckbox {...passProps} />
 
-            case 'range':
-            case 'daterange':
-              if (rangeType === 'numeric') return <RangeNumeric {...passProps} />
-              if (rangeType === 'daterangepicker') return <DateRangePicker {...passProps} />
-              return <Range {...passProps} />
+              case 'range':
+              case 'daterange':
+                if (rangeType === 'numeric') return <RangeNumeric {...passProps} />
+                if (rangeType === 'daterangepicker') return <DateRangePicker {...passProps} />
+                return <Range {...passProps} />
 
-            case 'rating':
-              return <Rating {...passProps} />
+              case 'rating':
+                return <Rating {...passProps} />
 
-            case 'boolean':
-              return <FacetBoolean {...passProps} />
+              case 'boolean':
+                return <FacetBoolean {...passProps} />
 
-            case 'tagcloud':
-              return <TagCloud { ...passProps} />
+              case 'tagcloud':
+                return <TagCloud { ...passProps} />
 
-            default:
-              return <Default {...passProps} />
-          }
-        })}
+              default:
+                return <Default {...passProps} />
+            }
+          })}
+        </div>
       </div>
     )
   }
