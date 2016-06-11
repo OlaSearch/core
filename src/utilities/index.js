@@ -124,7 +124,6 @@ const utilities = {
     return _regExp.test(query)
   },
   getFacetsToDisplay (selected, facets, facetsToDisplay) {
-
     var selections = flatten(selected.map((item) => item.selected))
     var names = []
     var defaultNames = facetsToDisplay['*']
