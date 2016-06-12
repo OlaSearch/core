@@ -8,6 +8,9 @@ module.exports = {
       'requesting': 'Getting your current location',
       'enabled': 'Stop using current location',
       'prompt': 'Use my current location'
+    },
+    'instantsearch': {
+      'placeholder': 'Enter keywords'
     }
   }
 }

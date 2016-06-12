@@ -126,6 +126,11 @@ const utilities = {
   getComponentDisplayName (WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
   },
+  translateKey (path, obj, safe) {
+    return path.split('.').reduce(function(prev, curr) {
+      return !safe ? prev[curr] : (prev ? prev[curr] : undefined)
+    }, obj || self)
+  },
   getFacetsToDisplay (selected, facets, facetsToDisplay) {
     var selections = flatten(selected.map((item) => item.selected))
     var names = []

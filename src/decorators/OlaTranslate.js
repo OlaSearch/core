@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { supplant, getComponentDisplayName } from './../utilities'
+import { supplant, getComponentDisplayName, translateKey } from './../utilities'
 
 export default function withTranslate (WrappedComponent) {
   class WithTranslate extends React.Component {
     static displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`;
     translate = (key, placeholders) => {
       let { locale, translations } = this.props.Intl
-      let result = translations[locale]['messages'][key]
+      let result = translateKey(key, translations[locale]['messages'])
       if (typeof placeholders === 'undefined') {
         return result
       }

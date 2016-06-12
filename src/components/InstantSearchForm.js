@@ -5,6 +5,7 @@ import History from './History'
 import SpeechInput from './Speech'
 import { debounce } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
+import withTranslate from './../decorators/OlaTranslate'
 
 class InstantSearchForm extends React.Component {
   constructor (props, context) {
@@ -14,7 +15,6 @@ class InstantSearchForm extends React.Component {
   }
 
   static defaultProps = {
-    placeholder: 'Enter keywords',
     minCharacters: 0,
     showGeoLocation: false
   };
@@ -26,7 +26,6 @@ class InstantSearchForm extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     q: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
     minCharacters: React.PropTypes.number
   };
 
@@ -58,10 +57,12 @@ class InstantSearchForm extends React.Component {
 
   render () {
     let {
-      placeholder,
       q,
-      showGeoLocation
+      showGeoLocation,
+      translate
     } = this.props
+
+    console.log(translate('instantsearch.placeholder'))
 
     let button = q
       ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear'></button>
@@ -74,7 +75,7 @@ class InstantSearchForm extends React.Component {
             ref='Input'
             type='text'
             className='ola-text-input ola-text-input-round'
-            placeholder={placeholder}
+            placeholder={translate('instantsearch.placeholder')}
             value={q}
             aria-label='searchInput'
             autoComplete='off'
@@ -111,4 +112,4 @@ class InstantSearchForm extends React.Component {
   }
 }
 
-module.exports = InstantSearchForm
+module.exports = withTranslate(InstantSearchForm)

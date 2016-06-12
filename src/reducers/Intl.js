@@ -2,7 +2,7 @@ import types from './../constants/ActionTypes'
 import defaultTranslations from './../translations'
 
 var initialState = {
-  locale: 'en',
+  locale: 'zh',
   translations: defaultTranslations
 }
 
