@@ -75,6 +75,12 @@ class TabsFilter extends React.Component {
 
     return tabs
   };
+  shouldComponentUpdate (nextProps) {
+    return (
+      this.props.facets !== nextProps.facets ||
+      this.props.selected !== nextProps.selected
+    )
+  }
   render () {
     var {
       facets,

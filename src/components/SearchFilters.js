@@ -48,7 +48,6 @@ class SearchFilters extends React.Component {
     if (conditional) {
       /* Agree with `facetsToDisplay` */
       facets = getFacetsToDisplay(selected, facets, this.context.config.facetsToDisplay)
-
     } else {
       /* Remove tabs */
       facets = facets.filter((facet) => !facet.tab)

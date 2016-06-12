@@ -1,6 +1,5 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import OlaIntlProvider from './OlaIntlProvider'
 
 class OlaProvider extends React.Component {
   static childContextTypes = {
@@ -20,13 +19,10 @@ class OlaProvider extends React.Component {
     }
   }
   render () {
-    let { translations, children, lang, store } = this.props
     return (
       <div className='ola-search'>
-        <Provider store={store}>
-          <OlaIntlProvider translations={translations} lang={lang}>
-            {children}
-          </OlaIntlProvider>
+        <Provider store={this.props.store}>
+            {this.props.children}
         </Provider>
       </div>
     )

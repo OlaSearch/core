@@ -1,6 +1,6 @@
 import React from 'react'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
-import { facetToggle } from './../../decorators/OlaFacetToggle'
+import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
@@ -173,4 +173,4 @@ class CheckBoxItem extends React.Component {
   }
 }
 
-module.exports = facetToggle(CheckboxFilter)
+module.exports = withFacetToggle(CheckboxFilter)

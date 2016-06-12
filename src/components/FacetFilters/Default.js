@@ -2,7 +2,7 @@ import React from 'react'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import Tag from './../Misc/Tag'
 import ReactList from 'react-list'
-import { facetToggle } from './../../decorators/OlaFacetToggle'
+import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 
@@ -221,4 +221,4 @@ class SelectedItem extends React.Component {
   }
 }
 
-module.exports = facetToggle(LinkFilter)
+module.exports = withFacetToggle(LinkFilter)

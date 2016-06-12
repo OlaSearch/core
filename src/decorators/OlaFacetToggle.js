@@ -1,28 +1,30 @@
 import React from 'react'
+import { getComponentDisplayName } from './../utilities'
 
-export const facetToggle = (ComposedComponent) => class extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isCollapsed: props.facet.isCollapsed || false
+export default function withFacetToggle (WrappedComponent) {
+  return class WithFacetToggle extends React.Component {
+    constructor (props) {
+      super(props)
+      this.state = {
+        isCollapsed: props.facet.isCollapsed || false
+      }
     }
-  }
+    static displayName = `withFacetToggle(${getComponentDisplayName(WrappedComponent)})`;
+    componentWillReceiveProps (nextProps) {
+      if (nextProps.facet.isCollapsed !== this.props.facet.isCollapsed) {
+        this.setState({
+          isCollapsed: nextProps.facet.isCollapsed
+        })
+      }
+    }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.facet.isCollapsed !== this.props.facet.isCollapsed) {
+    toggleDisplay = () => {
       this.setState({
-        isCollapsed: nextProps.facet.isCollapsed
+        isCollapsed: !this.state.isCollapsed
       })
+    };
+    render () {
+      return <WrappedComponent {...this.props} isCollapsed={this.state.isCollapsed} toggleDisplay={this.toggleDisplay} />
     }
-  }
-
-  toggleDisplay = () => {
-    this.setState({
-      isCollapsed: !this.state.isCollapsed
-    })
-  };
-
-  render () {
-    return <ComposedComponent {...this.props} isCollapsed={this.state.isCollapsed} toggleDisplay={this.toggleDisplay} />
   }
 }

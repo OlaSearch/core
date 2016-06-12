@@ -4,6 +4,7 @@ import AutoSuggest from './AutoSuggest'
 import Device from './Device'
 import Timestamp from './Timestamp'
 import Context from './Context'
+import Intl from './Intl'
 
 module.exports = {
   AppState,
@@ -11,5 +12,6 @@ module.exports = {
   QueryState,
   AutoSuggest,
   Device,
-  Timestamp
+  Timestamp,
+  Intl
 }

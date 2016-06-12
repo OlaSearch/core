@@ -21,22 +21,22 @@
  *
  */
 
-var areIntlLocalesSupported = require('intl-locales-supported')
-var localesMyAppSupports = [ 'en' ]
+// var areIntlLocalesSupported = require('intl-locales-supported')
+// var localesMyAppSupports = [ 'en' ]
 
-if (global.Intl) {
-  // Determine if the built-in `Intl` has the locale data we need.
-  if (!areIntlLocalesSupported(localesMyAppSupports)) {
-    // `Intl` exists, but it doesn't have the data we need, so load the
-    // polyfill and patch the constructors we need with the polyfill's.
-    var IntlPolyfill = require('intl')
-    global.Intl.NumberFormat = IntlPolyfill.NumberFormat
-    global.Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
-  }
-} else {
-  // No `Intl`, so use and load the polyfill.
-  global.Intl = require('intl')
-}
+// if (global.Intl) {
+//   // Determine if the built-in `Intl` has the locale data we need.
+//   if (!areIntlLocalesSupported(localesMyAppSupports)) {
+//     // `Intl` exists, but it doesn't have the data we need, so load the
+//     // polyfill and patch the constructors we need with the polyfill's.
+//     var IntlPolyfill = require('intl')
+//     global.Intl.NumberFormat = IntlPolyfill.NumberFormat
+//     global.Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
+//   }
+// } else {
+//   // No `Intl`, so use and load the polyfill.
+//   global.Intl = require('intl')
+// }
 
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
@@ -64,7 +64,8 @@ module.exports = {
     Search: require('./actions/Search'),
     Context: require('./actions/Context'),
     History: require('./actions/History'),
-    Logger: require('./actions/Logger')
+    Logger: require('./actions/Logger'),
+    Intl: require('./actions/Intl')
   },
   SnippetActions: {
     Bookmark: require('./components/SnippetActions/Bookmark'),
@@ -102,7 +103,6 @@ module.exports = {
   },
   olaReducer: require('./reducers'),
   createOlaMiddleware: require('./middleware/createOlaMiddleware'),
-  ReactIntl: require('react-intl'),
   utilities: require('./utilities'),
   DateParser: require('./utilities/dateParser'),
   urlSync: require('./services/urlSync'),

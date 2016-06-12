@@ -123,8 +123,10 @@ const utilities = {
     let _regExp = new RegExp(characters, 'gi')
     return _regExp.test(query)
   },
+  getComponentDisplayName (WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+  },
   getFacetsToDisplay (selected, facets, facetsToDisplay) {
-
     var selections = flatten(selected.map((item) => item.selected))
     var names = []
     var defaultNames = facetsToDisplay['*']

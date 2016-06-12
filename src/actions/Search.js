@@ -51,13 +51,6 @@ export function clearFilters () {
   }
 }
 
-export function setLocale (locale) {
-  return {
-    type: types.SET_LOCALE,
-    locale
-  }
-}
-
 export function clearQueryTerm () {
   return {
     type: types.CLEAR_QUERY_TERM

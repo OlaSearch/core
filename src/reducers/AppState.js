@@ -14,7 +14,6 @@ var initialState = {
   isLoading: false,
   bookmarks: storage.get('bookmarks') || [],
   history: storage.get('history') || [],
-  locale: 'en-US',
   error: null,
   qt: null
 }
@@ -130,13 +129,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         history: []
-      }
-
-    case types.SET_LOCALE:
-      var { locale } = action
-      return {
-        ...state,
-        locale
       }
 
     case types.TERMINATE_SEARCH:

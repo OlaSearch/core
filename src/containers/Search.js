@@ -16,7 +16,6 @@ import SearchFooter from './../components/SearchFooter'
 import { OlaRoute } from './../decorators/OlaRoute'
 import { initSearch } from './../actions/Search'
 import classNames from 'classnames'
-import { FormattedMessage } from 'react-intl'
 
 class Search extends React.Component {
   constructor (props) {
@@ -109,7 +108,7 @@ class Search extends React.Component {
 
           <div className='ola-sidebar'>
 
-            <h3><FormattedMessage id='refineResults' /></h3>
+            <h3>Refine your results</h3>
 
             <ClearAllFacets
               dispatch={dispatch}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
-import { facetToggle } from './../../decorators/OlaFacetToggle'
+import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { parseRangeValues } from './../../utilities'
 
@@ -81,4 +81,4 @@ class RatingFilter extends React.Component {
   }
 }
 
-module.exports = facetToggle(RatingFilter)
+module.exports = withFacetToggle(RatingFilter)
