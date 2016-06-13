@@ -1,5 +1,6 @@
 import React from 'react'
 import { supplant, getComponentDisplayName, translateKey } from './../utilities'
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 export default function injectTranslate (WrappedComponent) {
   class WithTranslate extends React.Component {
@@ -18,5 +19,5 @@ export default function injectTranslate (WrappedComponent) {
       return <WrappedComponent {...this.props} translate={this.translate} />
     }
   }
-  return WithTranslate
+  return hoistNonReactStatic(WithTranslate, WrappedComponent)
 }
