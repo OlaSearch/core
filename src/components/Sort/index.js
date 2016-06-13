@@ -1,5 +1,6 @@
 import React from 'react'
 import { changeSort, executeSearch } from './../../actions/Search'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class Sort extends React.Component {
   static propTypes = {
@@ -21,11 +22,11 @@ class Sort extends React.Component {
   }
   render () {
     let { sortBy } = this.context.config
-    let { selected } = this.props
+    let { selected, translate } = this.props
 
     return (
       <div className='ola-sort'>
-        <label>Sort by </label>
+        <label>{translate('sort_label')} </label>
         <select
           className='ola-sort-select'
           value={selected}
@@ -39,5 +40,4 @@ class Sort extends React.Component {
   }
 }
 
-module.exports = Sort
-
+module.exports = injectTranslate(Sort)

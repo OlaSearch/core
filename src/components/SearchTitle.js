@@ -1,5 +1,5 @@
 import React from 'react'
-import withTranslate from './../decorators/OlaTranslate'
+import injectTranslate from './../decorators/olaTranslate'
 
 const SearchTitle = ({ totalResults, page, perPage, isPhone, translate }, context) => {
   let currentIdx = Math.min(((page - 1) * perPage) + 1, totalResults)
@@ -25,4 +25,4 @@ SearchTitle.contextTypes = {
   config: React.PropTypes.object
 }
 
-module.exports = withTranslate(SearchTitle)
+module.exports = injectTranslate(SearchTitle)

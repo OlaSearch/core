@@ -1,5 +1,6 @@
 import React from 'react'
 import { updateQueryTerm, executeSearch } from './../../actions/Search'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class SpellSuggestion extends React.Component {
   static propTypes = {
@@ -33,7 +34,8 @@ class SpellSuggestion extends React.Component {
       suggestions,
       totalResults,
       showCount,
-      alwaysVisible
+      alwaysVisible,
+      translate
     } = this.props
 
     if (!suggestions.length) return null
@@ -46,7 +48,7 @@ class SpellSuggestion extends React.Component {
 
     return (
       <div className='ola-spell-suggestion'>
-        <span>Did you mean</span>
+        <span>{translate('suggestions.did_you_mean')}</span>
         {suggestions.map((item, idx) => {
           return (
             <TermItem
@@ -85,4 +87,4 @@ class TermItem extends React.Component {
   }
 }
 
-module.exports = SpellSuggestion
+module.exports = injectTranslate(SpellSuggestion)

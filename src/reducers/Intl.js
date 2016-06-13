@@ -1,9 +1,7 @@
 import types from './../constants/ActionTypes'
-import defaultTranslations from './../translations'
 
 var initialState = {
-  locale: 'zh',
-  translations: defaultTranslations
+  locale: 'zh'
 }
 
 export default (state = initialState, action) => {
@@ -13,13 +11,6 @@ export default (state = initialState, action) => {
         ...state,
         locale: action.locale
       }
-
-    case types.SET_TRANSLATIONS:
-      return {
-        ...state,
-        translations: action.translations
-      }
-
     default:
       return state
   }

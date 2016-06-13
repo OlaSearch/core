@@ -3,11 +3,12 @@ import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import Tag from './../Misc/Tag'
 import ReactList from 'react-list'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
+import injectTranslate from './../../decorators/olaTranslate'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
+import FilterInput from './common/FilterInput'
 
 class LinkFilter extends React.Component {
-
   constructor (props) {
     super(props)
 
@@ -27,8 +28,6 @@ class LinkFilter extends React.Component {
 
   static defaultProps = {
     limit: 5,
-    showMoreText: 'Show more',
-    showLessText: 'Show fewer',
     listType: 'uniform',
     showSelectedFacetItem: false
   };
@@ -96,15 +95,16 @@ class LinkFilter extends React.Component {
       selected,
       isCollapsed,
       toggleDisplay,
-      showMoreText,
-      showLessText,
       listType,
-      showSelectedFacetItem
+      showSelectedFacetItem,
+      translate
     } = this.props
 
     var {
       values
     } = facet
+
+    var originalSize = values.length
 
     /* Filter values */
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
@@ -121,6 +121,9 @@ class LinkFilter extends React.Component {
 
     if (!showMore) values = values.slice(0, limit)
 
+    let showMoreText = translate('facet_filter_showmore')
+    let showLessText = translate('facet_filter_showless')
+
     var showMoreLink = shouldDisplayShowMore
       ? <button className='ola-btn ola-link-show-more' onClick={this.toggleshowMore}>{showMore ? showLessText : showMoreText}</button>
       : null
@@ -132,18 +135,19 @@ class LinkFilter extends React.Component {
 
     var itemRendererBound = this.itemRenderer.bind(this, values)
 
+    var filterInput = originalSize > limit
+      ? <FilterInput
+        value={filterText}
+        onChange={this.onChangeFilterText}
+        placeholder={translate('facet_filter_placeholder')}
+        />
+      : null
+
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
-          <input
-            type='text'
-            className='ola-text-input ola-facet-filter-input'
-            value={filterText}
-            placeholder='Filter'
-            arial-label='Input'
-            onChange={this.onChangeFilterText}
-          />
+          {filterInput}
 
           <div className='ola-facet-tags-selected'>
             {selected.map((item, idx) => {
@@ -221,4 +225,4 @@ class SelectedItem extends React.Component {
   }
 }
 
-module.exports = withFacetToggle(LinkFilter)
+module.exports = injectTranslate(withFacetToggle(LinkFilter))

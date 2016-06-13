@@ -55,6 +55,7 @@ module.exports = {
   ClearAllFacets: require('./components/Misc/ClearAllFacets'),
   PopularKeywords: require('./components/Misc/PopularKeywords'),
   Error: require('./components/Misc/Error'),
+  Translate: require('./components/Misc/Translate'),
   Tabs: require('./components/FacetFilters/Tabs'),
   SelectedFilters: require('./components/SelectedFilters'),
   Sort: require('./components/Sort'),
@@ -99,7 +100,8 @@ module.exports = {
   },
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
-    OlaFacetToggle: require('./decorators/OlaFacetToggle')
+    OlaFacetToggle: require('./decorators/OlaFacetToggle'),
+    injectTranslate: require('./decorators/olaTranslate')
   },
   olaReducer: require('./reducers'),
   createOlaMiddleware: require('./middleware/createOlaMiddleware'),

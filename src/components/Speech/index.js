@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class SpeechInput extends React.Component {
   constructor (props) {
@@ -77,7 +78,7 @@ class SpeechInput extends React.Component {
 
   render () {
     let { isRecording, isSpeechSupported } = this.state
-
+    let { translate } = this.props
     if (!isSpeechSupported) return null
 
     let klassName = classnames('ola-link-speech', {
@@ -90,11 +91,11 @@ class SpeechInput extends React.Component {
           type='button'
           className={klassName}
           onClick={this.onLaunch}>
-          <span className='ola-btn-hint hint--top' aria-label='Press to speak' />
+          <span className='ola-btn-hint hint--top' aria-label={translate('speech_label')} />
         </button>
       </div>
     )
   }
 }
 
-module.exports = SpeechInput
+module.exports = injectTranslate(SpeechInput)

@@ -9,6 +9,7 @@ import SpellSuggestion from './../SpellSuggestions/SpellSuggestion'
 import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import { checkForAllowedCharacters } from './../../utilities'
+import injectTranslate from './../../decorators/olaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import invariant from 'invariant'
@@ -173,9 +174,9 @@ class AutoSuggest extends React.Component {
       bookmarks,
       showFacetSuggestions,
       viewAllClassName,
-      placeholder,
       facetSuggestionName,
-      className
+      className,
+      translate
     } = this.props
 
     var {
@@ -212,7 +213,7 @@ class AutoSuggest extends React.Component {
             onKeyDown={this.onKeyDown}
             onSubmit={this.onSubmit}
             onFocus={this.onFocus}
-            placeholder={placeholder}
+            placeholder={translate('autosuggest.placeholder')}
             handleClickOutside={this.handleClickOutside}
           />
           <div className={klass}>
@@ -247,7 +248,7 @@ class AutoSuggest extends React.Component {
             <a
               className={viewAllClassName}
               onClick={this.handleViewAll}
-            >View all results</a>
+            >{translate('autosuggest.viewall')}</a>
           </div>
         </div>
       </div>
@@ -262,4 +263,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(listensToClickOutside(AutoSuggest))
+module.exports = connect(mapStateToProps)(injectTranslate(listensToClickOutside(AutoSuggest)))

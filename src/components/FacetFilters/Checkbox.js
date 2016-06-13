@@ -1,9 +1,11 @@
 import React from 'react'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
+import injectTranslate from './../../decorators/olaTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
+import FilterInput from './common/FilterInput'
 
 class CheckboxFilter extends React.Component {
   constructor (props) {
@@ -81,7 +83,8 @@ class CheckboxFilter extends React.Component {
       isCollapsed,
       toggleDisplay,
       limit,
-      listType
+      listType,
+      translate
     } = this.props
 
     var {
@@ -103,14 +106,11 @@ class CheckboxFilter extends React.Component {
     })
 
     var filterInput = originalSize > limit
-      ? <input
-        type='text'
-        className='ola-text-input ola-facet-filter-input'
+      ? <FilterInput
         value={filterText}
-        placeholder='Filter'
-        arial-label='Input'
         onChange={this.onChangeFilterText}
-      />
+        placeholder={translate('facet_filter_placeholder')}
+        />
       : null
 
     var itemRendererBound = this.itemRenderer.bind(this, values)
@@ -173,4 +173,4 @@ class CheckBoxItem extends React.Component {
   }
 }
 
-module.exports = withFacetToggle(CheckboxFilter)
+module.exports = injectTranslate(withFacetToggle(CheckboxFilter))

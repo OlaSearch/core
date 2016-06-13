@@ -1,10 +1,11 @@
 import React from 'react'
+import injectTranslate from './../../decorators/olaTranslate'
 
-const NoResults = ({results, isLoading, q, isBookmark}) => {
+const NoResults = ({results, isLoading, q, isBookmark, translate}) => {
   if (results.length || isLoading) return null
-  let message = <span>No results found matching <strong>{q}</strong>. Please try again.</span>
+  let message = translate('no_results_found', { q })
   if (isBookmark) {
-    message = 'You do not have any bookmarks. Click on the heart icon to add one.'
+    message = translate('bookmarks_empty_label')
   }
 
   return (
@@ -20,4 +21,4 @@ NoResults.propTypes = {
   q: React.PropTypes.string
 }
 
-module.exports = NoResults
+module.exports = injectTranslate(NoResults)

@@ -5,7 +5,7 @@ import History from './History'
 import SpeechInput from './Speech'
 import { debounce } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
-import withTranslate from './../decorators/OlaTranslate'
+import injectTranslate from './../decorators/olaTranslate'
 
 class InstantSearchForm extends React.Component {
   constructor (props, context) {
@@ -62,8 +62,6 @@ class InstantSearchForm extends React.Component {
       translate
     } = this.props
 
-    console.log(translate('instantsearch.placeholder'))
-
     let button = q
       ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear'></button>
       : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit'></button>
@@ -112,4 +110,4 @@ class InstantSearchForm extends React.Component {
   }
 }
 
-module.exports = withTranslate(InstantSearchForm)
+module.exports = injectTranslate(InstantSearchForm)

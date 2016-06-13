@@ -1,13 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { supplant, getComponentDisplayName, translateKey } from './../utilities'
 
-export default function withTranslate (WrappedComponent) {
+export default function injectTranslate (WrappedComponent) {
   class WithTranslate extends React.Component {
     static displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`;
+    static contextTypes = {
+      translations: React.PropTypes.object
+    };
     translate = (key, placeholders) => {
-      let { locale, translations } = this.props.Intl
-      let result = translateKey(key, translations[locale]['messages'])
+      let result = translateKey(key, this.context.translations['messages'])
       if (typeof placeholders === 'undefined') {
         return result
       }
@@ -17,8 +18,5 @@ export default function withTranslate (WrappedComponent) {
       return <WrappedComponent {...this.props} translate={this.translate} />
     }
   }
-
-  return connect((state) => ({
-    Intl: state.Intl
-  }))(WithTranslate)
+  return WithTranslate
 }

@@ -85,7 +85,7 @@ class GeoLocation extends React.Component {
     })
     let title = isRequestingLocation ? textRequesting : isGeoEnabled ? textEnabled : textPrompt
     return (
-      <button className={klass} onClick={this.getLocation}>
+      <button type='button' className={klass} onClick={this.getLocation}>
         <span className={hintklass} aria-label={title} />
       </button>
     )

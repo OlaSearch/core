@@ -5,6 +5,7 @@ import listensToClickOutside from 'react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
 import NoResults from './../Snippets/NoResults'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class Bookmarks extends React.Component {
   static propTypes = {
@@ -43,7 +44,8 @@ class Bookmarks extends React.Component {
   render () {
     var {
       bookmarks,
-      dispatch
+      dispatch,
+      translate
     } = this.props
 
     var {
@@ -62,10 +64,10 @@ class Bookmarks extends React.Component {
           className='ola-link-bookmark'
           onClick={this.toggleVisibility}
         >
-          <span className='ola-btn-hint hint--top' aria-label='Bookmarks' />
+          <span className='ola-btn-hint hint--top' aria-label={translate('bookmarks_label')} />
         </button>
         <div className={klass}>
-          <div className='ola-module-title'>Bookmarks</div>
+          <div className='ola-module-title'>{translate('bookmarks_label')}</div>
           <div className='ola-module-body'>
             <NoResults
               results={bookmarks}
@@ -90,4 +92,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(listensToClickOutside(Bookmarks))
+module.exports = connect(mapStateToProps)(injectTranslate(listensToClickOutside(Bookmarks)))

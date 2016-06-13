@@ -4,6 +4,7 @@ import { clearHistory } from './../../actions/History'
 import listensToClickOutside from 'react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class History extends React.Component {
   static propTypes = {
@@ -50,7 +51,7 @@ class History extends React.Component {
   render () {
     var {
       history,
-      emptyHistoryText
+      translate
     } = this.props
 
     var {
@@ -73,11 +74,11 @@ class History extends React.Component {
           className='ola-link-history'
           onClick={this.toggleVisibility}
         >
-          <span className='ola-btn-hint hint--top' aria-label='Search history' />
+          <span className='ola-btn-hint hint--top' aria-label={translate('history_label')} />
         </button>
         <div className={klass}>
           <div className='ola-module-title'>
-            <span>History </span>
+            <span>{translate('history_label')} </span>
             <button
               type='button'
               className='ola-fake-button ola-clear'
@@ -88,7 +89,7 @@ class History extends React.Component {
           <div className='ola-module-body'>
             {!history.length &&
               <div className='ola-module-item'>
-                {emptyHistoryText}
+                {translate('history_empty_label')}
               </div>
             }
 
@@ -107,4 +108,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(listensToClickOutside(History))
+module.exports = connect(mapStateToProps)(injectTranslate(listensToClickOutside(History)))
