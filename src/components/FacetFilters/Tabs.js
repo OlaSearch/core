@@ -2,6 +2,7 @@ import React from 'react'
 import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
+import injectTranslate from './../../decorators/olaTranslate'
 import invariant from 'invariant'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
@@ -84,7 +85,8 @@ class TabsFilter extends React.Component {
   render () {
     var {
       facets,
-      selected
+      selected,
+      translate
     } = this.props
 
     var facet = find(propEq('tab', true))(facets)
@@ -113,6 +115,7 @@ class TabsFilter extends React.Component {
           facet={facet}
           totalCount={totalCount}
           handleClick={this.handleRemoveFacet}
+          label={translate('facet_tabs_all_label')}
         />
         {tabs.map((value, idx) => {
           var isActive = selectedItems.indexOf(value.name) !== -1
@@ -140,7 +143,7 @@ class TabItemAll extends React.Component {
     if (!this.props.isSelected) this.props.handleClick(this.props.facet)
   };
   render () {
-    let { isSelected, totalCount } = this.props
+    let { isSelected, totalCount, label } = this.props
     var klassTab = classNames({
       'ola-tabs-label': true,
       'ola-tab-active': isSelected
@@ -150,7 +153,7 @@ class TabItemAll extends React.Component {
         className={klassTab}
         onClick={this.handleClick}
       >
-        All
+        {label}
         <span className='ola-search-facet-count'>{totalCount}</span>
       </a>
     )
@@ -186,4 +189,4 @@ class TabItem extends React.Component {
   }
 }
 
-module.exports = TabsFilter
+module.exports = injectTranslate(TabsFilter)

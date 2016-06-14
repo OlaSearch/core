@@ -1,10 +1,11 @@
 import React from 'react'
+import injectTranslate from './../../decorators/olaTranslate'
 
-const PopularKeywords = ({ label, onClick }, context) => {
+const PopularKeywords = ({ onClick, translate }, context) => {
   let { popularKeywords } = context.config
   return (
     <div className='ola-popular-keywords'>
-      <span className='ola-popular-label'>{label}</span>
+      <span className='ola-popular-label'>{translate('popular_keywords')}: </span>
       {popularKeywords.map((keyword, idx) => {
         return (
           <PopularKeywordItem
@@ -20,10 +21,6 @@ const PopularKeywords = ({ label, onClick }, context) => {
 
 PopularKeywords.contextTypes = {
   config: React.PropTypes.object
-}
-
-PopularKeywords.defaultProps = {
-  label: 'Popular keywords: '
 }
 
 /**
@@ -45,4 +42,4 @@ class PopularKeywordItem extends React.Component {
   }
 }
 
-module.exports = PopularKeywords
+module.exports = injectTranslate(PopularKeywords)

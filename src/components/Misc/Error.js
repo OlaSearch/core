@@ -1,17 +1,20 @@
 import React from 'react'
+import injectTranslate from './../../decorators/olaTranslate'
 
-const Error = ({ error, title }) => {
+const Error = ({ error, translate }) => {
   if (!error) return null
 
-  var message = ''
-
+  var message
+  var title
   switch (error.status) {
     case 404:
-      message = '404 The page cannot be found'
+      title = translate('error_404_title')
+      message = translate('error_404_description')
       break
 
     default:
-      message = 'Something went wrong. Please email support@olasearch.com.'
+      title = translate('error_general_title')
+      message = translate('error_general_description')
       break
   }
 
@@ -23,13 +26,8 @@ const Error = ({ error, title }) => {
   )
 }
 
-Error.defaultProps = {
-  title: 'Something went wrong'
-}
-
 Error.propTypes = {
-  title: React.PropTypes.string,
   error: React.PropTypes.object
 }
 
-module.exports = Error
+module.exports = injectTranslate(Error)

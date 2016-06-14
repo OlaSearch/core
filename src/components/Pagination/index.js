@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class Pagination extends React.Component {
   static defaultProps = {
@@ -86,7 +87,8 @@ class Pagination extends React.Component {
       currentPage,
       edges,
       limit,
-      ellipsis
+      ellipsis,
+      translate
     } = this.props
 
     let currentPageInt = parseInt(currentPage)
@@ -107,7 +109,7 @@ class Pagination extends React.Component {
 
     return (
       <nav className='ola-pagination' ref='pagination'>
-        <button className={prevPageClass} onClick={this.prevPage}>Previous</button>
+        <button className={prevPageClass} onClick={this.prevPage}>{translate('pagination_prev_label')}</button>
         {pages.map((page, idx) => {
           return (
             <PageNumber
@@ -118,7 +120,7 @@ class Pagination extends React.Component {
             />
           )
         })}
-        <button className={nextPageClass} onClick={this.nextPage}>Next</button>
+        <button className={nextPageClass} onClick={this.nextPage}>{translate('pagination_next_label')}</button>
       </nav>
     )
   }
@@ -155,4 +157,4 @@ class PageNumber extends React.Component {
   }
 }
 
-module.exports = Pagination
+module.exports = injectTranslate(Pagination)

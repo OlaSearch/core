@@ -2,7 +2,7 @@ import React from 'react'
 import { supplant, getComponentDisplayName, translateKey, createHTMLMarkup } from './../utilities'
 import hoistNonReactStatic from 'hoist-non-react-statics'
 
-export default function injectTranslate (WrappedComponent) {
+module.exports = (WrappedComponent)  => {
   class WithTranslate extends React.Component {
     static displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`;
     static contextTypes = {

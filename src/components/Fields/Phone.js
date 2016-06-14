@@ -1,18 +1,14 @@
 import React from 'react'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
+import injectTranslate from './../../decorators/olaTranslate'
 
 const Phone = (props) => {
-  let { phone, title, ...rest } = props
+  let { phone, translate, ...rest } = props
 
-  if (!phone) return NO_SCRIPT_TAG
+  if (!phone) return null
 
   let url = 'tel://' + phone
 
-  return <a href={url} className='ola-btn ola-btn-call' {...rest}>{title}</a>
+  return <a href={url} className='ola-btn ola-btn-call' {...rest}>{translate('call_label')}</a>
 }
 
-Phone.defaultProps = {
-  title: 'Call'
-}
-
-module.exports = Phone
+module.exports = injectTranslate(Phone)

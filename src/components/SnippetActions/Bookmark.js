@@ -1,5 +1,6 @@
 import React from 'react'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class BookmarkActions extends React.Component {
   addBookmark = () => {
@@ -24,17 +25,18 @@ class BookmarkActions extends React.Component {
     )
   }
   render () {
-    let { bookmarks, result } = this.props
+    let { bookmarks, result, translate } = this.props
     let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id).length
-
+    let removeLabel = translate('remove_bookmark_label')
+    let addLabel = translate('add_bookmark_label')
     if (isBookmarked) {
       return (
         <button
           type='button'
           className='ola-link-bookmark-action action-remove'
-          title='Remove from bookmarks'
+          title={removeLabel}
           onClick={this.removeBookmark}>
-          <span>Remove Bookmark</span>
+          <span>{removeLabel}</span>
         </button>
       )
     } else {
@@ -42,14 +44,14 @@ class BookmarkActions extends React.Component {
         <button
           type='button'
           className='ola-link-bookmark-action'
-          title='Add to bookmarks'
+          title={addLabel}
           onClick={this.addBookmark}>
-          <span>Add Bookmark</span>
+          <span>{addLabel}</span>
         </button>
       )
     }
   }
 }
 
-module.exports = BookmarkActions
+module.exports = injectTranslate(BookmarkActions)
 

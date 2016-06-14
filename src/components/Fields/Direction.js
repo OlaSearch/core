@@ -1,14 +1,14 @@
 import React from 'react'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
+import injectTranslate from './../../decorators/olaTranslate'
 
 const Directions = (props) => {
-  var { latlong, ...rest } = props
+  var { latlong, translate, ...rest } = props
 
-  if (!latlong) return NO_SCRIPT_TAG
+  if (!latlong) return null
 
   var url = `https://www.google.com/maps?q=${latlong}`
 
-  return <a className='ola-btn ola-btn-directions' {...rest} href={url}>Get directions</a>
+  return <a className='ola-btn ola-btn-directions' {...rest} href={url}>{translate('get_directions_label')}</a>
 }
 
-module.exports = Directions
+module.exports = injectTranslate(Directions)

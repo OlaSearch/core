@@ -1,5 +1,6 @@
 import React from 'react'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
+import injectTranslate from './../../decorators/olaTranslate'
 
 class ClearAllFacets extends React.Component {
   handleClick = () => {
@@ -12,7 +13,7 @@ class ClearAllFacets extends React.Component {
     return nextProps.selected !== this.props.selected
   }
   render () {
-    let { selected } = this.props
+    let { selected, translate } = this.props
     if (!selected.length) return null
 
     return (
@@ -20,9 +21,9 @@ class ClearAllFacets extends React.Component {
         type='button'
         className='ola-link-clear-all-filters'
         onClick={this.handleClick}
-      >Clear all filters</button>
+      >{translate('clear_all_filters')}</button>
     )
   }
 }
 
-module.exports = ClearAllFacets
+module.exports = injectTranslate(ClearAllFacets)

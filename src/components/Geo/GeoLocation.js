@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
+import injectTranslate from './../../decorators/olaTranslate'
 import once from 'ramda/src/once'
 
 class GeoLocation extends React.Component {
@@ -73,7 +74,7 @@ class GeoLocation extends React.Component {
   render () {
     if (!('geolocation' in navigator)) return null
 
-    let { Context, active, textPrompt, textRequesting, textEnabled } = this.props
+    let { Context, active, textPrompt, textRequesting, textEnabled, translate } = this.props
     let { isRequestingLocation } = Context
     let isGeoEnabled = active || !!Context.location
     let klass = classNames('ola-link-geo', {
@@ -83,7 +84,7 @@ class GeoLocation extends React.Component {
     let hintklass = classNames('ola-btn-hint hint--top', {
       'hint--always': isRequestingLocation
     })
-    let title = isRequestingLocation ? textRequesting : isGeoEnabled ? textEnabled : textPrompt
+    let title = isRequestingLocation ? translate('geo_location_requesting') : isGeoEnabled ? translate('geo_location_enabled') : translate('geo_location_prompt')
     return (
       <button type='button' className={klass} onClick={this.getLocation}>
         <span className={hintklass} aria-label={title} />
@@ -100,4 +101,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(GeoLocation)
+export default connect(mapStateToProps)(injectTranslate(GeoLocation))
