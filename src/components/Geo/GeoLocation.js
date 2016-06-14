@@ -7,10 +7,7 @@ import once from 'ramda/src/once'
 
 class GeoLocation extends React.Component {
   static defaultProps = {
-    active: false,
-    textRequesting: 'Getting your current location',
-    textEnabled: 'Stop using current location',
-    textPrompt: 'Use my current location'
+    active: false
   };
   static contextTypes = {
     config: React.PropTypes.object
@@ -74,7 +71,7 @@ class GeoLocation extends React.Component {
   render () {
     if (!('geolocation' in navigator)) return null
 
-    let { Context, active, textPrompt, textRequesting, textEnabled, translate } = this.props
+    let { Context, active, translate } = this.props
     let { isRequestingLocation } = Context
     let isGeoEnabled = active || !!Context.location
     let klass = classNames('ola-link-geo', {

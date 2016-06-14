@@ -1,8 +1,8 @@
 import React from 'react'
 import { supplant, getComponentDisplayName, translateKey, createHTMLMarkup } from './../utilities'
-import hoistNonReactStatic from 'hoist-non-react-statics'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 
-module.exports = (WrappedComponent)  => {
+module.exports = (WrappedComponent) => {
   class WithTranslate extends React.Component {
     static displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`;
     static contextTypes = {
@@ -19,5 +19,5 @@ module.exports = (WrappedComponent)  => {
       return <WrappedComponent {...this.props} translate={this.translate} />
     }
   }
-  return hoistNonReactStatic(WithTranslate, WrappedComponent)
+  return hoistNonReactStatics(WithTranslate, WrappedComponent)
 }
