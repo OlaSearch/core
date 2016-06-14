@@ -1,15 +1,18 @@
 import React, { Children } from 'react'
 import { connect } from 'react-redux'
-import defaultTranslations from './../translations'
+import _t from './../translations'
 
 class OlaIntlProvider extends React.Component {
   static childContextTypes = {
     translations: React.PropTypes.object
   };
   getChildContext () {
-    let { locale, translations = {} } = this.props
+    let { locale, translations: t = {} } = this.props
     return {
-      translations: { ...defaultTranslations[locale], ...translations[locale] }
+      translations: {
+        locales: t[locale] ? t[locale]['locales'] : _t[locale]['locales'],
+        messages: Object.assign({}, _t[locale]['messages'], t[locale] ? t[locale]['messages'] : {})
+      }
     }
   }
   render () {
