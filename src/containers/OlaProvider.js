@@ -24,7 +24,7 @@ class OlaProvider extends React.Component {
       <div className='ola-search'>
         <Provider store={this.props.store}>
           <OlaIntlProvider translations={this.props.translations}>
-            {Children.only(this.props.children)}
+            {this.props.children}
           </OlaIntlProvider>
         </Provider>
       </div>
