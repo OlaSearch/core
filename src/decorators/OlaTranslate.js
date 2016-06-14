@@ -1,6 +1,6 @@
 import React from 'react'
-import { supplant, getComponentDisplayName, translateKey } from './../utilities'
-import hoistNonReactStatic from 'hoist-non-react-statics';
+import { supplant, getComponentDisplayName, translateKey, createHTMLMarkup } from './../utilities'
+import hoistNonReactStatic from 'hoist-non-react-statics'
 
 export default function injectTranslate (WrappedComponent) {
   class WithTranslate extends React.Component {
@@ -8,12 +8,12 @@ export default function injectTranslate (WrappedComponent) {
     static contextTypes = {
       translations: React.PropTypes.object
     };
-    translate = (key, placeholders) => {
+    translate = (key, placeholders, isHTML) => {
       let result = translateKey(key, this.context.translations['messages'])
       if (typeof placeholders === 'undefined') {
         return result
       }
-      return supplant(result, placeholders)
+      return isHTML ? <div dangerouslySetInnerHTML={createHTMLMarkup(supplant(result, placeholders))} /> : supplant(result, placeholders)
     };
     render () {
       return <WrappedComponent {...this.props} translate={this.translate} />

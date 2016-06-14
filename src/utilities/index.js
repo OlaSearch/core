@@ -127,9 +127,10 @@ const utilities = {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
   },
   translateKey (path, obj, safe) {
-    return path.split('.').reduce((prev, curr) => {
-      return !safe ? prev[curr] : (prev ? prev[curr] : undefined)
-    }, obj)
+    return obj[path] || path
+    // return path.split('.').reduce((prev, curr) => {
+    //   return !safe ? prev[curr] : (prev ? prev[curr] : undefined)
+    // }, obj)
   },
   getFacetsToDisplay (selected, facets, facetsToDisplay) {
     var selections = flatten(selected.map((item) => item.selected))

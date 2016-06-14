@@ -48,7 +48,7 @@ class SpellSuggestion extends React.Component {
 
     return (
       <div className='ola-spell-suggestion'>
-        <span>{translate('suggestions.did_you_mean')}</span>
+        <span>{translate('suggestions_did_you_mean')}</span>
         {suggestions.map((item, idx) => {
           return (
             <TermItem

@@ -5,7 +5,7 @@ const TermSuggestion = ({ term, translate }) => {
   if (!term) return null
   return (
     <div className='ola-term-suggestion'>
-      {translate('suggestions.showing_results_for')} <strong>{term}</strong>
+      {translate('suggestions_showing_results_for', { term }, true)}
     </div>
   )
 }

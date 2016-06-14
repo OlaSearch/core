@@ -213,7 +213,7 @@ class AutoSuggest extends React.Component {
             onKeyDown={this.onKeyDown}
             onSubmit={this.onSubmit}
             onFocus={this.onFocus}
-            placeholder={translate('autosuggest.placeholder')}
+            placeholder={translate('autosuggest_placeholder')}
             handleClickOutside={this.handleClickOutside}
           />
           <div className={klass}>
@@ -248,7 +248,7 @@ class AutoSuggest extends React.Component {
             <a
               className={viewAllClassName}
               onClick={this.handleViewAll}
-            >{translate('autosuggest.viewall')}</a>
+            >{translate('autosuggest_viewall')}</a>
           </div>
         </div>
       </div>
