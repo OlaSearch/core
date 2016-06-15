@@ -9,34 +9,19 @@
  * Actions, Dispatcher, Config File
  *
  * ReactDOM.render(
- *  <OlaProvider config, parser, searchServices, queryBuilder, store >
+ *  <OlaProvider config, store, translations>
  *    <YourComponent />
  *  </OlaProvider>,
- *  document.getElementById('root'))
+ *  document.getElementById('root')
+ *  )
  *
  * ContextTypes: {
  *   store: React.PropTypes.object,
  *   config: React.PropTypes.object,
+ *   translations: React.PropTypes.object,
  * }
  *
  */
-
-// var areIntlLocalesSupported = require('intl-locales-supported')
-// var localesMyAppSupports = [ 'en' ]
-
-// if (global.Intl) {
-//   // Determine if the built-in `Intl` has the locale data we need.
-//   if (!areIntlLocalesSupported(localesMyAppSupports)) {
-//     // `Intl` exists, but it doesn't have the data we need, so load the
-//     // polyfill and patch the constructors we need with the polyfill's.
-//     var IntlPolyfill = require('intl')
-//     global.Intl.NumberFormat = IntlPolyfill.NumberFormat
-//     global.Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
-//   }
-// } else {
-//   // No `Intl`, so use and load the polyfill.
-//   global.Intl = require('intl')
-// }
 
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),

@@ -3,7 +3,7 @@ module.exports = {
   messages: {
     'title': '电影',
     'refine_results': '优化搜索结果',
-    'showing': '显示 {current} - {next} {total}',
+    'showing': '结果 {current} - {next} 约 {total}',
     'geo_location_requesting': '让您的当前位置',
     'geo_location_enabled': '停止使用当前的位置',
     'geo_location_prompt': '使用我的当前位置',
@@ -21,7 +21,7 @@ module.exports = {
     'autosuggest_placeholder': '输入关键字',
     'autosuggest_viewall': '查看所有结果',
     'suggestions_did_you_mean': '你的意思是',
-    'suggestions_showing_results_for': '为显示结果',
+    'suggestions_showing_results_for': '为显示结果 <strong>{term}</strong>',
     'facet_tabs_all_label': '所有',
     'pagination_next_label': '下一个',
     'pagination_prev_label': '以前',
@@ -33,9 +33,9 @@ module.exports = {
     'clear_all_filters': '清除所有过滤器',
 
     /* ERROR */
-    'error_404_title': 'Page not found',
-    'error_404_description': '404 The page cannot be found',
-    'error_general_title': 'Something went wrong',
-    'error_general_description': 'Please email us at bug@olasearch.com'
+    'error_404_title': '404网页未找到',
+    'error_404_description': '该页面无法找到',
+    'error_general_title': '出了些问题',
+    'error_general_description': '请support@olasearch.com给我们发电子邮件'
   }
 }

@@ -13,14 +13,12 @@ class Histogram extends React.Component {
     data = data.sort((a, b) => a.name - b.name)
 
     let max = data.reduce((a, b) => a.count > b.count ? a : b)
-    let min = data.reduce((a, b) => a.count < b.count ? a : b)
     let { count: maxCount } = max
-    let { count: minCount } = min
 
     return (
       <div className='ola-histogram'>
         {data.map((item, idx) => {
-          let height = (maxCount === minCount ? item.count / maxCount : (item.count - min.count) / (max.count - min.count)) * 100
+          let height = item.count / maxCount * 100
           return (
             <div
               key={idx}

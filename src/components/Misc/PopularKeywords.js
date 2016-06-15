@@ -34,9 +34,7 @@ class PopularKeywordItem extends React.Component {
     let { keyword } = this.props
     return (
       <div className='ola-popular-keyword'>
-        <a onClick={this.onClick}>
-          {keyword}
-        </a>
+        <a onClick={this.onClick}>{keyword}</a>
       </div>
     )
   }

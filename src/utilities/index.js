@@ -12,12 +12,11 @@ const utilities = {
     return arr ? suffix + arr.join(separator) : null
   },
   checkIfFacetExists (facets, name) {
-    for (var i = 0; i < facets.length; i++) {
+    for (let i = 0; i < facets.length; i++) {
       if (facets[i].name === name) {
         return i
       }
     }
-
     return null
   },
   getValuesFromSelect (select) {
@@ -25,7 +24,7 @@ const utilities = {
     var options = select && select.options
     var opt
 
-    for (var i = 0, len = options.length; i < len; i++) {
+    for (let i = 0, len = options.length; i < len; i++) {
       opt = options[i]
 
       if (opt.selected) {
@@ -128,6 +127,8 @@ const utilities = {
   },
   translateKey (path, obj, safe) {
     return obj[path] || path
+    // To enable `dot` based translation, uncomment this
+    // 'search.placeholder.inner'
     // return path.split('.').reduce((prev, curr) => {
     //   return !safe ? prev[curr] : (prev ? prev[curr] : undefined)
     // }, obj)
@@ -148,11 +149,12 @@ const utilities = {
     })
 
     /* If there are no keys in `facetsToDisplay` Return all facets */
-
     if (!hasKey) names = defaultNames
 
-    /* Found */
-
+    /**
+     * Found
+     * Ignore tabs
+     */
     return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
   }
 }
