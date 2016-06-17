@@ -1,8 +1,6 @@
 import types from './../constants/ActionTypes'
+import { CONTEXT_STORAGE_KEY, CONTEXT_STORAGE_TTL } from './../constants/Settings'
 import storage from './../services/storage'
-
-const CONTEXT_STORAGE_KEY = 'ola_context'
-const STORAGE_TTL = 1 / 24 / 60 * 5 /* Days */
 
 var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
 var initialState = valueFromStorage
@@ -30,7 +28,7 @@ export default (state = initialState, action) => {
         isRequestingLocation: false,
         location: `${latitude},${longitude}`
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
+      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
       return _state
 
     case types.REQUEST_GEO_LOCATION_FAILURE:
@@ -39,7 +37,7 @@ export default (state = initialState, action) => {
         isRequestingLocation: false,
         location: null
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
+      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
       return _state
     case types.ADD_CONTEXT:
       if (action.contextType === 'geo') {
@@ -48,7 +46,7 @@ export default (state = initialState, action) => {
           location: action.value
         }
       }
-      storage.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
+      storage.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
       return _state
     case types.REMOVE_CONTEXT:
       if (action.contextType === 'geo') {
@@ -59,7 +57,7 @@ export default (state = initialState, action) => {
           hasRequestedLocation: !!state.location
         }
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
+      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
       return _state
 
     case types.ADD_DYNAMIC_FIELD:
@@ -68,10 +66,11 @@ export default (state = initialState, action) => {
         ...state,
         fields: [...filtered, {
           name: action.name,
-          value: action.value
+          value: action.value,
+          filename: action.filename
         }]
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
+      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
       return _state
 
     case types.REMOVE_DYNAMIC_FIELD:
@@ -79,7 +78,7 @@ export default (state = initialState, action) => {
         ...state,
         fields: state.fields.filter((field) => field.name !== action.name)
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, STORAGE_TTL)
+      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
       return _state
 
     default:

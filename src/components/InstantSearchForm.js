@@ -16,7 +16,9 @@ class InstantSearchForm extends React.Component {
 
   static defaultProps = {
     minCharacters: 0,
-    showGeoLocation: false
+    showGeoLocation: false,
+    showBookmarks: true,
+    showHistory: true
   };
 
   static contextTypes = {
@@ -59,6 +61,8 @@ class InstantSearchForm extends React.Component {
     let {
       q,
       showGeoLocation,
+      showBookmarks,
+      showHistory,
       translate
     } = this.props
 
@@ -86,7 +90,7 @@ class InstantSearchForm extends React.Component {
           />
           {button}
 
-          <Bookmarks />
+          {showBookmarks && <Bookmarks />}
 
           {showGeoLocation &&
             <GeoLocation
@@ -98,7 +102,7 @@ class InstantSearchForm extends React.Component {
             />
           }
 
-          <History searchUrl={this.props.searchUrl} />
+          {showHistory && <History searchUrl={this.props.searchUrl} />}
 
           <SpeechInput
             onResult={this.onChange}

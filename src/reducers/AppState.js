@@ -1,4 +1,5 @@
 import types from './../constants/ActionTypes'
+import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 import { buildQueryString, character as hashCharacter } from './../services/urlSync'
 import flatten from 'ramda/src/flatten'
@@ -12,8 +13,8 @@ var initialState = {
   spellSuggestions: [],
   suggestedTerm: '',
   isLoading: false,
-  bookmarks: storage.get('bookmarks') || [],
-  history: storage.get('history') || [],
+  bookmarks: storage.get(BOOKMARKS_STORAGE_KEY) || [],
+  history: storage.get(HISTORY_STORAGE_KEY) || [],
   error: null,
   qt: null
 }
@@ -64,39 +65,27 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_BOOKMARK:
-
-      var bookmarks = [action.snippet, ...state.bookmarks]
-
-      storage.set('bookmarks', bookmarks)
-
       return {
         ...state,
-        bookmarks
+        bookmarks: [action.snippet, ...state.bookmarks]
       }
 
     case types.REMOVE_BOOKMARK:
-
-      var _bookmarks = [
-        ...state.bookmarks.filter(
-          (bookmark) => bookmark.id !== action.snippet.id
-        )
-      ]
-
-      storage.set('bookmarks', _bookmarks)
-
       return {
         ...state,
-        bookmarks: _bookmarks
+        bookmarks: [
+          ...state.bookmarks.filter(
+            (bookmark) => bookmark.id !== action.snippet.id
+          )
+        ]
       }
 
     case types.ADD_HISTORY:
 
       var query = omit(['page', 'per_page', 'referrer'], action.query)
-
       var { q, facet_query } = query
 
       /* Get selected facets */
-
       var activeFacets = flatten(facet_query.map((item) => item.selected))
 
       /* Check if it already exists */
@@ -115,17 +104,12 @@ export default (state = initialState, action) => {
         facets: activeFacets
       }, ...state.history]
 
-      storage.set('history', history)
-
       return {
         ...state,
         history
       }
 
     case types.CLEAR_HISTORY:
-
-      storage.set('history', [])
-
       return {
         ...state,
         history: []
@@ -133,6 +117,13 @@ export default (state = initialState, action) => {
 
     case types.TERMINATE_SEARCH:
       return initialState
+
+    case 'OLA_REHYDRATE':
+      return {
+        ...state,
+        bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
+        history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
+      }
 
     default:
       return state

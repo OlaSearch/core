@@ -104,6 +104,9 @@ class LinkFilter extends React.Component {
       values
     } = facet
 
+    /* Remove values with no name */
+    values = values.filter((value) => value.name)
+
     var originalSize = values.length
 
     /* Filter values */

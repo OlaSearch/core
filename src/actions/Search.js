@@ -235,6 +235,13 @@ export function updateStateFromQuery (config) {
   }
 }
 
+export function setStorageKey (key) {
+  return {
+    type: types.SET_STORAGE_KEY,
+    key
+  }
+}
+
 // function writeCookie(name,value,days) {
 //     var date, expires;
 //     if (days) {

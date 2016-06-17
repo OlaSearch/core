@@ -12,7 +12,6 @@ var names = 'JanFebMarAprMayJunJulAugSepOctNovDecJanuaryFebruaryMarchAprilMayJun
 var DateParser = {
   format (date, mask, _zone) {
     if (!date) return
-
     if (typeof date === 'string' || typeof date === 'number') date = this.parse(date)
 
     mask = masks[mask] || mask || masks['default']

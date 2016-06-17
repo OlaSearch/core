@@ -23,7 +23,7 @@ class OlaProvider extends React.Component {
     return (
       <div className='ola-search'>
         <Provider store={this.props.store}>
-          <OlaIntlProvider translations={this.props.translations}>
+          <OlaIntlProvider translations={this.props.translations} store={this.props.store}>
             {this.props.children}
           </OlaIntlProvider>
         </Provider>

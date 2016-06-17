@@ -25,7 +25,6 @@ export function log (eventType, result, eventSource) {
  */
 function submitLog () {
   var [ dispatch, getState, eventType, result, eventSource ] = arguments
-
   dispatch({
     log: true,
     type: 'SEND_LOG',

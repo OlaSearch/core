@@ -23,8 +23,12 @@ module.exports = {
     'suggestions_did_you_mean': 'Did you mean',
     'suggestions_showing_results_for': 'Showing results for <strong>{term}</strong>',
     'facet_tabs_all_label': 'All',
+
+    /* Pagination */
     'pagination_next_label': 'Next',
     'pagination_prev_label': 'Previous',
+    'per_page_label': 'Results per page',
+
     'get_directions_label': 'Get directions',
     'call_label': 'Call',
     'add_bookmark_label': 'Add bookmark',

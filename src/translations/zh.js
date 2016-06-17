@@ -23,8 +23,12 @@ module.exports = {
     'suggestions_did_you_mean': '你的意思是',
     'suggestions_showing_results_for': '为显示结果 <strong>{term}</strong>',
     'facet_tabs_all_label': '所有',
+
+    /* Pagination */
     'pagination_next_label': '下一个',
     'pagination_prev_label': '以前',
+    'per_page_label': 'Results per page',
+
     'get_directions_label': '获取路线',
     'call_label': '呼叫',
     'add_bookmark_label': '添加到书签',

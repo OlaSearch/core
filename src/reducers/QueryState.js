@@ -171,7 +171,7 @@ export default (state = initialState, action) => {
     case types.CHANGE_SORT:
       return {
         ...state,
-        sort: action.sort,
+        sort: action.sort || '',
         page: 1
       }
 

@@ -92,6 +92,9 @@ class CheckboxFilter extends React.Component {
       displayName
     } = facet
 
+    /* Remove values with no name */
+    values = values.filter((value) => value.name)
+
     var originalSize = values.length
 
     /* Filter values */

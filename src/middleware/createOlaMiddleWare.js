@@ -1,6 +1,10 @@
 /* Create middleware */
 import { log } from './../actions/Logger'
+import { debounce, persistState } from './../utilities'
 import queryString from 'query-string'
+import { STATE_TYPE_KEYS } from './../constants/Settings'
+
+const persistStateMiddleware = debounce(persistState, 500)
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -13,6 +17,11 @@ module.exports = (options = {}) => {
       executeFromSpellSuggest,
       suggestedTerm
     } = action
+
+    /* Persist store state */
+    if (STATE_TYPE_KEYS.indexOf(action.type) !== -1) {
+      persistStateMiddleware(action, getState, options.config.namespace)
+    }
 
     if (!types) {
       // Normal action: pass it on

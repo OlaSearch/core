@@ -1,3 +1,6 @@
+import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY } from './../constants/Settings'
+import types from './../constants/ActionTypes'
+import storage from './../services/storage'
 import flatten from 'ramda/src/flatten'
 
 const utilities = {
@@ -156,6 +159,19 @@ const utilities = {
      * Ignore tabs
      */
     return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
+  },
+  persistState (action, getState, namespace) {
+    switch (action.type) {
+      case types.ADD_BOOKMARK:
+      case types.REMOVE_BOOKMARK:
+        storage.set(BOOKMARKS_STORAGE_KEY, getState().AppState.bookmarks, namespace)
+        break
+
+      case types.ADD_HISTORY:
+      case types.CLEAR_HISTORY:
+        storage.set(HISTORY_STORAGE_KEY, getState().AppState.history, namespace)
+        break
+    }
   }
 }
 

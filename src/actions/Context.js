@@ -1,9 +1,9 @@
 import types from './../constants/ActionTypes'
 
-export function addDynamicField (name, value) {
+export function addDynamicField (name, value, filename) {
   return {
     type: types.ADD_DYNAMIC_FIELD,
-    name, value
+    name, value, filename
   }
 }
 

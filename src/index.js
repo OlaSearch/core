@@ -16,9 +16,9 @@
  *  )
  *
  * ContextTypes: {
- *   store: React.PropTypes.object,
- *   config: React.PropTypes.object,
- *   translations: React.PropTypes.object,
+ *   store: React.PropTypes.object, // Required
+ *   config: React.PropTypes.object, // Required
+ *   translations: React.PropTypes.object, // Optional
  * }
  *
  */
@@ -93,5 +93,6 @@ module.exports = {
   utilities: require('./utilities'),
   DateParser: require('./utilities/dateParser'),
   urlSync: require('./services/urlSync'),
+  storage: require('./services/storage'),
   Settings: require('./constants/Settings')
 }
