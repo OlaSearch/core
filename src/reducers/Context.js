@@ -1,5 +1,5 @@
 import types from './../constants/ActionTypes'
-import { CONTEXT_STORAGE_KEY, CONTEXT_STORAGE_TTL } from './../constants/Settings'
+import { CONTEXT_STORAGE_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
 var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
@@ -11,7 +11,6 @@ var initialState = valueFromStorage
     isRequestingLocation: false,
     hasRequestedLocation: false
   }
-var _state
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -23,46 +22,40 @@ export default (state = initialState, action) => {
     case types.REQUEST_GEO_LOCATION_SUCCESS:
       let { coords } = action.payload
       let { latitude, longitude } = coords
-      _state = {
+      return {
         ...state,
         isRequestingLocation: false,
         location: `${latitude},${longitude}`
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
-      return _state
 
     case types.REQUEST_GEO_LOCATION_FAILURE:
-      _state = {
+      return {
         ...state,
         isRequestingLocation: false,
         location: null
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
-      return _state
     case types.ADD_CONTEXT:
       if (action.contextType === 'geo') {
-        _state = {
+        return {
           ...state,
           location: action.value
         }
       }
-      storage.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
-      return _state
+      break
     case types.REMOVE_CONTEXT:
       if (action.contextType === 'geo') {
-        _state = {
+        return {
           ...state,
           location: null,
           fields: [],
           hasRequestedLocation: !!state.location
         }
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
-      return _state
+      break
 
     case types.ADD_DYNAMIC_FIELD:
       let filtered = state.fields.filter((field) => field.name !== action.name)
-      _state = {
+      return {
         ...state,
         fields: [...filtered, {
           name: action.name,
@@ -70,16 +63,11 @@ export default (state = initialState, action) => {
           filename: action.filename
         }]
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
-      return _state
-
     case types.REMOVE_DYNAMIC_FIELD:
-      _state = {
+      return {
         ...state,
         fields: state.fields.filter((field) => field.name !== action.name)
       }
-      storage.cookies.set(CONTEXT_STORAGE_KEY, _state, CONTEXT_STORAGE_TTL)
-      return _state
 
     default:
       return state

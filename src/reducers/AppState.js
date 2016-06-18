@@ -122,7 +122,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
-        history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
+        history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || []
       }
 
     default:
