@@ -242,21 +242,9 @@ export function setStorageKey (key) {
   }
 }
 
-// function writeCookie(name,value,days) {
-//     var date, expires;
-//     if (days) {
-//         date = new Date();
-//         date.setTime(date.getTime()+(days*24*60*60*1000));
-//         expires = "; expires=" + date.toGMTString();
-//             }else{
-//         expires = "";
-//     }
-//     document.cookie = name + "=" + value + expires + "; path=/";
-// }
-
 export function initSearch (options) {
   return (dispatch, getState) => {
-    let { config, urlSync } = options
+    let { config, urlSync, searchOnLoad = true } = options
     let { history } = config
 
     /* Should Ola Search read state from query string */
@@ -264,8 +252,6 @@ export function initSearch (options) {
     let shouldSyncURL = urlSync === undefined || urlSync
 
     historyType = history || historyType
-
-    // writeCookie('olasearch-cookie', Math.random())
 
     /* Always pass configuration to @parseQueryString handler */
 
@@ -288,10 +274,12 @@ export function initSearch (options) {
 
     /* Disable Route change initally */
 
-    dispatch(
-      executeSearch({
-        routeChange: false
-      })
-    )
+    if (searchOnLoad) {
+      dispatch(
+        executeSearch({
+          routeChange: false
+        })
+      )
+    }
   }
 }

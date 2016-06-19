@@ -1,29 +1,25 @@
 import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const HighlightedField = ({ field, result, length }) => {
-  var { highlighting } = result
+  if (!field) return null
 
-  if (!field) return NO_SCRIPT_TAG
-
-  var fieldContent = result[field]
+  let { highlighting } = result
+  let fieldContent = result[field]
 
   /* Check for highlighting */
 
   if (highlighting && field in highlighting) {
-    var highlightedContent = highlighting[field]
-
+    let highlightedContent = highlighting[field]
     if (typeof highlightedContent === 'object') {
       fieldContent = highlightedContent.join('<br />...')
     }
   } else if (fieldContent && fieldContent.length > length) {
     fieldContent = fieldContent.substr(0, length).split(' ').slice(0, -1).join(' ') + '...'
   }
-
   let klass = `ola-field ola-field-highlighted-field ola-field-${field}`
 
-  if (!fieldContent) return NO_SCRIPT_TAG
+  if (!fieldContent) return null
 
   return (
     <div className={klass} dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />

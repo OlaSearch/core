@@ -1,6 +1,3 @@
-import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY, LOCALE_STORAGE_KEY, LOCALE_STORAGE_TTL, CONTEXT_STORAGE_KEY, CONTEXT_STORAGE_TTL } from './../constants/Settings'
-import types from './../constants/ActionTypes'
-import storage from './../services/storage'
 import flatten from 'ramda/src/flatten'
 
 const utilities = {
@@ -45,7 +42,6 @@ const utilities = {
 
     var later = function () {
       var last = utilities.now() - timestamp
-
       if (last < wait && last >= 0) {
         timeout = setTimeout(later, wait - last)
       } else {
@@ -159,28 +155,6 @@ const utilities = {
      * Ignore tabs
      */
     return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
-  },
-  persistState (action, getState, namespace) {
-    switch (action.type) {
-      case types.ADD_BOOKMARK:
-      case types.REMOVE_BOOKMARK:
-        return storage.set(BOOKMARKS_STORAGE_KEY, getState().AppState.bookmarks, namespace)
-
-      case types.ADD_HISTORY:
-      case types.CLEAR_HISTORY:
-        return storage.set(HISTORY_STORAGE_KEY, getState().AppState.history, namespace)
-
-      case types.SET_LOCALE:
-        return storage.cookies.set(LOCALE_STORAGE_KEY, action.locale, LOCALE_STORAGE_TTL)
-
-      case types.REQUEST_GEO_LOCATION_SUCCESS:
-      case types.REQUEST_GEO_LOCATION_FAILURE:
-      case types.ADD_CONTEXT:
-      case types.REMOVE_CONTEXT:
-      case types.ADD_DYNAMIC_FIELD:
-      case types.REMOVE_DYNAMIC_FIELD:
-        return storage.cookies.set(CONTEXT_STORAGE_KEY, getState().Context, CONTEXT_STORAGE_TTL)
-    }
   }
 }
 

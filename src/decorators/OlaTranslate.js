@@ -1,23 +1,14 @@
 import React from 'react'
-import { supplant, getComponentDisplayName, translateKey, createHTMLMarkup } from './../utilities'
+import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
 module.exports = (WrappedComponent) => {
-  class WithTranslate extends React.Component {
-    static displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`;
-    static contextTypes = {
-      translations: React.PropTypes.object
-    };
-    translate = (key, placeholders, isHTML) => {
-      let result = translateKey(key, this.context.translations['messages'])
-      if (typeof placeholders === 'undefined') {
-        return result
-      }
-      return isHTML ? <div dangerouslySetInnerHTML={createHTMLMarkup(supplant(result, placeholders))} /> : supplant(result, placeholders)
-    };
-    render () {
-      return <WrappedComponent {...this.props} translate={this.translate} />
-    }
+  const WithTranslate = (props, context) => {
+    return <WrappedComponent {...props} translate={context.translate} />
+  }
+  WithTranslate.displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`
+  WithTranslate.contextTypes = {
+    translate: React.PropTypes.func
   }
   return hoistNonReactStatics(WithTranslate, WrappedComponent)
 }

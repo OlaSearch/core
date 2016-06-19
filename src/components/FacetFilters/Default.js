@@ -40,7 +40,6 @@ class LinkFilter extends React.Component {
     })
 
     dispatch(addFacet(facet, value))
-
     dispatch(executeSearch())
   };
 

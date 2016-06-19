@@ -28,9 +28,7 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-
       var { results, appendResult, spellSuggestions, qt, suggestedTerm, totalResults, facets } = action
-
       if (appendResult) {
         return {
           ...state,
@@ -53,7 +51,6 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_FAILURE:
-
       var error = {
         status: action.error.status,
         statusText: action.error.statusText
@@ -81,7 +78,6 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_HISTORY:
-
       var query = omit(['page', 'per_page', 'referrer'], action.query)
       var { q, facet_query } = query
 

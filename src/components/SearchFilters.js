@@ -94,7 +94,7 @@ class SearchFilters extends React.Component {
                 return <FacetBoolean {...passProps} />
 
               case 'tagcloud':
-                return <TagCloud { ...passProps} />
+                return <TagCloud {...passProps} />
 
               default:
                 return <Default {...passProps} />

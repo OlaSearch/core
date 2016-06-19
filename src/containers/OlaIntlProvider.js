@@ -1,18 +1,29 @@
 import React, { Children } from 'react'
 import { connect } from 'react-redux'
 import _t from './../translations'
+import { supplant, translateKey, createHTMLMarkup } from './../utilities'
 
 class OlaIntlProvider extends React.Component {
+  constructor (props) {
+    super(props)
+    let { locale, translations: t = {} } = props
+    this.messages = Object.assign({}, _t[locale]['messages'], t[locale] ? t[locale]['messages'] : {})
+  }
   static childContextTypes = {
-    translations: React.PropTypes.object
+    translate: React.PropTypes.func
+  };
+  translate = (key, placeholders, isHTML) => {
+    let result = translateKey(key, this.messages)
+    if (typeof placeholders === 'undefined') {
+      return result
+    }
+    return isHTML
+    ? <div dangerouslySetInnerHTML={createHTMLMarkup(supplant(result, placeholders))} />
+    : supplant(result, placeholders)
   };
   getChildContext () {
-    let { locale, translations: t = {} } = this.props
     return {
-      translations: {
-        locales: t[locale] ? t[locale]['locales'] : _t[locale]['locales'],
-        messages: Object.assign({}, _t[locale]['messages'], t[locale] ? t[locale]['messages'] : {})
-      }
+      translate: this.translate
     }
   }
   render () {

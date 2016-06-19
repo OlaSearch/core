@@ -1,10 +1,9 @@
 /* Create middleware */
 import { log } from './../actions/Logger'
-import { debounce, persistState } from './../utilities'
+import { debouncePersistState, STATE_TYPE_KEYS } from './../services/persistState'
 import queryString from 'query-string'
-import { STATE_TYPE_KEYS } from './../constants/Settings'
 
-const persistStateMiddleware = debounce(persistState, 500)
+// const persistStateMiddleware = debounce(persistState, 500)
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -20,7 +19,7 @@ module.exports = (options = {}) => {
 
     /* Persist store state */
     if (STATE_TYPE_KEYS.indexOf(action.type) !== -1) {
-      persistStateMiddleware(action, getState, options.config.namespace)
+      debouncePersistState(action, getState, options.config.namespace)
     }
 
     if (!types) {

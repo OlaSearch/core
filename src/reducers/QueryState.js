@@ -21,7 +21,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_FILTER:
       /* Remove duplicate */
-
       let { filter, selected } = action.payload
       index = checkIfFacetExists(state.filters, filter.name)
 
@@ -34,7 +33,7 @@ export default (state = initialState, action) => {
         /* Update the value */
 
         let newFilter = state.filters.slice(0)
-        newFilter[ index ].selected = selected
+        newFilter[index].selected = selected
 
         return {
           ...state,
@@ -139,7 +138,6 @@ export default (state = initialState, action) => {
 
     case types.REPLACE_FACET:
       /* Check if key exists then update selected =[] OR Add new record with selected[] */
-
       value = action.value
       facet = action.facet
       props = omit('values', facet)
@@ -176,7 +174,6 @@ export default (state = initialState, action) => {
       }
 
     case types.CHANGE_PAGE:
-
       return {
         ...state,
         page: action.page

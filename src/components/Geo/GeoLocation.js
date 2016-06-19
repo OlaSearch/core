@@ -22,7 +22,6 @@ class GeoLocation extends React.Component {
       // Ask for users gelocation
       this.getLocation()
     }
-
     this.prompt(nextProps)
   }
   shouldComponentUpdate (nextProps) {
