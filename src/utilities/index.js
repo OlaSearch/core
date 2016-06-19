@@ -155,6 +155,20 @@ const utilities = {
      * Ignore tabs
      */
     return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
+  },
+  sanitizeAnchor (text) {
+    let str = text.toLowerCase()
+    // remove solr's <em> tags..
+    str = str.replace(/<(\/?)em>/gi, '')
+    str = str.replace(/<em.*?>/gi, '')
+    // make alphanumeric (removes all other characters)
+    str = str.replace(/[^a-z0-9_\s-]/gi, '')
+    // clean up multiple dashes or whitespaces
+    str = str.replace(/[\s-]+/gi, ' ')
+    // convert whitespaces and underscore to dash
+    str = str.replace(/[\s_]/gi, '-')
+    // return '#' + str;
+    return str
   }
 }
 

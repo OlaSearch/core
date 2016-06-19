@@ -39,14 +39,12 @@ export function requestGeoLocation (onSuccess, onFailure) {
           type: types.REQUEST_GEO_LOCATION_SUCCESS,
           payload: event
         })
-
         onSuccess && onSuccess(event)
       }, (error) => {
         dispatch({
           type: types.REQUEST_GEO_LOCATION_FAILURE,
           payload: error
         })
-
         onFailure && onFailure(error)
       })
     }
