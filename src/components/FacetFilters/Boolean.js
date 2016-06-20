@@ -11,13 +11,11 @@ class BooleanFilter extends React.Component {
   };
 
   onChange = (event) => {
-    let {
-      dispatch,
-      facet
-    } = this.props
+    let { dispatch, facet } = this.props
 
-    if (event.target.checked) dispatch(replaceFacet(facet, 'true'))
-    else dispatch(removeFacet(facet))
+    if (event.target.checked) {
+      dispatch(replaceFacet(facet, 'true'))
+    } else dispatch(removeFacet(facet))
 
     dispatch(executeSearch())
   };

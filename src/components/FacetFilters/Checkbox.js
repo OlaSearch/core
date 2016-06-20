@@ -122,10 +122,8 @@ class CheckboxFilter extends React.Component {
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
         <div className='ola-facet-wrapper'>
-
           {filterInput}
           <div className='ola-facet-list'>
-
             <div className='ola-facet-scroll-list'>
               <ReactList
                 itemRenderer={itemRendererBound}
@@ -133,7 +131,6 @@ class CheckboxFilter extends React.Component {
                 type={listType}
               />
             </div>
-
           </div>
         </div>
       </div>

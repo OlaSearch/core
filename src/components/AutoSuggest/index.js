@@ -12,7 +12,6 @@ import { checkForAllowedCharacters } from './../../utilities'
 import injectTranslate from './../../decorators/olaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
-import invariant from 'invariant'
 
 class AutoSuggest extends React.Component {
   constructor (props) {
@@ -20,11 +19,6 @@ class AutoSuggest extends React.Component {
     this.state = {
       isFocused: false
     }
-
-    /**
-     * Invariants
-     */
-    props.showFacetSuggestions && invariant(props.facetSuggestionName, 'facetSuggestionName is not defined')
   }
 
   static propTypes = {
