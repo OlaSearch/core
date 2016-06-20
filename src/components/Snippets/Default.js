@@ -1,10 +1,10 @@
 import React from 'react'
-import { arrayJoin } from './../../utilities'
 import Bookmark from './../SnippetActions/Bookmark'
 import Title from './../Fields/Title'
 import Thumbnail from './../Fields/Thumbnail'
 import Rating from './../Fields/Rating'
 import Summary from './../Fields/Summary'
+import ArrayField from './../Fields/ArrayField'
 
 const DefaultSnippet = (props) => {
   let { result, showSummary } = props
@@ -23,7 +23,7 @@ const DefaultSnippet = (props) => {
         <Title result={result} />
         <Rating rating={result.star_rating} />
         {showSummary && <Summary result={result} />}
-        {result.directors && <p>{arrayJoin('By ', result.directors)}</p>}
+        <ArrayField field={result.directors} />
       </div>
     </div>
   )

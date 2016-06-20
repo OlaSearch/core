@@ -1,9 +1,6 @@
-/* Create middleware */
 import { log } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../services/persistState'
 import queryString from 'query-string'
-
-// const persistStateMiddleware = debounce(persistState, 500)
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -22,10 +19,8 @@ module.exports = (options = {}) => {
       debouncePersistState(action, getState, options.config.namespace)
     }
 
-    if (!types) {
-      // Normal action: pass it on
-      return next(action)
-    }
+    // Normal action: pass it on
+    if (!types) return next(action)
 
     let {
       parser,
@@ -112,18 +107,18 @@ module.exports = (options = {}) => {
         var totalResults
         var facets
         var qt
-        if (!proxy) {
-          results = parser.normalizeResults(response)
-          spellSuggestions = parser.normalizeSpellSuggestions(response)
-          totalResults = parser.normalizeTotalResults(response)
-          facets = parser.normalizeFacets(response)
-          qt = parser.queryTime(response)
-        } else {
+        if (proxy) {
           results = response.results
           spellSuggestions = results.spellSuggestions
           totalResults = results.totalResults
           facets = results.facets
           qt = results.qt
+        } else {
+          results = parser.normalizeResults(response)
+          spellSuggestions = parser.normalizeSpellSuggestions(response)
+          totalResults = parser.normalizeTotalResults(response)
+          facets = parser.normalizeFacets(response)
+          qt = parser.queryTime(response)
         }
 
         let type = successType

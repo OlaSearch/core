@@ -46,12 +46,9 @@ class InstantSearchForm extends React.Component {
   };
 
   onClear = () => {
-    var { dispatch } = this.props
-
+    let { dispatch } = this.props
     setTimeout(() => this.refs.Input.focus(), 100)
-
     dispatch(clearQueryTerm())
-
     dispatch(executeSearch())
   };
 

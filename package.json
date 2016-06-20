@@ -49,7 +49,7 @@
     "babel-core": "^6.9.1",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
-    "babel-plugin-ramda": "^1.1.3",
+    "babel-plugin-ramda": "^1.1.5",
     "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
     "babel-plugin-transform-es3-memeber-and-property-regenerator": "^1.0.2",
     "babel-plugin-transform-es3-property-literals": "^6.8.0",
@@ -88,6 +88,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.0",
+    "fecha": "^2.1.0",
     "hoist-non-react-statics": "^1.2.0",
     "invariant": "^2.2.1",
     "ismobilejs": "^0.4.0",

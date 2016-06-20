@@ -32,19 +32,11 @@ class SpellSuggestion extends React.Component {
   render () {
     var {
       suggestions,
-      totalResults,
       showCount,
-      alwaysVisible,
       translate
     } = this.props
 
     if (!suggestions.length) return null
-
-    var max = suggestions.reduce((a, b) => a.count > b.count ? a : b)
-
-    /* Check if Current results is less than the suggestions */
-
-    if (totalResults >= max.count && !alwaysVisible) return null
 
     return (
       <div className='ola-spell-suggestion'>

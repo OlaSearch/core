@@ -1,5 +1,5 @@
 import React from 'react'
-import { createHTMLMarkup, sanitizeAnchor } from './../utilities'
+import { createHTMLMarkup, sanitizeAnchor } from './../../utilities'
 
 const Subtitles = ({subtitles, baseUrl}) => {
   if (!subtitles) return null

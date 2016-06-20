@@ -1,8 +1,9 @@
 import React from 'react'
 import { getComponentDisplayName } from './../utilities'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 
 export default function withFacetToggle (WrappedComponent) {
-  return class WithFacetToggle extends React.Component {
+  class WithFacetToggle extends React.Component {
     constructor (props) {
       super(props)
       this.state = {
@@ -17,7 +18,6 @@ export default function withFacetToggle (WrappedComponent) {
         })
       }
     }
-
     toggleDisplay = () => {
       this.setState({
         isCollapsed: !this.state.isCollapsed
@@ -27,4 +27,5 @@ export default function withFacetToggle (WrappedComponent) {
       return <WrappedComponent {...this.props} isCollapsed={this.state.isCollapsed} toggleDisplay={this.toggleDisplay} />
     }
   }
+  return hoistNonReactStatics(WithFacetToggle, WrappedComponent)
 }
