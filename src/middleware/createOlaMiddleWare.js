@@ -42,10 +42,10 @@ module.exports = (options = {}) => {
      */
     if (typeof config === 'function') {
       config = config(getState)
-      let { engineConfig } = options
-      parser = new engineConfig[config.search_engine_type].Parser(config)
-      queryBuilder = new engineConfig[config.search_engine_type].QueryBuilder(config)
-      searchService = new engineConfig[config.search_engine_type].SearchService(config)
+      let currentEngine = options.engineConfig[config.search_engine_type]
+      parser = new currentEngine.Parser(config)
+      queryBuilder = new currentEngine.QueryBuilder(config)
+      searchService = new currentEngine.SearchService(config)
     }
 
     if (!config) {

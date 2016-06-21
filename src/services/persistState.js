@@ -3,8 +3,12 @@ import types from './../constants/ActionTypes'
 import storage from './../services/storage'
 import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY, LOCALE_STORAGE_KEY, LOCALE_STORAGE_TTL, CONTEXT_STORAGE_KEY, CONTEXT_STORAGE_TTL } from './../constants/Settings'
 
-/* Persist debouncer */
-export const debouncePersistState = debounce(persistState, 500)
+/**
+ * Throttled function which is called from createOlaMiddleware.js
+ * @type {[type]}
+ */
+const PERSIST_TIMEOUT = 500
+export const debouncePersistState = debounce(persistState, PERSIST_TIMEOUT)
 
 /* Actions to watch */
 export const STATE_TYPE_KEYS = [

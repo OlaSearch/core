@@ -112,6 +112,10 @@ var urlSync = {
       facetQueryObject = {
         facet_query: fq
       }
+    } else {
+      facetQueryObject = {
+        facet_query: []
+      }
     }
 
     /**
@@ -138,6 +142,10 @@ var urlSync = {
 
       filtersObject = {
         filters: filterQuery
+      }
+    } else {
+      filtersObject = {
+        filters: []
       }
     }
 
