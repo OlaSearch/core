@@ -1,6 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import OlaIntlProvider from './OlaIntlProvider'
+import types from './../constants/ActionTypes'
 
 class OlaProvider extends React.Component {
   static childContextTypes = {
@@ -14,7 +15,7 @@ class OlaProvider extends React.Component {
       let namePart = this.constructor.displayName ? ' of ' + this.constructor.displayName : ''
       throw new Error('Could not find config or store on this.props ' + namePart)
     }
-    if (namespace) store.dispatch({ type: 'OLA_REHYDRATE', namespace })
+    if (namespace) store.dispatch({ type: types.OLA_REHYDRATE, namespace })
   }
   getChildContext () {
     return {
@@ -25,7 +26,7 @@ class OlaProvider extends React.Component {
     return (
       <div className='ola-search'>
         <Provider store={this.props.store}>
-          <OlaIntlProvider translations={this.props.translations} store={this.props.store}>
+          <OlaIntlProvider translations={this.props.translations}>
             {this.props.children}
           </OlaIntlProvider>
         </Provider>

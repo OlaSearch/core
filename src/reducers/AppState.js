@@ -114,7 +114,7 @@ export default (state = initialState, action) => {
     case types.TERMINATE_SEARCH:
       return initialState
 
-    case 'OLA_REHYDRATE':
+    case types.OLA_REHYDRATE:
       return {
         ...state,
         bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],

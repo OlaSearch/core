@@ -15,7 +15,7 @@
     "publish": "npm run clean && npm run build:lib",
     "start": "node devServer.js",
     "lint": "eslint src",
-    "test": "BABEL_ENV=production mocha --compilers js:babel-core/register --recursive --require ./test/setup.js",
+    "test": "BABEL_ENV=production mocha test/actions/*.js --compilers js:babel-core/register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
     "standard": "standard --verbose | snazzy"
   },
@@ -46,8 +46,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
-    "babel-core": "^6.9.1",
-    "babel-eslint": "^6.0.4",
+    "babel-core": "^6.10.4",
+    "babel-eslint": "^6.0.5",
     "babel-loader": "^6.2.4",
     "babel-plugin-ramda": "^1.1.5",
     "babel-plugin-transform-es3-member-expression-literals": "^6.8.0",
@@ -62,8 +62,8 @@
     "babel-preset-react-hmre": "^1.0.0",
     "babel-preset-stage-0": "^6.3.13",
     "cross-env": "^1.0.8",
-    "eslint": "^2.13.0",
-    "eslint-plugin-babel": "^3.0.0",
+    "eslint": "^2.13.1",
+    "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-react": "^5.2.2",
     "eventsource-polyfill": "^0.9.6",
     "expect": "^1.20.1",
@@ -95,8 +95,8 @@
     "nouislider": "^8.5.1",
     "query-string": "^4.2.2",
     "ramda": "^0.21.0",
-    "react-list": "^0.7.18",
-    "react-onclickoutside": "^5.2.0",
+    "react-list": "^0.7.19",
+    "react-onclickoutside": "^5.3.1",
     "react-responsive": "^1.1.3"
   }
 }

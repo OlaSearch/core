@@ -25,7 +25,6 @@ class TabsFilter extends React.Component {
     /**
      * Remove facets that are not in this tab
      */
-
     var { dispatch, resetFacetsOnSelect } = this.props
 
     if (resetFacetsOnSelect) dispatch(removeAllFacets())

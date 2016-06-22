@@ -173,9 +173,7 @@ class AutoSuggest extends React.Component {
       translate
     } = this.props
 
-    var {
-      isFocused
-    } = this.state
+    var { isFocused } = this.state
 
     var {
       results,
@@ -188,7 +186,6 @@ class AutoSuggest extends React.Component {
     } = AutoSuggest
 
     var { q } = query
-
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     var klassContainer = classNames('ola-autosuggest', className, {
       'ola-autosuggest-focus': isFocused,
@@ -225,7 +222,7 @@ class AutoSuggest extends React.Component {
               {shouldShowFacetSuggestions &&
                 <FacetSuggestion
                   facets={facets}
-                  query={query}
+                  q={q}
                   name={facetSuggestionName}
                   dispatch={dispatch}
                   onSubmit={this.handleViewAll}

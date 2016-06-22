@@ -20,13 +20,12 @@ class FacetSuggestion extends React.Component {
     return nextProps.facets !== this.props.facets
   }
   render () {
-    let { facets, query, name, limit } = this.props
+    let { facets, q, name, limit } = this.props
     let facet = find(propEq('name', name))(facets)
 
     if (!facet) return null
 
     let values = facet.values.splice(0, limit)
-    let { q } = query
 
     return (
       <div className='ola-facet-suggestions'>

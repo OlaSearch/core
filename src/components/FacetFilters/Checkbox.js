@@ -1,5 +1,5 @@
 import React from 'react'
-import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
+import { addFacet, removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import injectTranslate from './../../decorators/olaTranslate'
 import classNames from 'classnames'
@@ -34,8 +34,16 @@ class CheckboxFilter extends React.Component {
       filterText: ''
     })
 
-    dispatch(addFacet(facet, value))
-
+    /**
+     * Allows only single selection
+     * @param  {[type]} facet.allowSingleSelection
+     * @return {[type]}
+     */
+    if (facet.allowSingleSelection) {
+      dispatch(replaceFacet(facet, value))
+    } else {
+      dispatch(addFacet(facet, value))
+    }
     dispatch(executeSearch())
   };
 
@@ -89,7 +97,8 @@ class CheckboxFilter extends React.Component {
 
     var {
       values,
-      displayName
+      displayName,
+      allowSingleSelection
     } = facet
 
     /* Remove values with no name */
@@ -105,7 +114,8 @@ class CheckboxFilter extends React.Component {
 
     var klass = classNames({
       'ola-facet': true,
-      'ola-facet-collapsed': isCollapsed
+      'ola-facet-collapsed': isCollapsed,
+      'ola-facet-single-select': allowSingleSelection
     })
 
     var filterInput = originalSize > limit

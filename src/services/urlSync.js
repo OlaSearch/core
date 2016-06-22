@@ -129,7 +129,6 @@ var urlSync = {
         var [ name, value ] = filter.split(':')
 
         /* Parse query string */
-
         if (value.indexOf('=') !== -1) value = queryString.parse(value)
 
         var currentFilter = find(propEq('name', name))(config.filters)
