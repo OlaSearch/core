@@ -33,9 +33,9 @@
   "author": "Vinay M <vinay@olasearch.com> (http://bitbucket.com/olasearch)",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/olasearch/core/issues"
+    "url": "https://bitbucket.org/olasearch/olasearch-core/issues"
   },
-  "homepage": "https://github.com/olasearch/core",
+  "homepage": "https://bitbucket.org/olasearch/olasearch-core",
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
