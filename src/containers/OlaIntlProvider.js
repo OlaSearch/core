@@ -17,9 +17,10 @@ class OlaIntlProvider extends React.Component {
     if (typeof placeholders === 'undefined') {
       return result
     }
+    let finalResult = supplant(result, placeholders)
     return isHTML
-    ? <div dangerouslySetInnerHTML={createHTMLMarkup(supplant(result, placeholders))} />
-    : supplant(result, placeholders)
+    ? <div dangerouslySetInnerHTML={createHTMLMarkup(finalResult)} />
+    : finalResult
   };
   getChildContext () {
     return {

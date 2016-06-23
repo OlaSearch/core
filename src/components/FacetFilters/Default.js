@@ -123,11 +123,8 @@ class LinkFilter extends React.Component {
 
     if (!showMore) values = values.slice(0, limit)
 
-    let showMoreText = translate('facet_filter_showmore')
-    let showLessText = translate('facet_filter_showless')
-
     var showMoreLink = shouldDisplayShowMore
-      ? <button className='ola-btn ola-link-show-more' onClick={this.toggleshowMore}>{showMore ? showLessText : showMoreText}</button>
+      ? <button className='ola-btn ola-link-show-more' onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
       : null
 
     var klass = classNames({

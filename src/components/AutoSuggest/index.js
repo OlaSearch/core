@@ -206,6 +206,7 @@ class AutoSuggest extends React.Component {
             onFocus={this.onFocus}
             placeholder={translate('autosuggest_placeholder')}
             handleClickOutside={this.handleClickOutside}
+            onSearchButtonClick={this.props.onSearchButtonClick}
           />
           <div className={klass}>
             <TermSuggestion term={suggestedTerm} />
