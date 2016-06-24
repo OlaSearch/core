@@ -37,7 +37,6 @@ class SpeechInput extends React.Component {
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
     this.recog = new SpeechRecognition()
-
     this.recog.lang = lang
     this.recog.continuous = continuous
     this.recog.interimResults = interimResults
@@ -63,13 +62,13 @@ class SpeechInput extends React.Component {
     switch (event && event.type) {
       case 'result':
         window.requestAnimationFrame(() => {
-          let result = event.results[ event.resultIndex ]
+          let result = event.results[event.resultIndex]
           let item = result[0]
 
-          this.props.onResult.call(this, item.transcript, item.confidence)
+          this.props.onResult && this.props.onResult(item.transcript, item.confidence)
 
           if (result.isFinal) {
-            this.props.onFinalResult.call(this, item.transcript)
+            this.props.onFinalResult && this.props.onFinalResult(item.transcript)
           }
         })
         break

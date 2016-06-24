@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
           location: action.value
         }
       }
-      break
+      return state
     case types.REMOVE_CONTEXT:
       if (action.contextType === 'geo') {
         return {
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
           hasRequestedLocation: !!state.location
         }
       }
-      break
+      return state
 
     case types.ADD_DYNAMIC_FIELD:
       let filtered = state.fields.filter((field) => field.name !== action.name)

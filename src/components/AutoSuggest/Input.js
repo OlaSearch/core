@@ -34,7 +34,6 @@ class Input extends React.Component {
 
   onKeyDown = (event) => {
     var { onKeyDown, onSubmit } = this.props
-
     switch (event.which) {
 
       case 27: // Esc

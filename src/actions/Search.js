@@ -1,13 +1,10 @@
 import types from './../constants/ActionTypes'
-import { addHistory } from './History'
+import { debouceAddHistory } from './History'
 import { pushState } from './../services/urlSync'
 import { debounce, checkForAllowedCharacters } from './../utilities'
 
 /* Update Browser URL */
 const updateURL = debounce(pushState, 300)
-
-/* Adds to History */
-const addToHistory = debounce(addOlaHistory, 600)
 
 /* Should route change */
 var globalRouteChange = true
@@ -19,10 +16,6 @@ var allowedCharacters = null
 /* URL Parameter */
 
 var historyType = 'pushState'
-
-export function addOlaHistory (dispatchInstance, query) {
-  dispatchInstance(addHistory(query))
-}
 
 export function updateQueryTerm (term) {
   return {
@@ -103,12 +96,10 @@ export function executeSearch (payload) {
 
     if (!payload || payload.routeChange) {
       /* Update Browser URL */
-
       globalRouteChange && updateURL(query, historyType)
 
       /* Add History */
-
-      addToHistory(dispatch, query)
+      debouceAddHistory(dispatch)
     }
   }
 }

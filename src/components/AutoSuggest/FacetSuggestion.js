@@ -13,7 +13,6 @@ class FacetSuggestion extends React.Component {
     dispatch(addFacet(facet, name))
 
     /* Prevent race condition */
-
     setTimeout(() => onSubmit && onSubmit())
   };
   shouldComponentUpdate (nextProps) {

@@ -116,18 +116,13 @@ class AutoSuggest extends React.Component {
 
   onSubmit = (event) => {
     /* Check if there is active class */
-
     let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName)
-
     if (target) {
       let linkTarget = target.nodeName === 'A' ? target : target.querySelector('a')
       if (linkTarget) linkTarget.click()
-
       return
     }
-
     this.handleViewAll()
-
     event && event.preventDefault()
   };
 

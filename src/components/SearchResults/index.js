@@ -1,5 +1,5 @@
 import React from 'react'
-import SnippetDefault from './../Snippets/Default'
+import SnippetFallback from './../Snippets/Default'
 import { getMatchingSnippet } from './../../utilities'
 import classNames from 'classnames'
 
@@ -28,7 +28,7 @@ class SearchResults extends React.Component {
     return (
       <div className={klass}>
         {results.map((result, idx) => {
-          let OlaSnippet = getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetDefault
+          let OlaSnippet = getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetFallback
           let key = result.id || idx
           return (
             <OlaSnippet

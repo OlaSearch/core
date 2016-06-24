@@ -1,11 +1,11 @@
 import React from 'react'
 
-const FilterInput = ({ placeholder = '', filterText, onChange }) => {
+const FilterInput = ({ placeholder = '', value, onChange }) => {
   return (
     <input
       type='text'
       className='ola-text-input ola-facet-filter-input'
-      value={filterText}
+      value={value}
       placeholder={placeholder}
       arial-label='Input'
       onChange={onChange}
