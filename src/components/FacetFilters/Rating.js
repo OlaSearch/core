@@ -13,7 +13,6 @@ class RatingFilter extends React.Component {
 
   handleFacet = (event) => {
     var { dispatch, facet } = this.props
-
     var min = parseInt(event.target.value, 10)
     var value = [min, min + facet.interval]
 
@@ -24,7 +23,6 @@ class RatingFilter extends React.Component {
     }
 
     /* Search */
-
     dispatch(executeSearch())
   };
   isSelected = (bounds, name) => {

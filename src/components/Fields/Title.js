@@ -20,7 +20,7 @@ class Title extends React.Component {
   };
 
   render () {
-    var { result, isLink, children, baseUrl, url, ...rest } = this.props
+    var { result, isLink, children, baseUrl, url, ...rest, iconLeft = null, iconRight = null } = this.props
 
     var {
       title,
@@ -40,11 +40,13 @@ class Title extends React.Component {
 
     return (
       <h3 className='ola-field ola-field-title' {...rest}>
+        {iconLeft}
         {isLink
           ? <a href={url} onClick={this.logClick} dangerouslySetInnerHTML={createHTMLMarkup(title)} />
           : <span dangerouslySetInnerHTML={createHTMLMarkup(title)} />
         }
         {children}
+        {iconRight}
       </h3>
     )
   }

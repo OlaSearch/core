@@ -6,6 +6,7 @@ module.exports = {
   HighlightedField: require('./HighlightedField'),
   Map: require('./ImageMap'),
   Phone: require('./Phone'),
+  SMS: require('./SMS'),
   Rating: require('./Rating'),
   Subtitles: require('./Subtitles'),
   Summary: require('./Summary'),

@@ -1,3 +1,9 @@
+/**
+ * Ola Middleware
+ * # Functions
+ * 1. State persistence for Bookmarks, History and Context
+ * 2. Ajax requests for search adapters
+ */
 import { log } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../services/persistState'
 import queryString from 'query-string'

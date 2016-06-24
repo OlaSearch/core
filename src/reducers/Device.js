@@ -2,6 +2,8 @@ import isMobile from 'ismobilejs'
 
 var initialState = {
   isPhone: isMobile.phone,
+  isAndroid: isMobile.android,
+  isApple: isMobile.apple,
   isTablet: isMobile.tablet
 }
 

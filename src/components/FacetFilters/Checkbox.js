@@ -111,13 +111,11 @@ class CheckboxFilter extends React.Component {
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
 
     var size = values.length
-
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed,
       'ola-facet-single-select': allowSingleSelection
     })
-
     var filterInput = originalSize > limit
       ? <FilterInput
         value={filterText}
@@ -125,7 +123,6 @@ class CheckboxFilter extends React.Component {
         placeholder={translate('facet_filter_placeholder')}
         />
       : null
-
     var itemRendererBound = this.itemRenderer.bind(this, values)
 
     return (

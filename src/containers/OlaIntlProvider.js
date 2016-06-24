@@ -7,7 +7,10 @@ class OlaIntlProvider extends React.Component {
   constructor (props) {
     super(props)
     let { locale, translations: t = {} } = props
-    this.messages = Object.assign({}, _t[locale]['messages'], t[locale] ? t[locale]['messages'] : {})
+    this.messages = {
+      ..._t[locale]['messages'],
+      ...t[locale] ? t[locale]['messages'] : {}
+    }
   }
   static childContextTypes = {
     translate: React.PropTypes.func

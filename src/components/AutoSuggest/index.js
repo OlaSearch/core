@@ -230,6 +230,7 @@ class AutoSuggest extends React.Component {
                 dispatch={dispatch}
                 bookmarks={bookmarks}
                 isAutosuggest
+                {...this.props.Device}
               />
             </div>
             <a
@@ -246,6 +247,7 @@ class AutoSuggest extends React.Component {
 function mapStateToProps (state) {
   return {
     AutoSuggest: state.AutoSuggest,
+    Device: state.Device,
     bookmarks: state.AppState.bookmarks
   }
 }
