@@ -16,7 +16,6 @@ module.exports = (options = {}) => {
       query,
       context,
       payload = {},
-      executeFromSpellSuggest,
       suggestedTerm
     } = action
 
@@ -70,7 +69,7 @@ module.exports = (options = {}) => {
 
     const [ requestType, successType, failureType ] = types
 
-    dispatch({
+    next({
       ...payload,
       type: requestType
     })
@@ -134,16 +133,22 @@ module.exports = (options = {}) => {
          * Total results = 0 && Has Spell Suggestions
          */
 
-        if (totalResults === 0 && spellSuggestions.length && executeFromSpellSuggest) {
-          return dispatch(
-            executeFromSpellSuggest({
-              suggestedTerm: spellSuggestions[0].term,
-              ...payload
-            })
-          )
+        if (totalResults === 0 && spellSuggestions.length) {
+          let { term } = spellSuggestions[0]
+          return dispatch({
+            types,
+            query: {
+              ...query,
+              q: term
+            },
+            suggestedTerm: term,
+            api,
+            payload,
+            context
+          })
         }
 
-        dispatch({
+        next({
           ...payload,
           results,
           spellSuggestions,
@@ -166,7 +171,7 @@ module.exports = (options = {}) => {
         logger && logger.enabled && dispatch(log('Q', null, api))
       },
       (error) => {
-        dispatch({
+        next({
           ...payload,
           error,
           type: failureType

@@ -85,8 +85,7 @@ export function executeSearch (payload) {
       query,
       context,
       api: 'search',
-      payload,
-      executeFromSpellSuggest
+      payload
     })
 
     /**
@@ -101,32 +100,6 @@ export function executeSearch (payload) {
       /* Add History */
       debouceAddHistory(dispatch)
     }
-  }
-}
-
-export function executeFromSpellSuggest (payload) {
-  return (dispatch, getState) => {
-    var { suggestedTerm } = payload
-    var state = getState()
-    var query = {
-      ...state.QueryState,
-      q: suggestedTerm
-    }
-    var context = state.Context
-
-    dispatch({
-      types: [
-        types.REQUEST_SEARCH,
-        types.REQUEST_SEARCH_SUCCESS,
-        types.REQUEST_SEARCH_FAILURE
-      ],
-      shouldCallAPI: (state) => true,
-      query,
-      context,
-      api: 'search',
-      payload,
-      suggestedTerm
-    })
   }
 }
 
@@ -266,11 +239,9 @@ export function initSearch (options) {
     /* Disable Route change initally */
 
     if (searchOnLoad) {
-      dispatch(
-        executeSearch({
+      dispatch(executeSearch({
           routeChange: false
-        })
-      )
+      }))
     }
   }
 }

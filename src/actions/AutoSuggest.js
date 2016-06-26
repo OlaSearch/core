@@ -22,33 +22,7 @@ export function executeAutoSuggest () {
       query,
       context,
       api: 'suggest',
-      payload: {},
-      executeFromSpellSuggest
-    })
-  }
-}
-
-export function executeFromSpellSuggest (payload) {
-  return (dispatch, getState) => {
-    var { suggestedTerm } = payload
-    var state = getState()
-    var query = {
-      ...state.AutoSuggest.query,
-      q: suggestedTerm
-    }
-    var context = state.Context
-
-    dispatch({
-      types: [
-        types.REQUEST_AUTOSUGGEST,
-        types.REQUEST_AUTOSUGGEST_SUCCESS,
-        types.REQUEST_AUTOSUGGEST_FAILURE
-      ],
-      query,
-      context,
-      api: 'suggest',
-      payload: {},
-      suggestedTerm
+      payload: {}
     })
   }
 }

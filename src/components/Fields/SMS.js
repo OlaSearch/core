@@ -12,7 +12,7 @@ const SMS = ({ number, body, iconLeft = null, iconRight = null, text, Device, pl
   return (
     <a
       href={link}
-      className='ola-btn ola-btn-call ola-btn-sms'
+      className='ola-btn ola-btn-sms'
     >
     {iconLeft}
     {text}
