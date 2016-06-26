@@ -240,7 +240,7 @@ export function initSearch (options) {
 
     if (searchOnLoad) {
       dispatch(executeSearch({
-          routeChange: false
+        routeChange: false
       }))
     }
   }
