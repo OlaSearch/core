@@ -56,12 +56,10 @@ export function loadMore () {
 
     dispatch(changePage(++currentPage))
 
-    dispatch(
-      executeSearch({
-        routeChange: false,
-        appendResult: true
-      })
-    )
+    dispatch(executeSearch({
+      routeChange: false,
+      appendResult: true
+    }))
   }
 }
 

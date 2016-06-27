@@ -75,13 +75,13 @@ module.exports = (options = {}) => {
     })
 
     /* Add timestamp to query */
-
+    let currentState = getState()
     let timestampObj = {
-      timestamp: getState().Timestamp.timestamp
+      timestamp: currentState.Timestamp.timestamp
     }
 
     /* ACL Rules */
-    let acl = getState().Acl
+    let acl = currentState.Acl
     let callApi
     let params = proxy
       ? { ...query, api }
