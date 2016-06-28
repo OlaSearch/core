@@ -1,7 +1,7 @@
 import React from 'react'
 import { createHTMLMarkup, sanitizeAnchor } from './../../utilities'
 
-const Subtitles = ({subtitles, baseUrl}) => {
+const Subtitles = ({subtitles, baseUrl, iconLeft = null, iconRight = null }) => {
   if (!subtitles) return null
   return (
     <ul className='ola-field ola-field-subtitles'>
@@ -9,7 +9,11 @@ const Subtitles = ({subtitles, baseUrl}) => {
       let url = `${baseUrl}#${sanitizeAnchor(subtitle)}`
       return (
         <li key={idx}>
-          <a href={url}><em className='ion ion-ios-arrow-thin-right' /><span dangerouslySetInnerHTML={createHTMLMarkup(subtitle)} /></a>
+          <a href={url}>
+            {iconLeft}
+            <span dangerouslySetInnerHTML={createHTMLMarkup(subtitle)} />
+            {iconRight}
+          </a>
         </li>
       )
     })}

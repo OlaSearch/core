@@ -24,8 +24,8 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-      var { results, appendResult, spellSuggestions, qt, suggestedTerm, totalResults, facets } = action
-      if (appendResult) {
+      var { results, payload, spellSuggestions, qt, suggestedTerm, totalResults, facets } = action
+      if (payload.appendResult) {
         return {
           ...state,
           results: [ ...state.results, ...action.results ],

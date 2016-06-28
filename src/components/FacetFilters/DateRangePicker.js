@@ -12,6 +12,27 @@ class DateRange extends React.Component {
     }
   }
 
+  static defaultProps = {
+    dateLabels: [
+      {
+        label: 'This year',
+        id: 'current_year'
+      },
+      {
+        label: 'Last year',
+        id: 'last_year'
+      },
+      {
+        label: 'Last 3 years',
+        id: 'last_3_years'
+      },
+      {
+        label: 'Last 5 years',
+        id: 'last_5_years'
+      }
+    ]
+  };
+
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     facet: React.PropTypes.object.isRequired,
@@ -79,6 +100,7 @@ class DateRange extends React.Component {
     let {
       facet,
       selected,
+      dateLabels,
       isCollapsed,
       toggleDisplay
     } = this.props
@@ -108,34 +130,17 @@ class DateRange extends React.Component {
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
           <ul className='ola-date-list'>
-            <li>
-              <DateLabel
-                value='current_year'
-                label='This year'
-                onSelect={this.onDateSelect}
-              />
-            </li>
-            <li>
-              <DateLabel
-                value='last_year'
-                label='Last year'
-                onSelect={this.onDateSelect}
-              />
-            </li>
-            <li>
-              <DateLabel
-                value='last_3_years'
-                label='Last 3 years'
-                onSelect={this.onDateSelect}
-              />
-            </li>
-            <li>
-              <DateLabel
-                value='last_5_years'
-                label='Last 5 years'
-                onSelect={this.onDateSelect}
-              />
-            </li>
+            {dateLabels.map((date) => {
+              return (
+                <li>
+                  <DateLabel
+                    value={date.id}
+                    label={date.label}
+                    onSelect={this.onDateSelect}
+                  />
+                </li>
+              )
+            })}
             <li className={customKlass}>
               <button
                 className='ola-btn-unstyled ola-btn-date-select'

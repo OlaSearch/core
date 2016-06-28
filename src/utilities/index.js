@@ -19,21 +19,6 @@ const utilities = {
     }
     return null
   },
-  getValuesFromSelect (select) {
-    var result = []
-    var options = select && select.options
-    var opt
-
-    for (let i = 0, len = options.length; i < len; i++) {
-      opt = options[i]
-
-      if (opt.selected) {
-        result.push(opt.value || opt.text)
-      }
-    }
-
-    return result
-  },
   now: Date.now || function () {
     return new Date().getTime()
   },
@@ -111,9 +96,6 @@ const utilities = {
       if (matched) return rules[i].template
     }
     return false
-  },
-  generateSlug (value) {
-    return value.toString().toLowerCase().replace(/-+/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
   },
   checkForAllowedCharacters (query, characters) {
     if (!query || !characters) return true

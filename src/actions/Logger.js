@@ -2,6 +2,9 @@ import { debounce } from './../utilities'
 
 /**
  * Ola Logger Middleware intercepts this dispatch event and calls the loggerService
+ * eventType = Q|C
+ * result = only for click event
+ * eventSource = search|suggest api
  */
 
 var debounceLogger = debounce(submitLog, 1000)

@@ -99,7 +99,8 @@ class AutoSuggest extends React.Component {
       case 'up':
         this.clearActiveClass(nodes, activeClassName)
         next = nodes[Math.max(0, --index)]
-        next.classList.add(activeClassName)
+        if (index < 0) next.classList.remove(activeClassName)
+        else next.classList.add(activeClassName)
         break
 
       case 'down':

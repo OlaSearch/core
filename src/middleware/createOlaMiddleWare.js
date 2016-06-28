@@ -149,7 +149,7 @@ module.exports = (options = {}) => {
         }
 
         next({
-          ...payload,
+          payload,
           results,
           spellSuggestions,
           totalResults,
@@ -157,7 +157,6 @@ module.exports = (options = {}) => {
           type,
           suggestedTerm,
           qt,
-          appendResult: payload.appendResult,
           error: null
         })
 
@@ -172,7 +171,7 @@ module.exports = (options = {}) => {
       },
       (error) => {
         next({
-          ...payload,
+          payload,
           error,
           type: failureType
         })

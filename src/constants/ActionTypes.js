@@ -51,7 +51,6 @@ module.exports = {
   /* Locale */
 
   SET_LOCALE: 'SET_LOCALE',
-  SET_TRANSLATIONS: 'SET_TRANSLATIONS',
 
   /* Filter */
 

@@ -3,32 +3,19 @@ import { createHTMLMarkup } from './../../utilities'
 import { log } from './../../actions/Logger'
 
 class Title extends React.Component {
-  static defaultProps = {
-    isLink: true
-  };
-
-  static contextTypes = {
-    store: React.PropTypes.object
-  };
-
   logClick = (event) => {
-    let { onClick } = this.props
+    let { onClick, result } = this.props
 
     if (onClick) onClick(event)
 
-    this.context.store.dispatch(log('C', this.props.result))
+    this.context.store.dispatch(log('C', result))
   };
 
   render () {
     var { result, isLink, children, baseUrl, url, ...rest, iconLeft = null, iconRight = null } = this.props
-
-    var {
-      title,
-      highlighting
-    } = result
+    var { title, highlighting } = result
 
     if (!url) url = result.url
-
     if (baseUrl) url = baseUrl + url
 
     /* Check for highlighting */
@@ -50,6 +37,14 @@ class Title extends React.Component {
       </h3>
     )
   }
+}
+
+Title.defaultProps = {
+  isLink: true
+}
+
+Title.contextTypes = {
+  store: React.PropTypes.object
 }
 
 module.exports = Title

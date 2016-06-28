@@ -1,6 +1,7 @@
 import React from 'react'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
 import injectTranslate from './../../decorators/olaTranslate'
+import classnames from 'classnames'
 
 class BookmarkActions extends React.Component {
   addBookmark = () => {
@@ -25,15 +26,19 @@ class BookmarkActions extends React.Component {
     )
   }
   render () {
-    let { bookmarks, result, translate } = this.props
+    let { bookmarks, result, translate, isBookmark } = this.props
     let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id).length
     let removeLabel = translate('remove_bookmark_label')
     let addLabel = translate('add_bookmark_label')
-    if (isBookmarked) {
+    let removeClassName = classnames({
+      'ola-link-bookmark-action action-remove': !isBookmark,
+      'ola-module-clear ola-module-bookmark-remove': isBookmark
+    })
+    if (isBookmarked || isBookmark) {
       return (
         <button
           type='button'
-          className='ola-link-bookmark-action action-remove'
+          className={removeClassName}
           title={removeLabel}
           onClick={this.removeBookmark}>
           <span>{removeLabel}</span>

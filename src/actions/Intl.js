@@ -6,10 +6,3 @@ export function setLocale (locale) {
     locale
   }
 }
-
-export function setTranslations (translations) {
-  return {
-    type: types.SET_TRANSLATIONS,
-    translations
-  }
-}
