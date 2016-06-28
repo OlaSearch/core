@@ -2,3 +2,6 @@ dist
 devServer.js
 webpack.*
 demo
+src
+test
+webpack.*
