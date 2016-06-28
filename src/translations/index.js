@@ -1,4 +1,3 @@
 module.exports = {
-  en: require('./en'),
-  zh: require('./zh')
+  en: require('./en')
 }
