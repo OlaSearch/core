@@ -26,7 +26,6 @@
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
   AutoSuggest: require('./components/AutoSuggest'),
-  // Search: require('./containers/Search'),
   InstantSearchForm: require('./components/InstantSearchForm'),
   SpellSuggestion: require('./components/SpellSuggestions/SpellSuggestion'),
   TermSuggestion: require('./components/SpellSuggestions/TermSuggestion'),
@@ -44,15 +43,7 @@ module.exports = {
   Tabs: require('./components/FacetFilters/Tabs'),
   SelectedFilters: require('./components/SelectedFilters'),
   Sort: require('./components/Sort'),
-  Actions: {
-    AutoSuggest: require('./actions/AutoSuggest'),
-    Bookmarks: require('./actions/Bookmarks'),
-    Search: require('./actions/Search'),
-    Context: require('./actions/Context'),
-    History: require('./actions/History'),
-    Logger: require('./actions/Logger'),
-    Intl: require('./actions/Intl')
-  },
+  Actions: require('./actions'),
   SnippetActions: {
     Bookmark: require('./components/SnippetActions/Bookmark'),
     Share: require('./components/SnippetActions/Share')

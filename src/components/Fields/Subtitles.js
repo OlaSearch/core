@@ -1,7 +1,7 @@
 import React from 'react'
 import { createHTMLMarkup, sanitizeAnchor } from './../../utilities'
 
-const Subtitles = ({subtitles, baseUrl, iconLeft = null, iconRight = null }) => {
+const Subtitles = ({ subtitles, baseUrl, iconLeft = null, iconRight = null }) => {
   if (!subtitles) return null
   return (
     <ul className='ola-field ola-field-subtitles'>
