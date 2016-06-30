@@ -13,4 +13,4 @@ const FilterInput = ({ placeholder = '', value, onChange }) => {
   )
 }
 
-module.exports = FilterInput
+export default FilterInput

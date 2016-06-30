@@ -3,7 +3,7 @@ import Bookmarks from './../Bookmarks'
 import History from './../History'
 import SpeechInput from './../Speech'
 
-class Input extends React.Component {
+export default class Input extends React.Component {
   static propTypes = {
     q: React.PropTypes.string,
     onChange: React.PropTypes.func
@@ -109,5 +109,3 @@ class Input extends React.Component {
     )
   }
 }
-
-module.exports = Input

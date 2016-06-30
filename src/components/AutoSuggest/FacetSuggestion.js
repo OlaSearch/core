@@ -65,4 +65,4 @@ class FacetSuggestionItem extends React.Component {
   }
 }
 
-module.exports = FacetSuggestion
+export default FacetSuggestion

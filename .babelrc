@@ -6,7 +6,10 @@
     "transform-es3-property-literals",
     "transform-object-set-prototype-of-to-assign",
     "transform-react-remove-prop-types",
-    "transform-react-constant-elements"
+    "transform-react-constant-elements",
+    ["babel-plugin-transform-helper",{
+      helperFilename:'.babelhelper.js'
+    }]
   ],
   "env": {
     "development": {}

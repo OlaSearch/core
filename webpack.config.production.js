@@ -8,7 +8,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'olasearch.min.js',
-    publicPath: '/dist/'
+    publicPath: '/dist/',
+    library: 'OlaSearch',
+    libraryTarget: 'umd'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -35,4 +37,3 @@ module.exports = {
     'react-dom': 'ReactDOM'
   }
 }
-
