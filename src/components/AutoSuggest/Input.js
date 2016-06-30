@@ -19,9 +19,11 @@ export default class Input extends React.Component {
       return
     }
 
+    /* Clear query term */
     this.props.onClear()
 
-    setTimeout(() => this.refs.Input.focus(), 0)
+    /* Focus input */
+    this.refs.Input.focus()
   };
 
   onFocus = (event) => {
@@ -29,7 +31,10 @@ export default class Input extends React.Component {
 
     if (!event.target.value) return
 
-    this.props.onChange(event.target.value)
+    /* Persist event */
+    event.persist()
+
+    setTimeout(() => this.props.onChange(event.target.value))
   };
 
   onKeyDown = (event) => {

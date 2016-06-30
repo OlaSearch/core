@@ -58,7 +58,12 @@ class AutoSuggest extends React.Component {
   };
 
   onChange = (term) => {
-    let { dispatch } = this.props
+    let { dispatch, AutoSuggest } = this.props
+
+    if (!term && !AutoSuggest.query.q) {
+      dispatch(closeAutoSuggest())
+      return
+    }
 
     if (!term) return dispatch(clearQueryTerm())
 

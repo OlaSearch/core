@@ -14,6 +14,12 @@ export default (state = initialState, action) => {
         timestamp: new Date().getTime()
       }
 
+    case types.CLOSE_AUTOSUGGEST:
+      return {
+        ...state,
+        timestamp: null
+      }
+
     default:
       return state
   }

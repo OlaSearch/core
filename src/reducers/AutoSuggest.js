@@ -1,4 +1,5 @@
 import types from './../constants/ActionTypes'
+import indexOf from 'ramda/src/indexOf'
 
 var initialState = {
   query: {
@@ -16,6 +17,9 @@ var initialState = {
   isOpen: false,
   qt: null
 }
+
+/* Prevents redeclared variables for `JS Standard` compatiblity */
+var fq, facet, value
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -73,7 +77,8 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_FACET_AUTOSUGGEST:
-      var { value, facet } = action
+      facet = action.facet
+      value = action.value
       var { name, displayName, type, multiSelect, template, label } = facet
 
       return {
@@ -84,6 +89,33 @@ export default (state = initialState, action) => {
             name, type, displayName, multiSelect, template, label,
             selected: [value]
           }]
+        }
+      }
+
+    case types.REMOVE_FACET_AUTOSUGGEST:
+      fq = state.query.facet_query.slice(0)
+      facet = action.facet
+      value = action.value
+
+      for (var i = fq.length - 1; i >= 0; i--) {
+        let cur = fq[i]
+        let { selected } = cur
+
+        if (cur.name === facet.name) {
+          /* Remove selections if No value is supplied */
+          if (!value) selected = []
+          selected.splice(
+            indexOf(value, selected), 1
+          )
+          if (!selected.length) fq = [ ...fq.slice(0, i), ...fq.slice(i + 1) ]
+        }
+      }
+
+      return {
+        ...state,
+        query: {
+          ...state.query,
+          facet_query: fq
         }
       }
 
