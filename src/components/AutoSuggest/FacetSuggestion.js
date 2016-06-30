@@ -3,7 +3,7 @@ import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
 import { addFacet } from './../../actions/AutoSuggest'
 
-class FacetSuggestion extends React.Component {
+export default class FacetSuggestion extends React.Component {
   static defaultProps = {
     limit: 3
   };
@@ -64,5 +64,3 @@ class FacetSuggestionItem extends React.Component {
     )
   }
 }
-
-export default FacetSuggestion

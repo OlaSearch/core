@@ -205,6 +205,7 @@ class AutoSuggest extends React.Component {
             onKeyDown={this.onKeyDown}
             onSubmit={this.onSubmit}
             onFocus={this.onFocus}
+            isOpen={isOpen}
             placeholder={translate('autosuggest_placeholder')}
             handleClickOutside={this.handleClickOutside}
             onSearchButtonClick={this.props.onSearchButtonClick}

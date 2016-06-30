@@ -38,25 +38,34 @@ export default class Input extends React.Component {
   };
 
   onKeyDown = (event) => {
-    var { onKeyDown, onSubmit } = this.props
+    var { onKeyDown, onSubmit, isOpen, q } = this.props
     switch (event.which) {
 
       case 27: // Esc
-        this.onClear(event)
-        break
+        /**
+         * When autosuggest is closed and user presses escape key multiple times,
+         * Clear query term
+         */
+        if (!isOpen) return this.onClear(event)
+        return this.props.handleClickOutside()
       case 38: // Up
-        onKeyDown('up')
-        break
+        /**
+         * Escape key closes the autosuggests
+         * Once closed, when user presses Arrow up/down, we should show the results
+         */
+        event.preventDefault()
+        if (!isOpen && q) return this.props.onChange(q)
+        return onKeyDown('up')
 
       case 40: // Down
-        onKeyDown('down')
-        break
+        event.preventDefault()
+        if (!isOpen && q) return this.props.onChange(q)
+        return onKeyDown('down')
 
       case 9: // Tab
         break
       case 13: // Enter
-        onSubmit()
-        break
+        return onSubmit()
     }
   };
 
