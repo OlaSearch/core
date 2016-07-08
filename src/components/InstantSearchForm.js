@@ -76,7 +76,7 @@ class InstantSearchForm extends React.Component {
             className='ola-text-input ola-text-input-round'
             placeholder={translate('instantsearch_placeholder')}
             value={q}
-            aria-label='searchInput'
+            aria-label='Search input'
             autoComplete='off'
             autoCorrect='off'
             autoCapitalize='off'

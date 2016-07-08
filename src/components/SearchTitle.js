@@ -12,11 +12,12 @@ const SearchTitle = ({ totalResults, page, perPage, isPhone, translate }, contex
     next: lastIdx,
     total: totalResults
   }
+  let titleDesc = totalResults ? translate('showing', values) : translate('showing_no_results', values)
 
   return (
     <h3 className='ola-search-heading'>
       <span className='ola-search-heading-title'>{translate('title')}</span>
-      <small className='ola-search-heading-number'>{translate('showing', values)}</small>
+      <small className='ola-search-heading-number'>{titleDesc}</small>
     </h3>
   )
 }

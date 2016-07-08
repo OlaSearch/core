@@ -16,7 +16,9 @@ module.exports = (options = {}) => {
       query,
       context,
       payload = {},
-      suggestedTerm
+      suggestedTerm,
+      processResponse = true,
+      processData = null
     } = action
 
     /* Persist store state */
@@ -83,9 +85,10 @@ module.exports = (options = {}) => {
     /* ACL Rules */
     let acl = currentState.Acl
     let callApi
+    let mapping = api === 'suggest' ? config.mappingAutoSuggest : null
     let params = proxy
-      ? { ...query, api }
-      : queryBuilder.transform(query, api === 'suggest' ? config.mappingAutoSuggest : null, acl, context)
+        ? { ...query, api }
+        : queryBuilder.transform(query, mapping, acl, context)
 
     if (typeof api === 'function') {
       /* Returns a promise */
@@ -106,6 +109,17 @@ module.exports = (options = {}) => {
           if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
         }
 
+        let type = successType
+
+        /* Check if process response is false */
+
+        if (!processResponse) {
+          return next({
+            type,
+            response: processData ? processData(response) : response
+          })
+        }
+
         /* Parse only when the timestamp matches */
         var results
         var spellSuggestions
@@ -119,14 +133,12 @@ module.exports = (options = {}) => {
           facets = results.facets
           qt = results.qt
         } else {
-          results = parser.normalizeResults(response)
+          results = api === 'fuzzySuggest' ? parser.normalizeFuzzySuggestions(response) : parser.normalizeResults(response)
           spellSuggestions = parser.normalizeSpellSuggestions(response)
           totalResults = parser.normalizeTotalResults(response)
           facets = parser.normalizeFacets(response)
           qt = parser.queryTime(response)
         }
-
-        let type = successType
 
         /**
          * Check if
@@ -166,6 +178,7 @@ module.exports = (options = {}) => {
          * Q or C
          * results
          * eventSource
+         * searchInput = `voice`|`url`|`keyboard`
          */
         logger && logger.enabled && dispatch(log('Q', null, api))
       },

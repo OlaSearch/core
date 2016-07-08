@@ -5,6 +5,7 @@ import { debounce } from './../utilities'
  * eventType = Q|C
  * result = only for click event
  * eventSource = search|suggest api
+ * searchInput = `voice`|`url`|`keyboard`
  */
 
 var debounceLogger = debounce(submitLog, 1000)

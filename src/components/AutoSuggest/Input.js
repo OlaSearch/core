@@ -47,7 +47,7 @@ export default class Input extends React.Component {
          * Clear query term
          */
         if (!isOpen) return this.onClear(event)
-        return this.props.handleClickOutside()
+        return this.props.handleClickOutside(event)
       case 38: // Up
         /**
          * Escape key closes the autosuggests

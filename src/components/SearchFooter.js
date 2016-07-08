@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 
 const SearchFooter = (props, context) => {
   let { infiniteScroll } = context.config
-  let { isPhone, dispatch } = props
+  let { isPhone, dispatch, totalResults } = props
   let boundActionCreators = bindActionCreators({ changePage, executeSearch, loadMore }, dispatch)
 
   if (infiniteScroll || isPhone) {
@@ -14,6 +14,8 @@ const SearchFooter = (props, context) => {
       <LoadMore {...props} actions={boundActionCreators} />
     )
   }
+
+  if (!totalResults) return null
 
   return (
     <Pagination {...props} actions={boundActionCreators} />

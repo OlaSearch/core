@@ -15,7 +15,8 @@ var initialState = {
   suggestedTerm: '',
   isLoading: false,
   isOpen: false,
-  qt: null
+  qt: null,
+  tempQuery: null
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -29,11 +30,24 @@ export default (state = initialState, action) => {
         query: {
           ...state.query,
           q: action.term
-        }
+        },
+        tempQuery: null
+      }
+
+    case types.UPDATE_TEMP_QUERY_TERM_AUTOSUGGEST:
+      return {
+        ...state,
+        tempQuery: action.term
       }
 
     case types.CLEAR_QUERY_TERM_AUTOSUGGEST:
       return initialState
+
+    case types.CLEAR_TEMP_QUERY_TERM_AUTOSUGGEST:
+      return {
+        ...state,
+        tempQuery: null
+      }
 
     case types.REQUEST_AUTOSUGGEST:
       return {

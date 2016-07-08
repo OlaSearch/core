@@ -7,7 +7,20 @@ export function updateQueryTerm (term) {
   }
 }
 
-export function executeAutoSuggest () {
+export function updateTempQueryTerm (term) {
+  return {
+    type: types.UPDATE_TEMP_QUERY_TERM_AUTOSUGGEST,
+    term
+  }
+}
+
+export function clearTempQueryTerm () {
+  return {
+    type: types.CLEAR_TEMP_QUERY_TERM_AUTOSUGGEST
+  }
+}
+
+export function executeAutoSuggest (isFuzzySuggest = false) {
   return (dispatch, getState) => {
     var state = getState()
     var { query } = state.AutoSuggest
@@ -21,7 +34,7 @@ export function executeAutoSuggest () {
       ],
       query,
       context,
-      api: 'suggest',
+      api: isFuzzySuggest ? 'fuzzySuggest' : 'suggest',
       payload: {}
     })
   }
