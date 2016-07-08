@@ -1,16 +1,5 @@
 {
-  "presets": ["es2015", "react", "stage-0"],
-  "plugins": [
-    "ramda",
-    "transform-es3-member-expression-literals",
-    "transform-es3-property-literals",
-    "transform-object-set-prototype-of-to-assign",
-    "transform-react-remove-prop-types",
-    "transform-react-constant-elements",
-    ["babel-plugin-transform-helper",{
-      helperFilename:'.babelhelper.js'
-    }]
-  ],
+  "presets": ["olasearch"],
   "env": {
     "development": {}
   }
