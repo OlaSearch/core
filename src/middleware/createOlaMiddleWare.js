@@ -85,7 +85,7 @@ module.exports = (options = {}) => {
     /* ACL Rules */
     let acl = currentState.Acl
     let callApi
-    let mapping = api === 'suggest' ? config.mappingAutoSuggest : null
+    let mapping = api === 'suggest' ? config.mappingAutoSuggest : api === 'fuzzySuggest' ? config.mappingFuzzySuggest : null
     let params = proxy
         ? { ...query, api }
         : queryBuilder.transform(query, mapping, acl, context)

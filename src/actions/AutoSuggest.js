@@ -20,7 +20,7 @@ export function clearTempQueryTerm () {
   }
 }
 
-export function executeAutoSuggest (isFuzzySuggest = false) {
+export function executeAutoSuggest () {
   return (dispatch, getState) => {
     var state = getState()
     var { query } = state.AutoSuggest
@@ -34,7 +34,27 @@ export function executeAutoSuggest (isFuzzySuggest = false) {
       ],
       query,
       context,
-      api: isFuzzySuggest ? 'fuzzySuggest' : 'suggest',
+      api: 'suggest',
+      payload: {}
+    })
+  }
+}
+
+export function executeFuzzyAutoSuggest (isFuzzySuggest = false) {
+  return (dispatch, getState) => {
+    var state = getState()
+    var query = { q: state.AutoSuggest.query.q }
+    var context = state.Context
+
+    dispatch({
+      types: [
+        types.REQUEST_AUTOSUGGEST,
+        types.REQUEST_AUTOSUGGEST_SUCCESS,
+        types.REQUEST_AUTOSUGGEST_FAILURE
+      ],
+      query,
+      context,
+      api: 'fuzzySuggest',
       payload: {}
     })
   }

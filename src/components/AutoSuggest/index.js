@@ -1,7 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
-import { updateQueryTerm, updateTempQueryTerm, executeAutoSuggest, clearQueryTerm, clearTempQueryTerm, closeAutoSuggest, terminateAutoSuggest } from './../../actions/AutoSuggest'
+import {
+  updateQueryTerm,
+  executeAutoSuggest,
+  clearQueryTerm,
+  closeAutoSuggest,
+  terminateAutoSuggest,
+  updateTempQueryTerm,
+  clearTempQueryTerm,
+  executeFuzzyAutoSuggest
+} from './../../actions/AutoSuggest'
 import SearchResults from './../SearchResults'
 import Input from './Input'
 import TermSuggestion from './../SpellSuggestions/TermSuggestion'
@@ -30,7 +39,8 @@ class AutoSuggest extends React.Component {
     onSubmit: React.PropTypes.func,
     viewAllClassName: React.PropTypes.string,
     placeholder: React.PropTypes.string,
-    facetSuggestionName: React.PropTypes.string
+    facetSuggestionName: React.PropTypes.string,
+    fuzzySuggest: React.PropTypes.bool
   };
 
   static contextTypes = {
@@ -55,7 +65,7 @@ class AutoSuggest extends React.Component {
       /**
        * For Fuzzy suggestion, restore the original query term
        */
-      if (event && event.nativeEvent.type === 'keydown') {
+      if (event && event.nativeEvent.type === 'keydown' && this.props.isFuzzySuggest) {
         this.props.dispatch(clearTempQueryTerm())
       }
     }
@@ -79,7 +89,8 @@ class AutoSuggest extends React.Component {
     if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
       dispatch(terminateAutoSuggest())
     } else {
-      dispatch(executeAutoSuggest(this.props.isFuzzySuggest))
+      if (this.props.isFuzzySuggest) dispatch(executeFuzzyAutoSuggest())
+      else dispatch(executeAutoSuggest())
     }
   };
 
@@ -94,7 +105,7 @@ class AutoSuggest extends React.Component {
   };
 
   onKeyDown = (direction) => {
-    let { classNames, activeClassName, dispatch } = this.props
+    let { classNames, activeClassName, dispatch, isFuzzySuggest } = this.props
     let { suggestionsContainer } = this.refs
     let fullActiveClass = '.' + activeClassName
     let nodes = suggestionsContainer.querySelectorAll(classNames)
@@ -111,7 +122,7 @@ class AutoSuggest extends React.Component {
         next = nodes[Math.max(0, --index)]
         if (index < 0) {
           next.classList.remove(activeClassName)
-          if (index === -1) dispatch(clearTempQueryTerm())
+          if (index === -1 && isFuzzySuggest) dispatch(clearTempQueryTerm())
         } else {
           next.classList.add(activeClassName)
         }
@@ -126,7 +137,7 @@ class AutoSuggest extends React.Component {
         this.clearActiveClass(nodes, activeClassName)
         next = nodes[Math.min(nodes.length - 1, ++index)]
         if (index >= nodes.length) {
-          dispatch(clearTempQueryTerm())
+          isFuzzySuggest && dispatch(clearTempQueryTerm())
           this.clearActiveClass(nodes, activeClassName)
         } else {
           next.classList.add(activeClassName)
