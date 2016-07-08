@@ -214,7 +214,6 @@ class AutoSuggest extends React.Component {
       translate,
       isFuzzySuggest
     } = this.props
-
     var { isFocused } = this.state
     var {
       results,
@@ -226,16 +225,15 @@ class AutoSuggest extends React.Component {
       facets,
       tempQuery
     } = AutoSuggest
-
     var { q } = query
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     var klassContainer = classNames('ola-autosuggest', className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused
     })
-
     var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length
     var queryTerm = isFuzzySuggest ? tempQuery || q : q
+
     return (
       <div className={klassContainer}>
         <div className='ola-autosuggest-container'>
