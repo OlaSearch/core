@@ -73,7 +73,7 @@ var urlSync = {
      */
 
     for (let p in qs) {
-      if ((p === 'page' || p === 'per_page')) {
+      if (p === 'page' || p === 'per_page') {
         if (isNaN(qs[p])) {
           qs[p] = initialState[p]
         } else {

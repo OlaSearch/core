@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import { createHTMLMarkup } from './../../utilities'
 
 const Suggestions = ({ results, ...rest }) => {
   return (
@@ -41,7 +42,8 @@ class SuggestionItem extends React.Component {
         onClick={this.onSelect}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-      >{this.props.term}</a>
+        dangerouslySetInnerHTML={createHTMLMarkup(this.props.term)}
+      />
     )
   }
 }

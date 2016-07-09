@@ -27,14 +27,15 @@ export const STATE_TYPE_KEYS = [
 
 /* Based on actions: persist states to localstorage */
 function persistState (action, getState, namespace) {
+  let state = getState()
   switch (action.type) {
     case types.ADD_BOOKMARK:
     case types.REMOVE_BOOKMARK:
-      return storage.set(BOOKMARKS_STORAGE_KEY, getState().AppState.bookmarks, namespace)
+      return storage.set(BOOKMARKS_STORAGE_KEY, state.AppState.bookmarks, namespace)
 
     case types.ADD_HISTORY:
     case types.CLEAR_HISTORY:
-      return storage.set(HISTORY_STORAGE_KEY, getState().AppState.history, namespace)
+      return storage.set(HISTORY_STORAGE_KEY, state.AppState.history, namespace)
 
     case types.SET_LOCALE:
       return storage.cookies.set(LOCALE_STORAGE_KEY, action.locale, LOCALE_STORAGE_TTL)
@@ -45,6 +46,6 @@ function persistState (action, getState, namespace) {
     case types.REMOVE_CONTEXT:
     case types.ADD_DYNAMIC_FIELD:
     case types.REMOVE_DYNAMIC_FIELD:
-      return storage.cookies.set(CONTEXT_STORAGE_KEY, getState().Context, CONTEXT_STORAGE_TTL)
+      return storage.cookies.set(CONTEXT_STORAGE_KEY, state.Context, CONTEXT_STORAGE_TTL)
   }
 }

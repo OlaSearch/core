@@ -85,7 +85,7 @@ module.exports = (options = {}) => {
     /* ACL Rules */
     let acl = currentState.Acl
     let callApi
-    let mapping = api === 'suggest' ? config.mappingAutoSuggest : api === 'fuzzySuggest' ? config.mappingFuzzySuggest : null
+    let mapping = getMapping(api, config)
     let params = proxy
         ? { ...query, api }
         : queryBuilder.transform(query, mapping, acl, context)
@@ -190,5 +190,24 @@ module.exports = (options = {}) => {
         })
       }
     )
+  }
+}
+
+/**
+ * Get Query mapping
+ * @param  {string} type
+ * @param  {object} config
+ * @return {object}
+ */
+const getMapping = (type, config) => {
+  switch (type) {
+    case 'suggest':
+      return config.mappingAutoSuggest
+
+    case 'fuzzySuggest':
+      return config.mappingFuzzySuggest
+
+    default:
+      return null
   }
 }

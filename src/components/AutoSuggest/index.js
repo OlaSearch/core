@@ -1,16 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
-import {
-  updateQueryTerm,
-  executeAutoSuggest,
-  clearQueryTerm,
-  closeAutoSuggest,
-  terminateAutoSuggest,
-  updateTempQueryTerm,
-  clearTempQueryTerm,
-  executeFuzzyAutoSuggest
-} from './../../actions/AutoSuggest'
+import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, terminateAutoSuggest, updateFuzzyQueryTerm, clearFuzzyQueryTerm, executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import SearchResults from './../SearchResults'
 import Input from './Input'
 import TermSuggestion from './../SpellSuggestions/TermSuggestion'
@@ -40,7 +31,7 @@ class AutoSuggest extends React.Component {
     viewAllClassName: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     facetSuggestionName: React.PropTypes.string,
-    fuzzySuggest: React.PropTypes.bool
+    isFuzzySuggest: React.PropTypes.bool
   };
 
   static contextTypes = {
@@ -55,7 +46,7 @@ class AutoSuggest extends React.Component {
     viewAllClassName: 'ola-autosuggest-all',
     placeholder: 'Enter keywords',
     facetSuggestionName: '',
-    fuzzySuggest: false
+    isFuzzySuggest: false
   };
 
   handleClickOutside = (event) => {
@@ -66,7 +57,7 @@ class AutoSuggest extends React.Component {
        * For Fuzzy suggestion, restore the original query term
        */
       if (event && event.nativeEvent.type === 'keydown' && this.props.isFuzzySuggest) {
-        this.props.dispatch(clearTempQueryTerm())
+        this.props.dispatch(clearFuzzyQueryTerm())
       }
     }
     this.onBlur()
@@ -75,7 +66,7 @@ class AutoSuggest extends React.Component {
   onChange = (term) => {
     let { dispatch, AutoSuggest } = this.props
 
-    if (!term && !AutoSuggest.query.q) {
+    if (!term && !AutoSuggest.q) {
       dispatch(closeAutoSuggest())
       return
     }
@@ -122,7 +113,7 @@ class AutoSuggest extends React.Component {
         next = nodes[Math.max(0, --index)]
         if (index < 0) {
           next.classList.remove(activeClassName)
-          if (index === -1 && isFuzzySuggest) dispatch(clearTempQueryTerm())
+          if (index === -1 && isFuzzySuggest) dispatch(clearFuzzyQueryTerm())
         } else {
           next.classList.add(activeClassName)
         }
@@ -137,7 +128,7 @@ class AutoSuggest extends React.Component {
         this.clearActiveClass(nodes, activeClassName)
         next = nodes[Math.min(nodes.length - 1, ++index)]
         if (index >= nodes.length) {
-          isFuzzySuggest && dispatch(clearTempQueryTerm())
+          isFuzzySuggest && dispatch(clearFuzzyQueryTerm())
           this.clearActiveClass(nodes, activeClassName)
         } else {
           next.classList.add(activeClassName)
@@ -147,7 +138,7 @@ class AutoSuggest extends React.Component {
 
     if (this.props.isFuzzySuggest) {
       let term = this.props.AutoSuggest.results[index] ? this.props.AutoSuggest.results[index].term : null
-      term && this.props.dispatch(updateTempQueryTerm(term))
+      term && this.props.dispatch(updateFuzzyQueryTerm(term))
     }
 
     scrollIntoView(next, suggestionsContainer, {
@@ -168,7 +159,7 @@ class AutoSuggest extends React.Component {
   };
 
   handleViewAll = () => {
-    let { q, facet_query } = this.props.AutoSuggest.query
+    let { q, facet_query } = this.props.AutoSuggest
     let { dispatch, onSubmit } = this.props
     let { searchPageUrl, history } = this.context.config
 
@@ -217,22 +208,21 @@ class AutoSuggest extends React.Component {
     var { isFocused } = this.state
     var {
       results,
-      query,
+      q,
       spellSuggestions,
       suggestedTerm,
       isOpen,
       totalResults,
       facets,
-      tempQuery
+      fuzzyQuery
     } = AutoSuggest
-    var { q } = query
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     var klassContainer = classNames('ola-autosuggest', className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused
     })
     var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length
-    var queryTerm = isFuzzySuggest ? tempQuery || q : q
+    var queryTerm = isFuzzySuggest ? fuzzyQuery || q : q
 
     return (
       <div className={klassContainer}>

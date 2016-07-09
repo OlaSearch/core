@@ -2,12 +2,10 @@ import types from './../constants/ActionTypes'
 import indexOf from 'ramda/src/indexOf'
 
 var initialState = {
-  query: {
-    q: '',
-    per_page: 20,
-    page: 1,
-    facet_query: []
-  },
+  q: '',
+  per_page: 20,
+  page: 1,
+  facet_query: [],
   totalResults: 0,
   results: [],
   facets: [],
@@ -16,7 +14,7 @@ var initialState = {
   isLoading: false,
   isOpen: false,
   qt: null,
-  tempQuery: null
+  fuzzyQuery: null
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -27,26 +25,23 @@ export default (state = initialState, action) => {
     case types.UPDATE_QUERY_TERM_AUTOSUGGEST:
       return {
         ...state,
-        query: {
-          ...state.query,
-          q: action.term
-        },
-        tempQuery: null
+        q: action.term,
+        fuzzyQuery: null
       }
 
-    case types.UPDATE_TEMP_QUERY_TERM_AUTOSUGGEST:
+    case types.UPDATE_FUZZY_QUERY_TERM_AUTOSUGGEST:
       return {
         ...state,
-        tempQuery: action.term
+        fuzzyQuery: action.term
       }
 
     case types.CLEAR_QUERY_TERM_AUTOSUGGEST:
       return initialState
 
-    case types.CLEAR_TEMP_QUERY_TERM_AUTOSUGGEST:
+    case types.CLEAR_FUZZY_QUERY_TERM_AUTOSUGGEST:
       return {
         ...state,
-        tempQuery: null
+        fuzzyQuery: null
       }
 
     case types.REQUEST_AUTOSUGGEST:
@@ -97,13 +92,10 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        query: {
-          ...state.query,
-          facet_query: [{
-            name, type, displayName, multiSelect, template, label,
-            selected: [value]
-          }]
-        }
+        facet_query: [{
+          name, type, displayName, multiSelect, template, label,
+          selected: [value]
+        }]
       }
 
     case types.REMOVE_FACET_AUTOSUGGEST:
@@ -127,10 +119,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        query: {
-          ...state.query,
-          facet_query: fq
-        }
+        facet_query: fq
       }
 
     default:

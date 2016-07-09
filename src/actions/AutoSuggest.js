@@ -7,23 +7,24 @@ export function updateQueryTerm (term) {
   }
 }
 
-export function updateTempQueryTerm (term) {
+export function updateFuzzyQueryTerm (term) {
+  term = term.replace(/(<[^>]+>)/gi, '') /* Remove html tags from terms */
   return {
-    type: types.UPDATE_TEMP_QUERY_TERM_AUTOSUGGEST,
+    type: types.UPDATE_FUZZY_QUERY_TERM_AUTOSUGGEST,
     term
   }
 }
 
-export function clearTempQueryTerm () {
+export function clearFuzzyQueryTerm () {
   return {
-    type: types.CLEAR_TEMP_QUERY_TERM_AUTOSUGGEST
+    type: types.CLEAR_FUZZY_QUERY_TERM_AUTOSUGGEST
   }
 }
 
 export function executeAutoSuggest () {
   return (dispatch, getState) => {
     var state = getState()
-    var { query } = state.AutoSuggest
+    var { q, page, per_page, facet_query } = state.AutoSuggest
     var context = state.Context
 
     dispatch({
@@ -32,7 +33,7 @@ export function executeAutoSuggest () {
         types.REQUEST_AUTOSUGGEST_SUCCESS,
         types.REQUEST_AUTOSUGGEST_FAILURE
       ],
-      query,
+      query: { q, per_page, page, facet_query },
       context,
       api: 'suggest',
       payload: {}
@@ -43,7 +44,7 @@ export function executeAutoSuggest () {
 export function executeFuzzyAutoSuggest (isFuzzySuggest = false) {
   return (dispatch, getState) => {
     var state = getState()
-    var query = { q: state.AutoSuggest.query.q }
+    var query = { q: state.AutoSuggest.q }
     var context = state.Context
 
     dispatch({
