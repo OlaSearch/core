@@ -12,7 +12,7 @@ class Title extends React.Component {
   };
 
   render () {
-    var { result, isLink, children, baseUrl, url, ...rest, iconLeft = null, iconRight = null } = this.props
+    var { result, isLink, children, baseUrl, url, iconLeft, iconRight, ...rest } = this.props
     var { title, highlighting } = result
 
     if (!url) url = result.url
@@ -40,7 +40,9 @@ class Title extends React.Component {
 }
 
 Title.defaultProps = {
-  isLink: true
+  isLink: true,
+  iconLeft: null,
+  iconRight: null
 }
 
 Title.contextTypes = {

@@ -8,7 +8,7 @@ class OlaIntlProvider extends React.Component {
     super(props)
     let { locale, translations: t = {} } = props
     this.messages = {
-      ..._t[locale]['messages'],
+      ..._t[locale] ? _t[locale]['messages'] : {},
       ...t[locale] ? t[locale]['messages'] : {}
     }
   }

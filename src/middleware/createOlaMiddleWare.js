@@ -29,12 +29,7 @@ module.exports = (options = {}) => {
     // Normal action: pass it on
     if (!types) return next(action)
 
-    let {
-      parser,
-      queryBuilder,
-      config,
-      searchService
-    } = options
+    let { parser, queryBuilder, config, searchService } = options
 
     /**
      * When config is a function, Ola Search expects
