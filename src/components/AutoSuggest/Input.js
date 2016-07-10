@@ -114,6 +114,7 @@ export default class Input extends React.Component {
         <SpeechInput
           onResult={this.handleInputChange}
           onFinalResult={this.handleInputChange}
+          isAutosuggest
         />
 
         <Bookmarks />

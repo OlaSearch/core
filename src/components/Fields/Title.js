@@ -4,15 +4,23 @@ import { log } from './../../actions/Logger'
 
 class Title extends React.Component {
   logClick = (event) => {
-    let { onClick, result } = this.props
+    let { onClick, result, isBookmark, isAutosuggest } = this.props
 
     if (onClick) onClick(event)
 
-    this.context.store.dispatch(log('C', result))
+    /* Send Log */
+    let eventLabel = isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : null
+    this.context.store.dispatch(log({
+      eventType: 'C',
+      result,
+      eventCategory: 'Title',
+      eventAction: 'click',
+      eventLabel
+    }))
   };
 
   render () {
-    var { result, isLink, children, baseUrl, url, iconLeft, iconRight, ...rest } = this.props
+    var { result, isLink, children, baseUrl, url, iconLeft, iconRight } = this.props
     var { title, highlighting } = result
 
     if (!url) url = result.url
@@ -26,7 +34,7 @@ class Title extends React.Component {
     }
 
     return (
-      <h3 className='ola-field ola-field-title' {...rest}>
+      <h3 className='ola-field ola-field-title'>
         {iconLeft}
         {isLink
           ? <a href={url} onClick={this.logClick} dangerouslySetInnerHTML={createHTMLMarkup(title)} />
@@ -42,7 +50,8 @@ class Title extends React.Component {
 Title.defaultProps = {
   isLink: true,
   iconLeft: null,
-  iconRight: null
+  iconRight: null,
+  isBookmark: false
 }
 
 Title.contextTypes = {

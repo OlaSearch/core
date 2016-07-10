@@ -7,7 +7,7 @@ const FilterInput = ({ placeholder = '', value, onChange }) => {
       className='ola-text-input ola-facet-filter-input'
       value={value}
       placeholder={placeholder}
-      arial-label='Input'
+      aria-label='Input'
       onChange={onChange}
     />
   )

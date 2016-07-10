@@ -1,6 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import injectTranslate from './../../decorators/olaTranslate'
+import { log } from './../../actions/Logger'
 
 class SpeechInput extends React.Component {
   constructor (props) {
@@ -10,6 +11,10 @@ class SpeechInput extends React.Component {
       isSpeechSupported: window.SpeechRecognition || window.webkitSpeechRecognition
     }
   }
+
+  static contextTypes = {
+    store: React.PropTypes.object
+  };
 
   static defaultProps = {
     lang: 'en',
@@ -33,6 +38,17 @@ class SpeechInput extends React.Component {
       this.recog.stop()
       return
     }
+
+    /**
+     * Log
+     */
+    let eventLabel = this.props.isInstantSearch ? 'instantsearch' : this.props.isAutosuggest ? 'autosuggest' : null
+    this.context.store.dispatch(log({
+      eventType: 'C',
+      eventCategory: 'Voice',
+      eventAction: 'click',
+      eventLabel
+    }))
 
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 

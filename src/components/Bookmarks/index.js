@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import SearchResults from './../SearchResults'
 import NoResults from './../Snippets/NoResults'
 import injectTranslate from './../../decorators/olaTranslate'
+import { log } from './../../actions/Logger'
 
 class Bookmarks extends React.Component {
   static propTypes = {
@@ -30,6 +31,16 @@ class Bookmarks extends React.Component {
   toggleVisibility = () => {
     this.setState({
       isOpen: !this.state.isOpen
+    }, () => {
+      if (this.state.isOpen) {
+        this.props.dispatch(log({
+          eventType: 'C',
+          eventCategory: 'Bookmark button',
+          eventAction: 'open',
+          eventLabel: 'Bookmarks',
+          debounce: true
+        }))
+      }
     })
   };
   shouldComponentUpdate (nextProps, nextState) {

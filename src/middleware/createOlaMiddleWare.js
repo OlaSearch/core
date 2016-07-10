@@ -175,7 +175,13 @@ module.exports = (options = {}) => {
          * eventSource
          * searchInput = `voice`|`url`|`keyboard`
          */
-        logger && logger.enabled && dispatch(log('Q', null, api))
+        if (logger && logger.enabled) {
+          dispatch(log({
+            eventType: 'Q',
+            eventSource: api,
+            debounce: true
+          }))
+        }
       },
       (error) => {
         next({

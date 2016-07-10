@@ -104,6 +104,7 @@ class InstantSearchForm extends React.Component {
           <SpeechInput
             onResult={this.onChange}
             onFinalResult={this.onChange}
+            isInstantSearch
           />
         </div>
       </form>

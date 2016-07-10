@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
 import injectTranslate from './../../decorators/olaTranslate'
 import once from 'ramda/src/once'
+import { log } from './../../actions/Logger'
 
 class GeoLocation extends React.Component {
   static defaultProps = {
@@ -52,14 +53,23 @@ class GeoLocation extends React.Component {
     }
   };
   getLocation = () => {
+    let { dispatch } = this.props
     /* If location is already stored */
     if (this.props.Context.location) {
-      this.props.dispatch(removeContext('geo'))
+      dispatch(removeContext('geo'))
       this.props.onDisable && this.props.onDisable()
       return
     }
 
-    this.props.dispatch(requestGeoLocation(this.onSuccess, this.onError))
+    dispatch(log({
+      eventType: 'C',
+      eventCategory: 'Geolocation button',
+      eventAction: 'request_location',
+      eventLabel: 'Geolocation',
+      debounce: true
+    }))
+
+    dispatch(requestGeoLocation(this.onSuccess, this.onError))
   }
   onSuccess = (results) => {
     this.props.onSuccess && this.props.onSuccess(results)

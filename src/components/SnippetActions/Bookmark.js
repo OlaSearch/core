@@ -2,16 +2,29 @@ import React from 'react'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
 import injectTranslate from './../../decorators/olaTranslate'
 import classnames from 'classnames'
+import { log } from './../../actions/Logger'
 
 class BookmarkActions extends React.Component {
   addBookmark = () => {
     let { dispatch, result } = this.props
     dispatch(addBookmark(result))
+    dispatch(log({
+      eventType: 'C',
+      eventCategory: 'Add bookmark',
+      eventAction: 'click',
+      debounce: true
+    }))
   };
 
   removeBookmark = () => {
     let { dispatch, result } = this.props
     dispatch(removeBookmark(result))
+    dispatch(log({
+      eventType: 'C',
+      eventCategory: 'Remove bookmark',
+      eventAction: 'click',
+      debounce: true
+    }))
   };
 
   static propTypes = {

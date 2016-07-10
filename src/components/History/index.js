@@ -5,6 +5,7 @@ import listensToClickOutside from 'react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/olaTranslate'
+import { log } from './../../actions/Logger'
 
 class History extends React.Component {
   static propTypes = {
@@ -37,6 +38,16 @@ class History extends React.Component {
   toggleVisibility = () => {
     this.setState({
       isOpen: !this.state.isOpen
+    }, () => {
+      if (this.state.isOpen) {
+        this.props.dispatch(log({
+          eventType: 'C',
+          eventCategory: 'History button',
+          eventAction: 'open',
+          eventLabel: 'History',
+          debounce: true
+        }))
+      }
     })
   };
 

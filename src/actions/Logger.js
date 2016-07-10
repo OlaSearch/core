@@ -6,35 +6,32 @@ import { debounce } from './../utilities'
  * result = only for click event
  * eventSource = search|suggest api
  * searchInput = `voice`|`url`|`keyboard`
+ * eventCategory: Typically the object that was interacted with (e.g. 'Video')
+ * eventAction: The type of interaction (e.g. 'play')
+ * eventLabel: Useful for categorizing events (e.g. 'Fall Campaign')
+ * eventValue: A numeric value associated with the event (e.g. 42)
  */
 
-var debounceLogger = debounce(submitLog, 1000)
+const debounceLog = debounce(submitLog, 1000)
 
-export function log (eventType, result, eventSource) {
+export function log ({ eventType, debounce = false, ...rest }) {
   return (dispatch, getState) => {
-    switch (eventType) {
-      case 'C': // Click event
-        submitLog(dispatch, getState, eventType, result, eventSource)
-        break
-
-      default:
-        debounceLogger(dispatch, getState, eventType, result, eventSource)
-        break
+    if (debounce) {
+      return debounceLog({ dispatch, getState, eventType, ...rest })
     }
+    return submitLog({ dispatch, getState, eventType, ...rest })
   }
 }
 
 /**
  * Log submit function
  */
-function submitLog () {
-  var [ dispatch, getState, eventType, result, eventSource ] = arguments
+function submitLog (args) {
+  var { dispatch, getState, ...rest } = args
   dispatch({
     log: true,
     type: 'SEND_LOG',
-    eventType,
-    result,
-    eventSource,
-    state: getState()
+    state: getState(),
+    ...rest
   })
 }

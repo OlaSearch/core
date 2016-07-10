@@ -64,7 +64,7 @@ class AutoSuggest extends React.Component {
   };
 
   onChange = (term) => {
-    let { dispatch, AutoSuggest } = this.props
+    let { dispatch, AutoSuggest, isFuzzySuggest } = this.props
 
     if (!term && !AutoSuggest.q) {
       dispatch(closeAutoSuggest())
@@ -80,7 +80,7 @@ class AutoSuggest extends React.Component {
     if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
       dispatch(terminateAutoSuggest())
     } else {
-      if (this.props.isFuzzySuggest) dispatch(executeFuzzyAutoSuggest())
+      if (isFuzzySuggest) dispatch(executeFuzzyAutoSuggest())
       else dispatch(executeAutoSuggest())
     }
   };
