@@ -97,7 +97,7 @@ class SelectedFilters extends React.Component {
               <span className='ola-facet-tags-heading'>{facet.displayName}: </span>
               {tags.map((value, index) => {
                 return (
-                  <SelectedFacetItem
+                  <FacetItem
                     name={value}
                     facet={facet}
                     handleRemove={this.handleRemoveFacet}
@@ -110,7 +110,7 @@ class SelectedFilters extends React.Component {
         })}
         {filters.map((filter, idx) => {
           return (
-            <SelectedFilterItem
+            <FilterItem
               filter={filter}
               handleRemove={this.handleRemoveFilter}
               key={idx}
@@ -126,7 +126,7 @@ class SelectedFilters extends React.Component {
  * Selected Tag
  */
 
-class SelectedFacetItem extends React.Component {
+class FacetItem extends React.Component {
   handleRemove = () => {
     this.props.handleRemove(this.props.facet, this.props.name)
   };
@@ -146,7 +146,7 @@ class SelectedFacetItem extends React.Component {
  * Selected Tag
  */
 
-class SelectedFilterItem extends React.Component {
+class FilterItem extends React.Component {
   handleRemove = () => {
     this.props.handleRemove(this.props.filter)
   };
