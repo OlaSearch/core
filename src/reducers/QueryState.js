@@ -31,7 +31,6 @@ export default (state = initialState, action) => {
         }
       } else {
         /* Update the value */
-
         let newFilter = state.filters.slice(0)
         newFilter[index].selected = selected
 

@@ -8,10 +8,9 @@ export function updateQueryTerm (term) {
 }
 
 export function updateFuzzyQueryTerm (term) {
-  term = term.replace(/(<[^>]+>)/gi, '') /* Remove html tags from terms */
   return {
     type: types.UPDATE_FUZZY_QUERY_TERM_AUTOSUGGEST,
-    term
+    term: term.replace(/(<[^>]+>)/gi, '') /* Remove html tags from terms */
   }
 }
 

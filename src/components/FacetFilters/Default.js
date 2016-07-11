@@ -147,7 +147,6 @@ class LinkFilter extends React.Component {
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
           {filterInput}
-
           <div className='ola-facet-tags-selected'>
             {selected.map((item, idx) => {
               return (
@@ -160,9 +159,7 @@ class LinkFilter extends React.Component {
               )
             })}
           </div>
-
           <div className='ola-facet-list'>
-
             <div className='ola-facet-scroll-list'>
               <ReactList
                 itemRenderer={itemRendererBound}
@@ -170,7 +167,6 @@ class LinkFilter extends React.Component {
                 type={listType}
               />
             </div>
-
             {showMoreLink}
           </div>
         </div>
