@@ -9,11 +9,7 @@ const Directions = (props) => {
   var url = `https://www.google.com/maps?q=${latlong}`
 
   return (
-    <a
-      className='ola-btn ola-btn-directions'
-      {...rest}
-      href={url}
-    >
+    <a className='ola-btn ola-btn-directions' href={url} {...rest}>
       {iconLeft}
       {translate('get_directions_label')}
       {iconRight}
