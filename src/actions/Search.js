@@ -207,7 +207,7 @@ export function setStorageKey (key) {
 export function initSearch (options) {
   return (dispatch, getState) => {
     let { config, urlSync, searchOnLoad = true } = options
-    let { history } = config
+    let { history, filters } = config
 
     /* Should Ola Search read state from query string */
 
@@ -226,9 +226,7 @@ export function initSearch (options) {
 
     globalRouteChange = shouldSyncURL
 
-    /* Bootstrap by adding filters */
-    let { filters } = config
-
+    /* Add filters */
     filters.forEach((filter) => {
       let { selected } = filter
       if (selected) dispatch(addFilter({ filter, selected }))

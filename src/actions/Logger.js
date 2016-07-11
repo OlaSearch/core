@@ -12,7 +12,7 @@ import { debounce } from './../utilities'
  * eventValue: A numeric value associated with the event (e.g. 42)
  */
 
-const debounceLog = debounce(submitLog, 1000)
+export const debounceLog = debounce(submitLog, 1000)
 
 export function log ({ eventType, debounce = false, ...rest }) {
   return (dispatch, getState) => {
