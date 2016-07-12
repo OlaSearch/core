@@ -6,7 +6,10 @@ import SpeechInput from './Speech'
 import { debounce } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
 import injectTranslate from './../decorators/olaTranslate'
-
+/**
+ * 1. Debounces search for Mobile devices for better performance: Delay can be configured in config file
+ *
+ */
 class InstantSearchForm extends React.Component {
   constructor (props, context) {
     super(props)
@@ -20,7 +23,8 @@ class InstantSearchForm extends React.Component {
     minCharacters: 0,
     showGeoLocation: false,
     showBookmarks: true,
-    showHistory: true
+    showHistory: true,
+    isPhone: false
   };
 
   static contextTypes = {

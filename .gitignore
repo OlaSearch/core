@@ -4,3 +4,5 @@ npm-debug.log
 dist
 .vscode
 .temp_bundle_helpers
+coverage
+.nyc_output

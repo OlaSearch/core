@@ -12,7 +12,6 @@ module.exports = {
       console.warn(err)
       return undefined
     }
-    return false
   },
   set (key, value, namespace) {
     try {

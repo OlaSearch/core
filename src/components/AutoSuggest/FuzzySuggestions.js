@@ -20,6 +20,10 @@ class SuggestionItem extends React.Component {
       isActive: false
     }
   }
+
+  static propTypes = {
+    term: React.PropTypes.string.isRequired
+  };
   onMouseOver = () => {
     this.setState({
       isActive: true

@@ -9,7 +9,7 @@ const utilities = {
   },
   arrayJoin (suffix, arr, separator = ', ') {
     if (!Array.isArray(arr)) return arr
-    return arr ? suffix + arr.join(separator) : null
+    return (suffix ? suffix : '') + arr.join(separator)
   },
   checkIfFacetExists (facets, name) {
     for (let i = 0; i < facets.length; i++) {
@@ -19,7 +19,7 @@ const utilities = {
     }
     return null
   },
-  now: Date.now || function () {
+  now () {
     return new Date().getTime()
   },
   debounce (func, wait, immediate) {
@@ -58,22 +58,21 @@ const utilities = {
     var len = value.length
 
     for (var i = 0; i < len; i += 2) {
-      valueArray.push([ value[i], value[i + 1] ])
+      valueArray.push([value[i], value[i + 1]])
     }
 
     return valueArray
   },
-  castNumberToStringArray (numberArray) {
-    return numberArray.map((item) => item.toString())
+  castNumberToStringArray (values) {
+    if (!Array.isArray(values)) throw new Error('Argument is Invalid')
+    return values.map((item) => item.toString())
   },
   createHTMLMarkup (html) {
     return { __html: html }
   },
   getDisplayName (haystack, needle) {
     if (!haystack) return needle
-
     if (haystack[needle]) return haystack[needle]
-
     return needle
   },
   getMatchingSnippet (rules, result) {
@@ -103,7 +102,7 @@ const utilities = {
     return _regExp.test(query)
   },
   getComponentDisplayName (WrappedComponent) {
-    return WrappedComponent.displayName || WrappedComponent.name || 'Component'
+    return WrappedComponent.displayName || WrappedComponent.name
   },
   translateKey (path, obj, safe) {
     return obj[path] || path
@@ -129,7 +128,7 @@ const utilities = {
     })
 
     /* If there are no keys in `facetsToDisplay` Return all facets */
-    if (!hasKey) names = defaultNames
+    if (!hasKey) names = defaultNames || []
 
     /**
      * Found

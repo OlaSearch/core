@@ -1,14 +1,11 @@
 import fecha from 'fecha'
 
+const defaultMask = 'YYYY-MM-DD'
 const DateParser = {
-  format (date, mask, originalFormat) {
+  format (date, mask = defaultMask, originalFormat) {
     if (!date) return
     if (typeof date === 'string' || typeof date === 'number') {
-      try {
-        date = fecha.parse(date, originalFormat || 'YYYY-MM-DD')
-      } catch (err) {
-        console.warn(err)
-      }
+      date = fecha.parse(date, originalFormat || defaultMask)
     }
     return fecha.format(date, mask)
   }

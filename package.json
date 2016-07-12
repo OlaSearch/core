@@ -8,8 +8,10 @@
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
     "build": "NODE_ENV=production webpack --config webpack.config.production.js --progress",
     "lint": "eslint src",
-    "test": "BABEL_ENV=production mocha test/actions/*.js --compilers js:babel-core/register --recursive --require ./test/setup.js",
+    "nyc": "nyc npm run test",
+    "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
+    "test:cov": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "standard": "standard --verbose | snazzy"
   },
   "engines": {
@@ -37,6 +39,13 @@
       "/node_modules"
     ]
   },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js",
+      ".*.js",
+      "*setup.js"
+    ]
+  },
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
@@ -44,7 +53,9 @@
     "babel-loader": "^6.2.4",
     "babel-preset-olasearch": "^1.0.0",
     "babel-preset-react-hmre": "^1.0.0",
+    "babel-register": "^6.9.0",
     "cross-env": "^1.0.8",
+    "enzyme": "^2.4.1",
     "eslint": "^2.13.1",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-react": "^5.2.2",
@@ -52,8 +63,12 @@
     "expect": "^1.20.1",
     "expose-loader": "^0.7.1",
     "express": "^4.14.0",
+    "isparta": "^4.0.0",
     "jsdom": "^9.3.0",
     "mocha": "^2.5.3",
+    "react": "^15.2.1",
+    "react-addons-test-utils": "^15.2.1",
+    "react-dom": "^15.2.1",
     "rimraf": "^2.5.0",
     "snazzy": "^4.0.0",
     "standard": "^7.1.2",
