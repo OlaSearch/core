@@ -9,7 +9,7 @@ const utilities = {
   },
   arrayJoin (suffix, arr, separator = ', ') {
     if (!Array.isArray(arr)) return arr
-    return (suffix ? suffix : '') + arr.join(separator)
+    return (suffix || '') + arr.join(separator)
   },
   checkIfFacetExists (facets, name) {
     for (let i = 0; i < facets.length; i++) {

@@ -35,6 +35,7 @@
     "parser": "babel-eslint",
     "ignore": [
       "/test",
+      "/testbk",
       "/lib",
       "/node_modules"
     ]
