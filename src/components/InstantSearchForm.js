@@ -10,8 +10,10 @@ import injectTranslate from './../decorators/olaTranslate'
 class InstantSearchForm extends React.Component {
   constructor (props, context) {
     super(props)
-
-    this.instantSearchDebounce = debounce(() => this.props.dispatch(executeSearch()), context.config.searchTimeOut)
+    let { config } = context
+    let { searchTimeoutMobile = 300, searchTimeOut = 0 } = config
+    let searchDelay = props.isPhone ? config.searchTimeoutMobile : config.searchTimeOut
+    this.instantSearchDebounce = debounce(() => props.dispatch(executeSearch()), searchDelay)
   }
 
   static defaultProps = {

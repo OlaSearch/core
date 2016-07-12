@@ -8,6 +8,7 @@ import FacetBoolean from './FacetFilters/Boolean'
 import DateRangePicker from './FacetFilters/DateRangePicker'
 import TagCloud from './FacetFilters/TagCloud'
 import flatten from 'ramda/src/flatten'
+import equals from 'ramda/src/equals'
 import classNames from 'classnames'
 import { getFacetsToDisplay } from './../utilities'
 
@@ -31,7 +32,7 @@ class SearchFilters extends React.Component {
   shouldComponentUpdate (nextProps) {
     return (
       this.props.facets !== nextProps.facets ||
-      this.props.selected !== nextProps.selected
+      !equals(this.props.selected, nextProps.selected)
     )
   }
 
@@ -52,7 +53,6 @@ class SearchFilters extends React.Component {
       /* Remove tabs */
       facets = facets.filter((facet) => !facet.tab)
     }
-
     if (!facets.length) return null
 
     let parentClass = classNames('ola-search-filters', className)

@@ -58,8 +58,10 @@ export default (state = initialState, action) => {
         facets,
         totalResults,
         suggestedTerm,
-        qt
+        qt,
       } = action
+
+      let isOpen = (!!results.length || !!spellSuggestions.length || !!suggestedTerm) && state.q
 
       return {
         ...state,
@@ -70,7 +72,7 @@ export default (state = initialState, action) => {
         isLoading: false,
         suggestedTerm,
         qt,
-        isOpen: !!results.length || !!spellSuggestions.length || !!suggestedTerm
+        isOpen
       }
 
     case types.OPEN_AUTOSUGGEST:
