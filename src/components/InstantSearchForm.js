@@ -13,7 +13,7 @@ class InstantSearchForm extends React.Component {
     let { config } = context
     let { searchTimeoutMobile = 300, searchTimeOut = 0 } = config
     let searchDelay = props.isPhone ? config.searchTimeoutMobile : config.searchTimeOut
-    this.instantSearchDebounce = debounce(() => props.dispatch(executeSearch()), searchDelay)
+    this.searchDebounce = debounce(() => props.dispatch(executeSearch()), searchDelay)
   }
 
   static defaultProps = {
@@ -44,7 +44,7 @@ class InstantSearchForm extends React.Component {
 
     !isEvent && this.refs.Input.focus()
 
-    isEvent ? this.instantSearchDebounce() : dispatch(executeSearch())
+    isEvent ? this.searchDebounce() : dispatch(executeSearch())
   };
 
   onClear = () => {
