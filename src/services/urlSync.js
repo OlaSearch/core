@@ -3,7 +3,6 @@ import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS } from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
-import omit from 'ramda/src/omit'
 
 var urlSync = {
   character: '?',
@@ -24,10 +23,10 @@ var urlSync = {
   },
   buildQueryString (params) {
     var str = []
-    /* Omit */
-    params = omit(['isSearchActive'], params)
     /* Loop */
     for (var name in params) {
+      /* Omit */
+      if (name === 'isSearchActive') continue
       var value = params[name]
       if (name === 'facet_query') {
         value = value.map((item) => item.name + ':' + item.selected)
