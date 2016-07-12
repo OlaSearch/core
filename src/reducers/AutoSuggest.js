@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
         facets,
         totalResults,
         suggestedTerm,
-        qt,
+        qt
       } = action
 
       let isOpen = (!!results.length || !!spellSuggestions.length || !!suggestedTerm) && state.q

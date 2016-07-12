@@ -11,7 +11,8 @@ var initialState = {
   facet_query: [],
   sort: '',
   filters: [],
-  view: ''
+  view: '',
+  isSearchActive: true
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -66,14 +67,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         q: action.term,
-        page: 1
+        page: 1,
+        isSearchActive: !!action.term /* True if term is present */
       }
 
     case types.CLEAR_QUERY_TERM:
       return {
         ...state,
         q: '',
-        page: 1
+        page: 1,
+        isSearchActive: false
       }
 
     case types.ADD_FACET:
@@ -188,6 +191,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         view: action.view
+      }
+
+    case types.SET_SEARCH_STATUS:
+      return {
+        ...state,
+        isSearchActive: action.status
       }
 
     default:

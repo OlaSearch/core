@@ -12,7 +12,7 @@ class InstantSearchForm extends React.Component {
     super(props)
     let { config } = context
     let { searchTimeoutMobile = 300, searchTimeOut = 0 } = config
-    let searchDelay = props.isPhone ? config.searchTimeoutMobile : config.searchTimeOut
+    let searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeOut
     this.searchDebounce = debounce(() => props.dispatch(executeSearch()), searchDelay)
   }
 

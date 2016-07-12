@@ -79,5 +79,8 @@ module.exports = {
   REQUEST_GEO_LOCATION_FAILURE: 'REQUEST_GEO_LOCATION_FAILURE',
 
   /* Rehydrate */
-  OLA_REHYDRATE: 'OLA_REHYDRATE'
+  OLA_REHYDRATE: 'OLA_REHYDRATE',
+
+  /* Search status: When searchOnLoad is false, we need to disable search elements */
+  SET_SEARCH_STATUS: 'SET_SEARCH_STATUS'
 }

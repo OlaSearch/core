@@ -206,8 +206,8 @@ export function setStorageKey (key) {
 
 export function initSearch (options) {
   return (dispatch, getState) => {
-    let { config, urlSync, searchOnLoad = true } = options
-    let { history, filters } = config
+    let { config, urlSync } = options
+    let { history, filters, searchOnLoad = true } = config
 
     /* Should Ola Search read state from query string */
 
@@ -232,9 +232,27 @@ export function initSearch (options) {
       if (selected) dispatch(addFilter({ filter, selected }))
     })
 
-    /* Disable Route change initally */
+    /* De-activate search if searchOnLoad is false */
+    if (!searchOnLoad) {
+      let { q, facet_query, filters } = getState().QueryState
+      let shouldActivateSearch = q || facet_query.length || filters.length
 
-    if (searchOnLoad) {
+      /**
+       * Use
+       * !this.context.config.searchOnLoad && QueryState.isSearchActive
+       * to show hide results
+       */
+      if (!shouldActivateSearch) {
+        dispatch({
+          type: types.SET_SEARCH_STATUS,
+          status: searchOnLoad
+        })
+      } else {
+        dispatch(executeSearch({
+          routeChange: false
+        }))
+      }
+    } else {
       dispatch(executeSearch({
         routeChange: false
       }))
