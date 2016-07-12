@@ -66,6 +66,7 @@
     "isparta": "^4.0.0",
     "jsdom": "^9.3.0",
     "mocha": "^2.5.3",
+    "nyc": "^7.0.0",
     "react": "^15.2.1",
     "react-addons-test-utils": "^15.2.1",
     "react-dom": "^15.2.1",
