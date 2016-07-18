@@ -7,7 +7,7 @@ module.exports = (WrappedComponent) => {
   class WithLogger extends React.Component {
     log = (params) => this.context.store.dispatch(log(params));
     render () {
-      return <WrappedComponent {...props} log={log} />
+      return <WrappedComponent {...this.props} log={log} />
     }
   }
   WithLogger.displayName = `withLogger(${getComponentDisplayName(WrappedComponent)})`

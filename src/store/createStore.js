@@ -3,7 +3,6 @@ import olaReducer from './../reducers'
 import createOlaMiddleware from './../middleware/createOlaMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
-import invariant from 'invariant'
 
 /**
  * Signature
