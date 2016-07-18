@@ -5,7 +5,7 @@
  * 2. Ajax requests for search adapters
  */
 import { debounceLog } from './../actions/Logger'
-import { debouncePersistState, STATE_TYPE_KEYS } from './../services/persistState'
+import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 
 module.exports = (options = {}) => {

@@ -79,6 +79,13 @@ export function addFacet (facet, value) {
   }
 }
 
+export function removeFacet (facet) {
+  return {
+    type: types.REMOVE_FACET_AUTOSUGGEST,
+    facet
+  }
+}
+
 export function terminateAutoSuggest () {
   return {
     type: types.TERMINATE_AUTOSUGGEST

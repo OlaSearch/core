@@ -8,7 +8,7 @@ import TermSuggestion from './../SpellSuggestions/TermSuggestion'
 import SpellSuggestion from './../SpellSuggestions/SpellSuggestion'
 import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
-import { checkForAllowedCharacters } from './../../utilities'
+import { checkForAllowedCharacters, trim } from './../../utilities'
 import injectTranslate from './../../decorators/olaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
@@ -46,7 +46,8 @@ class AutoSuggest extends React.Component {
     viewAllClassName: 'ola-autosuggest-all',
     placeholder: 'Enter keywords',
     facetSuggestionName: '',
-    isFuzzySuggest: false
+    isFuzzySuggest: false,
+    showZone: false
   };
 
   handleClickOutside = (event) => {
@@ -56,7 +57,7 @@ class AutoSuggest extends React.Component {
       /**
        * For Fuzzy suggestion, restore the original query term
        */
-      if (event && event.nativeEvent.type === 'keydown' && this.props.isFuzzySuggest) {
+      if (event && event.nativeEvent && event.nativeEvent.type === 'keydown' && this.props.isFuzzySuggest) {
         this.props.dispatch(clearFuzzyQueryTerm())
       }
     }
@@ -65,6 +66,9 @@ class AutoSuggest extends React.Component {
 
   onChange = (term) => {
     let { dispatch, AutoSuggest, isFuzzySuggest } = this.props
+
+    /* Trim text */
+    if (term.length && trim(term) === '') return
 
     if (!term && !AutoSuggest.q) {
       dispatch(closeAutoSuggest())
@@ -199,6 +203,7 @@ class AutoSuggest extends React.Component {
       AutoSuggest,
       bookmarks,
       showFacetSuggestions,
+      showZone,
       viewAllClassName,
       facetSuggestionName,
       className,
@@ -238,6 +243,8 @@ class AutoSuggest extends React.Component {
             placeholder={translate('autosuggest_placeholder')}
             handleClickOutside={this.handleClickOutside}
             onSearchButtonClick={this.props.onSearchButtonClick}
+            results={results}
+            showZone={showZone}
           />
           <div className={klass}>
             <TermSuggestion term={suggestedTerm} />

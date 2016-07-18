@@ -2,7 +2,7 @@ import types from './../constants/ActionTypes'
 import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
-var initialState = {
+export const initialState = {
   totalResults: 0,
   results: [],
   facets: [],

@@ -6,7 +6,7 @@ const Directions = (props) => {
 
   if (!latlong) return null
 
-  var url = `https://www.google.com/maps?q=${latlong}`
+  var url = `https://www.google.com/maps/dir//${latlong}`
 
   return (
     <a className='ola-btn ola-btn-directions' href={url} {...rest}>

@@ -2,6 +2,8 @@ import React from 'react'
 import Bookmarks from './../Bookmarks'
 import History from './../History'
 import SpeechInput from './../Speech'
+import Zone from './../Zone'
+import classNames from 'classnames'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -35,6 +37,10 @@ export default class Input extends React.Component {
     event.persist()
 
     setTimeout(() => this.props.onChange(event.target.value))
+  };
+
+  onChangeZone = () => {
+    this.refs.Input.focus()
   };
 
   onKeyDown = (event) => {
@@ -83,17 +89,30 @@ export default class Input extends React.Component {
     var {
       q,
       placeholder,
-      onBlur
+      onBlur,
+      showZone
     } = this.props
 
-    /* Show clear or submit button */
+    /**
+     * Show clear or submit button
+     */
 
     var button = q
       ? <button type='reset' className='ola-clear-button' onClick={this.onClear}></button>
       : <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
 
+    let klass = classNames('ola-search-form-container', {
+      'ola-search-zone-enabled': showZone
+    })
+
     return (
-      <div className='ola-search-form-container'>
+      <div className={klass}>
+        {showZone &&
+          <Zone
+            isAutosuggest
+            onChange={this.onChangeZone}
+          />
+        }
         <input
           ref='Input'
           type='text'

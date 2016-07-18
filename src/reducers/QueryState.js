@@ -3,6 +3,7 @@ import { parseQueryString } from './../services/urlSync'
 import { checkIfFacetExists, castNumberToStringArray } from './../utilities'
 import indexOf from 'ramda/src/indexOf'
 import omit from 'ramda/src/omit'
+import clone from 'ramda/src/clone'
 
 var initialState = {
   q: '',
@@ -32,13 +33,12 @@ export default (state = initialState, action) => {
         }
       } else {
         /* Update the value */
-        let newFilter = state.filters.slice(0)
+        let newFilter = clone(state.filters)
         newFilter[index].selected = selected
 
         return {
           ...state,
-          filters: newFilter,
-          page: 1
+          filters: newFilter
         }
       }
 
@@ -84,7 +84,7 @@ export default (state = initialState, action) => {
       value = action.value
       facet = action.facet
       props = omit('values', facet)
-      fq = state.facet_query.slice(0)
+      fq = clone(state.facet_query)
       index = checkIfFacetExists(fq, facet.name)
 
       /**
@@ -109,7 +109,7 @@ export default (state = initialState, action) => {
       }
 
     case types.REMOVE_FACET:
-      fq = state.facet_query.slice(0)
+      fq = clone(state.facet_query)
       facet = action.facet
       value = action.value
 
@@ -143,7 +143,7 @@ export default (state = initialState, action) => {
       value = action.value
       facet = action.facet
       props = omit('values', facet)
-      fq = state.facet_query.slice(0)
+      fq = clone(state.facet_query)
       index = checkIfFacetExists(fq, facet.name)
 
       if (index === null) {
@@ -154,7 +154,6 @@ export default (state = initialState, action) => {
       } else {
         fq[index].selected = [value]
       }
-
       return {
         ...state,
         facet_query: fq,

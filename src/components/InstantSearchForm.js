@@ -3,9 +3,11 @@ import { updateQueryTerm, executeSearch, clearQueryTerm } from './../actions/Sea
 import Bookmarks from './Bookmarks'
 import History from './History'
 import SpeechInput from './Speech'
-import { debounce } from './../utilities'
+import { debounce, trim } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
 import injectTranslate from './../decorators/olaTranslate'
+import Zone from './Zone'
+import classNames from 'classnames'
 /**
  * 1. Debounces search for Mobile devices for better performance: Delay can be configured in config file
  *
@@ -24,6 +26,7 @@ class InstantSearchForm extends React.Component {
     showGeoLocation: false,
     showBookmarks: true,
     showHistory: true,
+    showZone: false,
     isPhone: false
   };
 
@@ -42,6 +45,9 @@ class InstantSearchForm extends React.Component {
     let isEvent = !!arg.target
     let term = isEvent ? arg.target.value : arg
 
+    /* Trim */
+    if (term.length && trim(term) === '') return
+
     dispatch(updateQueryTerm(term))
 
     if (isEvent && term && term.length < minCharacters) return
@@ -58,7 +64,11 @@ class InstantSearchForm extends React.Component {
     dispatch(executeSearch())
   };
 
-  onSubmit = (event) => event.preventDefault()
+  onSubmit = (event) => event.preventDefault();
+  onChangeZone = () => {
+    this.refs.Input.focus()
+    if (this.props.q) this.props.dispatch(executeSearch())
+  };
 
   render () {
     let {
@@ -66,6 +76,7 @@ class InstantSearchForm extends React.Component {
       showGeoLocation,
       showBookmarks,
       showHistory,
+      showZone,
       translate
     } = this.props
 
@@ -73,9 +84,18 @@ class InstantSearchForm extends React.Component {
       ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear'></button>
       : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit'></button>
 
+    let klass = classNames('ola-search-form', {
+      'ola-search-zone-enabled': showZone
+    })
+
     return (
-      <form className='ola-search-form' onSubmit={this.onSubmit}>
+      <form className={klass} onSubmit={this.onSubmit}>
         <div className='ola-search-form-container'>
+          {showZone &&
+            <Zone
+              onChange={this.onChangeZone}
+            />
+          }
           <input
             ref='Input'
             type='text'

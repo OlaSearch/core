@@ -26,6 +26,8 @@ class SelectedFilters extends React.Component {
 
   static defaultProps = {
     showQuery: false,
+    showTabs: true,
+    showZones: true,
     filters: [],
     facets: []
   };
@@ -65,12 +67,17 @@ class SelectedFilters extends React.Component {
       facets,
       showQuery,
       q,
-      filters
+      filters,
+      showZones,
+      showTabs
     } = this.props
 
     var {
       showGuidePopover
     } = this.state
+
+    /* Remove tabs and zones */
+    facets = facets.filter((item) => (showTabs ? true : !item.tab) && (showZones ? true : !item.zone))
 
     if (!facets.length &&
       !q &&
@@ -90,11 +97,11 @@ class SelectedFilters extends React.Component {
           : null
         }
         {facets.map((facet, idx) => {
-          var { selected: tags } = facet
+          var { selected: tags, displayName } = facet
 
           return (
             <div key={idx} className='ola-facet-tags-group'>
-              <span className='ola-facet-tags-heading'>{facet.displayName}: </span>
+              {displayName && <span className='ola-facet-tags-heading'>{displayName}: </span>}
               {tags.map((value, index) => {
                 return (
                   <FacetItem

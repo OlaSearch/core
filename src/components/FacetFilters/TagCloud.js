@@ -10,11 +10,9 @@ class TagCloud extends React.Component {
     showSelectedFacetItem: false
   };
 
-  handleAddFacet = (facet, value) => {
-    var { dispatch } = this.props
-
+  handleAddFacet = (value) => {
+    var { dispatch, facet } = this.props
     dispatch(addFacet(facet, value))
-
     dispatch(executeSearch())
   };
 
@@ -50,7 +48,6 @@ class TagCloud extends React.Component {
               <TagCloudItem
                 key={idx}
                 value={value}
-                facet={facet}
                 min={min}
                 max={max}
                 fontSizeMax={fontSizeMax}
@@ -70,13 +67,10 @@ class TagCloud extends React.Component {
  */
 class TagCloudItem extends React.Component {
   handleClick = () => {
-    let { facet, value } = this.props
-    let { name } = value
-    this.props.onSelect(facet, name)
+    this.props.onSelect(this.props.value.name)
   }
   render () {
-    let { value, min, max, fontSizeMin, fontSizeMax } = this.props
-    let { name, count } = value
+    let { value: { name, count }, min, max, fontSizeMin, fontSizeMax } = this.props
     let size = (count === min) ? fontSizeMin : (count / max) * (fontSizeMax - fontSizeMin) + fontSizeMin
     return (
       <button

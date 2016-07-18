@@ -1,6 +1,6 @@
 import expect from 'expect'
 import storage from './../../src/services/storage'
-import { STATE_TYPE_KEYS, debouncePersistState } from './../../src/services/persistState'
+import { STATE_TYPE_KEYS, debouncePersistState } from './../../src/store/persistState'
 import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY, LOCALE_STORAGE_KEY, CONTEXT_STORAGE_KEY } from './../../src/constants/Settings'
 import types from './../../src/constants/ActionTypes'
 
@@ -33,7 +33,7 @@ describe('persistState', () => {
       setTimeout(() => {
         expect(storage.get(BOOKMARKS_STORAGE_KEY, namespace)).toEqual(['hello'])
         done()
-      }, 500)
+      }, 510)
     })
 
     it('should remove bookmarks', (done) => {
@@ -42,7 +42,7 @@ describe('persistState', () => {
       setTimeout(() => {
         expect(storage.get(BOOKMARKS_STORAGE_KEY, namespace)).toEqual(['hello'])
         done()
-      }, 500)
+      }, 510)
     })
 
     it('should add history', (done) => {
@@ -50,7 +50,7 @@ describe('persistState', () => {
       setTimeout(() => {
         expect(storage.get(HISTORY_STORAGE_KEY, namespace)).toEqual(['world'])
         done()
-      }, 500)
+      }, 510)
     })
 
     it('should clear history', (done) => {
@@ -58,7 +58,7 @@ describe('persistState', () => {
       setTimeout(() => {
         expect(storage.get(HISTORY_STORAGE_KEY, namespace)).toEqual(['world'])
         done()
-      }, 500)
+      }, 510)
     })
   })
 
@@ -69,7 +69,7 @@ describe('persistState', () => {
       setTimeout(() => {
         expect(storage.cookies.get(LOCALE_STORAGE_KEY)).toEqual('en')
         done()
-      }, 500)
+      }, 510)
     })
   })
 
@@ -93,7 +93,7 @@ describe('persistState', () => {
       setTimeout(() => {
         expect(storage.cookies.get(CONTEXT_STORAGE_KEY)).toEqual('{"location":null,"fields":[],"isRequestingLocation":false,"hasRequestedLocation":false}')
         done()
-      }, 500)
+      }, 510)
     })
   })
 })

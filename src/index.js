@@ -62,6 +62,7 @@ module.exports = {
   },
   olaReducer: require('./reducers'),
   createOlaMiddleware: require('./middleware/createOlaMiddleware'),
+  createStore: require('./store/createStore'),
   utilities: require('./utilities'),
   DateParser: require('./utilities/dateParser'),
   urlSync: require('./services/urlSync'),

@@ -27,8 +27,8 @@ class CheckboxFilter extends React.Component {
     facet: React.PropTypes.object.isRequired
   };
 
-  handleAddFacet = (facet, value) => {
-    var { dispatch } = this.props
+  handleAddFacet = (value) => {
+    var { dispatch, facet } = this.props
 
     this.setState({
       filterText: ''
@@ -47,8 +47,8 @@ class CheckboxFilter extends React.Component {
     dispatch(executeSearch())
   };
 
-  handleRemoveFacet = (facet, value) => {
-    let { dispatch } = this.props
+  handleRemoveFacet = (value) => {
+    let { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
     dispatch(executeSearch())
   };
@@ -64,15 +64,16 @@ class CheckboxFilter extends React.Component {
   };
 
   itemRenderer = (values, index, key) => {
-    let { facet } = this.props
+    let { facet: { facetNames } } = this.props
     let { name, count } = values[index]
+    let displayName = getDisplayName(facetNames, name)
     let isActive = this.isSelected(name)
 
     return (
       <CheckBoxItem
         key={index}
-        facet={facet}
         name={name}
+        displayName={displayName}
         count={count}
         handleAddFacet={this.handleAddFacet}
         handleRemoveFacet={this.handleRemoveFacet}
@@ -98,11 +99,12 @@ class CheckboxFilter extends React.Component {
     var {
       values,
       displayName,
-      allowSingleSelection
+      allowSingleSelection,
+      allowedNames
     } = facet
 
-    /* Remove values with no name */
-    values = values.filter((value) => value.name)
+    /* Remove values with no name or name doesnt match allowedNames */
+    values = values.filter((value) => value.name && (allowedNames ? allowedNames.indexOf(value.name) !== -1 : true))
 
     var originalSize = values.length
 
@@ -151,21 +153,19 @@ class CheckboxFilter extends React.Component {
  */
 class CheckBoxItem extends React.Component {
   onChecked = (event) => {
-    let { facet, name, handleAddFacet, handleRemoveFacet } = this.props
+    let { name, handleAddFacet, handleRemoveFacet } = this.props
     if (event.target.checked) {
-      handleAddFacet(facet, name)
+      handleAddFacet(name)
     } else {
-      handleRemoveFacet(facet, name)
+      handleRemoveFacet(name)
     }
   }
   render () {
-    let { isActive, facet, count, name } = this.props
-    let { facetNames } = facet
+    let { isActive, count, displayName } = this.props
     let labelKlass = classNames({
       'ola-checkbox ola-checkbox-label': true,
       'ola-checkbox-active': isActive
     })
-    let displayName = getDisplayName(facetNames, name)
     return (
       <label className={labelKlass}>
         <input

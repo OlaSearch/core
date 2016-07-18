@@ -96,7 +96,6 @@ var urlSync = {
       var fq = facetQuery.map((item) => {
         let [ name, value ] = item.split(':')
         value = value.split(',')
-
         let facet = configFacets.filter((facet) => facet.name === name).reduce((a, b) => a)
         let { type } = facet
         if (RANGE_FACETS.indexOf(type) !== -1 && value.length > 1) {

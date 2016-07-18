@@ -120,7 +120,7 @@ describe('Utilities', () => {
       setTimeout(() => {
         expect(a).toBe(true)
         done()
-      }, 500)
+      }, 510)
     })
 
     it('immediate debounce will be called', (done) => {
@@ -146,7 +146,7 @@ describe('Utilities', () => {
       setTimeout(() => {
         expect(a).toBe(true)
         done()
-      }, 501)
+      }, 510) /* added some delay */
     })
   })
 
@@ -259,6 +259,12 @@ describe('Utilities', () => {
     })
     it('converts underscore to dashe', () => {
       expect(utils.sanitizeAnchor('HELLO_12')).toBe('hello-12')
+    })
+  })
+
+  describe('trim', () => {
+    it('removes whitespaces', () => {
+      expect(utils.trim(' hey ')).toEqual('hey')
     })
   })
 })

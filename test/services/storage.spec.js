@@ -22,7 +22,7 @@ describe('Storage', () => {
     expect(storage.get('key')).toEqual('hello')
   })
 
-  describe('catch errors', () => {
+  describe('LocalStorage: catch errors', () => {
     beforeEach(removeStorage)
     afterEach(restoreStorage)
     it('throws an error if localstorage doesnt exist when getting', () => {
@@ -37,6 +37,33 @@ describe('Storage', () => {
       storage.set('key')
       spy.destroy()
       expect(spy.calls.length).toBe(1)
+    })
+  })
+
+  describe('Cookies', () => {
+    it('saves a cookies for 2 days', () => {
+      storage.cookies.set('key', 'hello', 2)
+      expect(storage.cookies.get('key')).toEqual('hello')
+    })
+
+    it('saves a cookies for the session', () => {
+      storage.cookies.set('key_session', 'hello')
+      expect(storage.cookies.get('key_session')).toEqual('hello')
+    })
+
+    it('saves an object in cookie', () => {
+      let obj = { name: 'Foo'}
+      storage.cookies.set('key', obj)
+      expect(storage.cookies.get('key')).toEqual(JSON.stringify(obj))
+    })
+
+    it('returns null if not found', () => {
+      expect(storage.cookies.get('key_not_exists')).toEqual(null)
+    })
+
+    it('removes from storage', () => {
+      storage.cookies.remove('key')
+      expect(storage.cookies.get('key')).toEqual(null)
     })
   })
 })

@@ -227,9 +227,9 @@ export function initSearch (options) {
     globalRouteChange = shouldSyncURL
 
     /* Add filters */
-    filters.forEach((filter) => {
+    filters && filters.forEach((filter) => {
       let { selected } = filter
-      if (selected) dispatch(addFilter({ filter, selected }))
+      dispatch(addFilter({ filter, selected }))
     })
 
     /* De-activate search if searchOnLoad is false */

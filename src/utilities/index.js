@@ -137,7 +137,8 @@ const utilities = {
     return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
   },
   sanitizeAnchor (text) {
-    let str = text.toLowerCase()
+    if (!text) return null
+    let str = text.toString().toLowerCase()
     // remove solr's <em> tags..
     str = str.replace(/<(\/?)em>/gi, '')
     str = str.replace(/<em.*?>/gi, '')
@@ -149,6 +150,9 @@ const utilities = {
     str = str.replace(/[\s_]/gi, '-')
     // return '#' + str;
     return str
+  },
+  trim (str) {
+    return str.replace(/^\s+|\s+$/g, '')
   }
 }
 

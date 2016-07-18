@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
-import indexOf from 'ramda/src/indexOf'
+import omit from 'ramda/src/omit'
 
-var initialState = {
+export const initialState = {
   q: '',
   per_page: 20,
   page: 1,
@@ -18,7 +18,7 @@ var initialState = {
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
-var fq, facet, value
+var facet, value
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -36,7 +36,10 @@ export default (state = initialState, action) => {
       }
 
     case types.CLEAR_QUERY_TERM_AUTOSUGGEST:
-      return initialState
+      return {
+        ...state,
+        ...omit(['facet_query'], initialState)
+      }
 
     case types.CLEAR_FUZZY_QUERY_TERM_AUTOSUGGEST:
       return {
@@ -61,7 +64,7 @@ export default (state = initialState, action) => {
         qt
       } = action
 
-      let isOpen = (!!results.length || !!spellSuggestions.length || !!suggestedTerm) && state.q
+      let isOpen = (!!results.length || !!spellSuggestions.length || !!suggestedTerm) && !!state.q
 
       return {
         ...state,
@@ -101,27 +104,12 @@ export default (state = initialState, action) => {
       }
 
     case types.REMOVE_FACET_AUTOSUGGEST:
-      fq = state.query.facet_query.slice(0)
       facet = action.facet
       value = action.value
 
-      for (var i = fq.length - 1; i >= 0; i--) {
-        let cur = fq[i]
-        let { selected } = cur
-
-        if (cur.name === facet.name) {
-          /* Remove selections if No value is supplied */
-          if (!value) selected = []
-          selected.splice(
-            indexOf(value, selected), 1
-          )
-          if (!selected.length) fq = [ ...fq.slice(0, i), ...fq.slice(i + 1) ]
-        }
-      }
-
       return {
         ...state,
-        facet_query: fq
+        facet_query: state.facet_query.filter((f) => f.name !== facet.name)
       }
 
     default:

@@ -12,5 +12,6 @@ module.exports = {
   Summary: require('./Summary'),
   Thumbnail: require('./Thumbnail'),
   Title: require('./Title'),
-  Year: require('./Year')
+  Year: require('./Year'),
+  DocumentPages: require('./DocumentPages')
 }

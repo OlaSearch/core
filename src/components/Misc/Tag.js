@@ -2,7 +2,7 @@ import React from 'react'
 import { supplant, getDisplayName } from './../../utilities'
 import DateParser from './../../utilities/dateParser'
 
-const Tag = (props, context) => {
+const Tag = (props) => {
   var displayName = ''
   var { name, onRemove, facet } = props
   var { type, label, template, facetNames, dateFormat, interval } = facet
