@@ -14,7 +14,13 @@ import { debounce } from './../utilities'
 
 export const debounceLog = debounce(submitLog, 1000)
 
-export function log ({ eventType, debounce = false, ...rest }) {
+export function log (params) {
+  /* If log is called with no arguments */
+  if (!params) throw new Error('Invalid: log was called with no arguments')
+
+  let { eventType, debounce = false, ...rest } = params
+  /* If not event type is specified */
+  if (!eventType) throw new Error('Invalid: eventType is required')
   return (dispatch, getState) => {
     if (debounce) {
       return debounceLog({ dispatch, getState, eventType, ...rest })

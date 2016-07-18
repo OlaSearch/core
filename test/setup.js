@@ -13,4 +13,14 @@ global.window.localStorage = {
     setItem: function (key, value) {
         this[key] = value;
     }
-};
+}
+
+global.window.devToolsExtension = () => {
+  return (next) => (reducer, initialState, enhancer) => {
+    return next(fn(reducer), initialState, enhancer)
+  }
+
+  function fn(reducer) {
+    return (state, action) => reducer(state, action)
+  }
+}

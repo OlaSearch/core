@@ -17,3 +17,12 @@ export const FACET_ITEM_AUTOSUGGEST = {
   },
   value: 'Drama'
 }
+
+export const MOCK_SEARCH_ADAPTER = {
+  Parser () {
+  },
+  QueryBuilder () {
+  },
+  Http () {
+  }
+}

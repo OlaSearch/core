@@ -3,10 +3,32 @@ import olaReducer from './../reducers'
 import createOlaMiddleware from './../middleware/createOlaMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
+import invariant from 'invariant'
 
-module.exports = (config = {}, searchProvider = {}, reducers = {}, middlewares = [], enhancers = []) => {
+/**
+ * Signature
+ * createStore(
+ *   config,
+ *   searchProvider,
+ *   reducers,
+ *   middlewares,
+ *   Store enhancers
+ * )
+ */
+
+module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhancers = []) => {
+  if (!config) {
+    throw new Error('Invalid: Could not find config while creating store in `createStore`')
+  }
+  if (!searchProvider) {
+    throw new Error('Invalid: Could not find searchProvider while creating store in `createStore`')
+  }
   /* Options that should be passed to OlaProvider */
   let { Parser, QueryBuilder, Http } = searchProvider
+
+  if (!Parser || !QueryBuilder || !Http) {
+    throw new Error('Invalid: Search adapters must contain Parser, QueryBuilder and Http prototypes')
+  }
   let options = {
     config,
     parser: new Parser(config), /* For olaMiddleware */

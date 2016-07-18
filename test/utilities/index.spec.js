@@ -245,6 +245,12 @@ describe('Utilities', () => {
   })
 
   describe('sanitizeAnchor', () => {
+    it('converts text to string for number', () => {
+      expect(utils.sanitizeAnchor(100)).toBe('100')
+    })
+    it('returns empty string for no arguments', () => {
+      expect(utils.sanitizeAnchor()).toBe(null)
+    })
     it('converts text to lowercase', () => {
       expect(utils.sanitizeAnchor('HELLO')).toBe('hello')
     })
