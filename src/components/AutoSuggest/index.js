@@ -224,7 +224,8 @@ class AutoSuggest extends React.Component {
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     var klassContainer = classNames('ola-autosuggest', className, {
       'ola-autosuggest-focus': isFocused,
-      'ola-autosuggest-blur': !isFocused
+      'ola-autosuggest-blur': !isFocused,
+      'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
     var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length
     var queryTerm = isFuzzySuggest ? fuzzyQuery || q : q

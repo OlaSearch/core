@@ -85,7 +85,8 @@ class InstantSearchForm extends React.Component {
       : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit'></button>
 
     let klass = classNames('ola-search-form', {
-      'ola-search-zone-enabled': showZone
+      'ola-search-zone-enabled': showZone,
+      'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
 
     return (

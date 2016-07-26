@@ -18,12 +18,12 @@ class GeoLocation extends React.Component {
     if (props.active) this.getLocation()
     this._debouceLocation = once(this.requestGeoLocation)
   }
-  componentDidUpdate (nextProps) {
-    if (nextProps.active !== this.props.active && nextProps.active) {
+  componentDidUpdate (prevProps) {
+    if (prevProps.active !== this.props.active && prevProps.active) {
       // Ask for users gelocation
       this.getLocation()
     }
-    this.prompt(nextProps)
+    this.prompt(this.props)
   }
   shouldComponentUpdate (nextProps) {
     return (

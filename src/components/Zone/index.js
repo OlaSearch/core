@@ -4,6 +4,8 @@ import { addFacet as addFacetAutoSuggest, removeFacet as removeFacetAutoSuggest 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import flatten from 'ramda/src/flatten'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 
 /* Create a zone facet */
 const CREATE_ZONE_FACET = (name) => ({ name, zone: true, type: 'string' })
@@ -34,10 +36,12 @@ class Zone extends React.Component {
     let { selected } = this.props
     let selectedValues = flatten(selected.filter((item) => item.name === filter).map((item) => item.selected))
     let selectedValue = selectedValues.length ? selectedValues[0] : defaultValue
+    let selectedDisplayName = find(propEq('name', selectedValue))(values)['displayName']
 
     return (
       <div className='ola-zone'>
         <label className='ola-zone-label'>Select zone</label>
+        <span className='ola-zone-selected'>{selectedDisplayName}</span>
         <select
           onChange={this.onChange}
           value={selectedValue}
