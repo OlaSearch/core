@@ -20,6 +20,7 @@ module.exports = (WrappedComponent) => {
       if (this.context.router && this.props.location.search !== nextProps.location.search) this.onPopState()
     }
     onPopState = () => {
+      console.log('called')
       this.props.dispatch(initSearch({ config: this.context.config }))
     };
     render () {

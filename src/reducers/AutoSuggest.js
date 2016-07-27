@@ -1,5 +1,6 @@
 import types from './../constants/ActionTypes'
 import omit from 'ramda/src/omit'
+import { SEARCH_INPUTS } from './../constants/Settings'
 
 export const initialState = {
   q: '',
@@ -14,7 +15,8 @@ export const initialState = {
   isLoading: false,
   isOpen: false,
   qt: null,
-  fuzzyQuery: null
+  fuzzyQuery: null,
+  searchInput: null
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -26,6 +28,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         q: action.term,
+        searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
         fuzzyQuery: null
       }
 

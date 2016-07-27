@@ -26,7 +26,7 @@ var urlSync = {
     /* Loop */
     for (var name in params) {
       /* Omit */
-      if (name === 'isSearchActive') continue
+      if (name === 'isSearchActive' || name === 'searchInput') continue
       var value = params[name]
       if (name === 'facet_query') {
         value = value.map((item) => item.name + ':' + item.selected)

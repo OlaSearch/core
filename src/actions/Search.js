@@ -17,10 +17,11 @@ var allowedCharacters = null
 
 var historyType = 'pushState'
 
-export function updateQueryTerm (term) {
+export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM,
-    term
+    term,
+    searchInput
   }
 }
 

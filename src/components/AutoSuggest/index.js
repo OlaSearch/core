@@ -64,7 +64,7 @@ class AutoSuggest extends React.Component {
     this.onBlur()
   };
 
-  onChange = (term) => {
+  onChange = (term, searchInput) => {
     let { dispatch, AutoSuggest, isFuzzySuggest } = this.props
 
     /* Trim text */
@@ -79,7 +79,7 @@ class AutoSuggest extends React.Component {
 
     let { allowedCharacters } = this.context.config
 
-    dispatch(updateQueryTerm(term))
+    dispatch(updateQueryTerm(term, searchInput))
 
     if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
       dispatch(terminateAutoSuggest())

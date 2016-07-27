@@ -1,6 +1,7 @@
 import React from 'react'
 import { updateQueryTerm, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/olaTranslate'
+import { SEARCH_INPUTS } from './../../constants/Settings'
 
 class SpellSuggestion extends React.Component {
   static propTypes = {
@@ -18,12 +19,12 @@ class SpellSuggestion extends React.Component {
   onChange = (term) => {
     var { dispatch } = this.props
 
-    dispatch(updateQueryTerm(term))
+    dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))
 
     dispatch(executeSearch())
   };
   handleClick = (term) => {
-    this.props.onChange ? this.props.onChange(term) : this.onChange(term)
+    this.props.onChange ? this.props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION) : this.onChange(term)
   };
 
   shouldComponentUpdate (nextProps) {

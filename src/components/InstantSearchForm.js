@@ -8,6 +8,7 @@ import GeoLocation from './Geo/GeoLocation'
 import injectTranslate from './../decorators/olaTranslate'
 import Zone from './Zone'
 import classNames from 'classnames'
+import { SEARCH_INPUTS } from './../constants/Settings'
 /**
  * 1. Debounces search for Mobile devices for better performance: Delay can be configured in config file
  *
@@ -40,7 +41,7 @@ class InstantSearchForm extends React.Component {
     minCharacters: React.PropTypes.number
   };
 
-  onChange = (arg) => {
+  onChange = (arg, searchInput) => {
     let { dispatch, minCharacters } = this.props
     let isEvent = !!arg.target
     let term = isEvent ? arg.target.value : arg
@@ -48,13 +49,17 @@ class InstantSearchForm extends React.Component {
     /* Trim */
     if (term.length && trim(term) === '') return
 
-    dispatch(updateQueryTerm(term))
+    dispatch(updateQueryTerm(term, searchInput))
 
     if (isEvent && term && term.length < minCharacters) return
 
     !isEvent && this.refs.Input.focus()
 
     isEvent ? this.searchDebounce() : dispatch(executeSearch())
+  };
+
+  onSpeechChange = (text) => {
+    this.onChange(text, SEARCH_INPUTS.VOICE)
   };
 
   onClear = () => {
@@ -129,8 +134,8 @@ class InstantSearchForm extends React.Component {
           {showHistory && <History searchUrl={this.props.searchUrl} />}
 
           <SpeechInput
-            onResult={this.onChange}
-            onFinalResult={this.onChange}
+            onResult={this.onSpeechChange}
+            onFinalResult={this.onSpeechChange}
             isInstantSearch
           />
         </div>

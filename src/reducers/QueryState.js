@@ -4,6 +4,7 @@ import { checkIfFacetExists, castNumberToStringArray } from './../utilities'
 import indexOf from 'ramda/src/indexOf'
 import omit from 'ramda/src/omit'
 import clone from 'ramda/src/clone'
+import { SEARCH_INPUTS } from './../constants/Settings'
 
 var initialState = {
   q: '',
@@ -13,7 +14,8 @@ var initialState = {
   sort: '',
   filters: [],
   view: '',
-  isSearchActive: true
+  isSearchActive: true,
+  searchInput: null
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -60,13 +62,15 @@ export default (state = initialState, action) => {
     case types.UPDATE_STATE_FROM_QUERY:
       return {
         ...parseQueryString(state, action.config),
-        referrer: ''
+        referrer: '',
+        searchInput: SEARCH_INPUTS.URL
       }
 
     case types.UPDATE_QUERY_TERM:
       return {
         ...state,
         q: action.term,
+        searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
         page: 1,
         isSearchActive: !!action.term /* True if term is present */
       }

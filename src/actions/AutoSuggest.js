@@ -1,9 +1,10 @@
 import types from './../constants/ActionTypes'
 
-export function updateQueryTerm (term) {
+export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM_AUTOSUGGEST,
-    term
+    term,
+    searchInput
   }
 }
 

@@ -153,6 +153,16 @@ const utilities = {
   },
   trim (str) {
     return str.replace(/^\s+|\s+$/g, '')
+  },
+  triggerEvent (el, name, options) {
+    var event;
+    if (window.CustomEvent) {
+      event = new CustomEvent(name, options);
+    } else {
+      event = document.createEvent('CustomEvent');
+      event.initCustomEvent(name, true, true, options);
+    }
+    el.dispatchEvent(event);
   }
 }
 

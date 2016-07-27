@@ -4,6 +4,7 @@ import History from './../History'
 import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
+import { SEARCH_INPUTS } from './../../constants/Settings'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -79,8 +80,11 @@ export default class Input extends React.Component {
     return this.props.onSearchButtonClick ? this.props.onSearchButtonClick() : this.refs.Input.focus()
   };
 
-  handleInputChange = (arg) => {
-    this.props.onChange(arg.target ? arg.target.value : arg)
+  handleInputChange = (arg, searchInput) => {
+    this.props.onChange(arg.target ? arg.target.value : arg, searchInput)
+  };
+  handleSpeechChange = (text) => {
+    this.handleInputChange(text, SEARCH_INPUTS.VOICE)
   };
   shouldComponentUpdate (nextProps) {
     return nextProps.q !== this.props.q
@@ -131,8 +135,8 @@ export default class Input extends React.Component {
         {button}
 
         <SpeechInput
-          onResult={this.handleInputChange}
-          onFinalResult={this.handleInputChange}
+          onResult={this.handleSpeechChange}
+          onFinalResult={this.handleSpeechChange}
           isAutosuggest
         />
 
