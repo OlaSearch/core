@@ -72,6 +72,8 @@ class InstantSearchForm extends React.Component {
   onSubmit = (event) => event.preventDefault();
   onChangeZone = () => {
     this.refs.Input.focus()
+
+    if (this.props.onChangeZone) return this.props.onChangeZone()
     if (this.props.q) this.props.dispatch(executeSearch())
   };
 

@@ -80,6 +80,50 @@ And fixing any JS style issues before committing files
 2. Components
 	- All components
 
+
+## Installation
+
+#### Step 1
+
+````
+git clone git+ssh://git@bitbucket.org/olasearch/olasearch-core.git
+cd olasearch-core/
+npm install
+````
+
+#### Step 2
+
+````
+Create a configuration file from src/CONFIG.SAMPLE.js
+````
+
+#### Step 3
+
+Initialize Ola Search
+````
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Parser, QueryBuilder, Http } from 'olasearch-elasticsearch-adapter';
+import config from './config.elasticsearch';
+import { createStore, OlaProvider, Search } from 'olasearch'
+
+/* DOM */
+var root = document.getElementById('ola-serp')
+
+/* Store */
+let store = createStore(config, { Parser, QueryBuilder, Http }, {}, [])
+
+/* Render */
+
+ReactDOM.render(
+  <OlaProvider config={config} store = {store}>
+    <Search />
+  </OlaProvider>
+  , root
+);
+
+````
+
 ## Sending logs
 
 Sending logs are handled by the Search adapter. To enable logging, add the below to the config file

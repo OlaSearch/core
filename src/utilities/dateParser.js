@@ -8,6 +8,9 @@ const DateParser = {
       date = fecha.parse(date, originalFormat || defaultMask)
     }
     return fecha.format(date, mask)
+  },
+  today (mask = defaultMask) {
+    return this.format(new Date(), mask)
   }
 }
 
