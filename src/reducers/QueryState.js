@@ -1,5 +1,4 @@
 import types from './../constants/ActionTypes'
-import { parseQueryString } from './../services/urlSync'
 import { checkIfFacetExists, castNumberToStringArray } from './../utilities'
 import indexOf from 'ramda/src/indexOf'
 import omit from 'ramda/src/omit'
@@ -61,7 +60,7 @@ export default (state = initialState, action) => {
 
     case types.UPDATE_STATE_FROM_QUERY:
       return {
-        ...parseQueryString(state, action.config),
+        ...action.stateFromUrl,
         referrer: '',
         searchInput: SEARCH_INPUTS.URL
       }

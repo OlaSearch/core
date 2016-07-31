@@ -1,6 +1,6 @@
 import types from './../constants/ActionTypes'
 import { debouceAddHistory } from './History'
-import { pushState } from './../services/urlSync'
+import { parseQueryString, pushState } from './../services/urlSync'
 import { debounce, checkForAllowedCharacters } from './../utilities'
 
 /* Update Browser URL */
@@ -192,9 +192,12 @@ export function changeView (view) {
 }
 
 export function updateStateFromQuery (config) {
-  return {
-    type: types.UPDATE_STATE_FROM_QUERY,
-    config
+  return (dispatch, getState) => {
+    let stateFromUrl = parseQueryString(getState().QueryState, config)
+    dispatch({
+      type: types.UPDATE_STATE_FROM_QUERY,
+      stateFromUrl
+    })
   }
 }
 

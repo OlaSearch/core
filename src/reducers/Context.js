@@ -20,8 +20,7 @@ export default (state = initialState, action) => {
         isRequestingLocation: true
       }
     case types.REQUEST_GEO_LOCATION_SUCCESS:
-      let { coords } = action.payload
-      let { latitude, longitude } = coords
+      let { coords: { latitude, longitude } } = action.payload
       return {
         ...state,
         isRequestingLocation: false,

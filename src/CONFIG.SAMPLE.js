@@ -25,7 +25,7 @@ module.exports = {
     headers: {}
   },
   logger: {
-    enabled: process.env.OLA_ENV  === 'production'? true : true,
+    enabled: process.env.OLA_ENV === 'production',
     engine: ['google', 'logstash'],
     url: '/log',
     headers: {
@@ -70,14 +70,14 @@ module.exports = {
     {
       name: 'highlight',
       key: 'highlight',
-      value:  "true"
+      value: 'true'
     },
     {
       name: 'highlight_fields',
       key: 'highlight_fields',
-      value:  ["title_t", "description_t"],
-      matched_fields: [["title_t", "title_t.word", "title_t.ngram"], []],
-      pre_tags: ['<em class="ola-highlight">'],
+      value: ['title_t', 'description_t'],
+      matched_fields: [['title_t', 'title_t.word', 'title_t.ngram'], []],
+      pre_tags: ['<em class=\'ola-highlight\'>'],
       post_tags: ['</em>']
     }
   ],
@@ -101,14 +101,14 @@ module.exports = {
     {
       name: 'highlight',
       key: 'highlight',
-      value:  "true"
+      value: 'true'
     },
     {
       name: 'highlight_fields',
       key: 'highlight_fields',
-      value:  ["title_t", "description_t"],
-      matched_fields: [["title_t", "title_t.word", "title_t.ngram"], []],
-      pre_tags: ['<em class="ola-highlight">'],
+      value: ['title_t', 'description_t'],
+      matched_fields: [['title_t', 'title_t.word', 'title_t.ngram'], []],
+      pre_tags: ['<em class=\'ola-highlight\'>'],
       post_tags: ['</em>']
     }
   ],

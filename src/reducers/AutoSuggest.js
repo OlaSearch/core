@@ -97,7 +97,6 @@ export default (state = initialState, action) => {
       facet = action.facet
       value = action.value
       var { name, displayName, type, multiSelect, template, label } = facet
-
       return {
         ...state,
         facet_query: [{
@@ -107,12 +106,9 @@ export default (state = initialState, action) => {
       }
 
     case types.REMOVE_FACET_AUTOSUGGEST:
-      facet = action.facet
-      value = action.value
-
       return {
         ...state,
-        facet_query: state.facet_query.filter((f) => f.name !== facet.name)
+        facet_query: state.facet_query.filter((f) => f.name !== action.facet.name)
       }
 
     default:

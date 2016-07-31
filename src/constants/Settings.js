@@ -9,13 +9,13 @@ export const LOCALE_STORAGE_TTL = 30 /* Days */
 
 /**
  * Search Input types
+ * SPELL_CORRECT: 'spell_suggestion',  Use suggestedTerm in logs to filter these
+ * HISTORY: 'history' We are already tracking clicks on history items eventType C, eventLabel History
  */
 
 export const SEARCH_INPUTS = {
   KEYBOARD: 'keyboard',
   VOICE: 'voice',
   URL: 'url',
-  DID_YOU_MEAN_SUGGESTION: 'suggestion',
-  /* SPELL_CORRECT: 'spell_suggestion',  Use suggestedTerm in logs to filter these */
-  /* HISTORY: 'history' We are already tracking clicks on history items eventType C, eventLabel History */
+  DID_YOU_MEAN_SUGGESTION: 'suggestion'
 }

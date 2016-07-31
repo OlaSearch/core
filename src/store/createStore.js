@@ -51,7 +51,8 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
   } else {
     var createLogger = require('redux-logger')
     const logger = createLogger({
-      collapsed: true
+      collapsed: true,
+      duration: true
     })
     store = createStore(
       olaReducers,

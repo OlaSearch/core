@@ -155,14 +155,14 @@ const utilities = {
     return str.replace(/^\s+|\s+$/g, '')
   },
   triggerEvent (el, name, options) {
-    var event;
+    var event
     if (window.CustomEvent) {
-      event = new CustomEvent(name, options);
+      event = new window.CustomEvent(name, options)
     } else {
-      event = document.createEvent('CustomEvent');
-      event.initCustomEvent(name, true, true, options);
+      event = document.createEvent('CustomEvent')
+      event.initCustomEvent(name, true, true, options)
     }
-    el.dispatchEvent(event);
+    el.dispatchEvent(event)
   }
 }
 

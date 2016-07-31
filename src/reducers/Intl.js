@@ -2,9 +2,8 @@ import types from './../constants/ActionTypes'
 import { LOCALE_STORAGE_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
-var localeFromStorage = storage.cookies.get(LOCALE_STORAGE_KEY)
 var initialState = {
-  locale: localeFromStorage || 'en'
+  locale: storage.cookies.get(LOCALE_STORAGE_KEY) || 'en'
 }
 
 export default (state = initialState, action) => {

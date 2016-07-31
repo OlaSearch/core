@@ -6,7 +6,7 @@ const PerPage = ({ perPage, translate, dispatch }, context) => {
   let values = context.config.perPage
   return (
     <div className='ola-per-page'>
-      <label>{translate('per_page_label')}</label>
+      <label className='ola-per-page-label'>{translate('per_page_label')}</label>
       <select
         defaultValue={perPage}
         className='ola-per-page-select'

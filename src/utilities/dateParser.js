@@ -5,7 +5,11 @@ const DateParser = {
   format (date, mask = defaultMask, originalFormat) {
     if (!date) return
     if (typeof date === 'string' || typeof date === 'number') {
-      date = fecha.parse(date, originalFormat || defaultMask)
+      try {
+        date = fecha.parse(date, originalFormat || defaultMask)
+      } catch (e) {
+        console.warn(e)
+      }
     }
     return fecha.format(date, mask)
   },
