@@ -8,13 +8,13 @@ import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
 
 /* Create a zone facet */
-const CREATE_ZONE_FACET = (name) => ({ name, zone: true, type: 'string' })
+const createZoneFacet = (name) => ({ name, zone: true, type: 'string' })
 
 class Zone extends React.Component {
   onChange = (event) => {
     let { value } = event.target
     let { onChange, replaceFacet, removeFacet } = this.props
-    let facet = CREATE_ZONE_FACET(this.context.config.zone.filter)
+    let facet = createZoneFacet(this.context.config.zone.filter)
     if (value) {
       replaceFacet(facet, value)
     } else {

@@ -13,7 +13,7 @@ import TermSuggestion from './../components/SpellSuggestions/TermSuggestion'
 import SpellSuggestion from './../components/SpellSuggestions/SpellSuggestion'
 import Sort from './../components/Sort'
 import SearchFooter from './../components/SearchFooter'
-import { OlaRoute } from './../decorators/OlaRoute'
+import { olaRoute } from './../decorators/OlaRoute'
 import { initSearch } from './../actions/Search'
 import classNames from 'classnames'
 
@@ -197,4 +197,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(OlaRoute(Search))
+module.exports = connect(mapStateToProps)(olaRoute(Search))

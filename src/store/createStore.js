@@ -58,7 +58,7 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
       olaReducers,
       compose(
         applyMiddleware(thunk, olaMiddleWare, logger, ...middlewares),
-        window.devToolsExtension ? window.devToolsExtension() : f => f,
+        window.devToolsExtension ? window.devToolsExtension() : (f) => f,
         ...enhancers
       )
     )

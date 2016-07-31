@@ -72,4 +72,3 @@ class BookmarkActions extends React.Component {
 }
 
 module.exports = injectTranslate(BookmarkActions)
-
