@@ -1,7 +1,8 @@
 import types from './../constants/ActionTypes'
 import { debouceAddHistory } from './History'
 import { parseQueryString, pushState } from './../services/urlSync'
-import { debounce, checkForAllowedCharacters } from './../utilities'
+import { debounce, checkForAllowedCharacters, castNumberToStringArray } from './../utilities'
+import omit from 'ramda/src/omit'
 
 /* Update Browser URL */
 const updateURL = debounce(pushState, 300)
@@ -71,13 +72,15 @@ export function executeSearch (payload) {
     var query = state.QueryState
     var { q, isSearchActive, facet_query, filters } = query
     var context = state.Context
+
+    /* If no query and search is not active (searchOnLoad = false) */
     if (allowedCharacters &&
       !checkForAllowedCharacters(q, allowedCharacters)
-      || !(isSearchActive || (!!q || facet_query.length || filters.length)) /* If no query and search is not active (searchOnLoad = false) */
+      || !(isSearchActive || (!!q || facet_query.length || filters.length))
     ) {
       // Terminate search
       dispatch(terminateSearch())
-      // Update the URL first
+      // Update the URL
       updateURL(query, historyType)
       return
     }
@@ -119,21 +122,41 @@ export function addFacet (facet, value) {
   return (dispatch, getState) => {
     acceptSuggestedTerm(dispatch, getState)
 
+    /**
+     * Always convert Array to strings
+     * [1, 2] => ["1", "2"]
+     */
+    if (value instanceof Array) value = castNumberToStringArray(value)
+
     dispatch({
       type: types.ADD_FACET,
-      facet, value
+      facet: omit('values', facet),
+      value
     })
   }
 }
 
 export function removeFacet (facet, value) {
+  /**
+   * Always convert Array to strings
+   * [1, 2] => ["1", "2"]
+   */
+  if (value instanceof Array) value = castNumberToStringArray(value)
+
   return {
     type: types.REMOVE_FACET,
-    facet, value
+    facet,
+    value
   }
 }
 
 export function replaceFacet (facet, value) {
+  /**
+   * Always convert Array to strings
+   * [1, 2] => ["1", "2"]
+   */
+  if (value instanceof Array) value = castNumberToStringArray(value)
+
   return {
     type: types.REPLACE_FACET,
     facet, value

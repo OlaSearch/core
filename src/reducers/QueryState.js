@@ -1,5 +1,5 @@
 import types from './../constants/ActionTypes'
-import { checkIfFacetExists, castNumberToStringArray } from './../utilities'
+import { checkIfFacetExists } from './../utilities'
 import indexOf from 'ramda/src/indexOf'
 import omit from 'ramda/src/omit'
 import clone from 'ramda/src/clone'
@@ -18,37 +18,37 @@ var initialState = {
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
-var fq, facet, value, index, props
+var fq, facet, value, index, props, exists
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_FILTER:
-      /* Remove duplicate */
       let { filter, selected } = action.payload
       index = checkIfFacetExists(state.filters, filter.name)
-
-      if (index === null) {
+      if (index !== null) {
         return {
           ...state,
           filters: [ ...state.filters, { ...filter, selected } ]
         }
       } else {
-        /* Update the value */
-        let newFilter = clone(state.filters)
-        newFilter[index].selected = selected
-
         return {
           ...state,
-          filters: newFilter
+          filters: state.filters.map((item) => {
+            if (item.name === filter.name) {
+              return {
+                ...item,
+                selected
+              }
+            }
+            return item
+          })
         }
       }
 
     case types.REMOVE_FILTER:
-      var { name } = action.payload
-
       return {
         ...state,
-        filters: state.filters.filter((item) => item.name !== name),
+        filters: state.filters.filter((item) => item.name !== action.payload.name),
         page: 1
       }
 
@@ -70,97 +70,80 @@ export default (state = initialState, action) => {
         ...state,
         q: action.term,
         searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
-        page: 1,
-        isSearchActive: !!action.term /* True if term is present */
+        page: 1
       }
 
     case types.CLEAR_QUERY_TERM:
       return {
         ...state,
         q: '',
-        page: 1,
-        isSearchActive: false
+        page: 1
       }
 
     case types.ADD_FACET:
-      /* Check if key exists then update selected =[] OR Add new record with selected[] */
-      value = action.value
-      facet = action.facet
-      props = omit('values', facet)
-      fq = clone(state.facet_query)
-      index = checkIfFacetExists(fq, facet.name)
-
-      /**
-       * Always convert Array to strings
-       * [1, 2] => ["1", "2"]
-       */
-      if (value instanceof Array) value = castNumberToStringArray(value)
-
-      if (index === null) {
-        fq.push({
-          ...props,
-          selected: [value]
-        })
+      index = checkIfFacetExists(state.facet_query, action.facet.name)
+      if (index !== null) {
+        return {
+          ...state,
+          facet_query: state.facet_query.map((item) => {
+            if (item.name === action.facet.name) {
+              return {
+                ...item,
+                selected: [ ...item.selected, action.value ]
+              }
+            }
+            return item
+          })
+        }
       } else {
-        fq[index].selected.push(value)
-      }
-
-      return {
-        ...state,
-        facet_query: fq,
-        page: 1
-      }
-
-    case types.REMOVE_FACET:
-      fq = clone(state.facet_query)
-      facet = action.facet
-      value = action.value
-
-      if (value instanceof Array) value = castNumberToStringArray(value)
-
-      for (var i = fq.length - 1; i >= 0; i--) {
-        let cur = fq[i]
-        let { selected } = cur
-
-        if (cur.name === facet.name) {
-          /* Remove selections if No value is supplied */
-
-          if (!value) selected = []
-
-          selected.splice(
-            indexOf(value, selected), 1
-          )
-
-          if (!selected.length) fq = [ ...fq.slice(0, i), ...fq.slice(i + 1) ]
+        return {
+          ...state,
+          facet_query: [ ...state.facet_query, {
+            ...action.facet,
+            selected: [action.value]
+          }]
         }
       }
 
+    case types.REMOVE_FACET:
       return {
         ...state,
-        facet_query: fq,
-        page: 1
+        facet_query: state.facet_query.map((item) => {
+          if (item.name === action.facet.name) {
+            let i = indexOf(action.value, item.selected)
+            return {
+              ...item,
+              selected: [ ...item.selected.slice(0, i), ...item.selected.slice(i + 1) ]
+            }
+          }
+          return item
+        })
+        .filter((item) => item.selected.length)
       }
 
     case types.REPLACE_FACET:
-      /* Check if key exists then update selected =[] OR Add new record with selected[] */
-      value = action.value
-      facet = action.facet
-      props = omit('values', facet)
-      fq = clone(state.facet_query)
-      index = checkIfFacetExists(fq, facet.name)
-
-      if (index === null) {
-        fq = [...fq, {
-          ...props,
-          selected: [value]
-        }]
+      index = checkIfFacetExists(state.facet_query, action.facet.name)
+      if (index !== null) {
+        return {
+          ...state,
+          facet_query: state.facet_query.map((item) => {
+            if (item.name === action.facet.name) {
+              return {
+                ...item,
+                selected: [action.value]
+              }
+            }
+            return item
+          })
+        }
       } else {
-        fq[index].selected = [value]
-      }
-      return {
-        ...state,
-        facet_query: fq,
-        page: 1
+        return {
+          ...state,
+          facet_query: [ ...state.facet_query, {
+            ...action.facet,
+            selected: [action.value]
+          }]
+        }
       }
 
     case types.REMOVE_ALL_FACETS:

@@ -4,12 +4,14 @@ const defaultMask = 'YYYY-MM-DD'
 const DateParser = {
   format (date, mask = defaultMask, originalFormat) {
     if (!date) return
-    if (typeof date === 'string' || typeof date === 'number') {
-      try {
-        date = fecha.parse(date, originalFormat || defaultMask)
-      } catch (e) {
-        console.warn(e)
-      }
+    if (typeof date === 'number' || !isNaN(date)) {
+      date = new Date(date)
+      return fecha.format(date, mask)
+    }
+    try {
+      date = fecha.parse(date, originalFormat || defaultMask)
+    } catch (e) {
+      console.warn(e, date)
     }
     return fecha.format(date, mask)
   },
