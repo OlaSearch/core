@@ -272,5 +272,7 @@ describe('Utilities', () => {
     it('removes whitespaces', () => {
       expect(utils.trim(' hey ')).toEqual('hey')
     })
+
+    // it('handles numbers', () => )
   })
 })

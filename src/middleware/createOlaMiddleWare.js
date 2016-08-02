@@ -72,7 +72,7 @@ module.exports = (options = {}) => {
     })
 
     /* Add timestamp to query */
-    let currentState = getState()
+    var currentState = getState()
     let timestampObj = {
       timestamp: currentState.Timestamp.timestamp
     }
@@ -181,7 +181,7 @@ module.exports = (options = {}) => {
             eventType: 'Q',
             eventSource: api,
             debounce: true,
-            getState
+            state: currentState
           })
         }
       },

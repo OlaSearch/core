@@ -6,8 +6,6 @@ class Title extends React.Component {
   logClick = (event) => {
     let { onClick, result, isBookmark, isAutosuggest } = this.props
 
-    if (onClick) onClick(event)
-
     /* Send Log */
     let eventLabel = isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : null
     this.context.store.dispatch(log({
@@ -17,6 +15,8 @@ class Title extends React.Component {
       eventAction: 'click',
       eventLabel
     }))
+
+    if (onClick) onClick(event)
   };
 
   render () {

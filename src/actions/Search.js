@@ -69,10 +69,17 @@ export function executeSearch (payload) {
     /* Check if there is a suggested term */
     var state = getState()
     var query = state.QueryState
+    var { q, isSearchActive, facet_query, filters } = query
     var context = state.Context
-
-    if (allowedCharacters && !checkForAllowedCharacters(query.q, allowedCharacters)) {
-      return dispatch(terminateSearch())
+    if (allowedCharacters &&
+      !checkForAllowedCharacters(q, allowedCharacters)
+      || !(isSearchActive || (!!q || facet_query.length || filters.length)) /* If no query and search is not active (searchOnLoad = false) */
+    ) {
+      // Terminate search
+      dispatch(terminateSearch())
+      // Update the URL first
+      updateURL(query, historyType)
+      return
     }
 
     dispatch({
@@ -194,6 +201,7 @@ export function changeView (view) {
 export function updateStateFromQuery (config) {
   return (dispatch, getState) => {
     let stateFromUrl = parseQueryString(getState().QueryState, config)
+
     dispatch({
       type: types.UPDATE_STATE_FROM_QUERY,
       stateFromUrl
@@ -208,27 +216,27 @@ export function setStorageKey (key) {
   }
 }
 
-export function initSearch (options) {
+/**
+ * Initializes search
+ * @param  {[type]} options [description]
+ * @return {[type]}         [description]
+ */
+export function initSearch ({ config, urlSync = true }) {
   return (dispatch, getState) => {
-    let { config, urlSync } = options
     let { history, filters, searchOnLoad = true } = config
 
-    /* Should Ola Search read state from query string */
-
-    let shouldSyncURL = urlSync === undefined || urlSync
-
+    /* History type: pushState or hash */
     historyType = history || historyType
 
     /* Always pass configuration to @parseQueryString handler */
 
-    shouldSyncURL && dispatch(updateStateFromQuery(config))
+    urlSync && dispatch(updateStateFromQuery(config))
 
     /* Set global variable */
     allowedCharacters = config.allowedCharacters
 
     /* Global setting */
-
-    globalRouteChange = shouldSyncURL
+    globalRouteChange = urlSync
 
     /* Add filters */
     filters && filters.forEach((filter) => {
@@ -239,19 +247,19 @@ export function initSearch (options) {
     /* De-activate search if searchOnLoad is false */
     if (!searchOnLoad) {
       let { q, facet_query, filters } = getState().QueryState
-      let shouldActivateSearch = q || facet_query.length || filters.length
+      let shouldSearch = q || facet_query.length || filters.length
 
       /**
        * Use
        * !this.context.config.searchOnLoad && QueryState.isSearchActive
        * to show hide results
        */
-      if (!shouldActivateSearch) {
-        dispatch({
-          type: types.SET_SEARCH_STATUS,
-          status: searchOnLoad
-        })
-      } else {
+      dispatch({
+        type: types.SET_SEARCH_STATUS,
+        status: searchOnLoad
+      })
+
+      if (shouldSearch) {
         dispatch(executeSearch({
           routeChange: false
         }))

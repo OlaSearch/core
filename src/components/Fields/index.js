@@ -13,5 +13,6 @@ module.exports = {
   Thumbnail: require('./Thumbnail'),
   Title: require('./Title'),
   Year: require('./Year'),
-  DocumentPages: require('./DocumentPages')
+  DocumentPages: require('./DocumentPages'),
+  Button: require('./Button')
 }

@@ -22,10 +22,11 @@ export function log (params) {
   /* If not event type is specified */
   if (!eventType) throw new Error('Invalid: eventType is required')
   return (dispatch, getState) => {
+    let state = getState()
     if (debounce) {
-      return debounceLog({ dispatch, getState, eventType, ...rest })
+      return debounceLog({ dispatch, state, eventType, ...rest })
     }
-    return submitLog({ dispatch, getState, eventType, ...rest })
+    return submitLog({ dispatch, state, eventType, ...rest })
   }
 }
 
@@ -33,11 +34,11 @@ export function log (params) {
  * Log submit function
  */
 function submitLog (args) {
-  var { dispatch, getState, ...rest } = args
+  var { dispatch, state, ...rest } = args
   dispatch({
     log: true,
     type: 'SEND_LOG',
-    state: getState(),
+    state,
     ...rest
   })
 }
