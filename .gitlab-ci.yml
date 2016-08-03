@@ -1,9 +1,6 @@
-image: node:4.0.0
-
 before_script:
-    - npm install -g npm@3.x.x --silence
+    - npm install -g npm@3.5.3 --silence
     - npm install --silence
 
-run_tests:
-  script:
-   - npm run test
+test:
+  script: npm run test
