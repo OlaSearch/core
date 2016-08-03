@@ -27,7 +27,7 @@ class TabsFilter extends React.Component {
      */
     var { dispatch, resetFacetsOnSelect } = this.props
 
-    // if (resetFacetsOnSelect) dispatch(removeAllFacets())
+    if (resetFacetsOnSelect) dispatch(removeAllFacets())
 
     dispatch(replaceFacet(facet, value))
 

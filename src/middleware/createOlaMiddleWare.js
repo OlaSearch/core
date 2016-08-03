@@ -181,7 +181,7 @@ module.exports = (options = {}) => {
             eventType: 'Q',
             eventSource: api,
             debounce: true,
-            state: currentState
+            state: getState()
           })
         }
       },

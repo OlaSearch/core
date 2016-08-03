@@ -1,8 +1,5 @@
 import types from './../constants/ActionTypes'
 import { checkIfFacetExists } from './../utilities'
-import indexOf from 'ramda/src/indexOf'
-import omit from 'ramda/src/omit'
-import clone from 'ramda/src/clone'
 import { SEARCH_INPUTS } from './../constants/Settings'
 
 var initialState = {
@@ -18,7 +15,7 @@ var initialState = {
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
-var fq, facet, value, index, props, exists
+var index
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -110,10 +107,9 @@ export default (state = initialState, action) => {
         ...state,
         facet_query: state.facet_query.map((item) => {
           if (item.name === action.facet.name) {
-            let i = indexOf(action.value, item.selected)
             return {
               ...item,
-              selected: [ ...item.selected.slice(0, i), ...item.selected.slice(i + 1) ]
+              selected: item.selected.filter((val) => val !== action.value)
             }
           }
           return item

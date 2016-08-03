@@ -57,7 +57,6 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_AUTOSUGGEST_SUCCESS:
-
       var {
         spellSuggestions,
         results,
