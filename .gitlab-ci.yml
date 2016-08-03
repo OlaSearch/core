@@ -4,4 +4,6 @@ before_script:
     - npm install --silence
 
 test:
-  script: npm run test
+  script:
+  - npm run standard
+  - npm run test

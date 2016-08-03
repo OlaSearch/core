@@ -1,6 +1,8 @@
 # OlaSearch
 OlaSearch is a fully customisable front-end search interface that brings your information collection to life
 
+[![build status](https://gitlab.com/olasearch/olasearch-core/badges/master/build.svg)](https://gitlab.com/olasearch/olasearch-core/commits/master)
+
 ## Todo
 
 - [x] Search history
