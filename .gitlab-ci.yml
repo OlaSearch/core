@@ -1,6 +1,10 @@
 image: node:4.2.2
 
-all_tests:
+before_script:
+    - npm install -g npm@3.x.x
+    - npm set progress=false
+    - npm install
+
+run_tests:
   script:
-   - npm install
    - npm run test
