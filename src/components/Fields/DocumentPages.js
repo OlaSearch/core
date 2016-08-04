@@ -1,14 +1,32 @@
 import React from 'react'
 import HighlightedField from './HighlightedField'
 
-const DocumentPages = ({ pages, q, onSelectPage }) => {
+const DocumentPages = ({ pages, q, onSelectPage, contentField }) => {
   return (
     <div>
-      {pages.map((page, idx) => <PageDetail onSelectPage={onSelectPage} page={page} key={idx} />)}
+      {pages.map((page, idx) =>
+        <PageDetail
+          onSelectPage={onSelectPage}
+          page={page}
+          contentField={contentField}
+          feld
+          key={idx}
+        />
+      )}
     </div>
   )
 }
 
+/**
+ * Default props
+ */
+DocumentPages.defaultProps = {
+  contentField: 'pageContent'
+}
+
+/**
+ * Page detail
+ */
 class PageDetail extends React.Component {
   onSelectPage = () => {
     this.props.onSelectPage(this.props.page)
@@ -25,7 +43,7 @@ class PageDetail extends React.Component {
         >
           <span>p. {pageNumber}</span>
         </a>
-        <HighlightedField field='pageContent' result={page} />
+        <HighlightedField field={this.props.contentField} result={page} />
       </div>
     )
   }
