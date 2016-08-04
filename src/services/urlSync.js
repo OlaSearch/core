@@ -28,16 +28,17 @@ var urlSync = {
       /* Omit */
       if (name === 'isSearchActive' || name === 'searchInput') continue
       var value = params[name]
+
+      /* Facets */
       if (name === 'facet_query') {
         value = value.map((item) => item.name + ':' + item.selected)
       }
 
+      /* Filters */
       if (name === 'filters') {
         value = value.map((item) => {
           var { name, selected } = item
-
           if (typeof selected === 'object') selected = queryString.stringify(selected)
-
           return name + ':' + selected
         })
       }

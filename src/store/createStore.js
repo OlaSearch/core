@@ -23,22 +23,24 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
     throw new Error('Invalid: Could not find searchProvider while creating store in `createStore`')
   }
   /* Options that should be passed to OlaProvider */
-  let { Parser, QueryBuilder, Http } = searchProvider
+  const { Parser, QueryBuilder, Http } = searchProvider
 
   if (!Parser || !QueryBuilder || !Http) {
-    throw new Error('Invalid: Search adapters must contain Parser, QueryBuilder and Http prototypes')
+    throw new Error('Invalid: Search adapters must contain Parser, QueryBuilder and Http functions')
   }
-  let options = {
+  const options = {
     config,
     parser: new Parser(config), /* For olaMiddleware */
     queryBuilder: new QueryBuilder(config), /* For olaMiddleware */
     searchService: new Http(config) /* For olaMiddleware */
   }
-  let olaMiddleWare = createOlaMiddleware(options)
+  const olaMiddleWare = createOlaMiddleware(options)
 
   /* Reducer */
-  let olaReducers = combineReducers(Object.assign({}, olaReducer, reducers))
-  let store
+  const olaReducers = combineReducers(Object.assign({}, olaReducer, reducers))
+
+  /* Store */
+  var store
 
   if (process.env.NODE_ENV === 'production') {
     store = createStore(
@@ -49,7 +51,7 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
       )
     )
   } else {
-    var createLogger = require('redux-logger')
+    const createLogger = require('redux-logger')
     const logger = createLogger({
       collapsed: true,
       duration: true
