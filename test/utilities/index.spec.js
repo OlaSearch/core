@@ -301,6 +301,7 @@ describe('Utilities', () => {
 
     it('can parse numbers and strings', () => {
       expect(utils.sanitizePhone(90291442)).toEqual(90291442)
+      expect(utils.sanitizePhone(1234)).toEqual(1234)
       expect(utils.sanitizePhone('abc')).toEqual('')
     })
   })
