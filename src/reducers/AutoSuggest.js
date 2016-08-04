@@ -19,9 +19,6 @@ export const initialState = {
   searchInput: null
 }
 
-/* Prevents redeclared variables for `JS Standard` compatiblity */
-var facet, value
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.UPDATE_QUERY_TERM_AUTOSUGGEST:
@@ -93,14 +90,12 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_FACET_AUTOSUGGEST:
-      facet = action.facet
-      value = action.value
-      var { name, displayName, type, multiSelect, template, label } = facet
+      var { name, displayName, type, multiSelect, template, label } = action.facet
       return {
         ...state,
         facet_query: [{
           name, type, displayName, multiSelect, template, label,
-          selected: [value]
+          selected: [action.value]
         }]
       }
 

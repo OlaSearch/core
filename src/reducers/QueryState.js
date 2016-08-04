@@ -15,14 +15,14 @@ var initialState = {
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
-var index
+var exists
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_FILTER:
       let { filter, selected } = action.payload
-      index = checkIfFacetExists(state.filters, filter.name)
-      if (index !== null) {
+      exists = checkIfFacetExists(state.filters, filter.name)
+      if (exists) {
         return {
           ...state,
           filters: [ ...state.filters, { ...filter, selected } ]
@@ -78,8 +78,8 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_FACET:
-      index = checkIfFacetExists(state.facet_query, action.facet.name)
-      if (index !== null) {
+      exists = checkIfFacetExists(state.facet_query, action.facet.name)
+      if (exists) {
         return {
           ...state,
           facet_query: state.facet_query.map((item) => {
@@ -109,7 +109,10 @@ export default (state = initialState, action) => {
           if (item.name === action.facet.name) {
             return {
               ...item,
-              selected: item.selected.filter((val) => val !== action.value)
+              selected: item.selected.filter((val) => {
+                // console.log(val, action.value, val.indexOf(action.value))
+                return val !== action.value
+              })
             }
           }
           return item
@@ -118,8 +121,8 @@ export default (state = initialState, action) => {
       }
 
     case types.REPLACE_FACET:
-      index = checkIfFacetExists(state.facet_query, action.facet.name)
-      if (index !== null) {
+      exists = checkIfFacetExists(state.facet_query, action.facet.name)
+      if (exists) {
         return {
           ...state,
           facet_query: state.facet_query.map((item) => {

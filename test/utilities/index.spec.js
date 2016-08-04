@@ -94,11 +94,11 @@ describe('Utilities', () => {
 
   describe('checkIfFacetExists', () => {
     it('finds a match in facet array', () => {
-      expect(utils.checkIfFacetExists(FACETS_STUB, 'genres_sm')).toEqual(0)
+      expect(utils.checkIfFacetExists(FACETS_STUB, 'genres_sm')).toEqual(true)
     })
 
     it('returns null when no match is found', () => {
-      expect(utils.checkIfFacetExists(FACETS_STUB, 'genres_sms')).toEqual(null)
+      expect(utils.checkIfFacetExists(FACETS_STUB, 'genres_sms')).toEqual(false)
     })
   })
 

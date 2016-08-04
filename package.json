@@ -20,17 +20,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/olasearch/olasearch-core"
+    "url": "git+ssh://git@gitlab.com/olasearch/olasearch-core.git"
   },
   "keywords": [
     "olasearch"
   ],
-  "author": "Vinay M <vinay@olasearch.com> (http://bitbucket.com/olasearch)",
+  "author": "Vinay M <vinay@olasearch.com> (http://gitlab.com/olasearch)",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://bitbucket.org/olasearch/olasearch-core/issues"
+    "url": "https://gitlab.com/olasearch/olasearch-core/issues"
   },
-  "homepage": "https://bitbucket.org/olasearch/olasearch-core",
+  "homepage": "https://gitlab.com/olasearch/olasearch-core",
   "standard": {
     "parser": "babel-eslint",
     "ignore": [

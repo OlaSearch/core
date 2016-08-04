@@ -12,12 +12,7 @@ const utilities = {
     return (suffix || '') + arr.join(separator)
   },
   checkIfFacetExists (facets, name) {
-    for (let i = 0; i < facets.length; i++) {
-      if (facets[i].name === name) {
-        return i
-      }
-    }
-    return null
+    return facets.some((item) => item.name === name)
   },
   now () {
     return new Date().getTime()
