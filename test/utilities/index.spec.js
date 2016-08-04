@@ -275,4 +275,28 @@ describe('Utilities', () => {
 
     // it('handles numbers', () => )
   })
+
+  describe('sanitizePhone', () => {
+    it('removes spaces', () => {
+      expect(utils.sanitizePhone('+65 1234')).toEqual('+651234')
+    })
+
+    it('removes special characters', () => {
+      expect(utils.sanitizePhone('+65 (1234)')).toEqual('+651234')
+      expect(utils.sanitizePhone('+65asa(1234)')).toEqual('+651234')
+    })
+
+    it('takes first element', () => {
+      expect(utils.sanitizePhone('+65 (1234)/ + 65 1234')).toEqual('+651234')
+    })
+
+    it('parses arrays of numbers', () => {
+      expect(utils.sanitizePhone('+65 (1234)/ + 65 1234 / 12312312/12312')).toEqual('+651234')
+    })
+
+    it('can parse numbers and strings', () => {
+      expect(utils.sanitizePhone('90291442')).toEqual('90291442')
+      expect(utils.sanitizePhone('abc')).toEqual('')
+    })
+  })
 })

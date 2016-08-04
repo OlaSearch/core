@@ -151,6 +151,11 @@ const utilities = {
     // return '#' + str;
     return str
   },
+  sanitizePhone (number) {
+    return number.split('/')
+      .shift()
+      .replace(/[a-z_\s-\(\)]/gi, '')
+  },
   trim (str) {
     return str.replace(/^\s+|\s+$/g, '')
   },
