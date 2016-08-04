@@ -266,6 +266,9 @@ describe('Utilities', () => {
     it('converts underscore to dashe', () => {
       expect(utils.sanitizeAnchor('HELLO_12')).toBe('hello-12')
     })
+    it('converts numbers to string before sanitizing', () => {
+      expect(utils.sanitizeAnchor(1234)).toEqual(1234)
+    })
   })
 
   describe('trim', () => {
@@ -297,7 +300,7 @@ describe('Utilities', () => {
     })
 
     it('can parse numbers and strings', () => {
-      expect(utils.sanitizePhone(90291442)).toEqual('90291442')
+      expect(utils.sanitizePhone(90291442)).toEqual(90291442)
       expect(utils.sanitizePhone('abc')).toEqual('')
     })
   })
