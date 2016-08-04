@@ -12,7 +12,8 @@ export const initialState = {
   bookmarks: storage.get(BOOKMARKS_STORAGE_KEY) || [],
   history: storage.get(HISTORY_STORAGE_KEY) || [],
   error: null,
-  qt: null
+  qt: null,
+  namespace: '' /* Used for creating cookies */
 }
 
 export default (state = initialState, action) => {
@@ -28,7 +29,7 @@ export default (state = initialState, action) => {
       if (payload.appendResult) {
         return {
           ...state,
-          results: [ ...state.results, ...action.results ],
+          results: [ ...state.results, ...results ],
           isLoading: false,
           error: null
         }
@@ -47,14 +48,12 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_FAILURE:
-      var error = {
-        status: action.error.status,
-        statusText: action.error.statusText
-      }
-
       return {
         ...state,
-        error
+        error: {
+          status: action.error.status,
+          statusText: action.error.statusText
+        }
       }
 
     case types.ADD_BOOKMARK:
@@ -90,7 +89,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
-        history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || []
+        history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
+        namespace: action.namespace
       }
 
     default:

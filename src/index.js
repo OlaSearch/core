@@ -25,6 +25,7 @@
 
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
+  OlaIntlProvider: require('./containers/OlaIntlProvider'),
   AutoSuggest: require('./components/AutoSuggest'),
   InstantSearchForm: require('./components/InstantSearchForm'),
   SpellSuggestion: require('./components/SpellSuggestions/SpellSuggestion'),
