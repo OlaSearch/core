@@ -273,7 +273,9 @@ describe('Utilities', () => {
       expect(utils.trim(' hey ')).toEqual('hey')
     })
 
-    // it('handles numbers', () => )
+    it('handles numbers', () => {
+      expect(utils.trim(123)).toEqual(123)
+    })
   })
 
   describe('sanitizePhone', () => {
@@ -295,7 +297,7 @@ describe('Utilities', () => {
     })
 
     it('can parse numbers and strings', () => {
-      expect(utils.sanitizePhone('90291442')).toEqual('90291442')
+      expect(utils.sanitizePhone(90291442)).toEqual('90291442')
       expect(utils.sanitizePhone('abc')).toEqual('')
     })
   })

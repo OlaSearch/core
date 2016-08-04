@@ -151,12 +151,14 @@ const utilities = {
     // return '#' + str;
     return str
   },
-  sanitizePhone (number) {
-    return number.split('/')
+  sanitizePhone (str) {
+    if (typeof str !== 'string') str = str.toString()
+    return str.split('/')
       .shift()
       .replace(/[a-z_\s-\(\)]/gi, '')
   },
   trim (str) {
+    if (typeof str !== 'string') str = str.toString()
     return str.replace(/^\s+|\s+$/g, '')
   },
   triggerEvent (el, name, options) {
