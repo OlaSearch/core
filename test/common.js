@@ -18,6 +18,14 @@ export const FACET_ITEM_AUTOSUGGEST = {
   value: 'Drama'
 }
 
+export const MAKE_FILTER_ITEM = (name) => ({
+  name: `${name}`,
+  type: 'field',
+  field: '_type',
+  selected: ['doc'],
+  multiSelect: true
+})
+
 export const MOCK_SEARCH_ADAPTER = {
   Parser () {
   },

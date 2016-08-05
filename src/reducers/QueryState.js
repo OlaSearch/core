@@ -2,7 +2,7 @@ import types from './../constants/ActionTypes'
 import { checkIfFacetExists } from './../utilities'
 import { SEARCH_INPUTS } from './../constants/Settings'
 
-var initialState = {
+export const initialState = {
   q: '',
   page: 1,
   per_page: 10,
@@ -20,14 +20,9 @@ var exists
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_FILTER:
-      let { filter, selected } = action.payload
+      let { filter, selected } = action
       exists = checkIfFacetExists(state.filters, filter.name)
       if (exists) {
-        return {
-          ...state,
-          filters: [ ...state.filters, { ...filter, selected } ]
-        }
-      } else {
         return {
           ...state,
           filters: state.filters.map((item) => {
@@ -40,12 +35,17 @@ export default (state = initialState, action) => {
             return item
           })
         }
+      } else {
+        return {
+          ...state,
+          filters: [ ...state.filters, { ...filter, selected } ]
+        }
       }
 
     case types.REMOVE_FILTER:
       return {
         ...state,
-        filters: state.filters.filter((item) => item.name !== action.payload.name),
+        filters: state.filters.filter((item) => item.name !== action.name),
         page: 1
       }
 
@@ -57,6 +57,7 @@ export default (state = initialState, action) => {
 
     case types.UPDATE_STATE_FROM_QUERY:
       return {
+        ...state,
         ...action.stateFromUrl,
         referrer: '',
         searchInput: SEARCH_INPUTS.URL
@@ -110,7 +111,6 @@ export default (state = initialState, action) => {
             return {
               ...item,
               selected: item.selected.filter((val) => {
-                // console.log(val, action.value, val.indexOf(action.value))
                 return val !== action.value
               })
             }

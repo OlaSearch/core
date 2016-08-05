@@ -8,12 +8,13 @@ var initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case undefined:
+    default:
+      return state
     case types.SET_LOCALE:
       return {
         ...state,
         locale: action.locale
       }
-    default:
-      return state
   }
 }

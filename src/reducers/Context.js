@@ -3,14 +3,13 @@ import { CONTEXT_STORAGE_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
 var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
-var initialState = valueFromStorage
-  ? JSON.parse(valueFromStorage)
-  : {
-    location: null,
-    fields: [],
-    isRequestingLocation: false,
-    hasRequestedLocation: false
-  }
+export const initialState = {
+  location: null,
+  fields: [],
+  isRequestingLocation: false,
+  hasRequestedLocation: false,
+  ...valueFromStorage ? JSON.parse(valueFromStorage) : {}
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {

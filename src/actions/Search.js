@@ -26,17 +26,17 @@ export function updateQueryTerm (term, searchInput) {
   }
 }
 
-export function addFilter (payload) {
+export function addFilter ({ filter, selected }) {
   return {
     type: types.ADD_FILTER,
-    payload
+    filter, selected
   }
 }
 
-export function removeFilter (payload) {
+export function removeFilter ({ name }) {
   return {
     type: types.REMOVE_FILTER,
-    payload
+    name
   }
 }
 

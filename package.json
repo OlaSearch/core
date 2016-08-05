@@ -11,7 +11,7 @@
     "nyc": "nyc npm run test",
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
-    "test:cov": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
+    "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "standard": "standard --verbose | snazzy"
   },
   "engines": {
