@@ -16,7 +16,7 @@ describe('Reducer: Timestamp', () => {
 
   it('should update timestamp', () => {
     let state = reducer(initialState, MAKE_ACTION(types.REQUEST_SEARCH))
-    expect(state.timestamp).toEqual(new Date().getTime())
+    expect(state.timestamp).toBeLessThanOrEqualTo(new Date().getTime())
   })
 
   it('should clear timestamp when autosuggest is closed', () => {
