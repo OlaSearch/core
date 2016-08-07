@@ -11,6 +11,7 @@ export default (state = initialState, action) => {
     case undefined:
     default:
       return state
+
     case types.SET_LOCALE:
       return {
         ...state,

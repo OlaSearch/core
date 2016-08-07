@@ -59,7 +59,8 @@ module.exports = {
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
     OlaFacetToggle: require('./decorators/OlaFacetToggle'),
-    injectTranslate: require('./decorators/olaTranslate')
+    injectTranslate: require('./decorators/OlaTranslate'),
+    withLogger: require('./decorators/OlaLogger')
   },
   olaReducer: require('./reducers'),
   createOlaMiddleware: require('./middleware/createOlaMiddleware'),
