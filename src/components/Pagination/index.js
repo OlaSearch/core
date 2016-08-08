@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 class Pagination extends React.Component {
   static defaultProps = {

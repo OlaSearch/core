@@ -1,7 +1,7 @@
 import React from 'react'
 import { addFacet, removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'

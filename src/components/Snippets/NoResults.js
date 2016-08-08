@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const NoResults = ({results, isLoading, q, isBookmark, translate}) => {
   if (results.length || isLoading) return null

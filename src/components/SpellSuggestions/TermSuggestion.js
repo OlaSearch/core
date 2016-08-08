@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const TermSuggestion = ({ term, translate, className }) => {
   if (!term) return null

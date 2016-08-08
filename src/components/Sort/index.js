@@ -1,6 +1,6 @@
 import React from 'react'
 import { changeSort, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 class Sort extends React.Component {
   static propTypes = {

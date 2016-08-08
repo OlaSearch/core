@@ -1,6 +1,6 @@
 import React from 'react'
 import { sanitizePhone } from './../../utilities'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const Phone = (props) => {
   let { phone, translate, ...rest } = props

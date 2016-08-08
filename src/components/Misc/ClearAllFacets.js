@@ -1,6 +1,6 @@
 import React from 'react'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 class ClearAllFacets extends React.Component {
   handleClick = () => {

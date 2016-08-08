@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const Translate = ({ id, translate, tagName = 'span' }) => {
   return React.createElement(tagName, null, translate(id))

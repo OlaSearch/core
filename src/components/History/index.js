@@ -4,7 +4,7 @@ import { clearHistory } from './../../actions/History'
 import listensToClickOutside from 'react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import { log } from './../../actions/Logger'
 
 class History extends React.Component {

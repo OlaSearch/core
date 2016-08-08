@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../decorators/olaTranslate'
+import injectTranslate from './../decorators/OlaTranslate'
 
 const SearchTitle = ({ totalResults, page, perPage, isPhone, translate }, context) => {
   let currentIdx = Math.min(((page - 1) * perPage) + 1, totalResults)

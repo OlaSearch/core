@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const Directions = (props) => {
   var { latlong, translate, iconLeft = null, iconRight = null, ...rest } = props

@@ -1,6 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import { log } from './../../actions/Logger'
 
 class SpeechInput extends React.Component {

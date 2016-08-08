@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import once from 'ramda/src/once'
 import { log } from './../../actions/Logger'
 

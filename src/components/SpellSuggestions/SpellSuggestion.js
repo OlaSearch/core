@@ -1,6 +1,6 @@
 import React from 'react'
 import { updateQueryTerm, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
 class SpellSuggestion extends React.Component {

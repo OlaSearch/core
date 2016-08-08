@@ -5,7 +5,7 @@ import listensToClickOutside from 'react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
 import NoResults from './../Snippets/NoResults'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import { log } from './../../actions/Logger'
 
 class Bookmarks extends React.Component {

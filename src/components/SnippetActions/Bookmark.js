@@ -1,6 +1,6 @@
 import React from 'react'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 import classnames from 'classnames'
 import { log } from './../../actions/Logger'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const PopularKeywords = ({ onClick, translate }, context) => {
   let { popularKeywords } = context.config

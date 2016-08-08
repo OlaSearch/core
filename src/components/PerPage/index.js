@@ -1,6 +1,6 @@
 import React from 'react'
 import { changePerPage, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/olaTranslate'
+import injectTranslate from './../../decorators/OlaTranslate'
 
 const PerPage = ({ perPage, translate, dispatch }, context) => {
   let values = context.config.perPage
