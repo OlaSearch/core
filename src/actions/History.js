@@ -42,12 +42,12 @@ export function clearHistory () {
 }
 
 /* Adds to History */
-export const debouceAddHistory = debounce(addToHistory, 600)
+export const debouceAddHistory = debounce(_addHistory, 600)
 
 /**
  * Takes dispatch as first argument
  * @param {function} dispatch
  */
-function addToHistory (dispatch, options) {
+function _addHistory (dispatch, options) {
   dispatch(addHistory(options))
 }

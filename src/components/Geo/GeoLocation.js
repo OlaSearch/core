@@ -7,17 +7,17 @@ import once from 'ramda/src/once'
 import { log } from './../../actions/Logger'
 
 class GeoLocation extends React.Component {
+  constructor (props) {
+    super(props)
+    if (props.active) this.getLocation()
+    this._debouceLocation = once(this.requestGeoLocation)
+  }
   static defaultProps = {
     active: false
   };
   static contextTypes = {
     config: React.PropTypes.object
   };
-  constructor (props) {
-    super(props)
-    if (props.active) this.getLocation()
-    this._debouceLocation = once(this.requestGeoLocation)
-  }
   componentDidUpdate (prevProps) {
     if (prevProps.active !== this.props.active && prevProps.active) {
       // Ask for users gelocation
@@ -28,8 +28,8 @@ class GeoLocation extends React.Component {
   shouldComponentUpdate (nextProps) {
     return (
       nextProps.Context !== this.props.Context ||
-      nextProps.QueryState.q !== this.props.QueryState.q ||
-      nextProps.AppState.isLoading === this.props.AppState.isLoading
+      nextProps.q !== this.props.q ||
+      nextProps.isLoading === this.props.isLoading
     )
   }
   requestGeoLocation = () => {
@@ -37,8 +37,7 @@ class GeoLocation extends React.Component {
   };
   prompt = (props) => {
     let _props = props || this.props
-    let { q } = _props.QueryState
-    let { isLoading } = _props.AppState
+    let { q, isLoading } = _props
     let { location, isRequestingLocation, hasRequestedLocation } = _props.Context
     let { geoLocationKeywords } = this.context.config
 
@@ -102,8 +101,8 @@ class GeoLocation extends React.Component {
 function mapStateToProps (state) {
   return {
     Context: state.Context,
-    AppState: state.AppState,
-    QueryState: state.QueryState
+    isLoading: state.AppState.isLoading,
+    q: state.QueryState.q
   }
 }
 

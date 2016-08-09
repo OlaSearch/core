@@ -29,24 +29,23 @@ export function removeContext (contextType) {
 }
 
 export function requestGeoLocation (onSuccess, onFailure) {
+  if (!navigator.geolocation) return
   return (dispatch, getState) => {
-    if (navigator.geolocation) {
+    dispatch({
+      type: types.REQUEST_GEO_LOCATION
+    })
+    navigator.geolocation.getCurrentPosition((event) => {
       dispatch({
-        type: types.REQUEST_GEO_LOCATION
+        type: types.REQUEST_GEO_LOCATION_SUCCESS,
+        payload: event
       })
-      navigator.geolocation.getCurrentPosition((event) => {
-        dispatch({
-          type: types.REQUEST_GEO_LOCATION_SUCCESS,
-          payload: event
-        })
-        onSuccess && onSuccess(event)
-      }, (error) => {
-        dispatch({
-          type: types.REQUEST_GEO_LOCATION_FAILURE,
-          payload: error
-        })
-        onFailure && onFailure(error)
+      onSuccess && onSuccess(event)
+    }, (error) => {
+      dispatch({
+        type: types.REQUEST_GEO_LOCATION_FAILURE,
+        payload: error
       })
-    }
+      onFailure && onFailure(error)
+    })
   }
 }
