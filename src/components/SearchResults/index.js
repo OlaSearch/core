@@ -22,13 +22,13 @@ class SearchResults extends React.Component {
   }
 
   render () {
-    let { results, className, ...rest } = this.props
+    let { results, className, snippet: snippetOverride, ...rest } = this.props
     let { snippetRules, defaultSnippet } = this.context.config
     let klass = classNames('ola-results', className)
     return (
       <div className={klass}>
         {results.map((result, idx) => {
-          let OlaSnippet = getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetFallback
+          let OlaSnippet = snippetOverride || getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetFallback
           let key = result.id || idx
           return (
             <OlaSnippet

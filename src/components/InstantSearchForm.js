@@ -19,7 +19,17 @@ class InstantSearchForm extends React.Component {
     let { config } = context
     let { searchTimeoutMobile = 0, searchTimeOut = 0 } = config
     let searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeOut
-    this.searchDebounce = debounce(() => props.dispatch(executeSearch()), searchDelay)
+    /**
+     * Add url Sync option
+     */
+    this.executeSearch = () => props.dispatch(executeSearch({
+      urlSync: props.urlSync
+    }))
+
+    /**
+     * Debounce search
+     */
+    this.searchDebounce = debounce(this.executeSearch, searchDelay)
   }
 
   static defaultProps = {
@@ -27,8 +37,10 @@ class InstantSearchForm extends React.Component {
     showGeoLocation: false,
     showBookmarks: true,
     showHistory: true,
+    showSpeech: true,
     showZone: false,
-    isPhone: false
+    isPhone: false,
+    urlSync: true
   };
 
   static contextTypes = {
@@ -55,7 +67,7 @@ class InstantSearchForm extends React.Component {
 
     !isEvent && this.refs.Input.focus()
 
-    isEvent ? this.searchDebounce() : dispatch(executeSearch())
+    isEvent ? this.searchDebounce() : this.executeSearch()
   };
 
   onSpeechChange = (text) => {
@@ -66,7 +78,7 @@ class InstantSearchForm extends React.Component {
     let { dispatch } = this.props
     setTimeout(() => this.refs.Input.focus(), 100)
     dispatch(clearQueryTerm())
-    dispatch(executeSearch())
+    this.executeSearch()
   };
 
   onSubmit = (event) => event.preventDefault();
@@ -74,7 +86,7 @@ class InstantSearchForm extends React.Component {
     this.refs.Input.focus()
 
     if (this.props.onChangeZone) return this.props.onChangeZone()
-    if (this.props.q) this.props.dispatch(executeSearch())
+    if (this.props.q) this.executeSearch()
   };
 
   render () {
@@ -84,6 +96,7 @@ class InstantSearchForm extends React.Component {
       showBookmarks,
       showHistory,
       showZone,
+      showSpeech,
       translate
     } = this.props
 
@@ -121,9 +134,12 @@ class InstantSearchForm extends React.Component {
           />
           {button}
 
-          {showBookmarks && <Bookmarks />}
+          {showBookmarks ?
+            <Bookmarks />
+            : null
+          }
 
-          {showGeoLocation &&
+          {showGeoLocation ?
             <GeoLocation
               active={false}
               onSuccess={this.props.onGeoLocationSuccess}
@@ -131,15 +147,22 @@ class InstantSearchForm extends React.Component {
               onDisable={this.props.onGeoLocationDisable}
               onError={this.props.onGeoError}
             />
+            : null
           }
 
-          {showHistory && <History searchUrl={this.props.searchUrl} />}
+          {showHistory ?
+            <History searchUrl={this.props.searchUrl} />
+            : null
+          }
 
-          <SpeechInput
-            onResult={this.onSpeechChange}
-            onFinalResult={this.onSpeechChange}
-            isInstantSearch
-          />
+          {showSpeech ?
+            <SpeechInput
+              onResult={this.onSpeechChange}
+              onFinalResult={this.onSpeechChange}
+              isInstantSearch
+            />
+            : null
+          }
         </div>
       </form>
     )
