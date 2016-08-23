@@ -10,11 +10,16 @@ class SearchResults extends React.Component {
     dispatch: React.PropTypes.func.isRequired
   };
 
+  static defaultProps = {
+    alwaysUpdate: false
+  };
+
   static contextTypes = {
     config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
   };
 
   shouldComponentUpdate (nextProps) {
+    if (nextProps.alwaysUpdate) return true
     return (
       this.props.results !== nextProps.results ||
       this.props.bookmarks !== nextProps.bookmarks

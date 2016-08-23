@@ -2,7 +2,7 @@ import React from 'react'
 import injectTranslate from './../../decorators/OlaTranslate'
 
 const NoResults = ({results, isLoading, q, isBookmark, translate}) => {
-  if (results.length || isLoading) return null
+  if (results.length || isLoading || !q) return null
   let message = translate('no_results_found', { q }, true)
   if (isBookmark) {
     message = translate('bookmarks_empty_label')

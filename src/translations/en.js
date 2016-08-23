@@ -17,7 +17,7 @@ module.exports = {
     'facet_filter_showmore': 'Show more',
     'facet_filter_showless': 'Show less',
     'sort_label': 'Sort by',
-    'no_results_found': 'Sorry, no results found matching <strong>{q}</strong>. Please try again.',
+    'no_results_found': 'Sorry, no results found matching <strong>{q}</strong>.',
     'speech_label': 'Press to speak',
     'autosuggest_placeholder': 'Enter keywords',
     'autosuggest_viewall': 'View all results',
