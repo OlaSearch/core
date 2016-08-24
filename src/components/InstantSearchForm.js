@@ -123,7 +123,7 @@ class InstantSearchForm extends React.Component {
             />
           }
           <input
-            ref={(c) => this.Input = c}
+            ref={(c) => { this.Input = c }}
             type='text'
             className='ola-text-input ola-text-input-round'
             placeholder={translate('instantsearch_placeholder')}
@@ -139,13 +139,13 @@ class InstantSearchForm extends React.Component {
           />
           {button}
 
-          {showBookmarks ?
-            <Bookmarks />
+          {showBookmarks
+            ? <Bookmarks />
             : null
           }
 
-          {showGeoLocation ?
-            <GeoLocation
+          {showGeoLocation
+            ? <GeoLocation
               active={false}
               onSuccess={this.props.onGeoLocationSuccess}
               onFailure={this.props.onGeoLocationFailure}
@@ -155,13 +155,13 @@ class InstantSearchForm extends React.Component {
             : null
           }
 
-          {showHistory ?
-            <History searchUrl={this.props.searchUrl} />
+          {showHistory
+            ? <History searchUrl={this.props.searchUrl} />
             : null
           }
 
-          {showSpeech ?
-            <SpeechInput
+          {showSpeech
+            ? <SpeechInput
               onResult={this.onSpeechChange}
               onFinalResult={this.onSpeechChange}
               isInstantSearch
