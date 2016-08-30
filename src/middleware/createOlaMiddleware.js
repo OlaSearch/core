@@ -128,7 +128,7 @@ module.exports = (options = {}) => {
           facets = results.facets
           qt = results.qt
         } else {
-          results = api === 'fuzzySuggest' ? parser.normalizeFuzzySuggestions(response) : parser.normalizeResults(response)
+          results = api === 'fuzzySuggest' ? response.response.docs : parser.normalizeResults(response)
           spellSuggestions = parser.normalizeSpellSuggestions(response)
           totalResults = parser.normalizeTotalResults(response)
           facets = parser.normalizeFacets(response)

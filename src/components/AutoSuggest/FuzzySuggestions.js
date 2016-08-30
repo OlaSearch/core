@@ -46,7 +46,7 @@ class SuggestionItem extends React.Component {
         onClick={this.onSelect}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-        dangerouslySetInnerHTML={createHTMLMarkup(this.props.term)}
+        dangerouslySetInnerHTML={createHTMLMarkup(this.props.suggestion)}
       />
     )
   }

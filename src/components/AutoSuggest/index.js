@@ -14,6 +14,9 @@ import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
 
+
+const SUGGESTION_TERM_KEY = 'suggestion'
+
 class AutoSuggest extends React.Component {
   constructor (props) {
     super(props)
@@ -141,7 +144,7 @@ class AutoSuggest extends React.Component {
     }
 
     if (this.props.isFuzzySuggest) {
-      let term = this.props.AutoSuggest.results[index] ? this.props.AutoSuggest.results[index].term : null
+      let term = this.props.AutoSuggest.results[index] ? this.props.AutoSuggest.results[index][SUGGESTION_TERM_KEY] : null
       term && this.props.dispatch(updateFuzzyQueryTerm(term))
     }
 
@@ -270,9 +273,9 @@ class AutoSuggest extends React.Component {
               }
               {isFuzzySuggest
                 ? <FuzzySuggestions
-                  results={results}
-                  onSelect={this.onFuzzySelect}
-                  activeClassName={this.props.activeClassName}
+                    results={results}
+                    onSelect={this.onFuzzySelect}
+                    activeClassName={this.props.activeClassName}
                   />
                 : <SearchResults
                   results={results}
