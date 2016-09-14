@@ -27,6 +27,7 @@ module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
   OlaIntlProvider: require('./containers/OlaIntlProvider'),
   AutoSuggest: require('./components/AutoSuggest'),
+  AutoComplete: require('./components/AutoComplete'),
   InstantSearchForm: require('./components/InstantSearchForm'),
   SpellSuggestion: require('./components/SpellSuggestions/SpellSuggestion'),
   TermSuggestion: require('./components/SpellSuggestions/TermSuggestion'),
@@ -56,6 +57,7 @@ module.exports = {
   Snippets: {
     Default: require('./components/Snippets/Default')
   },
+  Answer: require('./components/Snippets/Answer'),
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
     OlaFacetToggle: require('./decorators/OlaFacetToggle'),

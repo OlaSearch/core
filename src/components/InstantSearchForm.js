@@ -9,6 +9,7 @@ import injectTranslate from './../decorators/OlaTranslate'
 import Zone from './Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../constants/Settings'
+import { connect } from 'react-redux'
 /**
  * 1. Debounces search for Mobile devices for better performance: Delay can be configured in config file
  *
@@ -22,9 +23,9 @@ class InstantSearchForm extends React.Component {
     /**
      * Add url Sync option
      */
-    this.executeSearch = () => props.dispatch(executeSearch({
+    this.executeSearch = () => props.executeSearch({
       urlSync: props.urlSync
-    }))
+    })
 
     /**
      * Debounce search
@@ -49,7 +50,6 @@ class InstantSearchForm extends React.Component {
   };
 
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
     q: React.PropTypes.string,
     minCharacters: React.PropTypes.number
   };
@@ -59,14 +59,14 @@ class InstantSearchForm extends React.Component {
   }
 
   onChange = (arg, searchInput) => {
-    let { dispatch, minCharacters } = this.props
+    let { updateQueryTerm, minCharacters } = this.props
     let isEvent = !!arg.target
     let term = isEvent ? arg.target.value : arg
 
     /* Trim */
     if (term.length && trim(term) === '') return
 
-    dispatch(updateQueryTerm(term, searchInput))
+    updateQueryTerm(term, searchInput)
 
     if (isEvent && term && term.length < minCharacters) return
 
@@ -80,9 +80,8 @@ class InstantSearchForm extends React.Component {
   };
 
   onClear = () => {
-    let { dispatch } = this.props
     setTimeout(() => this.Input.focus(), 100)
-    dispatch(clearQueryTerm())
+    this.props.clearQueryTerm()
     this.executeSearch()
   };
 
@@ -174,4 +173,11 @@ class InstantSearchForm extends React.Component {
   }
 }
 
-module.exports = injectTranslate(InstantSearchForm)
+function mapStateToProps (state) {
+  return {
+    q: state.QueryState.q
+  }
+}
+
+module.exports = connect(mapStateToProps, { updateQueryTerm, executeSearch, clearQueryTerm })(injectTranslate(InstantSearchForm))
+

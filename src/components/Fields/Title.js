@@ -1,6 +1,6 @@
 import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
-import { log } from './../../actions/Logger'
+import withLogger from './../../decorators/OlaLogger'
 
 class Title extends React.Component {
   logClick = (event) => {
@@ -8,20 +8,21 @@ class Title extends React.Component {
 
     /* Send Log */
     let eventLabel = isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : null
-    this.context.store.dispatch(log({
+    this.props.log({
       eventType: 'C',
       result,
       eventCategory: 'Title',
       eventAction: 'click',
       eventLabel
-    }))
+    })
 
     if (onClick) onClick(event)
   };
 
   render () {
-    var { result, isLink, children, baseUrl, url, iconLeft, iconRight } = this.props
-    var { title, highlighting } = result
+    var { result, isLink, field, children, baseUrl, url, iconLeft, iconRight } = this.props
+    var { highlighting } = result
+    var title = result[field || 'title']
 
     if (!url) url = result.url
     if (baseUrl) url = baseUrl + url
@@ -51,11 +52,8 @@ Title.defaultProps = {
   isLink: true,
   iconLeft: null,
   iconRight: null,
-  isBookmark: false
+  isBookmark: false,
+  field: null
 }
 
-Title.contextTypes = {
-  store: React.PropTypes.object
-}
-
-module.exports = Title
+module.exports = withLogger(Title)

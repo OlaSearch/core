@@ -7,8 +7,7 @@ const Summary = ({ result, length, ellipsis }) => {
   if (!summary) return null
 
   /* Check for highlighting */
-
-  if (highlighting) {
+  if (highlighting && highlighting.summary) {
     let { summary: highlightedSummary } = highlighting
     if (typeof highlightedSummary === 'object') {
       summary = highlightedSummary.join(`<br />${ellipsis}`)

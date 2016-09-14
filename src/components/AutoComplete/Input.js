@@ -5,6 +5,8 @@ import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
+import InputShadow from './InputShadow'
+import GeoLocation from './../Geo/GeoLocation'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -56,6 +58,14 @@ export default class Input extends React.Component {
         if (!isOpen) return this.onClear(event)
         return this.props.handleClickOutside(event)
 
+      case 39: // Right
+        /**
+         * If fuzzy query, do nothing
+         */
+        if (!this.props.results.length || this.props.fuzzyQuery) return
+        let firstTerm = this.props.results[0].suggestion
+        return this.props.onChange(firstTerm)
+
       case 38: // Up
         /**
          * Escape key closes the autosuggests
@@ -88,10 +98,11 @@ export default class Input extends React.Component {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
   };
   shouldComponentUpdate (nextProps) {
-    return (
-      nextProps.q !== this.props.q ||
-      nextProps.results !== this.props.results
-    )
+    return true
+    // return (
+    //   nextProps.q !== this.props.q ||
+    //   nextProps.results !== this.props.results ||
+    // )
   }
   render () {
     var {
@@ -100,6 +111,10 @@ export default class Input extends React.Component {
       onBlur,
       showZone,
       results,
+      isFuzzySuggest,
+      fuzzyQuery,
+      isOpen,
+      showGeoLocation
     } = this.props
 
     /**
@@ -113,6 +128,7 @@ export default class Input extends React.Component {
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
+    let _first = !fuzzyQuery && q && results.length ? results[0].suggestion : ''
 
     return (
       <div className={klass}>
@@ -138,7 +154,21 @@ export default class Input extends React.Component {
           onKeyDown={this.onKeyDown}
         />
 
+        <InputShadow
+          value={_first}
+        />
         {button}
+
+        {showGeoLocation
+          ? <GeoLocation
+            active={false}
+            onSuccess={this.props.onGeoLocationSuccess}
+            onFailure={this.props.onGeoLocationFailure}
+            onDisable={this.props.onGeoLocationDisable}
+            onError={this.props.onGeoError}
+          />
+          : null
+        }
 
         <SpeechInput
           onResult={this.handleSpeechChange}

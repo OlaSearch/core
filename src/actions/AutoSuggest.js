@@ -8,19 +8,6 @@ export function updateQueryTerm (term, searchInput) {
   }
 }
 
-export function updateFuzzyQueryTerm (term) {
-  return {
-    type: types.UPDATE_FUZZY_QUERY_TERM_AUTOSUGGEST,
-    term: term.replace(/(<[^>]+>)/gi, '') /* Remove html tags from terms */
-  }
-}
-
-export function clearFuzzyQueryTerm () {
-  return {
-    type: types.CLEAR_FUZZY_QUERY_TERM_AUTOSUGGEST
-  }
-}
-
 export function executeAutoSuggest () {
   return (dispatch, getState) => {
     var state = getState()
@@ -41,13 +28,11 @@ export function executeAutoSuggest () {
   }
 }
 
-export function executeFuzzyAutoSuggest (isFuzzySuggest = false) {
+export function executeFuzzyAutoSuggest (term) {
   return (dispatch, getState) => {
-    var state = getState()
-    var query = { q: state.AutoSuggest.q }
-    var context = state.Context
-
-    dispatch({
+    var query = { qq: term }
+    var context = getState().Context
+    return dispatch({
       types: [
         types.REQUEST_AUTOSUGGEST,
         types.REQUEST_AUTOSUGGEST_SUCCESS,

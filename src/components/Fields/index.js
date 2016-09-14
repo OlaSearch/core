@@ -14,5 +14,7 @@ module.exports = {
   Title: require('./Title'),
   Year: require('./Year'),
   DocumentPages: require('./DocumentPages'),
-  Button: require('./Button')
+  Button: require('./Button'),
+  Url: require('./Url'),
+  TextField: require('./TextField')
 }

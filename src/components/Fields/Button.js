@@ -11,6 +11,7 @@ class Button extends React.Component {
       eventAction: 'click'
     })
 
+    event.preventDefault()
     window.location.href = this.props.url
   };
   render () {
@@ -22,6 +23,7 @@ class Button extends React.Component {
       <a
         className={klass}
         onClick={this.handeClick}
+        href={this.props.url}
       >
       {label}
       </a>

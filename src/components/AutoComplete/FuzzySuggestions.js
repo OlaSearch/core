@@ -2,10 +2,10 @@ import React from 'react'
 import classNames from 'classnames'
 import { createHTMLMarkup } from './../../utilities'
 
-const Suggestions = ({ results, ...rest }) => {
+const Suggestions = ({ q, results, ...rest }) => {
   return (
     <div className='ola-fuzzy-suggestions'>
-      {results.map((result, idx) => <SuggestionItem key={idx} {...result} {...rest} />)}
+      {results.map((result, idx) => <SuggestionItem key={idx} q={q} result={result} {...rest} />)}
     </div>
   )
 }
@@ -13,6 +13,8 @@ const Suggestions = ({ results, ...rest }) => {
 /**
  * Suggestion item
  */
+
+const reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g')
 class SuggestionItem extends React.Component {
   constructor (props) {
     super(props)
@@ -22,7 +24,7 @@ class SuggestionItem extends React.Component {
   }
 
   static propTypes = {
-    term: React.PropTypes.string.isRequired
+    result: React.PropTypes.obj.isRequired
   };
   onMouseOver = () => {
     this.setState({
@@ -34,19 +36,24 @@ class SuggestionItem extends React.Component {
       isActive: false
     })
   };
-  onSelect = () => {
-    this.props.onSelect(this.props.term)
+  onSelect = (event) => {
+    this.props.onSelect(this.props.result)
+    event.preventDefault();
   };
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let klass = classNames('ola-suggestion-item', activeClass)
+    let { suggestion } = this.props.result
+    let pattern = '(' + this.props.q.replace(reEscape, '\\$1') + ')';
+    console.log()
+    suggestion = suggestion.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
     return (
       <a
         className={klass}
         onClick={this.onSelect}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-        dangerouslySetInnerHTML={createHTMLMarkup(this.props.suggestion)}
+        dangerouslySetInnerHTML={createHTMLMarkup(suggestion)}
       />
     )
   }

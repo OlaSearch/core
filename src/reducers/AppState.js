@@ -13,7 +13,8 @@ export const initialState = {
   history: storage.get(HISTORY_STORAGE_KEY) || [],
   error: null,
   qt: null,
-  namespace: '' /* Used for creating cookies */
+  namespace: '' /* Used for creating cookies */,
+  answer: null /* Used for instant answers */
 }
 
 export default (state = initialState, action) => {
@@ -25,7 +26,7 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-      var { results, payload, spellSuggestions, qt, suggestedTerm, totalResults, facets } = action
+      var { results, payload, spellSuggestions, qt, suggestedTerm, totalResults, facets, answer } = action
       if (payload.appendResult) {
         return {
           ...state,
@@ -43,6 +44,7 @@ export default (state = initialState, action) => {
         totalResults,
         suggestedTerm,
         qt,
+        answer,
         isLoading: false,
         error: null
       }

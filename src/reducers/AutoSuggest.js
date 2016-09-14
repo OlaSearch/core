@@ -15,7 +15,6 @@ export const initialState = {
   isLoading: false,
   isOpen: false,
   qt: null,
-  fuzzyQuery: null,
   searchInput: null
 }
 
@@ -26,25 +25,12 @@ export default (state = initialState, action) => {
         ...state,
         q: action.term,
         searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
-        fuzzyQuery: null
-      }
-
-    case types.UPDATE_FUZZY_QUERY_TERM_AUTOSUGGEST:
-      return {
-        ...state,
-        fuzzyQuery: action.term
       }
 
     case types.CLEAR_QUERY_TERM_AUTOSUGGEST:
       return {
         ...state,
         ...omit(['facet_query'], initialState)
-      }
-
-    case types.CLEAR_FUZZY_QUERY_TERM_AUTOSUGGEST:
-      return {
-        ...state,
-        fuzzyQuery: null
       }
 
     case types.REQUEST_AUTOSUGGEST:

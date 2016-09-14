@@ -8,6 +8,8 @@ import { debounceLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 
+const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
+
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
     const {
@@ -18,7 +20,8 @@ module.exports = (options = {}) => {
       payload = {},
       suggestedTerm,
       processResponse = true,
-      processData = null
+      processData = null,
+      shouldDispatchActions = true
     } = action
 
     /* Persist store state */
@@ -64,9 +67,16 @@ module.exports = (options = {}) => {
       throw new Error('Expected an array of three string types.')
     }
 
+    /**
+     * Fuzzy suggest
+     */
+    if (api === FUZZY_SUGGEST_KEY) {
+      return searchService[api](timestampObj, query)
+    }
+
     const [ requestType, successType, failureType ] = types
 
-    next({
+    shouldDispatchActions && next({
       ...payload,
       type: requestType
     })
@@ -121,14 +131,18 @@ module.exports = (options = {}) => {
         var totalResults
         var facets
         var qt
+        var answer
         if (proxy) {
           results = response.results
-          spellSuggestions = results.spellSuggestions
-          totalResults = results.totalResults
-          facets = results.facets
-          qt = results.qt
+          spellSuggestions = response.spellSuggestions
+          totalResults = response.totalResults
+          facets = response.facets
+          qt = response.qt
+
+          /* Instant answer */
+          answer = response.answer
         } else {
-          results = api === 'fuzzySuggest' ? response.response.docs : parser.normalizeResults(response)
+          results = api === FUZZY_SUGGEST_KEY ? response.response.docs : parser.normalizeResults(response)
           spellSuggestions = parser.normalizeSpellSuggestions(response)
           totalResults = parser.normalizeTotalResults(response)
           facets = parser.normalizeFacets(response)
@@ -155,7 +169,7 @@ module.exports = (options = {}) => {
           })
         }
 
-        next({
+        shouldDispatchActions && next({
           payload,
           results,
           spellSuggestions,
@@ -164,6 +178,7 @@ module.exports = (options = {}) => {
           type,
           suggestedTerm,
           qt,
+          answer,
           error: null
         })
 
@@ -183,6 +198,17 @@ module.exports = (options = {}) => {
             debounce: true,
             state: getState()
           })
+        }
+
+        return {
+          results,
+          spellSuggestions,
+          totalResults,
+          facets,
+          type,
+          suggestedTerm,
+          qt,
+          answer
         }
       },
       (error) => {
@@ -207,7 +233,7 @@ const getMapping = (type, config) => {
     case 'suggest':
       return config.mappingAutoSuggest
 
-    case 'fuzzySuggest':
+    case FUZZY_SUGGEST_KEY:
       return config.mappingFuzzySuggest
 
     default:
