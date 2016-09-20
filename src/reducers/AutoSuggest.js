@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         q: action.term,
-        searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
+        searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD
       }
 
     case types.CLEAR_QUERY_TERM_AUTOSUGGEST:

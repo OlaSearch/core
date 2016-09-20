@@ -7,7 +7,6 @@
 import { debounceLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
-import { pickDeep } from './../utilities'
 
 const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
 

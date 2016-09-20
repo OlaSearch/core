@@ -111,9 +111,7 @@ export default class Input extends React.Component {
       onBlur,
       showZone,
       results,
-      isFuzzySuggest,
       fuzzyQuery,
-      isOpen,
       showGeoLocation
     } = this.props
 

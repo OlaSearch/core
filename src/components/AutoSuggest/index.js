@@ -18,7 +18,7 @@ class AutoSuggest extends React.Component {
     super(props)
     this.state = {
       isFocused: false,
-      fuzzyQuery: null,
+      fuzzyQuery: null
     }
   }
 
@@ -94,7 +94,7 @@ class AutoSuggest extends React.Component {
   };
 
   onKeyDown = (direction) => {
-    let { classNames, activeClassName, dispatch } = this.props
+    let { classNames, activeClassName } = this.props
     let { suggestionsContainer } = this.refs
     let fullActiveClass = '.' + activeClassName
     let nodes = suggestionsContainer.querySelectorAll(classNames)
@@ -189,7 +189,7 @@ class AutoSuggest extends React.Component {
       viewAllClassName,
       facetSuggestionName,
       className,
-      translate,
+      translate
     } = this.props
     var { isFocused } = this.state
     var {
@@ -199,7 +199,7 @@ class AutoSuggest extends React.Component {
       suggestedTerm,
       isOpen,
       totalResults,
-      facets,
+      facets
     } = AutoSuggest
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     var klassContainer = classNames('ola-autosuggest', className, {

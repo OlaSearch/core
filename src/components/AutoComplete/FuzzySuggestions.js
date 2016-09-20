@@ -38,13 +38,13 @@ class SuggestionItem extends React.Component {
   };
   onSelect = (event) => {
     this.props.onSelect(this.props.result)
-    event.preventDefault();
+    event.preventDefault()
   };
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
-    let { term, payload, category_name, isLastCategory, isFirstCategory } = this.props.result
-    let pattern = '(' + this.props.q.replace(reEscape, '\\$1') + ')';
-    term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>') + (category_name ? ' in <span class="ola-suggestion-category-name">' + category_name + '</span>': '')
+    let { term, payload, category_name: categoryName, isLastCategory, isFirstCategory } = this.props.result
+    let pattern = '(' + this.props.q.replace(reEscape, '\\$1') + ')'
+    term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>') + (categoryName ? ' in <span class="ola-suggestion-category-name">' + categoryName + '</span>' : '')
     let klass = classNames('ola-suggestion-item', activeClass, {
       'ola-suggestion-category-last': isLastCategory,
       'ola-suggestion-category-first': isFirstCategory,

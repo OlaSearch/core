@@ -98,8 +98,7 @@ export default class Input extends React.Component {
       q,
       placeholder,
       onBlur,
-      showZone,
-      results,
+      showZone
     } = this.props
 
     /**

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import Input from './Input'
-import { buildQueryString, getHistoryCharacter, pushState } from './../../services/urlSync'
+import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import { checkForAllowedCharacters, trim, pickDeep } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -20,7 +20,7 @@ class AutoComplete extends React.Component {
       fuzzyQuery: null,
       isOpen: false,
       q: props.q,
-      results: [],
+      results: []
     }
   }
 
@@ -30,7 +30,7 @@ class AutoComplete extends React.Component {
     dispatch: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func,
     viewAllClassName: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
+    placeholder: React.PropTypes.string
   };
 
   static contextTypes = {
@@ -143,12 +143,12 @@ class AutoComplete extends React.Component {
             let payload = JSON.parse(item.payload)
             if (payload.categories && !categoryFound) {
               let categories = payload.categories.filter((item) => {
-                let [name, count] = item.split('|')
+                let [name] = item.split('|')
                 return this.props.visibleCategoryGroups.indexOf(name) !== -1
               })
               let totalCategories = categories.length
               for (let j = 0; j < totalCategories; j++) {
-                let [ name, count ] = payload.categories[j].split('|')
+                let [ name ] = payload.categories[j].split('|')
                 let displayName = facet.facetNames[name] || name
                 res.push({
                   ...item,
@@ -187,7 +187,7 @@ class AutoComplete extends React.Component {
   };
 
   onKeyDown = (direction) => {
-    let { classNames, activeClassName, dispatch } = this.props
+    let { classNames, activeClassName } = this.props
     let { suggestionsContainer } = this.refs
     let fullActiveClass = '.' + activeClassName
     let nodes = suggestionsContainer.querySelectorAll(classNames)
@@ -256,7 +256,7 @@ class AutoComplete extends React.Component {
 
   onFuzzySelect = (suggestion) => {
     let { payload, term } = suggestion
-    let { type, taxo_group, taxo_id } = payload
+    let { taxo_group: taxoGroup, taxo_id } = payload
     /* If onSelect prop is set */
     if (this.props.onSelect) {
       this.closeAutoSuggest()
@@ -268,8 +268,8 @@ class AutoComplete extends React.Component {
     }
     let { searchPageUrl, history } = this.context.config
     let url
-    if (taxo_group) {
-      url = buildQueryString({ facet_query: [{ name: taxo_group, selected: taxo_id }] })
+    if (taxoGroup) {
+      url = buildQueryString({ facet_query: [{ name: taxoGroup, selected: taxo_id }] })
     } else {
       url = buildQueryString({ q: term })
     }
@@ -295,14 +295,10 @@ class AutoComplete extends React.Component {
 
   render () {
     var {
-      dispatch,
-      AutoSuggest,
       showZone,
-      viewAllClassName,
-      facetSuggestionName,
       className,
       translate,
-      enabledFocusBlur,
+      enabledFocusBlur
     } = this.props
     var { isFocused, fuzzyQuery, q, results, isOpen } = this.state
     var klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
