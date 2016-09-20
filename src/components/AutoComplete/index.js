@@ -4,11 +4,13 @@ import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import Input from './Input'
 import { buildQueryString, getHistoryCharacter, pushState } from './../../services/urlSync'
-import { checkForAllowedCharacters, trim } from './../../utilities'
+import { checkForAllowedCharacters, trim, pickDeep } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 
 class AutoComplete extends React.Component {
   constructor (props) {
@@ -18,7 +20,7 @@ class AutoComplete extends React.Component {
       fuzzyQuery: null,
       isOpen: false,
       q: props.q,
-      results: []
+      results: [],
     }
   }
 
@@ -45,7 +47,9 @@ class AutoComplete extends React.Component {
     className: 'ola-autosuggest',
     containerClass: 'ola-autosuggest-container',
     enabledFocusBlur: true,
-    showGeoLocation: false
+    showGeoLocation: false,
+    categoryGroup: 'section_s',
+    visibleCategoryGroups: ['credit-card-detail-page', 'save', 'borrow', 'invest', 'insure', 'help-centre']
   };
 
   componentWillReceiveProps (nextProps) {
@@ -106,9 +110,8 @@ class AutoComplete extends React.Component {
 
   onChange = (term, searchInput) => {
     let { q } = this.state
-
     /* Trim text */
-    if (term.length && trim(term) === '') return
+    if (term && term.length && trim(term) === '') return
 
     if (!term && !q) {
       this.closeAutoSuggest()
@@ -123,14 +126,46 @@ class AutoComplete extends React.Component {
 
     this.clearFuzzyQueryTerm()
 
+    /* Get the display names of the facets */
+    let facet = find(propEq('name', this.props.categoryGroup))(this.context.config.facets)
+
     if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
       this.terminateAutoSuggest()
     } else {
       this.props.executeFuzzyAutoSuggest(term)
-        .then((res, xhr) => {
-          let results = res.response.docs
+        .then((response, xhr) => {
+          let results = pickDeep(response.suggest, 'suggestions')
+          /* Parse payload */
+          let res = []
+          let categoryFound = false
+          for (let i = 0; i < results.length; i++) {
+            let item = results[i]
+            let payload = JSON.parse(item.payload)
+            if (payload.categories && !categoryFound) {
+              let categories = payload.categories.filter((item) => {
+                let [name, count] = item.split('|')
+                return this.props.visibleCategoryGroups.indexOf(name) !== -1
+              })
+              let totalCategories = categories.length
+              for (let j = 0; j < totalCategories; j++) {
+                let [ name, count ] = payload.categories[j].split('|')
+                let displayName = facet.facetNames[name] || name
+                res.push({
+                  ...item,
+                  category_id: name,
+                  category_name: displayName,
+                  category_group: payload.category_group,
+                  isLastCategory: j === totalCategories - 1,
+                  isFirstCategory: j === 0
+                })
+                categoryFound = true
+              }
+            } else {
+              res.push({ ...item, payload })
+            }
+          }
           this.setState({
-            results,
+            results: res,
             isOpen: !!results.length
           })
         })
@@ -208,6 +243,9 @@ class AutoComplete extends React.Component {
     }
 
     /* If onSelect prop is set */
+    this.setState({
+      results: []
+    })
     if (this.props.onSelect) return this.props.onSelect(this.state.q)
 
     let { searchPageUrl, history } = this.context.config
@@ -216,22 +254,24 @@ class AutoComplete extends React.Component {
     event && event.preventDefault()
   };
 
-  onFuzzySelect = (term) => {
-    let { type, suggestion, taxo_group, taxo_id } = term
+  onFuzzySelect = (suggestion) => {
+    let { payload, term } = suggestion
+    let { type, taxo_group, taxo_id } = payload
     /* If onSelect prop is set */
     if (this.props.onSelect) {
       this.closeAutoSuggest()
       this.setState({
-        q: suggestion
+        q: term,
+        results: []
       })
-      return this.props.onSelect(term)
+      return this.props.onSelect(suggestion)
     }
     let { searchPageUrl, history } = this.context.config
     let url
     if (taxo_group) {
       url = buildQueryString({ facet_query: [{ name: taxo_group, selected: taxo_id }] })
     } else {
-      url = buildQueryString({ q: suggestion })
+      url = buildQueryString({ q: term })
     }
     window.location.href = searchPageUrl + getHistoryCharacter(history) + url
   };
@@ -276,7 +316,7 @@ class AutoComplete extends React.Component {
     } else {
       klassContainer = className
     }
-    var queryTerm = fuzzyQuery ? fuzzyQuery.suggestion || q : q
+    var queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
 
     return (
       <div className={klassContainer}>

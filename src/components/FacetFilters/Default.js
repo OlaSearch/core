@@ -7,6 +7,7 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import FilterInput from './common/FilterInput'
+import xss from 'xss'
 
 class LinkFilter extends React.Component {
   constructor (props) {
@@ -57,7 +58,7 @@ class LinkFilter extends React.Component {
 
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: event.target.value
+      filterText: xss(event.target.value)
     })
   };
 

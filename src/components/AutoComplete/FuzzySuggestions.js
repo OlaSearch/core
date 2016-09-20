@@ -42,18 +42,21 @@ class SuggestionItem extends React.Component {
   };
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
-    let klass = classNames('ola-suggestion-item', activeClass)
-    let { suggestion } = this.props.result
+    let { term, payload, category_name, isLastCategory, isFirstCategory } = this.props.result
     let pattern = '(' + this.props.q.replace(reEscape, '\\$1') + ')';
-    console.log()
-    suggestion = suggestion.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+    term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>') + (category_name ? ' in <span class="ola-suggestion-category-name">' + category_name + '</span>': '')
+    let klass = classNames('ola-suggestion-item', activeClass, {
+      'ola-suggestion-category-last': isLastCategory,
+      'ola-suggestion-category-first': isFirstCategory,
+      'ola-suggestion-category-name': payload.taxo_group
+    })
     return (
       <a
         className={klass}
         onClick={this.onSelect}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
-        dangerouslySetInnerHTML={createHTMLMarkup(suggestion)}
+        dangerouslySetInnerHTML={createHTMLMarkup(term)}
       />
     )
   }

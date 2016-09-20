@@ -10,6 +10,7 @@ export const initialState = {
   sort: '',
   filters: [],
   view: '',
+  offset: 0,
   isSearchActive: true,
   searchInput: null
 }

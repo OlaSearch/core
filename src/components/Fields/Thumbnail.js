@@ -6,8 +6,11 @@ const Thumbnail = (props, context) => {
   var {
     thumbnail,
     thumbnail_mobile: thumbnailMobile,
+    result,
     ...rest
   } = props
+
+  if (!thumbnail && !thumbnailMobile) return null
 
   if (!thumbnailMobile) {
     return (

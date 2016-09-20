@@ -18,15 +18,14 @@ class InstantSearchForm extends React.Component {
   constructor (props, context) {
     super(props)
     let { config } = context
-    let { searchTimeoutMobile = 0, searchTimeOut = 0 } = config
-    let searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeOut
+    let { searchTimeoutMobile = 0, searchTimeout = 0 } = config
+    let searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeout
     /**
      * Add url Sync option
      */
     this.executeSearch = () => props.executeSearch({
       urlSync: props.urlSync
     })
-
     /**
      * Debounce search
      */
@@ -46,7 +45,7 @@ class InstantSearchForm extends React.Component {
   };
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
   };
 
   static propTypes = {

@@ -160,6 +160,14 @@ const utilities = {
       event.initCustomEvent(name, true, true, options)
     }
     el.dispatchEvent(event)
+  },
+  pickDeep (obj, key) {
+    if (!obj) return null
+    if (Object.keys(obj).indexOf(key) !== -1) return obj[key]
+    for (let i in obj) {
+      return utilities.pickDeep(obj[i], key)
+    }
+    return null
   }
 }
 

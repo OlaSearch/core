@@ -7,6 +7,7 @@
 import { debounceLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
+import { pickDeep } from './../utilities'
 
 const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
 
@@ -142,7 +143,7 @@ module.exports = (options = {}) => {
           /* Instant answer */
           answer = response.answer
         } else {
-          results = api === FUZZY_SUGGEST_KEY ? response.response.docs : parser.normalizeResults(response)
+          results = parser.normalizeResults(response)
           spellSuggestions = parser.normalizeSpellSuggestions(response)
           totalResults = parser.normalizeTotalResults(response)
           facets = parser.normalizeFacets(response)

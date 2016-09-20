@@ -3,6 +3,7 @@ import { debouceAddHistory } from './History'
 import { parseQueryString, pushState } from './../services/urlSync'
 import { debounce, checkForAllowedCharacters, castNumberToStringArray } from './../utilities'
 import omit from 'ramda/src/omit'
+import xss from 'xss'
 
 /* Update Browser URL */
 const updateURL = debounce(pushState, 300)
@@ -21,7 +22,7 @@ var historyType = 'pushState'
 export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM,
-    term,
+    term: xss(term),
     searchInput
   }
 }

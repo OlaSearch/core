@@ -1,9 +1,10 @@
 import types from './../constants/ActionTypes'
+import xss from 'xss'
 
 export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM_AUTOSUGGEST,
-    term,
+    term: xss(term),
     searchInput
   }
 }
@@ -28,9 +29,9 @@ export function executeAutoSuggest () {
   }
 }
 
-export function executeFuzzyAutoSuggest (term) {
+export function executeFuzzyAutoSuggest (q) {
   return (dispatch, getState) => {
-    var query = { qq: term }
+    var query = { q }
     var context = getState().Context
     return dispatch({
       types: [

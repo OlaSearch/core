@@ -3,6 +3,7 @@ import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS } from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
+import xss from 'xss'
 
 var urlSync = {
   character: '?',
@@ -70,12 +71,14 @@ var urlSync = {
     var { filters, facet_query: facetQuery } = qs
     var facetQueryObject = {}
     var filtersObject = {}
-
     /**
      * Validate query string
      */
 
     for (let p in qs) {
+      /* prevent XSS */
+      qs[p] = xss(qs[p])
+
       if (p === 'page' || p === 'per_page') {
         if (isNaN(qs[p])) {
           qs[p] = initialState[p]

@@ -63,7 +63,7 @@ export default class Input extends React.Component {
          * If fuzzy query, do nothing
          */
         if (!this.props.results.length || this.props.fuzzyQuery) return
-        let firstTerm = this.props.results[0].suggestion
+        let firstTerm = this.props.results[0].term
         return this.props.onChange(firstTerm)
 
       case 38: // Up
@@ -128,7 +128,9 @@ export default class Input extends React.Component {
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
-    let _first = !fuzzyQuery && q && results.length ? results[0].suggestion : ''
+    let _first = !fuzzyQuery && q && results.length ? results[0].term : ''
+    let reg = new RegExp('^' + q, 'gi')
+    if (!reg.test(_first)) _first = ''
 
     return (
       <div className={klass}>
