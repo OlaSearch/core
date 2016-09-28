@@ -82,5 +82,10 @@ module.exports = {
   OLA_REHYDRATE: 'OLA_REHYDRATE',
 
   /* Search status: When searchOnLoad is false, we need to disable search elements */
-  SET_SEARCH_STATUS: 'SET_SEARCH_STATUS'
+  SET_SEARCH_STATUS: 'SET_SEARCH_STATUS',
+
+  /* Answer */
+  REQUEST_ANSWER: 'REQUEST_ANSWER',
+  REQUEST_ANSWER_SUCCESS: 'REQUEST_ANSWER_SUCCESS',
+  REQUEST_ANSWER_FAILURE: 'REQUEST_ANSWER_FAILURE'
 }

@@ -3,7 +3,7 @@ import { debouceAddHistory } from './History'
 import { parseQueryString, pushState } from './../services/urlSync'
 import { debounce, checkForAllowedCharacters, castNumberToStringArray } from './../utilities'
 import omit from 'ramda/src/omit'
-import xss from 'xss'
+import xssFilters from 'xss-filters'
 
 /* Update Browser URL */
 const updateURL = debounce(pushState, 300)
@@ -22,7 +22,7 @@ var historyType = 'pushState'
 export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM,
-    term: xss(term),
+    term: xssFilters.inHTMLData(term),
     searchInput
   }
 }
@@ -112,6 +112,20 @@ export function executeSearch (payload) {
       /* Add History */
       debouceAddHistory(dispatch)
     }
+  }
+}
+
+export function fetchAnswer (url) {
+  return (dispatch, getState) => {
+    dispatch({
+      types: [
+        types.REQUEST_ANSWER,
+        types.REQUEST_ANSWER_SUCCESS,
+        types.REQUEST_ANSWER_FAILURE
+      ],
+      query: { url },
+      api: 'answer'
+    })
   }
 }
 

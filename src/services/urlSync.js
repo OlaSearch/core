@@ -3,7 +3,7 @@ import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS } from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
-import xss from 'xss'
+import xssFilters from 'xss-filters'
 
 var urlSync = {
   character: '?',
@@ -77,7 +77,7 @@ var urlSync = {
 
     for (let p in qs) {
       /* prevent XSS */
-      qs[p] = xss(qs[p])
+      qs[p] = xssFilters.inHTMLData(qs[p])
 
       if (p === 'page' || p === 'per_page') {
         if (isNaN(qs[p])) {
@@ -86,6 +86,9 @@ var urlSync = {
           qs[p] = parseInt(qs[p])
         }
       }
+      /* Validate states: Prevent over-ride */
+      if (!qs['per_page']) qs['per_page'] = initialState['per_page']
+      if (!qs['page']) qs['page'] = initialState['page']
     }
 
     /**
@@ -95,7 +98,13 @@ var urlSync = {
     if (facetQuery) {
       var { facets: configFacets } = config
 
-      if (typeof facetQuery === 'string') facetQuery = JSON.parse('["' + facetQuery + '"]')
+      if (typeof facetQuery === 'string') {
+        try {
+          facetQuery = JSON.parse('["' + facetQuery + '"]')
+        } catch (e) {
+          facetQuery = []
+        }
+      }
 
       var fq = facetQuery.map((item) => {
         let [ name, value ] = item.split(':')
@@ -128,7 +137,13 @@ var urlSync = {
      * Field level filtering
      */
     if (filters) {
-      if (typeof filters === 'string') filters = JSON.parse('["' + filters + '"]')
+      if (typeof filters === 'string') {
+        try {
+          filters = JSON.parse('["' + filters + '"]')
+        } catch (e) {
+          filters = []
+        }
+      }
 
       var filterQuery = filters.map((filter) => {
         var [ name, value ] = filter.split(':')

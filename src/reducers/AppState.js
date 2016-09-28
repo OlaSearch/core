@@ -9,6 +9,7 @@ export const initialState = {
   spellSuggestions: [],
   suggestedTerm: '',
   isLoading: false,
+  isLoadingAnswer: false,
   bookmarks: storage.get(BOOKMARKS_STORAGE_KEY) || [],
   history: storage.get(HISTORY_STORAGE_KEY) || [],
   error: null,
@@ -56,6 +57,19 @@ export default (state = initialState, action) => {
           status: action.error.status,
           statusText: action.error.statusText
         }
+      }
+
+    case types.REQUEST_ANSWER:
+      return {
+        ...state,
+        isLoadingAnswer: true
+      }
+
+    case types.REQUEST_ANSWER_SUCCESS:
+      return {
+        ...state,
+        answer: action.answer,
+        isLoadingAnswer: false
       }
 
     case types.ADD_BOOKMARK:

@@ -1,5 +1,6 @@
 import React from 'react'
 import SnippetFallback from './../Snippets/Default'
+import Answer from './../Snippets/Answer'
 import { getMatchingSnippet } from './../../utilities'
 import classNames from 'classnames'
 
@@ -33,7 +34,8 @@ class SearchResults extends React.Component {
     return (
       <div className={klass}>
         {results.map((result, idx) => {
-          let OlaSnippet = snippetOverride || getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetFallback
+          let { ola_answer } = result
+          let OlaSnippet = ola_answer ? Answer : snippetOverride || getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetFallback
           let key = result.id || idx
           return (
             <OlaSnippet

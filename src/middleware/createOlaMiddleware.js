@@ -7,6 +7,7 @@
 import { debounceLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
+import { fetchAnswer } from './../actions/Search'
 
 const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
 
@@ -140,7 +141,7 @@ module.exports = (options = {}) => {
           qt = response.qt
 
           /* Instant answer */
-          answer = response.answer
+          answer = api === 'answer' ? response : response.answer
         } else {
           results = parser.normalizeResults(response)
           spellSuggestions = parser.normalizeSpellSuggestions(response)
@@ -167,6 +168,14 @@ module.exports = (options = {}) => {
             payload,
             context
           })
+        }
+
+        /**
+         * If answer is a callback
+         * SPICE
+         */
+        if (answer && answer.callback) {
+          dispatch(fetchAnswer(answer.callback))
         }
 
         shouldDispatchActions && next({
@@ -212,7 +221,7 @@ module.exports = (options = {}) => {
         }
       },
       (error) => {
-        next({
+        shouldDispatchActions && next({
           payload,
           error,
           type: failureType

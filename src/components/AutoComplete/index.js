@@ -141,11 +141,13 @@ class AutoComplete extends React.Component {
           for (let i = 0; i < results.length; i++) {
             let item = results[i]
             let payload = JSON.parse(item.payload)
-            if (payload.categories && !categoryFound) {
-              let categories = payload.categories.filter((item) => {
+            if (payload.categories && payload.categories.length && !categoryFound) {
+
+              let categories = this.props.visibleCategoryGroups ? payload.categories.filter((item) => {
                 let [name] = item.split('|')
                 return this.props.visibleCategoryGroups.indexOf(name) !== -1
-              })
+              }) : payload.categories
+
               let totalCategories = categories.length
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.categories[j].split('|')

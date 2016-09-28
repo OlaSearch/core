@@ -23,24 +23,9 @@ describe('Reducer: AutoSuggest', () => {
     expect(state.q).toEqual('Foo')
   })
 
-  it('remove fuzzy term on query term update', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.UPDATE_QUERY_TERM_AUTOSUGGEST, { term: 'Foo'}))
-    expect(state.fuzzyQuery).toEqual(null)
-  })
-
   it('returns initial state on clear', () => {
     let state = reducer(initialState, MAKE_ACTION(types.CLEAR_QUERY_TERM_AUTOSUGGEST))
     expect(state).toEqual(initialState)
-  })
-
-  it('sets fuzzy term', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.UPDATE_FUZZY_QUERY_TERM_AUTOSUGGEST, { term: 'Foo'}))
-    expect(state.fuzzyQuery).toEqual('Foo')
-  })
-
-  it('removes fuzzy term', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.CLEAR_FUZZY_QUERY_TERM_AUTOSUGGEST))
-    expect(state.fuzzyQuery).toEqual(null)
   })
 
   it('loading flag is set to true before search', () => {

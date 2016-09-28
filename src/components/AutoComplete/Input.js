@@ -97,13 +97,6 @@ export default class Input extends React.Component {
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
   };
-  shouldComponentUpdate (nextProps) {
-    return true
-    // return (
-    //   nextProps.q !== this.props.q ||
-    //   nextProps.results !== this.props.results ||
-    // )
-  }
   render () {
     var {
       q,
@@ -128,7 +121,10 @@ export default class Input extends React.Component {
     })
     let _first = !fuzzyQuery && q && results.length ? results[0].term : ''
     let reg = new RegExp('^' + q, 'gi')
-    if (!reg.test(_first)) _first = ''
+    if (!reg.test(_first)) {
+      _first = ''
+    } else _first = _first.replace(new RegExp('(' + q + ')', 'gi' ), q)
+
 
     return (
       <div className={klass}>

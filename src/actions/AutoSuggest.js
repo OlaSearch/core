@@ -1,10 +1,10 @@
 import types from './../constants/ActionTypes'
-import xss from 'xss'
+import xssFilters from 'xss-filters'
 
 export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM_AUTOSUGGEST,
-    term: xss(term),
+    term: xssFilters.inHTMLData(term),
     searchInput
   }
 }
