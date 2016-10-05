@@ -43,9 +43,11 @@ class SuggestionItem extends React.Component {
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let { term, payload, category_name: categoryName, isLastCategory, isFirstCategory } = this.props.result
-    let pattern = '(' + this.props.q.replace(reEscape, '\\$1') + ')'
-    term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>') + (categoryName ? ' in <span class="ola-suggestion-category-name">' + categoryName + '</span>' : '')
-    let klass = classNames('ola-suggestion-item', activeClass, {
+    let { type } = payload
+    let pattern = '(^' + this.props.q.replace(reEscape, '\\$1') + ')'
+    let prefix = type === 'taxonomy' ? '@' : ''
+    term = prefix + term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>') + (categoryName ? ' in <span class="ola-suggestion-category-name">' + categoryName + '</span>' : '')
+    let klass = classNames('ola-suggestion-item', activeClass, `ola-suggestion-type-${type}`, {
       'ola-suggestion-category-last': isLastCategory,
       'ola-suggestion-category-first': isFirstCategory,
       'ola-suggestion-category-name': payload.taxo_group

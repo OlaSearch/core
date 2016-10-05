@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
+import { updateQueryTerm, replaceFacet, removeAllFacets } from './../../actions/Search'
 import Input from './Input'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import { checkForAllowedCharacters, trim, pickDeep } from './../../utilities'
@@ -87,6 +88,8 @@ class AutoComplete extends React.Component {
       results: [],
       isOpen: false
     })
+
+    this.props.updateQueryTerm('')
   };
   terminateAutoSuggest = () => {
     this.setState({
@@ -141,7 +144,10 @@ class AutoComplete extends React.Component {
           for (let i = 0; i < results.length; i++) {
             let item = results[i]
             let payload = JSON.parse(item.payload)
-            if (payload.categories && payload.categories.length && !categoryFound) {
+            /* If categories are found, we will need to create additional array items */
+            if (payload.categories &&
+              payload.categories.length &&
+              !categoryFound) {
 
               let categories = this.props.visibleCategoryGroups ? payload.categories.filter((item) => {
                 let [name] = item.split('|')
@@ -149,6 +155,7 @@ class AutoComplete extends React.Component {
               }) : payload.categories
 
               let totalCategories = categories.length
+
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.categories[j].split('|')
                 let displayName = facet.facetNames[name] || name
@@ -158,7 +165,8 @@ class AutoComplete extends React.Component {
                   category_name: displayName,
                   category_group: payload.category_group,
                   isLastCategory: j === totalCategories - 1,
-                  isFirstCategory: j === 0
+                  isFirstCategory: j === 0,
+                  payload
                 })
                 categoryFound = true
               }
@@ -179,6 +187,7 @@ class AutoComplete extends React.Component {
 
   onClear = () => {
     this.clearQueryTerm()
+    this.props.onSelect && this.props.onSelect('')
   };
 
   clearActiveClass = () => {
@@ -244,38 +253,78 @@ class AutoComplete extends React.Component {
       return this.onFuzzySelect(this.state.fuzzyQuery)
     }
 
-    /* If onSelect prop is set */
     this.setState({
-      results: []
+      results: [],
+      isOpen: false
     })
-    if (this.props.onSelect) return this.props.onSelect(this.state.q)
 
-    let { searchPageUrl, history } = this.context.config
-    let url = buildQueryString({ q: this.state.q })
-    window.location.href = searchPageUrl + getHistoryCharacter(history) + url
+    /* Remove all selected facets */
+    this.props.removeAllFacets()
+
+    /* Update query term */
+    this.props.updateQueryTerm(this.state.q)
+
+    this.props.onSelect && this.props.onSelect(this.state.q)
+
     event && event.preventDefault()
   };
 
   onFuzzySelect = (suggestion) => {
-    let { payload, term } = suggestion
-    let { taxo_group: taxoGroup, taxo_id } = payload
-    /* If onSelect prop is set */
-    if (this.props.onSelect) {
-      this.closeAutoSuggest()
-      this.setState({
-        q: term,
-        results: []
-      })
-      return this.props.onSelect(suggestion)
+    let { payload } = suggestion
+    let facet
+    let isTaxonomy = payload.taxo_group
+    let isCategory = suggestion.category_group
+    let rawSuggestion = payload.suggestion_raw
+    let term = rawSuggestion || suggestion.term
+
+    this.setState({
+      q: isTaxonomy || isCategory ? '' : term,
+      results: [],
+      isOpen: false,
+      fuzzyQuery: null
+    })
+
+    /**
+     * If taxonomy is selected
+     */
+    if (isTaxonomy) {
+      facet = find(propEq('name', payload.taxo_group))(this.context.config.facets)
+      /* Remove all selected facets */
+      this.props.removeAllFacets()
+      /* Add facet */
+      this.props.replaceFacet(facet, payload.taxo_id)
+      /* Add query term */
+      this.props.updateQueryTerm('')
+
+      return this.props.onSelect && this.props.onSelect(suggestion)
     }
-    let { searchPageUrl, history } = this.context.config
-    let url
-    if (taxoGroup) {
-      url = buildQueryString({ facet_query: [{ name: taxoGroup, selected: taxo_id }] })
-    } else {
-      url = buildQueryString({ q: term })
+
+    /**
+     * If category is selected
+     * Eg: queryterm in category_name
+     */
+    if (isCategory) {
+      facet = find(propEq('name', suggestion.category_group))(this.context.config.facets)
+      /* Remove all selected facets */
+      this.props.removeAllFacets()
+      /* Replace facet */
+      this.props.replaceFacet(facet, suggestion.category_id)
+      /* Add query term */
+      this.props.updateQueryTerm(term)
+
+      return this.props.onSelect && this.props.onSelect(suggestion)
     }
-    window.location.href = searchPageUrl + getHistoryCharacter(history) + url
+
+    /**
+     * Else if its a term suggestion
+     */
+    if (term) {
+      /* Remove all selected facets */
+      this.props.removeAllFacets()
+      /* Add query term */
+      this.props.updateQueryTerm(term)
+      return this.props.onSelect && this.props.onSelect(suggestion)
+    }
   };
 
   onFocus = (event) => {
@@ -353,4 +402,4 @@ class AutoComplete extends React.Component {
   }
 }
 
-module.exports = connect(null, { executeFuzzyAutoSuggest })(injectTranslate(listensToClickOutside(AutoComplete)))
+module.exports = connect(null, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets })(injectTranslate(listensToClickOutside(AutoComplete)))
