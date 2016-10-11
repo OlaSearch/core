@@ -62,9 +62,8 @@ export default class Input extends React.Component {
         /**
          * If fuzzy query, do nothing
          */
-        if (!this.props.results.length || this.props.fuzzyQuery) return
-        let firstTerm = this.props.results[0].term
-        return this.props.onChange(firstTerm)
+        if (event.shiftKey || !this.getShadowTerm()) return
+        return this.props.onChange(this.getShadowTerm())
 
       case 38: // Up
         /**
@@ -97,6 +96,16 @@ export default class Input extends React.Component {
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
   };
+  getShadowTerm = () => {
+    let { fuzzyQuery, q, results } = this.props
+    let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
+    let reg = new RegExp('^' + q, 'gi')
+    if (!reg.test(shadowTerm)) {
+      return ''
+    } else {
+      return shadowTerm.replace(new RegExp('(' + q + ')', 'gi' ), q)
+    }
+  };
   render () {
     var {
       q,
@@ -119,11 +128,7 @@ export default class Input extends React.Component {
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
-    let _first = !fuzzyQuery && q && results.length ? results[0].term : ''
-    let reg = new RegExp('^' + q, 'gi')
-    if (!reg.test(_first)) {
-      _first = ''
-    } else _first = _first.replace(new RegExp('(' + q + ')', 'gi' ), q)
+    let shadowTerm = this.getShadowTerm()
 
 
     return (
@@ -151,7 +156,7 @@ export default class Input extends React.Component {
         />
 
         <InputShadow
-          value={_first}
+          value={shadowTerm}
         />
         {button}
 

@@ -137,7 +137,7 @@ class Search extends React.Component {
               <TermSuggestion
                 term={suggestedTerm}
                 q={q}
-                />
+              />
 
               <SpellSuggestion
                 suggestions={spellSuggestions}

@@ -27,7 +27,7 @@ var urlSync = {
     /* Loop */
     for (var name in params) {
       /* Omit */
-      if (name === 'isSearchActive' || name === 'searchInput') continue
+      if (name === 'isSearchActive' || name === 'searchInput' || name === 'enriched_q') continue
       var value = params[name]
 
       /* Facets */

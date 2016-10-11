@@ -4,6 +4,7 @@ import { SEARCH_INPUTS } from './../constants/Settings'
 
 export const initialState = {
   q: '',
+  enriched_q: '', /* From Intent engine */
   page: 1,
   per_page: 10,
   facet_query: [],
@@ -182,6 +183,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSearchActive: action.status
+      }
+
+    case types.REQUEST_SEARCH_SUCCESS:
+      return {
+        ...state,
+        enriched_q: action.enriched_q || ''
       }
 
     default:
