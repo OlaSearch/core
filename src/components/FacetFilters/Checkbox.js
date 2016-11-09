@@ -94,7 +94,8 @@ class CheckboxFilter extends React.Component {
       toggleDisplay,
       limit,
       listType,
-      translate
+      translate,
+      showIfEmpty
     } = this.props
 
     var {
@@ -108,6 +109,9 @@ class CheckboxFilter extends React.Component {
     values = values.filter((value) => value.name && (allowedNames ? allowedNames.indexOf(value.name) !== -1 : true))
 
     var originalSize = values.length
+
+    /* Dont show anything when no items */
+    if (!originalSize && !showIfEmpty) return null
 
     /* Filter values */
 

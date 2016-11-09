@@ -49,7 +49,7 @@ const Tag = (props) => {
   return (
     <div className='ola-facet-tag'>
       <span className='ola-facet-tag-name'>{displayName}</span>
-      <button className='ola-facet-tag-remove' onClick={onRemove}><span>Remove</span></button>
+      <button className='ola-facet-tag-remove' onClick={onRemove}><span>{props.buttonLabel}</span></button>
     </div>
   )
 }
@@ -57,7 +57,12 @@ const Tag = (props) => {
 Tag.propTypes = {
   name: React.PropTypes.any,
   onRemove: React.PropTypes.func,
-  facet: React.PropTypes.object
+  facet: React.PropTypes.object,
+  buttonLabel: React.PropTypes.string
+}
+
+Tag.defaultProps = {
+  buttonLabel: 'Remove'
 }
 
 module.exports = Tag

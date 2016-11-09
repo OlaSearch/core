@@ -7,5 +7,6 @@ module.exports = {
   RangeNumeric: require('./RangeNumeric'),
   Rating: require('./Rating'),
   Tabs: require('./Tabs'),
-  TagCloud: require('./TagCloud')
+  TagCloud: require('./TagCloud'),
+  Hierarchical: require('./Hierarchical')
 }

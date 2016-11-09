@@ -1,5 +1,5 @@
 import React from 'react'
-import { removeFacet, executeSearch, clearQueryTerm, removeFilter } from './../actions/Search'
+import { removeFacet, executeSearch, clearQueryTerm, removeFilter, removeFacetItem } from './../actions/Search'
 import Tag from './Misc/Tag'
 import Tooltip from './Misc/Tooltip'
 import queryString from 'query-string'
@@ -21,20 +21,27 @@ class SelectedFilters extends React.Component {
     filters: React.PropTypes.array,
     dispatch: React.PropTypes.func,
     q: React.PropTypes.string,
-    showQuery: React.PropTypes.boolean
+    showQuery: React.PropTypes.boolean,
+    grouped: React.PropTypes.boolean
   };
 
   static defaultProps = {
     showQuery: false,
     showTabs: true,
     showZones: true,
+    grouped: true,
     filters: [],
     facets: []
   };
 
   handleRemoveFacet = (facet, value) => {
     let { dispatch } = this.props
-    dispatch(removeFacet(facet, value))
+
+    if (facet.type === 'hierarchical') {
+      dispatch(removeFacetItem(facet))
+    } else {
+      dispatch(removeFacet(facet, value))
+    }
     dispatch(executeSearch())
   };
 
@@ -62,6 +69,9 @@ class SelectedFilters extends React.Component {
       this.state.showGuidePopover !== nextState.showGuidePopover
     )
   }
+  renderGroups = () => {
+
+  }
   render () {
     var {
       facets,
@@ -69,7 +79,8 @@ class SelectedFilters extends React.Component {
       q,
       filters,
       showZones,
-      showTabs
+      showTabs,
+      grouped
     } = this.props
 
     var {
@@ -97,11 +108,24 @@ class SelectedFilters extends React.Component {
           : null
         }
         {facets.map((facet, idx) => {
-          var { selected: tags, displayName } = facet
-
+          var { selected: tags, displayName, type } = facet
+          if (!grouped) {
+            return tags.map((value, index) => {
+                return (
+                  <div key={index} className='ola-facet-tags-group'>
+                    {displayName && <span className='ola-facet-tags-heading'>{displayName}</span>}
+                    <FacetItem
+                      name={value}
+                      facet={facet}
+                      handleRemove={this.handleRemoveFacet}
+                    />
+                  </div>
+                )
+            })
+          }
           return (
             <div key={idx} className='ola-facet-tags-group'>
-              {displayName && <span className='ola-facet-tags-heading'>{displayName}: </span>}
+              {displayName && <span className='ola-facet-tags-heading'>{displayName}</span>}
               {tags.map((value, index) => {
                 return (
                   <FacetItem
@@ -139,6 +163,9 @@ class FacetItem extends React.Component {
   };
   render () {
     let { name, facet } = this.props
+    if (facet.rootLevel && facet.rootLevel > 0) {
+      name = name.split('/').slice(facet.rootLevel).join('/')
+    }
     return (
       <Tag
         onRemove={this.handleRemove}

@@ -100,7 +100,8 @@ class InstantSearchForm extends React.Component {
       showHistory,
       showZone,
       showSpeech,
-      translate
+      translate,
+      placeholder
     } = this.props
 
     let button = q
@@ -111,6 +112,8 @@ class InstantSearchForm extends React.Component {
       'ola-search-zone-enabled': showZone,
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
+
+    let _placeholder = placeholder || translate('instantsearch_placeholder')
 
     return (
       <form className={klass} onSubmit={this.onSubmit}>
@@ -124,7 +127,7 @@ class InstantSearchForm extends React.Component {
             ref={(c) => { this.Input = c }}
             type='text'
             className='ola-text-input ola-text-input-round'
-            placeholder={translate('instantsearch_placeholder')}
+            placeholder={_placeholder}
             value={q}
             aria-label='Search input'
             autoComplete='off'

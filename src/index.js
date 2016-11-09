@@ -57,7 +57,7 @@ module.exports = {
   Snippets: {
     Default: require('./components/Snippets/Default')
   },
-  Answer: require('./components/Snippets/Answer'),
+  Answer: require('./components/Answer/Answer'),
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
     OlaFacetToggle: require('./decorators/OlaFacetToggle'),
@@ -71,5 +71,15 @@ module.exports = {
   DateParser: require('./utilities/dateParser'),
   urlSync: require('./services/urlSync'),
   storage: require('./services/storage'),
-  Settings: require('./constants/Settings')
+  Settings: require('./constants/Settings'),
+
+  // Filters
+  DefaultFilter: require('./components/FacetFilters/Default'),
+  FacetCheckbox: require('./components/FacetFilters/Checkbox'),
+  Range: require('./components/FacetFilters/Range'),
+  RangeNumeric: require('./components/FacetFilters/RangeNumeric'),
+  Rating: require('./components/FacetFilters/Rating'),
+  DateRangePicker: require('./components/FacetFilters/DateRangePicker'),
+  TagCloud: require('./components/FacetFilters/TagCloud'),
+  Hierarchical: require('./components/FacetFilters/Hierarchical'),
 }

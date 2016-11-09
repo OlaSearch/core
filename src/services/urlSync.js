@@ -5,11 +5,23 @@ import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
 import xssFilters from 'xss-filters'
 
+const REMOVE_FROM_QUERY_STRING = [
+  'isSearchActive',
+  'searchInput',
+  'enriched_q',
+  'skip_intent'
+]
+
 var urlSync = {
   character: '?',
   pushState (qs, type) {
     var char = urlSync.getHistoryCharacter(type)
     if (window.history.pushState) {
+      if (type !== 'pushState') {
+        let r = new RegExp(/\/(.*)?\//gi)
+        let matches = r.exec(window.location.hash)
+        if (matches) return window.location.hash = char + urlSync.buildQueryString(qs)
+      }
       window.history.pushState(null, '', char + urlSync.buildQueryString(qs))
     }
   },
@@ -27,7 +39,7 @@ var urlSync = {
     /* Loop */
     for (var name in params) {
       /* Omit */
-      if (name === 'isSearchActive' || name === 'searchInput' || name === 'enriched_q') continue
+      if (REMOVE_FROM_QUERY_STRING.indexOf(name) !== -1) continue
       var value = params[name]
 
       /* Facets */
@@ -89,6 +101,7 @@ var urlSync = {
       /* Validate states: Prevent over-ride */
       if (!qs['per_page']) qs['per_page'] = initialState['per_page']
       if (!qs['page']) qs['page'] = initialState['page']
+      if (!qs['q']) qs['q'] = ''
     }
 
     /**
@@ -106,19 +119,26 @@ var urlSync = {
         }
       }
 
-      var fq = facetQuery.map((item) => {
-        let [ name, value ] = item.split(':')
-        value = value.split(',')
-        let facet = configFacets.filter((facet) => facet.name === name).reduce((a, b) => a)
-        let { type } = facet
-        if (RANGE_FACETS.indexOf(type) !== -1 && value.length > 1) {
-          value = parseRangeValues(value)
-        }
+      var fq = facetQuery
+        .filter((item) => {
+          let [ name, value ] = item.split(':')
+          return find(propEq('name', name))(configFacets)
+        })
+        .map((item) => {
+          let [ name, value ] = item.split(':')
+          value = value.split(',')
 
-        return {
-          ...facet,
-          selected: value
-        }
+          let facet = find(propEq('name', name))(configFacets)
+
+          let { type } = facet
+          if (RANGE_FACETS.indexOf(type) !== -1 && value.length > 1) {
+            value = parseRangeValues(value)
+          }
+
+          return {
+            ...facet,
+            selected: value
+          }
       })
 
       /* Extend */

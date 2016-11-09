@@ -50,7 +50,7 @@ class AutoComplete extends React.Component {
     enabledFocusBlur: true,
     showGeoLocation: false,
     categoryGroup: 'section_s',
-    visibleCategoryGroups: ['credit-card-detail-page', 'save', 'borrow', 'invest', 'insure', 'help-centre']
+    visibleCategoryGroups: [] //['credit-card-detail-page', 'save', 'borrow', 'invest', 'insure', 'help-centre']
   };
 
   componentWillReceiveProps (nextProps) {
@@ -76,9 +76,10 @@ class AutoComplete extends React.Component {
       isOpen: false
     })
   };
-  updateQueryTerm = (term) => {
+  updateQueryTerm = (term, searchInput) => {
     this.setState({
-      q: term
+      q: term,
+      searchInput
     })
   };
   clearQueryTerm = (term) => {
@@ -136,44 +137,65 @@ class AutoComplete extends React.Component {
       this.terminateAutoSuggest()
     } else {
       this.props.executeFuzzyAutoSuggest(term)
-        .then((response, xhr) => {
-          let results = pickDeep(response.suggest, 'suggestions')
+        .then((results, xhr) => {
           /* Parse payload */
           let res = []
           let categoryFound = false
-          for (let i = 0; i < results.length; i++) {
-            let item = results[i]
-            let payload = JSON.parse(item.payload)
-            /* If categories are found, we will need to create additional array items */
-            if (payload.categories &&
-              payload.categories.length &&
-              !categoryFound) {
 
-              let categories = this.props.visibleCategoryGroups ? payload.categories.filter((item) => {
+          for (let i = 0; i < results.length; i++) {
+            let { payload, answer, ...rest } = results[i]
+
+            if (typeof payload === 'string') payload = JSON.parse(payload)
+            let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
+            /**
+             * Check if answers are found
+             * @type {[type]}
+             */
+            // if (i === 0 && !answer && payload.answer) {
+            //   answer = payload.answer
+            //   res.unshift({
+            //     term: payload.suggestion_raw,
+            //     payload: {
+            //       type: 'answer',
+            //       answer
+            //     }
+            //   })
+            // }
+
+            /* If categories are found, we will need to create additional array items */
+            if (isCategory) {
+              let categories = this.props.visibleCategoryGroups ? payload.taxo_terms.filter((item) => {
                 let [name] = item.split('|')
                 return this.props.visibleCategoryGroups.indexOf(name) !== -1
-              }) : payload.categories
+              }) : payload.taxo_terms
 
               let totalCategories = categories.length
 
+              res.push({
+                ...rest,
+                term: payload.suggestion_raw,
+                label: payload.label,
+                type: payload.type
+              })
+
               for (let j = 0; j < totalCategories; j++) {
-                let [ name ] = payload.categories[j].split('|')
+                let [ name ] = payload.taxo_terms[j].split('|')
                 let displayName = facet.facetNames[name] || name
                 res.push({
-                  ...item,
-                  category_id: name,
-                  category_name: displayName,
-                  category_group: payload.category_group,
+                  ...rest,
+                  taxo_term: displayName,
                   isLastCategory: j === totalCategories - 1,
                   isFirstCategory: j === 0,
-                  payload
+                  ...payload,
+                  term: payload.suggestion_raw
                 })
                 categoryFound = true
               }
             } else {
-              res.push({ ...item, payload })
+              res.push({ ...rest, ...payload })
             }
           }
+
           this.setState({
             results: res,
             isOpen: !!results.length
@@ -262,7 +284,7 @@ class AutoComplete extends React.Component {
     this.props.removeAllFacets()
 
     /* Update query term */
-    this.props.updateQueryTerm(this.state.q)
+    this.props.updateQueryTerm(this.state.q, this.state.searchInput)
 
     this.props.onSelect && this.props.onSelect(this.state.q)
 
@@ -270,61 +292,48 @@ class AutoComplete extends React.Component {
   };
 
   onFuzzySelect = (suggestion) => {
-    let { payload } = suggestion
+    let { type, taxo_label, label, taxo_term, taxo_terms, suggestion_raw } = suggestion
     let facet
-    let isTaxonomy = payload.taxo_group
-    let isCategory = suggestion.category_group
-    let rawSuggestion = payload.suggestion_raw
-    let term = rawSuggestion || suggestion.term
+    let isTaxonomy = type === 'taxonomy'
+    let isEntity = type === 'entity'
+    let isQuery = type === 'query'
+    let hasQueryTerm = isQuery || (isEntity && taxo_terms)
+    let term = suggestion_raw || suggestion.term
 
     this.setState({
-      q: isTaxonomy || isCategory ? '' : term,
+      q: hasQueryTerm ? term : '',
       results: [],
       isOpen: false,
       fuzzyQuery: null
     })
 
-    /**
-     * If taxonomy is selected
-     */
-    if (isTaxonomy) {
-      facet = find(propEq('name', payload.taxo_group))(this.context.config.facets)
-      /* Remove all selected facets */
-      this.props.removeAllFacets()
-      /* Add facet */
-      this.props.replaceFacet(facet, payload.taxo_id)
-      /* Add query term */
-      this.props.updateQueryTerm('')
+    /* Remove all selected facets */
+    this.props.removeAllFacets()
 
-      return this.props.onSelect && this.props.onSelect(suggestion)
+    if (isEntity || isTaxonomy) {
+      /**
+       * For Barack Obama in Climate
+       */
+      if (taxo_label && taxo_term) {
+        facet = find(propEq('name', taxo_label))(this.context.config.facets)
+        this.props.replaceFacet(facet, taxo_term)
+        this.props.updateQueryTerm(term)
+      } else {
+        facet = find(propEq('name', label))(this.context.config.facets)
+        this.props.replaceFacet(facet, term)
+        this.props.updateQueryTerm('')
+      }
     }
 
-    /**
-     * If category is selected
-     * Eg: queryterm in category_name
-     */
-    if (isCategory) {
-      facet = find(propEq('name', suggestion.category_group))(this.context.config.facets)
-      /* Remove all selected facets */
-      this.props.removeAllFacets()
-      /* Replace facet */
-      this.props.replaceFacet(facet, suggestion.category_id)
-      /* Add query term */
+    if (isQuery) {
+      if (taxo_label && taxo_term) {
+        facet = find(propEq('name', taxo_label))(this.context.config.facets)
+        this.props.replaceFacet(facet, taxo_term)
+      }
       this.props.updateQueryTerm(term)
-
-      return this.props.onSelect && this.props.onSelect(suggestion)
     }
 
-    /**
-     * Else if its a term suggestion
-     */
-    if (term) {
-      /* Remove all selected facets */
-      this.props.removeAllFacets()
-      /* Add query term */
-      this.props.updateQueryTerm(term)
-      return this.props.onSelect && this.props.onSelect(suggestion)
-    }
+    return this.props.onSelect && this.props.onSelect(suggestion)
   };
 
   onFocus = (event) => {

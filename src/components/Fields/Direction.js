@@ -1,20 +1,24 @@
 import React from 'react'
 import injectTranslate from './../../decorators/OlaTranslate'
+import withLogger from './../../decorators/OlaLogger'
 
 const Directions = (props) => {
-  var { latlong, translate, iconLeft = null, iconRight = null, ...rest } = props
+  var { latlong, translate, label, iconLeft = null, iconRight = null, log, ...rest } = props
 
   if (!latlong) return null
+  if (typeof latlong === 'object') {
+    latlong = `${latlong.lat},${latlong.lon}`
+  }
 
   var url = `https://www.google.com/maps/dir//${latlong}`
 
   return (
     <a className='ola-btn ola-btn-directions' href={url} {...rest}>
       {iconLeft}
-      {translate('get_directions_label')}
+      {label || translate('get_directions_label')}
       {iconRight}
     </a>
   )
 }
 
-module.exports = injectTranslate(Directions)
+module.exports = injectTranslate(withLogger(Directions))

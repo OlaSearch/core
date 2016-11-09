@@ -1,6 +1,6 @@
 import types from './../constants/ActionTypes'
 import { debouceAddHistory } from './History'
-import { parseQueryString, pushState } from './../services/urlSync'
+import { parseQueryString, pushState, buildQueryString } from './../services/urlSync'
 import { debounce, checkForAllowedCharacters, castNumberToStringArray } from './../utilities'
 import omit from 'ramda/src/omit'
 import xssFilters from 'xss-filters'
@@ -53,6 +53,13 @@ export function clearQueryTerm () {
   }
 }
 
+export function setSkipIntent (flag) {
+  return {
+    type: types.SET_SKIP_INTENT,
+    flag
+  }
+}
+
 export function loadMore () {
   return (dispatch, getState) => {
     var currentPage = getState().QueryState.page
@@ -63,6 +70,18 @@ export function loadMore () {
       routeChange: false,
       appendResult: true
     }))
+  }
+}
+
+export function changeAnswerSelection (index, key, answer) {
+  /* Clone */
+  let newAnswer = JSON.parse(JSON.stringify(answer))
+  newAnswer['suggestions'][key].selection = index
+  return (dispatch, getState) => {
+    /* Clear enriched query for Intent engine */
+    dispatch({ type: types.CLEAR_ENRICHED_QUERY })
+    /* Execute search */
+    dispatch(executeSearch({ answer: newAnswer }))
   }
 }
 
@@ -83,6 +102,14 @@ export function executeSearch (payload) {
       dispatch(terminateSearch())
       // Update the URL
       updateURL(query, historyType)
+      return
+    }
+
+    /**
+     * If searching from another page
+     */
+    if (payload && payload.forceRedirect) {
+      window.location.href = payload.searchPageUrl + '?' + buildQueryString(query)
       return
     }
 
@@ -129,6 +156,20 @@ export function fetchAnswer (url) {
   }
 }
 
+export function fetchResult (id) {
+  return (dispatch, getState) => {
+    dispatch({
+      types: [
+        types.REQUEST_RESULT,
+        types.REQUEST_RESULT_SUCCESS,
+        types.REQUEST_RESULT_FAILURE
+      ],
+      query: { q: `id:${id}` },
+      api: 'get'
+    })
+  }
+}
+
 export function terminateSearch () {
   return {
     type: types.TERMINATE_SEARCH
@@ -160,6 +201,15 @@ export function removeFacet (facet, value) {
    */
   if (value instanceof Array) value = castNumberToStringArray(value)
 
+  /*
+    Reset facets is a Root facet (Tabs or Collection)
+    Used in admin console
+  */
+  if (facet.isRoot) {
+    return {
+      type: types.REMOVE_ALL_FACETS
+    }
+  }
   return {
     type: types.REMOVE_FACET,
     facet,
@@ -183,6 +233,13 @@ export function replaceFacet (facet, value) {
 export function removeAllFacets () {
   return {
     type: types.REMOVE_ALL_FACETS
+  }
+}
+
+export function removeFacetItem (facet) {
+  return {
+    type: types.REMOVE_FACET_ITEM,
+    facet
   }
 }
 

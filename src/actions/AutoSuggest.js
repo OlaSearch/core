@@ -1,5 +1,6 @@
 import types from './../constants/ActionTypes'
 import xssFilters from 'xss-filters'
+import { pickDeep } from './../utilities'
 
 export function updateQueryTerm (term, searchInput) {
   return {
@@ -41,6 +42,9 @@ export function executeFuzzyAutoSuggest (q) {
       ],
       query,
       context,
+      processData: (response) => pickDeep(response.suggest, 'suggestions'),
+      nullResponse: [],
+      returnWithoutDispatch: true,
       api: 'fuzzySuggest',
       payload: {}
     })

@@ -130,6 +130,13 @@ const utilities = {
      * Ignore tabs
      */
     return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
+    .sort((a, b) => {
+      let aIndex = names.indexOf(a.name)
+      let bIndex = names.indexOf(b.name)
+      if (aIndex > bIndex) return 1
+      if (aIndex < bIndex) return -1
+      return 0
+    })
   },
   sanitizeAnchor (str) {
     if (!str) return null
@@ -168,6 +175,58 @@ const utilities = {
       return utilities.pickDeep(obj[i], key)
     }
     return null
+  },
+  truncate (str, length, ellipsis = '...') {
+    if (str.toString().length > length) {
+      return str.substr(0, length).split(' ').slice(0, -1).join(' ') + ellipsis
+    }
+    return str
+  },
+  escapeRegEx (str) {
+    return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
+  },
+  toNestedArray (data, rootLevel = 0) {
+    let output = []
+    for (var i = 0; i < data.length; i++) {
+      var count = data[i].count
+      var items = data[i].name.split('/')
+      var hasParent = items.length > rootLevel
+      if (hasParent) {
+        output.push({
+          displayName: items.pop(),
+          count,
+          parent: rootLevel ? items.length === rootLevel ? null : items[items.length - 1] || null : items[items.length - 1] || null,
+          name: data[i].name
+        })
+      }
+    }
+
+    function getNestedChildren(arr, parent) {
+      var out = []
+      for(var i in arr) {
+        if (arr[i].parent == parent) {
+          var children = getNestedChildren(arr, arr[i].displayName)
+          if (children.length) {
+            arr[i].children = children
+          }
+          out.push(arr[i])
+        }
+      }
+      return out
+    }
+    return getNestedChildren(output, null)
+  },
+  uuid () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8)
+        return v.toString(16)
+    })
+  },
+  getKey (key, namespace) {
+    return namespace ? `${key}_${namespace}` : key
+  },
+  isSvg (path) {
+    return path.split('.').pop().indexOf('svg') === 0
   }
 }
 

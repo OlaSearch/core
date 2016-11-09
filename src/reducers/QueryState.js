@@ -1,6 +1,7 @@
 import types from './../constants/ActionTypes'
 import { checkIfFacetExists } from './../utilities'
 import { SEARCH_INPUTS } from './../constants/Settings'
+import equals from 'ramda/src/equals'
 
 export const initialState = {
   q: '',
@@ -13,7 +14,8 @@ export const initialState = {
   view: '',
   offset: 0,
   isSearchActive: true,
-  searchInput: null
+  searchInput: null,
+  skip_intent: false,
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -27,6 +29,7 @@ export default (state = initialState, action) => {
       if (exists) {
         return {
           ...state,
+          page: 1,
           filters: state.filters.map((item) => {
             if (item.name === filter.name) {
               return {
@@ -40,8 +43,15 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
+          page: 1,
           filters: [ ...state.filters, { ...filter, selected } ]
         }
+      }
+
+    case types.SET_SKIP_INTENT:
+      return {
+        ...state,
+        skip_intent: action.flag
       }
 
     case types.REMOVE_FILTER:
@@ -54,15 +64,18 @@ export default (state = initialState, action) => {
     case types.CLEAR_FILTERS:
       return {
         ...state,
+        page: 1,
         filters: []
       }
 
     case types.UPDATE_STATE_FROM_QUERY:
+      /* Reason: tennis players => click on snippet => come back to listing page from detail */
       return {
         ...state,
         ...action.stateFromUrl,
         referrer: '',
-        searchInput: SEARCH_INPUTS.URL
+        searchInput: SEARCH_INPUTS.URL,
+        skip_intent: false
       }
 
     case types.UPDATE_QUERY_TERM:
@@ -70,7 +83,15 @@ export default (state = initialState, action) => {
         ...state,
         q: action.term,
         searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
-        page: 1
+        enriched_q: '',
+        page: 1,
+        skip_intent: false
+      }
+
+    case types.CLEAR_ENRICHED_QUERY:
+      return {
+        ...state,
+        enriched_q: ''
       }
 
     case types.CLEAR_QUERY_TERM:
@@ -85,6 +106,7 @@ export default (state = initialState, action) => {
       if (exists) {
         return {
           ...state,
+          page: 1,
           facet_query: state.facet_query.map((item) => {
             if (item.name === action.facet.name) {
               return {
@@ -98,6 +120,7 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
+          page: 1,
           facet_query: [ ...state.facet_query, {
             ...action.facet,
             selected: [action.value]
@@ -108,12 +131,13 @@ export default (state = initialState, action) => {
     case types.REMOVE_FACET:
       return {
         ...state,
+        page: 1,
         facet_query: state.facet_query.map((item) => {
           if (item.name === action.facet.name) {
             return {
               ...item,
               selected: item.selected.filter((val) => {
-                return val !== action.value
+                return !equals(val, action.value)
               })
             }
           }
@@ -127,6 +151,7 @@ export default (state = initialState, action) => {
       if (exists) {
         return {
           ...state,
+          page: 1,
           facet_query: state.facet_query.map((item) => {
             if (item.name === action.facet.name) {
               return {
@@ -140,11 +165,19 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
+          page: 1,
           facet_query: [ ...state.facet_query, {
             ...action.facet,
             selected: [action.value]
           }]
         }
+      }
+
+    case types.REMOVE_FACET_ITEM:
+      return {
+        ...state,
+        page: 1,
+        facet_query: state.facet_query.filter((item) => item.name !== action.facet.name)
       }
 
     case types.REMOVE_ALL_FACETS:

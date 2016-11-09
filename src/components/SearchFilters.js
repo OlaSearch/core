@@ -1,6 +1,7 @@
 import React from 'react'
 import Default from './FacetFilters/Default'
 import FacetCheckbox from './FacetFilters/Checkbox'
+import Hierarchical from './FacetFilters/Hierarchical'
 import Range from './FacetFilters/Range'
 import RangeNumeric from './FacetFilters/RangeNumeric'
 import Rating from './FacetFilters/Rating'
@@ -78,6 +79,9 @@ class SearchFilters extends React.Component {
             switch (type) {
               case 'checkbox':
                 return <FacetCheckbox {...passProps} />
+
+              case 'hierarchical':
+                return <Hierarchical {...passProps} />
 
               case 'range':
               case 'daterange':

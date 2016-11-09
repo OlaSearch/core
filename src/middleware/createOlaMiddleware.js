@@ -20,9 +20,11 @@ module.exports = (options = {}) => {
       context,
       payload = {},
       suggestedTerm,
+      nullResponse = null,
       processResponse = true,
       processData = null,
-      shouldDispatchActions = true
+      shouldDispatchActions = true,
+      returnWithoutDispatch = false
     } = action
 
     /* Persist store state */
@@ -68,13 +70,6 @@ module.exports = (options = {}) => {
       throw new Error('Expected an array of three string types.')
     }
 
-    /**
-     * Fuzzy suggest
-     */
-    if (api === FUZZY_SUGGEST_KEY) {
-      return searchService[api](timestampObj, query)
-    }
-
     const [ requestType, successType, failureType ] = types
 
     shouldDispatchActions && next({
@@ -93,16 +88,15 @@ module.exports = (options = {}) => {
     let callApi
     let mapping = getMapping(api, config)
     let params = proxy
-        ? { ...query, api }
+        ? { ...query, ...payload.answer ? { answer: payload.answer } : {}, api, ...context }
         : queryBuilder.transform(query, mapping, acl, context)
 
     if (typeof api === 'function') {
-      /* Returns a promise */
+      /* Should returns a promise */
       callApi = () => api(params)
     } else {
       callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params) : null
     }
-
     if (typeof callApi !== 'function') {
       throw new Error('Expected callApi to be a function. Check your dispatch call.')
     }
@@ -112,17 +106,24 @@ module.exports = (options = {}) => {
         if (xhr && 'responseURL' in xhr) {
           let responseURL = xhr.responseURL.split('?').pop()
           let timestampFromResponse = parseInt(queryString.parse(responseURL).timestamp)
-          if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return
+          if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return nullResponse
         }
 
         let type = successType
 
         /* Check if process response is false */
 
+        if (processData) {
+          response = processData(response)
+        }
+
+        /* For autocomplete */
+        if (returnWithoutDispatch) return response
+
         if (!processResponse) {
           return next({
             type,
-            response: processData ? processData(response) : response
+            response
           })
         }
 

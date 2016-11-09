@@ -6,6 +6,12 @@ export const CONTEXT_STORAGE_KEY = '_ola_context_'
 export const CONTEXT_STORAGE_TTL = 1 / 24 / 60 * 5
 export const LOCALE_STORAGE_KEY = '_ola_locale_'
 export const LOCALE_STORAGE_TTL = 30 /* Days */
+export const SEARCH_SESSION_KEY = 'ola_search_session'
+export const USER_SESSION_KEY = 'ola_user_session' /* used for analytics only */
+export const USER_SESSION_EXPIRY_DAYS = 365
+export const INTENT_SESSION_KEY = 'ola_intent_session'
+export const INTENT_SESSION_EXPIRY_DAYS = 365
+export const RE_ESCAPE = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g')
 
 /**
  * Search Input types

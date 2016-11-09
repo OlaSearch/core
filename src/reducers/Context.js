@@ -8,6 +8,7 @@ export const initialState = {
   fields: [],
   isRequestingLocation: false,
   hasRequestedLocation: false,
+  userId: null,
   ...valueFromStorage ? JSON.parse(valueFromStorage) : {}
 }
 
@@ -65,6 +66,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fields: state.fields.filter((field) => field.name !== action.name)
+      }
+
+    case types.SET_INTENT_SESSION_ID:
+      return {
+        ...state,
+        userId: action.userId
       }
 
     default:

@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import { createHTMLMarkup } from './../../utilities'
+import { createHTMLMarkup, truncate } from './../../utilities'
+import { RE_ESCAPE } from './../../constants/Settings'
 
 const Suggestions = ({ q, results, ...rest }) => {
   return (
@@ -13,8 +14,6 @@ const Suggestions = ({ q, results, ...rest }) => {
 /**
  * Suggestion item
  */
-
-const reEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g')
 class SuggestionItem extends React.Component {
   constructor (props) {
     super(props)
@@ -22,7 +21,6 @@ class SuggestionItem extends React.Component {
       isActive: false
     }
   }
-
   static propTypes = {
     result: React.PropTypes.obj.isRequired
   };
@@ -40,18 +38,56 @@ class SuggestionItem extends React.Component {
     this.props.onSelect(this.props.result)
     event.preventDefault()
   };
+  buildAnswers = (answer) => {
+    let str = `<div class='ola-answer-autocomplete'>`
+    let totalFound = answer.length
+    answer.filter((item, idx) => idx < 1).forEach((item) => {
+      str+= `
+        <div class='ola-answer-item'>
+          ${item.image ?
+            `<div class='ola-answer-image'>
+              <img src='${item.image}' alt='${item.title}' />
+            </div>`
+            : ''
+          }
+          <div class='ola-answer-content'>
+            <p class='ola-answer-title'>${item.title}</p>
+            ${item.description ? `<p class='ola-answer-desc'>${truncate(item.description, 100)}</p>`: ''}
+            ${totalFound > 1 ? `<p class='ola-answer-more'>Found ${totalFound} more results. View all</p>` : ''}
+          </div>
+        </div>
+      `
+    })
+    str+=`</div>`
+    return str
+  }
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
-    let { term, payload, category_name: categoryName, isLastCategory, isFirstCategory } = this.props.result
-    let { type } = payload
-    let pattern = '(^' + this.props.q.replace(reEscape, '\\$1') + ')'
-    let prefix = type === 'taxonomy' ? '#' : ''
-    term = prefix + term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>') + (categoryName ? ' in <span class="ola-suggestion-category-name">' + categoryName + '</span>' : '')
+    let { type, answer, term, taxo_term, isLastCategory, isFirstCategory } = this.props.result
+    let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1') + ')'
+
+    /* Create term */
+    term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+
     let klass = classNames('ola-suggestion-item', activeClass, `ola-suggestion-type-${type}`, {
       'ola-suggestion-category-last': isLastCategory,
       'ola-suggestion-category-first': isFirstCategory,
-      'ola-suggestion-category-name': payload.taxo_group
+      'ola-suggestion-category-name': taxo_term
     })
+    /**
+     * If its a category
+     */
+    if (taxo_term && type !== 'taxonomy') {
+      term = term + (taxo_term ? ' in <span class="ola-suggestion-category-name">' + taxo_term + '</span>' : '')
+    }
+
+    /**
+     * If its a answer
+     */
+    if (type === 'answer') {
+      term = this.buildAnswers(answer)
+    }
+
     return (
       <a
         className={klass}

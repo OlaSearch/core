@@ -15,7 +15,11 @@ export const initialState = {
   error: null,
   qt: null,
   namespace: '' /* Used for creating cookies */,
-  answer: null /* Used for instant answers */
+  answer: null /* Used for instant answers */,
+
+  /* Individual result */
+  result: [],
+  isLoadingResult: false,
 }
 
 export default (state = initialState, action) => {
@@ -57,6 +61,18 @@ export default (state = initialState, action) => {
           status: action.error.status,
           statusText: action.error.statusText
         }
+      }
+
+    case types.REQUEST_RESULT:
+      return {
+        ...state,
+        isLoadingResult: true
+      }
+    case types.REQUEST_RESULT_SUCCESS:
+      return {
+        ...state,
+        result: action.results,
+        isLoadingResult: false
       }
 
     case types.REQUEST_ANSWER:

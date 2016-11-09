@@ -3,6 +3,9 @@ import olaReducer from './../reducers'
 import createOlaMiddleware from './../middleware/createOlaMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
+import utilities from './../utilities'
+import storage from './../services/storage'
+import { INTENT_SESSION_KEY, INTENT_SESSION_EXPIRY_DAYS } from './../constants/Settings'
 
 /**
  * Signature
@@ -64,6 +67,22 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
         ...enhancers
       )
     )
+  }
+
+  /* Create user cookie */
+  if (config.logger && config.logger.enabled) {
+    var userId = storage.cookies.get(utilities.getKey(INTENT_SESSION_KEY, config.namespace))
+    if (!userId) {
+      storage.cookies.set(
+        utilities.getKey(INTENT_SESSION_KEY, config.namespace),
+        utilities.uuid(),
+        INTENT_SESSION_EXPIRY_DAYS
+      )
+    }
+    store.dispatch({
+      type: types.SET_INTENT_SESSION_ID,
+      userId
+    })
   }
 
   /**

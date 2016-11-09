@@ -16,7 +16,6 @@ class RangeFilter extends React.Component {
   };
 
   static defaultProps = {
-    step: 1,
     pips: [0, 26, 44.5, 63, 81.5, 100],
     pipsDensity: 4,
     pipsMode: 'positions',
@@ -35,8 +34,11 @@ class RangeFilter extends React.Component {
 
   componentDidUpdate () {
     var options = this.getSliderValues(this.props)
-    var { step } = this.props
+    var { step = 1 } = this.props.facet
     var { min, max, value } = options
+
+    /* Convert to numeric value */
+    step = parseInt(step)
 
     /**
      * Check if min, max is the same, then disable the slider
@@ -90,7 +92,6 @@ class RangeFilter extends React.Component {
   componentDidMount () {
     var {
       facet,
-      step,
       showPips,
       pips,
       pipsDensity,
@@ -99,7 +100,10 @@ class RangeFilter extends React.Component {
 
     var options = this.getSliderValues(this.props)
 
-    var { singleHandle, type, dateFormat } = facet
+    var { step = 1, singleHandle, type, dateFormat } = facet
+
+    /* Convert to numeric value */
+    step = parseInt(step)
 
     var {min, max, value} = options
 

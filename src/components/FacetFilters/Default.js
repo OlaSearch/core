@@ -24,12 +24,14 @@ class LinkFilter extends React.Component {
     selected: React.PropTypes.array.isRequired,
     facet: React.PropTypes.object.isRequired,
     limit: React.PropTypes.number.isRequired,
-    showSelectedFacetItem: React.PropTypes.bool
+    showIfEmpty: React.PropTypes.bool,
+    showSelectedFacetItem: React.PropTypes.bool,
   };
 
   static defaultProps = {
     limit: 5,
     listType: 'uniform',
+    showIfEmpty: false,
     showSelectedFacetItem: false
   };
 
@@ -96,23 +98,29 @@ class LinkFilter extends React.Component {
       isCollapsed,
       toggleDisplay,
       listType,
-      showSelectedFacetItem,
-      translate
+      translate,
+      showIfEmpty,
+      showSelectedFacetItem
     } = this.props
 
     var {
-      values
+      values,
+      showSelectedTag = true,
+      removeLabel
     } = facet
 
     /* Remove values with no name */
     values = values.filter((value) => value.name)
 
+    if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
+
     var originalSize = values.length
+
+    /* Dont show anything when no items */
+    if (!originalSize && !showIfEmpty) return null
 
     /* Filter values */
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
-
-    if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 
     var size = values.length
 
@@ -128,8 +136,7 @@ class LinkFilter extends React.Component {
       ? <button className='ola-btn ola-link-show-more' onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
       : null
 
-    var klass = classNames({
-      'ola-facet': true,
+    var klass = classNames('ola-facet ola-facet-default', {
       'ola-facet-collapsed': isCollapsed
     })
 
@@ -148,18 +155,22 @@ class LinkFilter extends React.Component {
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
           {filterInput}
-          <div className='ola-facet-tags-selected'>
-            {selected.map((item, idx) => {
-              return (
-                <SelectedItem
-                  name={item}
-                  facet={facet}
-                  handleRemove={this.handleRemoveFacet}
-                  key={idx}
-                />
-              )
-            })}
-          </div>
+          {showSelectedTag
+            ? <div className='ola-facet-tags-selected'>
+              {selected.map((item, idx) => {
+                return (
+                  <SelectedItem
+                    name={item}
+                    facet={facet}
+                    handleRemove={this.handleRemoveFacet}
+                    key={idx}
+                    buttonLabel={removeLabel}
+                  />
+                )
+              })}
+            </div>
+            : null
+          }
           <div className='ola-facet-list'>
             <div className='ola-facet-scroll-list'>
               <ReactList
@@ -210,12 +221,13 @@ class SelectedItem extends React.Component {
     this.props.handleRemove(this.props.name)
   };
   render () {
-    let { name, facet } = this.props
+    let { name, facet, buttonLabel } = this.props
     return (
       <Tag
         onRemove={this.handleRemove}
         name={name}
         facet={facet}
+        buttonLabel={buttonLabel}
       />
     )
   }

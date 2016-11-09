@@ -5,6 +5,7 @@ import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
+import { escapeRegEx } from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
 
@@ -95,15 +96,16 @@ export default class Input extends React.Component {
   };
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
+    this.props.onSubmit()
   };
   getShadowTerm = () => {
     let { fuzzyQuery, q, results } = this.props
     let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
-    let reg = new RegExp('^' + q, 'gi')
+    let reg = new RegExp('^' + escapeRegEx(q), 'gi')
     if (!reg.test(shadowTerm)) {
       return ''
     } else {
-      return shadowTerm.replace(new RegExp('(' + q + ')', 'gi' ), q)
+      return shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi' ), q)
     }
   };
   render () {
@@ -117,19 +119,10 @@ export default class Input extends React.Component {
       showGeoLocation
     } = this.props
 
-    /**
-     * Show clear or submit button
-     */
-
-    var button = q
-      ? <button type='reset' className='ola-clear-button' onClick={this.onClear}></button>
-      : <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
-
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
     let shadowTerm = this.getShadowTerm()
-
 
     return (
       <div className={klass}>
@@ -158,7 +151,8 @@ export default class Input extends React.Component {
         <InputShadow
           value={shadowTerm}
         />
-        {button}
+
+        <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
 
         {showGeoLocation
           ? <GeoLocation

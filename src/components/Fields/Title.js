@@ -24,7 +24,7 @@ class Title extends React.Component {
     var { highlighting } = result
     var title = result[field || 'title']
 
-    if (!url) url = result.url
+    if (!url) url = result.url || this.props.url
     if (baseUrl) url = baseUrl + url
 
     /* Check for highlighting */
