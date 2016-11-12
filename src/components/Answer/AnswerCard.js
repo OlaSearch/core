@@ -9,17 +9,20 @@ class AnswerCard extends React.Component {
   };
   render () {
     let { result, onSelect, cdn, isActive, module } = this.props
-    let { image, description, subtitle, title } = result
+    let isClickable = !!result.additional_data
+    let { image, description, subtitle, title, exists } = result
     if (module === 'spices.facts.place.capital') {
       image = image.length > 1 ? image[1] : image
     }
     let klass = classNames('ola-answer-item', {
-      'ola-answer-item-active': isActive
+      'ola-answer-item-active': isActive,
+      'ola-answer-item-isSelectable': isClickable,
+      'ola-answer-item-deActive': !exists
     })
     image = image || 'https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png'
     let bgImage = isSvg(image) ? image : `${cdn}/${image}`
     return (
-      <a className={klass} onClick={this.handleSelect}>
+      <a className={klass} onClick={isClickable ? this.handleSelect : null}>
         {image
           ? <div className='ola-answer-image' style={{
             backgroundImage: `url("${bgImage}")`

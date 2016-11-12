@@ -13,7 +13,8 @@ class SpeechInput extends React.Component {
   }
 
   static contextTypes = {
-    store: React.PropTypes.object
+    store: React.PropTypes.object,
+    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
   };
 
   static defaultProps = {
@@ -62,9 +63,19 @@ class SpeechInput extends React.Component {
     this.recog.addEventListener('result', this.handleEvent)
     // this.recog.addEventListener('end', () => console.warn('end'))
     this.recog.addEventListener('error', this.handleError)
+    this.recog.addEventListener('end', this.stopRecording)
+    this.recog.addEventListener('onnomatch', this.stopRecording)
+    this.recog.addEventListener('onspeechend', this.stopRecording)
 
     /* Start recognizing */
     this.recog.start()
+  };
+
+  stopRecording = () => {
+    this.setState({
+      isRecording: false
+    })
+    if (this.recog) this.recog.stop()
   };
 
   handleError = (err) => {
@@ -94,14 +105,15 @@ class SpeechInput extends React.Component {
   render () {
     let { isRecording, isSpeechSupported } = this.state
     let { translate } = this.props
-    if (!isSpeechSupported) return null
+    let { voiceSearch } = this.context.config
+    if (!isSpeechSupported || !voiceSearch) return null
 
     let klassName = classnames('ola-link-speech', {
       'ola-link-speech-stop': isRecording
     })
 
     return (
-      <div>
+      <div className='ola-speech-input'>
         <button
           type='button'
           className={klassName}

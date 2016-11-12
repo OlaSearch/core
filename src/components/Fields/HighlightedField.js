@@ -12,7 +12,11 @@ const HighlightedField = ({ field, result, length }) => {
   if (highlighting && field in highlighting) {
     let highlightedContent = highlighting[field]
     if (typeof highlightedContent === 'object') {
-      fieldContent = highlightedContent.join('<br />...')
+      let temp = []
+      for (let i = 0; i < highlightedContent.length; i++){
+        temp.push(`<span class='ola-hi-token'>${highlightedContent[i]}</span>`)
+      }
+      fieldContent = temp
     }
   } else if (fieldContent && fieldContent.length > length) {
     fieldContent = fieldContent.substr(0, length).split(' ').slice(0, -1).join(' ') + '...'

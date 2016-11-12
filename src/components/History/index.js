@@ -13,13 +13,8 @@ class History extends React.Component {
     history: React.PropTypes.array.isRequired
   };
 
-  static defaultProps = {
-    emptyHistoryText: 'Your search history will show here'
-  };
-
   constructor (props) {
     super(props)
-
     this.state = {
       isOpen: false
     }
@@ -66,8 +61,11 @@ class History extends React.Component {
     } = this.props
 
     var {
-      searchPageUrl
+      searchPageUrl,
+      searchHistory
     } = this.context.config
+
+    if (!searchHistory) return null
 
     var {
       isOpen
@@ -77,6 +75,8 @@ class History extends React.Component {
       'ola-module': true,
       'ola-js-hide': !isOpen
     })
+
+    const hasHistory = history.length > 0
 
     return (
       <div className='ola-history-container'>
@@ -90,22 +90,23 @@ class History extends React.Component {
         <div className={klass}>
           <div className='ola-module-title'>
             <span>{translate('history_label')} </span>
-            <button
-              type='button'
-              className='ola-fake-button ola-clear'
-              onClick={this.clearHistory}>
-              (clear)
-            </button>
+            {hasHistory
+              ? <button
+                  type='button'
+                  className='ola-fake-button ola-clear'
+                  onClick={this.clearHistory}>
+                  (clear)
+                </button>
+              : null
+            }
           </div>
           <div className='ola-module-body'>
-            {!history.length &&
+            {!hasHistory &&
               <div className='ola-module-item'>
                 {translate('history_empty_label')}
               </div>
             }
-
             {history.map((item, idx) => <HistoryItem searchPageUrl={searchPageUrl} history={item} key={idx} />)}
-
           </div>
         </div>
       </div>

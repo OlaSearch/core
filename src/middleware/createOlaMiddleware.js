@@ -89,7 +89,7 @@ module.exports = (options = {}) => {
     let mapping = getMapping(api, config)
     let params = proxy
         ? { ...query, ...payload.answer ? { answer: payload.answer } : {}, api, ...context }
-        : queryBuilder.transform(query, mapping, acl, context)
+        : api === FUZZY_SUGGEST_KEY ? query : queryBuilder.transform(query, mapping, acl, context)
 
     if (typeof api === 'function') {
       /* Should returns a promise */

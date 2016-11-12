@@ -64,7 +64,7 @@ export default class Input extends React.Component {
          * If fuzzy query, do nothing
          */
         if (event.shiftKey || !this.getShadowTerm()) return
-        return this.props.onChange(this.getShadowTerm())
+        return this.props.onChange(this.getShadowTerm(true))
 
       case 38: // Up
         /**
@@ -98,14 +98,14 @@ export default class Input extends React.Component {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
     this.props.onSubmit()
   };
-  getShadowTerm = () => {
+  getShadowTerm = (raw = false) => {
     let { fuzzyQuery, q, results } = this.props
     let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
     let reg = new RegExp('^' + escapeRegEx(q), 'gi')
     if (!reg.test(shadowTerm)) {
       return ''
     } else {
-      return shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi' ), q)
+      return raw ? shadowTerm : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi' ), q)
     }
   };
   render () {
@@ -132,27 +132,28 @@ export default class Input extends React.Component {
             onChange={this.onChangeZone}
           />
         }
-        <input
-          ref='Input'
-          type='text'
-          value={q}
-          className='ola-text-input ola-text-input-round'
-          onChange={this.handleInputChange}
-          onFocus={this.onFocus}
-          onBlur={onBlur}
-          autoComplete='off'
-          autoCorrect='off'
-          autoCapitalize='off'
-          spellCheck='false'
-          placeholder={placeholder}
-          onKeyDown={this.onKeyDown}
-        />
+        <div className='ola-form-input-wrapper'>
+          <input
+            ref='Input'
+            type='text'
+            value={q}
+            className='ola-text-input ola-text-input-round'
+            onChange={this.handleInputChange}
+            onFocus={this.onFocus}
+            onBlur={onBlur}
+            autoComplete='off'
+            autoCorrect='off'
+            autoCapitalize='off'
+            spellCheck='false'
+            placeholder={placeholder}
+            onKeyDown={this.onKeyDown}
+            autoFocus={this.props.autoFocus}
+          />
 
-        <InputShadow
-          value={shadowTerm}
-        />
-
-        <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
+          <InputShadow
+            value={shadowTerm}
+          />
+        </div>
 
         {showGeoLocation
           ? <GeoLocation
@@ -171,9 +172,11 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
+        <History />
+
         <Bookmarks />
 
-        <History />
+        <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
       </div>
     )
   }

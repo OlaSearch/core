@@ -33,6 +33,11 @@ class RangeFilter extends React.Component {
   };
 
   componentDidUpdate () {
+    /**
+     * Check if there are values
+     */
+    if (!this.props.facet.values.length) return this.refs.slider.setAttribute('disabled', true)
+
     var options = this.getSliderValues(this.props)
     var { step = 1 } = this.props.facet
     var { min, max, value } = options

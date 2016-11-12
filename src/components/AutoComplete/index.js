@@ -28,6 +28,7 @@ class AutoComplete extends React.Component {
   static propTypes = {
     AutoSuggest: React.PropTypes.object.isRequired,
     showFacetSuggestions: React.PropTypes.bool,
+    autoFocus: React.PropTypes.bool,
     dispatch: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func,
     viewAllClassName: React.PropTypes.string,
@@ -137,7 +138,7 @@ class AutoComplete extends React.Component {
       this.terminateAutoSuggest()
     } else {
       this.props.executeFuzzyAutoSuggest(term)
-        .then((results, xhr) => {
+        .then((results) => {
           /* Parse payload */
           let res = []
           let categoryFound = false
@@ -147,20 +148,6 @@ class AutoComplete extends React.Component {
 
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
-            /**
-             * Check if answers are found
-             * @type {[type]}
-             */
-            // if (i === 0 && !answer && payload.answer) {
-            //   answer = payload.answer
-            //   res.unshift({
-            //     term: payload.suggestion_raw,
-            //     payload: {
-            //       type: 'answer',
-            //       answer
-            //     }
-            //   })
-            // }
 
             /* If categories are found, we will need to create additional array items */
             if (isCategory) {
@@ -173,13 +160,14 @@ class AutoComplete extends React.Component {
 
               res.push({
                 ...rest,
-                term: payload.suggestion_raw,
+                suggestion_raw: payload.suggestion_raw,
                 label: payload.label,
                 type: payload.type
               })
 
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.taxo_terms[j].split('|')
+                let [ path ] = payload.taxo_paths ? payload.taxo_paths[j].split('|') : []
                 let displayName = facet.facetNames[name] || name
                 res.push({
                   ...rest,
@@ -187,7 +175,8 @@ class AutoComplete extends React.Component {
                   isLastCategory: j === totalCategories - 1,
                   isFirstCategory: j === 0,
                   ...payload,
-                  term: payload.suggestion_raw
+                  suggestion_raw: payload.suggestion_raw,
+                  taxo_path: path
                 })
                 categoryFound = true
               }
@@ -198,8 +187,9 @@ class AutoComplete extends React.Component {
 
           this.setState({
             results: res,
-            isOpen: !!results.length
+            isOpen: this.state.q ? !!results.length : false
           })
+
         })
     }
 
@@ -292,7 +282,7 @@ class AutoComplete extends React.Component {
   };
 
   onFuzzySelect = (suggestion) => {
-    let { type, taxo_label, label, taxo_term, taxo_terms, suggestion_raw } = suggestion
+    let { type, taxo_label, label, path, taxo_term, taxo_path, taxo_terms, suggestion_raw } = suggestion
     let facet
     let isTaxonomy = type === 'taxonomy'
     let isEntity = type === 'entity'
@@ -316,19 +306,18 @@ class AutoComplete extends React.Component {
        */
       if (taxo_label && taxo_term) {
         facet = find(propEq('name', taxo_label))(this.context.config.facets)
-        this.props.replaceFacet(facet, taxo_term)
+        this.props.replaceFacet(facet, taxo_path || taxo_term)
         this.props.updateQueryTerm(term)
       } else {
         facet = find(propEq('name', label))(this.context.config.facets)
-        this.props.replaceFacet(facet, term)
+        this.props.replaceFacet(facet, path || term)
         this.props.updateQueryTerm('')
       }
     }
-
     if (isQuery) {
       if (taxo_label && taxo_term) {
         facet = find(propEq('name', taxo_label))(this.context.config.facets)
-        this.props.replaceFacet(facet, taxo_term)
+        this.props.replaceFacet(facet, taxo_path || taxo_term)
       }
       this.props.updateQueryTerm(term)
     }
@@ -387,13 +376,14 @@ class AutoComplete extends React.Component {
             isOpen={isOpen}
             placeholder={translate('autosuggest_placeholder')}
             handleClickOutside={this.handleClickOutside}
-            onSearchButtonClick={this.props.onSearchButtonClick}
+            onSearchButtonClick={this.onSubmit}
             results={results}
             showZone={showZone}
             fuzzyQuery={fuzzyQuery}
             showGeoLocation={this.props.showGeoLocation}
             onGeoLocationSuccess={this.props.onGeoLocationSuccess}
             onGeoLocationDisable={this.props.onGeoLocationDisable}
+            autoFocus={this.props.autoFocus}
           />
           <div className={klass}>
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>

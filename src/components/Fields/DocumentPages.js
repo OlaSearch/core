@@ -1,27 +1,54 @@
 import React from 'react'
 import HighlightedField from './HighlightedField'
 
-const DocumentPages = ({ pages, q, onSelectPage, contentField }) => {
-  return (
-    <div>
-      {pages.map((page, idx) =>
-        <PageDetail
-          onSelectPage={onSelectPage}
-          page={page}
-          contentField={contentField}
-          feld
-          key={idx}
-        />
-      )}
-    </div>
-  )
+class DocumentPages extends React.Component {
+  constructor (props) {
+    super (props)
+    this.state = {
+      isVisible: false
+    }
+  }
+  toggle = () => {
+    this.setState({
+      isVisible: !this.state.isVisible
+    })
+  };
+  onSelect = (pageNumber) => {
+    this.props.onClick && this.props.onClick(pageNumber, this.props.result)
+  };
+  render () {
+    let { pages, q, contentField } = this.props
+    let { isVisible } = this.state
+
+    if (!pages.length) return null
+
+    if (!isVisible) return (
+      <div className='ola-field-pages'>
+        <a className='ola-link-view-pages' onClick={this.toggle}>View more</a>
+      </div>
+    )
+    return (
+      <div className='ola-field-pages'>
+        <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>Hide</a>
+        {pages.map((page, idx) =>
+          <PageDetail
+            onSelectPage={this.onSelect}
+            page={page}
+            contentField={contentField}
+            key={idx}
+          />
+        )}
+      </div>
+    )
+  }
 }
 
 /**
  * Default props
  */
 DocumentPages.defaultProps = {
-  contentField: 'pageContent'
+  contentField: 'pageContent',
+  pages: []
 }
 
 /**
@@ -32,7 +59,7 @@ class PageDetail extends React.Component {
     this.props.onSelectPage(this.props.page)
   };
   render () {
-    let { page } = this.props
+    let { page, contentField } = this.props
     let { pageNumber } = page
 
     return (
@@ -43,7 +70,7 @@ class PageDetail extends React.Component {
         >
           <span>p. {pageNumber}</span>
         </a>
-        <HighlightedField field={this.props.contentField} result={page} />
+        <HighlightedField field={contentField} result={page} />
       </div>
     )
   }

@@ -3,7 +3,7 @@ import remove from 'ramda/src/remove'
 import AnswerDropdown from './AnswerDropdown'
 import equals from 'ramda/src/equals'
 
-const WILDCARD_MODULE_NAME = 'spices.wildcard'
+const WILDCARD_MODULE_NAMES = ['spices.wildcard', 'spices.meeting']
 
 const AnswerSuggestion = (props) => {
   let { answer, onChange, onSkipIntent } = props
@@ -41,7 +41,7 @@ const AnswerSuggestion = (props) => {
     return true
   })
 
-  let shouldShowSuggestion = module === WILDCARD_MODULE_NAME && !equals(keys, newKeys)
+  let shouldShowSuggestion = WILDCARD_MODULE_NAMES.indexOf(module) !== -1 && !equals(keys, newKeys)
 
   return (
     <div className='ola-answer-suggestion'>

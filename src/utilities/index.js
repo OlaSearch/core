@@ -63,6 +63,7 @@ const utilities = {
     return values.map((item) => item.toString())
   },
   createHTMLMarkup (html) {
+    if (Array.isArray(html)) html = html.join('')
     return { __html: html }
   },
   getDisplayName (haystack, needle) {
@@ -185,17 +186,21 @@ const utilities = {
   escapeRegEx (str) {
     return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
   },
-  toNestedArray (data, rootLevel = 0) {
+  toNestedArray (data, rootLevel = 0, parentNode) {
     let output = []
     for (var i = 0; i < data.length; i++) {
       var count = data[i].count
       var items = data[i].name.split('/')
       var hasParent = items.length > rootLevel
       if (hasParent) {
+        let parent = rootLevel
+        ? items.length === rootLevel
+          ? null : items.slice(0, items.length - 1).join('/') || null
+        : items.slice(0, items.length - 1).join('/') || null
         output.push({
           displayName: items.pop(),
           count,
-          parent: rootLevel ? items.length === rootLevel ? null : items[items.length - 1] || null : items[items.length - 1] || null,
+          parent,
           name: data[i].name
         })
       }
@@ -205,7 +210,7 @@ const utilities = {
       var out = []
       for(var i in arr) {
         if (arr[i].parent == parent) {
-          var children = getNestedChildren(arr, arr[i].displayName)
+          var children = getNestedChildren(arr, arr[i].name)
           if (children.length) {
             arr[i].children = children
           }
@@ -214,7 +219,7 @@ const utilities = {
       }
       return out
     }
-    return getNestedChildren(output, null)
+    return getNestedChildren(output, parentNode)
   },
   uuid () {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {

@@ -37,19 +37,22 @@ class AnswerDropdown extends React.Component {
     return (
       <div className={klass}>
         <div className='ola-answer-dropdown-label' onClick={this.toggle}>{label}</div>
-        <div className='ola-answer-dropdown-box'>
-          {options.map((option, idx) => {
-            return (
-              <AnswerDropdownItem
-                onChange={this.onChange}
-                key={idx}
-                option={option}
-                isActive={active === idx}
-                index={idx}
-              />
-            )
-          })}
-        </div>
+        {isOpen
+          ? <div className='ola-answer-dropdown-box'>
+              {options.map((option, idx) => {
+                return (
+                  <AnswerDropdownItem
+                    onChange={this.onChange}
+                    key={idx}
+                    option={option}
+                    isActive={active === idx}
+                    index={idx}
+                  />
+                )
+              })}
+            </div>
+          : null
+        }
       </div>
     )
   }
@@ -62,9 +65,10 @@ class AnswerDropdown extends React.Component {
 class AnswerDropdownItem extends React.Component{
   handleClick = () => this.props.onChange(this.props.option, this.props.index);
   render () {
-    let { option: { name }, isActive } = this.props
-    // if (isActive) return <span className='ola-answer-dropdown-item'>{name}</span>
-    return <a className='ola-answer-dropdown-item' onClick={this.handleClick}>{name}</a>
+    let { option: { name, exists }, isActive } = this.props
+    if (isActive) return null
+    if (exists) return <a className='ola-answer-dropdown-item' onClick={this.handleClick}>{name}</a>
+    return <span className='ola-answer-dropdown-item ola-answer-dropdown-item-inactive'>{name}</span>
   }
 }
 

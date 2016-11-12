@@ -14,6 +14,10 @@ class Bookmarks extends React.Component {
     bookmarks: React.PropTypes.array.isRequired
   };
 
+  static contextTypes = {
+    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+  };
+
   constructor (props) {
     super(props)
 
@@ -62,6 +66,10 @@ class Bookmarks extends React.Component {
     var {
       isOpen
     } = this.state
+
+    let { bookmarking } = this.context.config
+
+    if (!bookmarking) return null
 
     var klass = classNames({
       'ola-module': true,

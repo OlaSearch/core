@@ -67,7 +67,8 @@ class HierarchicalFilter extends React.Component {
       allowSingleSelection,
       allowedNames,
       rootLevel = 0,
-      rollUp = false
+      rollUp = false,
+      parentNode = null
     } = facet
 
     if (typeof rollUp === 'string') rollUp = (rollUp === 'false'? false : true)
@@ -85,7 +86,7 @@ class HierarchicalFilter extends React.Component {
     if (!originalSize) return null
 
     /* Get Hierarchical values */
-    values = toNestedArray(values, rootLevel)
+    values = toNestedArray(values, rootLevel, parentNode)
     /* Selected */
     let selected = this.props.selected.map((item) => item.split('/')).reduce((o, i) => i, [])
     let selectedPath = []

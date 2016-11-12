@@ -3,6 +3,9 @@ import classNames from 'classnames'
 import withLogger from './../../decorators/OlaLogger'
 
 class Button extends React.Component {
+  static defaultProps = {
+    fullWidth: false
+  };
   handeClick = (event) => {
     this.props.log({
       eventType: 'C',
@@ -11,14 +14,17 @@ class Button extends React.Component {
       eventAction: 'click'
     })
 
+    if (this.props.onClick) return this.props.onClick(event)
+
     event.preventDefault()
     window.location.href = this.props.url
   };
   render () {
-    let { label, className } = this.props
+    let { label, className, fullWidth } = this.props
     if (!label) return null
-
-    let klass = classNames('ola-cta-button', className)
+    let klass = classNames('ola-cta-button', className, {
+      'ola-btn-fullwidth': fullWidth
+    })
     return (
       <a
         className={klass}

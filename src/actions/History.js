@@ -3,7 +3,8 @@ import { buildQueryString, character as hashCharacter } from './../services/urlS
 import omit from 'ramda/src/omit'
 import flatten from 'ramda/src/flatten'
 import equals from 'ramda/src/equals'
-import { debounce } from './../utilities'
+import { debounce, supplant } from './../utilities'
+import DateParser from './../utilities/dateParser'
 
 export function addHistory (options) {
   return (dispatch, getState) => {
@@ -15,7 +16,29 @@ export function addHistory (options) {
 
     /* Filtering history */
     var query = omit(['page', 'per_page', 'referrer'], QueryState)
-    var activeFacets = flatten(facet_query.map((item) => item.selected))
+    var activeFacets = flatten(facet_query.map((item) => {
+      let { selected, template, dateFormat, type } = item
+      switch (type) {
+        case 'range':
+          if (typeof selected === 'string') {
+            return selected
+          } else {
+            let [from, to] = selected
+            return supplant(template, {from, to})
+          }
+        case 'daterange':
+          let [ from, to ] = selected[0]
+          let fromDate = new Date(parseInt(from))
+          let toDate = new Date(parseInt(to))
+          return supplant(template, {
+            from: DateParser.format(fromDate, dateFormat),
+            to: DateParser.format(toDate, dateFormat)
+          })
+
+        default:
+          return selected
+      }
+    }))
 
     /* Check if it already exists */
     var exists = history.filter((item) => item.q === q && equals(item.facets, activeFacets))
