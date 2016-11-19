@@ -64,7 +64,8 @@ export default class Input extends React.Component {
          * If fuzzy query, do nothing
          */
         if (event.shiftKey || !this.getShadowTerm()) return
-        return this.props.onChange(this.getShadowTerm(true))
+        return onKeyDown('down')
+        // return this.props.onChange(this.getShadowTerm(true))
 
       case 38: // Up
         /**
