@@ -106,7 +106,7 @@ export default class Input extends React.Component {
     if (!reg.test(shadowTerm)) {
       return ''
     } else {
-      return raw ? shadowTerm : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi' ), q)
+      return raw ? shadowTerm : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi'), q)
     }
   };
   render () {
@@ -115,8 +115,6 @@ export default class Input extends React.Component {
       placeholder,
       onBlur,
       showZone,
-      results,
-      fuzzyQuery,
       showGeoLocation
     } = this.props
 

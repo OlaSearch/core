@@ -4,8 +4,7 @@ import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { updateQueryTerm, replaceFacet, removeAllFacets } from './../../actions/Search'
 import Input from './Input'
-import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
-import { checkForAllowedCharacters, trim, pickDeep } from './../../utilities'
+import { checkForAllowedCharacters, trim } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
@@ -51,7 +50,7 @@ class AutoComplete extends React.Component {
     enabledFocusBlur: true,
     showGeoLocation: false,
     categoryGroup: 'section_s',
-    visibleCategoryGroups: [] //['credit-card-detail-page', 'save', 'borrow', 'invest', 'insure', 'help-centre']
+    visibleCategoryGroups: []
   };
 
   componentWillReceiveProps (nextProps) {
@@ -144,7 +143,7 @@ class AutoComplete extends React.Component {
           let categoryFound = false
 
           for (let i = 0; i < results.length; i++) {
-            let { payload, answer, ...rest } = results[i]
+            let { payload, ...rest } = results[i]
 
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
@@ -189,7 +188,6 @@ class AutoComplete extends React.Component {
             results: res,
             isOpen: this.state.q ? !!results.length : false
           })
-
         })
     }
 
@@ -282,13 +280,13 @@ class AutoComplete extends React.Component {
   };
 
   onFuzzySelect = (suggestion) => {
-    let { type, taxo_label, label, path, taxo_term, taxo_path, taxo_terms, suggestion_raw } = suggestion
+    let { type, label, path } = suggestion
     let facet
     let isTaxonomy = type === 'taxonomy'
     let isEntity = type === 'entity'
     let isQuery = type === 'query'
-    let hasQueryTerm = isQuery || (isEntity && taxo_terms)
-    let term = suggestion_raw || suggestion.term
+    let hasQueryTerm = isQuery || (isEntity && suggestion.taxo_terms)
+    let term = suggestion.suggestion_raw || suggestion.term
 
     this.setState({
       q: hasQueryTerm ? term : '',
@@ -304,9 +302,9 @@ class AutoComplete extends React.Component {
       /**
        * For Barack Obama in Climate
        */
-      if (taxo_label && taxo_term) {
-        facet = find(propEq('name', taxo_label))(this.context.config.facets)
-        this.props.replaceFacet(facet, taxo_path || taxo_term)
+      if (suggestion.taxo_label && suggestion.taxo_term) {
+        facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
+        this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
         this.props.updateQueryTerm(term)
       } else {
         facet = find(propEq('name', label))(this.context.config.facets)
@@ -315,9 +313,9 @@ class AutoComplete extends React.Component {
       }
     }
     if (isQuery) {
-      if (taxo_label && taxo_term) {
-        facet = find(propEq('name', taxo_label))(this.context.config.facets)
-        this.props.replaceFacet(facet, taxo_path || taxo_term)
+      if (suggestion.taxo_label && suggestion.taxo_term) {
+        facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
+        this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
       }
       this.props.updateQueryTerm(term)
     }

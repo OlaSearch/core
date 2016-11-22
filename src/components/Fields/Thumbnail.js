@@ -1,5 +1,6 @@
 import React from 'react'
 import Media from 'react-responsive'
+import omit from 'ramda/src/omit'
 
 const Thumbnail = (props, context) => {
   var { mediaQuery, cdn } = context.config
@@ -7,10 +8,10 @@ const Thumbnail = (props, context) => {
     thumbnail,
     thumbnail_mobile: thumbnailMobile,
     baseUrl,
-    size,
-    result,
     ...rest
   } = props
+
+  let restProps = omit(['size', 'result'], rest)
 
   if (!thumbnail && !thumbnailMobile) return null
 
@@ -26,17 +27,17 @@ const Thumbnail = (props, context) => {
 
   if (!thumbnailMobile) {
     return (
-      <img className='ola-img' {...rest} src={`${baseUrl}${thumbnail}`} alt='' />
+      <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
     )
   }
 
   return (
     <div>
       <Media query={mediaQuery.tablet}>
-        <img className='ola-img ola-img-desktop' {...rest} src={`${baseUrl}${thumbnail}`} alt='' />
+        <img className='ola-img ola-img-desktop' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
       </Media>
       <Media query={mediaQuery.mobile}>
-        <img className='ola-img ola-img-mobile' {...rest} src={`${baseUrl}${thumbnailMobile}`} alt='' />
+        <img className='ola-img ola-img-mobile' {...restProps} src={`${baseUrl}${thumbnailMobile}`} alt='' />
       </Media>
     </div>
   )

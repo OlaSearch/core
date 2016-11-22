@@ -14,8 +14,8 @@ class BooleanFilter extends React.Component {
     let { dispatch, facet } = this.props
 
     if (event.target.checked) {
-      dispatch(replaceFacet(facet, "true"))
-    } else dispatch(removeFacet(facet, "true"))
+      dispatch(replaceFacet(facet, 'true'))
+    } else dispatch(removeFacet(facet, 'true'))
 
     dispatch(executeSearch())
   };

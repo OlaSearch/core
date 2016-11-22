@@ -1,11 +1,9 @@
 import React from 'react'
-import { addFacet, removeFacet, replaceFacet, executeSearch, removeFacetItem } from './../../actions/Search'
+import { replaceFacet, executeSearch, removeFacetItem } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
-import ReactList from 'react-list'
-import { getDisplayName, toNestedArray } from './../../utilities'
-import FilterInput from './common/FilterInput'
+import { toNestedArray } from './../../utilities'
 import xss from 'xss'
 
 class HierarchicalFilter extends React.Component {
@@ -55,23 +53,19 @@ class HierarchicalFilter extends React.Component {
     var {
       facet,
       isCollapsed,
-      toggleDisplay,
-      limit,
-      listType,
-      translate
+      toggleDisplay
     } = this.props
 
     var {
       values,
       displayName,
       allowSingleSelection,
-      allowedNames,
       rootLevel = 0,
       rollUp = false,
       parentNode = null
     } = facet
 
-    if (typeof rollUp === 'string') rollUp = (rollUp === 'false'? false : true)
+    if (typeof rollUp === 'string') rollUp = rollUp !== 'false'
 
     var klass = classNames({
       'ola-facet': true,
@@ -91,7 +85,7 @@ class HierarchicalFilter extends React.Component {
     let selected = this.props.selected.map((item) => item.split('/')).reduce((o, i) => i, [])
     let selectedPath = []
     for (var i = 0; i < selected.length; i++) {
-      selectedPath.push(selected[i - 1] ? selectedPath[i-1] + '/' + selected[i] : selected[i])
+      selectedPath.push(selected[i - 1] ? selectedPath[i - 1] + '/' + selected[i] : selected[i])
     }
 
     return (
@@ -113,13 +107,12 @@ class HierarchicalFilter extends React.Component {
   }
 }
 
-
 /**
  * Group
  */
 class CheckboxGroup extends React.Component {
   render () {
-    let { values, rollUp, selected, rootLevel } = this.props
+    let { values, rollUp, selected } = this.props
     if (!values) return null
     let isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
 
@@ -129,26 +122,28 @@ class CheckboxGroup extends React.Component {
           let index = selected.indexOf(value.name)
           let isActive = index !== -1
 
-          if (isActive || !rollUp || !isAnyChecked) return (
-            <div className='ola-facet-h-group-inner' key={idx}>
-              <CheckBoxItem
-                value={value}
-                handleAddFacet={this.props.handleAddFacet}
-                handleRemoveFacet={this.props.handleRemoveFacet}
-                isActive={isActive}
-              />
-              {value.children && isActive
-                ? <CheckboxGroup
+          if (isActive || !rollUp || !isAnyChecked) {
+            return (
+              <div className='ola-facet-h-group-inner' key={idx}>
+                <CheckBoxItem
+                  value={value}
+                  handleAddFacet={this.props.handleAddFacet}
+                  handleRemoveFacet={this.props.handleRemoveFacet}
+                  isActive={isActive}
+                />
+                {value.children && isActive
+                  ? <CheckboxGroup
                     values={value.children}
                     handleAddFacet={this.props.handleAddFacet}
                     handleRemoveFacet={this.props.handleRemoveFacet}
                     selected={selected}
                     rollUp={rollUp}
                   />
-                : null
-              }
-            </div>
-          )
+                  : null
+                }
+              </div>
+            )
+          }
           return null
         })}
       </div>

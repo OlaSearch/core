@@ -5,7 +5,6 @@ import AnswerCard from './AnswerCard'
 import AnswerInfo from './AnswerInfo'
 import { createHTMLMarkup } from './../../utilities'
 import { updateQueryTerm, executeSearch, changeAnswerSelection, setSkipIntent } from './../../actions/Search'
-import listensToClickOutside from 'react-onclickoutside'
 
 class Answer extends React.Component {
   constructor (props) {
@@ -50,7 +49,7 @@ class Answer extends React.Component {
     }
   }
   render () {
-    const { answer, isLoading, result, enrichedQuery, dispatch } = this.props
+    const { answer, isLoading, result } = this.props
 
     if (isLoading) {
       return (
@@ -70,8 +69,7 @@ class Answer extends React.Component {
       )
     }
     if (!answer) return null
-    let { data, callback, template, enrich, source, suggestions } = answer
-
+    let { data, source } = answer
 
     /**
      * If the answer is from Intent engine
@@ -93,17 +91,18 @@ class Answer extends React.Component {
                 {data
                   .slice(0, 4)
                   .map((result, idx) => {
-                  return (
-                    <AnswerCard
-                      key={result.title}
-                      cdn={this.context.config.cdn}
-                      result={result}
-                      module={answer.module}
-                      onSelect={this.showAnswerCard}
-                      isActive={this.state.selectedAnswer === result}
-                    />
-                  )
-                })}
+                    return (
+                      <AnswerCard
+                        key={result.title}
+                        cdn={this.context.config.cdn}
+                        result={result}
+                        module={answer.module}
+                        onSelect={this.showAnswerCard}
+                        isActive={this.state.selectedAnswer === result}
+                      />
+                    )
+                  })
+                }
               </div>
               {this.state.isOpen
                 ? <AnswerInfo answer={this.state.selectedAnswer} onClose={this.hideAnswerCard} />
@@ -111,8 +110,8 @@ class Answer extends React.Component {
               }
               {source
                 ? <div className='ola-answer-source'>
-                    Source: <a target='_blank' href={source.url}>{source.name}</a>
-                  </div>
+                  Source: <a target='_blank' href={source.url}>{source.name}</a>
+                </div>
                 : null
               }
             </div>

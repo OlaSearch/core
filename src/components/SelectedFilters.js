@@ -108,19 +108,19 @@ class SelectedFilters extends React.Component {
           : null
         }
         {facets.map((facet, idx) => {
-          var { selected: tags, displayName, type } = facet
+          var { selected: tags, displayName } = facet
           if (!grouped) {
             return tags.map((value, index) => {
-                return (
-                  <div key={index} className='ola-facet-tags-group'>
-                    {displayName && <span className='ola-facet-tags-heading'>{displayName}</span>}
-                    <FacetItem
-                      name={value}
-                      facet={facet}
-                      handleRemove={this.handleRemoveFacet}
-                    />
-                  </div>
-                )
+              return (
+                <div key={index} className='ola-facet-tags-group'>
+                  {displayName && <span className='ola-facet-tags-heading'>{displayName}</span>}
+                  <FacetItem
+                    name={value}
+                    facet={facet}
+                    handleRemove={this.handleRemoveFacet}
+                  />
+                </div>
+              )
             })
           }
           return (

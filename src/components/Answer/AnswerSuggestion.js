@@ -1,5 +1,4 @@
 import React from 'react'
-import remove from 'ramda/src/remove'
 import AnswerDropdown from './AnswerDropdown'
 import equals from 'ramda/src/equals'
 
@@ -10,13 +9,11 @@ const AnswerSuggestion = (props) => {
   let { suggestions, original, module } = answer
   let keys = Object.keys(suggestions)
   let text = original.split('')
-  let prevString = ''
-  let startIndex = 0
   let newKeys = []
 
   keys.map((key) => {
     let { position, selection, suggestions: options } = suggestions[key]
-    let [ start, end ] = position
+    let [ start ] = position
     /* Add to new keys */
     newKeys.push(options[selection].name.toLowerCase())
     /* Generate dropdown */

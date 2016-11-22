@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-import Thumbnail from './../Fields/Thumbnail'
 import { isSvg } from './../../utilities'
 
 class AnswerCard extends React.Component {
@@ -8,7 +7,7 @@ class AnswerCard extends React.Component {
     this.props.onSelect(this.props.result)
   };
   render () {
-    let { result, onSelect, cdn, isActive, module } = this.props
+    let { result, cdn, isActive, module } = this.props
     let isClickable = !!result.additional_data
     let { image, description, subtitle, title, exists } = result
     if (module === 'spices.facts.place.capital') {

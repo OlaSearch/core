@@ -19,7 +19,7 @@ export const initialState = {
 
   /* Individual result */
   result: [],
-  isLoadingResult: false,
+  isLoadingResult: false
 }
 
 export default (state = initialState, action) => {

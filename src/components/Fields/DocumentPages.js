@@ -3,7 +3,7 @@ import HighlightedField from './HighlightedField'
 
 class DocumentPages extends React.Component {
   constructor (props) {
-    super (props)
+    super(props)
     this.state = {
       isVisible: false
     }
@@ -22,11 +22,13 @@ class DocumentPages extends React.Component {
 
     if (!pages.length) return null
 
-    if (!isVisible) return (
-      <div className='ola-field-pages'>
-        <a className='ola-link-view-pages' onClick={this.toggle}>View more</a>
-      </div>
-    )
+    if (!isVisible) {
+      return (
+        <div className='ola-field-pages'>
+          <a className='ola-link-view-pages' onClick={this.toggle}>View more</a>
+        </div>
+      )
+    }
     return (
       <div className='ola-field-pages'>
         <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>Hide</a>
@@ -36,6 +38,7 @@ class DocumentPages extends React.Component {
             page={page}
             contentField={contentField}
             key={idx}
+            q={q}
           />
         )}
       </div>

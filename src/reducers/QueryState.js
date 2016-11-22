@@ -15,7 +15,7 @@ export const initialState = {
   offset: 0,
   isSearchActive: true,
   searchInput: null,
-  skip_intent: false,
+  skip_intent: false
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */

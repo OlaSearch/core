@@ -25,7 +25,7 @@ class LinkFilter extends React.Component {
     facet: React.PropTypes.object.isRequired,
     limit: React.PropTypes.number.isRequired,
     showIfEmpty: React.PropTypes.bool,
-    showSelectedFacetItem: React.PropTypes.bool,
+    showSelectedFacetItem: React.PropTypes.bool
   };
 
   static defaultProps = {

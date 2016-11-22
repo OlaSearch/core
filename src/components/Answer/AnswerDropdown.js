@@ -26,7 +26,7 @@ class AnswerDropdown extends React.Component {
     this.handleClickOutside()
   };
   render () {
-    let { active, options, item } = this.props
+    let { active, options } = this.props
     let { isOpen } = this.state
     if (!options) return null
     let label = options[this.props.active].name
@@ -50,7 +50,7 @@ class AnswerDropdown extends React.Component {
                   />
                 )
               })}
-            </div>
+          </div>
           : null
         }
       </div>
@@ -58,11 +58,10 @@ class AnswerDropdown extends React.Component {
   }
 }
 
-
 /**
  * Dropdown Item
  */
-class AnswerDropdownItem extends React.Component{
+class AnswerDropdownItem extends React.Component {
   handleClick = () => this.props.onChange(this.props.option, this.props.index);
   render () {
     let { option: { name, exists }, isActive } = this.props

@@ -184,7 +184,7 @@ const utilities = {
     return str
   },
   escapeRegEx (str) {
-    return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
+    return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
   },
   toNestedArray (data, rootLevel = 0, parentNode) {
     let output = []
@@ -206,10 +206,10 @@ const utilities = {
       }
     }
 
-    function getNestedChildren(arr, parent) {
+    function getNestedChildren (arr, parent) {
       var out = []
-      for(var i in arr) {
-        if (arr[i].parent == parent) {
+      for (let i in arr) {
+        if (arr[i].parent === parent) {
           var children = getNestedChildren(arr, arr[i].name)
           if (children.length) {
             arr[i].children = children
@@ -223,8 +223,9 @@ const utilities = {
   },
   uuid () {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8)
-        return v.toString(16)
+      var r = Math.random() * 16 | 0
+      var v = c === 'x' ? r : (r & 0x3 | 0x8)
+      return v.toString(16)
     })
   },
   getKey (key, namespace) {

@@ -92,11 +92,12 @@ class History extends React.Component {
             <span>{translate('history_label')} </span>
             {hasHistory
               ? <button
-                  type='button'
-                  className='ola-fake-button ola-clear'
-                  onClick={this.clearHistory}>
+                type='button'
+                className='ola-fake-button ola-clear'
+                onClick={this.clearHistory}
+                >
                   (clear)
-                </button>
+              </button>
               : null
             }
           </div>

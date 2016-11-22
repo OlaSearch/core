@@ -1,11 +1,11 @@
 import React from 'react'
 
 const AnswerInfo = ({ answer, onClose }) => {
-  let { additional_data } = answer
-  if (!additional_data) return null
+  let { additional_data: data } = answer
+  if (!data) return null
   return (
     <div className='ola-answer-additional-data'>
-      {additional_data.map((item, i) => {
+      {data.map((item, i) => {
         return (
           <div className='ola-answer-additional-row' key={i}>
             <div className='ola-answer-additional-label'>

@@ -81,5 +81,5 @@ module.exports = {
   Rating: require('./components/FacetFilters/Rating'),
   DateRangePicker: require('./components/FacetFilters/DateRangePicker'),
   TagCloud: require('./components/FacetFilters/TagCloud'),
-  Hierarchical: require('./components/FacetFilters/Hierarchical'),
+  Hierarchical: require('./components/FacetFilters/Hierarchical')
 }

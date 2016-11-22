@@ -20,7 +20,9 @@ var urlSync = {
       if (type !== 'pushState') {
         let r = new RegExp(/\/(.*)?\//gi)
         let matches = r.exec(window.location.hash)
-        if (matches) return window.location.hash = char + urlSync.buildQueryString(qs)
+        if (matches) {
+          window.location.hash = char + urlSync.buildQueryString(qs)
+        }
       }
       window.history.pushState(null, '', char + urlSync.buildQueryString(qs))
     }
@@ -121,7 +123,7 @@ var urlSync = {
 
       var fq = facetQuery
         .filter((item) => {
-          let [ name, value ] = item.split(':')
+          let [ name ] = item.split(':')
           return find(propEq('name', name))(configFacets)
         })
         .map((item) => {
@@ -139,7 +141,7 @@ var urlSync = {
             ...facet,
             selected: value
           }
-      })
+        })
 
       /* Extend */
 

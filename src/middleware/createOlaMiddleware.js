@@ -134,14 +134,14 @@ module.exports = (options = {}) => {
         var facets
         var qt
         var answer
-        var enriched_q
+        var enrichedQuery
         if (proxy) {
           results = response.results
           spellSuggestions = response.spellSuggestions
           totalResults = response.totalResults
           facets = response.facets
           qt = response.qt
-          enriched_q = response.enriched_q
+          enrichedQuery = response.enriched_q
 
           /* Instant answer */
           answer = api === 'answer' ? response : response.answer
@@ -191,7 +191,7 @@ module.exports = (options = {}) => {
           suggestedTerm,
           qt,
           answer,
-          enriched_q,
+          enriched_q: enrichedQuery,
           error: null
         })
 
