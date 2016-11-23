@@ -1,10 +1,10 @@
 import React from 'react'
 import { createHTMLMarkup, truncate } from './../../utilities'
 
-const TextField = ({ field, result, length, ellipsis }) => {
-  let fieldContent = result[field]
+const TextField = ({ field, result, staticText, length, prefix = '', suffix = '', ellipsis }) => {
+  let fieldContent = result[field] || staticText
   if (!fieldContent) return null
-  fieldContent = truncate(fieldContent, length)
+  fieldContent = prefix + truncate(fieldContent, length) + suffix
   let klass = `ola-field ola-field-highlighted-field ola-field-${field}`
   return (
     <div className={klass} dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />

@@ -1,7 +1,15 @@
 import React from 'react'
 
 const Breadcrumbs = ({ crumbs }) => {
-  if (!crumbs || !crumbs.length) return null
+  if (!crumbs) return null
+
+  if (typeof crumbs === 'string') {
+    return (
+      <div className='ola-field ola-field-crumbs ola-field-crumbs-tag'>
+        {crumbs}
+      </div>
+    )
+  }
   return (
     <div className='ola-field ola-field-crumbs'>
       {crumbs.map((crumb, idx) => {

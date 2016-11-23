@@ -32,7 +32,8 @@ class LinkFilter extends React.Component {
     limit: 5,
     listType: 'uniform',
     showIfEmpty: false,
-    showSelectedFacetItem: false
+    showSelectedFacetItem: false,
+    debug: false
   };
 
   handleAddFacet = (value) => {
@@ -100,7 +101,8 @@ class LinkFilter extends React.Component {
       listType,
       translate,
       showIfEmpty,
-      showSelectedFacetItem
+      showSelectedFacetItem,
+      debug
     } = this.props
 
     var {
@@ -155,7 +157,7 @@ class LinkFilter extends React.Component {
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
         <div className='ola-facet-wrapper'>
           {filterInput}
-          {showSelectedTag
+          {showSelectedTag || debug
             ? <div className='ola-facet-tags-selected'>
               {selected.map((item, idx) => {
                 return (
