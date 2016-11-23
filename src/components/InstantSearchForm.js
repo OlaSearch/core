@@ -105,8 +105,8 @@ class InstantSearchForm extends React.Component {
     } = this.props
 
     let button = q
-      ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear'></button>
-      : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit'></button>
+      ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear' />
+      : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit' />
 
     let klass = classNames('ola-search-form', {
       'ola-search-zone-enabled': showZone,

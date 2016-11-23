@@ -26,7 +26,7 @@ class RatingFilter extends React.Component {
     dispatch(executeSearch())
   };
   isSelected = (bounds, name) => {
-    /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]];*/
+    /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]]; */
     return bounds.indexOf(parseInt(name)) > -1
   };
   render () {
@@ -37,7 +37,7 @@ class RatingFilter extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
 
-    /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]];*/
+    /* Selected - [1,2,3,4] => [ [1, 2], [3, 4]]; */
     var selectedArray = parseRangeValues(this.props.selected)
     var bounds = selectedArray.map((item) => parseInt(item[0]))
 

@@ -30,7 +30,8 @@ export function updateQueryTerm (term, searchInput) {
 export function addFilter ({ filter, selected }) {
   return {
     type: types.ADD_FILTER,
-    filter, selected
+    filter,
+    selected
   }
 }
 
@@ -226,7 +227,8 @@ export function replaceFacet (facet, value) {
 
   return {
     type: types.REPLACE_FACET,
-    facet, value
+    facet,
+    value
   }
 }
 

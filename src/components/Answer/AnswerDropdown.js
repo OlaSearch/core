@@ -39,17 +39,17 @@ class AnswerDropdown extends React.Component {
         <div className='ola-answer-dropdown-label' onClick={this.toggle}>{label}</div>
         {isOpen
           ? <div className='ola-answer-dropdown-box'>
-              {options.map((option, idx) => {
-                return (
-                  <AnswerDropdownItem
-                    onChange={this.onChange}
-                    key={idx}
-                    option={option}
-                    isActive={active === idx}
-                    index={idx}
-                  />
-                )
-              })}
+            {options.map((option, idx) => {
+              return (
+                <AnswerDropdownItem
+                  onChange={this.onChange}
+                  key={idx}
+                  option={option}
+                  isActive={active === idx}
+                  index={idx}
+                />
+              )
+            })}
           </div>
           : null
         }

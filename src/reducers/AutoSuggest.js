@@ -80,7 +80,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         facet_query: [{
-          name, type, displayName, multiSelect, template, label,
+          name,
+          type,
+          displayName,
+          multiSelect,
+          template,
+          label,
           selected: [action.value]
         }]
       }

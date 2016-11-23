@@ -14,9 +14,9 @@ const SMS = ({ number, body, iconLeft = null, iconRight = null, label, Device, p
       href={link}
       className='ola-btn ola-btn-sms'
     >
-    {iconLeft}
-    {label}
-    {iconRight}
+      {iconLeft}
+      {label}
+      {iconRight}
     </a>
   )
 }

@@ -103,7 +103,7 @@ class SelectedFilters extends React.Component {
         {showQuery && q
           ? <div className='ola-facet-tag'>
             <span className='ola-facet-tag-name'>{q}</span>
-            <button className='ola-facet-tag-remove' onClick={this.onRemoveQueryTag}></button>
+            <button className='ola-facet-tag-remove' onClick={this.onRemoveQueryTag} />
           </div>
           : null
         }

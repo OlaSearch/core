@@ -133,7 +133,7 @@ class RangeFilter extends React.Component {
     var sliderOptions = {
       start: value,
       step,
-      connect: singleHandle ? 'lower' : true,
+      connect: singleHandle ? [true, false] : true,
       tooltips: singleHandle ? [formatTooltip] : [formatTooltip, formatTooltip],
       range: {
         min,

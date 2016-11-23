@@ -3,7 +3,7 @@ import Thumbnail from './Thumbnail'
 import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const Map = (props) => {
-  var { latlong, apiKey, width, height } = props
+  var { latlong, apiKey, width, height, onClick, result } = props
 
   if (!latlong) return NO_SCRIPT_TAG
 
@@ -18,6 +18,9 @@ const Map = (props) => {
     <a
       href={url}
       className='field field-url'
+      onClick={(event) => {
+        onClick && onClick(event, result)
+      }}
     >
       <Thumbnail
         thumbnail={map}

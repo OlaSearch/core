@@ -93,7 +93,7 @@ class Search extends React.Component {
         <div className={klassModal} onClick={this.toggleSidebar} />
         <div className='ola-form-container ola-header-section'>
 
-          <a href='index.html' className='ola-logo'></a>
+          <a href='index.html' className='ola-logo' />
 
           <InstantSearchForm
             q={q}
@@ -104,7 +104,7 @@ class Search extends React.Component {
 
         <div className={klassSearchContainer}>
 
-          <button type='button' className='ola-link-open-filter' onClick={this.toggleSidebar}></button>
+          <button type='button' className='ola-link-open-filter' onClick={this.toggleSidebar} />
 
           <div className='ola-sidebar'>
 

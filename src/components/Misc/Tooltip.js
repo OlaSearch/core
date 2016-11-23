@@ -8,7 +8,7 @@ const Tooltip = ({ isShown, onClose, content }) => {
         <p>{content}</p>
         <a onClick={onClose}>Close</a>
       </div>
-      <div className='ola-modal-background' onClick={onClose}></div>
+      <div className='ola-modal-background' onClick={onClose} />
     </div>
   )
 }

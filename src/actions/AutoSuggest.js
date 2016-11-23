@@ -66,7 +66,8 @@ export function closeAutoSuggest () {
 export function addFacet (facet, value) {
   return {
     type: types.ADD_FACET_AUTOSUGGEST,
-    facet, value
+    facet,
+    value
   }
 }
 

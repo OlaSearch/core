@@ -106,7 +106,7 @@ export default class Input extends React.Component {
      */
 
     var button = q
-      ? <button type='reset' className='ola-clear-button' onClick={this.onClear}></button>
+      ? <button type='reset' className='ola-clear-button' onClick={this.onClear} />
       : <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
 
     let klass = classNames('ola-search-form-container', {

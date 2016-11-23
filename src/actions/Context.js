@@ -3,7 +3,9 @@ import types from './../constants/ActionTypes'
 export function addDynamicField (name, value, filename) {
   return {
     type: types.ADD_DYNAMIC_FIELD,
-    name, value, filename
+    name,
+    value,
+    filename
   }
 }
 
@@ -17,7 +19,8 @@ export function removeDynamicField (name) {
 export function addContext (contextType, value) {
   return {
     type: types.ADD_CONTEXT,
-    contextType, value
+    contextType,
+    value
   }
 }
 
