@@ -13,7 +13,8 @@ class Title extends React.Component {
       result,
       eventCategory: 'Title',
       eventAction: 'click',
-      eventLabel
+      eventLabel,
+      snippetId: this.props.snippetId
     })
 
     if (onClick) onClick(event)

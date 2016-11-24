@@ -1,6 +1,7 @@
 import React from 'react'
 import Thumbnail from './Thumbnail'
 import { NO_SCRIPT_TAG } from './../../constants/Settings'
+import withLogger from './../../decorators/OlaLogger'
 
 const Map = (props) => {
   var { latlong, apiKey, width, height, onClick, result } = props
@@ -19,6 +20,14 @@ const Map = (props) => {
       href={url}
       className='field field-url'
       onClick={(event) => {
+        props.log({
+          eventType: 'C',
+          result,
+          eventCategory: 'Map',
+          eventAction: 'click',
+          eventLabel: 'Map',
+          snippetId: props.snippetId
+        })
         onClick && onClick(event, result)
       }}
     >
@@ -36,4 +45,4 @@ Map.defaultProps = {
   height: 200
 }
 
-module.exports = Map
+module.exports = withLogger(Map)

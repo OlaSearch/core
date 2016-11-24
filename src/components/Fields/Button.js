@@ -11,7 +11,8 @@ class Button extends React.Component {
       eventType: 'C',
       result: this.props.result,
       eventCategory: this.props.label,
-      eventAction: 'click'
+      eventAction: 'click',
+      snippetId: this.props.snippetId
     })
 
     if (this.props.onClick) return this.props.onClick(event, this.props.result)

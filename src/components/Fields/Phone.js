@@ -19,7 +19,8 @@ const Phone = (props) => {
           eventType: 'C',
           result: result,
           eventCategory: 'Call',
-          eventAction: 'click'
+          eventAction: 'click',
+          snippetId: props.snippetId
         })
         onClick && onClick(event, result)
       }}

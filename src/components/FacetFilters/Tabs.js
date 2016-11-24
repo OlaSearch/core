@@ -49,9 +49,7 @@ class TabsFilter extends React.Component {
   };
 
   getTabsForDisplay = (tab, values) => {
-    var {
-      tabsToDisplay
-    } = tab
+    var { tabsToDisplay } = this.props
 
     invariant(tabsToDisplay, 'tabsToDisplay is required. It should be part of the individual facet')
 
@@ -85,10 +83,11 @@ class TabsFilter extends React.Component {
     var {
       facets,
       selected,
+      name,
       translate
     } = this.props
 
-    var facet = find(propEq('tab', true))(facets)
+    var facet = find(propEq('name', name))(facets)
 
     /* Return null if there is no facets */
 
@@ -96,7 +95,6 @@ class TabsFilter extends React.Component {
 
     var { values } = facet
     var tabs = this.getTabsForDisplay(facet, values)
-
     var selectedItems = flatten(selected.filter((item) => item.name === facet.name).map((item) => item.selected))
 
     /* Calculate Total for All Tab */

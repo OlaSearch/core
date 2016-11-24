@@ -20,7 +20,8 @@ const Directions = (props) => {
           result: result,
           eventCategory: 'Get Directions',
           eventAction: 'click',
-          debounce: true
+          debounce: true,
+          snippetId: props.snippetId
         })
         onClick && onClick(event)
       }}
