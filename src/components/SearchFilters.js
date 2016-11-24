@@ -46,13 +46,13 @@ class SearchFilters extends React.Component {
       ...props
     } = this.props
 
+    /* Remove tabs */
+    facets = facets.filter(({ type }) => type !== 'tab')
+
     /* Check for facets to display conditional */
     if (conditional) {
       /* Agree with `facetsToDisplay` */
       facets = getFacetsToDisplay(selected, facets, this.context.config.facetsToDisplay)
-    } else {
-      /* Remove tabs */
-      facets = facets.filter((facet) => !facet.tab)
     }
     if (!facets.length) return null
 

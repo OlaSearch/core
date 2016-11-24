@@ -48,8 +48,8 @@ class TabsFilter extends React.Component {
     dispatch(executeSearch())
   };
 
-  getTabsForDisplay = (tab, values) => {
-    var { tabsToDisplay } = this.props
+  getTabsForDisplay = (facet, values) => {
+    var { tabsToDisplay } = facet
 
     invariant(tabsToDisplay, 'tabsToDisplay is required. It should be part of the individual facet')
 
