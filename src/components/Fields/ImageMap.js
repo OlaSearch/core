@@ -26,7 +26,8 @@ const Map = (props) => {
           eventCategory: 'Map',
           eventAction: 'click',
           eventLabel: 'Map',
-          snippetId: props.snippetId
+          snippetId: props.snippetId,
+          collectionId: props.collectionId
         })
         onClick && onClick(event, result)
       }}

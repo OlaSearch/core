@@ -2,7 +2,7 @@ import React from 'react'
 import withLogger from './../../decorators/OlaLogger'
 import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
-const Url = ({ result, log, snippetId }) => {
+const Url = ({ result, log, snippetId, collectionId }) => {
   let { url } = result
   if (!url) return NO_SCRIPT_TAG
 
@@ -12,7 +12,8 @@ const Url = ({ result, log, snippetId }) => {
       result,
       eventCategory: 'Title',
       eventAction: 'click',
-      snippetId
+      snippetId,
+      collectionId
     })
   }}>{url}</a>
 }

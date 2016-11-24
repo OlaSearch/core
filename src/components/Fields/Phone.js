@@ -20,7 +20,8 @@ const Phone = (props) => {
           result: result,
           eventCategory: 'Call',
           eventAction: 'click',
-          snippetId: props.snippetId
+          snippetId: props.snippetId,
+          collectionId: props.collectionId
         })
         onClick && onClick(event, result)
       }}
