@@ -153,7 +153,7 @@ const utilities = {
     if (typeof str !== 'string') str = str.toString()
     return str.split('/')
       .shift()
-      .replace(/[a-z_\s-\(\)]/gi, '')
+      .replace(/[a-z_\s-()]/gi, '')
   },
   trim (str) {
     if (typeof str !== 'string') str = str.toString()
