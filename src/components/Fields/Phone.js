@@ -4,7 +4,7 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import withLogger from './../../decorators/OlaLogger'
 
 const Phone = (props) => {
-  let { phone, label, translate, log, onClick, result, ...rest } = props
+  let { phone, label, translate, log, onClick, result, snippetId, collectionId, ...rest } = props
 
   if (!phone) return null
 
@@ -20,8 +20,8 @@ const Phone = (props) => {
           result: result,
           eventCategory: 'Call',
           eventAction: 'click',
-          snippetId: props.snippetId,
-          collectionId: props.collectionId
+          snippetId: snippetId,
+          collectionId: collectionId
         })
         onClick && onClick(event, result)
       }}

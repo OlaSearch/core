@@ -41,6 +41,10 @@ module.exports = {
     'error_404_title': 'Page not found',
     'error_404_description': '404 The page cannot be found',
     'error_general_title': 'Something went wrong',
-    'error_general_description': 'Please email us at support@olasearch.com'
+    'error_general_description': 'Please email us at support@olasearch.com',
+
+    /* Document */
+    doc_view_pages: 'View more',
+    doc_hide_pages: 'Hide'
   }
 }

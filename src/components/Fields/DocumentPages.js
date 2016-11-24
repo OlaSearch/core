@@ -1,5 +1,7 @@
 import React from 'react'
 import HighlightedField from './HighlightedField'
+import injectTranslate from './../../decorators/OlaTranslate'
+import withLogger from './../../decorators/OlaLogger'
 
 class DocumentPages extends React.Component {
   constructor (props) {
@@ -11,13 +13,34 @@ class DocumentPages extends React.Component {
   toggle = () => {
     this.setState({
       isVisible: !this.state.isVisible
+    }, () => {
+      if (this.state.isVisible) {
+        this.props.log({
+          eventType: 'C',
+          result: this.props.result,
+          eventCategory: 'View pages',
+          eventLabel: this.props.translate('doc_view_pages'),
+          eventAction: 'click',
+          snippetId: this.props.snippetId,
+          collectionId: this.props.collectionId
+        })
+      }
     })
   };
-  onSelect = (pageNumber) => {
-    this.props.onClick && this.props.onClick(pageNumber, this.props.result)
+  onSelect = (page) => {
+    this.props.onClick && this.props.onClick(page, this.props.result)
+    this.props.log({
+      eventType: 'C',
+      result: this.props.result,
+      eventCategory: 'View page',
+      eventLabel: page.pageNumber,
+      eventAction: 'click',
+      snippetId: this.props.snippetId,
+      collectionId: this.props.collectionId
+    })
   };
   render () {
-    let { pages, q, contentField } = this.props
+    let { pages, q, contentField, translate } = this.props
     let { isVisible } = this.state
 
     if (!pages.length) return null
@@ -25,13 +48,13 @@ class DocumentPages extends React.Component {
     if (!isVisible) {
       return (
         <div className='ola-field-pages'>
-          <a className='ola-link-view-pages' onClick={this.toggle}>View more</a>
+          <a className='ola-link-view-pages' onClick={this.toggle}>{translate('doc_view_pages')}</a>
         </div>
       )
     }
     return (
       <div className='ola-field-pages'>
-        <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>Hide</a>
+        <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>{translate('doc_hide_pages')}</a>
         {pages.map((page, idx) =>
           <PageDetail
             onSelectPage={this.onSelect}
@@ -79,4 +102,4 @@ class PageDetail extends React.Component {
   }
 }
 
-module.exports = DocumentPages
+module.exports = injectTranslate(withLogger(DocumentPages))

@@ -11,7 +11,7 @@ const Thumbnail = (props, context) => {
     ...rest
   } = props
 
-  let restProps = omit(['size', 'result'], rest)
+  let restProps = omit(['size', 'result', 'snippetId', 'collectionId'], rest)
 
   if (!thumbnail && !thumbnailMobile) return null
 
