@@ -18,8 +18,8 @@ class DocumentPages extends React.Component {
         this.props.log({
           eventType: 'C',
           result: this.props.result,
-          eventCategory: 'View pages',
-          eventLabel: this.props.translate('doc_view_pages'),
+          eventCategory: this.props.translate('doc_view_pages'),
+          eventLabel: 'Pages',
           eventAction: 'click',
           snippetId: this.props.snippetId,
           collectionId: this.props.collectionId
@@ -32,8 +32,9 @@ class DocumentPages extends React.Component {
     this.props.log({
       eventType: 'C',
       result: this.props.result,
-      eventCategory: 'View page',
-      eventLabel: page.pageNumber,
+      eventCategory: 'Page number',
+      eventValue: page.pageNumber,
+      eventLabel: 'Pages',
       eventAction: 'click',
       snippetId: this.props.snippetId,
       collectionId: this.props.collectionId
