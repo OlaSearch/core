@@ -30,6 +30,14 @@ class History extends React.Component {
     })
   };
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.isOpen !== this.props.isOpen) {
+      this.setState({
+        isOpen: nextProps.isOpen
+      })
+    }
+  }
+
   toggleVisibility = () => {
     this.setState({
       isOpen: !this.state.isOpen

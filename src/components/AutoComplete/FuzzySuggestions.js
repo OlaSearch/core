@@ -40,7 +40,7 @@ class SuggestionItem extends React.Component {
   };
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
-    let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory } = this.props.result
+    let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory, history } = this.props.result
     let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1') + ')'
 
     /* Create term */
@@ -49,7 +49,8 @@ class SuggestionItem extends React.Component {
     let klass = classNames('ola-suggestion-item', activeClass, `ola-suggestion-type-${type}`, {
       'ola-suggestion-category-last': isLastCategory,
       'ola-suggestion-category-first': isFirstCategory,
-      'ola-suggestion-category-name': taxoTerm
+      'ola-suggestion-category-name': taxoTerm,
+      'ola-suggestion-history': history
     })
     /**
      * If its a category

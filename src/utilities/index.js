@@ -195,7 +195,8 @@ const utilities = {
       if (hasParent) {
         let parent = rootLevel
         ? items.length === rootLevel
-          ? null : items.slice(0, items.length - 1).join('/') || null
+          ? null
+          : items.slice(0, items.length - 1).join('/') || null
         : items.slice(0, items.length - 1).join('/') || null
         output.push({
           displayName: items.pop(),

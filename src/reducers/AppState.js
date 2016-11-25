@@ -115,7 +115,11 @@ export default (state = initialState, action) => {
       }
 
     case types.TERMINATE_SEARCH:
-      return initialState
+      return {
+        ...initialState,
+        bookmarks: state.bookmarks,
+        history: state.history
+      }
 
     case types.OLA_REHYDRATE:
       return {

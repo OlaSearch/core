@@ -9,6 +9,7 @@ const REMOVE_FROM_QUERY_STRING = [
   'isSearchActive',
   'searchInput',
   'enriched_q',
+  'per_page',
   'skip_intent'
 ]
 

@@ -3,7 +3,7 @@ import olaReducer from './../reducers'
 import createOlaMiddleware from './../middleware/createOlaMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
-import utilities from './../utilities'
+import { getKey, uuid } from './../utilities'
 import storage from './../services/storage'
 import { USER_SESSION_KEY, USER_SESSION_EXPIRY_DAYS } from './../constants/Settings'
 
@@ -70,21 +70,23 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
   }
 
   /* Create user cookie */
-  if (config.logger && config.logger.enabled) {
-    var userSession = storage.cookies.get(utilities.getKey(USER_SESSION_KEY, config.namespace))
-    if (!userSession) {
-      storage.cookies.set(
-        utilities.getKey(USER_SESSION_KEY, config.namespace),
-        utilities.uuid(),
-        USER_SESSION_EXPIRY_DAYS
-      )
-    }
-    store.dispatch({
-      type: types.SET_USER_SESSION,
+  var userSession = storage.cookies.get(getKey(USER_SESSION_KEY, config.namespace))
+  var isNewUser = false
+  if (!userSession) {
+    isNewUser = true
+    userSession = uuid()
+    storage.cookies.set(
+      getKey(USER_SESSION_KEY, config.namespace),
       userSession,
-      isNewUser: !userSession
-    })
+      USER_SESSION_EXPIRY_DAYS
+    )
   }
+  /* Set user session */
+  store.dispatch({
+    type: types.SET_USER_SESSION,
+    userSession,
+    isNewUser
+  })
 
   /**
    * Rehydrate store
