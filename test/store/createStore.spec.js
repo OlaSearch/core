@@ -34,7 +34,8 @@ describe('createStore', () => {
   })
 
   it('Rehydrates the store', () => {
-    storage.set(`ola_${BOOKMARKS_STORAGE_KEY}`, ['hey'])
+    /* Key_Namespace */
+    storage.set(`${BOOKMARKS_STORAGE_KEY}_ola`, ['hey'])
     let store = createStore({ namespace: 'ola'}, MOCK_SEARCH_ADAPTER)
     expect(store.getState().AppState.bookmarks.length).toEqual(1)
   })
