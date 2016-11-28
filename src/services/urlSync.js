@@ -89,7 +89,6 @@ var urlSync = {
     /**
      * Validate query string
      */
-
     for (let p in qs) {
       /* prevent XSS */
       qs[p] = xssFilters.inHTMLData(qs[p])
@@ -110,7 +109,6 @@ var urlSync = {
     /**
      * Facets
      */
-
     if (facetQuery) {
       var { facets: configFacets } = config
 
@@ -145,7 +143,6 @@ var urlSync = {
         })
 
       /* Extend */
-
       facetQueryObject = {
         facet_query: fq
       }
