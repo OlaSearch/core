@@ -230,7 +230,7 @@ const utilities = {
     })
   },
   getKey (key, namespace) {
-    return namespace ? `${key}_${namespace}` : key
+    return namespace ? `${namespace}_${key}` : key
   },
   isSvg (path) {
     return path.split('.').pop().indexOf('svg') === 0

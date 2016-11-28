@@ -1,5 +1,5 @@
 import types from './../constants/ActionTypes'
-import { CONTEXT_STORAGE_KEY } from './../constants/Settings'
+import { CONTEXT_STORAGE_KEY, USER_SESSION_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
 var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
@@ -70,10 +70,10 @@ export default (state = initialState, action) => {
         fields: state.fields.filter((field) => field.name !== action.name)
       }
 
-    case types.SET_USER_SESSION:
+    case types.OLA_REHYDRATE:
       return {
         ...state,
-        userSession: action.userSession,
+        userSession: storage.cookies.get(USER_SESSION_KEY, action.namespace),
         isNewUser: action.isNewUser
       }
 

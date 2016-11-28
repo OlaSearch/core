@@ -12,6 +12,7 @@ const DateParser = {
       date = fecha.parse(date, originalFormat || defaultMask)
     } catch (e) {
       console.warn(e, date)
+      return ''
     }
     return fecha.format(date, mask)
   },

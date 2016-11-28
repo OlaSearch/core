@@ -1,9 +1,10 @@
+import { getKey } from './../utilities'
 /**
  * Use try {} catch (e) {} for localStorage because of users browser privacy settings
  */
 module.exports = {
   get (key, namespace) {
-    let _key = createstorageKey(key, namespace)
+    let _key = getKey(key, namespace)
     try {
       if (window.localStorage.getItem(_key)) {
         return JSON.parse(window.localStorage.getItem(_key))
@@ -15,7 +16,7 @@ module.exports = {
   },
   set (key, value, namespace) {
     try {
-      if ('localStorage' in window) window.localStorage.setItem(createstorageKey(key, namespace), JSON.stringify(value))
+      if ('localStorage' in window) window.localStorage.setItem(getKey(key, namespace), JSON.stringify(value))
     } catch (err) {
       console.warn(err)
       return undefined
@@ -31,14 +32,14 @@ module.exports = {
         expires = `; expires=${date.toGMTString()}`
       } else expires = ''
       try {
-        document.cookie = `${createstorageKey(name, namespace)}=${value}${expires}; path=/`
+        document.cookie = `${getKey(name, namespace)}=${value}${expires}; path=/`
       } catch (err) {
         console.warn(err)
       }
     },
     get (name, namespace) {
       try {
-        var nameEQ = `${createstorageKey(name, namespace)}=`
+        var nameEQ = `${getKey(name, namespace)}=`
         var ca = document.cookie.split(';')
         for (let i = 0; i < ca.length; i++) {
           var c = ca[i]
@@ -52,11 +53,7 @@ module.exports = {
       }
     },
     remove (name, namespace) {
-      this.set(createstorageKey(name, namespace), '', -1)
+      this.set(getKey(name, namespace), '', -1)
     }
   }
-}
-
-function createstorageKey (key, namespace) {
-  return namespace ? `${namespace}_${key}` : key
 }

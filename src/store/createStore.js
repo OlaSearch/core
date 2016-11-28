@@ -70,7 +70,7 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
   }
 
   /* Create user cookie */
-  var userSession = storage.cookies.get(getKey(USER_SESSION_KEY, config.namespace))
+  var userSession = storage.cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = false
   if (!userSession) {
     isNewUser = true
@@ -81,19 +81,14 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
       USER_SESSION_EXPIRY_DAYS
     )
   }
-  /* Set user session */
-  store.dispatch({
-    type: types.SET_USER_SESSION,
-    userSession,
-    isNewUser
-  })
 
   /**
    * Rehydrate store
    */
   store.dispatch({
     type: types.OLA_REHYDRATE,
-    namespace: config.namespace
+    namespace: config.namespace,
+    isNewUser: isNewUser
   })
 
   return store
