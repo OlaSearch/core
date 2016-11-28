@@ -26,7 +26,7 @@
     "olasearch"
   ],
   "author": "Vinay M <vinay@olasearch.com> (http://gitlab.com/olasearch)",
-  "license": "UNLICENSED",
+  "license": "Copyright Ola Search Pte Ltd",
   "bugs": {
     "url": "https://gitlab.com/olasearch/olasearch-core/issues"
   },
