@@ -111,7 +111,7 @@ class HierarchicalFilter extends React.Component {
  * Group
  */
 const CheckboxGroup = (props) => {
-  let { values, rollUp, selected } = props
+  let { values, rollUp, selected, handleAddFacet, handleRemoveFacet } = props
   if (!values) return null
   let isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
 
@@ -126,15 +126,15 @@ const CheckboxGroup = (props) => {
             <div className='ola-facet-h-group-inner' key={idx}>
               <CheckBoxItem
                 value={value}
-                handleAddFacet={this.props.handleAddFacet}
-                handleRemoveFacet={this.props.handleRemoveFacet}
+                handleAddFacet={handleAddFacet}
+                handleRemoveFacet={handleRemoveFacet}
                 isActive={isActive}
               />
               {value.children && isActive
                 ? <CheckboxGroup
                   values={value.children}
-                  handleAddFacet={this.props.handleAddFacet}
-                  handleRemoveFacet={this.props.handleRemoveFacet}
+                  handleAddFacet={handleAddFacet}
+                  handleRemoveFacet={handleRemoveFacet}
                   selected={selected}
                   rollUp={rollUp}
                 />
