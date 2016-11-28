@@ -54,7 +54,7 @@ class InstantSearchForm extends React.Component {
   };
 
   componentDidMount () {
-    if (this.props.autoFocus) this.Input.focus()
+    if (this.props.autoFocus) this.refs.Input.focus()
   }
 
   onChange = (arg, searchInput) => {
@@ -69,7 +69,7 @@ class InstantSearchForm extends React.Component {
 
     if (isEvent && term && term.length < minCharacters) return
 
-    !isEvent && this.Input.focus()
+    !isEvent && this.refs.Input.focus()
 
     isEvent ? this.searchDebounce() : this.executeSearch()
   };
@@ -79,14 +79,14 @@ class InstantSearchForm extends React.Component {
   };
 
   onClear = () => {
-    setTimeout(() => this.Input.focus(), 100)
+    setTimeout(() => this.refs.Input.focus(), 100)
     this.props.clearQueryTerm()
     this.executeSearch()
   };
 
   onSubmit = (event) => event.preventDefault();
   onChangeZone = () => {
-    this.Input.focus()
+    this.refs.Input.focus()
 
     if (this.props.onChangeZone) return this.props.onChangeZone()
     if (this.props.q) this.executeSearch()
@@ -124,7 +124,7 @@ class InstantSearchForm extends React.Component {
             />
           }
           <input
-            ref={(c) => { this.Input = c }}
+            ref='Input'
             type='text'
             className='ola-text-input ola-text-input-round'
             placeholder={_placeholder}

@@ -7,7 +7,7 @@
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
     "build": "NODE_ENV=production webpack --config webpack.config.production.js --progress",
-    "lint": "eslint src",
+    "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
@@ -35,7 +35,6 @@
     "parser": "babel-eslint",
     "ignore": [
       "/test",
-      "/testbk",
       "/lib",
       "/node_modules"
     ]
@@ -57,7 +56,7 @@
     "babel-register": "^6.18.0",
     "cross-env": "^3.1.3",
     "enzyme": "^2.6.0",
-    "eslint": "^3.10.2",
+    "eslint": "^3.11.0",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-react": "^6.7.1",
     "expect": "^1.20.2",
@@ -65,7 +64,7 @@
     "express": "^4.14.0",
     "isparta": "^4.0.0",
     "jsdom": "^9.8.3",
-    "mocha": "^3.1.2",
+    "mocha": "^3.2.0",
     "nyc": "^10.0.0",
     "react": "^15.4.1",
     "react-addons-test-utils": "^15.4.1",
@@ -74,7 +73,7 @@
     "redux-thunk": "^2.1.0",
     "rimraf": "^2.5.4",
     "snazzy": "^5.0.0",
-    "standard": "^8.5.0"
+    "standard": "^8.6.0"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.1.0 < 16",
@@ -95,8 +94,11 @@
     "ramda": "^0.22.1",
     "react-list": "^0.8.0",
     "react-onclickoutside": "^5.7.1",
-    "react-responsive": "^1.2.3",
+    "react-responsive": "^1.2.5",
     "redux-logger": "^2.7.4",
     "xss-filters": "^1.2.7"
-  }
+  },
+  "pre-commit": [
+    "standard"
+  ]
 }

@@ -110,45 +110,43 @@ class HierarchicalFilter extends React.Component {
 /**
  * Group
  */
-class CheckboxGroup extends React.Component {
-  render () {
-    let { values, rollUp, selected } = this.props
-    if (!values) return null
-    let isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
+const CheckboxGroup = (props) => {
+  let { values, rollUp, selected } = props
+  if (!values) return null
+  let isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
 
-    return (
-      <div className='ola-facet-h-group'>
-        {values.map((value, idx) => {
-          let index = selected.indexOf(value.name)
-          let isActive = index !== -1
+  return (
+    <div className='ola-facet-h-group'>
+      {values.map((value, idx) => {
+        let index = selected.indexOf(value.name)
+        let isActive = index !== -1
 
-          if (isActive || !rollUp || !isAnyChecked) {
-            return (
-              <div className='ola-facet-h-group-inner' key={idx}>
-                <CheckBoxItem
-                  value={value}
+        if (isActive || !rollUp || !isAnyChecked) {
+          return (
+            <div className='ola-facet-h-group-inner' key={idx}>
+              <CheckBoxItem
+                value={value}
+                handleAddFacet={this.props.handleAddFacet}
+                handleRemoveFacet={this.props.handleRemoveFacet}
+                isActive={isActive}
+              />
+              {value.children && isActive
+                ? <CheckboxGroup
+                  values={value.children}
                   handleAddFacet={this.props.handleAddFacet}
                   handleRemoveFacet={this.props.handleRemoveFacet}
-                  isActive={isActive}
+                  selected={selected}
+                  rollUp={rollUp}
                 />
-                {value.children && isActive
-                  ? <CheckboxGroup
-                    values={value.children}
-                    handleAddFacet={this.props.handleAddFacet}
-                    handleRemoveFacet={this.props.handleRemoveFacet}
-                    selected={selected}
-                    rollUp={rollUp}
-                  />
-                  : null
-                }
-              </div>
-            )
-          }
-          return null
-        })}
-      </div>
-    )
-  }
+                : null
+              }
+            </div>
+          )
+        }
+        return null
+      })}
+    </div>
+  )
 }
 
 /**

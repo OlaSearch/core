@@ -71,9 +71,11 @@ export default (state = initialState, action) => {
       }
 
     case types.OLA_REHYDRATE:
+      let userSession = storage.cookies.get(USER_SESSION_KEY, action.namespace)
       return {
         ...state,
-        userSession: storage.cookies.get(USER_SESSION_KEY, action.namespace),
+        userSession,
+        userId: action.userId || userSession,
         isNewUser: action.isNewUser
       }
 
