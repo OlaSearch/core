@@ -88,7 +88,9 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
   store.dispatch({
     type: types.OLA_REHYDRATE,
     namespace: config.namespace,
-    isNewUser: isNewUser
+    isNewUser: isNewUser,
+    projectId: config.projectId,
+    env: config.env
   })
 
   return store

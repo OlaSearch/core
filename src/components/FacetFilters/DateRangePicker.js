@@ -44,9 +44,12 @@ class DateRange extends React.Component {
     let toDate = new Date(this.refs.toDate.value).getTime()
 
     let { facet, dispatch } = this.props
+    let { dateFormat } = facet
+
+    fromDate = dateFormat ? DateParser.format(fromDate, dateFormat) : fromDate
+    toDate = dateFormat ? DateParser.format(toDate, dateFormat) : toDate
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
-
     dispatch(executeSearch())
   };
 
@@ -61,6 +64,7 @@ class DateRange extends React.Component {
     let toDate
     let year
     let { facet, dispatch } = this.props
+    let { dateFormat = null } = facet
 
     switch (type) {
       case 'current_year':
@@ -85,6 +89,9 @@ class DateRange extends React.Component {
         break
     }
 
+    fromDate = dateFormat ? DateParser.format(fromDate, dateFormat) : fromDate
+    toDate = dateFormat ? DateParser.format(toDate, dateFormat) : toDate
+
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
 
     dispatch(executeSearch())
@@ -108,8 +115,10 @@ class DateRange extends React.Component {
     let { isCustomDateActive } = this.state
 
     let [ from, to ] = selected
-    let { values } = facet
+    let { values, dateFormat } = facet
     let dates = values.map((value) => value.name)
+    /* Convert dates to (getTime) */
+    dates = dates.map((d) => DateParser.parse(d, dateFormat).getTime())
     let min = Math.min.apply(this, dates)
     let max = Math.max.apply(this, dates)
 
@@ -132,7 +141,7 @@ class DateRange extends React.Component {
           <ul className='ola-date-list'>
             {dateLabels.map((date) => {
               return (
-                <li>
+                <li key={date.id}>
                   <DateLabel
                     value={date.id}
                     label={date.label}

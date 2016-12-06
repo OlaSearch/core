@@ -102,6 +102,7 @@ export default class Input extends React.Component {
   getShadowTerm = (raw = false) => {
     let { fuzzyQuery, q, results } = this.props
     let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
+    if (!q) return ''
     let reg = new RegExp('^' + escapeRegEx(q), 'gi')
     if (!reg.test(shadowTerm)) {
       return ''

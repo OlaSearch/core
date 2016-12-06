@@ -135,7 +135,7 @@ class LinkFilter extends React.Component {
     if (!showMore) values = values.slice(0, limit)
 
     var showMoreLink = shouldDisplayShowMore
-      ? <button className='ola-btn ola-link-show-more' onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
+      ? <button className={`ola-btn ola-link-show-more ${showMore ? 'ola-link-show-less' : ''}`} onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
       : null
 
     var klass = classNames('ola-facet ola-facet-default', {
@@ -207,8 +207,8 @@ class Item extends React.Component {
         type='button'
         onClick={this.handleClick}
       >
-        <span className='ola-search-facet-count'>{count}</span>
         <span className='ola-search-facet-name'>{displayName}</span>
+        <span className='ola-search-facet-count'>{count}</span>
       </button>
     )
   }

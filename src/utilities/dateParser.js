@@ -16,6 +16,15 @@ const DateParser = {
     }
     return fecha.format(date, mask)
   },
+  parse (date, mask = defaultMask) {
+    try {
+      date = fecha.parse(date, mask)
+    } catch (e) {
+      console.warn(e, date)
+      return ''
+    }
+    return date
+  },
   today (mask = defaultMask) {
     return this.format(new Date(), mask)
   }

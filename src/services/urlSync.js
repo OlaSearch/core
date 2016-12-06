@@ -3,6 +3,7 @@ import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS } from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
+import flatten from 'ramda/src/flatten'
 import xssFilters from 'xss-filters'
 
 const REMOVE_FROM_QUERY_STRING = [
@@ -10,7 +11,9 @@ const REMOVE_FROM_QUERY_STRING = [
   'searchInput',
   'enriched_q',
   'per_page',
-  'skip_intent'
+  'skip_intent',
+  'projectId',
+  'env'
 ]
 
 var urlSync = {
@@ -47,12 +50,14 @@ var urlSync = {
 
       /* Facets */
       if (name === 'facet_query') {
-        value = value.map((item) => item.name + ':' + item.selected)
+        value = value.map((item) => {
+          return item.name + ':' + flatten(item.selected).join('+')
+        })
       }
 
       /* Filters */
       if (name === 'filters') {
-        value = value.map((item) => {
+        value = value.filter((item) => !item.hidden).map((item) => {
           var { name, selected } = item
           if (typeof selected === 'object') selected = queryString.stringify(selected)
           return name + ':' + selected
@@ -111,7 +116,6 @@ var urlSync = {
      */
     if (facetQuery) {
       var { facets: configFacets } = config
-
       if (typeof facetQuery === 'string') {
         try {
           facetQuery = JSON.parse('["' + facetQuery + '"]')
@@ -126,9 +130,8 @@ var urlSync = {
           return find(propEq('name', name))(configFacets)
         })
         .map((item) => {
-          let [ name, value ] = item.split(':')
-          value = value.split(',')
-
+          let [ name, value ] = item.split(/:(.+)?/) /* Split the first : Date strings can contain : */
+          value = value.split('+')
           let facet = find(propEq('name', name))(configFacets)
 
           let { type } = facet
@@ -165,19 +168,19 @@ var urlSync = {
         }
       }
 
-      var filterQuery = filters.map((filter) => {
-        var [ name, value ] = filter.split(':')
+      var filterQuery = filters
+        .map((item) => {
+          var [ name, value ] = item.split(':')
+          /* Parse query string */
+          if (value.indexOf('=') !== -1) value = queryString.parse(value)
 
-        /* Parse query string */
-        if (value.indexOf('=') !== -1) value = queryString.parse(value)
+          var currentFilter = find(propEq('name', name))(config.filters)
 
-        var currentFilter = find(propEq('name', name))(config.filters)
-
-        return {
-          ...currentFilter,
-          selected: value
-        }
-      })
+          return {
+            ...currentFilter,
+            selected: value
+          }
+        })
 
       filtersObject = {
         filters: filterQuery

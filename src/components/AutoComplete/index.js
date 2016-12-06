@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
-import { updateQueryTerm, replaceFacet, removeAllFacets } from './../../actions/Search'
+import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
 import Input from './Input'
 import { checkForAllowedCharacters, trim } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -50,7 +50,8 @@ class AutoComplete extends React.Component {
     enabledFocusBlur: true,
     showGeoLocation: false,
     categoryGroup: 'section_s',
-    visibleCategoryGroups: []
+    visibleCategoryGroups: [],
+    autoFocus: false
   };
 
   componentWillReceiveProps (nextProps) {
@@ -197,7 +198,7 @@ class AutoComplete extends React.Component {
 
   onClear = () => {
     this.clearQueryTerm()
-    this.props.onSelect && this.props.onSelect('')
+    this.onSelect('')
   };
 
   clearActiveClass = () => {
@@ -274,9 +275,17 @@ class AutoComplete extends React.Component {
     /* Update query term */
     this.props.updateQueryTerm(this.state.q, this.state.searchInput)
 
-    this.props.onSelect && this.props.onSelect(this.state.q)
+    this.onSelect(this.state.q)
 
     event && event.preventDefault()
+  };
+
+  onSelect = (suggestion) => {
+    if (this.props.onSelect) {
+      this.props.onSelect(suggestion)
+    } else {
+      this.props.executeSearch()
+    }
   };
 
   onFuzzySelect = (suggestion) => {
@@ -320,7 +329,7 @@ class AutoComplete extends React.Component {
       this.props.updateQueryTerm(term)
     }
 
-    return this.props.onSelect && this.props.onSelect(suggestion)
+    return this.onSelect(suggestion)
   };
 
   onFocus = (event) => {
@@ -399,4 +408,4 @@ class AutoComplete extends React.Component {
   }
 }
 
-module.exports = connect(null, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets })(injectTranslate(listensToClickOutside(AutoComplete)))
+module.exports = connect(null, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch })(injectTranslate(listensToClickOutside(AutoComplete)))

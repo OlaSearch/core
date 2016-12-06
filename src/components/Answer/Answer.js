@@ -21,7 +21,9 @@ class Answer extends React.Component {
     this.props.dispatch(changeAnswerSelection(index, itemKey, this.props.answer))
   };
   showAnswerCard = (answer) => {
-    if (this.state.isOpen && answer === this.state.selectedAnswer) return this.hideAnswerCard()
+    if (this.state.isOpen && answer === this.state.selectedAnswer) {
+      return this.hideAnswerCard()
+    }
     this.setState({
       isOpen: true,
       selectedAnswer: answer

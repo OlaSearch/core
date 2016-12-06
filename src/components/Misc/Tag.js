@@ -19,9 +19,8 @@ const Tag = (props) => {
 
     case 'daterange':
       let [ from, to ] = name
-      let fromDate = new Date(parseInt(from))
-      let toDate = new Date(parseInt(to))
-
+      let fromDate = isNaN(from) ? from : new Date(parseInt(from))
+      let toDate = isNaN(to) ? to : new Date(parseInt(to))
       displayName = supplant(template, {
         from: DateParser.format(fromDate, dateFormat),
         to: DateParser.format(toDate, dateFormat)

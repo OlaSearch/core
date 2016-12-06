@@ -2,8 +2,9 @@ import React from 'react'
 import Title from './../Fields/Title'
 import Thumbnail from './../Fields/Thumbnail'
 import Summary from './../Fields/Summary'
+import Bookmark from './../SnippetActions/Bookmark'
 
-const DefaultSnippet = ({ result }) => {
+const DefaultSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
   return (
     <div className='ola-snippet'>
       <div className='ola-snippet-image'>
@@ -13,6 +14,7 @@ const DefaultSnippet = ({ result }) => {
         />
       </div>
       <div className='ola-snippet-content'>
+        <Bookmark result={result} bookmarks={bookmarks} dispatch={dispatch} {...rest} />
         <Title result={result} />
         <Summary result={result} />
       </div>

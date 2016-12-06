@@ -14,7 +14,11 @@ export const initialState = {
   view: '',
   isSearchActive: true,
   searchInput: null,
-  skip_intent: false
+  skip_intent: false,
+
+  /* project info */
+  projectId: null,
+  env: null
 }
 
 /* Prevents redeclared variables for `JS Standard` compatiblity */
@@ -221,6 +225,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         enriched_q: action.enriched_q || ''
+      }
+
+    case types.OLA_REHYDRATE:
+      return {
+        ...state,
+        projectId: action.projectId,
+        env: action.env
       }
 
     default:

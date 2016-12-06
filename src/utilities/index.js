@@ -101,7 +101,7 @@ const utilities = {
     return WrappedComponent.displayName || WrappedComponent.name
   },
   translateKey (path, obj, safe) {
-    return obj[path] || path
+    return obj[path] === null ? '' : obj[path] || path
     // To enable `dot` based translation, uncomment this
     // 'search.placeholder.inner'
     // return path.split('.').reduce((prev, curr) => {
