@@ -1,6 +1,7 @@
 import React from 'react'
 import Media from 'react-responsive'
 import omit from 'ramda/src/omit'
+import withLogger from './../../decorators/OlaLogger'
 
 const Thumbnail = (props, context) => {
   var { mediaQuery, cdn } = context.config
@@ -8,6 +9,9 @@ const Thumbnail = (props, context) => {
     thumbnail,
     thumbnail_mobile: thumbnailMobile,
     baseUrl,
+    isLink,
+    url,
+    log,
     ...rest
   } = props
 
@@ -25,7 +29,33 @@ const Thumbnail = (props, context) => {
     thumbnail = encodeURIComponent(thumbnail)
   }
 
+  let linkProps = isLink
+    ? {
+      href: url,
+      onClick: (event) => {
+        log({
+          eventType: 'C',
+          result: props.result,
+          eventCategory: 'Thumbnail',
+          eventAction: 'click',
+          snippetId: props.snippetId,
+          collectionId: props.collectionId
+        })
+      },
+      className: 'ola-image-linked'
+    }
+    : {}
+
   if (!thumbnailMobile) {
+    if (isLink) {
+      return (
+        <a {...linkProps}>
+          <img onError={(event) => {
+            event.target.style = 'display:none;'
+          }} className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+        </a>
+      )
+    }
     return (
       <img onError={(event) => {
         event.target.style = 'display:none;'
@@ -55,7 +85,9 @@ Thumbnail.propTypes = {
 }
 
 Thumbnail.defaultProps = {
-  baseUrl: ''
+  baseUrl: '',
+  isLink: false,
+  url: null
 }
 
-module.exports = Thumbnail
+module.exports = withLogger(Thumbnail)
