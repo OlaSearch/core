@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
-import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
+import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, navigateToResultsPage } from './../../actions/Search'
 import Input from './Input'
 import { checkForAllowedCharacters, trim } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -28,6 +28,7 @@ class AutoComplete extends React.Component {
     AutoSuggest: React.PropTypes.object.isRequired,
     showFacetSuggestions: React.PropTypes.bool,
     autoFocus: React.PropTypes.bool,
+    forceRedirect: React.PropTypes.bool,
     dispatch: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func,
     viewAllClassName: React.PropTypes.string,
@@ -51,7 +52,8 @@ class AutoComplete extends React.Component {
     showGeoLocation: false,
     categoryGroup: 'section_s',
     visibleCategoryGroups: [],
-    autoFocus: false
+    autoFocus: false,
+    forceRedirect: false
   };
 
   componentWillReceiveProps (nextProps) {
@@ -281,11 +283,11 @@ class AutoComplete extends React.Component {
   };
 
   onSelect = (suggestion) => {
-    if (this.props.onSelect) {
-      this.props.onSelect(suggestion)
-    } else {
-      this.props.executeSearch()
-    }
+    this.props.executeSearch({
+      forceRedirect: this.props.forceRedirect,
+      searchPageUrl: this.context.config.searchPageUrl,
+      routeChange: !this.props.forceRedirect
+    })
   };
 
   onFuzzySelect = (suggestion) => {
@@ -318,7 +320,8 @@ class AutoComplete extends React.Component {
       } else {
         facet = find(propEq('name', label))(this.context.config.facets)
         this.props.replaceFacet(facet, path || term)
-        this.props.updateQueryTerm('')
+        /* Remove query term */
+        this.clearQueryTerm()
       }
     }
     if (isQuery) {
@@ -391,6 +394,7 @@ class AutoComplete extends React.Component {
             onGeoLocationSuccess={this.props.onGeoLocationSuccess}
             onGeoLocationDisable={this.props.onGeoLocationDisable}
             autoFocus={this.props.autoFocus}
+            isPhone={this.props.isPhone}
           />
           <div className={klass}>
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
@@ -408,4 +412,10 @@ class AutoComplete extends React.Component {
   }
 }
 
-module.exports = connect(null, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch })(injectTranslate(listensToClickOutside(AutoComplete)))
+function mapStateToProps (state) {
+  return {
+    isPhone: state.Device.isPhone
+  }
+}
+
+module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, navigateToResultsPage })(injectTranslate(listensToClickOutside(AutoComplete)))

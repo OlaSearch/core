@@ -234,6 +234,9 @@ const utilities = {
   },
   isSvg (path) {
     return path.split('.').pop().indexOf('svg') === 0
+  },
+  scrollTo (element) {
+    /* To be implemented */
   }
 }
 

@@ -74,6 +74,12 @@ export function loadMore () {
   }
 }
 
+export function navigateToResultsPage () {
+  return (dispatch, getState) => {
+    // buildQueryString(getState())
+  }
+}
+
 export function changeAnswerSelection (index, key, answer) {
   /* Clone */
   let newAnswer = JSON.parse(JSON.stringify(answer))
@@ -195,7 +201,7 @@ export function addFacet (facet, value) {
   }
 }
 
-export function removeFacet (facet, value) {
+export function removeFacet (facet, value, resetAllFacets = false) {
   /**
    * Always convert Array to strings
    * [1, 2] => ["1", "2"]
@@ -206,7 +212,7 @@ export function removeFacet (facet, value) {
     Reset facets is a Root facet (Tabs or Collection)
     Used in admin console
   */
-  if (facet.isRoot) {
+  if (resetAllFacets || facet.resetOnDeSelect) {
     return {
       type: types.REMOVE_ALL_FACETS
     }

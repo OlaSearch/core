@@ -32,7 +32,6 @@ export default (state = initialState, action) => {
       if (exists) {
         return {
           ...state,
-          page: 1,
           filters: state.filters.map((item) => {
             if (item.name === filter.name) {
               return {
@@ -46,7 +45,6 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
-          page: 1,
           filters: [ ...state.filters, { ...filter, selected } ]
         }
       }

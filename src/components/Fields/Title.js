@@ -40,7 +40,7 @@ class Title extends React.Component {
       <h3 className='ola-field ola-field-title'>
         {iconLeft}
         {isLink
-          ? <a href={url} onClick={this.logClick} dangerouslySetInnerHTML={createHTMLMarkup(title)} />
+          ? <a href={url} target={this.props.target} onClick={this.logClick} dangerouslySetInnerHTML={createHTMLMarkup(title)} />
           : <span dangerouslySetInnerHTML={createHTMLMarkup(title)} />
         }
         {children}
@@ -55,7 +55,8 @@ Title.defaultProps = {
   iconLeft: null,
   iconRight: null,
   isBookmark: false,
-  field: null
+  field: null,
+  target: null
 }
 
 module.exports = withLogger(Title)

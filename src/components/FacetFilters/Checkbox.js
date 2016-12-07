@@ -30,11 +30,6 @@ class CheckboxFilter extends React.Component {
 
   handleAddFacet = (value) => {
     var { dispatch, facet } = this.props
-
-    this.setState({
-      filterText: ''
-    })
-
     /**
      * Allows only single selection
      * @param  {[type]} facet.allowSingleSelection

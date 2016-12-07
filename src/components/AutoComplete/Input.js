@@ -5,7 +5,7 @@ import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
-import { escapeRegEx } from './../../utilities'
+import { escapeRegEx, scrollTo } from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
 
@@ -33,6 +33,10 @@ export default class Input extends React.Component {
   };
 
   onFocus = (event) => {
+    /* Scroll to input */
+    if (this.props.isPhone) scrollTo(this.refs.Input)
+
+    /* Call onFocus event */
     this.props.onFocus && this.props.onFocus(event)
 
     if (!event.target.value) return

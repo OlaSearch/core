@@ -27,7 +27,9 @@ const Thumbnail = (props, context) => {
 
   if (!thumbnailMobile) {
     return (
-      <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+      <img onError={(event) => {
+        event.target.style = 'display:none;'
+      }} className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
     )
   }
 
