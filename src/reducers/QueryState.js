@@ -232,6 +232,12 @@ export default (state = initialState, action) => {
         env: action.env
       }
 
+    case types.UPDATE_OLA_PARAMETERS:
+      return {
+        ...state,
+        ...action.params
+      }
+
     default:
       return state
   }

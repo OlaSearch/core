@@ -25,11 +25,9 @@ class AutoComplete extends React.Component {
   }
 
   static propTypes = {
-    AutoSuggest: React.PropTypes.object.isRequired,
     showFacetSuggestions: React.PropTypes.bool,
     autoFocus: React.PropTypes.bool,
     forceRedirect: React.PropTypes.bool,
-    dispatch: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func,
     viewAllClassName: React.PropTypes.string,
     placeholder: React.PropTypes.string
@@ -102,15 +100,14 @@ class AutoComplete extends React.Component {
     })
   };
   handleClickOutside = (event) => {
-    if (this.state.isOpen) {
-      this.closeAutoSuggest()
-
-      /**
-       * For Fuzzy suggestion, restore the original query term
-       */
-      if (event && event.nativeEvent && event.nativeEvent.type === 'keydown') {
-        this.clearFuzzyQueryTerm()
-      }
+    /* Prevent rendering when autocomplete is closed */
+    if (!this.state.isOpen) return
+    this.closeAutoSuggest()
+    /**
+     * For Fuzzy suggestion, restore the original query term
+     */
+    if (event && event.nativeEvent && event.nativeEvent.type === 'keydown') {
+      this.clearFuzzyQueryTerm()
     }
     this.onBlur()
   };

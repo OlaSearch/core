@@ -7,7 +7,7 @@ class AnswerCard extends React.Component {
     this.props.onSelect(this.props.result)
   };
   render () {
-    let { result, cdn, isActive, module } = this.props
+    let { result, cdn, imagePlaceholder, isActive, module } = this.props
     let isClickable = !!result.additional_data
     let { image, description, subtitle, title, exists } = result
     if (module === 'spices.facts.place.capital') {
@@ -18,10 +18,10 @@ class AnswerCard extends React.Component {
       'ola-answer-item-isSelectable': isClickable,
       'ola-answer-item-deActive': !exists
     })
-    image = image || 'https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png'
-    let bgImage = isSvg(image) ? image : `${cdn}/${image}`
+    image = image || imagePlaceholder
+    let bgImage = image ? isSvg(image) ? image : `${cdn ? cdn + '/' : ''}${image}` : null
     return (
-      <a className={klass} onClick={isClickable ? this.handleSelect : null}>
+      <div className={klass} onClick={isClickable ? this.handleSelect : null}>
         {image
           ? <div className='ola-answer-image' style={{
             backgroundImage: `url("${bgImage}")`
@@ -34,7 +34,7 @@ class AnswerCard extends React.Component {
           </h3>
           <div className='ola-answer-subtitle'>{subtitle || description}</div>
         </div>
-      </a>
+      </div>
     )
   }
 }

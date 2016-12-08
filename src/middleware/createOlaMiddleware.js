@@ -10,6 +10,7 @@ import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
 
 const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
+const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -60,7 +61,7 @@ module.exports = (options = {}) => {
       throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
     }
 
-    const { logger, proxy } = config
+    const { logger, proxy, intentEngineEnabled } = config
 
     if (
       !Array.isArray(types) ||
@@ -91,11 +92,14 @@ module.exports = (options = {}) => {
         ? { ...query, ...payload.answer ? { answer: payload.answer } : {}, api, ...context }
         : api === FUZZY_SUGGEST_KEY ? query : queryBuilder.transform(query, mapping, acl, context)
 
+    /* Api url when intent engine is active */
+    let apiUrl = intentEngineEnabled && INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 ? config.api.intent : undefined
+
     if (typeof api === 'function') {
       /* Should returns a promise */
       callApi = () => api(params)
     } else {
-      callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params) : null
+      callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params, apiUrl) : null
     }
     if (typeof callApi !== 'function') {
       throw new Error('Expected callApi to be a function. Check your dispatch call.')
