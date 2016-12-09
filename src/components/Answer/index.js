@@ -1,14 +1,12 @@
 import React from 'react'
 import AnswerSuggestion from './AnswerSuggestion'
-import AnswerTableDetail from './AnswerTableDetail'
+import TableDetail from './common/TableDetail'
 import AnswerGrid from './AnswerGrid'
 import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
-import { createHTMLMarkup } from './../../utilities'
 import { updateQueryTerm, executeSearch, changeAnswerSelection, setSkipIntent } from './../../actions/Search'
 
 class Answer extends React.Component {
   handleChange = (option, index, itemKey) => {
-    console.log(index, itemKey, this.props.answer)
     this.props.dispatch(changeAnswerSelection(index, itemKey, this.props.answer))
   };
   handleSkipIntent = () => {
@@ -19,7 +17,11 @@ class Answer extends React.Component {
   templatePicker = (template, data) => {
     switch (template) {
       case 'table_detail':
-        return <AnswerTableDetail data={data} />
+        return (
+          <TableDetail
+            data={data}
+          />
+        )
 
       case 'person_info_grid':
       case 'text':
@@ -32,16 +34,18 @@ class Answer extends React.Component {
         )
 
       case 'person_info_detail':
-        return (<AnswerPersonInfoDetail
-          data={data}
-        />)
+        return (
+          <AnswerPersonInfoDetail
+            data={data}
+          />
+        )
 
       default:
         return null
     }
   };
   render () {
-    const { answer, isLoading, result } = this.props
+    const { answer, isLoading } = this.props
 
     if (isLoading) {
       return (
@@ -50,16 +54,7 @@ class Answer extends React.Component {
         </div>
       )
     }
-    /**
-     * If the answer is from search engine
-     */
-    if (result) {
-      return (
-        <div className='ola-snippet-answer'>
-          <div dangerouslySetInnerHTML={createHTMLMarkup(result.ola_answer)} />
-        </div>
-      )
-    }
+
     if (!answer) return null
     let { data, template } = answer
     /**

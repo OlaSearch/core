@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../decorators/OlaTranslate'
 
 const Error = ({ error, translate }) => {
   if (!error) return null

@@ -60,7 +60,8 @@ export default class Input extends React.Component {
          * When autosuggest is closed and user presses escape key multiple times,
          * Clear query term
          */
-        if (!isOpen) return this.onClear(event)
+        // if (!isOpen) return this.onClear(event)
+        if (!isOpen) return this.refs.Input.select()
         return this.props.handleClickOutside(event)
 
       case 39: // Right
@@ -86,6 +87,7 @@ export default class Input extends React.Component {
         return onKeyDown('down')
 
       case 9: // Tab
+        this.props.onBlur && this.props.onBlur(event)
         break
       case 13: // Enter
         return onSubmit()

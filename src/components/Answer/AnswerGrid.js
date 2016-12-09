@@ -66,7 +66,7 @@ export default class AnswerGrid extends React.Component {
           }
         </div>
         {this.state.isOpen
-          ? <ListKeyValue data={this.state.selectedAnswer.additional_data} />
+          ? <ListKeyValue data={this.state.selectedAnswer.additional_data} onClose={this.hideAnswerCard} />
           : null
         }
         {source

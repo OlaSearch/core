@@ -26,30 +26,15 @@
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
   OlaIntlProvider: require('./containers/OlaIntlProvider'),
-  AutoSuggest: require('./components/AutoSuggest'),
   AutoComplete: require('./components/AutoComplete'),
-  InstantSearchForm: require('./components/InstantSearchForm'),
-  SpellSuggestion: require('./components/SpellSuggestions/SpellSuggestion'),
-  TermSuggestion: require('./components/SpellSuggestions/TermSuggestion'),
   Pagination: require('./components/Pagination'),
-  PerPage: require('./components/PerPage'),
   SearchFooter: require('./components/SearchFooter'),
   SearchFilters: require('./components/SearchFilters'),
   SearchResults: require('./components/SearchResults'),
-  NoResults: require('./components/Snippets/NoResults'),
-  SearchTitle: require('./components/SearchTitle'),
-  ClearAllFacets: require('./components/Misc/ClearAllFacets'),
-  PopularKeywords: require('./components/Misc/PopularKeywords'),
-  Error: require('./components/Misc/Error'),
   Translate: require('./components/Misc/Translate'),
-  Tabs: require('./components/FacetFilters/Tabs'),
   SelectedFilters: require('./components/SelectedFilters'),
-  Sort: require('./components/Sort'),
   Actions: require('./actions'),
-  SnippetActions: {
-    Bookmark: require('./components/SnippetActions/Bookmark'),
-    Share: require('./components/SnippetActions/Share')
-  },
+  SnippetActions: require('./components/SnippetActions'),
   version: require('./constants/Version'),
   Fields: require('./components/Fields'),
   GeoLocation: require('./components/Geo/GeoLocation'),
@@ -57,7 +42,6 @@ module.exports = {
   Snippets: {
     Default: require('./components/Snippets/Default')
   },
-  Answer: require('./components/Answer/Answer'),
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
     OlaFacetToggle: require('./decorators/OlaFacetToggle'),
@@ -81,5 +65,20 @@ module.exports = {
   Rating: require('./components/FacetFilters/Rating'),
   DateRangePicker: require('./components/FacetFilters/DateRangePicker'),
   TagCloud: require('./components/FacetFilters/TagCloud'),
-  Hierarchical: require('./components/FacetFilters/Hierarchical')
+  Hierarchical: require('./components/FacetFilters/Hierarchical'),
+
+  // Optional olasearch/dist/{name}
+  NoResults: require('./components/Snippets/NoResults'),
+  SearchTitle: require('./components/SearchTitle'),
+  ClearAllFacets: require('./components/ClearAllFacets'),
+  PopularKeywords: require('./components/PopularKeywords'),
+  Error: require('./components/Error'),
+  Answer: require('./components/Answer'),
+  Tabs: require('./components/FacetFilters/Tabs'),
+  Sort: require('./components/Sort'),
+  InstantSearchForm: require('./components/InstantSearchForm'),
+  SpellSuggestion: require('./components/SpellSuggestion'),
+  TermSuggestion: require('./components/TermSuggestion'),
+  PerPage: require('./components/PerPage'),
+  AutoSuggest: require('./components/AutoSuggest')
 }

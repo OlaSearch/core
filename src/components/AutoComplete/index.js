@@ -101,13 +101,14 @@ class AutoComplete extends React.Component {
   };
   handleClickOutside = (event) => {
     /* Prevent rendering when autocomplete is closed */
-    if (!this.state.isOpen) return
-    this.closeAutoSuggest()
-    /**
-     * For Fuzzy suggestion, restore the original query term
-     */
-    if (event && event.nativeEvent && event.nativeEvent.type === 'keydown') {
-      this.clearFuzzyQueryTerm()
+    if (this.state.isOpen) {
+      this.closeAutoSuggest()
+      /**
+       * For Fuzzy suggestion, restore the original query term
+       */
+      if (event && event.nativeEvent && event.nativeEvent.type === 'keydown') {
+        return this.clearFuzzyQueryTerm()
+      }
     }
     this.onBlur()
   };
@@ -197,7 +198,7 @@ class AutoComplete extends React.Component {
 
   onClear = () => {
     this.clearQueryTerm()
-    this.onSelect('')
+    if (!this.props.forceRedirect) this.onSelect('')
   };
 
   clearActiveClass = () => {
@@ -274,7 +275,13 @@ class AutoComplete extends React.Component {
     /* Update query term */
     this.props.updateQueryTerm(this.state.q, this.state.searchInput)
 
+    /* Trigger search */
     this.onSelect(this.state.q)
+
+    /* trigger blur on mobile devices */
+    if (this.props.isPhone) {
+      setTimeout(() => document.activeElement.blur(), 300)
+    }
 
     event && event.preventDefault()
   };
@@ -349,6 +356,12 @@ class AutoComplete extends React.Component {
     this.props.onBlur && this.props.onBlur(event)
   };
 
+  onSoftBlur = (event) => {
+    this.setState({
+      isFocused: false
+    })
+  };
+
   render () {
     var {
       showZone,
@@ -392,6 +405,7 @@ class AutoComplete extends React.Component {
             onGeoLocationDisable={this.props.onGeoLocationDisable}
             autoFocus={this.props.autoFocus}
             isPhone={this.props.isPhone}
+            onBlur={this.onSoftBlur}
           />
           <div className={klass}>
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>

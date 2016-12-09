@@ -1,7 +1,7 @@
 import React from 'react'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../../decorators/OlaTranslate'
 
-class AnswerTable extends React.Component {
+class TableDetail extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -13,11 +13,12 @@ class AnswerTable extends React.Component {
   };
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
   render () {
-    let { data: { record_data, record_keys }, max, translate } = this.props
+    let { data: { record_data, record_keys, caption }, max, translate } = this.props
     let { isOpen } = this.state
     let size = record_data.length
     return (
       <div className='ola-answer-table-detail'>
+        {caption && <h4 className='ola-answer-table-caption'>{caption}</h4>}
         <table className='ola-answer-table'>
           <thead>
             <tr>
@@ -30,9 +31,9 @@ class AnswerTable extends React.Component {
               .map((row, idx) => {
                 return (
                   <tr key={idx}>
-                    {record_keys.map((key) => {
+                    {record_keys.map((key, idx) => {
                       return (
-                        <td>{row[key]}</td>
+                        <td key={idx}>{row[key]}</td>
                       )
                     })}
                   </tr>
@@ -50,4 +51,4 @@ class AnswerTable extends React.Component {
   }
 }
 
-module.exports = injectTranslate(AnswerTable)
+module.exports = injectTranslate(TableDetail)
