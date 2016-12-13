@@ -4,8 +4,8 @@ import equals from 'ramda/src/equals'
 
 const WILDCARD_MODULE_NAMES = ['spices.wildcard', 'spices.meeting']
 
-const AnswerSuggestion = (props) => {
-  let { answer, onChange, onSkipIntent } = props
+const AnswerSuggestion = ({ answer, onChange, onSkipIntent }) => {
+  if (!answer.suggestions || !Object.keys(answer.suggestions).length) return null
   let { suggestions, original, module } = answer
   let keys = Object.keys(suggestions)
   let text = original.split('')

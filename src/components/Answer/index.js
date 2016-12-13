@@ -1,6 +1,7 @@
 import React from 'react'
 import AnswerSuggestion from './AnswerSuggestion'
 import TableDetail from './common/TableDetail'
+import ItemDetail from './common/ItemDetail'
 import AnswerGrid from './AnswerGrid'
 import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
 import { updateQueryTerm, executeSearch, changeAnswerSelection, setSkipIntent } from './../../actions/Search'
@@ -14,7 +15,11 @@ class Answer extends React.Component {
     this.props.dispatch(setSkipIntent(true))
     this.props.dispatch(executeSearch())
   };
-  templatePicker = (template, data) => {
+  templatePicker = (template, data, module) => {
+    if (this.props.templates && this.props.templates.hasOwnProperty(module)) {
+      let Component = this.props.templates[module]
+      return <Component data={data} />
+    }
     switch (template) {
       case 'table_detail':
         return (
@@ -32,6 +37,9 @@ class Answer extends React.Component {
             answer={this.props.answer}
           />
         )
+
+      case 'item_detail':
+        return <ItemDetail data={data} />
 
       case 'person_info_detail':
         return (
@@ -56,7 +64,7 @@ class Answer extends React.Component {
     }
 
     if (!answer) return null
-    let { data, template } = answer
+    let { data, template, module, source } = answer
     /**
      * If the answer is from Intent engine
      */
@@ -69,8 +77,14 @@ class Answer extends React.Component {
             onSkipIntent={this.handleSkipIntent}
           />
           <div className='ola-answer'>
-            {this.templatePicker(template, data)}
+            {this.templatePicker(template, data, module)}
           </div>
+          {source
+            ? <div className='ola-answer-source'>
+              Source: <a target='_blank' href={source.url}>{source.name}</a>
+            </div>
+            : null
+          }
         </div>
       )
     }

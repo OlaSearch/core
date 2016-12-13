@@ -161,6 +161,8 @@ export default class Input extends React.Component {
           />
         </div>
 
+        {q && <button type='button' className='ola-clear-button' onClick={this.onClear} />}
+
         {showGeoLocation
           ? <GeoLocation
             active={false}
@@ -178,9 +180,9 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
-        <History />
+        <History onOpen={this.props.handleClose} />
 
-        <Bookmarks />
+        <Bookmarks onOpen={this.props.handleClose} />
 
         <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
       </div>

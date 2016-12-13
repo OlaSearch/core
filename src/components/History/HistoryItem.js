@@ -5,7 +5,10 @@ const HistoryItem = ({ history, searchPageUrl }) => {
   return (
     <div className='ola-module-item ola-module-item-history'>
       <a href={url}>{history.q}</a>
-      {history.facets.map((facet, idx) => <span key={idx} className='ola-search-facet-count'>{facet}</span>)}
+      {history.facets.map((facet, idx) => {
+        let name = facet.split(':').pop()
+        return <span key={idx} className='ola-search-facet-count'>{name}</span>
+      })}
     </div>
   )
 }

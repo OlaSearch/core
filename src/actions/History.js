@@ -11,40 +11,39 @@ export function addHistory (options) {
     let { QueryState, AppState } = getState()
     let { q, facet_query } = QueryState
     let { totalResults, history } = AppState
-
     if (!q || !totalResults) return
 
     /* Filtering history */
     var query = omit(['page', 'per_page', 'referrer'], QueryState)
     var activeFacets = flatten(facet_query.map((item) => {
-      let { selected, template, dateFormat, type } = item
+      let { selected, template, dateFormat, type, name } = item
       switch (type) {
         case 'range':
           if (typeof selected === 'string') {
             return selected
           } else {
             let [from, to] = selected
-            return supplant(template, {from, to})
+            return `${name}:${supplant(template, {from, to})}`
           }
         case 'daterange':
           let [ from, to ] = selected[0]
           let fromDate = new Date(parseInt(from))
           let toDate = new Date(parseInt(to))
-          return supplant(template, {
+          return `${name}: ${supplant(template, {
             from: DateParser.format(fromDate, dateFormat),
             to: DateParser.format(toDate, dateFormat)
-          })
+          })}`
 
         default:
-          return selected
+          return `${name}:${selected}`
       }
     }))
 
     /* Check if it already exists */
-    var exists = history.filter((item) => item.q === q && equals(item.facets, activeFacets))
+    var exists = history.some((item) => item.q === q && equals(item.facets, activeFacets))
 
     /* Check if history already exists */
-    if (exists.length) return
+    if (exists) return
 
     dispatch({
       type: types.ADD_HISTORY,

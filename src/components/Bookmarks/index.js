@@ -37,6 +37,8 @@ class Bookmarks extends React.Component {
       isOpen: !this.state.isOpen
     }, () => {
       if (this.state.isOpen) {
+        this.props.onOpen && this.props.onOpen()
+
         this.props.dispatch(log({
           eventType: 'C',
           eventCategory: 'Bookmark button',

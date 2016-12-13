@@ -280,7 +280,7 @@ class AutoComplete extends React.Component {
 
     /* trigger blur on mobile devices */
     if (this.props.isPhone) {
-      setTimeout(() => document.activeElement.blur(), 300)
+      setTimeout(() => document.activeElement.blur(), 100)
     }
 
     event && event.preventDefault()
@@ -406,7 +406,9 @@ class AutoComplete extends React.Component {
             autoFocus={this.props.autoFocus}
             isPhone={this.props.isPhone}
             onBlur={this.onSoftBlur}
+            handleClose={this.closeAutoSuggest}
           />
+
           <div className={klass}>
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
               <FuzzySuggestions
@@ -417,6 +419,7 @@ class AutoComplete extends React.Component {
               />
             </div>
           </div>
+
         </div>
       </div>
     )

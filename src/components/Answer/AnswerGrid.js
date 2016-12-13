@@ -41,7 +41,6 @@ export default class AnswerGrid extends React.Component {
   };
   render () {
     let { data, answer } = this.props
-    let { source } = answer
     let klass = classNames('ola-answer-items', {
       'ola-answer-items-single': data.length === 1
     })
@@ -67,12 +66,6 @@ export default class AnswerGrid extends React.Component {
         </div>
         {this.state.isOpen
           ? <ListKeyValue data={this.state.selectedAnswer.additional_data} onClose={this.hideAnswerCard} />
-          : null
-        }
-        {source
-          ? <div className='ola-answer-source'>
-            Source: <a target='_blank' href={source.url}>{source.name}</a>
-          </div>
           : null
         }
       </div>
