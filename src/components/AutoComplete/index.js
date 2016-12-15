@@ -49,7 +49,7 @@ class AutoComplete extends React.Component {
     enabledFocusBlur: true,
     showGeoLocation: false,
     categoryGroup: 'section_s',
-    visibleCategoryGroups: [],
+    visibleCategoryGroups: null,
     autoFocus: false,
     forceRedirect: false
   };
@@ -270,7 +270,7 @@ class AutoComplete extends React.Component {
     })
 
     /* Remove all selected facets */
-    this.props.removeAllFacets()
+    // this.props.removeAllFacets()
 
     /* Update query term */
     this.props.updateQueryTerm(this.state.q, this.state.searchInput)

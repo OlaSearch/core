@@ -60,7 +60,7 @@ class SuggestionItem extends React.Component {
     }
 
     return (
-      <a
+      <button
         className={klass}
         onClick={this.onSelect}
         onMouseOver={this.onMouseOver}

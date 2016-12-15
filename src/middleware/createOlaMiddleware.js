@@ -39,8 +39,7 @@ module.exports = (options = {}) => {
     let { parser, queryBuilder, config, searchService } = options
 
     /**
-     * When config is a function, Ola Search expects
-     *  engineConfiguration
+     * When config is a function, Ola Search expects `engineConfig` in config file
      *  engineConfig = {
      *    solr: { parser, queryBuilder, searchService },
      *    elastic: { parser, queryBuilder, searchService }

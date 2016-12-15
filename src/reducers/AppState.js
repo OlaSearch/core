@@ -19,9 +19,7 @@ export const initialState = {
 
   /* Individual result */
   result: [],
-  isLoadingResult: false,
-  /* Filter sequence */
-  filter_sequence: [] /* For logging the sequence of filters that the user used */
+  isLoadingResult: false
 }
 
 export default (state = initialState, action) => {

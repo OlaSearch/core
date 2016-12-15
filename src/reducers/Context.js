@@ -13,7 +13,7 @@ export const initialState = {
   isNewUser: false,
   ...valueFromStorage ? JSON.parse(valueFromStorage) : {},
   /* Filter sequence */
-  filter_sequence: [] /* For logging the sequence of filters that the user used */
+  filter_term_sequence: [] /* For logging the sequence of filters that the user used */
 }
 
 export default (state = initialState, action) => {
@@ -79,13 +79,13 @@ export default (state = initialState, action) => {
     case types.ADD_FACET:
       return {
         ...state,
-        filter_sequence: [...state.filter_sequence, `${action.facet.name}:${action.value}`]
+        filter_term_sequence: [...state.filter_term_sequence, `${action.facet.name}:${action.value}`]
       }
 
     case types.REMOVE_FACET:
       return {
         ...state,
-        filter_sequence: state.filter_sequence.filter((item) => item !== `${action.facet.name}:${action.value}`)
+        filter_term_sequence: state.filter_term_sequence.filter((item) => item !== `${action.facet.name}:${action.value}`)
       }
 
     case types.OLA_REHYDRATE:
