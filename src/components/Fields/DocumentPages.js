@@ -21,8 +21,7 @@ class DocumentPages extends React.Component {
           eventCategory: this.props.translate('doc_view_pages'),
           eventLabel: 'Pages',
           eventAction: 'click',
-          snippetId: this.props.snippetId,
-          collectionId: this.props.collectionId
+          snippetId: this.props.snippetId
         })
       }
     })
@@ -36,8 +35,7 @@ class DocumentPages extends React.Component {
       eventValue: page.pageNumber,
       eventLabel: 'Pages',
       eventAction: 'click',
-      snippetId: this.props.snippetId,
-      collectionId: this.props.collectionId
+      snippetId: this.props.snippetId
     })
   };
   render () {

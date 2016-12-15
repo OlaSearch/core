@@ -11,12 +11,13 @@ const DefaultSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
         <Thumbnail
           thumbnail={result.thumbnail}
           thumbnail_mobile={result.thumbnail_mobile}
+          {...rest}
         />
       </div>
       <div className='ola-snippet-content'>
         <Bookmark result={result} bookmarks={bookmarks} dispatch={dispatch} {...rest} />
-        <Title result={result} />
-        <Summary result={result} />
+        <Title result={result} {...rest} />
+        <Summary result={result} {...rest} />
       </div>
     </div>
   )

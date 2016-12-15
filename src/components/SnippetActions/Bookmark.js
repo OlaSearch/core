@@ -13,8 +13,8 @@ class BookmarkActions extends React.Component {
       eventCategory: 'Add bookmark',
       eventAction: 'click',
       debounce: true,
-      snippetId: this.props.snippetId,
-      collectionId: this.props.collectionId
+      result,
+      snippetId: this.props.snippetId
     }))
   };
 
@@ -26,8 +26,8 @@ class BookmarkActions extends React.Component {
       eventCategory: 'Remove bookmark',
       eventAction: 'click',
       debounce: true,
-      snippetId: this.props.snippetId,
-      collectionId: this.props.collectionId
+      result,
+      snippetId: this.props.snippetId
     }))
   };
 

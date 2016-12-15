@@ -11,7 +11,9 @@ export const initialState = {
   userSession: null,
   userId: null,
   isNewUser: false,
-  ...valueFromStorage ? JSON.parse(valueFromStorage) : {}
+  ...valueFromStorage ? JSON.parse(valueFromStorage) : {},
+  /* Filter sequence */
+  filter_sequence: [] /* For logging the sequence of filters that the user used */
 }
 
 export default (state = initialState, action) => {
@@ -21,6 +23,7 @@ export default (state = initialState, action) => {
         ...state,
         isRequestingLocation: true
       }
+
     case types.REQUEST_GEO_LOCATION_SUCCESS:
       let { coords: { latitude, longitude } } = action.payload
       return {
@@ -35,6 +38,7 @@ export default (state = initialState, action) => {
         isRequestingLocation: false,
         location: null
       }
+
     case types.ADD_CONTEXT:
       if (action.contextType === 'geo') {
         return {
@@ -43,6 +47,7 @@ export default (state = initialState, action) => {
         }
       }
       return state
+
     case types.REMOVE_CONTEXT:
       if (action.contextType === 'geo') {
         return {
@@ -68,6 +73,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fields: state.fields.filter((field) => field.name !== action.name)
+      }
+
+    /** Filter sequence */
+    case types.ADD_FACET:
+      return {
+        ...state,
+        filter_sequence: [...state.filter_sequence, `${action.facet.name}:${action.value}`]
+      }
+
+    case types.REMOVE_FACET:
+      return {
+        ...state,
+        filter_sequence: state.filter_sequence.filter((item) => item !== `${action.facet.name}:${action.value}`)
       }
 
     case types.OLA_REHYDRATE:

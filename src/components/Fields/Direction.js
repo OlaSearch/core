@@ -21,8 +21,7 @@ const Directions = (props) => {
           eventCategory: 'Get Directions',
           eventAction: 'click',
           debounce: true,
-          snippetId: props.snippetId,
-          collectionId: props.collectionId
+          snippetId: props.snippetId
         })
         onClick && onClick(event)
       }}

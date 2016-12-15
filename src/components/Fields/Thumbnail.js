@@ -38,8 +38,7 @@ const Thumbnail = (props, context) => {
           result: props.result,
           eventCategory: 'Thumbnail',
           eventAction: 'click',
-          snippetId: props.snippetId,
-          collectionId: props.collectionId
+          snippetId: props.snippetId
         })
       },
       className: 'ola-image-linked'
