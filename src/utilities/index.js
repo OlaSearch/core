@@ -220,7 +220,7 @@ const utilities = {
       }
       return out
     }
-    return getNestedChildren(output, parentNode)
+    return getNestedChildren(output, parentNode === '' ? null : parentNode)
   },
   uuid () {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {

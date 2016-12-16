@@ -51,7 +51,8 @@ class AutoComplete extends React.Component {
     categoryGroup: 'section_s',
     visibleCategoryGroups: null,
     autoFocus: false,
-    forceRedirect: false
+    forceRedirect: false,
+    q: ''
   };
 
   componentWillReceiveProps (nextProps) {
@@ -102,7 +103,7 @@ class AutoComplete extends React.Component {
   handleClickOutside = (event) => {
     /* Prevent rendering when autocomplete is closed */
     if (this.state.isOpen) {
-      this.closeAutoSuggest()
+      this.terminateAutoSuggest()
       /**
        * For Fuzzy suggestion, restore the original query term
        */
@@ -139,6 +140,8 @@ class AutoComplete extends React.Component {
     } else {
       this.props.executeFuzzyAutoSuggest(term)
         .then((results) => {
+          if (!results) return
+
           /* Parse payload */
           let res = []
           let categoryFound = false
@@ -198,7 +201,6 @@ class AutoComplete extends React.Component {
 
   onClear = () => {
     this.clearQueryTerm()
-    if (!this.props.forceRedirect) this.onSelect('')
   };
 
   clearActiveClass = () => {
@@ -270,7 +272,7 @@ class AutoComplete extends React.Component {
     })
 
     /* Remove all selected facets */
-    // this.props.removeAllFacets()
+    this.props.removeAllFacets()
 
     /* Update query term */
     this.props.updateQueryTerm(this.state.q, this.state.searchInput)
@@ -287,6 +289,13 @@ class AutoComplete extends React.Component {
   };
 
   onSelect = (suggestion) => {
+    if (this.props.onSelect) {
+      this.props.onSelect(suggestion, {
+        removeAllFacets: this.props.removeAllFacets,
+        updateQueryTerm: this.props.updateQueryTerm
+      })
+    }
+
     this.props.executeSearch({
       forceRedirect: this.props.forceRedirect,
       searchPageUrl: this.context.config.searchPageUrl,
@@ -426,7 +435,7 @@ class AutoComplete extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
     isPhone: state.Device.isPhone
   }

@@ -231,6 +231,16 @@ export function replaceFacet (facet, value) {
    */
   if (value instanceof Array) value = castNumberToStringArray(value)
 
+  /**
+   * For heirarchical facet
+   */
+  if (facet.rootLevel && parseInt(facet.rootLevel) === value.split('/').length) {
+    return {
+      type: types.REMOVE_FACET_ITEM,
+      facet
+    }
+  }
+
   return {
     type: types.REPLACE_FACET,
     facet,

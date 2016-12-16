@@ -43,7 +43,6 @@ export function executeFuzzyAutoSuggest (q) {
       query,
       context,
       processData: (response) => pickDeep(response.suggest, 'suggestions'),
-      nullResponse: [],
       returnWithoutDispatch: true,
       api: 'fuzzySuggest',
       payload: {}

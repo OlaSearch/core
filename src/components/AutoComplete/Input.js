@@ -16,14 +16,14 @@ export default class Input extends React.Component {
   };
 
   onClear = (event) => {
-    event && event.preventDefault()
+    // event && event.preventDefault()
 
-    /* Do not call blur event when its a button */
-    if (event.target.nodeName === 'INPUT' && !event.target.value) {
-      event.target.blur()
-      this.props.handleClickOutside(event)
-      return
-    }
+    // /* Do not call blur event when its a button */
+    // if (event.target.nodeName === 'INPUT' && !event.target.value) {
+    //   event.target.blur()
+    //   this.props.handleClickOutside(event)
+    //   return
+    // }
 
     /* Clear query term */
     this.props.onClear()
