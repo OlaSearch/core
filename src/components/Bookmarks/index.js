@@ -14,10 +14,6 @@ class Bookmarks extends React.Component {
     bookmarks: React.PropTypes.array.isRequired
   };
 
-  static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
-  };
-
   constructor (props) {
     super(props)
 
@@ -69,10 +65,6 @@ class Bookmarks extends React.Component {
       isOpen
     } = this.state
 
-    let { bookmarking } = this.context.config
-
-    if (!bookmarking) return null
-
     var klass = classNames({
       'ola-module': true,
       'ola-js-hide': !isOpen
@@ -113,4 +105,13 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(injectTranslate(listensToClickOutside(Bookmarks)))
+const BookmarksContainer = connect(mapStateToProps)(injectTranslate(listensToClickOutside(Bookmarks)))
+const BookMarksWrapper = (props, { config: { bookmarking } }) => {
+  if (bookmarking) return <BookmarksContainer />
+  return null
+}
+BookMarksWrapper.contextTypes = {
+  config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+}
+
+module.exports = BookMarksWrapper

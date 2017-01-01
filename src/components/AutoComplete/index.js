@@ -272,6 +272,7 @@ class AutoComplete extends React.Component {
     })
 
     /* Remove all selected facets */
+    /* Keep the selected facets if its a freeform search */
     this.props.removeAllFacets()
 
     /* Update query term */

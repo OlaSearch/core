@@ -20,10 +20,6 @@ class History extends React.Component {
     }
   }
 
-  static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
-  };
-
   handleClickOutside = (event) => {
     this.setState({
       isOpen: false
@@ -67,15 +63,9 @@ class History extends React.Component {
   render () {
     var {
       history,
-      translate
+      translate,
+      searchPageUrl
     } = this.props
-
-    var {
-      searchPageUrl,
-      searchHistory
-    } = this.context.config
-
-    if (!searchHistory) return null
 
     var {
       isOpen
@@ -131,4 +121,13 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(injectTranslate(listensToClickOutside(History)))
+const HistoryContainer = connect(mapStateToProps)(injectTranslate(listensToClickOutside(History)))
+const HistoryWrapper = (props, { config: { searchHistory, searchPageUrl } }) => {
+  if (searchHistory) return <HistoryContainer searchPageUrl={searchPageUrl} />
+  return null
+}
+HistoryWrapper.contextTypes = {
+  config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+}
+
+module.exports = HistoryWrapper

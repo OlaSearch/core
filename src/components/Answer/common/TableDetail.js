@@ -19,29 +19,31 @@ class TableDetail extends React.Component {
     return (
       <div className='ola-answer-table-detail'>
         {caption && <h4 className='ola-answer-table-caption'>{caption}</h4>}
-        <table className='ola-answer-table'>
-          <thead>
-            <tr>
-              {record_keys.map((key, idx) => <th key={idx}>{key}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {record_data
-              .slice(0, isOpen ? undefined : max)
-              .map((row, idx) => {
-                return (
-                  <tr key={idx}>
-                    {record_keys.map((key, idx) => {
-                      return (
-                        <td key={idx}>{row[key]}</td>
-                      )
-                    })}
-                  </tr>
-                )
-              })
-            }
-          </tbody>
-        </table>
+        <div className='ola-answer-table-wrapper'>
+          <table className='ola-answer-table'>
+            <thead>
+              <tr>
+                {record_keys.map((key, idx) => <th key={idx}>{key}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {record_data
+                .slice(0, isOpen ? undefined : max)
+                .map((row, idx) => {
+                  return (
+                    <tr key={idx}>
+                      {record_keys.map((key, idx) => {
+                        return (
+                          <td key={idx}>{row[key]}</td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
         {!isOpen && size > max
           ? <button className='ola-answer-link-more' onClick={this.toggle}>{translate('answers_show_more')}</button>
           : null
