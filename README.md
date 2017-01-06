@@ -3,6 +3,8 @@ OlaSearch is a fully customisable front-end search interface that brings your in
 
 [![build status](https://gitlab.com/olasearch/olasearch-core/badges/master/build.svg)](https://gitlab.com/olasearch/olasearch-core/commits/master)
 
+Using [https://yarnpkg.com](Yarn) as package manager
+
 ## Todo
 
 - [x] Search history
