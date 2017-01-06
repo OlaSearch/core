@@ -74,12 +74,6 @@ export function loadMore () {
   }
 }
 
-export function navigateToResultsPage () {
-  return (dispatch, getState) => {
-    // buildQueryString(getState())
-  }
-}
-
 export function changeAnswerSelection (index, key, answer) {
   /* Clone */
   let newAnswer = JSON.parse(JSON.stringify(answer))
@@ -171,7 +165,7 @@ export function fetchResult (id) {
         types.REQUEST_RESULT_SUCCESS,
         types.REQUEST_RESULT_FAILURE
       ],
-      query: { q: `id:${id}` },
+      query: { q: `id:${id}`, projectId: getState().QueryState.projectId, env: getState().QueryState.env },
       api: 'get'
     })
   }

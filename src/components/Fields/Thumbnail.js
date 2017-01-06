@@ -29,18 +29,20 @@ const Thumbnail = (props, context) => {
     thumbnail = encodeURIComponent(thumbnail)
   }
 
+  function handleClick (event) {
+    log({
+      eventType: 'C',
+      result: props.result,
+      eventCategory: 'Thumbnail',
+      eventAction: 'click',
+      snippetId: props.snippetId
+    })
+  }
+
   let linkProps = isLink
     ? {
       href: url,
-      onClick: (event) => {
-        log({
-          eventType: 'C',
-          result: props.result,
-          eventCategory: 'Thumbnail',
-          eventAction: 'click',
-          snippetId: props.snippetId
-        })
-      },
+      onClick: handleClick,
       className: 'ola-image-linked'
     }
     : {}
@@ -49,16 +51,12 @@ const Thumbnail = (props, context) => {
     if (isLink) {
       return (
         <a {...linkProps}>
-          <img onError={(event) => {
-            event.target.style = 'display:none;'
-          }} className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+          <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
         </a>
       )
     }
     return (
-      <img onError={(event) => {
-        event.target.style = 'display:none;'
-      }} className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+      <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
     )
   }
 

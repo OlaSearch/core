@@ -150,6 +150,8 @@ logger: {
 5. requestAnimationFrame
 6. ~html5-elements
 
+https://cdn.polyfill.io/v2/polyfill.min.js?features=Event|always,CustomEvent|always,requestAnimationFrame|always,~html5-elements|always,Object.assign|always,Element.prototype.classList|always
+
 ## License
 
 Copyright OlaSearch Pte Ltd 2015

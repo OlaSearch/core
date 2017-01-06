@@ -10,20 +10,22 @@ const Phone = (props) => {
 
   let url = 'tel://' + sanitizePhone(phone)
 
+  function handleClick (event) {
+    log({
+      eventType: 'C',
+      result: result,
+      eventCategory: 'Call',
+      eventAction: 'click',
+      snippetId: snippetId
+    })
+    onClick && onClick(event, result)
+  }
+
   return (
     <a
       href={url}
       className='ola-cta-button ola-btn-call'
-      onClick={(event) => {
-        log({
-          eventType: 'C',
-          result: result,
-          eventCategory: 'Call',
-          eventAction: 'click',
-          snippetId: snippetId
-        })
-        onClick && onClick(event, result)
-      }}
+      onClick={handleClick}
       {...rest}>
       {label || translate('call_label')}
     </a>

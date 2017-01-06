@@ -4,7 +4,7 @@ import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, navigateToResultsPage } from './../../actions/Search'
 import Input from './Input'
-import { checkForAllowedCharacters, trim } from './../../utilities'
+import { checkForAllowedCharacters, trim, getCoords } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
@@ -52,7 +52,11 @@ class AutoComplete extends React.Component {
     visibleCategoryGroups: null,
     autoFocus: false,
     forceRedirect: false,
-    q: ''
+    q: '',
+    scrollOnFocus: true,
+    scrollPadding: 16,
+    searchOnSelect: false,
+    searchTimeout: 400
   };
 
   componentWillReceiveProps (nextProps) {
@@ -148,7 +152,6 @@ class AutoComplete extends React.Component {
 
           for (let i = 0; i < results.length; i++) {
             let { payload, ...rest } = results[i]
-
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
 
@@ -165,7 +168,7 @@ class AutoComplete extends React.Component {
                 ...rest,
                 suggestion_raw: payload.suggestion_raw,
                 label: payload.label,
-                type: payload.type
+                type: 'query' /* The first item is a query */
               })
 
               for (let j = 0; j < totalCategories; j++) {
@@ -204,7 +207,7 @@ class AutoComplete extends React.Component {
   };
 
   clearActiveClass = () => {
-    let nodes = this.refs.suggestionsContainer.querySelectorAll(this.props.classNames)
+    let nodes = this.suggestionsContainer.querySelectorAll(this.props.classNames)
     for (let i = 0; i < nodes.length; i++) {
       nodes[i].classList.remove(this.props.activeClassName)
     }
@@ -212,13 +215,12 @@ class AutoComplete extends React.Component {
 
   onKeyDown = (direction) => {
     let { classNames, activeClassName } = this.props
-    let { suggestionsContainer } = this.refs
     let fullActiveClass = '.' + activeClassName
-    let nodes = suggestionsContainer.querySelectorAll(classNames)
+    let nodes = this.suggestionsContainer.querySelectorAll(classNames)
 
     if (!nodes.length) return
 
-    let target = suggestionsContainer.querySelector(fullActiveClass)
+    let target = this.suggestionsContainer.querySelector(fullActiveClass)
     let index = target ? [].indexOf.call(nodes, target) : -1
     let next
 
@@ -254,16 +256,23 @@ class AutoComplete extends React.Component {
     let term = this.state.results[index] ? this.state.results[index] : null
     term && this.updateFuzzyQueryTerm(term)
 
-    scrollIntoView(next, suggestionsContainer, {
+    /* Add a timeout */
+    if (this.props.searchOnSelect && !this.props.isPhone && term) {
+      if (this._autosearch) clearTimeout(this._autosearch)
+      this._autosearch = setTimeout(() => {
+        this.onSubmit(null, { stayOpen: true })
+      }, this.props.searchTimeout)
+    }
+
+    scrollIntoView(next, this.suggestionsContainer, {
       onlyScrollIfNeeded: true
     })
   };
 
-  onSubmit = (event) => {
-    this.closeAutoSuggest()
+  onSubmit = (event, options) => {
     /* If there is a fuzzy term */
     if (this.state.fuzzyQuery) {
-      return this.onFuzzySelect(this.state.fuzzyQuery)
+      return this.onFuzzySelect(this.state.fuzzyQuery, options)
     }
 
     this.setState({
@@ -302,9 +311,12 @@ class AutoComplete extends React.Component {
       searchPageUrl: this.context.config.searchPageUrl,
       routeChange: !this.props.forceRedirect
     })
+
+    /* Clear timeout */
+    if (this._autosearch) clearTimeout(this._autosearch)
   };
 
-  onFuzzySelect = (suggestion) => {
+  onFuzzySelect = (suggestion, options) => {
     let { type, label, path } = suggestion
     let facet
     let isTaxonomy = type === 'taxonomy'
@@ -312,13 +324,16 @@ class AutoComplete extends React.Component {
     let isQuery = type === 'query'
     let hasQueryTerm = isQuery || (isEntity && suggestion.taxo_terms)
     let term = suggestion.suggestion_raw || suggestion.term
+    let stayOpen = options && options.stayOpen
 
-    this.setState({
-      q: hasQueryTerm ? term : '',
-      results: [],
-      isOpen: false,
-      fuzzyQuery: null
-    })
+    if (!stayOpen) {
+      this.setState({
+        q: hasQueryTerm ? term : '',
+        results: [],
+        isOpen: false,
+        fuzzyQuery: null
+      })
+    }
 
     /* Remove all selected facets */
     this.props.removeAllFacets()
@@ -335,7 +350,7 @@ class AutoComplete extends React.Component {
         facet = find(propEq('name', label))(this.context.config.facets)
         this.props.replaceFacet(facet, path || term)
         /* Remove query term */
-        this.clearQueryTerm()
+        this.props.updateQueryTerm('')
       }
     }
     if (isQuery) {
@@ -350,6 +365,11 @@ class AutoComplete extends React.Component {
   };
 
   onFocus = (event) => {
+    /* Set scroll position on phone */
+    if (this.props.isPhone && this.props.scrollOnFocus) {
+      document.documentElement.scrollTop = document.body.scrollTop = getCoords(event.target).top - this.props.scrollPadding
+    }
+
     this.setState({
       isFocused: true
     })
@@ -370,6 +390,10 @@ class AutoComplete extends React.Component {
     this.setState({
       isFocused: false
     })
+  };
+
+  registerRef = (input) => {
+    this.suggestionsContainer = input
   };
 
   render () {
@@ -420,7 +444,7 @@ class AutoComplete extends React.Component {
           />
 
           <div className={klass}>
-            <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
+            <div className='ola-suggestions-wrapper' ref={this.registerRef}>
               <FuzzySuggestions
                 results={results}
                 onSelect={this.onFuzzySelect}

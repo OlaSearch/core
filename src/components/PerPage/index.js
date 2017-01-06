@@ -4,16 +4,19 @@ import injectTranslate from './../../decorators/OlaTranslate'
 
 const PerPage = ({ perPage, translate, dispatch }, context) => {
   let values = context.config.perPage
+
+  function onChange (event) {
+    dispatch(changePerPage(event.target.value))
+    dispatch(executeSearch())
+  }
+
   return (
     <div className='ola-per-page'>
       <label className='ola-per-page-label'>{translate('per_page_label')}</label>
       <select
         defaultValue={perPage}
         className='ola-per-page-select'
-        onChange={(event) => {
-          dispatch(changePerPage(event.target.value))
-          dispatch(executeSearch())
-        }}
+        onChange={onChange}
       >
         {values.map((value, idx) => <option key={idx}>{value}</option>)}
       </select>

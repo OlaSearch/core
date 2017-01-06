@@ -4,12 +4,12 @@ import { isSvg } from './../../utilities'
 
 class AnswerCard extends React.Component {
   handleSelect = () => {
-    this.props.onSelect(this.props.result)
+    if (this.props.result.hasOwnProperty('additional_data')) return this.props.onSelect(this.props.result)
   };
   render () {
     let { result, cdn, imagePlaceholder, isActive, module } = this.props
-    let isClickable = !!result.additional_data
     let { image, description, subtitle, title, exists } = result
+    let isClickable = !!result.additional_data
     if (module === 'spices.facts.place.capital') {
       image = image.length > 1 ? image[1] : image
     }
@@ -21,7 +21,7 @@ class AnswerCard extends React.Component {
     image = image || imagePlaceholder
     let bgImage = image ? isSvg(image) ? image : `${cdn ? cdn + '/' : ''}${image}` : null
     return (
-      <div className={klass} onClick={isClickable ? this.handleSelect : null}>
+      <div className={klass} onClick={this.handleSelect}>
         {image
           ? <div className='ola-answer-image' style={{
             backgroundImage: `url("${bgImage}")`

@@ -79,26 +79,22 @@ DocumentPages.defaultProps = {
 /**
  * Page detail
  */
-class PageDetail extends React.Component {
-  onSelectPage = () => {
-    this.props.onSelectPage(this.props.page)
-  };
-  render () {
-    let { page, contentField } = this.props
-    let { pageNumber } = page
-
-    return (
-      <div className='ola-snippet-page'>
-        <a
-          onClick={this.onSelectPage}
-          className='ola-page-number'
-        >
-          <span>p. {pageNumber}</span>
-        </a>
-        <HighlightedField field={contentField} result={page} />
-      </div>
-    )
+const PageDetail = ({ page, contentField, onSelectPage }) => {
+  function handleSelect (event) {
+    onSelectPage(page)
   }
+  let { pageNumber } = page
+  return (
+    <div className='ola-snippet-page'>
+      <a
+        onClick={handleSelect}
+        className='ola-page-number'
+      >
+        <span>p. {pageNumber}</span>
+      </a>
+      <HighlightedField field={contentField} result={page} />
+    </div>
+  )
 }
 
 module.exports = injectTranslate(withLogger(DocumentPages))

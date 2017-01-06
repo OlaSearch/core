@@ -36,7 +36,7 @@ class RangeFilter extends React.Component {
     /**
      * Check if there are values
      */
-    if (!this.props.facet.values.length) return this.refs.slider.setAttribute('disabled', true)
+    if (!this.props.facet.values.length) return this.sliderInput.setAttribute('disabled', true)
 
     var options = this.getSliderValues(this.props)
     var { step = 1 } = this.props.facet
@@ -54,10 +54,10 @@ class RangeFilter extends React.Component {
       max += 60
       step = 60
 
-      this.refs.slider.setAttribute('disabled', true)
-    } else this.refs.slider.removeAttribute('disabled')
+      this.sliderInput.setAttribute('disabled', true)
+    } else this.sliderInput.removeAttribute('disabled')
 
-    this.refs.slider.noUiSlider.updateOptions({
+    this.sliderInput.noUiSlider.updateOptions({
       step,
       range: {
         min,
@@ -65,7 +65,7 @@ class RangeFilter extends React.Component {
       }
     })
 
-    this.refs.slider.noUiSlider.set(value)
+    this.sliderInput.noUiSlider.set(value)
   }
 
   getSliderValues (props) {
@@ -117,8 +117,8 @@ class RangeFilter extends React.Component {
       max += 60
       step = 60
 
-      this.refs.slider.setAttribute('disabled', true)
-    } else this.refs.slider.removeAttribute('disabled')
+      this.sliderInput.setAttribute('disabled', true)
+    } else this.sliderInput.removeAttribute('disabled')
 
     /* Tooltip format */
 
@@ -156,7 +156,7 @@ class RangeFilter extends React.Component {
 
     /* Initialize Slider */
 
-    this.slider = noUiSlider.create(this.refs.slider, { ...sliderOptions, ...pipsOptions })
+    this.slider = noUiSlider.create(this.sliderInput, { ...sliderOptions, ...pipsOptions })
 
     /* Bind to onchange */
 
@@ -174,6 +174,9 @@ class RangeFilter extends React.Component {
       this.props.selected !== nextProps.selected
     )
   }
+  registerRef = (input) => {
+    this.sliderInput = input
+  };
   render () {
     var { facet, isCollapsed, toggleDisplay } = this.props
     var { displayName, values, showHistogram } = facet
@@ -188,7 +191,7 @@ class RangeFilter extends React.Component {
         <div className='ola-facet-wrapper'>
           {showHistogram && <Histogram data={values} />}
           <div className='ola-slider'>
-            <div ref='slider' />
+            <div ref={this.registerRef} />
           </div>
         </div>
       </div>

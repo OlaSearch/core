@@ -29,12 +29,12 @@ export default class Input extends React.Component {
     this.props.onClear()
 
     /* Focus input */
-    this.refs.Input.focus()
+    this.input.focus()
   };
 
   onFocus = (event) => {
     /* Scroll to input */
-    if (this.props.isPhone) scrollTo(this.refs.Input)
+    if (this.props.isPhone) scrollTo(this.input)
 
     /* Call onFocus event */
     this.props.onFocus && this.props.onFocus(event)
@@ -48,7 +48,7 @@ export default class Input extends React.Component {
   };
 
   onChangeZone = () => {
-    this.refs.Input.focus()
+    this.input.focus()
   };
 
   onKeyDown = (event) => {
@@ -61,7 +61,7 @@ export default class Input extends React.Component {
          * Clear query term
          */
         // if (!isOpen) return this.onClear(event)
-        if (!isOpen) return this.refs.Input.select()
+        if (!isOpen) return this.input.select()
         return this.props.handleClickOutside(event)
 
       case 39: // Right
@@ -90,12 +90,13 @@ export default class Input extends React.Component {
         this.props.onBlur && this.props.onBlur(event)
         break
       case 13: // Enter
+        event.preventDefault() // Prevents firing onChange
         return onSubmit()
     }
   };
 
   onSearchButtonClick = () => {
-    return this.props.onSearchButtonClick ? this.props.onSearchButtonClick() : this.refs.Input.focus()
+    return this.props.onSearchButtonClick ? this.props.onSearchButtonClick() : this.input.focus()
   };
 
   handleInputChange = (arg, searchInput) => {
@@ -115,6 +116,9 @@ export default class Input extends React.Component {
     } else {
       return raw ? shadowTerm : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi'), q)
     }
+  };
+  registerRef = (input) => {
+    this.input = input
   };
   render () {
     var {
@@ -140,7 +144,7 @@ export default class Input extends React.Component {
         }
         <div className='ola-form-input-wrapper'>
           <input
-            ref='Input'
+            ref={this.registerRef}
             type='text'
             value={q}
             className='ola-text-input ola-text-input-round'

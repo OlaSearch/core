@@ -50,7 +50,7 @@ class Pagination extends React.Component {
 
     onChangePage
       ? onChangePage()
-      : this.refs.pagination.parentNode.scrollIntoView()
+      : this.pagination.parentNode.scrollIntoView()
 
     actions.changePage(page)
 
@@ -80,6 +80,9 @@ class Pagination extends React.Component {
       this.props.perPage !== nextProps.perPage
     )
   }
+  registerRef = (input) => {
+    this.pagination = input
+  };
   render () {
     let {
       totalResults,
@@ -108,7 +111,7 @@ class Pagination extends React.Component {
     })
 
     return (
-      <nav className='ola-pagination' ref='pagination'>
+      <nav className='ola-pagination' ref={this.registerRef}>
         <button className={prevPageClass} onClick={this.prevPage}>{translate('pagination_prev_label')}</button>
         {pages.map((page, idx) => {
           return (
@@ -116,7 +119,7 @@ class Pagination extends React.Component {
               selectPage={this.selectPage}
               page={page}
               key={idx}
-              currentPage={currentPageInt}
+              isActive={currentPageInt === page}
             />
           )
         })}
@@ -129,32 +132,22 @@ class Pagination extends React.Component {
 /**
  * Page Number
  */
-class PageNumber extends React.Component {
-  handleClick = () => {
-    let { page } = this.props
+const PageNumber = ({ page, isActive, selectPage }) => {
+  function handleClick () {
+    if (!isNaN(page)) selectPage(page)
+  }
 
-    if (!isNaN(page)) this.props.selectPage(page)
-  };
-  shouldComponentUpdate (nextProps) {
-    return (
-      this.props.page !== nextProps.page ||
-      this.props.currentPage !== nextProps.currentPage
-    )
-  }
-  render () {
-    let { page, currentPage } = this.props
-    let klass = classNames({
-      'ola-page': true,
-      'ola-page-current': currentPage === page,
-      'ola-page-ellipsis': isNaN(page)
-    })
-    return (
-      <button
-        className={klass}
-        onClick={this.handleClick}
-      >{page}</button>
-    )
-  }
+  let klass = classNames({
+    'ola-page': true,
+    'ola-page-current': isActive,
+    'ola-page-ellipsis': isNaN(page)
+  })
+  return (
+    <button
+      className={klass}
+      onClick={handleClick}
+    >{page}</button>
+  )
 }
 
 module.exports = injectTranslate(Pagination)

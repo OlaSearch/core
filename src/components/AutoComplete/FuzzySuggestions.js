@@ -41,7 +41,7 @@ class SuggestionItem extends React.Component {
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory, history } = this.props.result
-    let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1') + ')'
+    let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1').split(/\s/).join('|') + ')'
 
     /* Create term */
     term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
@@ -56,7 +56,7 @@ class SuggestionItem extends React.Component {
      * If its a category
      */
     if (taxoTerm && type !== 'taxonomy') {
-      term = term + (taxoTerm ? ' in <span class="ola-suggestion-category-name">' + taxoTerm + '</span>' : '')
+      term = term + (taxoTerm ? '<span class="ola-suggestion-separator"> in </span><span class="ola-suggestion-category-name">' + taxoTerm + '</span>' : '')
     }
 
     return (

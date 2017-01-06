@@ -12,19 +12,21 @@ const Directions = (props) => {
 
   var url = `https://www.google.com/maps/dir//${latlong}`
 
+  function handleClick (event) {
+    log({
+      eventType: 'C',
+      result: result,
+      eventCategory: 'Get Directions',
+      eventAction: 'click',
+      debounce: true,
+      snippetId: props.snippetId
+    })
+    onClick && onClick(event)
+  }
+
   return (
     <a className='ola-btn ola-btn-directions'
-      onClick={(event) => {
-        log({
-          eventType: 'C',
-          result: result,
-          eventCategory: 'Get Directions',
-          eventAction: 'click',
-          debounce: true,
-          snippetId: props.snippetId
-        })
-        onClick && onClick(event)
-      }}
+      onClick={handleClick}
       href={url}
       {...rest}>
       {iconLeft}

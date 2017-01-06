@@ -1,20 +1,10 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
-import { RANGE_FACETS } from './../constants/Settings'
+import { RANGE_FACETS, REMOVE_FROM_QUERY_STRING } from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
 import flatten from 'ramda/src/flatten'
 import xssFilters from 'xss-filters'
-
-const REMOVE_FROM_QUERY_STRING = [
-  'isSearchActive',
-  'searchInput',
-  'enriched_q',
-  'per_page',
-  'skip_intent',
-  'projectId',
-  'env'
-]
 
 var urlSync = {
   character: '?',
@@ -43,7 +33,7 @@ var urlSync = {
   buildQueryString (params) {
     var str = []
     /* Loop */
-    for (var name in params) {
+    for (let name in params) {
       /* Omit */
       if (REMOVE_FROM_QUERY_STRING.indexOf(name) !== -1) continue
       var value = params[name]

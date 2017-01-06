@@ -160,30 +160,26 @@ class TabItemAll extends React.Component {
 /**
  * Tab Item
  */
-class TabItem extends React.Component {
-  handleClick = () => {
-    let { facet, value, isActive } = this.props
-    let { name, count } = value
-    if (!isActive && count) this.props.handleClick(facet, name)
-  };
-  render () {
-    let { isActive, value, facet } = this.props
-    let { name, count } = value
-    let { facetNames } = facet
-    let klass = classNames({
-      'ola-tabs-label': true,
-      'ola-tab-active': isActive
-    })
-    return (
-      <a
-        className={klass}
-        type='button'
-        onClick={this.handleClick}>
-        <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
-        <span className='ola-search-facet-count'>{count}</span>
-      </a>
-    )
+const TabItem = ({ facet, value, isActive, handleClick }) => {
+  let { name, count } = value
+  let { facetNames } = facet
+  let klass = classNames({
+    'ola-tabs-label': true,
+    'ola-tab-active': isActive
+  })
+
+  function handleTabClick (event) {
+    if (!isActive && count) handleClick(facet, name)
   }
+  return (
+    <a
+      className={klass}
+      type='button'
+      onClick={handleTabClick}>
+      <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
+      <span className='ola-search-facet-count'>{count}</span>
+    </a>
+  )
 }
 
 module.exports = injectTranslate(TabsFilter)

@@ -2,40 +2,39 @@ import React from 'react'
 import classNames from 'classnames'
 import withLogger from './../../decorators/OlaLogger'
 
-class Button extends React.Component {
-  static defaultProps = {
-    fullWidth: false
-  };
-  handeClick = (event) => {
-    this.props.log({
+const Button = ({ label, className, url, fullWidth, onClick, result, snippetId, log }) => {
+  function handleClick (event) {
+    log({
       eventType: 'C',
-      result: this.props.result,
-      eventCategory: this.props.label,
+      result: result,
+      eventCategory: label,
       eventAction: 'click',
-      snippetId: this.props.snippetId
+      snippetId: snippetId
     })
 
-    if (this.props.onClick) return this.props.onClick(event, this.props.result)
+    if (onClick) return onClick(event, result)
 
     event.preventDefault()
-    window.location.href = this.props.url
-  };
-  render () {
-    let { label, className, fullWidth } = this.props
-    if (!label) return null
-    let klass = classNames('ola-cta-button', className, {
-      'ola-btn-fullwidth': fullWidth
-    })
-    return (
-      <a
-        className={klass}
-        onClick={this.handeClick}
-        href={this.props.url}
-      >
-        {label}
-      </a>
-    )
+    window.location.href = url
   }
+
+  let klass = classNames('ola-cta-button', className, {
+    'ola-btn-fullwidth': fullWidth
+  })
+  if (!label) return null
+  return (
+    <a
+      className={klass}
+      onClick={handleClick}
+      href={url}
+    >
+      {label}
+    </a>
+  )
+}
+
+Button.defaultProps = {
+  fullWidth: false
 }
 
 module.exports = withLogger(Button)
