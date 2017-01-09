@@ -26,18 +26,15 @@ PopularKeywords.contextTypes = {
 /**
  * Item
  */
-class PopularKeywordItem extends React.Component {
-  onClick = () => {
-    this.props.onClick(this.props.keyword)
-  };
-  render () {
-    let { keyword } = this.props
-    return (
-      <div className='ola-popular-keyword'>
-        <a onClick={this.onClick}>{keyword}</a>
-      </div>
-    )
+const PopularKeywordItem = ({ keyword, onClick }) => {
+  function handleClick () {
+    onClick(keyword)
   }
+  return (
+    <div className='ola-popular-keyword'>
+      <a onClick={handleClick}>{keyword}</a>
+    </div>
+  )
 }
 
 module.exports = injectTranslate(PopularKeywords)

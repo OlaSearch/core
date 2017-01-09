@@ -68,7 +68,7 @@ const utilities = {
   },
   getDisplayName (haystack, needle) {
     if (!haystack) return needle
-    if (haystack[needle]) return haystack[needle]
+    if (needle in haystack) return haystack[needle]
     return needle
   },
   getMatchingSnippet (rules, result) {
@@ -238,8 +238,8 @@ const utilities = {
   scrollTo (element) {
     /* To be implemented */
   },
-  getCoords (elem) {
-    var box = elem.getBoundingClientRect()
+  getCoords (element) {
+    var box = element.getBoundingClientRect()
     var body = document.body
     var docEl = document.documentElement
     var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop

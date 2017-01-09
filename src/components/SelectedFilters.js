@@ -153,45 +153,38 @@ class SelectedFilters extends React.Component {
 /**
  * Selected Tag
  */
-
-class FacetItem extends React.Component {
-  handleRemove = () => {
-    this.props.handleRemove(this.props.facet, this.props.name)
-  };
-  render () {
-    let { name, facet } = this.props
-    if (facet.rootLevel && facet.rootLevel > 0) {
-      name = name.split('/').slice(facet.rootLevel).join('/')
-    }
-    return (
-      <Tag
-        onRemove={this.handleRemove}
-        name={name}
-        facet={facet}
-      />
-    )
+const FacetItem = ({ facet, name, handleRemove }) => {
+  function onRemove () {
+    handleRemove(facet, name)
   }
+  if (facet.rootLevel && facet.rootLevel > 0) {
+    name = name.split('/').slice(facet.rootLevel).join('/')
+  }
+  return (
+    <Tag
+      onRemove={onRemove}
+      name={name}
+      facet={facet}
+    />
+  )
 }
 
 /**
  * Selected Tag
  */
 
-class FilterItem extends React.Component {
-  handleRemove = () => {
-    this.props.handleRemove(this.props.filter)
-  };
-  render () {
-    let { filter } = this.props
-    let { name } = filter
-    return (
-      <Tag
-        onRemove={this.handleRemove}
-        name={name}
-        facet={filter}
-      />
-    )
+const FilterItem = ({ filter, handleRemove }) => {
+  function onRemove () {
+    handleRemove(filter)
   }
+  let { name } = filter
+  return (
+    <Tag
+      onRemove={onRemove}
+      name={name}
+      facet={filter}
+    />
+  )
 }
 
 module.exports = SelectedFilters

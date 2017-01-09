@@ -1,5 +1,4 @@
 import React from 'react'
-import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import { log } from './../actions/Logger'
 

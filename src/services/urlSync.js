@@ -8,17 +8,17 @@ import xssFilters from 'xss-filters'
 
 var urlSync = {
   character: '?',
-  pushState (qs, type) {
+  pushState (qs, type, replaceQueryParamName) {
     var char = urlSync.getHistoryCharacter(type)
     if (window.history.pushState) {
       if (type !== 'pushState') {
         let r = new RegExp(/\/(.*)?\//gi)
         let matches = r.exec(window.location.hash)
         if (matches) {
-          window.location.hash = char + urlSync.buildQueryString(qs)
+          window.location.hash = char + urlSync.buildQueryString(qs, replaceQueryParamName)
         }
       }
-      window.history.pushState(null, '', char + urlSync.buildQueryString(qs))
+      window.history.pushState(null, '', char + urlSync.buildQueryString(qs, replaceQueryParamName))
     }
   },
   getHistoryCharacter (type) {
@@ -30,14 +30,17 @@ var urlSync = {
       window.history.replaceState(null, '', char + urlSync.buildQueryString(qs))
     }
   },
-  buildQueryString (params) {
+  buildQueryString (params, replaceQueryParamName) {
     var str = []
     /* Loop */
     for (let name in params) {
       /* Omit */
       if (REMOVE_FROM_QUERY_STRING.indexOf(name) !== -1) continue
       var value = params[name]
-
+      if (replaceQueryParamName && name === 'keywords') continue
+      if (name === 'q' && replaceQueryParamName) {
+        name = 'keywords'
+      }
       /* Facets */
       if (name === 'facet_query') {
         value = value.map((item) => {
@@ -87,6 +90,10 @@ var urlSync = {
     for (let p in qs) {
       /* prevent XSS */
       qs[p] = xssFilters.inHTMLData(qs[p])
+
+      if (config.replaceQueryParamName && p === 'keywords') {
+        qs['q'] = xssFilters.inHTMLData(qs[p])
+      }
 
       if (p === 'page' || p === 'per_page') {
         if (isNaN(qs[p])) {

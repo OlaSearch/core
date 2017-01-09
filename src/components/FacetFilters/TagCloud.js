@@ -39,6 +39,7 @@ class TagCloud extends React.Component {
 
     if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 
+    if (!values.length) return null
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>

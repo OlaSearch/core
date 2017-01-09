@@ -18,6 +18,7 @@ var allowedCharacters = null
 /* URL Parameter */
 
 var historyType = 'pushState'
+var replaceQueryParamName = false
 
 export function updateQueryTerm (term, searchInput) {
   return {
@@ -102,7 +103,7 @@ export function executeSearch (payload) {
       // Terminate search
       dispatch(terminateSearch())
       // Update the URL
-      updateURL(query, historyType)
+      updateURL(query, historyType, replaceQueryParamName)
       return
     }
 
@@ -110,7 +111,7 @@ export function executeSearch (payload) {
      * If searching from another page
      */
     if (payload && payload.forceRedirect) {
-      window.location.href = payload.searchPageUrl + '?' + buildQueryString(query)
+      window.location.href = payload.searchPageUrl + '?' + buildQueryString(query, payload.replaceQueryParamName)
       return
     }
 
@@ -135,7 +136,7 @@ export function executeSearch (payload) {
 
     if (!payload || payload.routeChange || payload.urlSync) {
       /* Update Browser URL */
-      globalRouteChange && updateURL(query, historyType)
+      globalRouteChange && updateURL(query, historyType, replaceQueryParamName)
 
       /* Add History */
       debouceAddHistory(dispatch)
@@ -336,6 +337,9 @@ export function initSearch ({ config, urlSync = true }) {
 
     /* History type: pushState or hash */
     historyType = history || historyType
+
+    /* Replace `q` with `keywords` */
+    if (config.replaceQueryParamName) replaceQueryParamName = true
 
     /* Always pass configuration to @parseQueryString handler */
 

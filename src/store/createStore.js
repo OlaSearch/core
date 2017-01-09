@@ -40,7 +40,7 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
   const olaMiddleWare = createOlaMiddleware(options)
 
   /* Reducer */
-  const olaReducers = combineReducers(Object.assign({}, olaReducer, reducers))
+  const olaReducers = combineReducers({ ...olaReducer, ...reducers })
 
   /* Store */
   var store

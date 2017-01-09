@@ -136,9 +136,6 @@ class AutoComplete extends React.Component {
 
     this.clearFuzzyQueryTerm()
 
-    /* Get the display names of the facets */
-    let facet = find(propEq('name', this.props.categoryGroup))(this.context.config.facets)
-
     if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
       this.terminateAutoSuggest()
     } else {
@@ -163,6 +160,8 @@ class AutoComplete extends React.Component {
               }) : payload.taxo_terms
 
               let totalCategories = categories.length
+              /* Get the display names of the facets */
+              let facet = find(propEq('name', payload.taxo_label))(this.context.config.facets)
 
               res.push({
                 ...rest,
@@ -170,11 +169,10 @@ class AutoComplete extends React.Component {
                 label: payload.label,
                 type: 'query' /* The first item is a query */
               })
-
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.taxo_terms[j].split('|')
                 let [ path ] = payload.taxo_paths ? payload.taxo_paths[j].split('|') : []
-                let displayName = facet.facetNames[name] || name
+                let displayName = facet ? facet.facetNames[name] || name : name
                 res.push({
                   ...rest,
                   taxo_term: displayName,
@@ -309,7 +307,8 @@ class AutoComplete extends React.Component {
     this.props.executeSearch({
       forceRedirect: this.props.forceRedirect,
       searchPageUrl: this.context.config.searchPageUrl,
-      routeChange: !this.props.forceRedirect
+      routeChange: !this.props.forceRedirect,
+      replaceQueryParamName: this.context.config.replaceQueryParamName
     })
 
     /* Clear timeout */

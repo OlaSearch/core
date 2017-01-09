@@ -20,7 +20,6 @@ class SpellSuggestion extends React.Component {
     var { dispatch } = this.props
 
     dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))
-
     dispatch(executeSearch())
   };
   handleClick = (term) => {
@@ -60,24 +59,22 @@ class SpellSuggestion extends React.Component {
 /**
  * Spell suggestion term
  */
-class TermItem extends React.Component {
-  handleClick = () => {
-    this.props.handleClick(this.props.item.term)
-  };
-  render () {
-    let { item, showCount } = this.props
-    let { term, count } = item
-    return (
-      <button
-        type='button'
-        className='ola-spell-links'
-        onClick={this.handleClick}
-      >
-        <span className='ola-spell-term'>{term}</span>
-        {showCount && <span className='ola-spell-count'>{count}</span>}
-      </button>
-    )
+const TermItem = ({ item, showCount, handleClick }) => {
+  function onClick () {
+    handleClick(item.term)
   }
+
+  let { term, count } = item
+  return (
+    <button
+      type='button'
+      className='ola-spell-links'
+      onClick={onClick}
+    >
+      <span className='ola-spell-term'>{term}</span>
+      {showCount && <span className='ola-spell-count'>{count}</span>}
+    </button>
+  )
 }
 
 module.exports = injectTranslate(SpellSuggestion)
