@@ -11,6 +11,7 @@ import { fetchAnswer } from './../actions/Search'
 
 const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
 const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
+const API_IGNORE_LOGGING = ['answer', 'get']
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -176,14 +177,6 @@ module.exports = (options = {}) => {
           })
         }
 
-        /**
-         * If answer is a callback
-         * SPICE
-         */
-        if (answer && answer.callback) {
-          dispatch(fetchAnswer(answer.callback))
-        }
-
         shouldDispatchActions && next({
           payload,
           results,
@@ -206,7 +199,7 @@ module.exports = (options = {}) => {
          * eventSource
          * searchInput = `voice`|`url`|`keyboard`
          */
-        if (logger && logger.enabled) {
+        if (logger && logger.enabled && API_IGNORE_LOGGING.indexOf(api) === -1) {
           debounceLog({
             dispatch,
             eventType: 'Q',
@@ -214,6 +207,14 @@ module.exports = (options = {}) => {
             debounce: true,
             state: getState()
           })
+        }
+
+        /**
+         * If answer is a callback
+         * SPICE
+         */
+        if (answer && answer.callback) {
+          dispatch(fetchAnswer(answer.callback))
         }
 
         return {
