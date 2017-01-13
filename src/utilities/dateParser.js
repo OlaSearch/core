@@ -9,7 +9,13 @@ const DateParser = {
       return fecha.format(date, mask)
     }
     try {
-      date = fecha.parse(date, originalFormat || defaultMask)
+      let d = new Date(date)
+      if (Object.prototype.toString.call(d) === "[object Date]" &&
+        !isNaN(d.getTime())) {
+        // Valid date
+        return fecha.format(d, mask)
+      }
+      date = DateParser.parse(date, originalFormat || defaultMask)
     } catch (e) {
       console.warn(e, date)
       return ''
