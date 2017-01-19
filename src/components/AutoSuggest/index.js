@@ -88,7 +88,7 @@ class AutoSuggest extends React.Component {
 
   clearActiveClass = () => {
     let nodes = this.refs.suggestionsContainer.querySelectorAll(this.props.classNames)
-    for (let i = 0; i < nodes.length; i++) {
+    for (let i = 0, len = nodes.length; i < len; i++) {
       nodes[i].classList.remove(this.props.activeClassName)
     }
   };

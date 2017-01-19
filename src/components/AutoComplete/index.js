@@ -147,7 +147,7 @@ class AutoComplete extends React.Component {
           let res = []
           let categoryFound = false
 
-          for (let i = 0; i < results.length; i++) {
+          for (let i = 0, len = results.length; i < len; i++) {
             let { payload, ...rest } = results[i]
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
@@ -206,7 +206,7 @@ class AutoComplete extends React.Component {
 
   clearActiveClass = () => {
     let nodes = this.suggestionsContainer.querySelectorAll(this.props.classNames)
-    for (let i = 0; i < nodes.length; i++) {
+    for (let i = 0, len = nodes.length; i < len; i++) {
       nodes[i].classList.remove(this.props.activeClassName)
     }
   };

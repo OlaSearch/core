@@ -188,19 +188,17 @@ class DateRange extends React.Component {
 /**
  * Date label
  */
-class DateLabel extends React.Component {
-  handleClick = () => {
-    this.props.onSelect(this.props.value)
-  };
-  render () {
-    var { label } = this.props
-    return (
-      <button
-        className='ola-btn-unstyled ola-btn-date-select'
-        onClick={this.handleClick}
-        >{label}</button>
-    )
+const DateLabel = ({ label, value, onSelect }) => {
+  function handleClick () {
+    onSelect(value)
   }
+
+  return (
+    <button
+      className='ola-btn-unstyled ola-btn-date-select'
+      onClick={handleClick}
+      >{label}</button>
+  )
 }
 
 module.exports = withFacetToggle(DateRange)

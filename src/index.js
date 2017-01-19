@@ -39,9 +39,6 @@ module.exports = {
   Fields: require('./components/Fields'),
   GeoLocation: require('./components/Geo/GeoLocation'),
   FacetFilters: require('./components/FacetFilters'),
-  Snippets: {
-    Default: require('./components/Snippets/Default')
-  },
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
     OlaFacetToggle: require('./decorators/OlaFacetToggle'),
@@ -69,6 +66,7 @@ module.exports = {
 
   // Optional olasearch/lib/{name}
   NoResults: require('./components/Snippets/NoResults'),
+  DefaultSnippet: require('./components/Snippets/Default'),
   SearchTitle: require('./components/SearchTitle'),
   ClearAllFacets: require('./components/ClearAllFacets'),
   PopularKeywords: require('./components/PopularKeywords'),

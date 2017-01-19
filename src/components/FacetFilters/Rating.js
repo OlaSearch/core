@@ -55,7 +55,7 @@ class RatingFilter extends React.Component {
                 'ola-checkbox-active': isActive
               })
 
-              for (var i = 0; i < normalized; i++) {
+              for (let i = 0; i < normalized; i++) {
                 stars.push(<em key={i} className='ion ion-ios-star ola-rating-active' />)
               }
 

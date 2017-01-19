@@ -13,7 +13,7 @@ const HighlightedField = ({ field, result, length }) => {
     let highlightedContent = highlighting[field]
     if (typeof highlightedContent === 'object') {
       let temp = []
-      for (let i = 0; i < highlightedContent.length; i++) {
+      for (let i = 0, len = highlightedContent.length; i < len; i++) {
         temp.push(`<span class='ola-hi-token'>${highlightedContent[i]}</span>`)
       }
       fieldContent = temp

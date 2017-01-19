@@ -64,6 +64,7 @@ class Answer extends React.Component {
     }
 
     if (!answer) return null
+
     let { data, template, module, source } = answer
     /**
      * If the answer is from Intent engine

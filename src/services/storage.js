@@ -41,7 +41,7 @@ module.exports = {
       try {
         var nameEQ = `${getKey(name, namespace)}=`
         var ca = document.cookie.split(';')
-        for (let i = 0; i < ca.length; i++) {
+        for (let i = 0, len = ca.length; i < len; i++) {
           var c = ca[i]
           while (c.charAt(0) === ' ') c = c.substring(1, c.length)
           if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length)

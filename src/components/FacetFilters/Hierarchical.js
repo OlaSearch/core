@@ -84,7 +84,7 @@ class HierarchicalFilter extends React.Component {
     /* Selected */
     let selected = this.props.selected.map((item) => item.split('/')).reduce((o, i) => i, [])
     let selectedPath = []
-    for (var i = 0; i < selected.length; i++) {
+    for (let i = 0, len = selected.length; i < len; i++) {
       selectedPath.push(selected[i - 1] ? selectedPath[i - 1] + '/' + selected[i] : selected[i])
     }
 

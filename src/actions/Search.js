@@ -352,10 +352,12 @@ export function initSearch ({ config, urlSync = true }) {
     globalRouteChange = urlSync
 
     /* Add filters */
-    filters && filters.forEach((filter) => {
-      let { selected } = filter
-      dispatch(addFilter({ filter, selected }))
-    })
+    if (filters) {
+      for (let i = 0, len = filters.length; i < len; i++) {
+        let { selected } = filters[i]
+        dispatch(addFilter({ filter: filters[i], selected }))
+      }
+    }
 
     /* De-activate search if searchOnLoad is false */
     if (!searchOnLoad) {

@@ -6,6 +6,8 @@ import find from 'ramda/src/find'
 import flatten from 'ramda/src/flatten'
 import xssFilters from 'xss-filters'
 
+const QUERY_ALT_NAME = 'keywords'
+
 var urlSync = {
   character: '?',
   pushState (qs, type, replaceQueryParamName) {
@@ -36,10 +38,10 @@ var urlSync = {
     for (let name in params) {
       /* Omit */
       if (REMOVE_FROM_QUERY_STRING.indexOf(name) !== -1) continue
+      if (replaceQueryParamName && name === QUERY_ALT_NAME) continue
       var value = params[name]
-      if (replaceQueryParamName && name === 'keywords') continue
       if (name === 'q' && replaceQueryParamName) {
-        name = 'keywords'
+        name = QUERY_ALT_NAME
       }
       /* Facets */
       if (name === 'facet_query') {
@@ -62,7 +64,7 @@ var urlSync = {
        */
 
       if (Array.isArray(value)) {
-        for (var i = 0; i < value.length; i++) {
+        for (let i = 0, len = value.length; i < len; i++) {
           str.push(
             encodeURIComponent(name) + '=' +
             encodeURIComponent(value[i])
@@ -87,11 +89,12 @@ var urlSync = {
     /**
      * Validate query string
      */
+    console.log(qs)
     for (let p in qs) {
       /* prevent XSS */
       qs[p] = xssFilters.inHTMLData(qs[p])
 
-      if (config.replaceQueryParamName && p === 'keywords') {
+      if (config.replaceQueryParamName && p === QUERY_ALT_NAME) {
         qs['q'] = xssFilters.inHTMLData(qs[p])
       }
 

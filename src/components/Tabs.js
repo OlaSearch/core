@@ -55,7 +55,7 @@ class TabsFilter extends React.Component {
 
     var tabs = []
 
-    for (var i = 0; i < tabsToDisplay.length; i++) {
+    for (let i = 0, len = tabsToDisplay.length; i < len; i++) {
       let tab = values.filter((item) => item.name === tabsToDisplay[i])
 
       if (tab.length) {

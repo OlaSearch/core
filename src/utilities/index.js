@@ -73,11 +73,11 @@ const utilities = {
   },
   getMatchingSnippet (rules, result) {
     if (!rules) return false
-    for (let i = 0; i < rules.length; i++) {
+    for (let i = 0, len = rules.length; i < len; i++) {
       let rule = rules[i].rules
       let matched = true
       if (Array.isArray(rule)) {
-        for (let j = 0; j < rule.length; j++) {
+        for (let j = 0, len = rule.length; j < len; j++) {
           let { field, value } = rule[j]
           let fieldValue = result[field]
           if (!fieldValue || fieldValue && !fieldValue.toString().match(new RegExp(value, 'gi'))) matched = false
@@ -102,11 +102,6 @@ const utilities = {
   },
   translateKey (path, obj, safe) {
     return obj[path] === null ? '' : obj[path] || path
-    // To enable `dot` based translation, uncomment this
-    // 'search.placeholder.inner'
-    // return path.split('.').reduce((prev, curr) => {
-    //   return !safe ? prev[curr] : (prev ? prev[curr] : undefined)
-    // }, obj)
   },
   getFacetsToDisplay (selected, facets, facetsToDisplay) {
     var selections = flatten(selected.map((item) => item.selected))
@@ -115,13 +110,12 @@ const utilities = {
     var hasKey = false
 
     /* Loop through selections and find Facets to display */
-
-    selections.forEach((item) => {
-      if (facetsToDisplay.hasOwnProperty(item)) {
-        names = facetsToDisplay[item]
+    for (let i = 0, len = selections.length; i < len; i++) {
+      if (facetsToDisplay.hasOwnProperty(selections[i])) {
+        names = facetsToDisplay[selections[i]]
         hasKey = true
       }
-    })
+    }
 
     /* If there are no keys in `facetsToDisplay` Return all facets */
     if (!hasKey) names = defaultNames || []
@@ -188,7 +182,7 @@ const utilities = {
   },
   toNestedArray (data, rootLevel = 0, parentNode) {
     let output = []
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0, len = data.length; i < len; i++) {
       var count = data[i].count
       var items = data[i].name.split('/')
       var hasParent = items.length > rootLevel

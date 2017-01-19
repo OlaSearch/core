@@ -75,6 +75,20 @@ export default (state = initialState, action) => {
         fields: state.fields.filter((field) => field.name !== action.name)
       }
 
+    /* Filter sequence from url */
+    case types.UPDATE_STATE_FROM_QUERY:
+      let seq = []
+      let fq = action.stateFromUrl.facet_query
+      for (let i = 0, len = fq.length; i < len; i++) {
+        for (let j = 0; j < fq[i].selected.length; j++) {
+          seq.push(`${fq[i].name}:${fq[i].selected[j]}`)
+        }
+      }
+      return {
+        ...state,
+        filter_term_sequence: seq
+      }
+
     /** Filter sequence */
     case types.ADD_FACET:
       return {
