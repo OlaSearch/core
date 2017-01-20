@@ -102,6 +102,25 @@ export default (state = initialState, action) => {
         filter_term_sequence: state.filter_term_sequence.filter((item) => item !== `${action.facet.name}:${action.value}`)
       }
 
+    case types.REPLACE_FACET:
+      let fts = state.filter_term_sequence.filter((item) => item.split(':')[0] === action.facet.name)
+      return {
+        ...state,
+        filter_term_sequence: [...fts, `${action.facet.name}:${action.value}`]
+      }
+
+    case types.REMOVE_FACET_ITEM:
+      return {
+        ...state,
+        filter_term_sequence: state.filter_term_sequence.filter((item) => item.split[':'][0] === action.facet.name)
+      }
+
+    case types.REMOVE_ALL_FACETS:
+      return {
+        ...state,
+        filter_term_sequence: []
+      }
+
     case types.OLA_REHYDRATE:
       let userSession = storage.cookies.get(USER_SESSION_KEY, action.namespace)
       return {

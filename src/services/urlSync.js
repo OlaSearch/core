@@ -89,7 +89,6 @@ var urlSync = {
     /**
      * Validate query string
      */
-    console.log(qs)
     for (let p in qs) {
       /* prevent XSS */
       qs[p] = xssFilters.inHTMLData(qs[p])
