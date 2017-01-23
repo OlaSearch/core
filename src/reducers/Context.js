@@ -112,7 +112,7 @@ export default (state = initialState, action) => {
     case types.REMOVE_FACET_ITEM:
       return {
         ...state,
-        filter_term_sequence: state.filter_term_sequence.filter((item) => item.split[':'][0] === action.facet.name)
+        filter_term_sequence: state.filter_term_sequence.filter((item) => item.split(':')[0] !== action.facet.name)
       }
 
     case types.REMOVE_ALL_FACETS:
