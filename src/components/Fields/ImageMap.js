@@ -1,12 +1,11 @@
 import React from 'react'
 import Thumbnail from './Thumbnail'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
 import withLogger from './../../decorators/OlaLogger'
 
 const Map = (props) => {
   var { latlong, apiKey, width, height, onClick, result, log } = props
 
-  if (!latlong) return NO_SCRIPT_TAG
+  if (!latlong) return null
 
   if (typeof latlong === 'object') {
     latlong = `${latlong.lat},${latlong.lon}`

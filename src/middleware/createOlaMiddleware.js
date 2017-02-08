@@ -162,7 +162,7 @@ module.exports = (options = {}) => {
          * Total results = 0 && Has Spell Suggestions
          */
 
-        if (totalResults === 0 && spellSuggestions.length) {
+        if (totalResults === 0 && spellSuggestions.length && !enrichedQuery) {
           let { term } = spellSuggestions[0]
           return dispatch({
             types,

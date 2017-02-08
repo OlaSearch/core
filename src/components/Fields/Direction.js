@@ -28,7 +28,8 @@ const Directions = (props) => {
     <a className='ola-btn ola-btn-directions'
       onClick={handleClick}
       href={url}
-      {...rest}>
+      {...rest}
+    >
       {iconLeft}
       {label || translate('get_directions_label')}
       {iconRight}

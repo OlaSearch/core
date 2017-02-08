@@ -1,10 +1,9 @@
 import React from 'react'
 import withLogger from './../../decorators/OlaLogger'
-import { NO_SCRIPT_TAG } from './../../constants/Settings'
 
 const Url = ({ result, onClick, log, snippetId }) => {
   let { url } = result
-  if (!url) return NO_SCRIPT_TAG
+  if (!url) return null
 
   function handleClick (event) {
     log({

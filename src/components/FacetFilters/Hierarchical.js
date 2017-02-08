@@ -42,7 +42,7 @@ class HierarchicalFilter extends React.Component {
     let { dispatch, facet } = this.props
     value = value.split('/').slice(0, -1)
     let path = value.join('/')
-    if (value.length === facet.rootLevel) {
+    if (value.length === parseInt(facet.rootLevel)) {
       dispatch(removeFacetItem(facet))
     } else {
       dispatch(replaceFacet(facet, path))
