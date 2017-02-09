@@ -28,12 +28,25 @@ const DateParser = {
   },
   parse (date, mask = defaultMask) {
     try {
+      /**
+       * Check if the value is a valid date
+       * Example: 2015-12-02
+       */
+      let d = new Date(date)
+      if (Object.prototype.toString.call(d) === '[object Date]' &&
+        !isNaN(d.getTime())) {
+        // Valid date
+        return d
+      }
       date = fecha.parse(date, mask)
     } catch (e) {
       console.warn(e, date)
       return ''
     }
     return date
+  },
+  toUTC (date) {
+    return DateParser.parse(date).toISOString()
   },
   today (mask = defaultMask) {
     return this.format(new Date(), mask)

@@ -89,8 +89,8 @@ class DateRange extends React.Component {
         break
     }
 
-    fromDate = dateFormat ? DateParser.format(fromDate, dateFormat) : fromDate
-    toDate = dateFormat ? DateParser.format(toDate, dateFormat) : toDate
+    fromDate = dateFormat ? DateParser.toUTC(fromDate) : fromDate
+    toDate = dateFormat ? DateParser.toUTC(toDate) : toDate
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
 

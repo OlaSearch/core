@@ -24,10 +24,15 @@ class RangeFilter extends React.Component {
 
   onChange = (value) => {
     var { facet, dispatch } = this.props
+    let { dateFormat } = facet
 
     if (typeof value === 'string' || value.length === 1) value = [0, value[0]]
 
-    dispatch(replaceFacet(facet, value))
+    let [start, end] = value
+    start = dateFormat ? DateParser.toUTC(start) : start /* Use ISO string */
+    end = dateFormat ? DateParser.toUTC(end) : end
+
+    dispatch(replaceFacet(facet, [start, end]))
 
     dispatch(executeSearch())
   };
@@ -39,11 +44,11 @@ class RangeFilter extends React.Component {
     if (!this.props.facet.values.length) return this.sliderInput.setAttribute('disabled', true)
 
     var options = this.getSliderValues(this.props)
-    var { step = 1 } = this.props.facet
+    var { interval = 1, dateFormat } = this.props.facet
     var { min, max, value } = options
 
     /* Convert to numeric value */
-    step = parseInt(step)
+    let step = dateFormat ? 1 : parseInt(interval)
 
     /**
      * Check if min, max is the same, then disable the slider
@@ -105,10 +110,10 @@ class RangeFilter extends React.Component {
 
     var options = this.getSliderValues(this.props)
 
-    var { step = 1, singleHandle, type, dateFormat } = facet
+    var { interval = 1, singleHandle, dateFormat } = facet
 
     /* Convert to numeric value */
-    step = parseInt(step)
+    let step = dateFormat ? 1 : parseInt(interval)
 
     var {min, max, value} = options
 
@@ -121,10 +126,9 @@ class RangeFilter extends React.Component {
     } else this.sliderInput.removeAttribute('disabled')
 
     /* Tooltip format */
-
     var formatTooltip = {
       to: (value) => {
-        return type === 'daterange' ? DateParser.format(value, dateFormat) : Math.floor(value)
+        return dateFormat ? DateParser.format(value, dateFormat) : Math.floor(value)
       }
     }
 

@@ -3,7 +3,6 @@ import Default from './FacetFilters/Default'
 import FacetCheckbox from './FacetFilters/Checkbox'
 import Hierarchical from './FacetFilters/Hierarchical'
 import Range from './FacetFilters/Range'
-import RangeNumeric from './FacetFilters/RangeNumeric'
 import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
 import DateRangePicker from './FacetFilters/DateRangePicker'
@@ -68,7 +67,7 @@ class SearchFilters extends React.Component {
                   .filter((item) => item.name === facet.name)
                   .map((item) => item.selected)
             let selectedItems = flatten(selectedFacets)
-            let { type, rangeType, name } = facet
+            let { type, datePicker, name } = facet
             let passProps = {
               facet,
               selected: selectedItems,
@@ -85,8 +84,7 @@ class SearchFilters extends React.Component {
 
               case 'range':
               case 'daterange':
-                if (rangeType === 'numeric') return <RangeNumeric {...passProps} />
-                if (rangeType === 'daterangepicker') return <DateRangePicker {...passProps} />
+                if (datePicker) return <DateRangePicker {...passProps} />
                 return <Range {...passProps} />
 
               case 'rating':
