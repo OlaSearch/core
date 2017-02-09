@@ -76,11 +76,29 @@ class RangeFilter extends React.Component {
   getSliderValues (props) {
     var {facet, selected} = props
 
-    var { values, singleHandle } = facet
+    var { values, singleHandle, dateFormat } = facet
     var min = 0
     var max = 0
 
-    values = values.map((value) => value.name)
+    values = values.map((value) => {
+      if (typeof value.name === 'string' && dateFormat) {
+        return DateParser.parse(value.name).getTime()
+      }
+      return value.name
+    })
+    /**
+     * Selected will be a [['start', 'end']]
+     * @param  {[type]} (value [description]
+     * @return {[type]}        [description]
+     */
+    selected = selected.map((values) => {
+      return values.map((value) => {
+        if (typeof value === 'string' && dateFormat) {
+          return DateParser.parse(value).getTime()
+        }
+        return value
+      })
+    })
 
     if (values.length) {
       min = Math.min(...values)
@@ -95,7 +113,6 @@ class RangeFilter extends React.Component {
     if (singleHandle) {
       value = arr && arr.length ? arr[1] : [max]
     }
-
     return {min, max, value}
   }
 

@@ -88,6 +88,7 @@
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.1",
     "fecha": "^2.3.0",
+    "flatpickr": "^2.3.7",
     "hoist-non-react-statics": "^1.2.0",
     "invariant": "^2.2.2",
     "ismobilejs": "^0.4.0",

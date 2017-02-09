@@ -3,6 +3,7 @@ import { replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
+import Flatpickr from 'flatpickr'
 
 class DateRange extends React.Component {
   constructor (props) {
@@ -40,14 +41,9 @@ class DateRange extends React.Component {
   };
 
   onCustomChange = () => {
-    let fromDate = new Date(this.refs.fromDate.value).getTime()
-    let toDate = new Date(this.refs.toDate.value).getTime()
-
+    let fromDate = DateParser.toUTC(this.fromRef.value)
+    let toDate = DateParser.toUTC(this.toRef.value)
     let { facet, dispatch } = this.props
-    let { dateFormat } = facet
-
-    fromDate = dateFormat ? DateParser.format(fromDate, dateFormat) : fromDate
-    toDate = dateFormat ? DateParser.format(toDate, dateFormat) : toDate
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
     dispatch(executeSearch())
@@ -98,10 +94,24 @@ class DateRange extends React.Component {
   };
 
   format = (date) => {
-    var d = new Date(parseInt(date))
-
-    return DateParser.format(d, 'YYYY-MM-DD')
+    return DateParser.format(DateParser.parse(date), 'YYYY-MM-DD')
   };
+  registerFromRef = (input) => {
+    if (!input) return
+    this.fromRef = input
+    this.fromPicker = new Flatpickr(input)
+  };
+  registerToRef = (input) => {
+    if (!input) return
+    this.toRef = input
+    this.toPicker = new Flatpickr(input)
+  };
+
+  componentWillUnmount () {
+    /* Destroy picker */
+    this.fromPicker.destroy()
+    this.toPicker.destroy()
+  }
 
   render () {
     let {
@@ -113,18 +123,16 @@ class DateRange extends React.Component {
     } = this.props
 
     let { isCustomDateActive } = this.state
-
-    let [ from, to ] = selected
-    let { values, dateFormat } = facet
+    let [ from, to ] = selected && selected.length === 1 ? selected[0] : selected
+    let { values } = facet
     let dates = values.map((value) => value.name)
     /* Convert dates to (getTime) */
-    dates = dates.map((d) => DateParser.parse(d, dateFormat).getTime())
+    dates = dates.map((d) => DateParser.parse(d).getTime())
     let min = Math.min.apply(this, dates)
     let max = Math.max.apply(this, dates)
 
     let defaultFrom = from || min
     let defaultTo = to || max
-
     let klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
@@ -133,7 +141,6 @@ class DateRange extends React.Component {
     let customKlass = classNames('ola-date-custom', {
       'ola-custom-active': isCustomDateActive
     })
-
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
@@ -159,18 +166,18 @@ class DateRange extends React.Component {
                 <label className='ola-label ola-label-date'>
                   <span>From</span>
                   <input
-                    type='date'
+                    type='text'
                     value={this.format(defaultFrom)}
                     min={this.format(min)}
-                    ref='fromDate'
+                    ref={this.registerFromRef}
                     onChange={this.onCustomChange}
                   />
                 </label>
                 <label className='ola-label ola-label-date'>
                   <span>To</span>
                   <input
-                    type='date'
-                    ref='toDate'
+                    type='text'
+                    ref={this.registerToRef}
                     max={this.format(max)}
                     value={this.format(defaultTo)}
                     onChange={this.onCustomChange}
