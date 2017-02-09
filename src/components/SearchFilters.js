@@ -68,13 +68,13 @@ class SearchFilters extends React.Component {
                   .filter((item) => item.name === facet.name)
                   .map((item) => item.selected)
             let selectedItems = flatten(selectedFacets)
+            let { type, rangeType, name } = facet
             let passProps = {
               facet,
               selected: selectedItems,
-              key: index,
+              key: name,
               ...props
             }
-            let { type, rangeType } = facet
 
             switch (type) {
               case 'checkbox':
