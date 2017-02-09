@@ -87,17 +87,13 @@ class RangeFilter extends React.Component {
       return value.name
     })
     /**
-     * Selected will be a [['start', 'end']]
-     * @param  {[type]} (value [description]
-     * @return {[type]}        [description]
+     * Selected will be a ['start', 'end']
      */
-    selected = selected.map((values) => {
-      return values.map((value) => {
-        if (typeof value === 'string' && dateFormat) {
-          return DateParser.parse(value).getTime()
-        }
-        return value
-      })
+    selected = selected.map((value) => {
+      if (typeof value === 'string' && dateFormat) {
+        return DateParser.parse(value).getTime()
+      }
+      return value
     })
 
     if (values.length) {
