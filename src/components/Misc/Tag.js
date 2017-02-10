@@ -9,22 +9,16 @@ const Tag = (props) => {
 
   switch (type) {
     case 'range':
+    case 'daterange':
       if (typeof name === 'string') {
         displayName = name
       } else {
-        let [from, to] = name
-        displayName = supplant(template, {from, to})
+        let [ from, to ] = name
+        displayName = supplant(template, {
+          from: dateFormat ? DateParser.format(from, dateFormat) : from,
+          to: dateFormat ? DateParser.format(to, dateFormat) : to
+        })
       }
-      break
-
-    case 'daterange':
-      let [ from, to ] = name
-      let fromDate = isNaN(from) ? from : new Date(parseInt(from))
-      let toDate = isNaN(to) ? to : new Date(parseInt(to))
-      displayName = supplant(template, {
-        from: DateParser.format(fromDate, dateFormat),
-        to: DateParser.format(toDate, dateFormat)
-      })
       break
 
     case 'rating':

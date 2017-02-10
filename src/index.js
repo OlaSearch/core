@@ -60,7 +60,7 @@ module.exports = {
   Range: require('./components/FacetFilters/Range'),
   // RangeNumeric: require('./components/FacetFilters/RangeNumeric'),
   Rating: require('./components/FacetFilters/Rating'),
-  DateRangePicker: require('./components/FacetFilters/DateRangePicker'),
+  DatePicker: require('./components/FacetFilters/DatePicker'),
   TagCloud: require('./components/FacetFilters/TagCloud'),
   Hierarchical: require('./components/FacetFilters/Hierarchical'),
 

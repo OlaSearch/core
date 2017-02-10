@@ -5,7 +5,7 @@ import Hierarchical from './FacetFilters/Hierarchical'
 import Range from './FacetFilters/Range'
 import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
-import DateRangePicker from './FacetFilters/DateRangePicker'
+import DatePicker from './FacetFilters/DatePicker'
 import TagCloud from './FacetFilters/TagCloud'
 import flatten from 'ramda/src/flatten'
 import equals from 'ramda/src/equals'
@@ -84,7 +84,7 @@ class SearchFilters extends React.Component {
 
               case 'range':
               case 'daterange':
-                if (datePicker) return <DateRangePicker {...passProps} />
+                if (datePicker) return <DatePicker {...passProps} />
                 return <Range {...passProps} />
 
               case 'rating':

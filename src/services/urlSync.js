@@ -132,7 +132,6 @@ var urlSync = {
           let [ name, value ] = item.split(/:(.+)?/) /* Split the first : Date strings can contain : */
           value = value.split('+')
           let facet = find(propEq('name', name))(configFacets)
-
           let { type } = facet
           if (RANGE_FACETS.indexOf(type) !== -1 && value.length > 1) {
             value = parseRangeValues(value)

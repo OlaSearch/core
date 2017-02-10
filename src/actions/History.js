@@ -19,20 +19,18 @@ export function addHistory (options) {
       let { selected, template, dateFormat, type, name } = item
       switch (type) {
         case 'range':
+        case 'daterange':
           if (typeof selected === 'string') {
             return selected
           } else {
-            let [from, to] = selected
-            return `${name}:${supplant(template, {from, to})}`
+            return selected.map((item) => {
+              let [from, to] = item
+              return `${name}:${supplant(template, {
+                from: dateFormat ? DateParser.format(from, dateFormat) : from,
+                to: dateFormat ? DateParser.format(to, dateFormat) : to
+              })}`
+            })
           }
-        case 'daterange':
-          let [ from, to ] = selected[0]
-          let fromDate = new Date(parseInt(from))
-          let toDate = new Date(parseInt(to))
-          return `${name}: ${supplant(template, {
-            from: DateParser.format(fromDate, dateFormat),
-            to: DateParser.format(toDate, dateFormat)
-          })}`
 
         default:
           return `${name}:${selected}`
