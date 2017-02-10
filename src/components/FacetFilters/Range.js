@@ -123,7 +123,7 @@ class RangeFilter extends React.Component {
 
     var options = this.getSliderValues(this.props)
 
-    var { interval, step: stepValue = 1,singleHandle, dateFormat } = facet
+    var { interval, step: stepValue = 1, singleHandle, dateFormat } = facet
 
     /* Convert to numeric value */
     let step = dateFormat ? stepValue : parseInt(interval)
