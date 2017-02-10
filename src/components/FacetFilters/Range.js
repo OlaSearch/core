@@ -44,11 +44,11 @@ class RangeFilter extends React.Component {
     if (!this.props.facet.values.length) return this.sliderInput.setAttribute('disabled', true)
 
     var options = this.getSliderValues(this.props)
-    var { interval = 1, dateFormat } = this.props.facet
+    var { interval, step: stepValue = 1, dateFormat } = this.props.facet
     var { min, max, value } = options
 
     /* Convert to numeric value */
-    let step = dateFormat ? 1 : parseInt(interval)
+    let step = dateFormat ? stepValue : parseInt(interval)
 
     /**
      * Check if min, max is the same, then disable the slider
@@ -123,10 +123,10 @@ class RangeFilter extends React.Component {
 
     var options = this.getSliderValues(this.props)
 
-    var { interval = 1, singleHandle, dateFormat } = facet
+    var { interval, step: stepValue = 1,singleHandle, dateFormat } = facet
 
     /* Convert to numeric value */
-    let step = dateFormat ? 1 : parseInt(interval)
+    let step = dateFormat ? stepValue : parseInt(interval)
 
     var {min, max, value} = options
 
