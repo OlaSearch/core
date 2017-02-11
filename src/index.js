@@ -78,5 +78,6 @@ module.exports = {
   SpellSuggestion: require('./components/SpellSuggestion'),
   TermSuggestion: require('./components/TermSuggestion'),
   PerPage: require('./components/PerPage'),
-  AutoSuggest: require('./components/AutoSuggest')
+  AutoSuggest: require('./components/AutoSuggest'),
+  ActionTypes: require('./constants/ActionTypes')
 }
