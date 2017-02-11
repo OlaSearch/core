@@ -84,8 +84,10 @@ class SearchFilters extends React.Component {
 
               case 'range':
               case 'daterange':
-                if (datePicker) return <DatePicker {...passProps} />
                 return <Range {...passProps} />
+
+              case 'datepicker':
+                return <DatePicker {...passProps} />
 
               case 'rating':
                 return <Rating {...passProps} />

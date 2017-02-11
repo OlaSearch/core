@@ -20,6 +20,7 @@ export function addHistory (options) {
       switch (type) {
         case 'range':
         case 'daterange':
+        case 'datepicker':
           if (typeof selected === 'string') {
             return selected
           } else {

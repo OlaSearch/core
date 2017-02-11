@@ -10,6 +10,7 @@ const Tag = (props) => {
   switch (type) {
     case 'range':
     case 'daterange':
+    case 'datepicker':
       if (typeof name === 'string') {
         displayName = name
       } else {
