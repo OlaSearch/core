@@ -1,4 +1,4 @@
-import isMobile from 'ismobilejs'
+import { phone, android, apple, tablet, seven_inch as sevenInch } from 'ismobilejs'
 
 /* Structure
   {
@@ -20,15 +20,19 @@ import isMobile from 'ismobilejs'
       device,
       firefox,
       opera
-    }
+    },
+    phone,
+    seven_inch,
+    tablet
   }
 */
 
 var initialState = {
-  isPhone: isMobile.phone,
-  isAndroid: isMobile.android,
-  isApple: isMobile.apple,
-  isTablet: isMobile.tablet
+  isPhone: phone,
+  isAndroid: android,
+  isApple: apple,
+  isTablet: tablet,
+  isDesktop: !phone && !tablet && !sevenInch
 }
 
 export default (state = initialState, action) => {
