@@ -16,9 +16,10 @@ class Answer extends React.Component {
     this.props.dispatch(executeSearch())
   };
   templatePicker = (template, data, module) => {
-    if (this.props.templates && this.props.templates.hasOwnProperty(module)) {
-      let Component = this.props.templates[module]
-      return <Component data={data} />
+    /* Check for user defined templates */
+    if (this.props.templates && this.props.templates.hasOwnProperty(template)) {
+      let Component = this.props.templates[template]
+      return <Component data={data} module={module} />
     }
     switch (template) {
       case 'table_detail':

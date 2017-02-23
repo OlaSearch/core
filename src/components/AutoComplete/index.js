@@ -280,7 +280,7 @@ class AutoComplete extends React.Component {
 
     /* Remove all selected facets */
     /* Keep the selected facets if its a freeform search */
-    this.props.removeAllFacets()
+    // this.props.removeAllFacets()
 
     /* Update query term */
     this.props.updateQueryTerm(this.state.q, this.state.searchInput)
@@ -334,10 +334,9 @@ class AutoComplete extends React.Component {
       })
     }
 
-    /* Remove all selected facets */
-    this.props.removeAllFacets()
-
     if (isEntity || isTaxonomy) {
+      /* Remove all selected facets */
+      this.props.removeAllFacets()
       /**
        * For Barack Obama in Climate
        */
@@ -354,6 +353,9 @@ class AutoComplete extends React.Component {
     }
     if (isQuery) {
       if (suggestion.taxo_label && suggestion.taxo_term) {
+        /* Remove all selected facets */
+        this.props.removeAllFacets()
+
         facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
       }

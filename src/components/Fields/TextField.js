@@ -1,7 +1,7 @@
 import React from 'react'
 import { createHTMLMarkup, truncate } from './../../utilities'
 
-const TextField = ({ field, result, staticText, length, prefix = '', suffix = '', ellipsis }) => {
+const TextField = ({ field, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass }) => {
   let fieldContent = result[field] || staticText
   let { highlighting } = result
   if (!fieldContent) return null
@@ -19,7 +19,8 @@ const TextField = ({ field, result, staticText, length, prefix = '', suffix = ''
   } else if (fieldContent && fieldContent.length > length) {
     fieldContent = prefix + truncate(fieldContent, length) + suffix
   }
-  let klass = `ola-field ola-field-highlighted-field ola-field-${field}`
+  let userClass = dynamicClass && fieldContent ? ` ${field}-${fieldContent.toLowerCase()}` : ''
+  let klass = `ola-field ola-field-highlighted-field ola-field-${field}${userClass}`
   return (
     <div className={klass} dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />
   )
@@ -27,7 +28,8 @@ const TextField = ({ field, result, staticText, length, prefix = '', suffix = ''
 
 TextField.defaultProps = {
   length: 200,
-  ellipsis: '...'
+  ellipsis: '...',
+  dynamicClass: false
 }
 
 TextField.propTypes = {

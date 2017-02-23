@@ -12,6 +12,7 @@ const Thumbnail = (props, context) => {
     isLink,
     url,
     log,
+    useBackgroundImage,
     ...rest
   } = props
 
@@ -47,23 +48,26 @@ const Thumbnail = (props, context) => {
     }
     : {}
 
+  let imageUrl = `${baseUrl}${thumbnail}`
+  let imgThumbnail = useBackgroundImage
+    ? <div className='ola-img ola-img-bg' {...restProps} style={{ backgroundImage: `url(${imageUrl})` }} />
+    : <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+
   if (!thumbnailMobile) {
     if (isLink) {
       return (
         <a {...linkProps}>
-          <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+          {imgThumbnail}
         </a>
       )
     }
-    return (
-      <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
-    )
+    return imgThumbnail
   }
 
   return (
     <div>
       <Media query={mediaQuery.tablet}>
-        <img className='ola-img ola-img-desktop' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+        {imgThumbnail}
       </Media>
       <Media query={mediaQuery.mobile}>
         <img className='ola-img ola-img-mobile' {...restProps} src={`${baseUrl}${thumbnailMobile}`} alt='' />
@@ -84,7 +88,8 @@ Thumbnail.propTypes = {
 Thumbnail.defaultProps = {
   baseUrl: '',
   isLink: false,
-  url: null
+  url: null,
+  useBackgroundImage: false
 }
 
 module.exports = withLogger(Thumbnail)
