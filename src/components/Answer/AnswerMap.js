@@ -1,17 +1,16 @@
+/* global google */
 import React from 'react'
 import GoogleMaps from './maputils'
 
 class AnswerMap extends React.Component {
   componentDidMount () {
-    GoogleMaps.load({ apiKey: '12' }, this.initMap)
+    GoogleMaps.load({ apiKey: 'AIzaSyAfccsQVW0CrUzGHQ1AhQpnCYhWjZgs7bw' }, this.initMap)
   }
   initMap = () => {
     this.map = new google.maps.Map(this.mapEl, {
       center: {lat: -34.0622928, lng: 23.3755341},
       zoom: 4
     })
-
-    let google = window.google
 
     this.bounds = new google.maps.LatLngBounds()
 
@@ -27,8 +26,8 @@ class AnswerMap extends React.Component {
 
     /* Max zoom */
     google.maps.event.addListenerOnce(this.map, 'bounds_changed', (event) => {
-      if (this.map.getZoom() > 8) {
-        this.map.setZoom(7)
+      if (this.map.getZoom() > 12) {
+        this.map.setZoom(12)
       }
     })
 
@@ -70,7 +69,6 @@ class AnswerMap extends React.Component {
       let [ lat, lng ] = result[locationKey].split(',')
       let position = { lat: parseFloat(lat), lng: parseFloat(lng) }
       let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
-      let google = window.google
 
       let marker = new google.maps.Marker({
         position: position,

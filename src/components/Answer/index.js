@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import AnswerSuggestion from './AnswerSuggestion'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
@@ -66,7 +67,9 @@ class Answer extends React.Component {
 
     if (!answer) return null
 
-    let { data, template, module, source } = answer
+    let { data, template, module, source, intent } = answer
+    let intentName = intent ? intent.split('.').pop() : null
+    let answerKlass = classNames('ola-answer', `ola-answer-intent-${intentName}`)
     /**
      * If the answer is from Intent engine
      */
@@ -78,7 +81,7 @@ class Answer extends React.Component {
             onChange={this.handleChange}
             onSkipIntent={this.handleSkipIntent}
           />
-          <div className='ola-answer'>
+          <div className={answerKlass}>
             {this.templatePicker(template, data, module)}
           </div>
           {source

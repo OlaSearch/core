@@ -31,7 +31,17 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-      var { results, payload, spellSuggestions, qt, suggestedTerm, totalResults, facets, answer } = action
+      var { results, payload, spellSuggestions, qt, suggestedTerm, totalResults, facets, answer, skipSearchResultsUpdate } = action
+      /* Handle skip update */
+      if (skipSearchResultsUpdate) {
+        return {
+          ...state,
+          isLoading: false,
+          error: null,
+          answer
+        }
+      }
+      /* Handle infinite scroll */
       if (payload.appendResult) {
         return {
           ...state,

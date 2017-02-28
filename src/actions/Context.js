@@ -52,3 +52,11 @@ export function requestGeoLocation (onSuccess, onFailure) {
     })
   }
 }
+
+export function addContextField (field, value) {
+  return {
+    type: types.ADD_CONTEXT_FIELD,
+    field,
+    value
+  }
+}

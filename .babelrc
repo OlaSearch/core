@@ -1,6 +1,11 @@
 {
-  "presets": ["olasearch"],
-  "env": {
-    "development": {}
-  }
+  "presets": ["es2015", "react", "stage-0"],
+  plugins: [
+    'babel-plugin-ramda',
+    'babel-plugin-transform-es3-member-expression-literals',
+    'babel-plugin-transform-es3-property-literals',
+    'babel-plugin-transform-object-set-prototype-of-to-assign',
+    'babel-plugin-transform-react-remove-prop-types',
+    'babel-plugin-transform-react-constant-elements'
+  ]
 }

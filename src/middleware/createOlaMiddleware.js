@@ -139,6 +139,7 @@ module.exports = (options = {}) => {
         var qt
         var answer
         var enrichedQuery
+        var skipSearchResultsUpdate = false
         if (proxy) {
           results = response.results
           spellSuggestions = response.spellSuggestions
@@ -146,6 +147,7 @@ module.exports = (options = {}) => {
           facets = response.facets
           qt = response.qt
           enrichedQuery = response.enriched_q
+          skipSearchResultsUpdate = response.skipSearchResultsUpdate
 
           /* Instant answer */
           answer = api === 'answer' ? response : response.answer
@@ -188,7 +190,8 @@ module.exports = (options = {}) => {
           qt,
           answer,
           enriched_q: enrichedQuery,
-          error: null
+          error: null,
+          skipSearchResultsUpdate
         })
 
         /**

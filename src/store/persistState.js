@@ -22,7 +22,8 @@ export const STATE_TYPE_KEYS = [
   types.ADD_CONTEXT,
   types.REMOVE_CONTEXT,
   types.ADD_DYNAMIC_FIELD,
-  types.REMOVE_DYNAMIC_FIELD
+  types.REMOVE_DYNAMIC_FIELD,
+  types.ADD_CONTEXT_FIELD
 ]
 
 /* Based on actions: persist states to localstorage */
@@ -46,6 +47,7 @@ function persistState (action, getState, namespace) {
     case types.REMOVE_CONTEXT:
     case types.ADD_DYNAMIC_FIELD:
     case types.REMOVE_DYNAMIC_FIELD:
+    case types.ADD_CONTEXT_FIELD:
       return storage.cookies.set(CONTEXT_STORAGE_KEY, state.Context, CONTEXT_STORAGE_TTL)
   }
 }

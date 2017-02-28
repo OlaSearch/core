@@ -11,7 +11,8 @@ export const initialState = {
   userSession: null,
   userId: null,
   isNewUser: false,
-  ...valueFromStorage ? JSON.parse(valueFromStorage) : {},
+  hasUsedVoice: false,
+  ...valueFromStorage ? JSON.parse(decodeURIComponent(valueFromStorage)) : {},
   /* Filter sequence */
   filter_term_sequence: [] /* For logging the sequence of filters that the user used */
 }
@@ -119,6 +120,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filter_term_sequence: []
+      }
+
+    case types.ADD_CONTEXT_FIELD:
+      return {
+        ...state,
+        [action.field]: action.value
       }
 
     case types.OLA_REHYDRATE:

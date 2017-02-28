@@ -3,7 +3,7 @@ export default {
   appended: false,
   load (params, callback) {
     const index = this.callbacks.push(callback)
-    if (window.google) {
+    if (window.google.maps) {
       setTimeout(this.fireCallbacks.bind(this))
     } else {
       if (!this.appended) {
@@ -14,9 +14,9 @@ export default {
     return index
   },
   getSrc (params) {
-    // let { apiKey } = params
+    let { apiKey } = params
     let src = 'https://maps.googleapis.com/maps/api/js'
-    src += `?callback=mapsCallback&libraries=drawing`
+    src += `?callback=mapsCallback&key=${apiKey}&libraries=drawing`
     return src
   },
   appendScript (params) {

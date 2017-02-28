@@ -25,7 +25,8 @@ module.exports = {
   cookies: {
     set (name, value, days, namespace) {
       var expires
-      if (typeof value === 'object') value = JSON.stringify(value)
+      /* Always encode URI for objects */
+      if (typeof value === 'object') value = encodeURIComponent(JSON.stringify(value))
       if (days) {
         let date = new Date()
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
