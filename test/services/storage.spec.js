@@ -54,7 +54,7 @@ describe('Storage', () => {
     it('saves an object in cookie', () => {
       let obj = { name: 'Foo'}
       storage.cookies.set('key', obj)
-      expect(storage.cookies.get('key')).toEqual(JSON.stringify(obj))
+      expect(decodeURIComponent(storage.cookies.get('key'))).toEqual(JSON.stringify(obj))
     })
 
     it('returns null if not found', () => {

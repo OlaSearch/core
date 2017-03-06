@@ -3,7 +3,7 @@ import { default as reducer, initialState } from './../../src/reducers/Context'
 import { CONTEXT_STORAGE_KEY } from './../../src/constants/Settings'
 import expect from 'expect'
 import storage from './../../src/services/storage'
-import { MAKE_ACTION, INIT_TYPE } from './../common'
+import { MAKE_ACTION, INIT_TYPE, decodeCookie } from './../common'
 
 describe('Reducer: Context', () => {
   it('should exist', () => {
@@ -16,13 +16,13 @@ describe('Reducer: Context', () => {
     storage.cookies.set(CONTEXT_STORAGE_KEY, {
       location: '1, 2'
     })
-    var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
+    var valueFromStorage = decodeCookie(storage.cookies.get(CONTEXT_STORAGE_KEY))
     initialStateFromCookie = {
       location: null,
       fields: [],
       isRequestingLocation: false,
       hasRequestedLocation: false,
-      ...valueFromStorage ? JSON.parse(valueFromStorage) : {}
+      ...valueFromStorage ? valueFromStorage : {}
     }
 
     let state = reducer(initialStateFromCookie, {})

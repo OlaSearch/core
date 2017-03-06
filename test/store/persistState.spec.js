@@ -91,7 +91,7 @@ describe('persistState', () => {
     it('should save Geo Location status', (done) => {
       debouncePersistState({ type: types.REQUEST_GEO_LOCATION_SUCCESS }, getState)
       setTimeout(() => {
-        expect(storage.cookies.get(CONTEXT_STORAGE_KEY)).toEqual('{"location":null,"fields":[],"isRequestingLocation":false,"hasRequestedLocation":false}')
+        expect(decodeURIComponent(storage.cookies.get(CONTEXT_STORAGE_KEY))).toEqual('{"location":null,"fields":[],"isRequestingLocation":false,"hasRequestedLocation":false}')
         done()
       }, 510)
     })

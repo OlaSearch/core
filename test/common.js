@@ -34,3 +34,7 @@ export const MOCK_SEARCH_ADAPTER = {
   Http () {
   }
 }
+
+export function decodeCookie (obj) {
+  return JSON.parse(decodeURIComponent(obj))
+}
