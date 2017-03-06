@@ -11,7 +11,7 @@ const AnswerWordMap = ({ data, fontSizeMin, fontSizeMax }) => {
   return (
     <div className='ola-answer-wordmap'>
       {record_data.map(({ value, count }, idx) => {
-        let size = (count === min) ? fontSizeMin : (count / max) * (fontSizeMax - fontSizeMin) + fontSizeMin
+        let size = (count === min) ? fontSizeMin : ((count / max) * (fontSizeMax - fontSizeMin)) + fontSizeMin
         return (
           <span
             key={idx}

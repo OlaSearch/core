@@ -8,9 +8,9 @@ const VoiceHelp = ({ hasUsedVoice, onDismiss }) => {
       <div className='ola-onboarding-overlay' onClick={onDismiss} />
       <div className='ola-onboarding-content'>
         <p>
-          Hello, I can help you explore this collection using your voice.
+          Hi there, you can use your voice to explore this collection.
         </p>
-        <p>Press the button and ask <strong> "What can i do"</strong> to get started</p>
+        <p>Tap the button and ask <strong> "What can i do"</strong> to get started</p>
       </div>
     </div>
   )

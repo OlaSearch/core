@@ -182,4 +182,3 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps, { updateQueryTerm, executeSearch, clearQueryTerm })(injectTranslate(InstantSearchForm))
-

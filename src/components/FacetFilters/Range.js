@@ -8,7 +8,6 @@ import Histogram from './Histogram'
 import DateParser from './../../utilities/dateParser'
 
 class RangeFilter extends React.Component {
-
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     selected: React.PropTypes.array.isRequired,

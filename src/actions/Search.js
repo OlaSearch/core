@@ -97,8 +97,10 @@ export function executeSearch (payload) {
 
     /* If no query and search is not active (searchOnLoad = false) */
     if (allowedCharacters &&
-      !checkForAllowedCharacters(q, allowedCharacters) ||
-      !(isSearchActive || (!!q || facet_query.length || filters.length))
+      (
+        !checkForAllowedCharacters(q, allowedCharacters) ||
+        !(isSearchActive || (!!q || facet_query.length || filters.length))
+      )
     ) {
       // Terminate search
       dispatch(terminateSearch())

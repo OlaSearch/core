@@ -9,7 +9,6 @@ import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
 
 class TabsFilter extends React.Component {
-
   static propTypes = {
     facets: React.PropTypes.array.isRequired,
     selected: React.PropTypes.array.isRequired,

@@ -72,7 +72,7 @@ class TagCloudItem extends React.Component {
   }
   render () {
     let { value: { name, count }, min, max, fontSizeMin, fontSizeMax } = this.props
-    let size = (count === min) ? fontSizeMin : (count / max) * (fontSizeMax - fontSizeMin) + fontSizeMin
+    let size = (count === min) ? fontSizeMin : ((count / max) * (fontSizeMax - fontSizeMin)) + fontSizeMin
     return (
       <button
         className='ola-btn-tag'

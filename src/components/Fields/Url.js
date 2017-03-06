@@ -20,6 +20,7 @@ const Url = ({ result, onClick, log, snippetId }) => {
     <a
       className='ola-field ola-field-url'
       href={url}
+      title={url}
       onClick={handleClick}
       >
       {url}

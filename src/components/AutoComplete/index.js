@@ -334,6 +334,14 @@ class AutoComplete extends React.Component {
       })
     }
 
+    /**
+     * Check if a filter is already applied
+     */
+    if (this.props.facets.length) {
+      this.props.updateQueryTerm(term)
+      return this.onSelect(suggestion)
+    }
+
     if (isEntity || isTaxonomy) {
       /* Remove all selected facets */
       this.props.removeAllFacets()
@@ -463,7 +471,8 @@ class AutoComplete extends React.Component {
 
 function mapStateToProps (state, ownProps) {
   return {
-    isPhone: state.Device.isPhone
+    isPhone: state.Device.isPhone,
+    facets: state.QueryState.facet_query
   }
 }
 

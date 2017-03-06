@@ -47,7 +47,6 @@ export default class Input extends React.Component {
   onKeyDown = (event) => {
     var { onKeyDown, onSubmit, isOpen, q } = this.props
     switch (event.which) {
-
       case 27: // Esc
         /**
          * When autosuggest is closed and user presses escape key multiple times,
