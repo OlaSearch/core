@@ -96,11 +96,12 @@ export function executeSearch (payload) {
     var context = state.Context
 
     /* If no query and search is not active (searchOnLoad = false) */
-    if (allowedCharacters &&
-      (
-        !checkForAllowedCharacters(q, allowedCharacters) ||
+    if (
+        (
+          allowedCharacters &&
+          !checkForAllowedCharacters(q, allowedCharacters)
+        ) ||
         !(isSearchActive || (!!q || facet_query.length || filters.length))
-      )
     ) {
       // Terminate search
       dispatch(terminateSearch())

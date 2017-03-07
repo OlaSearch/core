@@ -247,6 +247,16 @@ const utilities = {
       top: Math.round(top),
       left: Math.round(left)
     }
+  },
+  isValidUrl (str) {
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
+    return regexp.test(str)
+  },
+  formatText (str, label) {
+    if (utilities.isValidUrl(str)) {
+      return <a className='ola-email-link' href={str}>{label}</a>
+    }
+    return str
   }
 }
 

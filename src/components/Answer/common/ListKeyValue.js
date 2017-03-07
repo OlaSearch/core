@@ -1,4 +1,5 @@
 import React from 'react'
+import { formatText } from './../../../utilities'
 
 const ListKeyValue = ({ data }) => {
   if (!data) return null
@@ -12,7 +13,7 @@ const ListKeyValue = ({ data }) => {
                 {label}
               </div>
               <div className='ola-answer-value'>
-                {value}
+                {formatText(value, label)}
               </div>
             </div>
           )
