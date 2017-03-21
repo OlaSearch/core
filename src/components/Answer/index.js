@@ -69,13 +69,14 @@ class Answer extends React.Component {
 
     let { data, template, module, source, intent } = answer
     let intentName = intent ? intent.split('.').pop() : null
-    let answerKlass = classNames('ola-answer', `ola-answer-intent-${intentName}`)
+    let snippetClass = classNames('ola-snippet-answer', `ola-snippet-template-${template}`)
+    let answerKlass = classNames('ola-answer', `ola-answer-intent-${intentName}`, `ola-answer-template-${template}`)
     /**
      * If the answer is from Intent engine
      */
     if (data) {
       return (
-        <div className='ola-snippet-answer'>
+        <div className={snippetClass}>
           <AnswerSuggestion
             answer={answer}
             onChange={this.handleChange}

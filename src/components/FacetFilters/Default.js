@@ -202,14 +202,17 @@ class Item extends React.Component {
     let itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected })
 
     return (
-      <button
-        className={itemKlass}
-        type='button'
-        onClick={this.handleClick}
-      >
-        <span className='ola-search-facet-name'>{displayName}</span>
+      <div className='ola-btn-wrap'>
+        <button
+          className={itemKlass}
+          type='button'
+          onClick={this.handleClick}
+          title={displayName}
+        >
+          <span className='ola-search-facet-name'>{displayName}</span>
+        </button>
         <span className='ola-search-facet-count'>{count}</span>
-      </button>
+      </div>
     )
   }
 }

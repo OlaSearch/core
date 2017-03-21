@@ -48,6 +48,7 @@ module.exports = {
     doc_hide_pages: 'Hide',
 
     /* Answers */
-    answers_show_more: 'View all'
+    answers_show_more: 'View all',
+    answers_show_less: 'View less'
   }
 }

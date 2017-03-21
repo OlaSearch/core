@@ -10,7 +10,7 @@ class AnswerPersonInfoDetail extends React.Component {
     }
   }
   static defaultProps = {
-    max: 5
+    max: 6
   };
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
   render () {
@@ -21,21 +21,31 @@ class AnswerPersonInfoDetail extends React.Component {
     return (
       <div className='ola-answer-person-info-detail'>
         {caption && <h4 className='ola-answer-table-caption'>{caption}</h4>}
-        {data
+        <div className='ola-answer-person-items'>
+          {data
           .slice(0, isOpen ? undefined : max)
           .map((item, idx) => {
             let { title, subtitle, description, additional_data: additionalData } = item
             return (
               <div className='ola-answer-item' key={idx}>
-                <h3 className='ola-answer-title'>{title}</h3>
-                <div className='ola-answer-subtitle'>{subtitle || description}</div>
+                <div className='ola-answer-title'>
+                  <span className='ola-answer-title-text'>{title}</span>
+                  <div className='ola-answer-subtitle'>{subtitle || description}</div>
+                </div>
+
                 <ListKeyValue data={additionalData} />
               </div>
             )
           })
         }
+        </div>
         {!isOpen && size > max
-          ? <button className='ola-answer-link-more' onClick={this.toggle}>{translate('answers_show_more')}</button>
+          ? <button className='ola-answer-link-more' onClick={this.toggle}>
+            {isOpen
+                ? translate('answers_show_less')
+                : translate('answers_show_more')
+              }
+          </button>
           : null
         }
       </div>

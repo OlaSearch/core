@@ -44,8 +44,13 @@ class TableDetail extends React.Component {
             </tbody>
           </table>
         </div>
-        {!isOpen && size > max
-          ? <button className='ola-answer-link-more' onClick={this.toggle}>{translate('answers_show_more')}</button>
+        {size > max
+          ? <button className='ola-answer-link-more' onClick={this.toggle}>
+            {isOpen
+                ? translate('answers_show_less')
+                : translate('answers_show_more')
+              }
+          </button>
           : null
         }
       </div>
