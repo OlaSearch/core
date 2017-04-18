@@ -1,14 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { updateQueryTerm, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
 class SpellSuggestion extends React.Component {
   static propTypes = {
-    suggestions: React.PropTypes.array.isRequired,
-    totalResults: React.PropTypes.number.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
-    showCount: React.PropTypes.bool
+    suggestions: PropTypes.array.isRequired,
+    totalResults: PropTypes.number.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    showCount: PropTypes.bool
   };
 
   static defaultProps = {

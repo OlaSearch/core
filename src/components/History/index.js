@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { clearHistory } from './../../actions/History'
 import listensToClickOutside from 'react-onclickoutside'
@@ -9,8 +10,8 @@ import { log } from './../../actions/Logger'
 
 class History extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    history: React.PropTypes.array.isRequired
+    dispatch: PropTypes.func.isRequired,
+    history: PropTypes.array.isRequired
   };
 
   constructor (props) {
@@ -127,7 +128,7 @@ const HistoryWrapper = (props, { config: { searchHistory, searchPageUrl } }) => 
   return null
 }
 HistoryWrapper.contextTypes = {
-  config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
 module.exports = HistoryWrapper

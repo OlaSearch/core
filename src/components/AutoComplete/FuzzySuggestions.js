@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { createHTMLMarkup } from './../../utilities'
 import { RE_ESCAPE } from './../../constants/Settings'
@@ -22,7 +23,7 @@ class SuggestionItem extends React.Component {
     }
   }
   static propTypes = {
-    result: React.PropTypes.obj.isRequired
+    result: PropTypes.obj.isRequired
   };
   onMouseOver = () => {
     this.setState({

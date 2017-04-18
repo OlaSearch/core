@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
 
@@ -14,13 +15,13 @@ class Pagination extends React.Component {
   };
 
   static propTypes = {
-    totalResults: React.PropTypes.number.isRequired,
-    currentPage: React.PropTypes.any,
-    perPage: React.PropTypes.any.isRequired,
-    onChangePage: React.PropTypes.func,
-    actions: React.PropTypes.shape({
-      changePage: React.PropTypes.func.isRequired,
-      executeSearch: React.PropTypes.func.isRequired
+    totalResults: PropTypes.number.isRequired,
+    currentPage: PropTypes.any,
+    perPage: PropTypes.any.isRequired,
+    onChangePage: PropTypes.func,
+    actions: PropTypes.shape({
+      changePage: PropTypes.func.isRequired,
+      executeSearch: PropTypes.func.isRequired
     })
   };
 

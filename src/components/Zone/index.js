@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { replaceFacet, removeFacet } from './../../actions/Search'
 import { addFacet as addFacetAutoSuggest, removeFacet as removeFacetAutoSuggest } from './../../actions/AutoSuggest'
 import { connect } from 'react-redux'
@@ -24,7 +25,7 @@ class Zone extends React.Component {
   };
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: PropTypes.object
   };
 
   static defaultProps = {

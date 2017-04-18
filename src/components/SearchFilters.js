@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Default from './FacetFilters/Default'
 import FacetCheckbox from './FacetFilters/Checkbox'
 import Hierarchical from './FacetFilters/Hierarchical'
@@ -14,15 +15,15 @@ import { getFacetsToDisplay } from './../utilities'
 
 class SearchFilters extends React.Component {
   static contextTypes = {
-    config: React.PropTypes.object
+    config: PropTypes.object
   };
 
   static propTypes = {
-    facets: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    dispatch: React.PropTypes.func,
-    conditional: React.PropTypes.bool,
-    showSelectedFacetItem: React.PropTypes.bool
+    facets: PropTypes.array.isRequired,
+    selected: PropTypes.array.isRequired,
+    dispatch: PropTypes.func,
+    conditional: PropTypes.bool,
+    showSelectedFacetItem: PropTypes.bool
   };
 
   static defaultProps = {

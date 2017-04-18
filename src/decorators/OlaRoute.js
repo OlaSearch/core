@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { initSearch } from './../actions/Search'
 import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
@@ -6,8 +7,8 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 module.exports = (WrappedComponent) => {
   class OlaRoute extends React.Component {
     static contextTypes = {
-      config: React.PropTypes.object,
-      router: React.PropTypes.object
+      config: PropTypes.object,
+      router: PropTypes.object
     };
     static displayName = `olaRoute(${getComponentDisplayName(WrappedComponent)})`;
     componentWillMount () {

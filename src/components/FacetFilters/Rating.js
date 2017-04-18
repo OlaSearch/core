@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
@@ -6,9 +7,9 @@ import { parseRangeValues } from './../../utilities'
 
 class RatingFilter extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    facet: React.PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired,
+    facet: PropTypes.object.isRequired
   };
 
   handleFacet = (event) => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/OlaTranslate'
 
 const SearchTitle = ({ totalResults, page, perPage, isPhone, translate }, context) => {
@@ -23,7 +24,7 @@ const SearchTitle = ({ totalResults, page, perPage, isPhone, translate }, contex
 }
 
 SearchTitle.contextTypes = {
-  config: React.PropTypes.object
+  config: PropTypes.object
 }
 
 module.exports = injectTranslate(SearchTitle)

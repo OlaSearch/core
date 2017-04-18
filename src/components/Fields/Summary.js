@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { createHTMLMarkup } from './../../utilities'
 
 const Summary = ({ result, length, ellipsis }) => {
@@ -27,8 +28,8 @@ Summary.defaultProps = {
 }
 
 Summary.propTypes = {
-  length: React.PropTypes.number,
-  ellipsis: React.PropTypes.string
+  length: PropTypes.number,
+  ellipsis: PropTypes.string
 }
 
 module.exports = Summary

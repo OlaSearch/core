@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
@@ -16,7 +17,7 @@ class GeoLocation extends React.Component {
     active: false
   };
   static contextTypes = {
-    config: React.PropTypes.object
+    config: PropTypes.object
   };
   componentDidUpdate (prevProps) {
     if (prevProps.active !== this.props.active && prevProps.active) {

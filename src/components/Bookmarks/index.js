@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { removeBookmark } from './../../actions/Bookmarks'
 import listensToClickOutside from 'react-onclickoutside'
@@ -10,8 +11,8 @@ import { log } from './../../actions/Logger'
 
 class Bookmarks extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    bookmarks: React.PropTypes.array.isRequired
+    dispatch: PropTypes.func.isRequired,
+    bookmarks: PropTypes.array.isRequired
   };
 
   constructor (props) {
@@ -111,7 +112,7 @@ const BookMarksWrapper = (props, { config: { bookmarking } }) => {
   return null
 }
 BookMarksWrapper.contextTypes = {
-  config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
 module.exports = BookMarksWrapper

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import DateParser from './../../utilities/dateParser'
@@ -35,9 +36,9 @@ class DateRange extends React.Component {
   };
 
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    facet: React.PropTypes.object.isRequired,
-    selected: React.PropTypes.array.isRequired
+    dispatch: PropTypes.func.isRequired,
+    facet: PropTypes.object.isRequired,
+    selected: PropTypes.array.isRequired
   };
 
   onCustomChange = () => {

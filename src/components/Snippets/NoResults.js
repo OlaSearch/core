@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import injectTranslate from './../../decorators/OlaTranslate'
 
 const NoResults = ({ results, isLoading, q, isBookmark, translate }) => {
@@ -17,9 +18,9 @@ const NoResults = ({ results, isLoading, q, isBookmark, translate }) => {
 }
 
 NoResults.propTypes = {
-  results: React.PropTypes.array,
-  isLoading: React.PropTypes.bool,
-  q: React.PropTypes.string
+  results: PropTypes.array,
+  isLoading: PropTypes.bool,
+  q: PropTypes.string
 }
 
 module.exports = injectTranslate(NoResults)

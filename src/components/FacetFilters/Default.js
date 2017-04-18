@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import Tag from './../Misc/Tag'
 import ReactList from 'react-list'
@@ -20,12 +21,12 @@ class LinkFilter extends React.Component {
   }
 
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    facet: React.PropTypes.object.isRequired,
-    limit: React.PropTypes.number.isRequired,
-    showIfEmpty: React.PropTypes.bool,
-    showSelectedFacetItem: React.PropTypes.bool
+    dispatch: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired,
+    facet: PropTypes.object.isRequired,
+    limit: PropTypes.number.isRequired,
+    showIfEmpty: PropTypes.bool,
+    showSelectedFacetItem: PropTypes.bool
   };
 
   static defaultProps = {

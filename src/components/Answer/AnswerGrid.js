@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ListKeyValue from './common/ListKeyValue'
 import AnswerCard from './AnswerCard'
 import classNames from 'classnames'
@@ -12,7 +13,7 @@ export default class AnswerGrid extends React.Component {
     }
   }
   static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
   componentWillReceiveProps (nextProps) {
     if (nextProps.answer !== this.props.answer) {

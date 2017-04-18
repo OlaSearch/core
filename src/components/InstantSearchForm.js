@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { updateQueryTerm, executeSearch, clearQueryTerm } from './../actions/Search'
 import Bookmarks from './Bookmarks'
 import History from './History'
@@ -45,12 +46,12 @@ class InstantSearchForm extends React.Component {
   };
 
   static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
   static propTypes = {
-    q: React.PropTypes.string,
-    minCharacters: React.PropTypes.number
+    q: PropTypes.string,
+    minCharacters: PropTypes.number
   };
 
   componentDidMount () {

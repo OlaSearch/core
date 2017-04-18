@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 const LoadMore = ({ totalResults, currentPage, perPage, actions, isLoading }) => {
@@ -19,13 +20,13 @@ const LoadMore = ({ totalResults, currentPage, perPage, actions, isLoading }) =>
 }
 
 LoadMore.propTypes = {
-  actions: React.PropTypes.shape({
-    loadMore: React.PropTypes.func.isRequired
+  actions: PropTypes.shape({
+    loadMore: PropTypes.func.isRequired
   }),
-  totalResults: React.PropTypes.any.isRequired,
-  currentPage: React.PropTypes.any.isRequired,
-  perPage: React.PropTypes.any.isRequired,
-  isLoading: React.PropTypes.boolean
+  totalResults: PropTypes.any.isRequired,
+  currentPage: PropTypes.any.isRequired,
+  perPage: PropTypes.any.isRequired,
+  isLoading: PropTypes.boolean
 }
 
 LoadMore.defaultProps = {

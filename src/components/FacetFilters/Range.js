@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import flatten from 'ramda/src/flatten'
 import noUiSlider from 'nouislider'
@@ -9,9 +10,9 @@ import DateParser from './../../utilities/dateParser'
 
 class RangeFilter extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    facet: React.PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired,
+    facet: PropTypes.object.isRequired
   };
 
   static defaultProps = {

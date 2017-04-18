@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { log } from './../../actions/Logger'
@@ -13,8 +14,8 @@ class SpeechInput extends React.Component {
   }
 
   static contextTypes = {
-    store: React.PropTypes.object,
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+    store: PropTypes.object,
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
   static defaultProps = {

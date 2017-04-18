@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/OlaTranslate'
 
 const PopularKeywords = ({ onClick, translate }, context) => {
@@ -20,7 +21,7 @@ const PopularKeywords = ({ onClick, translate }, context) => {
 }
 
 PopularKeywords.contextTypes = {
-  config: React.PropTypes.object
+  config: PropTypes.object
 }
 
 /**

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { removeFacet, executeSearch, clearQueryTerm, removeFilter, removeFacetItem } from './../actions/Search'
 import Tag from './Misc/Tag'
 import Tooltip from './Misc/Tooltip'
@@ -17,12 +18,12 @@ class SelectedFilters extends React.Component {
   }
 
   static propTypes: {
-    facets: React.PropTypes.array,
-    filters: React.PropTypes.array,
-    dispatch: React.PropTypes.func,
-    q: React.PropTypes.string,
-    showQuery: React.PropTypes.boolean,
-    grouped: React.PropTypes.boolean
+    facets: PropTypes.array,
+    filters: PropTypes.array,
+    dispatch: PropTypes.func,
+    q: PropTypes.string,
+    showQuery: PropTypes.boolean,
+    grouped: PropTypes.boolean
   };
 
   static defaultProps = {

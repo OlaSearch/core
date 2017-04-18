@@ -1,4 +1,5 @@
 import React, { Children } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _t from './../translations'
 import { supplant, translateKey, createHTMLMarkup } from './../utilities'
@@ -13,7 +14,7 @@ class OlaIntlProvider extends React.Component {
     }
   }
   static childContextTypes = {
-    translate: React.PropTypes.func
+    translate: PropTypes.func
   };
   translate = (key, placeholders, isHTML) => {
     let result = translateKey(key, this.messages)

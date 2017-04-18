@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
 import injectTranslate from './../../decorators/OlaTranslate'
 import classnames from 'classnames'
@@ -32,9 +33,9 @@ class BookmarkActions extends React.Component {
   };
 
   static propTypes = {
-    bookmarks: React.PropTypes.array,
-    result: React.PropTypes.object,
-    dispatch: React.PropTypes.func
+    bookmarks: PropTypes.array,
+    result: PropTypes.object,
+    dispatch: PropTypes.func
   };
   shouldComponentUpdate (nextProps) {
     return (

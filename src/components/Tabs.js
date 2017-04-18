@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../utilities'
@@ -10,10 +11,10 @@ import propEq from 'ramda/src/propEq'
 
 class TabsFilter extends React.Component {
   static propTypes = {
-    facets: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
-    resetFacetsOnSelect: React.PropTypes.bool
+    facets: PropTypes.array.isRequired,
+    selected: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    resetFacetsOnSelect: PropTypes.bool
   };
 
   static defaultProps = {

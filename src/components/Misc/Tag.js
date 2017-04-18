@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { supplant, getDisplayName } from './../../utilities'
 import DateParser from './../../utilities/dateParser'
 
@@ -49,10 +50,10 @@ const Tag = (props) => {
 }
 
 Tag.propTypes = {
-  name: React.PropTypes.any,
-  onRemove: React.PropTypes.func,
-  facet: React.PropTypes.object,
-  buttonLabel: React.PropTypes.string
+  name: PropTypes.any,
+  onRemove: PropTypes.func,
+  facet: PropTypes.object,
+  buttonLabel: PropTypes.string
 }
 
 Tag.defaultProps = {

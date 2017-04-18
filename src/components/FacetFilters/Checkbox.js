@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { addFacet, removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -23,9 +24,9 @@ class CheckboxFilter extends React.Component {
   };
 
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.array.isRequired,
-    facet: React.PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired,
+    selected: PropTypes.array.isRequired,
+    facet: PropTypes.object.isRequired
   };
 
   handleAddFacet = (value) => {

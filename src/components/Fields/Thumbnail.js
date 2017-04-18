@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Media from 'react-responsive'
 import omit from 'ramda/src/omit'
 import withLogger from './../../decorators/OlaLogger'
@@ -77,12 +78,12 @@ const Thumbnail = (props, context) => {
 }
 
 Thumbnail.contextTypes = {
-  config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
 Thumbnail.propTypes = {
-  thumbnail: React.PropTypes.string,
-  thumbnail_mobile: React.PropTypes.string
+  thumbnail: PropTypes.string,
+  thumbnail_mobile: PropTypes.string
 }
 
 Thumbnail.defaultProps = {

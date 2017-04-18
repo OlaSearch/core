@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
@@ -25,16 +26,16 @@ class AutoComplete extends React.Component {
   }
 
   static propTypes = {
-    showFacetSuggestions: React.PropTypes.bool,
-    autoFocus: React.PropTypes.bool,
-    forceRedirect: React.PropTypes.bool,
-    onSubmit: React.PropTypes.func,
-    viewAllClassName: React.PropTypes.string,
-    placeholder: React.PropTypes.string
+    showFacetSuggestions: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+    forceRedirect: PropTypes.bool,
+    onSubmit: PropTypes.func,
+    viewAllClassName: PropTypes.string,
+    placeholder: PropTypes.string
   };
 
   static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
   static defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, terminateAutoSuggest } from './../../actions/AutoSuggest'
@@ -23,18 +24,18 @@ class AutoSuggest extends React.Component {
   }
 
   static propTypes = {
-    AutoSuggest: React.PropTypes.object.isRequired,
-    bookmarks: React.PropTypes.array,
-    showFacetSuggestions: React.PropTypes.bool,
-    dispatch: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func,
-    viewAllClassName: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    facetSuggestionName: React.PropTypes.string
+    AutoSuggest: PropTypes.object.isRequired,
+    bookmarks: PropTypes.array,
+    showFacetSuggestions: PropTypes.bool,
+    dispatch: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func,
+    viewAllClassName: PropTypes.string,
+    placeholder: PropTypes.string,
+    facetSuggestionName: PropTypes.string
   };
 
   static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
   static defaultProps = {

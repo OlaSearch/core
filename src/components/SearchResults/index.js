@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import SnippetFallback from './../Snippets/Default'
 import Answer from './../Snippets/Answer'
 import { getMatchingSnippet } from './../../utilities'
@@ -6,9 +7,9 @@ import classNames from 'classnames'
 
 class SearchResults extends React.Component {
   static propTypes = {
-    results: React.PropTypes.array.isRequired,
-    bookmarks: React.PropTypes.array,
-    dispatch: React.PropTypes.func.isRequired
+    results: PropTypes.array.isRequired,
+    bookmarks: PropTypes.array,
+    dispatch: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -16,7 +17,7 @@ class SearchResults extends React.Component {
   };
 
   static contextTypes = {
-    config: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.func])
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
   shouldComponentUpdate (nextProps) {

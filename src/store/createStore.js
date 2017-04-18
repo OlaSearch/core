@@ -54,7 +54,7 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
       )
     )
   } else {
-    const createLogger = require('redux-logger')
+    const { createLogger } = require('redux-logger')
     const logger = createLogger({
       collapsed: true,
       duration: true

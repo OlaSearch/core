@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import InstantSearchForm from './../components/InstantSearchForm'
 import NoResults from './../components/Snippets/NoResults'
@@ -27,7 +28,7 @@ class Search extends React.Component {
   }
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: PropTypes.object
   };
 
   componentDidMount () {

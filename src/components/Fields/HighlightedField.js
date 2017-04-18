@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { createHTMLMarkup } from './../../utilities'
 
 const HighlightedField = ({ field, result, length }) => {
@@ -35,7 +36,7 @@ HighlightedField.defaultProps = {
 }
 
 HighlightedField.propTypes = {
-  length: React.PropTypes.number
+  length: PropTypes.number
 }
 
 module.exports = HighlightedField

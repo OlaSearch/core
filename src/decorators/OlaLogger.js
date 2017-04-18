@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import { log } from './../actions/Logger'
 
@@ -10,7 +11,7 @@ module.exports = (WrappedComponent) => {
     return <WrappedComponent {...props} log={logFn} />
   }
   WithLogger.contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   }
   return hoistNonReactStatics(WithLogger, WrappedComponent)
 }

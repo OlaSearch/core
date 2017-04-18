@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Bookmarks from './../Bookmarks'
 import History from './../History'
 import SpeechInput from './../Speech'
@@ -8,8 +9,8 @@ import { SEARCH_INPUTS } from './../../constants/Settings'
 
 export default class Input extends React.Component {
   static propTypes = {
-    q: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    q: PropTypes.string,
+    onChange: PropTypes.func
   };
 
   onClear = (event) => {

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Pagination from './Pagination'
 import LoadMore from './InfiniteScroll/LoadMore'
 import { changePage, executeSearch, loadMore } from './../actions/Search'
@@ -26,7 +27,7 @@ const SearchFooter = (props, context) => {
 }
 
 SearchFooter.contextTypes = {
-  config: React.PropTypes.object
+  config: PropTypes.object
 }
 
 module.exports = SearchFooter

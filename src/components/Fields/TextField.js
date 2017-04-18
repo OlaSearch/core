@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { createHTMLMarkup, truncate } from './../../utilities'
 
 const TextField = ({ field, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass }) => {
@@ -33,7 +34,7 @@ TextField.defaultProps = {
 }
 
 TextField.propTypes = {
-  length: React.PropTypes.number
+  length: PropTypes.number
 }
 
 module.exports = TextField

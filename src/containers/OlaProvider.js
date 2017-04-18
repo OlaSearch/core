@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import OlaIntlProvider from './OlaIntlProvider'
 
 class OlaProvider extends React.Component {
   static childContextTypes = {
-    config: React.PropTypes.any.isRequired
+    config: PropTypes.any.isRequired
   };
   constructor (props) {
     super(props)

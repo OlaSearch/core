@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/OlaTranslate'
 
 const Error = ({ error, translate }) => {
@@ -27,7 +28,7 @@ const Error = ({ error, translate }) => {
 }
 
 Error.propTypes = {
-  error: React.PropTypes.object
+  error: PropTypes.object
 }
 
 module.exports = injectTranslate(Error)

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { changePerPage, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/OlaTranslate'
 
@@ -25,7 +26,7 @@ const PerPage = ({ perPage, translate, dispatch }, context) => {
 }
 
 PerPage.contextTypes = {
-  config: React.PropTypes.object
+  config: PropTypes.object
 }
 
 module.exports = injectTranslate(PerPage)

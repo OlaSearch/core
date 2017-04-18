@@ -1,15 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { changeSort, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/OlaTranslate'
 
 class Sort extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    selected: React.PropTypes.string.isRequired
+    dispatch: PropTypes.func.isRequired,
+    selected: PropTypes.string.isRequired
   };
 
   static contextTypes = {
-    config: React.PropTypes.object
+    config: PropTypes.object
   };
 
   handleChange = (event) => {

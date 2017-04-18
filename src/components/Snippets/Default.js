@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Title from './../Fields/Title'
 import Thumbnail from './../Fields/Thumbnail'
 import Summary from './../Fields/Summary'
@@ -24,9 +25,9 @@ const DefaultSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
 }
 
 DefaultSnippet.propTypes = {
-  dispatch: React.PropTypes.func.isRequired,
-  result: React.PropTypes.object,
-  bookmarks: React.PropTypes.array
+  dispatch: PropTypes.func.isRequired,
+  result: PropTypes.object,
+  bookmarks: PropTypes.array
 }
 
 module.exports = DefaultSnippet
