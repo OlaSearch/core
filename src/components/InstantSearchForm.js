@@ -139,7 +139,6 @@ class InstantSearchForm extends React.Component {
             onBlur={this.props.onBlur}
             onChange={this.onChange}
           />
-          {button}
 
           {showBookmarks
             ? <Bookmarks />
@@ -170,6 +169,8 @@ class InstantSearchForm extends React.Component {
             />
             : null
           }
+
+          {button}
         </div>
       </form>
     )

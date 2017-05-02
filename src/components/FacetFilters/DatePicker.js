@@ -129,9 +129,12 @@ class DateRange extends React.Component {
     let dates = values.map((value) => value.name)
     /* Convert dates to (getTime) */
     dates = dates.map((d) => DateParser.parse(d).getTime())
+
+    /* Check if dates exists */
+    if (!dates.length) return null
+
     let min = Math.min.apply(this, dates)
     let max = Math.max.apply(this, dates)
-
     let defaultFrom = from || min
     let defaultTo = to || max
     let klass = classNames({
