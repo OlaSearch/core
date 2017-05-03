@@ -1,9 +1,10 @@
-import { jsdom } from 'jsdom'
+import { JSDOM } from 'jsdom'
 
-global.document = jsdom('<!doctype html><html><body></body></html>',{
+global.dom = new JSDOM('<!doctype html><html><body></body></html>',{
   url: 'http://localhost'
 })
-global.window = document.defaultView
+global.document = dom.window.document
+global.window = dom.window
 global.navigator = global.window.navigator
 
 global.window.localStorage = {

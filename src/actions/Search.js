@@ -365,7 +365,7 @@ export function initSearch ({ config, urlSync = true }) {
     /* De-activate search if searchOnLoad is false */
     if (!searchOnLoad) {
       let { q, facet_query, filters } = getState().QueryState
-      let shouldSearch = q || facet_query.length || filters.length
+      let shouldSearch = q || facet_query.length
 
       /**
        * Use
