@@ -38,6 +38,7 @@ class RangeFilter extends React.Component {
   };
 
   componentDidUpdate () {
+    if (!this.sliderInput) return
     /**
      * Check if there are values
      */
@@ -113,6 +114,7 @@ class RangeFilter extends React.Component {
   }
 
   componentDidMount () {
+    if (!this.sliderInput) return
     var {
       facet,
       showPips,
@@ -181,7 +183,7 @@ class RangeFilter extends React.Component {
   }
 
   componentWillUnmount () {
-    this.slider.destroy()
+    this.sliderInput && this.sliderInput.destroy()
   }
 
   shouldComponentUpdate (nextProps) {
@@ -197,6 +199,8 @@ class RangeFilter extends React.Component {
   render () {
     var { facet, isCollapsed, toggleDisplay } = this.props
     var { displayName, values, showHistogram } = facet
+    /* Return null if there are no values */
+    if (!values.length) return null
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed

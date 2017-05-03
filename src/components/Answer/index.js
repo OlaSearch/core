@@ -4,6 +4,7 @@ import AnswerSuggestion from './AnswerSuggestion'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
 import AnswerGrid from './AnswerGrid'
+import AnswerGeneric from './AnswerGeneric'
 import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
 import { updateQueryTerm, executeSearch, changeAnswerSelection, setSkipIntent } from './../../actions/Search'
 
@@ -50,6 +51,9 @@ class Answer extends React.Component {
           />
         )
 
+      case 'generic':
+        return <AnswerGeneric {...data} />
+
       default:
         return null
     }
@@ -65,16 +69,17 @@ class Answer extends React.Component {
       )
     }
 
-    if (!answer) return null
+    if (!answer || !answer.card) return null
 
-    let { data, template, module, source, intent } = answer
+    let { card, module, source, intent } = answer
+    let { template } = card
     let intentName = intent ? intent.split('.').pop() : null
     let snippetClass = classNames('ola-snippet-answer', `ola-snippet-template-${template}`)
     let answerKlass = classNames('ola-answer', `ola-answer-intent-${intentName}`, `ola-answer-template-${template}`)
     /**
      * If the answer is from Intent engine
      */
-    if (data) {
+    if (card) {
       return (
         <div className={snippetClass}>
           <AnswerSuggestion
@@ -83,7 +88,7 @@ class Answer extends React.Component {
             onSkipIntent={this.handleSkipIntent}
           />
           <div className={answerKlass}>
-            {this.templatePicker(template, data, module)}
+            {this.templatePicker(template, card, module)}
           </div>
           {source
             ? <div className='ola-answer-source'>
