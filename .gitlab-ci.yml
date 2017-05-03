@@ -1,7 +1,7 @@
 image: node:6.4
 before_script:
-    - npm install -g npm@3.5.3 --silence
-    - npm install --silence
+    - npm install -g yarn --silence
+    - yarn install
 
 test:
   script:
