@@ -131,7 +131,7 @@ export default (state = initialState, action) => {
       let contextFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY, action.namespace)
       if (typeof contextFromStorage === 'string') {
         try {
-          contextFromStorage = JSON.parse('contextFromStorage')
+          contextFromStorage = JSON.parse(decodeURIComponent(contextFromStorage))
         } catch (e) {
           contextFromStorage = {}
         }
