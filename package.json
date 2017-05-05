@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf dist lib",
-    "watch": "BABEL_ENV=production babel-cli --watch src --out-dir lib",
+    "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
     "build": "NODE_ENV=production webpack --config webpack.config.production.js --progress",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",

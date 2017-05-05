@@ -24,7 +24,7 @@ export function executeAutoSuggest () {
       ],
       query: { q, per_page, page, facet_query },
       context,
-      api: 'suggest',
+      api: 'search',
       payload: {}
     })
   }
@@ -44,7 +44,7 @@ export function executeFuzzyAutoSuggest (q) {
       context,
       processData: (response) => pickDeep(response.suggest, 'suggestions'),
       returnWithoutDispatch: true,
-      api: 'fuzzySuggest',
+      api: 'suggest',
       payload: {}
     })
   }

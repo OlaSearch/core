@@ -9,7 +9,7 @@ import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
 
-const FUZZY_SUGGEST_KEY = 'fuzzySuggest'
+const FUZZY_SUGGEST_KEY = 'suggest'
 const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
 const API_IGNORE_LOGGING = ['answer', 'get']
 
@@ -80,6 +80,8 @@ module.exports = (options = {}) => {
 
     /* Add timestamp to query */
     var currentState = getState()
+    var projectId = currentState.QueryState.projectId
+    var env = currentState.QueryState.env
     let timestampObj = {
       timestamp: currentState.Timestamp.timestamp
     }
@@ -89,7 +91,7 @@ module.exports = (options = {}) => {
     let callApi
     let mapping = getMapping(api, config)
     let params = proxy
-        ? { ...query, ...payload.answer ? { answer: payload.answer } : {}, api, ...context }
+        ? { ...query, ...payload.answer ? { answer: payload.answer } : {}, api, ...context, projectId, env }
         : api === FUZZY_SUGGEST_KEY ? query : queryBuilder.transform(query, mapping, acl, context)
 
     /* Api url when intent engine is active */
@@ -99,7 +101,7 @@ module.exports = (options = {}) => {
       /* Should returns a promise */
       callApi = () => api(params)
     } else {
-      callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params, apiUrl) : null
+      callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params, apiUrl, intentEngineEnabled) : null
     }
     if (typeof callApi !== 'function') {
       throw new Error('Expected callApi to be a function. Check your dispatch call.')
@@ -250,11 +252,11 @@ module.exports = (options = {}) => {
  */
 const getMapping = (type, config) => {
   switch (type) {
-    case 'suggest':
-      return config.mappingAutoSuggest
+    // case 'suggest':
+    //   return config.mappingAutoSuggest
 
-    case FUZZY_SUGGEST_KEY:
-      return config.mappingFuzzySuggest
+    // case FUZZY_SUGGEST_KEY:
+    //   return config.mappingFuzzySuggest
 
     default:
       return null
