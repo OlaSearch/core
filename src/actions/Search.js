@@ -92,7 +92,7 @@ export function executeSearch (payload) {
     /* Check if there is a suggested term */
     var state = getState()
     var query = state.QueryState
-    var { q, isSearchActive, facet_query, filters } = query
+    var { q, isSearchActive, facet_query } = query
     var context = state.Context
 
     /* If no query and search is not active (searchOnLoad = false) */
@@ -101,7 +101,7 @@ export function executeSearch (payload) {
           allowedCharacters &&
           !checkForAllowedCharacters(q, allowedCharacters)
         ) ||
-        !(isSearchActive || (!!q || facet_query.length || filters.length))
+        !(isSearchActive || (!!q || facet_query.length))
     ) {
       // Terminate search
       dispatch(terminateSearch())

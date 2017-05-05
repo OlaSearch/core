@@ -39,7 +39,7 @@ function persistState (action, getState, namespace) {
       return storage.set(HISTORY_STORAGE_KEY, state.AppState.history, namespace)
 
     case types.SET_LOCALE:
-      return storage.cookies.set(LOCALE_STORAGE_KEY, action.locale, LOCALE_STORAGE_TTL)
+      return storage.cookies.set(LOCALE_STORAGE_KEY, action.locale, LOCALE_STORAGE_TTL, namespace)
 
     case types.REQUEST_GEO_LOCATION_SUCCESS:
     case types.REQUEST_GEO_LOCATION_FAILURE:
@@ -48,6 +48,6 @@ function persistState (action, getState, namespace) {
     case types.ADD_DYNAMIC_FIELD:
     case types.REMOVE_DYNAMIC_FIELD:
     case types.ADD_CONTEXT_FIELD:
-      return storage.cookies.set(CONTEXT_STORAGE_KEY, state.Context, CONTEXT_STORAGE_TTL)
+      return storage.cookies.set(CONTEXT_STORAGE_KEY, state.Context, CONTEXT_STORAGE_TTL, namespace)
   }
 }

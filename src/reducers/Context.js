@@ -2,7 +2,6 @@ import types from './../constants/ActionTypes'
 import { CONTEXT_STORAGE_KEY, USER_SESSION_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
-var valueFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY)
 export const initialState = {
   location: null,
   fields: [],
@@ -12,7 +11,6 @@ export const initialState = {
   userId: null,
   isNewUser: false,
   hasUsedVoice: false,
-  ...valueFromStorage ? JSON.parse(decodeURIComponent(valueFromStorage)) : {},
   /* Filter sequence */
   filter_term_sequence: [] /* For logging the sequence of filters that the user used */
 }
@@ -130,9 +128,14 @@ export default (state = initialState, action) => {
 
     case types.OLA_REHYDRATE:
       let userSession = storage.cookies.get(USER_SESSION_KEY, action.namespace)
+      let contextFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY, action.namespace)
+      if (typeof contextFromStorage === 'string') {
+        contextFromStorage = JSON.parse(contextFromStorage)
+      }
       return {
         ...state,
         userSession,
+        ...contextFromStorage,
         userId: action.userId || userSession,
         isNewUser: action.isNewUser
       }
