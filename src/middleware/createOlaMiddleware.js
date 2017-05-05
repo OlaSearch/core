@@ -83,7 +83,9 @@ module.exports = (options = {}) => {
     var projectId = currentState.QueryState.projectId
     var env = currentState.QueryState.env
     let timestampObj = {
-      timestamp: currentState.Timestamp.timestamp
+      timestamp: currentState.Timestamp.timestamp,
+      projectId,
+      env
     }
 
     /* ACL Rules */
@@ -101,7 +103,9 @@ module.exports = (options = {}) => {
       /* Should returns a promise */
       callApi = () => api(params)
     } else {
-      callApi = () => searchService.hasOwnProperty(api) ? searchService[api](timestampObj, params, apiUrl, intentEngineEnabled) : null
+      callApi = () => searchService.hasOwnProperty(api)
+        ? searchService[api](timestampObj, params, apiUrl)
+        : null
     }
     if (typeof callApi !== 'function') {
       throw new Error('Expected callApi to be a function. Check your dispatch call.')
