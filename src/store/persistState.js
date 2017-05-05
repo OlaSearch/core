@@ -48,6 +48,6 @@ function persistState (action, getState, namespace) {
     case types.ADD_DYNAMIC_FIELD:
     case types.REMOVE_DYNAMIC_FIELD:
     case types.ADD_CONTEXT_FIELD:
-      return storage.cookies.set(CONTEXT_STORAGE_KEY, state.Context, CONTEXT_STORAGE_TTL, namespace)
+      return storage.cookies.set(CONTEXT_STORAGE_KEY, JSON.stringify(state.Context), CONTEXT_STORAGE_TTL, namespace)
   }
 }

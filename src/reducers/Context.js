@@ -130,7 +130,11 @@ export default (state = initialState, action) => {
       let userSession = storage.cookies.get(USER_SESSION_KEY, action.namespace)
       let contextFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY, action.namespace)
       if (typeof contextFromStorage === 'string') {
-        contextFromStorage = JSON.parse(contextFromStorage)
+        try {
+          contextFromStorage = JSON.parse('contextFromStorage')
+        } catch (e) {
+          contextFromStorage = {}
+        }
       }
       return {
         ...state,
