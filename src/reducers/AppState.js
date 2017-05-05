@@ -128,7 +128,8 @@ export default (state = initialState, action) => {
       return {
         ...initialState,
         bookmarks: state.bookmarks,
-        history: state.history
+        history: state.history,
+        namespace: state.namespace
       }
 
     case types.OLA_REHYDRATE:
