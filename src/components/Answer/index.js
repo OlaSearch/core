@@ -5,6 +5,7 @@ import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
 import AnswerGrid from './AnswerGrid'
 import AnswerGeneric from './AnswerGeneric'
+import AnswerList from './AnswerList'
 import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
 import { updateQueryTerm, executeSearch, changeAnswerSelection, setSkipIntent } from './../../actions/Search'
 
@@ -45,11 +46,10 @@ class Answer extends React.Component {
         return <ItemDetail data={data} />
 
       case 'person_info_detail':
-        return (
-          <AnswerPersonInfoDetail
-            data={data}
-          />
-        )
+        return <AnswerPersonInfoDetail data={data} />
+
+      case 'list':
+        return <AnswerList data={data} />
 
       case 'generic':
         return <AnswerGeneric {...data} />
@@ -71,8 +71,8 @@ class Answer extends React.Component {
 
     if (!answer || !answer.card) return null
 
-    let { card, module, source, intent } = answer
-    let { template } = card
+    let { card, module, intent } = answer
+    let { template, source } = card
     let intentName = intent ? intent.split('.').pop() : null
     let snippetClass = classNames('ola-snippet-answer', `ola-snippet-template-${template}`)
     let answerKlass = classNames('ola-answer', `ola-answer-intent-${intentName}`, `ola-answer-template-${template}`)

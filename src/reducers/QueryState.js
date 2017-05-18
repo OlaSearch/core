@@ -85,7 +85,7 @@ export default (state = initialState, action) => {
         q: action.term,
         searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
         enriched_q: '',
-        page: 1,
+        page: action.forcePageReset ? 1 : state.page,
         skip_intent: false
       }
 

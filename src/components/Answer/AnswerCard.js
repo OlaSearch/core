@@ -7,7 +7,7 @@ const AnswerCard = ({ result, onSelect, cdn, imagePlaceholder, isActive, module 
     if (result.hasOwnProperty('additional_data')) return onSelect(result)
   }
 
-  let { image, description, subtitle, title, exists } = result
+  let { image, subtitle, title, exists } = result
   let isClickable = !!result.additional_data
   if (module === 'spices.facts.place.capital') {
     image = image.length > 1 ? image[1] : image
@@ -31,7 +31,7 @@ const AnswerCard = ({ result, onSelect, cdn, imagePlaceholder, isActive, module 
         <h3 className='ola-answer-title'>
           {title}
         </h3>
-        <div className='ola-answer-subtitle'>{subtitle || description}</div>
+        <div className='ola-answer-subtitle'>{subtitle}</div>
       </div>
     </div>
   )

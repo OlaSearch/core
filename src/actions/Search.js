@@ -20,11 +20,12 @@ var allowedCharacters = null
 var historyType = 'pushState'
 var replaceQueryParamName = false
 
-export function updateQueryTerm (term, searchInput) {
+export function updateQueryTerm (term, searchInput, forcePageReset = true) {
   return {
     type: types.UPDATE_QUERY_TERM,
     term: xssFilters.inHTMLData(term),
-    searchInput
+    searchInput,
+    forcePageReset
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import injectTranslate from './../../../decorators/OlaTranslate'
+import { createHTMLMarkup } from './../../../utilities'
 
 class TableDetail extends React.Component {
   constructor (props) {
@@ -13,7 +14,7 @@ class TableDetail extends React.Component {
   };
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
   render () {
-    let { data: { record_data, record_keys, caption }, max, translate } = this.props
+    let { data: { record_data, record_keys, caption, footnote }, max, translate } = this.props
     let { isOpen } = this.state
     let size = record_data.length
     return (
@@ -34,7 +35,11 @@ class TableDetail extends React.Component {
                     <tr key={idx}>
                       {record_keys.map((key, idx) => {
                         return (
-                          <td key={idx}>{row[key]}</td>
+                          <td key={idx}>
+                            <div
+                              dangerouslySetInnerHTML={createHTMLMarkup(row[key])}
+                            />
+                          </td>
                         )
                       })}
                     </tr>
@@ -44,6 +49,13 @@ class TableDetail extends React.Component {
             </tbody>
           </table>
         </div>
+        {footnote
+          ? <div
+              className='ola-answer-footnote'
+              dangerouslySetInnerHTML={createHTMLMarkup(footnote)}
+            />
+          : null
+        }
         {size > max
           ? <button className='ola-answer-link-more' onClick={this.toggle}>
             {isOpen

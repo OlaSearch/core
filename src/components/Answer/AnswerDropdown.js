@@ -61,14 +61,20 @@ class AnswerDropdown extends React.Component {
 /**
  * Dropdown Item
  */
-class AnswerDropdownItem extends React.Component {
-  handleClick = () => this.props.onChange(this.props.option, this.props.index);
-  render () {
-    let { option: { name, exists }, isActive } = this.props
-    if (isActive) return null
-    if (exists) return <a className='ola-answer-dropdown-item' onClick={this.handleClick}>{name}</a>
-    return <span className='ola-answer-dropdown-item ola-answer-dropdown-item-inactive'>{name}</span>
+const AnswerDropdownItem = (props) => {
+  function handleClick () {
+    props.onChange(props.option, props.index)
   }
+  let { option: { name, exists }, isActive } = props
+  if (isActive) return null
+  if (exists) return <a className='ola-answer-dropdown-item' onClick={handleClick}>{name}</a>
+  return (
+    <span
+      className='ola-answer-dropdown-item ola-answer-dropdown-item-inactive'
+      >
+      {name}
+    </span>
+  )
 }
 
 module.exports = listensToClickOutside(AnswerDropdown)
