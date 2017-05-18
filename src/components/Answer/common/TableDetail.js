@@ -51,8 +51,8 @@ class TableDetail extends React.Component {
         </div>
         {footnote
           ? <div
-              className='ola-answer-footnote'
-              dangerouslySetInnerHTML={createHTMLMarkup(footnote)}
+            className='ola-answer-footnote'
+            dangerouslySetInnerHTML={createHTMLMarkup(footnote)}
             />
           : null
         }

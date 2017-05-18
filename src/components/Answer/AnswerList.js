@@ -15,13 +15,13 @@ class AnswerList extends React.Component {
   toggle = () => this.setState({ isOpen: !this.state.isOpen });
   render () {
     let { data, max, translate } = this.props
-    let { elements, title } = data
+    let { elements } = data
     let { isOpen } = this.state
     let size = elements.length
     return (
       <div className='ola-answer-list-info-detail'>
         <div className='ola-answer-list-items'>
-        {elements
+          {elements
           .slice(0, isOpen ? undefined : max)
           .map((item, idx) => {
             let { title, subtitle, fields, buttons = [] } = item
@@ -44,14 +44,13 @@ class AnswerList extends React.Component {
                             </div>
                           </div>
                         )
-                    })}
+                      })}
                   </div>
                   {buttons.map((button, idx) => {
                     return (
                       <a key={idx} className='ola-answer-email' href={button.url}>{button.title}</a>
                     )
                   })}
-
 
                 </div>
               </div>
@@ -61,11 +60,11 @@ class AnswerList extends React.Component {
         </div>
         {size > max
           ? <button className='ola-answer-link-more' onClick={this.toggle}>
-              {isOpen
+            {isOpen
                 ? translate('answers_show_less')
                 : translate('answers_show_more')
               }
-            </button>
+          </button>
           : null
         }
       </div>
@@ -74,4 +73,3 @@ class AnswerList extends React.Component {
 }
 
 module.exports = injectTranslate(AnswerList)
-
