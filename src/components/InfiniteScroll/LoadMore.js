@@ -2,21 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-const LoadMore = ({ totalResults, currentPage, perPage, actions, isLoading, beforeChangePage }) => {
+const LoadMore = ({ totalResults, currentPage, perPage, actions, onLoadMore, isLoading, beforeChangePage }) => {
   if (currentPage * perPage >= totalResults) return null
   let klass = classNames('ola-link-load-more', {
     'ola-link-load-more-active': isLoading
   })
-  function onLoadMore () {
+  function handleClick () {
     if (beforeChangePage) beforeChangePage()
-    actions.loadMore()
+    onLoadMore
+      ? onLoadMore()
+      : actions.loadMore()
   }
   return (
     <button
       type='button'
       className={klass}
       disabled={isLoading}
-      onClick={onLoadMore}
+      onClick={handleClick}
     >
       Load more
     </button>

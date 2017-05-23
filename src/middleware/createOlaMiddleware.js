@@ -93,7 +93,7 @@ module.exports = (options = {}) => {
     let callApi
     let mapping = getMapping(api, config)
     let params = proxy
-        ? { ...query, ...payload.answer ? { answer: payload.answer } : {}, api, ...context, projectId, env }
+        ? { ...query, ...payload.extraParams, ...payload.answer ? { answer: payload.answer } : {}, api, ...context, projectId, env }
         : api === FUZZY_SUGGEST_KEY ? query : queryBuilder.transform(query, mapping, acl, context)
 
     /* Api url when intent engine is active */
