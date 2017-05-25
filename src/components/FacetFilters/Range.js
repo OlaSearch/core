@@ -38,7 +38,7 @@ class RangeFilter extends React.Component {
   };
 
   componentDidUpdate () {
-    if (!this.sliderInput) return
+    if (!this.sliderInput || !this.sliderInput.noUiSlider) return
     /**
      * Check if there are values
      */

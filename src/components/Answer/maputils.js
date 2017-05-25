@@ -3,7 +3,7 @@ export default {
   appended: false,
   load (params, callback) {
     const index = this.callbacks.push(callback)
-    if (window.google.maps) {
+    if (window.google && window.google.maps) {
       setTimeout(this.fireCallbacks.bind(this))
     } else {
       if (!this.appended) {

@@ -16,14 +16,15 @@ class OlaIntlProvider extends React.Component {
   static childContextTypes = {
     translate: PropTypes.func
   };
-  translate = (key, placeholders, isHTML) => {
+  translate = (key, placeholders, isHTML, options = {}) => {
     let result = translateKey(key, this.messages)
+    let tagName = options.tagName || 'div'
     if (typeof placeholders === 'undefined') {
       return result
     }
     let finalResult = supplant(result, placeholders)
     return isHTML
-    ? <div dangerouslySetInnerHTML={createHTMLMarkup(finalResult)} />
+    ? React.createElement(tagName, { dangerouslySetInnerHTML: createHTMLMarkup(finalResult) }, null)
     : finalResult
   };
   getChildContext () {

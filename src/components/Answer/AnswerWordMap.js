@@ -1,33 +1,59 @@
 import React from 'react'
 
-const AnswerWordMap = ({ data, fontSizeMin, fontSizeMax }) => {
-  let { record_data } = data
+const AnswerWordMap = ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSizeMax }) => {
   /* Return null if nothing */
-  if (!record_data.length) return null
+  if (!data.length) return null
 
-  let counts = record_data.map(({ value, count }) => count)
+  if (shuffle) {
+    data.sort(function () {
+      return 0.5 - Math.random()
+    })
+  }
+
+  let counts = data.map(({ title, count }) => count)
   let max = Math.max.apply(this, counts)
   let min = Math.min.apply(this, counts)
   return (
     <div className='ola-answer-wordmap'>
-      {record_data.map(({ value, count }, idx) => {
-        let size = (count === min) ? fontSizeMin : ((count / max) * (fontSizeMax - fontSizeMin)) + fontSizeMin
-        return (
-          <span
-            key={idx}
-            style={{ fontSize: size + 'px' }}
-          >
-            {value}
-          </span>
-        )
-      })}
+      {data
+        .slice(0, maxLen)
+        .map(({ title, count }, idx) => {
+          let size = (count === min) ? fontSizeMin : ((count / max) * (fontSizeMax - fontSizeMin)) + fontSizeMin
+          return (
+            <WordMapItem
+              key={idx}
+              title={title}
+              count={count}
+              onSelect={onSelect}
+              size={size}
+            />
+          )
+        })
+      }
     </div>
+  )
+}
+
+const WordMapItem = ({ title, count, size, onSelect }) => {
+  function handleClick (title) {
+    onSelect && onSelect(title)
+  }
+  return (
+    <button
+      style={{ fontSize: size + 'px' }}
+      onClick={handleClick}
+      className='ola-answer-wordmap-item'
+    >
+      {title}
+    </button>
   )
 }
 
 AnswerWordMap.defaultProps = {
   fontSizeMin: 14,
-  fontSizeMax: 28
+  fontSizeMax: 28,
+  maxLen: 10,
+  shuffle: false
 }
 
 module.exports = AnswerWordMap

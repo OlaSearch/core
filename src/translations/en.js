@@ -18,6 +18,7 @@ module.exports = {
     'facet_filter_showless': 'Show less',
     'sort_label': 'Sort by',
     'no_results_found': 'Sorry, no results found matching <strong>{q}</strong>.',
+    'no_results_found_filters_too_restrictive': 'Sorry, no results found matching <strong>{q}</strong>. This is often caused by applying filters that are too restrictive.',
     'speech_label': 'Press to speak',
     'autosuggest_placeholder': 'Enter keywords',
     'autosuggest_viewall': 'View all results',

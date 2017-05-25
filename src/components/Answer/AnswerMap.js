@@ -3,13 +3,17 @@ import React from 'react'
 import GoogleMaps from './maputils'
 
 class AnswerMap extends React.Component {
+  static defaultProps = {
+    markerIcon: null
+  };
   componentDidMount () {
     GoogleMaps.load({ apiKey: 'AIzaSyAfccsQVW0CrUzGHQ1AhQpnCYhWjZgs7bw' }, this.initMap)
   }
   initMap = () => {
     this.map = new google.maps.Map(this.mapEl, {
       center: {lat: -34.0622928, lng: 23.3755341},
-      zoom: 4
+      zoom: 4,
+      scrollwheel: false
     })
 
     this.bounds = new google.maps.LatLngBounds()
@@ -50,9 +54,7 @@ class AnswerMap extends React.Component {
     }
   };
   handleMarkerClick = (marker) => {
-    let { title: titleKey } = this.props.data
-    let { result } = marker
-    let title = result[titleKey]
+    let { title } = marker
     let content = `
       <div className='ola-gmap-infowindow'>
         <p>${title}</p>
@@ -63,18 +65,17 @@ class AnswerMap extends React.Component {
   };
   refreshMap = () => {
     let { data } = this.props
-    let { record_data, location: locationKey } = data
 
-    record_data.forEach((result) => {
-      let [ lat, lng ] = result[locationKey].split(',')
+    data.forEach(({ title, location }) => {
+      let [ lat, lng ] = location.split(',')
       let position = { lat: parseFloat(lat), lng: parseFloat(lng) }
       let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
 
       let marker = new google.maps.Marker({
         position: position,
         map: this.map,
-        title: result.title,
-        result
+        title: title,
+        icon: this.props.markerIcon
       })
 
       this.markers.push(marker)
