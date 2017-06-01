@@ -85,7 +85,7 @@ const utilities = {
       } else {
         for (let field in rule) {
           let fieldValue = result[field]
-          if (!fieldValue || (fieldValue && !fieldValue.toString().match(new RegExp(rule[field], 'gi')))) matched = false
+          if (!fieldValue || (fieldValue && !fieldValue.toString().match(new RegExp(rule[field] + '$', 'gi')))) matched = false
         }
       }
       if (matched) return rules[i].template

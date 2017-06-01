@@ -5,8 +5,10 @@ const AnswerWordMap = ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSizeM
   if (!data.length) return null
 
   if (shuffle) {
-    data.sort(function () {
-      return 0.5 - Math.random()
+    data.sort(function (a, b) {
+      if (a.title < b.title) return -1
+      if (a.title > b.title) return 1
+      return 0
     })
   }
 

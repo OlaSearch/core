@@ -183,7 +183,7 @@ class RangeFilter extends React.Component {
   }
 
   componentWillUnmount () {
-    this.sliderInput && this.sliderInput.destroy()
+    this.sliderInput && this.sliderInput.noUiSlider.destroy()
   }
 
   shouldComponentUpdate (nextProps) {
