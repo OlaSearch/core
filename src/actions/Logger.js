@@ -35,7 +35,7 @@ export function log (params) {
  */
 function submitLog (args) {
   var { dispatch, state, ...rest } = args
-  dispatch({
+  return dispatch({
     log: true,
     type: 'SEND_LOG',
     state,

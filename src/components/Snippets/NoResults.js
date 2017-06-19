@@ -7,14 +7,12 @@ const NoResults = ({
     totalResults,
     isLoading,
     q,
-    isBookmark,
     translate,
     suggestedTerm,
     facets,
     dispatch
   }) => {
   if (totalResults || isLoading) return null
-  if (!isBookmark && !q) return null
   /**
    * Show help suggestion if:
    * totalResults = 0
@@ -36,9 +34,6 @@ const NoResults = ({
     )
   } else {
     message = translate('no_results_found', { q }, true)
-    if (isBookmark) {
-      message = translate('bookmarks_empty_label')
-    }
   }
 
   return (

@@ -5,9 +5,9 @@ import { removeBookmark } from './../../actions/Bookmarks'
 import listensToClickOutside from 'react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
-import NoResults from './../Snippets/NoResults'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { log } from './../../actions/Logger'
+import NoBookmarks from './NoBookmarks'
 
 class Bookmarks extends React.Component {
   static propTypes = {
@@ -70,7 +70,6 @@ class Bookmarks extends React.Component {
       'ola-module': true,
       'ola-js-hide': !isOpen
     })
-
     return (
       <div className='ola-bookmarks-container'>
         <button
@@ -83,9 +82,8 @@ class Bookmarks extends React.Component {
         <div className={klass}>
           <div className='ola-module-title'>{translate('bookmarks_label')}</div>
           <div className='ola-module-body'>
-            <NoResults
-              results={bookmarks}
-              isBookmark
+            <NoBookmarks
+              bookmarks={bookmarks}
             />
             <SearchResults
               bookmarks={bookmarks}

@@ -49,7 +49,6 @@ class AutoComplete extends React.Component {
     containerClass: 'ola-autosuggest-container',
     enabledFocusBlur: true,
     showGeoLocation: false,
-    categoryGroup: 'section_s',
     visibleCategoryGroups: null,
     autoFocus: false,
     forceRedirect: false,

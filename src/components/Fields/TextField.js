@@ -2,8 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { createHTMLMarkup, truncate } from './../../utilities'
 
-const TextField = ({ field, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass }) => {
+const TextField = ({ field, fallbackFields, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass }) => {
   let fieldContent = result[field] || staticText
+  if (!fieldContent && fallbackFields.length) {
+    for (let i = 0; i < fallbackFields.length; i++) {
+      let fieldName = fallbackFields[i]
+      if (fieldName in result && result[fieldName]) {
+        fieldContent = result[fieldName]
+        break
+      }
+    }
+  }
   let { highlighting } = result
   if (!fieldContent) return null
 
@@ -30,7 +39,8 @@ const TextField = ({ field, result, staticText, length, prefix = '', suffix = ''
 TextField.defaultProps = {
   length: 200,
   ellipsis: '...',
-  dynamicClass: false
+  dynamicClass: false,
+  fallbackFields: []
 }
 
 TextField.propTypes = {
