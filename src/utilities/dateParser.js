@@ -13,11 +13,13 @@ const DateParser = {
        * Check if the value is a valid date
        * Example: 2015-12-02
        */
-      let d = new Date(date)
-      if (Object.prototype.toString.call(d) === '[object Date]' &&
-        !isNaN(d.getTime())) {
-        // Valid date
-        return fecha.format(d, mask)
+      if (mask === defaultMask) {
+        let d = new Date(date)
+        if (Object.prototype.toString.call(d) === '[object Date]' &&
+          !isNaN(d.getTime())) {
+          // Valid date
+          return fecha.format(d, mask)
+        }
       }
       date = DateParser.parse(date, originalFormat || defaultMask)
     } catch (e) {
@@ -32,11 +34,13 @@ const DateParser = {
        * Check if the value is a valid date
        * Example: 2015-12-02
        */
-      let d = new Date(date)
-      if (Object.prototype.toString.call(d) === '[object Date]' &&
-        !isNaN(d.getTime())) {
-        // Valid date
-        return d
+      if (mask === defaultMask) {
+        let d = new Date(date)
+        if (Object.prototype.toString.call(d) === '[object Date]' &&
+          !isNaN(d.getTime())) {
+          // Valid date
+          return d
+        }
       }
       date = fecha.parse(date, mask)
     } catch (e) {
@@ -45,8 +49,8 @@ const DateParser = {
     }
     return date
   },
-  toUTC (date) {
-    return DateParser.parse(date).toISOString()
+  toUTC (date, mask = defaultMask) {
+    return DateParser.parse(date, mask).toISOString()
   },
   today (mask = defaultMask) {
     return this.format(new Date(), mask)

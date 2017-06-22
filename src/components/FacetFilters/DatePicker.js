@@ -4,13 +4,15 @@ import { replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
-import Flatpickr from 'flatpickr'
+import DatePicker from 'react-pikaday-component'
 
+const DATE_FORMAT = 'DD-MM-YYYY'
 class DateRange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isCustomDateActive: false
+      fromDate: '01-01-2017',
+      toDate: '01-01-2017'
     }
   }
 
@@ -42,18 +44,22 @@ class DateRange extends React.Component {
   };
 
   onCustomChange = () => {
-    let fromDate = DateParser.toUTC(this.fromRef.value)
-    let toDate = DateParser.toUTC(this.toRef.value)
+    let fromDate = DateParser.toUTC(this.state.fromDate, DATE_FORMAT)
+    let toDate = DateParser.toUTC(this.state.toDate, DATE_FORMAT)
     let { facet, dispatch } = this.props
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
     dispatch(executeSearch())
   };
-
-  activateCustomDateEntry = () => {
+  onFromChange = (date) => {
     this.setState({
-      isCustomDateActive: !this.state.isCustomDateActive
-    })
+      fromDate: this.format(date)
+    }, this.onCustomChange)
+  };
+  onToChange = (date) => {
+    this.setState({
+      toDate: this.format(date)
+    }, this.onCustomChange)
   };
 
   onDateSelect = (type) => {
@@ -90,61 +96,71 @@ class DateRange extends React.Component {
     toDate = dateFormat ? DateParser.toUTC(toDate) : toDate
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
-
     dispatch(executeSearch())
   };
 
   format = (date) => {
-    return DateParser.format(DateParser.parse(date), 'YYYY-MM-DD')
+    return DateParser.format(DateParser.parse(date), DATE_FORMAT)
   };
-  registerFromRef = (input) => {
-    if (!input) return
-    this.fromRef = input
-    this.fromPicker = new Flatpickr(input)
-  };
-  registerToRef = (input) => {
-    if (!input) return
-    this.toRef = input
-    this.toPicker = new Flatpickr(input)
-  };
+  getMinMaxValue = (props) => {
+    let { selected, facet } = props
+    let [ fromDate, toDate ] = selected && selected.length === 1 ? selected[0] : selected
+    let { values } = facet
+    let dates = values.map((value) => value.name)
+    /* Convert dates to (getTime) */
+    dates = dates.map((d) => DateParser.parse(d).getTime())
+    let min = dates.length ? Math.min.apply(this, dates) : 0
+    let max = dates.length ? Math.max.apply(this, dates) : 0
 
-  componentWillUnmount () {
-    /* Destroy picker */
-    this.fromPicker.destroy()
-    this.toPicker.destroy()
+    return {
+      min,
+      max,
+      fromDate,
+      toDate
+    }
+  };
+  updateDate = (props) => {
+    let { min, max, fromDate, toDate } = this.getMinMaxValue(props)
+    this.setState({
+      fromDate: this.format(fromDate || min),
+      toDate: this.format(toDate || max)
+    })
   }
+  componentDidMount () {
+    this.updateDate(this.props)
+  }
+  componentWillReceiveProps (nextProps) {
+    this.updateDate(nextProps)
+  }
+  parseDate = (dateString, format) => {
+    const parts = dateString.split('-')
+    const day = parseInt(parts[0], 10)
+    const month = parseInt(parts[1] - 1, 10)
+    const year = parseInt(parts[1], 10)
+    return new Date(year, month, day)
+  }
+  toDateString = (date, format) => {
+    return DateParser.format(date, DATE_FORMAT)
+  };
 
   render () {
     let {
       facet,
-      selected,
       dateLabels,
       isCollapsed,
       toggleDisplay
     } = this.props
 
-    let { isCustomDateActive } = this.state
-    let [ from, to ] = selected && selected.length === 1 ? selected[0] : selected
     let { values } = facet
-    let dates = values.map((value) => value.name)
-    /* Convert dates to (getTime) */
-    dates = dates.map((d) => DateParser.parse(d).getTime())
 
     /* Check if dates exists */
-    if (!dates.length) return null
+    if (!values.length) return null
 
-    let min = Math.min.apply(this, dates)
-    let max = Math.max.apply(this, dates)
-    let defaultFrom = from || min
-    let defaultTo = to || max
     let klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
     })
 
-    let customKlass = classNames('ola-date-custom', {
-      'ola-custom-active': isCustomDateActive
-    })
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
@@ -161,32 +177,29 @@ class DateRange extends React.Component {
                 </li>
               )
             })}
-            <li className={customKlass}>
-              <button
-                className='ola-btn-unstyled ola-btn-date-select'
-                onClick={this.activateCustomDateEntry}
-                >Custom</button>
+            <li className='ola-date-custom'>
+              <label className='ola-btn-date-select'>Custom</label>
               <div className='ola-date-custom-input'>
-                <label className='ola-label ola-label-date'>
+                <div className='ola-label ola-label-date'>
                   <span>From</span>
-                  <input
-                    type='text'
-                    value={this.format(defaultFrom)}
-                    min={this.format(min)}
-                    ref={this.registerFromRef}
-                    onChange={this.onCustomChange}
+                  <DatePicker
+                    format={DATE_FORMAT}
+                    onChange={this.onFromChange}
+                    parse={this.parseDate}
+                    toString={this.toDateString}
+                    value={DateParser.parse(this.state.fromDate, DATE_FORMAT)}
                   />
-                </label>
-                <label className='ola-label ola-label-date'>
+                </div>
+                <div className='ola-label ola-label-date'>
                   <span>To</span>
-                  <input
-                    type='text'
-                    ref={this.registerToRef}
-                    max={this.format(max)}
-                    value={this.format(defaultTo)}
-                    onChange={this.onCustomChange}
+                  <DatePicker
+                    format={DATE_FORMAT}
+                    parse={this.parseDate}
+                    toString={this.toDateString}
+                    onChange={this.onToChange}
+                    value={DateParser.parse(this.state.toDate, DATE_FORMAT)}
                   />
-                </label>
+                </div>
               </div>
             </li>
           </ul>
