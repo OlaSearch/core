@@ -45,7 +45,7 @@ const Thumbnail = (props, context) => {
     ? {
       href: url,
       onClick: handleClick,
-      className: 'ola-field ola-field-img ola-field-img-link'
+      className: 'ola-img-link'
     }
     : {}
 
@@ -57,12 +57,18 @@ const Thumbnail = (props, context) => {
   if (!thumbnailMobile) {
     if (isLink) {
       return (
-        <a {...linkProps}>
-          {imgThumbnail}
-        </a>
+        <div className='ola-field ola-field-img'>
+          <a {...linkProps}>
+            {imgThumbnail}
+          </a>
+        </div>
       )
     }
-    return imgThumbnail
+    return (
+      <div className='ola-field ola-field-img'>
+        {imgThumbnail}
+      </div>
+    )
   }
 
   return (
