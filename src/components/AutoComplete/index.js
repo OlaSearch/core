@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
-import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, navigateToResultsPage } from './../../actions/Search'
+import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
 import Input from './Input'
 import { checkForAllowedCharacters, trim, getCoords } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -476,4 +476,4 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, navigateToResultsPage })(injectTranslate(listensToClickOutside(AutoComplete)))
+module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch })(injectTranslate(listensToClickOutside(AutoComplete)))

@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
 import FilterInput from './common/FilterInput'
-import xss from 'xss'
+import xssFilters from 'xss-filters'
 
 class CheckboxFilter extends React.Component {
   constructor (props) {
@@ -52,7 +52,7 @@ class CheckboxFilter extends React.Component {
 
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: xss(event.target.value)
+      filterText: xssFilters.inHTMLData(event.target.value)
     })
   };
 

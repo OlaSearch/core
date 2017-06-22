@@ -4,7 +4,7 @@ import withFacetToggle from './../../decorators/OlaFacetToggle'
 import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
 import { toNestedArray } from './../../utilities'
-import xss from 'xss'
+import xssFilters from 'xss-filters'
 
 class HierarchicalFilter extends React.Component {
   constructor (props) {
@@ -16,7 +16,7 @@ class HierarchicalFilter extends React.Component {
   }
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: xss(event.target.value)
+      filterText: xssFilters.inHTMLData(event.target.value)
     })
   };
   isSelected = (name) => {
