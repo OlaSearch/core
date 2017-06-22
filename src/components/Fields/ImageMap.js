@@ -1,9 +1,10 @@
 import React from 'react'
 import Thumbnail from './Thumbnail'
 import withLogger from './../../decorators/OlaLogger'
+import FieldLabel from './FieldLabel'
 
 const Map = (props) => {
-  var { latlong, apiKey, width, height, onClick, result, log } = props
+  var { latlong, apiKey, width, height, onClick, result, log, fieldLabel } = props
 
   if (!latlong) return null
 
@@ -27,16 +28,19 @@ const Map = (props) => {
   }
 
   return (
-    <a
-      href={url}
-      className='field field-url'
-      onClick={handleClick}
-    >
-      <Thumbnail
-        thumbnail={map}
-        thumbnail_mobile={map}
-      />
-    </a>
+    <div classname='ola-field ola-field-map'>
+      <FieldLabel label={fieldLabel} />
+      <a
+        href={url}
+        className='field field-url'
+        onClick={handleClick}
+      >
+        <Thumbnail
+          thumbnail={map}
+          thumbnail_mobile={map}
+        />
+      </a>
+    </div>
   )
 }
 

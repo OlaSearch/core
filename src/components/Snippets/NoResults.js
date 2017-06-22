@@ -12,7 +12,7 @@ const NoResults = ({
     facets,
     dispatch
   }) => {
-  if (totalResults || isLoading) return null
+  if (totalResults || isLoading || !q) return null
   /**
    * Show help suggestion if:
    * totalResults = 0

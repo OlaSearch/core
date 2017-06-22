@@ -17,7 +17,7 @@ const Thumbnail = (props, context) => {
     ...rest
   } = props
 
-  let restProps = omit(['size', 'result', 'snippetId', 'collectionId'], rest)
+  let restProps = omit(['size', 'result', 'snippetId', 'collectionId', 'showIfEmpty'], rest)
 
   if (!thumbnail && !thumbnailMobile) return null
 
@@ -45,7 +45,7 @@ const Thumbnail = (props, context) => {
     ? {
       href: url,
       onClick: handleClick,
-      className: 'ola-image-linked'
+      className: 'ola-field ola-field-img ola-field-img-link'
     }
     : {}
 
@@ -66,7 +66,7 @@ const Thumbnail = (props, context) => {
   }
 
   return (
-    <div>
+    <div className='ola-field ola-field-img'>
       <Media query={mediaQuery.tablet}>
         {imgThumbnail}
       </Media>

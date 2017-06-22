@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { createHTMLMarkup, truncate } from './../../utilities'
+import FieldLabel from './FieldLabel'
 
-const TextField = ({ field, fallbackFields, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass }) => {
+const TextField = ({ field, fallbackFields, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass, fieldLabel, showIfEmpty, placeholderText }) => {
   let fieldContent = result[field] || staticText
   if (!fieldContent && fallbackFields.length) {
     for (let i = 0; i < fallbackFields.length; i++) {
@@ -14,7 +15,10 @@ const TextField = ({ field, fallbackFields, result, staticText, length, prefix =
     }
   }
   let { highlighting } = result
-  if (!fieldContent) return null
+  if (showIfEmpty && !fieldContent) fieldContent = `<em>${field}</em>`
+  if (!fieldContent) {
+    return null
+  }
 
   /* Check for highlighting */
   if (highlighting && field in highlighting) {
@@ -30,9 +34,12 @@ const TextField = ({ field, fallbackFields, result, staticText, length, prefix =
     fieldContent = prefix + truncate(fieldContent, length) + suffix
   }
   let userClass = dynamicClass && fieldContent ? ` ${field}-${fieldContent.toLowerCase()}` : ''
-  let klass = `ola-field ola-field-highlighted-field ola-field-${field}${userClass}`
+  let klass = `ola-field ola-field-text ola-field-${field}${userClass}`
   return (
-    <div className={klass} dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />
+    <div className={klass}>
+      <FieldLabel label={fieldLabel} />
+      <div dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />
+    </div>
   )
 }
 
@@ -40,7 +47,9 @@ TextField.defaultProps = {
   length: 200,
   ellipsis: '...',
   dynamicClass: false,
-  fallbackFields: []
+  fallbackFields: [],
+  showIfEmpty: false,
+  placeholderText: null
 }
 
 TextField.propTypes = {

@@ -2,9 +2,10 @@ import React from 'react'
 import { sanitizePhone } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import withLogger from './../../decorators/OlaLogger'
+import FieldLabel from './FieldLabel'
 
 const Phone = (props) => {
-  let { phone, label, translate, log, onClick, result, snippetId, ...rest } = props
+  let { phone, label, translate, log, onClick, result, snippetId, fieldLabel, ...rest } = props
 
   if (!phone) return null
 
@@ -22,13 +23,16 @@ const Phone = (props) => {
   }
 
   return (
-    <a
-      href={url}
-      className='ola-cta-button ola-btn-call'
-      onClick={handleClick}
-      {...rest}>
-      {label || translate('call_label')}
-    </a>
+    <div className='ola-field ola-field-phone'>
+      <FieldLabel label={fieldLabel} />
+      <a
+        href={url}
+        className='ola-cta-button ola-btn-call'
+        onClick={handleClick}
+        {...rest}>
+        {label || translate('call_label')}
+      </a>
+    </div>
   )
 }
 

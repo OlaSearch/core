@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import FieldLabel from './FieldLabel'
 
-const SMS = ({ number, body, iconLeft = null, iconRight = null, label, Device, placeholder = '' }) => {
+const SMS = ({ number, body, iconLeft = null, iconRight = null, label, Device, placeholder = '', fieldLabel }) => {
   let { isApple, isPhone } = Device
 
   if (!isPhone || !number) return placeholder ? <p className='ola-field ola-field-sms'>{placeholder}</p> : null
@@ -10,14 +11,17 @@ const SMS = ({ number, body, iconLeft = null, iconRight = null, label, Device, p
   let link = `sms:${number}${bodyText}=${body}`
 
   return (
-    <a
-      href={link}
-      className='ola-btn ola-btn-sms'
-    >
-      {iconLeft}
-      {label}
-      {iconRight}
-    </a>
+    <div className='ola-field ola-field-sms'>
+      <FieldLabel label={fieldLabel} />
+      <a
+        href={link}
+        className='ola-btn ola-btn-sms'
+      >
+        {iconLeft}
+        {label}
+        {iconRight}
+      </a>
+    </div>
   )
 }
 

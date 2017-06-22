@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Title from './../Fields/Title'
 import Thumbnail from './../Fields/Thumbnail'
-import Summary from './../Fields/Summary'
+import TextField from './../Fields/TextField'
 import Bookmark from './../SnippetActions/Bookmark'
 
 const DefaultSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
@@ -18,7 +18,7 @@ const DefaultSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
       <div className='ola-snippet-content'>
         <Bookmark result={result} bookmarks={bookmarks} dispatch={dispatch} {...rest} />
         <Title result={result} {...rest} />
-        <Summary result={result} {...rest} />
+        <TextField result={result} {...rest} />
       </div>
     </div>
   )

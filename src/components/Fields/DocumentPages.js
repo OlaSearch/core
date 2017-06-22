@@ -1,7 +1,8 @@
 import React from 'react'
-import HighlightedField from './HighlightedField'
+import TextField from './TextField'
 import injectTranslate from './../../decorators/OlaTranslate'
 import withLogger from './../../decorators/OlaLogger'
+import FieldLabel from './FieldLabel'
 
 class DocumentPages extends React.Component {
   constructor (props) {
@@ -39,20 +40,24 @@ class DocumentPages extends React.Component {
     })
   };
   render () {
-    let { pages, q, contentField, translate } = this.props
+    let { pages, q, contentField, translate, fieldLabel, showIfEmpty } = this.props
     let { isVisible } = this.state
 
-    if (!pages.length) return null
+    if (!pages.length && !showIfEmpty) return null
+
+    let label = <FieldLabel label={fieldLabel} />
 
     if (!isVisible) {
       return (
-        <div className='ola-field-pages'>
+        <div className='ola-field ola-field-pages'>
+          {label}
           <a className='ola-link-view-pages' onClick={this.toggle}>{translate('doc_view_pages')}</a>
         </div>
       )
     }
     return (
-      <div className='ola-field-pages'>
+      <div className='ola-field ola-field-pages'>
+        {label}
         <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>{translate('doc_hide_pages')}</a>
         {pages.map((page, idx) =>
           <PageDetail
@@ -73,7 +78,8 @@ class DocumentPages extends React.Component {
  */
 DocumentPages.defaultProps = {
   contentField: 'pageContent',
-  pages: []
+  pages: [],
+  showIfEmpty: false
 }
 
 /**
@@ -92,7 +98,7 @@ const PageDetail = ({ page, contentField, onSelectPage }) => {
       >
         <span>p. {pageNumber}</span>
       </a>
-      <HighlightedField field={contentField} result={page} />
+      <TextField field={contentField} result={page} />
     </div>
   )
 }

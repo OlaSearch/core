@@ -2,7 +2,7 @@ import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
 import withLogger from './../../decorators/OlaLogger'
 
-const Title = ({ result, isLink, field, url, children, baseUrl, target, isBookmark, isAutosuggest, iconLeft, iconRight, log, snippetId, onClick }) => {
+const Title = ({ result, isLink, field, url, children, baseUrl, target, isBookmark, isAutosuggest, iconLeft, iconRight, log, snippetId, onClick, fieldLabel }) => {
   function logClick (event) {
     /* Send Log */
     let eventLabel = isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : null

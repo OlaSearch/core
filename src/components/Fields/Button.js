@@ -23,13 +23,15 @@ const Button = ({ label, className, url, fullWidth, onClick, result, snippetId, 
   })
   if (!label) return null
   return (
-    <a
-      className={klass}
-      onClick={handleClick}
-      href={url}
-    >
-      {label}
-    </a>
+    <div className='ola-field ola-field-button'>
+      <a
+        className={klass}
+        onClick={handleClick}
+        href={url}
+      >
+        {label}
+      </a>
+    </div>
   )
 }
 
