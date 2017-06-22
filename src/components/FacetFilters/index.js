@@ -1,7 +1,7 @@
 module.exports = {
   Boolean: require('./Boolean'),
   Checkbox: require('./Checkbox'),
-  DateRangePicker: require('./DateRangePicker'),
+  DatePicker: require('./DatePicker'),
   LinkFilter: require('./Default'),
   Range: require('./Range'),
   RangeNumeric: require('./RangeNumeric'),

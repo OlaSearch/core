@@ -337,14 +337,14 @@ class AutoComplete extends React.Component {
     /**
      * Check if a filter is already applied
      */
-    if (this.props.facets.length) {
-      this.props.updateQueryTerm(term)
-      return this.onSelect(suggestion)
-    }
+    // if (this.props.facets.length) {
+      // this.props.updateQueryTerm(term)
+      // return this.onSelect(suggestion)
+    // }
 
     if (isEntity || isTaxonomy) {
       /* Remove all selected facets */
-      this.props.removeAllFacets()
+      // this.props.removeAllFacets()
       /**
        * For Barack Obama in Climate
        */
