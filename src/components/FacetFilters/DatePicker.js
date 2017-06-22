@@ -5,8 +5,10 @@ import withFacetToggle from './../../decorators/OlaFacetToggle'
 import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
 import DatePicker from 'react-pikaday-component'
+import { connect } from 'react-redux'
 
 const DATE_FORMAT = 'DD-MM-YYYY'
+const DATE_FORMAT_MOBILE = 'YYYY-MM-DD'
 class DateRange extends React.Component {
   constructor (props) {
     super(props)
@@ -43,9 +45,13 @@ class DateRange extends React.Component {
     selected: PropTypes.array.isRequired
   };
 
+  getDateFormat = () => {
+    return this.props.isPhone ? DATE_FORMAT_MOBILE : DATE_FORMAT
+  };
+
   onCustomChange = () => {
-    let fromDate = DateParser.toUTC(this.state.fromDate, DATE_FORMAT)
-    let toDate = DateParser.toUTC(this.state.toDate, DATE_FORMAT)
+    let fromDate = DateParser.toUTC(this.state.fromDate, this.getDateFormat())
+    let toDate = DateParser.toUTC(this.state.toDate, this.getDateFormat())
     let { facet, dispatch } = this.props
 
     dispatch(replaceFacet(facet, [ fromDate, toDate ]))
@@ -100,7 +106,7 @@ class DateRange extends React.Component {
   };
 
   format = (date) => {
-    return DateParser.format(DateParser.parse(date), DATE_FORMAT)
+    return DateParser.format(DateParser.parse(date), this.getDateFormat())
   };
   getMinMaxValue = (props) => {
     let { selected, facet } = props
@@ -140,7 +146,14 @@ class DateRange extends React.Component {
     return new Date(year, month, day)
   }
   toDateString = (date, format) => {
-    return DateParser.format(date, DATE_FORMAT)
+    return DateParser.format(date, this.getDateFormat())
+  };
+
+  onMobileFromChange = (event) => {
+    this.onFromChange(event.target.value)
+  };
+  onMobileToChange = (event) => {
+    this.onToChange(event.target.value)
   };
 
   render () {
@@ -148,7 +161,8 @@ class DateRange extends React.Component {
       facet,
       dateLabels,
       isCollapsed,
-      toggleDisplay
+      toggleDisplay,
+      isPhone
     } = this.props
 
     let { values } = facet
@@ -182,23 +196,37 @@ class DateRange extends React.Component {
               <div className='ola-date-custom-input'>
                 <div className='ola-label ola-label-date'>
                   <span>From</span>
-                  <DatePicker
-                    format={DATE_FORMAT}
-                    onChange={this.onFromChange}
-                    parse={this.parseDate}
-                    toString={this.toDateString}
-                    value={DateParser.parse(this.state.fromDate, DATE_FORMAT)}
-                  />
+                  {isPhone
+                    ? <input
+                        type='date'
+                        value={DateParser.format(DateParser.parse(this.state.fromDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
+                        onChange={this.onMobileFromChange}
+                      />
+                    : <DatePicker
+                        format={DATE_FORMAT}
+                        onChange={this.onFromChange}
+                        parse={this.parseDate}
+                        toString={this.toDateString}
+                        value={DateParser.parse(this.state.fromDate, DATE_FORMAT)}
+                      />
+                  }
                 </div>
                 <div className='ola-label ola-label-date'>
                   <span>To</span>
-                  <DatePicker
-                    format={DATE_FORMAT}
-                    parse={this.parseDate}
-                    toString={this.toDateString}
-                    onChange={this.onToChange}
-                    value={DateParser.parse(this.state.toDate, DATE_FORMAT)}
-                  />
+                  {isPhone
+                    ? <input
+                        type='date'
+                        value={DateParser.format(DateParser.parse(this.state.toDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
+                        onChange={this.onMobileToChange}
+                      />
+                    : <DatePicker
+                        format={DATE_FORMAT}
+                        parse={this.parseDate}
+                        toString={this.toDateString}
+                        onChange={this.onToChange}
+                        value={DateParser.parse(this.state.toDate, DATE_FORMAT)}
+                      />
+                  }
                 </div>
               </div>
             </li>
@@ -225,4 +253,10 @@ const DateLabel = ({ label, value, onSelect }) => {
   )
 }
 
-module.exports = withFacetToggle(DateRange)
+function mapStateToProps (state) {
+  return {
+    isPhone: state.Device.isPhone || state.Device.isTablet
+  }
+}
+
+module.exports = connect(mapStateToProps, null)(withFacetToggle(DateRange))
