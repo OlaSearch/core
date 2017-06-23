@@ -12,7 +12,12 @@ const NoResults = ({
     facets,
     dispatch
   }) => {
-  if (totalResults || isLoading || !q) return null
+  /*
+    Removed `q` (23/6/17 - Vinay)
+    q can be empty when filters are used
+    (!q && !facets.length)
+   */
+  if (totalResults || isLoading) return null
   /**
    * Show help suggestion if:
    * totalResults = 0
@@ -33,7 +38,13 @@ const NoResults = ({
       </div>
     )
   } else {
-    message = translate('no_results_found', { q }, true)
+    if (!q) {
+      message = (
+        <div>
+          {translate('no_results_found_filters_only', null, true, { tagName: 'span' })}<button className='ola-reset-filters' type='button' onClick={removeFilters}>Remove filters</button>
+        </div>
+      )
+    } else message = translate('no_results_found', { q }, true)
   }
 
   return (
