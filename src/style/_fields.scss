@@ -1,0 +1,122 @@
+/**
+ * Fields
+ */
+
+.ola-field {
+  padding-bottom: 8px;
+}
+
+.ola-fg-horizontal > .ola-field {
+  padding-bottom: 0;
+}
+
+.ola-field-img {
+  border: 1px rgba(0,0,0,0.1) solid;
+  display: block;
+  width: 80px;
+  padding-bottom: 0;
+  margin-bottom: 8px;
+
+  @include media (tablet) {
+    width: 180px;
+  }
+
+  .ola-fg-horizontal & {
+    margin-right: 1em;
+  }
+
+  img {
+    max-width: 100%;
+    vertical-align: top;
+  }
+
+  .ola-module & {
+    width: 80px;
+  }
+}
+
+.ola-field-component-label {
+  color: #777;
+  font-size: 14px;
+  font-family: 'Ideal Sans A',sans-serif;
+}
+
+
+/**
+ * Field groups
+ */
+
+.ola-fg-horizontal {
+  @include flexbox;
+
+  > .ola-fg {
+    padding: 0 0.5em 0 0;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+/**
+ * Table inside snippet
+ */
+
+.ola-snippet {
+  table {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+  }
+
+  th, td {
+    padding: 6px 12px;
+    border: 1px #ccc solid;
+  }
+
+  th {
+    font-weight: 500;
+  }
+
+  thead th {
+    background: #eee;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+.ola-field-title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.ola-field-url {
+  font-size: 13px;
+  color: #666;
+  display: block;
+
+
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
