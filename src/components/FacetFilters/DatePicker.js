@@ -198,16 +198,16 @@ class DateRange extends React.Component {
                   <span>From</span>
                   {isPhone
                     ? <input
-                        type='date'
-                        value={DateParser.format(DateParser.parse(this.state.fromDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
-                        onChange={this.onMobileFromChange}
+                      type='date'
+                      value={DateParser.format(DateParser.parse(this.state.fromDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
+                      onChange={this.onMobileFromChange}
                       />
                     : <DatePicker
-                        format={DATE_FORMAT}
-                        onChange={this.onFromChange}
-                        parse={this.parseDate}
-                        toString={this.toDateString}
-                        value={DateParser.parse(this.state.fromDate, DATE_FORMAT)}
+                      format={DATE_FORMAT}
+                      onChange={this.onFromChange}
+                      parse={this.parseDate}
+                      toString={this.toDateString}
+                      value={DateParser.parse(this.state.fromDate, DATE_FORMAT)}
                       />
                   }
                 </div>
@@ -215,16 +215,16 @@ class DateRange extends React.Component {
                   <span>To</span>
                   {isPhone
                     ? <input
-                        type='date'
-                        value={DateParser.format(DateParser.parse(this.state.toDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
-                        onChange={this.onMobileToChange}
+                      type='date'
+                      value={DateParser.format(DateParser.parse(this.state.toDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
+                      onChange={this.onMobileToChange}
                       />
                     : <DatePicker
-                        format={DATE_FORMAT}
-                        parse={this.parseDate}
-                        toString={this.toDateString}
-                        onChange={this.onToChange}
-                        value={DateParser.parse(this.state.toDate, DATE_FORMAT)}
+                      format={DATE_FORMAT}
+                      parse={this.parseDate}
+                      toString={this.toDateString}
+                      onChange={this.onToChange}
+                      value={DateParser.parse(this.state.toDate, DATE_FORMAT)}
                       />
                   }
                 </div>

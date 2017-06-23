@@ -4,7 +4,6 @@ import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../
 import classNames from 'classnames'
 import { getDisplayName } from './../utilities'
 import injectTranslate from './../decorators/OlaTranslate'
-import invariant from 'invariant'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
@@ -51,7 +50,9 @@ class TabsFilter extends React.Component {
   getTabsForDisplay = (facet, values) => {
     var { tabsToDisplay } = facet
 
-    invariant(tabsToDisplay, 'tabsToDisplay is required. It should be part of the individual facet')
+    if (!tabsToDisplay) {
+      throw new Error('tabsToDisplay is required. It should be part of the individual facet')
+    }
 
     var tabs = []
 
