@@ -19,7 +19,10 @@ export const initialState = {
 
   /* Individual result */
   result: [],
-  isLoadingResult: false
+  isLoadingResult: false,
+
+  /* Sidebar */
+  isSidebarOpen: false
 }
 
 export default (state = initialState, action) => {
@@ -138,6 +141,12 @@ export default (state = initialState, action) => {
         bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
         history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
         namespace: action.namespace
+      }
+
+    case types.TOGGLE_SIDEBAR:
+      return {
+        ...state,
+        isSidebarOpen: !state.isSidebarOpen
       }
 
     default:

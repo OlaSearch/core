@@ -5,5 +5,6 @@ module.exports = {
   History: require('./History'),
   Intl: require('./Intl'),
   Logger: require('./Logger'),
-  Search: require('./Search')
+  Search: require('./Search'),
+  Ui: require('./Ui')
 }
