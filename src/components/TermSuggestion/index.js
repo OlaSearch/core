@@ -5,7 +5,7 @@ const TermSuggestion = ({ term, answer, totalResults, translate, className }) =>
   if (!term) return null
   if ((
         answer &&
-        (answer.data || answer.callback || answer.suggestions.length)
+        (answer.data || answer.callback || (answer.suggestions && answer.suggestions.length))
       ) ||
       totalResults === 0
   ) return null

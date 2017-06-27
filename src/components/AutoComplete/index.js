@@ -60,7 +60,8 @@ class AutoComplete extends React.Component {
   };
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.q !== this.props.q) {
+    if (nextProps.q !== this.props.q ||
+      nextProps.q !== this.state.q) {
       this.setState({
         q: nextProps.q
       })
@@ -95,8 +96,6 @@ class AutoComplete extends React.Component {
       results: [],
       isOpen: false
     })
-
-    this.props.updateQueryTerm('')
   };
   terminateAutoSuggest = () => {
     this.setState({

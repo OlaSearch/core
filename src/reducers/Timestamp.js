@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
 
 export const initialState = {
-  timestamp: null
+  timestamp: {}
 }
 
 export default (state = initialState, action) => {
@@ -15,13 +15,16 @@ export default (state = initialState, action) => {
     case types.REQUEST_AUTOSUGGEST:
       return {
         ...state,
-        timestamp: new Date().getTime()
+        timestamp: {
+          ...state.timestamp,
+          [`${action.api}`]: new Date().getTime()
+        }
       }
 
     case types.CLOSE_AUTOSUGGEST:
       return {
         ...state,
-        timestamp: null
+        timestamp: {}
       }
   }
 }

@@ -75,7 +75,8 @@ module.exports = (options = {}) => {
 
     shouldDispatchActions && next({
       ...payload,
-      type: requestType
+      type: requestType,
+      api
     })
 
     /* Add timestamp to query */
@@ -83,7 +84,7 @@ module.exports = (options = {}) => {
     var projectId = currentState.QueryState.projectId
     var env = currentState.QueryState.env
     let timestampObj = {
-      timestamp: currentState.Timestamp.timestamp,
+      timestamp: currentState.Timestamp.timestamp[api],
       projectId,
       env
     }
@@ -116,7 +117,7 @@ module.exports = (options = {}) => {
         if (xhr && 'responseURL' in xhr) {
           let responseURL = xhr.responseURL.split('?').pop()
           let timestampFromResponse = parseInt(queryString.parse(responseURL).timestamp)
-          if (timestampFromResponse && getState().Timestamp.timestamp !== timestampFromResponse) return nullResponse
+          if (timestampFromResponse && getState().Timestamp.timestamp[api] !== timestampFromResponse) return nullResponse
         }
 
         let type = successType
@@ -197,7 +198,8 @@ module.exports = (options = {}) => {
           answer,
           enriched_q: enrichedQuery,
           error: null,
-          skipSearchResultsUpdate
+          skipSearchResultsUpdate,
+          api
         })
 
         /**
