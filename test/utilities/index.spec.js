@@ -104,7 +104,7 @@ describe('Utilities', () => {
 
   describe('now', () => {
     it('returns current time', () => {
-      expect(utils.now()).toEqual(new Date().getTime())
+      expect(utils.now()).toBeLessThanOrEqualTo(new Date().getTime())
     })
   })
 
