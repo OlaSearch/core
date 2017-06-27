@@ -11,17 +11,17 @@ describe('Reducer: Timestamp', () => {
 
   it('should return empty timestamp', () => {
     let state = reducer(initialState, {})
-    expect(state.timestamp).toEqual(null)
+    expect(state.timestamp).toEqual({})
   })
 
   it('should update timestamp', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.REQUEST_SEARCH))
-    expect(state.timestamp).toBeLessThanOrEqualTo(new Date().getTime())
+    let state = reducer(initialState, MAKE_ACTION(types.REQUEST_SEARCH, { api: 'search'}))
+    expect(state.timestamp['search']).toBeLessThanOrEqualTo(new Date().getTime())
   })
 
   it('should clear timestamp when autosuggest is closed', () => {
     let state = reducer(initialState, MAKE_ACTION(types.CLOSE_AUTOSUGGEST))
-    expect(state.timestamp).toEqual(null)
+    expect(state.timestamp).toEqual({})
   })
 
 })
