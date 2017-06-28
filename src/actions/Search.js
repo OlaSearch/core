@@ -107,7 +107,7 @@ export function executeSearch (payload) {
       // Terminate search
       dispatch(terminateSearch())
       // Update the URL
-      updateURL(query, historyType, replaceQueryParamName)
+      globalRouteChange && updateURL(query, historyType, replaceQueryParamName)
       return
     }
 

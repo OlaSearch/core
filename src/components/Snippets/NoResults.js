@@ -18,6 +18,7 @@ const NoResults = ({
     (!q && !facets.length)
    */
   if (totalResults || isLoading) return null
+  if (!q && !facets.length) return null
   /**
    * Show help suggestion if:
    * totalResults = 0
@@ -38,7 +39,7 @@ const NoResults = ({
       </div>
     )
   } else {
-    if (!q) {
+    if (!q && facets.length) {
       message = (
         <div>
           {translate('no_results_found_filters_only', null, true, { tagName: 'span' })}<button className='ola-reset-filters' type='button' onClick={removeFilters}>Remove filters</button>
@@ -52,6 +53,10 @@ const NoResults = ({
       {message}
     </div>
   )
+}
+
+NoResults.defaultProps = {
+  facets: []
 }
 
 NoResults.propTypes = {

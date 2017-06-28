@@ -4,7 +4,7 @@ import { replaceFacet, executeSearch } from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
-import DatePicker from 'react-pikaday-component'
+import DatePicker from 'react-pikaday-datepicker'
 import { connect } from 'react-redux'
 
 const DATE_FORMAT = 'DD-MM-YYYY'
