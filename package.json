@@ -1,6 +1,6 @@
 {
   "name": "olasearch",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -52,13 +52,13 @@
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-olasearch": "^1.0.0",
+    "babel-preset-olasearch": "^1.0.3",
     "babel-preset-react-hmre": "^1.0.0",
     "babel-register": "^6.24.1",
     "chokidar": "^1.7.0",
     "cross-env": "^5.0.1",
     "enzyme": "^2.9.1",
-    "eslint": "^4.1.1",
+    "eslint": "3.19.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-react": "^7.1.0",
     "expect": "^1.20.2",
