@@ -117,7 +117,7 @@ class LinkFilter extends React.Component {
     values = values.filter((value) => value.name)
 
     /* Remove values in exclusion list */
-    values = values.filter(({ name }) => name.indexOf(exclusions) === -1)
+    values = values.filter(({ name }) => exclusions.indexOf(name) === -1)
 
     if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 

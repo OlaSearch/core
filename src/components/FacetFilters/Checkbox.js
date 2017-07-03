@@ -105,7 +105,7 @@ class CheckboxFilter extends React.Component {
     values = values.filter((value) => value.name)
 
     /* Remove values in exclusion list */
-    values = values.filter(({ name }) => name.indexOf(exclusions) === -1)
+    values = values.filter(({ name }) => exclusions.indexOf(name) === -1)
 
     var originalSize = values.length
 
