@@ -109,11 +109,15 @@ class LinkFilter extends React.Component {
     var {
       values,
       showSelectedTag = true,
-      removeLabel
+      removeLabel,
+      exclusions = []
     } = facet
 
     /* Remove values with no name */
     values = values.filter((value) => value.name)
+
+    /* Remove values in exclusion list */
+    values = values.filter(({ name }) => name.indexOf(exclusions) === -1)
 
     if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
 

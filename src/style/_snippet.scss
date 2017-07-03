@@ -1,0 +1,12 @@
+/**
+ * RTL snippet
+ */
+
+.ola-snippet-lang-ps {
+  direction: rtl;
+
+  .ola-link-bookmark-action {
+    left: 0;
+    right: auto;
+  }
+}

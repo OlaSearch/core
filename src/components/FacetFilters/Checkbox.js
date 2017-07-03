@@ -98,11 +98,14 @@ class CheckboxFilter extends React.Component {
       values,
       displayName,
       allowSingleSelection,
-      allowedNames
+      exclusions = []
     } = facet
 
     /* Remove values with no name or name doesnt match allowedNames */
-    values = values.filter((value) => value.name && (allowedNames ? allowedNames.indexOf(value.name) !== -1 : true))
+    values = values.filter((value) => value.name)
+
+    /* Remove values in exclusion list */
+    values = values.filter(({ name }) => name.indexOf(exclusions) === -1)
 
     var originalSize = values.length
 
@@ -110,7 +113,6 @@ class CheckboxFilter extends React.Component {
     if (!originalSize && !showIfEmpty) return null
 
     /* Filter values */
-
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
 
     var size = values.length
