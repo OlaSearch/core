@@ -1,8 +1,11 @@
 import React from 'react'
 import withLogger from './../../decorators/OlaLogger'
 
-const Url = ({ result, onClick, log, snippetId, anchorLink, label, className }) => {
+const Url = ({ result, field, onClick, log, snippetId, anchorLink, label, className }) => {
   let { url } = result
+  if (field) {
+    url = result[field]
+  }
   if (!url) return null
   if (anchorLink) url = `${url}#${anchorLink}`
   if (!label) label = url
