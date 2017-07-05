@@ -124,7 +124,7 @@ function mapStateToProps (state) {
 
 const HistoryContainer = connect(mapStateToProps)(injectTranslate(listensToClickOutside(History)))
 const HistoryWrapper = (props, { config: { searchHistory, searchPageUrl } }) => {
-  if (searchHistory) return <HistoryContainer searchPageUrl={searchPageUrl} />
+  if (searchHistory) return <HistoryContainer searchPageUrl={searchPageUrl} {...props} />
   return null
 }
 HistoryWrapper.contextTypes = {

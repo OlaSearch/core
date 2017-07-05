@@ -448,7 +448,7 @@ class AutoComplete extends React.Component {
             autoFocus={this.props.autoFocus}
             isPhone={this.props.isPhone}
             onBlur={this.onSoftBlur}
-            handleClose={this.closeAutoSuggest}
+            handleClose={this.terminateAutoSuggest}
           />
 
           <div className={klass}>

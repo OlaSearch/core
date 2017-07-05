@@ -184,9 +184,13 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
-        <History onOpen={this.props.handleClose} />
+        <History
+          onOpen={this.props.handleClose}
+        />
 
-        <Bookmarks onOpen={this.props.handleClose} />
+        <Bookmarks
+          onOpen={this.props.handleClose}
+        />
 
         <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
       </div>

@@ -106,7 +106,7 @@ function mapStateToProps (state) {
 
 const BookmarksContainer = connect(mapStateToProps)(injectTranslate(listensToClickOutside(Bookmarks)))
 const BookMarksWrapper = (props, { config: { bookmarking } }) => {
-  if (bookmarking) return <BookmarksContainer />
+  if (bookmarking) return <BookmarksContainer {...props} />
   return null
 }
 BookMarksWrapper.contextTypes = {
