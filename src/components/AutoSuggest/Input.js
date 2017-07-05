@@ -145,9 +145,13 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
-        <Bookmarks />
+        <Bookmarks
+          onOpen={this.props.handleClose}
+        />
 
-        <History />
+        <History
+          onOpen={this.props.handleClose}
+        />
       </div>
     )
   }

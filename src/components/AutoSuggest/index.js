@@ -226,6 +226,7 @@ class AutoSuggest extends React.Component {
             onSearchButtonClick={this.props.onSearchButtonClick}
             results={results}
             showZone={showZone}
+            handleClose={this.handleClickOutside}
           />
           <div className={klass}>
             <TermSuggestion term={suggestedTerm} />
