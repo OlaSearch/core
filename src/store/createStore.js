@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
 import { getKey, uuid } from './../utilities'
 import storage from './../services/storage'
-import { USER_SESSION_KEY, USER_SESSION_EXPIRY_DAYS } from './../constants/Settings'
+import { USER_SESSION_KEY, USER_NEW_KEY, USER_SESSION_EXPIRY_DAYS } from './../constants/Settings'
 
 /**
  * Signature
@@ -71,13 +71,24 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
 
   /* Create user cookie */
   var userSession = storage.cookies.get(USER_SESSION_KEY, config.namespace)
-  var isNewUser = false
-  if (!userSession) {
-    isNewUser = true
+  var isNewUser = storage.cookies.get(USER_NEW_KEY, config.namespace)
+
+  /* Check for user session */
+  if (userSession === null || userSession === undefined) {
     userSession = uuid()
     storage.cookies.set(
       getKey(USER_SESSION_KEY, config.namespace),
       userSession,
+      USER_SESSION_EXPIRY_DAYS
+    )
+  }
+  /* Check if the user is a new user */
+  if (isNewUser === null || isNewUser === undefined) {
+    isNewUser = true
+    /* Set new user flag */
+    storage.cookies.set(
+      getKey(USER_NEW_KEY, config.namespace),
+      isNewUser,
       USER_SESSION_EXPIRY_DAYS
     )
   }

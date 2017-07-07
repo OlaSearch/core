@@ -7,6 +7,7 @@ export const LOCALE_STORAGE_KEY = '_ola_locale_'
 export const LOCALE_STORAGE_TTL = 30 /* Days */
 export const SEARCH_SESSION_KEY = 'ola_search_session'
 export const USER_SESSION_KEY = 'ola_user_session' /* used for analytics only */
+export const USER_NEW_KEY = 'ola_new_user'
 export const USER_SESSION_EXPIRY_DAYS = 365
 export const INTENT_SESSION_KEY = 'ola_intent_session'
 export const INTENT_SESSION_EXPIRY_DAYS = 365
