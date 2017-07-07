@@ -144,6 +144,12 @@ export default (state = initialState, action) => {
         isNewUser: action.isNewUser
       }
 
+    case types.SET_NEW_USER_STATUS:
+      return {
+        ...state,
+        isNewUser: action.isNewUser
+      }
+
     default:
       return state
   }
