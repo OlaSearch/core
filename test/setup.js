@@ -16,6 +16,15 @@ global.window.localStorage = {
     }
 }
 
+global.window.sessionStorage = {
+    getItem: function (key) {
+        return this[key];
+    },
+    setItem: function (key, value) {
+        this[key] = value;
+    }
+}
+
 global.window.devToolsExtension = () => {
   return (next) => (reducer, initialState, enhancer) => {
     return next(fn(reducer), initialState, enhancer)
