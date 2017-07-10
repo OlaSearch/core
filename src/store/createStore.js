@@ -5,7 +5,8 @@ import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
 import { getKey, uuid } from './../utilities'
 import storage from './../services/storage'
-import { USER_SESSION_KEY, USER_NEW_KEY, USER_SESSION_EXPIRY_DAYS } from './../constants/Settings'
+import sessionStorage from './../services/sessionStorage'
+import { USER_SESSION_KEY, USER_NEW_KEY, USER_SESSION_EXPIRY_DAYS, SEARCH_SESSION_KEY } from './../constants/Settings'
 
 /**
  * Signature
@@ -94,6 +95,16 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
   }
 
   /**
+   * searchSession
+   * Session storage
+   */
+  var searchSession = sessionStorage.getItem(getKey(SEARCH_SESSION_KEY, config.namespace))
+  if (!searchSession) {
+    searchSession = uuid()
+    sessionStorage.setItem(getKey(SEARCH_SESSION_KEY, config.namespace), searchSession)
+  }
+
+  /**
    * Rehydrate store
    */
   store.dispatch({
@@ -101,6 +112,8 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
     namespace: config.namespace,
     isNewUser: isNewUser,
     projectId: config.projectId,
+    searchSession,
+    userSession,
     env: config.env
   })
 

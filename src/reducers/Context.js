@@ -1,5 +1,5 @@
 import types from './../constants/ActionTypes'
-import { CONTEXT_STORAGE_KEY, USER_SESSION_KEY } from './../constants/Settings'
+import { CONTEXT_STORAGE_KEY } from './../constants/Settings'
 import storage from './../services/storage'
 
 export const initialState = {
@@ -8,6 +8,7 @@ export const initialState = {
   isRequestingLocation: false,
   hasRequestedLocation: false,
   userSession: null,
+  searchSession: null,
   userId: null,
   isNewUser: false,
   hasUsedVoice: false,
@@ -127,7 +128,7 @@ export default (state = initialState, action) => {
       }
 
     case types.OLA_REHYDRATE:
-      let userSession = storage.cookies.get(USER_SESSION_KEY, action.namespace)
+      let { userSession, searchSession, isNewUser, userId } = action
       let contextFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY, action.namespace)
       if (typeof contextFromStorage === 'string') {
         try {
@@ -139,9 +140,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userSession,
+        searchSession,
         ...contextFromStorage,
-        userId: action.userId || userSession,
-        isNewUser: action.isNewUser
+        userId: userId || userSession,
+        isNewUser
       }
 
     case types.SET_NEW_USER_STATUS:
