@@ -173,9 +173,7 @@ module.exports = (options = {}) => {
         if (totalResults === 0 &&
           spellSuggestions.length &&
           !enrichedQuery &&
-          !answer &&
-          !answer.card &&
-          !answer.reply
+          !(answer && answer.card && answer.reply)
         ) {
           let { term } = spellSuggestions[0]
           return dispatch({
