@@ -99,7 +99,7 @@ module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhan
    * Session storage
    */
   var searchSession = sessionStorage.getItem(getKey(SEARCH_SESSION_KEY, config.namespace))
-  if (!searchSession) {
+  if (searchSession === null || searchSession === undefined) {
     searchSession = uuid()
     sessionStorage.setItem(getKey(SEARCH_SESSION_KEY, config.namespace), searchSession)
   }
