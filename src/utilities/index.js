@@ -112,7 +112,7 @@ const utilities = {
     /* Loop through selections and find Facets to display */
     for (let i = 0, len = selections.length; i < len; i++) {
       if (facetsToDisplay.hasOwnProperty(selections[i])) {
-        names = facetsToDisplay[selections[i]]
+        names = [ ...names, ...facetsToDisplay[selections[i]] ]
         hasKey = true
       }
     }
