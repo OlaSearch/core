@@ -10,7 +10,7 @@ const DateField = ({ date, format, fieldLabel, dependentField, result, showIfEmp
         return (
           <div className='ola-field ola-field-date'>
             <FieldLabel label={fieldLabel} />
-            -
+            <em>Date {date}</em>
           </div>
         )
       }
