@@ -14,6 +14,10 @@ const TextField = ({ field, fallbackFields, result, staticText, length, prefix =
       }
     }
   }
+  /* Convert array to string */
+  if (Array.isArray(fieldContent)) {
+    fieldContent = fieldContent.join(', ')
+  }
   let { highlighting } = result
   if (showIfEmpty && !fieldContent) fieldContent = `<em>${field}</em>`
   if (!fieldContent) {
