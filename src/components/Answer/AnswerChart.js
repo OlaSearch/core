@@ -3,7 +3,7 @@ import { bb } from 'billboard.js'
 import TableDetail from 'olasearch/lib/components/Answer/common/TableDetail'
 
 export default class AnswerCharts extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     this.drawChart()
   }
   sanitize = (text) => {
@@ -11,9 +11,9 @@ export default class AnswerCharts extends React.Component {
     return text.replace(/<(?:.*|\n)*?>/gm, '')
   };
   prepareData = (props) => {
-    let { data: { record_keys = [], record_data = [] }} = props
-    let keys = record_keys.filter((key) => key !== 'Country')
-    let data = record_data.slice(0, 5).map((item) => {
+    let { data: { record_keys: recordKeys = [], record_data: recordData = [] } } = props
+    let keys = recordKeys.filter((key) => key !== 'Country')
+    let data = recordData.slice(0, 5).map((item) => {
       let country = item['Country']
       return [].concat(country, keys.map((key) => {
         return key in item ? this.sanitize(item[key]) : null
@@ -58,7 +58,8 @@ export default class AnswerCharts extends React.Component {
     /* Check if record_keys <= 2 */
     /* ["Country", "2017"] => Only one value */
     if (this.props.data.record_keys.length <= 2) {
-      return this.chartRef.style.display = 'none'
+      this.chartRef.style.display = 'none'
+      return
     } else {
       this.chartRef.style.display = 'block'
     }
@@ -73,8 +74,7 @@ export default class AnswerCharts extends React.Component {
     this.chartRef = el
   };
   render () {
-    let { record_keys, record_data, title } = this.props.data
-    let showChart = record_keys.length > 2
+    let { title } = this.props
     return (
       <div className='ola-answer-chart'>
         {title && <h4 className='ola-answer-table-caption'>{title}</h4>}
