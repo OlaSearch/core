@@ -132,11 +132,9 @@ class LinkFilter extends React.Component {
     var size = values.length
 
     /* Should display show more link */
-
     var shouldDisplayShowMore = size > limit
 
     /* Show more */
-
     if (!showMore) values = values.slice(0, limit)
 
     var showMoreLink = shouldDisplayShowMore

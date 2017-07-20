@@ -50,6 +50,12 @@ class CheckboxFilter extends React.Component {
     dispatch(executeSearch())
   };
 
+  toggleshowMore = () => {
+    this.setState({
+      showMore: !this.state.showMore
+    })
+  };
+
   onChangeFilterText = (event) => {
     this.setState({
       filterText: xssFilters.inHTMLData(event.target.value)
@@ -81,7 +87,8 @@ class CheckboxFilter extends React.Component {
 
   render () {
     var {
-      filterText
+      filterText,
+      showMore
     } = this.state
 
     var {
@@ -116,6 +123,17 @@ class CheckboxFilter extends React.Component {
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
 
     var size = values.length
+
+    /* Should display show more link */
+    var shouldDisplayShowMore = size > limit
+
+    /* Show more */
+    if (!showMore) values = values.slice(0, limit)
+
+    var showMoreLink = shouldDisplayShowMore
+      ? <button className={`ola-btn ola-link-show-more ${showMore ? 'ola-link-show-less' : ''}`} onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
+      : null
+
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed,
@@ -139,10 +157,11 @@ class CheckboxFilter extends React.Component {
             <div className='ola-facet-scroll-list'>
               <ReactList
                 itemRenderer={itemRendererBound}
-                length={size}
+                length={values.length}
                 type={listType}
               />
             </div>
+            {showMoreLink}
           </div>
         </div>
       </div>
