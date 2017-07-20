@@ -170,7 +170,7 @@ export function fetchResult (id) {
         types.REQUEST_RESULT_SUCCESS,
         types.REQUEST_RESULT_FAILURE
       ],
-      query: { q: `id:${id}`, projectId: getState().QueryState.projectId, env: getState().QueryState.env },
+      query: { q: `id:${id}`, searchAdapterOptions: { disableBestBets: true } },
       api: 'get'
     })
   }

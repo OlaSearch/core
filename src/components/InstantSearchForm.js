@@ -42,7 +42,8 @@ class InstantSearchForm extends React.Component {
     showZone: false,
     isPhone: false,
     urlSync: true,
-    autoFocus: false
+    autoFocus: false,
+    className: null
   };
 
   static contextTypes = {
@@ -109,7 +110,7 @@ class InstantSearchForm extends React.Component {
       ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear' />
       : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit' />
 
-    let klass = classNames('ola-search-form', {
+    let klass = classNames('ola-search-form', this.props.className, {
       'ola-search-zone-enabled': showZone,
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })

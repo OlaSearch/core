@@ -61,7 +61,7 @@ module.exports = (options = {}) => {
       throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
     }
 
-    const { logger, proxy, intentEngineEnabled } = config
+    let { logger, proxy, intentEngineEnabled } = config
 
     if (
       !Array.isArray(types) ||
@@ -82,7 +82,7 @@ module.exports = (options = {}) => {
     /* Add timestamp to query */
     var currentState = getState()
     var projectId = currentState.QueryState.projectId
-    var env = currentState.QueryState.env
+    var env = currentState.QueryState.env || 'staging'
     let timestampObj = {
       timestamp: currentState.Timestamp.timestamp[api],
       projectId,
