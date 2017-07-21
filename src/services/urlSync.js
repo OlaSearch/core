@@ -125,7 +125,8 @@ var urlSync = {
 
       var fq = facetQuery
         .filter((item) => {
-          let [ name ] = item.split(':')
+          let [ name, value ] = item.split(':')
+          if (!value) return false
           return find(propEq('name', name))(configFacets)
         })
         .map((item) => {
