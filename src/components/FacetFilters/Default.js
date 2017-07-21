@@ -24,13 +24,11 @@ class LinkFilter extends React.Component {
     dispatch: PropTypes.func.isRequired,
     selected: PropTypes.array.isRequired,
     facet: PropTypes.object.isRequired,
-    limit: PropTypes.number.isRequired,
     showIfEmpty: PropTypes.bool,
     showSelectedFacetItem: PropTypes.bool
   };
 
   static defaultProps = {
-    limit: 5,
     listType: 'uniform',
     showIfEmpty: false,
     showSelectedFacetItem: false,
@@ -95,9 +93,7 @@ class LinkFilter extends React.Component {
 
     var {
       facet,
-      limit,
       selected,
-      isCollapsed,
       toggleDisplay,
       listType,
       translate,
@@ -110,7 +106,9 @@ class LinkFilter extends React.Component {
       values,
       showSelectedTag = true,
       removeLabel,
-      exclusions = []
+      exclusions = [],
+      limit = 6,
+      isCollapsed
     } = facet
 
     /* Remove values with no name */

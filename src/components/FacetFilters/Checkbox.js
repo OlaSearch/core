@@ -19,7 +19,6 @@ class CheckboxFilter extends React.Component {
   }
 
   static defaultProps = {
-    limit: 6,
     listType: 'uniform'
   };
 
@@ -93,9 +92,7 @@ class CheckboxFilter extends React.Component {
 
     var {
       facet,
-      isCollapsed,
       toggleDisplay,
-      limit,
       listType,
       translate,
       showIfEmpty
@@ -105,7 +102,9 @@ class CheckboxFilter extends React.Component {
       values,
       displayName,
       allowSingleSelection,
-      exclusions = []
+      exclusions = [],
+      limit = 6,
+      isCollapsed
     } = facet
 
     /* Remove values with no name or name doesnt match allowedNames */
@@ -173,33 +172,32 @@ class CheckboxFilter extends React.Component {
  * Checkbox Item
  * JSX No Bind
  */
-class CheckBoxItem extends React.Component {
-  onChecked = (event) => {
-    let { name, handleAddFacet, handleRemoveFacet } = this.props
+const CheckBoxItem = (props) => {
+  function onChecked (event) {
+    let { name, handleAddFacet, handleRemoveFacet } = props
     if (event.target.checked) {
       handleAddFacet(name)
     } else {
       handleRemoveFacet(name)
     }
   }
-  render () {
-    let { isActive, count, displayName } = this.props
-    let labelKlass = classNames({
-      'ola-checkbox ola-checkbox-label': true,
-      'ola-checkbox-active': isActive
-    })
-    return (
-      <label className={labelKlass}>
-        <input
-          type='checkbox'
-          checked={isActive}
-          onChange={this.onChecked}
-          />
-        <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
-        <span className='ola-search-facet-count'>{count}</span>
-      </label>
-    )
-  }
+
+  let { isActive, count, displayName } = props
+  let labelKlass = classNames({
+    'ola-checkbox ola-checkbox-label': true,
+    'ola-checkbox-active': isActive
+  })
+  return (
+    <label className={labelKlass}>
+      <input
+        type='checkbox'
+        checked={isActive}
+        onChange={onChecked}
+      />
+      <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
+      <span className='ola-search-facet-count'>{count}</span>
+    </label>
+  )
 }
 
 module.exports = injectTranslate(withFacetToggle(CheckboxFilter))
