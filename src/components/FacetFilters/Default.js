@@ -99,7 +99,8 @@ class LinkFilter extends React.Component {
       translate,
       showIfEmpty,
       showSelectedFacetItem,
-      debug
+      debug,
+      isCollapsed
     } = this.props
 
     var {
@@ -107,8 +108,7 @@ class LinkFilter extends React.Component {
       showSelectedTag = true,
       removeLabel,
       exclusions = [],
-      limit = 6,
-      isCollapsed
+      limit = 6
     } = facet
 
     /* Remove values with no name */

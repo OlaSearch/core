@@ -95,7 +95,8 @@ class CheckboxFilter extends React.Component {
       toggleDisplay,
       listType,
       translate,
-      showIfEmpty
+      showIfEmpty,
+      isCollapsed
     } = this.props
 
     var {
@@ -103,8 +104,7 @@ class CheckboxFilter extends React.Component {
       displayName,
       allowSingleSelection,
       exclusions = [],
-      limit = 6,
-      isCollapsed
+      limit = 6
     } = facet
 
     /* Remove values with no name or name doesnt match allowedNames */
