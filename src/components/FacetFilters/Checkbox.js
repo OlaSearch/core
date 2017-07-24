@@ -104,8 +104,12 @@ class CheckboxFilter extends React.Component {
       displayName,
       allowSingleSelection,
       exclusions = [],
-      limit = 6
+      limit = 6,
+      fixedValues
     } = facet
+
+    /* User specified values */
+    if (fixedValues) values = fixedValues.map((item) => ({ name: item }))
 
     /* Remove values with no name or name doesnt match allowedNames */
     values = values.filter((value) => value.name)
@@ -195,7 +199,7 @@ const CheckBoxItem = (props) => {
         onChange={onChecked}
       />
       <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
-      <span className='ola-search-facet-count'>{count}</span>
+      {count && <span className='ola-search-facet-count'>{count}</span>}
     </label>
   )
 }
