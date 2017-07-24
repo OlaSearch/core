@@ -66,6 +66,7 @@ module.exports = {
   DatePicker: require('./components/FacetFilters/DatePicker'),
   TagCloud: require('./components/FacetFilters/TagCloud'),
   Hierarchical: require('./components/FacetFilters/Hierarchical'),
+  Tabs: require('./components/FacetFilters/Tabs'),
 
   // Optional olasearch/lib/{name}
   NoResults: require('./components/Snippets/NoResults'),
@@ -75,7 +76,6 @@ module.exports = {
   PopularKeywords: require('./components/PopularKeywords'),
   Error: require('./components/Error'),
   Answer: require('./components/Answer'),
-  Tabs: require('./components/FacetFilters/Tabs'),
   Sort: require('./components/Sort'),
   InstantSearchForm: require('./components/InstantSearchForm'),
   SpellSuggestion: require('./components/SpellSuggestion'),

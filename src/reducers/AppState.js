@@ -121,6 +121,21 @@ export default (state = initialState, action) => {
         history: [action.history, ...state.history]
       }
 
+    case types.UPDATE_HISTORY:
+      return {
+        ...state,
+        history: state.history.map((item) => {
+          if (item.q === action.q) {
+            return {
+              ...item,
+              popularity: item.popularity + 1,
+              dateAdded: action.dateAdded
+            }
+          }
+          return item
+        })
+      }
+
     case types.CLEAR_HISTORY:
       return {
         ...state,

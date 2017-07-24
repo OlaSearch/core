@@ -46,6 +46,7 @@ module.exports = {
 
   ADD_HISTORY: 'ADD_HISTORY',
   CLEAR_HISTORY: 'CLEAR_HISTORY',
+  UPDATE_HISTORY: 'UPDATE_HISTORY',
 
   /* Pagination */
 

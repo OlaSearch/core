@@ -103,6 +103,20 @@ const utilities = {
   translateKey (path, obj, safe) {
     return obj[path] === null ? '' : obj[path] || path
   },
+  sortHistory (a, b) {
+    let a1 = a.popularity
+    let b1 = b.popularity
+    let a2 = a.dateAdded
+    let b2 = b.dateAdded
+    if (a1 === b1) {
+      if (a2 < b2) return 1
+      if (a2 > b2) return -1
+    } else {
+      if (a2 < b2) return 1
+      if (a2 > b2) return -1
+    }
+    return 0
+  },
   getFacetsToDisplay (selected, facets, facetsToDisplay) {
     var selections = flatten(selected.map((item) => item.selected))
     var names = []

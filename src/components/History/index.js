@@ -7,6 +7,7 @@ import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { log } from './../../actions/Logger'
+import { sortHistory } from './../../utilities'
 
 class History extends React.Component {
   static propTypes = {
@@ -78,6 +79,9 @@ class History extends React.Component {
     })
 
     const hasHistory = history.length > 0
+
+    /* Sort history based on popularity */
+    history = history.sort(sortHistory)
 
     return (
       <div className='ola-history-container'>

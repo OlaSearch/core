@@ -1,6 +1,6 @@
 import React from 'react'
 import { bb } from 'billboard.js'
-import TableDetail from 'olasearch/lib/components/Answer/common/TableDetail'
+import TableDetail from './common/TableDetail'
 
 export default class AnswerCharts extends React.Component {
   componentDidMount () {

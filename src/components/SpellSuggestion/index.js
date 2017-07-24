@@ -4,57 +4,50 @@ import { updateQueryTerm, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
-class SpellSuggestion extends React.Component {
-  static propTypes = {
-    suggestions: PropTypes.array.isRequired,
-    totalResults: PropTypes.number.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    showCount: PropTypes.bool
-  };
-
-  static defaultProps = {
-    showCount: false,
-    alwaysVisible: false
-  };
-
-  onChange = (term) => {
-    var { dispatch } = this.props
-
+const SpellSuggestion = (props) => {
+  function onChange (term) {
+    var { dispatch } = props
     dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))
     dispatch(executeSearch())
-  };
-  handleClick = (term) => {
-    this.props.onChange ? this.props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION) : this.onChange(term)
-  };
-
-  shouldComponentUpdate (nextProps) {
-    return nextProps.suggestions !== this.props.suggestions
   }
-  render () {
-    var {
-      suggestions,
-      showCount,
-      translate
-    } = this.props
-
-    if (!suggestions.length) return null
-
-    return (
-      <div className='ola-spell-suggestion'>
-        <span>{translate('suggestions_did_you_mean')}</span>
-        {suggestions.map((item, idx) => {
-          return (
-            <TermItem
-              handleClick={this.handleClick}
-              showCount={showCount}
-              item={item}
-              key={idx}
-            />
-          )
-        })}
-      </div>
-    )
+  function handleClick (term) {
+    props.onChange ? props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION) : onChange(term)
   }
+  var {
+    suggestions,
+    showCount,
+    translate
+  } = props
+
+  if (!suggestions.length) return null
+
+  return (
+    <div className='ola-spell-suggestion'>
+      <span>{translate('suggestions_did_you_mean')}</span>
+      {suggestions.map((item, idx) => {
+        return (
+          <TermItem
+            handleClick={handleClick}
+            showCount={showCount}
+            item={item}
+            key={idx}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+SpellSuggestion.propTypes = {
+  suggestions: PropTypes.array.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  showCount: PropTypes.bool
+}
+
+SpellSuggestion.defaultProps = {
+  showCount: false,
+  alwaysVisible: false
 }
 
 /**

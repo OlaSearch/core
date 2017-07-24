@@ -2,7 +2,6 @@ import types from './../constants/ActionTypes'
 import { buildQueryString, character as hashCharacter } from './../services/urlSync'
 import omit from 'ramda/src/omit'
 import flatten from 'ramda/src/flatten'
-import equals from 'ramda/src/equals'
 import { debounce, supplant } from './../utilities'
 import DateParser from './../utilities/dateParser'
 
@@ -11,7 +10,7 @@ export function addHistory (options) {
     let { QueryState, AppState } = getState()
     let { q, facet_query } = QueryState
     let { totalResults, history } = AppState
-    if (!q || !totalResults) return
+    if (!q || !totalResults || q === '*') return
 
     /* Filtering history */
     var query = omit(['page', 'per_page', 'referrer'], QueryState)
@@ -39,10 +38,16 @@ export function addHistory (options) {
     }))
 
     /* Check if it already exists */
-    var exists = history.some((item) => item.q === q && equals(item.facets, activeFacets))
+    var exists = history.some((item) => item.q === q)
 
     /* Check if history already exists */
-    if (exists) return
+    if (exists) {
+      return dispatch({
+        type: types.UPDATE_HISTORY,
+        q,
+        dateAdded: new Date().getTime()
+      })
+    }
 
     dispatch({
       type: types.ADD_HISTORY,
@@ -50,7 +55,8 @@ export function addHistory (options) {
         q,
         url: hashCharacter + buildQueryString(query),
         dateAdded: new Date().getTime(),
-        facets: activeFacets
+        facets: activeFacets,
+        popularity: 1
       }
     })
   }

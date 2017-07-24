@@ -11,50 +11,47 @@ import propEq from 'ramda/src/propEq'
 /* Create a zone facet */
 const createZoneFacet = (name) => ({ name, zone: true, type: 'string' })
 
-class Zone extends React.Component {
-  onChange = (event) => {
+const Zone = (props, context) => {
+  function onChange (event) {
     let { value } = event.target
-    let { onChange, replaceFacet, removeFacet } = this.props
-    let facet = createZoneFacet(this.context.config.zone.filter)
+    let { onChange, replaceFacet, removeFacet } = props
+    let facet = createZoneFacet(context.config.zone.filter)
     if (value) {
       replaceFacet(facet, value)
     } else {
       removeFacet(facet)
     }
     onChange && onChange(facet, value)
-  };
-
-  static contextTypes = {
-    config: PropTypes.object
-  };
-
-  static defaultProps = {
-    selected: []
-  };
-
-  render () {
-    let { zone: { defaultValue, values, filter } } = this.context.config
-    let { selected } = this.props
-    let selectedValues = flatten(selected.filter((item) => item.name === filter).map((item) => item.selected))
-    let selectedValue = selectedValues.length ? selectedValues[0] : defaultValue
-    let selectedDisplayName = find(propEq('name', selectedValue))(values)['displayName']
-
-    return (
-      <div className='ola-zone'>
-        <label className='ola-zone-label'>Select zone</label>
-        <span className='ola-zone-selected'>{selectedDisplayName}</span>
-        <select
-          onChange={this.onChange}
-          value={selectedValue}
-        >
-          {values.map((zone) => {
-            let { name, displayName } = zone
-            return <option key={name} value={name}>{displayName}</option>
-          })}
-        </select>
-      </div>
-    )
   }
+
+  let { zone: { defaultValue, values, filter } } = context.config
+  let { selected } = props
+  let selectedValues = flatten(selected.filter((item) => item.name === filter).map((item) => item.selected))
+  let selectedValue = selectedValues.length ? selectedValues[0] : defaultValue
+  let selectedDisplayName = find(propEq('name', selectedValue))(values)['displayName']
+
+  return (
+    <div className='ola-zone'>
+      <label className='ola-zone-label'>Select zone</label>
+      <span className='ola-zone-selected'>{selectedDisplayName}</span>
+      <select
+        onChange={onChange}
+        value={selectedValue}
+      >
+        {values.map(({ name, displayName }) => {
+          return <option key={name} value={name}>{displayName}</option>
+        })}
+      </select>
+    </div>
+  )
+}
+
+Zone.contextTypes = {
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+}
+
+Zone.defaultProps = {
+  selected: []
 }
 
 function mapStateToProps (state, ownProps) {
