@@ -4,7 +4,7 @@ import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
 const Directions = (props) => {
-  var { latlong, translate, label, iconLeft = null, iconRight = null, onClick, result, log, fieldLabel, ...rest } = props
+  var { latlong, translate, label, iconLeft = null, iconRight = null, onClick, result, log, fieldLabel, snippetId, ...rest } = props
 
   if (!latlong) return null
   if (typeof latlong === 'object') {
@@ -16,11 +16,11 @@ const Directions = (props) => {
   function handleClick (event) {
     log({
       eventType: 'C',
-      result: result,
+      result,
       eventCategory: 'Get Directions',
       eventAction: 'click',
       debounce: true,
-      snippetId: props.snippetId
+      snippetId
     })
     onClick && onClick(event)
   }

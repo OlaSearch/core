@@ -31,7 +31,7 @@ export default {
     this.fireCallbacks()
   },
   fireCallbacks () {
-    this.callbacks.forEach(callback => callback())
+    this.callbacks.forEach((callback) => callback())
     this.callbacks = []
   },
   removeCallback (index) {

@@ -6,10 +6,10 @@ const Button = ({ label, className, url, fullWidth, onClick, result, snippetId, 
   function handleClick (event) {
     log({
       eventType: 'C',
-      result: result,
+      result,
       eventCategory: label,
       eventAction: 'click',
-      snippetId: snippetId
+      snippetId
     })
 
     if (onClick) return onClick(event, result)

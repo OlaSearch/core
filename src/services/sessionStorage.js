@@ -19,15 +19,15 @@ var Storage = function (type) {
 
   return {
     length: 0,
-    clear: function () {
+    clear () {
       data = {}
       this.length = 0
       clearData()
     },
-    getItem: function (key) {
+    getItem (key) {
       return data[key] === undefined ? null : data[key]
     },
-    key: function (i) {
+    key (i) {
       // not perfect, but works
       var ctr = 0
       for (var k in data) {
@@ -36,12 +36,12 @@ var Storage = function (type) {
       }
       return null
     },
-    removeItem: function (key) {
+    removeItem (key) {
       delete data[key]
       this.length--
       setData(data)
     },
-    setItem: function (key, value) {
+    setItem (key, value) {
       data[key] = value + '' // forces the value to a string
       this.length++
       setData(data)

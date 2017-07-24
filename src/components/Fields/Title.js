@@ -12,7 +12,7 @@ const Title = ({ result, isLink, field, url, children, baseUrl, target, isBookma
       eventCategory: 'Title',
       eventAction: 'click',
       eventLabel,
-      snippetId: snippetId
+      snippetId
     })
 
     if (onClick) onClick(event)

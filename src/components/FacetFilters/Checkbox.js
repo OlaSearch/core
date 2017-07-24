@@ -143,11 +143,11 @@ class CheckboxFilter extends React.Component {
       'ola-facet-single-select': allowSingleSelection
     })
     var filterInput = originalSize > limit
-      ? <FilterInput
+      ? (<FilterInput
         value={filterText}
         onChange={this.onChangeFilterText}
         placeholder={translate('facet_filter_placeholder')}
-        />
+        />)
       : null
     var itemRendererBound = this.itemRenderer.bind(this, values)
 

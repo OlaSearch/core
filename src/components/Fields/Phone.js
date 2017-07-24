@@ -14,10 +14,10 @@ const Phone = (props) => {
   function handleClick (event) {
     log({
       eventType: 'C',
-      result: result,
+      result,
       eventCategory: 'Call',
       eventAction: 'click',
-      snippetId: snippetId
+      snippetId
     })
     onClick && onClick(event, result)
   }

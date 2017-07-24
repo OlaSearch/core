@@ -60,13 +60,13 @@ class DocumentPages extends React.Component {
         {label}
         <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>{translate('doc_hide_pages')}</a>
         {pages.map((page, idx) =>
-          <PageDetail
+          (<PageDetail
             onSelectPage={this.onSelect}
             page={page}
             contentField={contentField}
             key={idx}
             q={q}
-          />
+          />)
         )}
       </div>
     )

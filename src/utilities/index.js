@@ -1,3 +1,4 @@
+import React from 'react'
 import flatten from 'ramda/src/flatten'
 
 const utilities = {

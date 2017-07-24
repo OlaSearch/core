@@ -146,11 +146,11 @@ class LinkFilter extends React.Component {
     var itemRendererBound = this.itemRenderer.bind(this, values)
 
     var filterInput = originalSize > limit
-      ? <FilterInput
+      ? (<FilterInput
         value={filterText}
         onChange={this.onChangeFilterText}
         placeholder={translate('facet_filter_placeholder')}
-        />
+        />)
       : null
 
     return (

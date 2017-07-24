@@ -72,9 +72,9 @@ class AnswerMap extends React.Component {
       let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
 
       let marker = new google.maps.Marker({
-        position: position,
+        position,
         map: this.map,
-        title: title,
+        title,
         icon: this.props.markerIcon
       })
 
