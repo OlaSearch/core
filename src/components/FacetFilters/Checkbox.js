@@ -108,9 +108,6 @@ class CheckboxFilter extends React.Component {
       fixedValues
     } = facet
 
-    /* User specified values */
-    if (fixedValues) values = fixedValues.map((item) => ({ name: item }))
-
     /* Remove values with no name or name doesnt match allowedNames */
     values = values.filter((value) => value.name)
 
@@ -121,6 +118,9 @@ class CheckboxFilter extends React.Component {
 
     /* Dont show anything when no items */
     if (!originalSize && !showIfEmpty) return null
+
+    /* User specified values */
+    if (fixedValues) values = fixedValues.map((item) => ({ name: item }))
 
     /* Filter values */
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))

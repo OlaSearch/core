@@ -27,7 +27,8 @@ class SearchFilters extends React.Component {
   };
 
   static defaultProps = {
-    conditional: true
+    conditional: true,
+    facets: []
   };
 
   shouldComponentUpdate (nextProps) {

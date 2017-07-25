@@ -14,4 +14,8 @@ const FilterButton = ({ toggleSidebar, facets }) => {
   )
 }
 
+FilterButton.defaultProps = {
+  facets: []
+}
+
 module.exports = connect(null, { toggleSidebar })(FilterButton)

@@ -13,7 +13,9 @@ class SearchResults extends React.Component {
   };
 
   static defaultProps = {
-    alwaysUpdate: false
+    alwaysUpdate: false,
+    results: [],
+    bookmarks: []
   };
 
   static contextTypes = {

@@ -47,7 +47,8 @@ SpellSuggestion.propTypes = {
 
 SpellSuggestion.defaultProps = {
   showCount: false,
-  alwaysVisible: false
+  alwaysVisible: false,
+  suggestions: []
 }
 
 /**
