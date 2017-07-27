@@ -26,7 +26,7 @@
     "olasearch"
   ],
   "author": "Vinay M <vinay@olasearch.com> (http://gitlab.com/olasearch)",
-  "license": "UNLICENSED",
+  "license": "Copyright 2016-2017 Ola Search Pte Ltd",
   "bugs": {
     "url": "https://gitlab.com/olasearch/olasearch-core/issues"
   },
@@ -59,7 +59,7 @@
     "cross-env": "^5.0.1",
     "enzyme": "^2.9.1",
     "eslint": "3.19.0",
-    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-react": "^7.1.0",
     "expect": "^1.20.2",
     "expose-loader": "^0.7.3",

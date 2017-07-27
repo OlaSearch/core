@@ -120,7 +120,10 @@ class CheckboxFilter extends React.Component {
     if (!originalSize && !showIfEmpty) return null
 
     /* User specified values */
-    if (fixedValues) values = fixedValues.map((item) => ({ name: item }))
+    if (fixedValues) {
+      values = fixedValues.map((item) => ({ name: item }))
+      originalSize = values.length
+    }
 
     /* Filter values */
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
