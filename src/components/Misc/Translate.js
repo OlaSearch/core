@@ -7,6 +7,6 @@ const Translate = ({ id, translate, tagName }) => {
 
 Translate.defaultProps = {
   tagName: 'span'
-};
+}
 
 module.exports = injectTranslate(Translate)

@@ -49,9 +49,11 @@ class Pagination extends React.Component {
   selectPage = (page) => {
     let { actions, onChangePage } = this.props
 
-    onChangePage
-      ? onChangePage()
-      : this.pagination.parentNode.scrollIntoView()
+    if (onChangePage) {
+      return onChangePage(page)
+    }
+
+    this.pagination.parentNode.scrollIntoView()
 
     actions.changePage(page)
 
