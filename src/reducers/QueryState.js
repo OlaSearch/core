@@ -15,6 +15,7 @@ export const initialState = {
   isSearchActive: true,
   searchInput: null,
   skip_intent: false,
+  debug: false,
 
   /* project info */
   projectId: null,
@@ -229,7 +230,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         projectId: action.projectId,
-        env: action.env
+        env: action.env,
+        debug: action.debug
       }
 
     case types.UPDATE_OLA_PARAMETERS:
