@@ -111,6 +111,9 @@ class LinkFilter extends React.Component {
       limit = 6
     } = facet
 
+    /* Parse limit */
+    limit = parseInt(limit)
+
     /* Remove values with no name */
     values = values.filter((value) => value.name)
 

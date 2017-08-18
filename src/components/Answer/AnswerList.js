@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
+import AnswerField from './AnswerField'
+import AnswerButton from './AnswerButton'
 
 class AnswerList extends React.Component {
   constructor (props) {
@@ -35,20 +37,16 @@ class AnswerList extends React.Component {
 
                   <div className='ola-answer-keyvalue'>
                     {fields
-                      .map(({ label, value }, idx) => {
-                        let klass = classNames('ola-answer-row', `ola-answer-row-${label}`)
+                      .map((field, idx) => {
+                        let klass = classNames('ola-answer-row', `ola-answer-row-${field.label}`)
                         return (
-                          <div className={klass} key={idx}>
-                            <div className='ola-answer-value'>
-                              {value}
-                            </div>
-                          </div>
+                          <AnswerField className={klass} {...field} key={idx} />
                         )
                       })}
                   </div>
                   {buttons.map((button, idx) => {
                     return (
-                      <a key={idx} className='ola-answer-email' href={button.url}>{button.title}</a>
+                      <AnswerButton {...button} key={idx} />
                     )
                   })}
 

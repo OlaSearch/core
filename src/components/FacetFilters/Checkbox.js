@@ -108,6 +108,9 @@ class CheckboxFilter extends React.Component {
       fixedValues
     } = facet
 
+    /* Parse limit */
+    limit = parseInt(limit)
+
     /* Remove values with no name or name doesnt match allowedNames */
     values = values.filter((value) => value.name)
 
@@ -120,7 +123,7 @@ class CheckboxFilter extends React.Component {
     if (!originalSize && !showIfEmpty) return null
 
     /* User specified values */
-    if (fixedValues) {
+    if (fixedValues && fixedValues.length) {
       values = fixedValues.map((item) => ({ name: item }))
       originalSize = values.length
     }
