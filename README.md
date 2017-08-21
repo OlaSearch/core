@@ -21,6 +21,14 @@ Using [https://yarnpkg.com](Yarn) as package manager
 - [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
 - [x] Added tag cloud
 
+## Security
+
+1. Remove vulnerable node packages
+
+````
+npm run retire
+````
+
 ## Coding collaboration guidelines
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
