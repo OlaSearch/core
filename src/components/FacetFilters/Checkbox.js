@@ -6,6 +6,7 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
+import { ALL_VALUES } from './../../constants/Settings'
 import FilterInput from './common/FilterInput'
 import xssFilters from 'xss-filters'
 
@@ -105,7 +106,8 @@ class CheckboxFilter extends React.Component {
       allowSingleSelection,
       exclusions = [],
       limit = 6,
-      fixedValues
+      fixedValues,
+      defaultValue = []
     } = facet
 
     /* Parse limit */
@@ -119,14 +121,36 @@ class CheckboxFilter extends React.Component {
 
     var originalSize = values.length
 
-    /* Dont show anything when no items */
-    if (!originalSize && !showIfEmpty) return null
-
     /* User specified values */
     if (fixedValues && fixedValues.length) {
-      values = fixedValues.map((item) => ({ name: item }))
+      /**
+       * Example
+       * defaultValue = [-Archived]
+       * values = [{'name': 'Archived', count: 1}, { name: 'Online', count: 2}]
+       * fixedValues = ['All', 'Online']
+       * selectedValue = ['All', 'Archived', 'Online']
+       * acceptedValues = ['All', 'Online']
+       */
+      let selectedValue = [...defaultValue.map((item) => item.replace(/(-)/gi, '')), ...fixedValues]
+      let acceptedValues = values.filter(({ name, count }) => selectedValue.indexOf(name) !== -1)
+
+      if (!acceptedValues.length) return null
+      let totalValueCount = acceptedValues.reduce((acc, item) => {
+        acc += item.count
+        return acc
+      }, 0)
+      values = fixedValues.map((item) => ({
+        name: item,
+        count: item === ALL_VALUES ? totalValueCount : acceptedValues.filter(({ name }) => name === item).reduce((acc, item) => {
+          acc += item.count
+          return acc
+        }, 0)
+      }))
       originalSize = values.length
     }
+
+    /* Dont show anything when no items */
+    if (!originalSize && !showIfEmpty) return null
 
     /* Filter values */
     values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
