@@ -102,6 +102,7 @@ module.exports = {
 
   /* Update QueryState parameters */
   UPDATE_OLA_PARAMETERS: 'UPDATE_OLA_PARAMETERS',
+  CHANGE_ENVIRONMENT: 'CHANGE_ENVIRONMENT',
 
   /* Sidebar */
   TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR'

@@ -234,6 +234,12 @@ export default (state = initialState, action) => {
         debug: action.debug
       }
 
+    case types.CHANGE_ENVIRONMENT:
+      return {
+        ...state,
+        env: action.env
+      }
+
     case types.UPDATE_OLA_PARAMETERS:
       return {
         ...state,

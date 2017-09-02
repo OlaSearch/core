@@ -330,6 +330,13 @@ export function setStorageKey (key) {
   }
 }
 
+export function changeEnvironment (env) {
+  return {
+    type: types.CHANGE_ENVIRONMENT,
+    env
+  }
+}
+
 /**
  * Initializes search
  * @param  {[type]} options [description]
