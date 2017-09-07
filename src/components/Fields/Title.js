@@ -2,7 +2,7 @@ import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
 import withLogger from './../../decorators/OlaLogger'
 
-const Title = ({ result, isLink, field, url, children, baseUrl, target, isBookmark, isAutosuggest, iconLeft, iconRight, log, snippetId, onClick, fieldLabel }) => {
+const Title = ({ result, isLink, field, url, children, baseUrl, target, isBookmark, isAutosuggest, iconLeft, iconRight, log, snippetId, onClick, fieldLabel, openInNewWindow }) => {
   function logClick (event) {
     /* Send Log */
     let eventLabel = isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : null
@@ -29,6 +29,10 @@ const Title = ({ result, isLink, field, url, children, baseUrl, target, isBookma
     var { title: highlightedTitle } = highlighting
     if (typeof highlightedTitle === 'object') title = highlightedTitle[0]
   }
+  /* Check if it should be opened in new page */
+  if (openInNewWindow) {
+    target = '_blank'
+  }
 
   return (
     <h3 className='ola-field ola-field-title'>
@@ -49,7 +53,8 @@ Title.defaultProps = {
   iconRight: null,
   isBookmark: false,
   field: null,
-  target: null
+  target: null,
+  openInNewWindow: false
 }
 
 module.exports = withLogger(Title)

@@ -7,6 +7,7 @@ import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import Histogram from './Histogram'
 import DateParser from './../../utilities/dateParser'
+import { decimalAdjust } from './../../utilities'
 
 class RangeFilter extends React.Component {
   static propTypes = {
@@ -37,19 +38,90 @@ class RangeFilter extends React.Component {
     dispatch(executeSearch())
   };
 
+  setUpSlider = () => {
+    if (!this.sliderInput) return
+    var {
+      facet,
+      showPips,
+      pips,
+      pipsDensity,
+      pipsMode
+    } = this.props
+
+    var options = this.getSliderValues(this.props)
+
+    var { step: stepValue = 1, singleHandle, dateFormat } = facet
+
+    /* Convert to numeric value */
+    let step = dateFormat ? stepValue : parseFloat(stepValue)
+
+    var {min, max, value} = options
+
+    if (min === max) {
+      min -= 60
+      max += 60
+      step = 60
+
+      this.sliderInput.setAttribute('disabled', true)
+    } else this.sliderInput.removeAttribute('disabled')
+
+    /* Tooltip format */
+    var formatTooltip = {
+      to: (value) => {
+        return dateFormat ? DateParser.format(value, dateFormat) : decimalAdjust('round', value, -1)
+      }
+    }
+
+    /* Slider options */
+
+    var sliderOptions = {
+      start: value,
+      step,
+      connect: singleHandle ? [true, false] : true,
+      tooltips: singleHandle ? [formatTooltip] : [formatTooltip, formatTooltip],
+      range: {
+        min,
+        max
+      },
+      format: {
+        to: (value) => decimalAdjust('round', value, -1),
+        from: (value) => decimalAdjust('round', value, -1)
+      }
+    }
+
+    var pipsOptions = showPips ? {
+      pips: {
+        mode: pipsMode,
+        values: pips,
+        density: pipsDensity,
+        stepped: true
+      }
+    } : {}
+
+    /* Initialize Slider */
+
+    this.slider = noUiSlider.create(this.sliderInput, { ...sliderOptions, ...pipsOptions })
+
+    /* Bind to onchange */
+
+    this.slider.on('change', this.onChange)
+  }
+
   componentDidUpdate () {
-    if (!this.sliderInput || !this.sliderInput.noUiSlider) return
+    if (!this.sliderInput || !this.sliderInput.noUiSlider) {
+      return this.setUpSlider()
+    }
     /**
      * Check if there are values
      */
     if (!this.props.facet.values.length) return this.sliderInput.setAttribute('disabled', true)
 
     var options = this.getSliderValues(this.props)
-    var { interval, step: stepValue = 1, dateFormat } = this.props.facet
+    var { step: stepValue = 1, dateFormat } = this.props.facet
     var { min, max, value } = options
 
     /* Convert to numeric value */
-    let step = dateFormat ? stepValue : parseInt(interval)
+    let step = dateFormat ? stepValue : parseFloat(stepValue)
 
     /**
      * Check if min, max is the same, then disable the slider
@@ -114,72 +186,7 @@ class RangeFilter extends React.Component {
   }
 
   componentDidMount () {
-    if (!this.sliderInput) return
-    var {
-      facet,
-      showPips,
-      pips,
-      pipsDensity,
-      pipsMode
-    } = this.props
-
-    var options = this.getSliderValues(this.props)
-
-    var { interval, step: stepValue = 1, singleHandle, dateFormat } = facet
-
-    /* Convert to numeric value */
-    let step = dateFormat ? stepValue : parseInt(interval)
-
-    var {min, max, value} = options
-
-    if (min === max) {
-      min -= 60
-      max += 60
-      step = 60
-
-      this.sliderInput.setAttribute('disabled', true)
-    } else this.sliderInput.removeAttribute('disabled')
-
-    /* Tooltip format */
-    var formatTooltip = {
-      to: (value) => {
-        return dateFormat ? DateParser.format(value, dateFormat) : Math.floor(value)
-      }
-    }
-
-    /* Slider options */
-
-    var sliderOptions = {
-      start: value,
-      step,
-      connect: singleHandle ? [true, false] : true,
-      tooltips: singleHandle ? [formatTooltip] : [formatTooltip, formatTooltip],
-      range: {
-        min,
-        max
-      },
-      format: {
-        to: (value) => Math.floor(value),
-        from: (value) => Math.floor(value)
-      }
-    }
-
-    var pipsOptions = showPips ? {
-      pips: {
-        mode: pipsMode,
-        values: pips,
-        density: pipsDensity,
-        stepped: true
-      }
-    } : {}
-
-    /* Initialize Slider */
-
-    this.slider = noUiSlider.create(this.sliderInput, { ...sliderOptions, ...pipsOptions })
-
-    /* Bind to onchange */
-
-    this.slider.on('change', this.onChange)
+    this.setUpSlider()
   }
 
   componentWillUnmount () {
