@@ -1,7 +1,6 @@
 import expect from 'expect'
 import utils from './../../src/utilities'
 import React from 'react'
-import TestUtils from 'react-addons-test-utils'
 import { mount, shallow } from 'enzyme'
 
 const FACETS_STUB = [{

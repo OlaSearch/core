@@ -2,20 +2,28 @@ import React from 'react'
 import classNames from 'classnames'
 import withLogger from './../../decorators/OlaLogger'
 
-const Button = ({ label, className, url, fullWidth, onClick, result, snippetId, log }) => {
+const Button = ({ title, label, className, url, fullWidth, onClick, result, snippetId, log, target, openInNewWindow, eventLabel, eventCategory }) => {
+  if (title) label = title
   function handleClick (event) {
     log({
       eventType: 'C',
       result,
-      eventCategory: label,
+      eventCategory: eventCategory || 'button',
       eventAction: 'click',
+      eventLabel: eventLabel || label,
       snippetId
     })
 
     if (onClick) return onClick(event, result)
 
+    if (target) return
     event.preventDefault()
     window.location.href = url
+  }
+
+  /* Check if it should be opened in new page */
+  if (openInNewWindow) {
+    target = '_blank'
   }
 
   let klass = classNames('ola-cta-button', className, {
@@ -28,6 +36,7 @@ const Button = ({ label, className, url, fullWidth, onClick, result, snippetId, 
         className={klass}
         onClick={handleClick}
         href={url}
+        target={target}
       >
         {label}
       </a>
@@ -36,7 +45,8 @@ const Button = ({ label, className, url, fullWidth, onClick, result, snippetId, 
 }
 
 Button.defaultProps = {
-  fullWidth: false
+  fullWidth: false,
+  target: null
 }
 
 module.exports = withLogger(Button)
