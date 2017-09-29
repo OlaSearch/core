@@ -150,7 +150,7 @@ var urlSync = {
       }
     } else {
       facetQueryObject = {
-        facet_query: initialState.facet_query
+        facet_query: [] //initialState.facet_query
       }
     }
 
@@ -186,7 +186,7 @@ var urlSync = {
       }
     } else {
       filtersObject = {
-        filters: initialState.filters
+        filters: [] //initialState.filters
       }
     }
     return {

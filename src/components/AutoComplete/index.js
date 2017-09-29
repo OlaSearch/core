@@ -166,6 +166,7 @@ class AutoComplete extends React.Component {
                 ...rest,
                 suggestion_raw: payload.suggestion_raw,
                 label: payload.label,
+                answer: payload.answer,
                 type: 'query' /* The first item is a query */
               })
               for (let j = 0; j < totalCategories; j++) {

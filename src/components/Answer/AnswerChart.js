@@ -1,22 +1,19 @@
 import React from 'react'
 import { bb } from 'billboard.js'
 import TableDetail from './common/TableDetail'
+import { sanitizeNumbers } from './../../utilities'
 
 export default class AnswerCharts extends React.Component {
   componentDidMount () {
     this.drawChart()
   }
-  sanitize = (text) => {
-    if (typeof text !== 'string') return text
-    return text.replace(/<(?:.*|\n)*?>/gm, '')
-  };
   prepareData = (props) => {
     let { data: { record_keys: recordKeys = [], record_data: recordData = [] } } = props
-    let keys = recordKeys.filter((key) => key !== 'Country')
-    let data = recordData.slice(0, 5).map((item) => {
+    let keys = recordKeys.filter((key, idx) => idx !== 0)
+    let data = recordData.slice(0, 5).map((item, idx) => {
       let country = item['Country']
       return [].concat(country, keys.map((key) => {
-        return key in item ? this.sanitize(item[key]) : null
+        return key in item ? sanitizeNumbers(item[key]) : null
       }))
     })
     return [

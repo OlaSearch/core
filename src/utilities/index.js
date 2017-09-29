@@ -294,6 +294,10 @@ const utilities = {
       return <a className='ola-email-link' href={str}>{label}</a>
     }
     return str
+  },
+  sanitizeNumbers (text) {
+    if (typeof text !== 'string') return text
+    return parseFloat(text.replace(/<(?:.*|\n)*?>/gm, ''))
   }
 }
 
