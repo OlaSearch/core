@@ -3,22 +3,39 @@ import { sanitizeNumbers } from './../../utilities'
 import { SparkLine } from './../../utilities/sparkline'
 import classNames from 'classnames'
 
+/**
+ * Generic answer template
+ */
 const Generic = ({ card }) => {
-  return <span>{card.title}</span>
+  return <span className='ola-answer-quick-title'>{card.title}</span>
 }
 
+/**
+ * Line chart
+ */
 class LineChart extends React.Component {
   componentDidMount () {
+    this.sparkline = new SparkLine()
     this.buildSpark()
   }
-  buildSpark = () => {
+  buildSpark = (isUpdate) => {
     let values = this.getData()
-    if (values.length > 1 && this.el) {
-      SparkLine(this.el, values[0], true, 'rgba(0,0,255,.5)')
+    if (values && values[0].length > 1 && this.el) {
+      this.sparkline.init({
+        el: this.el,
+        data: values[0],
+        endpoint: true,
+        color: 'rgba(0,0,255,.5)',
+        style: 'line',
+        update: isUpdate
+      })
     }
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.card !== this.props.card
+  }
   componentDidUpdate () {
-    // this.buildSpark()
+    this.buildSpark(true)
   }
   registerRef = (el) => {
     this.el = el
@@ -43,6 +60,9 @@ class LineChart extends React.Component {
   }
 }
 
+/**
+ * List template
+ */
 const List = ({ card }) => {
   let { elements } = card
   function handleClick (e) {
@@ -75,6 +95,9 @@ const List = ({ card }) => {
   )
 }
 
+/**
+ * Template switcher
+ */
 function getTemplate (card) {
   switch (card.template) {
     case 'line_chart':
@@ -87,8 +110,7 @@ function getTemplate (card) {
 }
 
 const AnswerQuick = ({ answer, onSelect }) => {
-  // if (!answer) return null
-  return null
+  if (!answer) return null
   let { card } = answer
   let { template } = card
   let klass = classNames('ola-answer-quick', `ola-answer-quick-${template}`)
