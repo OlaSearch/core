@@ -37,7 +37,8 @@
     "ignore": [
       "/test",
       "/lib",
-      "/node_modules"
+      "/node_modules",
+      "src/components/Answer/AnswerQuick.js"
     ]
   },
   "nyc": {

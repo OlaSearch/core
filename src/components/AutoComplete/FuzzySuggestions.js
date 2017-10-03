@@ -54,7 +54,7 @@ class SuggestionItem extends React.Component {
       'ola-suggestion-category-first': isFirstCategory,
       'ola-suggestion-category-name': taxoTerm,
       'ola-suggestion-history': history,
-      'ola-suggestion-hasAnswer': answer && index === 0,
+      'ola-suggestion-hasAnswer': answer && index === 0
     })
     /**
      * If its a category
@@ -73,9 +73,9 @@ class SuggestionItem extends React.Component {
           <div className='ola-suggestion-item-text' dangerouslySetInnerHTML={createHTMLMarkup(term)} />
           {index === 0
             ? <AnswerQuick
-                answer={answer}
-                onSelect={this.onSelect}
-                index={index}
+              answer={answer}
+              onSelect={this.onSelect}
+              index={index}
               />
             : null
           }

@@ -9,7 +9,7 @@ const Generic = ({ card }) => {
 
 class LineChart extends React.Component {
   componentDidMount () {
-    this.buildSpark()  
+    this.buildSpark()
   }
   buildSpark = () => {
     let values = this.getData()
@@ -35,7 +35,6 @@ class LineChart extends React.Component {
   }
   render () {
     let values = this.getData()
-    let { title, record_data: recordData } = this.props.card
     if (values && values[0].length > 1) {
       return <canvas ref={this.registerRef} width={100} height={15} />
     } else {
@@ -46,7 +45,7 @@ class LineChart extends React.Component {
 
 const List = ({ card }) => {
   let { elements } = card
-  function handleClick(e) {
+  function handleClick (e) {
     e.stopPropagation()
   }
   return (
