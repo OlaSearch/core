@@ -134,7 +134,7 @@ class CheckboxFilter extends React.Component {
       let selectedValue = [...defaultValue.map((item) => item.replace(/(-)/gi, '')), ...fixedValues]
       let acceptedValues = values.filter(({ name, count }) => selectedValue.indexOf(name) !== -1)
 
-      if (!acceptedValues.length) return null
+      if (!acceptedValues.length && !showIfEmpty) return null
       let totalValueCount = acceptedValues.reduce((acc, item) => {
         acc += item.count
         return acc
