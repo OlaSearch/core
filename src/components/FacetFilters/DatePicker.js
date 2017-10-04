@@ -132,8 +132,6 @@ class DateRange extends React.Component {
     this.setState({
       fromDate: this.format(fromDate || min),
       toDate: this.format(toDate || max)
-      // minDate: new Date(min),
-      // maxDate: new Date(max)
     })
   }
   componentDidMount () {
@@ -179,8 +177,8 @@ class DateRange extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
     let yearRange = 20
-    let fromDate = DateParser.parse(this.state.fromDate, DATE_FORMAT)
-    let toDate = DateParser.parse(this.state.toDate, DATE_FORMAT)
+    let fromDate = DateParser.parse(this.state.fromDate, this.getDateFormat())
+    let toDate = DateParser.parse(this.state.toDate, this.getDateFormat())
     return (
       <div className={klass}>
         <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
@@ -207,6 +205,7 @@ class DateRange extends React.Component {
                       type='date'
                       value={DateParser.format(fromDate, DATE_FORMAT_MOBILE)}
                       onChange={this.onMobileFromChange}
+                      max={DateParser.format(toDate, DATE_FORMAT_MOBILE)}
                       />
                     : <DatePicker
                       format={DATE_FORMAT}
@@ -224,8 +223,9 @@ class DateRange extends React.Component {
                   {isPhone
                     ? <input
                       type='date'
-                      value={DateParser.format(DateParser.parse(this.state.toDate, DATE_FORMAT), DATE_FORMAT_MOBILE)}
+                      value={DateParser.format(toDate, DATE_FORMAT_MOBILE)}
                       onChange={this.onMobileToChange}
+                      max={DateParser.format(fromDate, DATE_FORMAT_MOBILE)}
                       />
                     : <DatePicker
                       format={DATE_FORMAT}
