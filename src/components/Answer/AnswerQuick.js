@@ -14,11 +14,15 @@ const Generic = ({ card }) => {
  * Line chart
  */
 class LineChart extends React.Component {
+  static defaultProps = {
+    width: 100,
+    height: 15
+  }
   componentDidMount () {
     this.sparkline = new SparkLine()
     this.buildSpark()
   }
-  buildSpark = (isUpdate) => {
+  buildSpark = () => {
     let values = this.getData()
     if (values && values[0].length > 1 && this.el) {
       this.sparkline.init({
@@ -27,7 +31,8 @@ class LineChart extends React.Component {
         endpoint: true,
         color: 'rgba(0,0,255,.5)',
         style: 'line',
-        update: isUpdate
+        height: this.props.height,
+        width: this.props.width
       })
     }
   };
@@ -35,7 +40,7 @@ class LineChart extends React.Component {
     return nextProps.card !== this.props.card
   }
   componentDidUpdate () {
-    this.buildSpark(true)
+    this.buildSpark()
   }
   registerRef = (el) => {
     this.el = el
@@ -52,8 +57,9 @@ class LineChart extends React.Component {
   }
   render () {
     let values = this.getData()
+    if (values && values.length > 1) return null
     if (values && values[0].length > 1) {
-      return <canvas ref={this.registerRef} width={100} height={15} />
+      return <canvas ref={this.registerRef} width={this.props.width} height={this.props.height} />
     } else {
       return <span>{values[0].map((v) => v)} </span>
     }

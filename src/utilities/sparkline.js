@@ -15,12 +15,12 @@ export const SparkLine = function () {
   if (window.HTMLCanvasElement) {
     return {
       init (options) {
-        let { el, data, endpoint, color = 'rgba(0,0,0,0.5)', style = 'line', update = false } = options
+        let { el, data, endpoint, color = 'rgba(0,0,0,0.5)', style = 'line', height: elHeight, width: elWidth } = options
         var ctx = el.getContext('2d')
-        var height = el.height - 3
-        var width = el.width
+        var height = elHeight - 3
+        var width = elWidth
         /* Transform data */
-        data = scaleAndTransform(data, [0, height - 3])
+        data = scaleAndTransform(data, [0, height])
         var total = data.length
         var max = Math.max.apply(Math, data)
         var min = Math.min.apply(Math, data)
@@ -30,13 +30,12 @@ export const SparkLine = function () {
         var y = height - data[0] / ystep
         var i
         if (window.devicePixelRatio) {
-          if (!update) {
-            el.width = el.width * window.devicePixelRatio
-            el.height = el.height * window.devicePixelRatio
-            el.style.width = (el.width / window.devicePixelRatio) + 'px'
-            el.style.height = (el.height / window.devicePixelRatio) + 'px'
-            el.style.display = 'inline-block'
-          }
+          el.width = elWidth * window.devicePixelRatio
+          el.height = elHeight * window.devicePixelRatio
+          el.style.width = elWidth + 'px'
+          el.style.height = elHeight + 'px'
+          el.style.display = 'inline-block'
+
           ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
         }
         ctx.clearRect(0, 0, width, height + 3)

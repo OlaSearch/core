@@ -119,7 +119,7 @@ module.exports = (options = {}) => {
           let timestampFromResponse = parseInt(queryString.parse(responseURL).timestamp)
           if (timestampFromResponse && getState().Timestamp.timestamp[api] !== timestampFromResponse) return nullResponse
         }
-
+        let responseTime = new Date().getTime() - getState().Timestamp.timestamp[api]
         let type = successType
 
         /* Check if process response is false */
@@ -134,7 +134,8 @@ module.exports = (options = {}) => {
         if (!processResponse) {
           return next({
             type,
-            response
+            response,
+            responseTime
           })
         }
 
@@ -185,7 +186,8 @@ module.exports = (options = {}) => {
             suggestedTerm: term,
             api,
             payload,
-            context
+            context,
+            responseTime
           })
         }
 
@@ -202,7 +204,8 @@ module.exports = (options = {}) => {
           enriched_q: enrichedQuery,
           error: null,
           skipSearchResultsUpdate,
-          api
+          api,
+          responseTime
         })
 
         /**
@@ -219,7 +222,8 @@ module.exports = (options = {}) => {
             eventType: 'Q',
             eventSource: api,
             debounce: true,
-            state: getState()
+            state: getState(),
+            responseTime
           })
         }
 
@@ -239,7 +243,8 @@ module.exports = (options = {}) => {
           type,
           suggestedTerm,
           qt,
-          answer
+          answer,
+          responseTime
         }
       },
       (error) => {
