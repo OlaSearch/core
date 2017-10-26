@@ -119,7 +119,6 @@ module.exports = (options = {}) => {
           let timestampFromResponse = parseInt(queryString.parse(responseURL).timestamp)
           if (timestampFromResponse && getState().Timestamp.timestamp[api] !== timestampFromResponse) return nullResponse
         }
-        let responseTime = new Date().getTime() - getState().Timestamp.timestamp[api]
         let type = successType
 
         /* Check if process response is false */
@@ -134,8 +133,7 @@ module.exports = (options = {}) => {
         if (!processResponse) {
           return next({
             type,
-            response,
-            responseTime
+            response
           })
         }
 
@@ -148,6 +146,7 @@ module.exports = (options = {}) => {
         var answer
         var enrichedQuery
         var skipSearchResultsUpdate = false
+        var responseTime
         if (proxy) {
           results = response.results
           spellSuggestions = response.spellSuggestions
@@ -156,6 +155,7 @@ module.exports = (options = {}) => {
           qt = response.qt
           enrichedQuery = response.enriched_q
           skipSearchResultsUpdate = response.skipSearchResultsUpdate
+          responseTime = response.responseTime
 
           /* Instant answer */
           answer = api === 'answer' ? response : response.answer

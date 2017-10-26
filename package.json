@@ -1,6 +1,6 @@
 {
   "name": "olasearch",
-  "version": "1.8.9",
+  "version": "1.9.0",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -58,7 +58,7 @@
     "babel-preset-react-hmre": "^1.0.0",
     "babel-register": "^6.26.0",
     "chokidar": "^1.7.0",
-    "cross-env": "^5.0.5",
+    "cross-env": "^5.1.0",
     "enzyme": "^3.1.0",
     "eslint": "^4.8.0",
     "eslint-plugin-babel": "^4.1.2",
@@ -103,9 +103,9 @@
     "query-string": "^5.0.0",
     "ramda": "^0.25.0",
     "react-list": "^0.8.8",
-    "react-onclickoutside": "^6.6.0",
+    "react-onclickoutside": "^6.6.2",
     "react-pikaday-datepicker": "3.0.1",
-    "react-responsive": "^2.0.0",
+    "react-responsive": "^3.0.0",
     "redux-logger": "^3.0.6",
     "xss-filters": "^1.2.7"
   },

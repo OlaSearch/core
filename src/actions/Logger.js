@@ -37,13 +37,14 @@ export function log (params) {
  * Log submit function
  */
 function submitLog (args) {
-  var { dispatch, state, ...rest } = args
+  var { dispatch, state, setNewUser, ...rest } = args
   dispatch({
     log: true,
     type: 'SEND_LOG',
     state,
     ...rest
   })
+  if (typeof (setNewUser) !== 'undefined' && !setNewUser) return
   /* Check if the user is new User */
   if (state.Context.isNewUser) {
     /* Set new user flag to false */
