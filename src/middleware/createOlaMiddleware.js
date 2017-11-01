@@ -4,7 +4,7 @@
  * 1. State persistence for Bookmarks, History and Context
  * 2. Ajax requests for search adapters
  */
-import { debounceLog } from './../actions/Logger'
+import { debounceLog, submitLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
@@ -216,12 +216,15 @@ module.exports = (options = {}) => {
          * eventSource
          * searchInput = `voice`|`url`|`keyboard`
          */
+        /* Query becomes empty for long conversations */
+        let isBotReply = answer && 'awaiting_user_input' in answer
+        let sendImmediateLog = isBotReply && !answer.awaiting_user_input
+        let logFn = sendImmediateLog ? submitLog : debounceLog
         if (logger && logger.enabled && API_IGNORE_LOGGING.indexOf(api) === -1) {
-          debounceLog({
+          logFn({
             dispatch,
             eventType: 'Q',
             eventSource: api,
-            debounce: true,
             state: getState(),
             responseTime
           })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { sanitizeNumbers } from './../../utilities'
+import { sanitizeNumbers, createHTMLMarkup } from './../../utilities'
 import { SparkLine } from './../../utilities/sparkline'
 import classNames from 'classnames'
 
@@ -55,13 +55,38 @@ class LineChart extends React.Component {
   shouldComponentUpdate (nextProps) {
     return this.props.card.record_data !== nextProps.card.record_data
   }
+  getChartLabel = () => {
+    let lastKey = this.props.card.record_keys[this.props.card.record_keys.length - 1]
+    let label = this.props.card.record_data[0][lastKey]
+    let unit = this.props.card.record_units ? this.props.card.record_units['data'] : ''
+
+    return `<span class='ola-answer-quick-value'>${label}${unit}</span> (${lastKey})`
+  };
   render () {
     let values = this.getData()
+    let { card: { record_units: recordUnits } } = this.props
     if (values && values.length > 1) return null
     if (values && values[0].length > 1) {
-      return <canvas ref={this.registerRef} width={this.props.width} height={this.props.height} />
+      let chartLabel = this.getChartLabel()
+      return (
+        <div className='ola-answer-quick-chart'>
+          <canvas className='ola-answer-quick-canvas' ref={this.registerRef} width={this.props.width} height={this.props.height} />
+          <div className='ola-answer-quick-chart-label'>
+            <div
+              dangerouslySetInnerHTML={createHTMLMarkup(chartLabel)}
+            />
+          </div>
+        </div>
+      )
     } else {
-      return <span>{values[0].map((v) => v)} </span>
+      return (
+        <div className='ola-answer-quick-singleData'>
+          <span className='ola-answer-quick-value'>
+            {values[0].map((v) => v)}
+          </span>
+          <span className='ola-answer-quick-unit'>{recordUnits.data}</span>
+        </div>
+      )
     }
   }
 }

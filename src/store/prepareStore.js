@@ -8,6 +8,11 @@ export const prepareUserState = ({ config }) => {
   var userSession = storage.cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = storage.cookies.get(USER_NEW_KEY, config.namespace)
 
+  /* Cast isNewUser to Boolean */
+  if (typeof isNewUser === 'string') {
+    isNewUser = isNewUser === 'true'
+  }
+
   /* Check for user session */
   if (userSession === null || userSession === undefined) {
     userSession = uuid()
