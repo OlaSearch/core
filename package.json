@@ -1,6 +1,6 @@
 {
   "name": "olasearch",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -69,7 +69,7 @@
     "isparta": "^4.0.0",
     "jsdom": "^11.3.0",
     "mocha": "^4.0.1",
-    "nyc": "^11.2.1",
+    "nyc": "^11.3.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-addons-perf": "^15.4.2",

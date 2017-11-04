@@ -28,8 +28,8 @@ class LineChart extends React.Component {
       this.sparkline.init({
         el: this.el,
         data: values[0],
-        endpoint: true,
-        color: 'rgba(0,0,255,.5)',
+        endpoint: false,
+        color: '#0081bf',
         style: 'line',
         height: this.props.height,
         width: this.props.width
