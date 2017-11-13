@@ -27,10 +27,8 @@ export default class Input extends React.Component {
     // }
 
     /* Clear query term */
-    this.props.onClear()
-
     /* Focus input */
-    this.input.focus()
+    this.props.onClear(() => this.input.focus())
   };
 
   onFocus = (event) => {

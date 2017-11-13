@@ -141,10 +141,9 @@ export function executeSearch (payload) {
     if (!payload || payload.routeChange || payload.urlSync) {
       /* Update Browser URL */
       globalRouteChange && updateURL(query, historyType, replaceQueryParamName)
-
-      /* Add History */
-      debouceAddHistory(dispatch)
     }
+    /* Always add History */
+    debouceAddHistory(dispatch)
   }
 }
 

@@ -221,6 +221,23 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
+      /*
+       * 1. Query can be enriched by the intent engine
+       * 2. Facets can be added by the intent engine
+       * Facet definitions are in config.facets
+       * {
+       *  answer: {
+       *    search: {
+       *      facet_query: [
+       *        {
+       *          name: '',
+       *          selected: []
+       *        }
+       *      ]
+       *    }
+       *  }
+       * }
+       */
       return {
         ...state,
         enriched_q: action.enriched_q || ''
