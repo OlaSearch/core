@@ -130,6 +130,7 @@ export function executeSearch (payload) {
       api: 'search',
       payload
     })
+    .then(() => debouceAddHistory(dispatch))
 
     /**
      * Check if route should be enabled
@@ -142,8 +143,6 @@ export function executeSearch (payload) {
       /* Update Browser URL */
       globalRouteChange && updateURL(query, historyType, replaceQueryParamName)
     }
-    /* Always add History */
-    debouceAddHistory(dispatch)
   }
 }
 

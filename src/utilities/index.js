@@ -298,6 +298,46 @@ const utilities = {
   sanitizeNumbers (text) {
     if (typeof text !== 'string') return text
     return parseFloat(text.replace(/<(?:.*|\n)*?>/gm, ''))
+  },
+  mergeResultsWithHistory (history, results, query, limit = 5) {
+    /* Check if answer exists in the first result */
+    if (results.length && results[0]['answer']) return results
+
+    history = history
+              .map(({ q, dateAdded }) => ({ term: q.toLowerCase(), type: 'history', dateAdded }))
+              .filter((his) => his.term && his.term !== '*')
+              .sort((a, b) => {
+                /* Sort by recency */
+                if (a.dateAdded < b.dateAdded) return 1
+                if (a.dateAdded > b.dateAdded) return -1
+                return 0
+              })
+              .filter((his, index, self) => self.findIndex((t) => t.term.match(new RegExp('^' + his.term + '$', 'gi'))) === index)
+
+    if (query) {
+      /* Only history that starts with */
+      history = history
+                .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
+                .sort((a, b) => {
+                  /* Sort by match */
+                  if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
+                  if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
+                  return 0
+                })
+    } else {
+      return history.filter((_, i) => i < limit)
+    }
+    /* 3 */
+    let historyTerms = history.map(({ term }) => term)
+
+    /* Remove results that contains the history term */
+    results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
+
+    /* Only take top 3 history terms */
+    history = history.filter((_, i) => i < limit)
+
+    /* Merge history with results */
+    return [...history, ...results]
   }
 }
 

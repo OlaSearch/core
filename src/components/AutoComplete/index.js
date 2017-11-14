@@ -5,7 +5,7 @@ import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
 import Input from './Input'
-import { checkForAllowedCharacters, trim, getCoords } from './../../utilities'
+import { checkForAllowedCharacters, trim, getCoords, mergeResultsWithHistory } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
@@ -55,8 +55,7 @@ class AutoComplete extends React.Component {
     scrollOnFocus: true,
     scrollPadding: 16,
     searchOnSelect: false,
-    searchTimeout: 400,
-    showHistory: true
+    searchTimeout: 400
   };
 
   componentWillReceiveProps (nextProps) {
@@ -64,12 +63,6 @@ class AutoComplete extends React.Component {
       nextProps.q !== this.state.q) {
       this.setState({
         q: nextProps.q
-      })
-    }
-    if (nextProps.history !== this.props.history) {
-      const history = this.mergeWithHistory([], 5, nextProps.history)
-      this.setState({
-        results: history
       })
     }
   }
@@ -99,63 +92,9 @@ class AutoComplete extends React.Component {
     this.setState({
       q: '',
       fuzzyQuery: null,
-      results: [],
-      isOpen: false
+      results: mergeResultsWithHistory(this.props.history, []),
+      isOpen: this.props.history.length > 0
     }, cb)
-  };
-  mergeWithHistory = (results = [], limit = 3, nextHistory = null) => {
-    /**
-     * Criteria to show history
-     * 1. q === null
-     * 2. query matches an item in history => boost to top
-     * 3. remove matched item from results
-     * 4. Hide history if there is an answer
-     */
-    if (results.length && results[0]['answer']) return results
-    let userQuery = this.state.q
-    let history = nextHistory || this.props.history
-    /* Remove duplicate terms from history */
-    history = history
-              .map(({ q, dateAdded }) => ({ term: q.toLowerCase(), type: 'history', dateAdded }))
-              .filter((his) => his.term && his.term !== '*')
-              .sort((a, b) => {
-                /* Sort by recency */
-                if (a.dateAdded < b.dateAdded) return 1
-                if (a.dateAdded > b.dateAdded) return -1
-                return 0
-              })
-              .filter((his, index, self) => self.findIndex((t) => t.term.match(new RegExp(his.term, 'gi'))) === index)
-    /* 2 */
-    if (userQuery) {
-      /* Only history that starts with */
-      history = history
-                .filter(({ term }) => term.match(new RegExp('^' + this.state.q, 'gi')))
-                .sort((a, b) => {
-                  /* Sort by match */
-                  let { q } = this.state
-                  if (a.term.indexOf(q) < b.term.indexOf(q)) return 1
-                  if (a.term.indexOf(q) > b.term.indexOf(q)) return -1
-                  return 0
-                })
-    } else {
-      return history.filter((_, i) => i < limit)
-    }
-
-    /* 3 */
-    let historyTerms = history.map(({ term }) => term)
-    results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
-
-    /* Only take top 3 history terms */
-    history = history.filter((_, i) => i < limit)
-
-    return [...history, ...results]
-  }
-  updateResults = (results) => {
-    const _results = this.mergeWithHistory(results)
-    this.setState({
-      results: _results,
-      isOpen: this.state.q ? !!_results.length : false
-    })
   };
   terminateAutoSuggest = () => {
     this.setState({
@@ -174,6 +113,7 @@ class AutoComplete extends React.Component {
         return this.clearFuzzyQueryTerm()
       }
     }
+    if (event && event.type === 'keydown') return
     this.onBlur()
   };
 
@@ -181,28 +121,18 @@ class AutoComplete extends React.Component {
     let { q } = this.state
     /* Trim text */
     if (term && term.length && trim(term) === '') return
+
     if (!term && !q) {
-      return this.closeAutoSuggest()
+      this.closeAutoSuggest()
+      return
     }
 
-    /* If search input is empty */
-    if (!term) {
-      return this.clearQueryTerm(() => {
-        const history = this.mergeWithHistory([], 5)
-        this.setState({
-          results: history,
-          isOpen: !!history.length
-        })
-      })
-    }
+    if (!term) return this.clearQueryTerm()
 
-    /* Check if character is in restricted list */
     let { allowedCharacters } = this.context.config
 
-    /* Update state of q */
     this.updateQueryTerm(term, searchInput)
 
-    /* Clear any fuzzy terms */
     this.clearFuzzyQueryTerm()
 
     if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
@@ -259,17 +189,15 @@ class AutoComplete extends React.Component {
             }
           }
 
-          /* Update result state */
-          this.updateResults(res)
+          this.setState({
+            results: mergeResultsWithHistory(this.props.history, res, this.state.q),
+            isOpen: this.state.q ? !!results.length : false
+          })
         })
     }
 
     /* Remove currently selected item from the autosuggest */
     this.clearActiveClass()
-  };
-
-  onClear = (cb) => {
-    this.clearQueryTerm(cb)
   };
 
   clearActiveClass = () => {
@@ -379,7 +307,6 @@ class AutoComplete extends React.Component {
       })
     }
 
-    /* Execute search when a suggestion is selected */
     this.props.executeSearch({
       forceRedirect: this.props.forceRedirect,
       searchPageUrl: this.context.config.searchPageUrl,
@@ -455,29 +382,36 @@ class AutoComplete extends React.Component {
     if (this.props.isPhone && this.props.scrollOnFocus) {
       document.documentElement.scrollTop = document.body.scrollTop = getCoords(event.target).top - this.props.scrollPadding
     }
-    const history = this.mergeWithHistory([], 5)
+
     this.setState({
       isFocused: true,
-      results: history,
-      isOpen: !!history.length
+      isOpen: true,
+      results: mergeResultsWithHistory(this.props.history, this.state.results, this.state.q)
     })
 
     this.props.onFocus && this.props.onFocus(event)
   };
 
   onBlur = (event) => {
-    this.setState({
-      isFocused: false,
-      results: []
-    })
+    setTimeout(() => {
+      this.setState({
+        isFocused: false,
+        results: []
+      })
 
-    this.props.onBlur && this.props.onBlur(event)
+      this.props.onBlur && this.props.onBlur(event)
+    }, 100)
   };
 
   onSoftBlur = (event) => {
-    this.setState({
-      isFocused: false
-    })
+    setTimeout(() => {
+      this.setState({
+        isFocused: false,
+        isOpen: false,
+        fuzzyQuery: null,
+        results: []
+      })
+    }, 100)
   };
 
   registerRef = (input) => {
@@ -485,28 +419,28 @@ class AutoComplete extends React.Component {
   };
 
   render () {
-    var {
+    const {
       showZone,
       className,
       translate
     } = this.props
-    var { isFocused, fuzzyQuery, q, results, isOpen } = this.state
-    var klass = classNames('ola-suggestions', {
-      'ola-js-hide': !isOpen
-    })
-    var klassContainer = classNames(className, {
+    const { isFocused, fuzzyQuery, q, results } = this.state
+    const isOpen = !results.length ? false : this.state.isOpen
+    const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
+    const klassContainer = classNames(className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused,
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
-    var queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
+    const queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
+
     return (
       <div className={klassContainer}>
         <div className={this.props.containerClass}>
           <Input
             q={queryTerm}
             onChange={this.onChange}
-            onClear={this.onClear}
+            onClear={this.clearQueryTerm}
             onKeyDown={this.onKeyDown}
             onSubmit={this.onSubmit}
             onFocus={this.onFocus}
@@ -546,8 +480,8 @@ class AutoComplete extends React.Component {
 function mapStateToProps (state, ownProps) {
   return {
     isPhone: state.Device.isPhone,
-    history: state.AppState.history,
-    facets: state.QueryState.facet_query
+    facets: state.QueryState.facet_query,
+    history: state.AppState.history
   }
 }
 

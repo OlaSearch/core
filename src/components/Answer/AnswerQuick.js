@@ -79,12 +79,16 @@ class LineChart extends React.Component {
         </div>
       )
     } else {
+      if (!recordUnits) return null
       return (
         <div className='ola-answer-quick-singleData'>
           <span className='ola-answer-quick-value'>
             {values[0].map((v) => v)}
           </span>
-          <span className='ola-answer-quick-unit'>{recordUnits.data}</span>
+          {recordUnits.data
+            ? <span className='ola-answer-quick-unit'>{recordUnits.data}</span>
+            : null
+          }
         </div>
       )
     }
