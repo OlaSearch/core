@@ -16,6 +16,7 @@ export const initialState = {
   searchInput: null,
   skip_intent: false,
   debug: false,
+  source: null,
 
   /* project info */
   projectId: null,
@@ -240,7 +241,8 @@ export default (state = initialState, action) => {
        */
       return {
         ...state,
-        enriched_q: action.enriched_q || ''
+        enriched_q: action.enriched_q || '',
+        source: null
       }
 
     case types.OLA_REHYDRATE:
@@ -261,6 +263,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...action.params
+      }
+
+    case types.SET_SEARCH_SOURCE:
+      return {
+        ...state,
+        source: action.source
       }
 
     default:

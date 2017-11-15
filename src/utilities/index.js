@@ -316,22 +316,23 @@ const utilities = {
 
     if (query) {
       /* Only history that starts with */
-      history = history
-                .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
-                .sort((a, b) => {
-                  /* Sort by match */
-                  if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
-                  if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
-                  return 0
-                })
+      history = []
+      // history = history
+      //           .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
+      //           .sort((a, b) => {
+      //             /* Sort by match */
+      //             if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
+      //             if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
+      //             return 0
+      //           })
     } else {
       return history.filter((_, i) => i < limit)
     }
     /* 3 */
-    let historyTerms = history.map(({ term }) => term)
+    // let historyTerms = history.map(({ term }) => term)
 
     /* Remove results that contains the history term */
-    results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
+    // results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
 
     /* Only take top 3 history terms */
     history = history.filter((_, i) => i < limit)

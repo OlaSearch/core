@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
-import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
+import { clearHistory } from './../../actions/History'
+import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource } from './../../actions/Search'
 import Input from './Input'
 import { checkForAllowedCharacters, trim, getCoords, mergeResultsWithHistory } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -62,8 +63,12 @@ class AutoComplete extends React.Component {
     if (nextProps.q !== this.props.q ||
       nextProps.q !== this.state.q) {
       this.setState({
-        q: nextProps.q
+        q: nextProps.q,
+        results: []
       })
+    }
+    if (nextProps.history !== this.props.history) {
+      this.handleHistoryChange(nextProps.history)
     }
   }
 
@@ -95,6 +100,11 @@ class AutoComplete extends React.Component {
       results: mergeResultsWithHistory(this.props.history, []),
       isOpen: this.props.history.length > 0
     }, cb)
+  };
+  handleHistoryChange = (newHistory) => {
+    this.setState({
+      results: mergeResultsWithHistory(newHistory, [])
+    })
   };
   terminateAutoSuggest = () => {
     this.setState({
@@ -305,6 +315,7 @@ class AutoComplete extends React.Component {
       this.setState({
         q: suggestion.term
       })
+      this.props.setSearchSource('suggest')
     }
 
     this.props.executeSearch({
@@ -319,7 +330,7 @@ class AutoComplete extends React.Component {
   };
 
   onFuzzySelect = (suggestion, options) => {
-    let { type, label, path } = suggestion
+    let { type, path } = suggestion
     let facet
     let isTaxonomy = type === 'taxonomy'
     let isEntity = type === 'entity'
@@ -357,10 +368,10 @@ class AutoComplete extends React.Component {
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
         this.props.updateQueryTerm(term)
       } else {
-        facet = find(propEq('name', label))(this.context.config.facets)
-        this.props.replaceFacet(facet, path || term)
+        // facet = find(propEq('name', label))(this.context.config.facets)
+        // this.props.replaceFacet(facet, path || term)
         /* Remove query term */
-        this.props.updateQueryTerm('')
+        this.props.updateQueryTerm(path || term)
       }
     }
     if (isQuery || isHistory) {
@@ -393,25 +404,24 @@ class AutoComplete extends React.Component {
   };
 
   onBlur = (event) => {
-    setTimeout(() => {
-      this.setState({
-        isFocused: false,
-        results: []
-      })
+    this.setState({
+      isFocused: false,
+      results: []
+    })
 
-      this.props.onBlur && this.props.onBlur(event)
-    }, 100)
+    this.props.onBlur && this.props.onBlur(event)
   };
 
-  onSoftBlur = (event) => {
-    setTimeout(() => {
-      this.setState({
-        isFocused: false,
-        isOpen: false,
-        fuzzyQuery: null,
-        results: []
-      })
-    }, 100)
+  onSoftBlur = (e) => {
+    if (!e.relatedTarget) return
+    if (this.suggestionsContainer.contains(e.relatedTarget)) return
+
+    this.setState({
+      isFocused: false,
+      isOpen: false,
+      fuzzyQuery: null,
+      results: []
+    })
   };
 
   registerRef = (input) => {
@@ -425,6 +435,7 @@ class AutoComplete extends React.Component {
       translate
     } = this.props
     const { isFocused, fuzzyQuery, q, results } = this.state
+    const { showSuggestionHelp } = this.context.config
     const isOpen = !results.length ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     const klassContainer = classNames(className, {
@@ -462,9 +473,22 @@ class AutoComplete extends React.Component {
 
           <div className={klass}>
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
+              {showSuggestionHelp
+                ? <div className='ola-suggestions-help'>
+                  {q
+                      ? translate('autosuggest_help')
+                      : <span>
+                        {translate('autosuggest_help_history')}
+                        <a onClick={this.props.clearHistory} className='ola-suggestions-clear'>clear</a>
+                      </span>
+                    }
+                </div>
+                : null
+              }
               <FuzzySuggestions
                 results={results}
                 onSelect={this.onFuzzySelect}
+                onRemoveHistory={this.onRemoveHistory}
                 activeClassName={this.props.activeClassName}
                 q={q}
               />
@@ -485,4 +509,4 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch })(injectTranslate(listensToClickOutside(AutoComplete)))
+module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource, clearHistory })(injectTranslate(listensToClickOutside(AutoComplete)))

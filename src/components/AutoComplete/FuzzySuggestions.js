@@ -36,14 +36,19 @@ class SuggestionItem extends React.Component {
       isActive: false
     })
   };
-  onSelect = (event) => {
-    this.props.onSelect(this.props.result)
+  onSelect = (event, result) => {
+    this.props.onSelect(result || this.props.result)
     event && event.preventDefault()
+  };
+  removeHistory = (event) => {
+    this.props.onRemoveHistory(this.props.result)
+    event.stopPropagation()
   };
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let { index, result } = this.props
-    let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory, history, answer } = result
+    let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory, answer } = result
+    const isHistory = type === 'history'
     let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1').split(/\s/).join('|') + ')'
 
     /* Create term */
@@ -53,7 +58,7 @@ class SuggestionItem extends React.Component {
       'ola-suggestion-category-last': isLastCategory,
       'ola-suggestion-category-first': isFirstCategory,
       'ola-suggestion-category-name': taxoTerm,
-      'ola-suggestion-history': history,
+      'ola-suggestion-history': isHistory,
       'ola-suggestion-hasAnswer': answer && index === 0
     })
     /**
@@ -70,7 +75,10 @@ class SuggestionItem extends React.Component {
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}
         >
-          <div className='ola-suggestion-item-text' dangerouslySetInnerHTML={createHTMLMarkup(term)} />
+          <div
+            className='ola-suggestion-item-text'
+            dangerouslySetInnerHTML={createHTMLMarkup(term)}
+          />
           {index === 0
             ? <AnswerQuick
               answer={answer}

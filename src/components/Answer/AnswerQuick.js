@@ -98,30 +98,41 @@ class LineChart extends React.Component {
 /**
  * List template
  */
-const List = ({ card }) => {
+const List = ({ card, onSelect }) => {
   let { elements } = card
   function handleClick (e) {
     e.stopPropagation()
   }
+  function handleCardClick(e, title) {
+    onSelect(e, {
+      term: title,
+      type: 'query'
+    })
+    e.preventDefault()
+    e.stopPropagation()
+  }
   return (
-    <div className='ola-answer-quick-list'>
-      {elements.map(({ subtitle, buttons }, idx) => {
+    <div className='ola-answer-quick-listItems'>
+      {elements.map(({ title, subtitle, buttons }, idx) => {
         return (
-          <div key={idx} className='ola-answer-quick-listItem'>
-            <p className='ola-answer-quick-subtitle'>{subtitle}</p>
-            <div className='ola-answer-quick-buttonList'>
-              {buttons.map((button, i) => {
-                return (
-                  <a
-                    key={i}
-                    href={button.url}
-                    className='ola-answer-quick-button'
-                    onClick={handleClick}
-                  >
-                    {button.title}
-                  </a>
-                )
-              })}
+          <div key={idx} className='ola-answer-quick-listItem' onClick={(e) => handleCardClick(e, title)}>
+            <div className='ola-answer-quick-listItemInner'>
+              {title && <p className='ola-answer-quick-list-title'>{title}</p>}
+              {subtitle && <p className='ola-answer-quick-list-subtitle'>{subtitle}</p>}
+              <div className='ola-answer-quick-list-buttons'>
+                {buttons.map((button, i) => {
+                  return (
+                    <a
+                      key={i}
+                      href={button.url}
+                      className='ola-answer-quick-list-button'
+                      onClick={handleClick}
+                    >
+                      {button.title}
+                    </a>
+                  )
+                })}
+              </div>
             </div>
           </div>
         )
@@ -133,14 +144,14 @@ const List = ({ card }) => {
 /**
  * Template switcher
  */
-function getTemplate (card) {
+function getTemplate (card, onSelect) {
   switch (card.template) {
     case 'line_chart':
-      return <LineChart card={card} />
+      return <LineChart card={card} onSelect={onSelect} />
     case 'list':
-      return <List card={card} />
+      return <List card={card} onSelect={onSelect} />
     default:
-      return <Generic card={card} />
+      return <Generic card={card} onSelect={onSelect} />
   }
 }
 
@@ -151,7 +162,7 @@ const AnswerQuick = ({ answer, onSelect }) => {
   let klass = classNames('ola-answer-quick', `ola-answer-quick-${template}`)
   return (
     <div className={klass} onClick={onSelect}>
-      {getTemplate(card)}
+      {getTemplate(card, onSelect)}
     </div>
   )
 }

@@ -142,6 +142,12 @@ export default (state = initialState, action) => {
         history: []
       }
 
+    case types.REMOVE_HISTORY:
+      return {
+        ...state,
+        history: state.history.filter(({ q, dateAdded }) => q !== action.result.term && dateAdded !== action.result.dateAdded)
+      }
+
     case types.TERMINATE_SEARCH:
       return {
         ...initialState,

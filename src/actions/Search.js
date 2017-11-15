@@ -395,3 +395,10 @@ export function initSearch ({ config, urlSync = true }) {
     }
   }
 }
+
+export function setSearchSource (source) {
+  return {
+    type: types.SET_SEARCH_SOURCE,
+    source
+  }
+}

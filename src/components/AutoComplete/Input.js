@@ -163,7 +163,7 @@ export default class Input extends React.Component {
           />
         </div>
 
-        {q && <button type='button' className='ola-clear-button' onClick={this.onClear} />}
+        {q && <button type='button' className='ola-clear-button' tabIndex='-1' onClick={this.onClear} />}
 
         {showGeoLocation
           ? <GeoLocation
@@ -190,7 +190,11 @@ export default class Input extends React.Component {
           onOpen={this.props.handleClose}
         />
 
-        <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
+        <button
+          type='button'
+          className='ola-search-button'
+          onClick={this.onSearchButtonClick}
+        />
       </div>
     )
   }

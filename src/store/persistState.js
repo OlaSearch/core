@@ -24,7 +24,8 @@ export const STATE_TYPE_KEYS = [
   types.ADD_DYNAMIC_FIELD,
   types.REMOVE_DYNAMIC_FIELD,
   types.ADD_CONTEXT_FIELD,
-  types.UPDATE_HISTORY
+  types.UPDATE_HISTORY,
+  types.REMOVE_HISTORY
 ]
 
 /* Based on actions: persist states to localstorage */
@@ -38,6 +39,7 @@ function persistState (action, getState, namespace) {
     case types.ADD_HISTORY:
     case types.CLEAR_HISTORY:
     case types.UPDATE_HISTORY:
+    case types.REMOVE_HISTORY:
       return storage.set(HISTORY_STORAGE_KEY, state.AppState.history, namespace)
 
     case types.SET_LOCALE:

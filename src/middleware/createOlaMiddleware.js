@@ -224,7 +224,7 @@ module.exports = (options = {}) => {
           logFn({
             dispatch,
             eventType: 'Q',
-            eventSource: api,
+            eventSource: currentState.QueryState.source || api,
             state: getState(),
             responseTime
           })

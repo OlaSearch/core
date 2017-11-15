@@ -23,6 +23,8 @@ module.exports = {
     'speech_label': 'Press to speak',
     'autosuggest_placeholder': 'Enter keywords',
     'autosuggest_viewall': 'View all results',
+    'autosuggest_help': 'Search suggestions',
+    'autosuggest_help_history': 'Search history',
     'suggestions_did_you_mean': 'Did you mean',
     'suggestions_showing_results_for': 'Showing results for <strong>{term}</strong>',
     'facet_tabs_all_label': 'All',

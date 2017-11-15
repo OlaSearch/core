@@ -68,6 +68,13 @@ export function clearHistory () {
   }
 }
 
+export function removeHistory (result) {
+  return {
+    type: types.REMOVE_HISTORY,
+    result
+  }
+}
+
 /* Adds to History */
 export const debouceAddHistory = debounce(_addHistory, 600)
 
