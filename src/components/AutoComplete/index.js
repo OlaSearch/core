@@ -55,6 +55,7 @@ class AutoComplete extends React.Component {
     q: '',
     scrollOnFocus: true,
     scrollPadding: 16,
+    resultLimit: 10,
     searchOnSelect: false,
     searchTimeout: 400
   };
@@ -349,17 +350,7 @@ class AutoComplete extends React.Component {
       })
     }
 
-    /**
-     * Check if a filter is already applied
-     */
-    // if (this.props.facets.length) {
-      // this.props.updateQueryTerm(term)
-      // return this.onSelect(suggestion)
-    // }
-
     if (isEntity || isTaxonomy) {
-      /* Remove all selected facets */
-      // this.props.removeAllFacets()
       /**
        * For Barack Obama in Climate
        */
@@ -368,9 +359,6 @@ class AutoComplete extends React.Component {
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
         this.props.updateQueryTerm(term)
       } else {
-        // facet = find(propEq('name', label))(this.context.config.facets)
-        // this.props.replaceFacet(facet, path || term)
-        /* Remove query term */
         this.props.updateQueryTerm(path || term)
       }
     }
@@ -432,9 +420,11 @@ class AutoComplete extends React.Component {
     const {
       showZone,
       className,
-      translate
+      translate,
+      resultLimit
     } = this.props
-    const { isFocused, fuzzyQuery, q, results } = this.state
+    let { isFocused, fuzzyQuery, q, results } = this.state
+    if (results.length > resultLimit) results.length = resultLimit
     const { showSuggestionHelp } = this.context.config
     const isOpen = !results.length ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })

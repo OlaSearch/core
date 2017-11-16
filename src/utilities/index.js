@@ -1,5 +1,6 @@
 import React from 'react'
 import flatten from 'ramda/src/flatten'
+import uniqBy from 'ramda/src/uniqBy'
 
 const utilities = {
   supplant (s, d) {
@@ -302,7 +303,7 @@ const utilities = {
   mergeResultsWithHistory (history, results, query, limit = 5) {
     /* Check if answer exists in the first result */
     if (results.length && results[0]['answer']) return results
-
+    var uniqByTerm = (a) => a.term
     history = history
               .map(({ q, dateAdded }) => ({ term: q.toLowerCase(), type: 'history', dateAdded }))
               .filter((his) => his.term && his.term !== '*')
@@ -312,7 +313,9 @@ const utilities = {
                 if (a.dateAdded > b.dateAdded) return -1
                 return 0
               })
-              .filter((his, index, self) => self.findIndex((t) => t.term.match(new RegExp('^' + his.term + '$', 'gi'))) === index)
+
+    /* Remove duplicates */
+    history = uniqBy(uniqByTerm, history)
 
     if (query) {
       /* Only history that starts with */
