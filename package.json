@@ -37,6 +37,7 @@
     "ignore": [
       "/test",
       "/lib",
+      "/src/polyfill.js",
       "/node_modules",
       "src/components/Answer/AnswerQuick.js"
     ]

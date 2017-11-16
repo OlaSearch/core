@@ -22,6 +22,7 @@
  * }
  *
  */
+// require('./polyfill.js');
 
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),

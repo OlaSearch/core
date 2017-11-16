@@ -303,13 +303,6 @@ const utilities = {
     /* Check if answer exists in the first result */
     if (results.length && results[0]['answer']) return results
 
-    /* Polyfill for findIndex */
-    if(!Array.prototype.findIndex){Object.defineProperty(Array.prototype,'findIndex',{value:function(predicate){if(this==null){throw new TypeError('"this" is null or not defined')}
-    var o=Object(this);var len=o.length>>>0;if(typeof predicate!=='function'){throw new TypeError('predicate must be a function')}
-    var thisArg=arguments[1];var k=0;while(k<len){var kValue=o[k];if(predicate.call(thisArg,kValue,k,o)){return k}
-    k++}
-    return-1}})}
-    
     history = history
               .map(({ q, dateAdded }) => ({ term: q.toLowerCase(), type: 'history', dateAdded }))
               .filter((his) => his.term && his.term !== '*')
