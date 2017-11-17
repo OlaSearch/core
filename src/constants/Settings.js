@@ -15,6 +15,8 @@ export const RE_ESCAPE = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', 
 export const REMOVE_FROM_QUERY_STRING = ['isSearchActive', 'searchInput', 'enriched_q', 'per_page', 'skip_intent', 'projectId', 'env', 'ola_collection_name', 'debug']
 export const SEARCH_COLLECTION_IDENTIFIER = 'ola_collection_name'
 export const ALL_VALUES = 'All'
+export const STYLE_TAG_ID = 'ola-styles'
+export const MODAL_ROOT_CLASSNAME = 'ola-modal-rootActive'
 
 /**
  * Search Input types

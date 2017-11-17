@@ -366,7 +366,6 @@ class AutoComplete extends React.Component {
       if (suggestion.taxo_label && suggestion.taxo_term) {
         /* Remove all selected facets */
         this.props.removeAllFacets()
-
         facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
       }

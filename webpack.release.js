@@ -2,12 +2,15 @@ var path = require('path')
 var webpack = require('webpack')
 var startYear = 2016
 var currentYear = new Date().getFullYear()
-var packageJson = require('./package.json');
+var packageJson = require('./package.json')
+var updateLatest = true
+
+if (updateLatest) packageJson.version = 'latest'
 
 module.exports = {
   entry: [
-    './src/index',
-    './src/polyfill'
+    './src/polyfill',
+    './src/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -58,10 +61,10 @@ module.exports = {
       include: [
         path.join(__dirname, './'),
         path.join(__dirname, './../src')
-      ],
+      ]
     },
-    { test: require.resolve("react"), loader: "expose-loader?React" },
-    { test: require.resolve("react-dom"), loader: "expose-loader?ReactDOM" },
+    { test: require.resolve('react'), loader: 'expose-loader?React' },
+    { test: require.resolve('react-dom'), loader: 'expose-loader?ReactDOM' },
     {
       test: /redux\/es\/index.js/,
       use: [
