@@ -4,8 +4,8 @@ var startYear = 2016
 var currentYear = new Date().getFullYear()
 var packageJson = require('./package.json')
 var updateLatest = true
-
-if (updateLatest) packageJson.version = 'latest'
+var argv = require('minimist')(process.argv.slice(2))
+var version = argv.version || packageJson.version
 
 module.exports = {
   entry: [
@@ -14,7 +14,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: `olasearch.core.min.${packageJson.version}.js`,
+    filename: `olasearch.core.min.${version}.js`,
     library: 'OlaSearch',
     libraryTarget: 'umd'
   },

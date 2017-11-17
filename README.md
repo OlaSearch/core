@@ -21,6 +21,19 @@ Using [https://yarnpkg.com](Yarn) as package manager
 - [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
 - [x] Added tag cloud
 
+
+## Publish to CDN
+1. Make sure you have your aws credentials in `~/.aws/credentials`
+
+````
+# Latest version
+npm run release -- --version=latest
+npm run s3-deploy
+
+# A tag
+npm run release -- --version=1.9.0
+````
+
 ## Security
 
 1. Remove vulnerable node packages

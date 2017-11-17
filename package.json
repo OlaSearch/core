@@ -13,7 +13,8 @@
     "test:watch": "npm test -- --watch",
     "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "standard": "standard --verbose --fix | snazzy",
-    "retire": "retire"
+    "retire": "retire",
+    "s3-deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js"
   },
   "engines": {
     "node": ">=6.4.0",
@@ -69,6 +70,7 @@
     "express": "^4.16.2",
     "isparta": "^4.0.0",
     "jsdom": "^11.3.0",
+    "minimist": "^1.2.0",
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
     "react": "^16.1.1",
@@ -81,6 +83,7 @@
     "redux-thunk": "^2.2.0",
     "retire": "^1.4.0",
     "rimraf": "^2.6.2",
+    "s3-deploy": "^0.7.6",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3",
     "webpack": "^3.8.1",
