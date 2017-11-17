@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
-    "build": "NODE_ENV=production webpack --config webpack.config.production.js --progress",
+    "release": "cross-env NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
@@ -82,14 +82,18 @@
     "retire": "^1.4.0",
     "rimraf": "^2.6.2",
     "snazzy": "^7.0.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "webpack": "^3.8.1",
+    "webpack-bundle-size-analyzer": "^2.7.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.20.0"
   },
   "peerDependencies": {
-    "react": ">=0.14.0",
-    "react-dom": ">=0.14.0",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "dependencies": {
     "babel-runtime": "^6.25.0",
