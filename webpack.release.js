@@ -3,7 +3,6 @@ var webpack = require('webpack')
 var startYear = 2016
 var currentYear = new Date().getFullYear()
 var packageJson = require('./package.json')
-var updateLatest = true
 var argv = require('minimist')(process.argv.slice(2))
 var version = argv.version || packageJson.version
 
