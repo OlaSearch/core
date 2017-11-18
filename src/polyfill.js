@@ -38,73 +38,6 @@
     this.Document.prototype = document
   }
 
-  // Object.defineProperty
-  (function (nativeDefineProperty) {
-    var supportsAccessors = Object.prototype.hasOwnProperty('__defineGetter__')
-    var ERR_ACCESSORS_NOT_SUPPORTED = 'Getters & setters cannot be defined on this javascript engine'
-    var ERR_VALUE_ACCESSORS = 'A property cannot both have accessors and be writable or have a value'
-
-    Object.defineProperty = function defineProperty (object, property, descriptor) {
-      // Where native support exists, assume it
-      if (nativeDefineProperty && (object === window || object === document || object === Element.prototype || object instanceof Element)) {
-        /* Safari error @Vinay 18 Nov 2017 */
-        try {
-          return nativeDefineProperty(object, property, descriptor)
-        } catch (error) { /* */ }
-      }
-
-      if (object === null || !(object instanceof Object || typeof object === 'object')) {
-        throw new TypeError('Object.defineProperty called on non-object')
-      }
-
-      if (!(descriptor instanceof Object)) {
-        throw new TypeError('Property description must be an object')
-      }
-
-      var propertyString = String(property)
-      var hasValueOrWritable = 'value' in descriptor || 'writable' in descriptor
-      var getterType = 'get' in descriptor && typeof descriptor.get
-      var setterType = 'set' in descriptor && typeof descriptor.set
-
-      // handle descriptor.get
-      if (getterType) {
-        if (getterType !== 'function') {
-          throw new TypeError('Getter must be a function')
-        }
-        if (!supportsAccessors) {
-          throw new TypeError(ERR_ACCESSORS_NOT_SUPPORTED)
-        }
-        if (hasValueOrWritable) {
-          throw new TypeError(ERR_VALUE_ACCESSORS)
-        }
-        object.__defineGetter__(propertyString, descriptor.get)
-      } else {
-        object[propertyString] = descriptor.value
-      }
-
-      // handle descriptor.set
-      if (setterType) {
-        if (setterType !== 'function') {
-          throw new TypeError('Setter must be a function')
-        }
-        if (!supportsAccessors) {
-          throw new TypeError(ERR_ACCESSORS_NOT_SUPPORTED)
-        }
-        if (hasValueOrWritable) {
-          throw new TypeError(ERR_VALUE_ACCESSORS)
-        }
-        object.__defineSetter__(propertyString, descriptor.set)
-      }
-
-      // OK to define value unconditionally - if a getter has been specified as well, an error would be thrown above
-      if ('value' in descriptor) {
-        object[propertyString] = descriptor.value
-      }
-
-      return object
-    }
-  }(Object.defineProperty));
-
   // Event
   (function () {
     var unlistenableWindowEvents = {
@@ -438,70 +371,73 @@
   }())
 
   // Element.prototype.classList
-  Object.defineProperty(Element.prototype, 'classList', {
-    configurable: true,
-    get: function () {
-      function pull () {
-        var className = (typeof element.className === 'object' ? element.className.baseVal : element.className);
-        [].splice.apply(classList, [0, classList.length].concat((className || '').replace(/^\s+|\s+$/g, '').split(/\s+/)))
-      }
-
-      function push () {
-        if (element.attachEvent) {
-          element.detachEvent('onpropertychange', pull)
+  // @vinay 19/11/2017: Safary 8 bug
+  try {
+    Object.defineProperty(Element.prototype, 'classList', {
+      configurable: true,
+      get: function () {
+        function pull () {
+          var className = (typeof element.className === 'object' ? element.className.baseVal : element.className);
+          [].splice.apply(classList, [0, classList.length].concat((className || '').replace(/^\s+|\s+$/g, '').split(/\s+/)))
         }
 
-        if (typeof element.className === 'object') {
-          element.className.baseVal = original.toString.call(classList)
-        } else {
-          element.className = original.toString.call(classList)
+        function push () {
+          if (element.attachEvent) {
+            element.detachEvent('onpropertychange', pull)
+          }
+
+          if (typeof element.className === 'object') {
+            element.className.baseVal = original.toString.call(classList)
+          } else {
+            element.className = original.toString.call(classList)
+          }
+
+          if (element.attachEvent) {
+            element.attachEvent('onpropertychange', pull)
+          }
         }
+
+        var element = this
+        var original = _DOMTokenList.prototype
+        var ClassList = function ClassList () {}
+        var classList
+
+        ClassList.prototype = new _DOMTokenList()
+
+        ClassList.prototype.item = function item (index) { // eslint-disable-line no-unused-vars
+          return pull(), original.item.apply(classList, arguments)
+        }
+
+        ClassList.prototype.toString = function toString () {
+          return pull(), original.toString.apply(classList, arguments)
+        }
+
+        ClassList.prototype.add = function add () {
+          return pull(), original.add.apply(classList, arguments), push()
+        }
+
+        ClassList.prototype.contains = function contains (token) { // eslint-disable-line no-unused-vars
+          return pull(), original.contains.apply(classList, arguments)
+        }
+
+        ClassList.prototype.remove = function remove () {
+          return pull(), original.remove.apply(classList, arguments), push()
+        }
+
+        ClassList.prototype.toggle = function toggle (token) {
+          return pull(), token = original.toggle.apply(classList, arguments), push(), token
+        }
+
+        classList = new ClassList()
 
         if (element.attachEvent) {
           element.attachEvent('onpropertychange', pull)
         }
+
+        return classList
       }
-
-      var element = this
-      var original = _DOMTokenList.prototype
-      var ClassList = function ClassList () {}
-      var classList
-
-      ClassList.prototype = new _DOMTokenList()
-
-      ClassList.prototype.item = function item (index) { // eslint-disable-line no-unused-vars
-        return pull(), original.item.apply(classList, arguments)
-      }
-
-      ClassList.prototype.toString = function toString () {
-        return pull(), original.toString.apply(classList, arguments)
-      }
-
-      ClassList.prototype.add = function add () {
-        return pull(), original.add.apply(classList, arguments), push()
-      }
-
-      ClassList.prototype.contains = function contains (token) { // eslint-disable-line no-unused-vars
-        return pull(), original.contains.apply(classList, arguments)
-      }
-
-      ClassList.prototype.remove = function remove () {
-        return pull(), original.remove.apply(classList, arguments), push()
-      }
-
-      ClassList.prototype.toggle = function toggle (token) {
-        return pull(), token = original.toggle.apply(classList, arguments), push(), token
-      }
-
-      classList = new ClassList()
-
-      if (element.attachEvent) {
-        element.attachEvent('onpropertychange', pull)
-      }
-
-      return classList
-    }
-  })
+    })
+  } catch (error) { /* */ };
 
   // Object.assign
   Object.assign = function assign (target, source) { // eslint-disable-line no-unused-vars
