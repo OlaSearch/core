@@ -131,7 +131,6 @@ export default class Input extends React.Component {
       'ola-search-zone-enabled': showZone
     })
     let shadowTerm = this.getShadowTerm()
-
     return (
       <div className={klass}>
         {showZone &&

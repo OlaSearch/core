@@ -62,10 +62,10 @@ class AutoComplete extends React.Component {
   };
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.q !== this.props.q ||
-      nextProps.q !== this.state.q) {
+    if (nextProps.q !== this.props.q) {
       this.setState({
         q: nextProps.q,
+        fuzzyQuery: null,
         results: []
       })
     }
@@ -311,12 +311,7 @@ class AutoComplete extends React.Component {
         updateQueryTerm: this.props.updateQueryTerm
       })
     }
-
     if (this.props.forceRedirect) {
-      /* Update the input value */
-      this.setState({
-        q: suggestion.term
-      })
       this.props.setSearchSource('suggest')
     }
 
@@ -338,18 +333,20 @@ class AutoComplete extends React.Component {
     let isEntity = type === 'entity'
     let isQuery = type === 'query'
     let isHistory = type === 'history'
-    let hasQueryTerm = isQuery || (isEntity && suggestion.taxo_terms)
+    // let hasQueryTerm = isQuery || (isEntity && suggestion.taxo_terms)
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
 
     if (!stayOpen) {
       this.setState({
-        q: hasQueryTerm ? term : '',
         results: [],
         isOpen: false,
         fuzzyQuery: null
       })
     }
+
+    /* Update state */
+    this.updateQueryTerm(term)
 
     if (isEntity || isTaxonomy) {
       /**
@@ -438,7 +435,6 @@ class AutoComplete extends React.Component {
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
     const queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
-
     return (
       <div className={klassContainer}>
         <div className={this.props.containerClass}>
