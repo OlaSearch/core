@@ -55,7 +55,8 @@ class AutoComplete extends React.Component {
     q: '',
     scrollOnFocus: true,
     scrollPadding: 16,
-    resultLimit: 10,
+    resultLimit: 5,
+    resultLimitDesktop: 10,
     searchOnSelect: false,
     searchTimeout: 400
   };
@@ -420,10 +421,14 @@ class AutoComplete extends React.Component {
       showZone,
       className,
       translate,
-      resultLimit
+      resultLimit,
+      resultLimitDesktop,
+      isDesktop
     } = this.props
     let { isFocused, fuzzyQuery, q, results } = this.state
-    if (results.length > resultLimit) results.length = resultLimit
+    if (results.length > resultLimit) {
+      results.length = isDesktop ? resultLimitDesktop : resultLimit
+    }
     const { showSuggestionHelp } = this.context.config
     const isOpen = !results.length ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
@@ -493,6 +498,7 @@ class AutoComplete extends React.Component {
 function mapStateToProps (state, ownProps) {
   return {
     isPhone: state.Device.isPhone,
+    isDesktop: state.Device.isDesktop,
     facets: state.QueryState.facet_query,
     history: state.AppState.history
   }
