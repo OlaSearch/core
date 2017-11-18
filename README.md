@@ -27,11 +27,11 @@ Using [https://yarnpkg.com](Yarn) as package manager
 
 ````
 # Latest version
-npm run release -- --version=latest
+VERSION=latest npm run release
 npm run s3-deploy
 
 # A tag
-npm run release -- --version=1.9.0
+VERSION=1.9.0 npm run release
 ````
 
 ## Security

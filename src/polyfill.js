@@ -28,19 +28,6 @@
     }
   }(this))
 
-  /* Polyfill for findIndex */
-  if (!Array.prototype.findIndex) {
-    Object.defineProperty(Array.prototype, 'findIndex', {value: function (predicate) {
-      if (this == null) { throw new TypeError('"this" is null or not defined') }
-      var o = Object(this); var len = o.length >>> 0; if (typeof predicate !== 'function') { throw new TypeError('predicate must be a function') }
-      var thisArg = arguments[1]; var k = 0; while (k < len) {
-        var kValue = o[k]; if (predicate.call(thisArg, kValue, k, o)) { return k }
-        k++
-      }
-      return -1
-    }})
-  }
-
   // Document
   if (this.HTMLDocument) { // IE8
     // HTMLDocument is an extension of Document.  If the browser has HTMLDocument but not Document, the former will suffice as an alias for the latter.
@@ -60,7 +47,10 @@
     Object.defineProperty = function defineProperty (object, property, descriptor) {
       // Where native support exists, assume it
       if (nativeDefineProperty && (object === window || object === document || object === Element.prototype || object instanceof Element)) {
-        return nativeDefineProperty(object, property, descriptor)
+        /* Safari error @Vinay 18 Nov 2017 */
+        try {
+          return nativeDefineProperty(object, property, descriptor)
+        } catch (error) { /* */ }
       }
 
       if (object === null || !(object instanceof Object || typeof object === 'object')) {
@@ -532,6 +522,19 @@
   Date.now = function now () {
     return new Date().getTime()
   };
+
+  /* Polyfill for findIndex */
+  if (!Array.prototype.findIndex) {
+    Object.defineProperty(Array.prototype, 'findIndex', {value: function (predicate) {
+      if (this == null) { throw new TypeError('"this" is null or not defined') }
+      var o = Object(this); var len = o.length >>> 0; if (typeof predicate !== 'function') { throw new TypeError('predicate must be a function') }
+      var thisArg = arguments[1]; var k = 0; while (k < len) {
+        var kValue = o[k]; if (predicate.call(thisArg, kValue, k, o)) { return k }
+        k++
+      }
+      return -1
+    }})
+  }
 
   // performance.now
   (function (global) {

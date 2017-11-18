@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
-    "release": "cross-env NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js",
+    "release": "cross-env NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js && cat ./src/polyfill.min.js ./dist/olasearch.core.$VERSION.js > ./dist/olasearch.core.min.$VERSION.js && rm ./dist/olasearch.core.$VERSION.js",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
@@ -70,7 +70,6 @@
     "express": "^4.16.2",
     "isparta": "^4.0.0",
     "jsdom": "^11.3.0",
-    "minimist": "^1.2.0",
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
     "react": "^16.1.1",

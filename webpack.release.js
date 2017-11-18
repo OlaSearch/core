@@ -2,18 +2,15 @@ var path = require('path')
 var webpack = require('webpack')
 var startYear = 2016
 var currentYear = new Date().getFullYear()
-var packageJson = require('./package.json')
-var argv = require('minimist')(process.argv.slice(2))
-var version = argv.version || packageJson.version
+var version = process.env.VERSION || 'latest'
 
 module.exports = {
   entry: [
-    './src/polyfill',
     './src/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: `olasearch.core.min.${version}.js`,
+    filename: `olasearch.core.${version}.js`,
     library: 'OlaSearch',
     libraryTarget: 'umd'
   },
