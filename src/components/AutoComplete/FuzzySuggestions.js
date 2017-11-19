@@ -47,6 +47,7 @@ class SuggestionItem extends React.Component {
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let { index, result } = this.props
+    if (!result) return null
     let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory, answer } = result
     const isHistory = type === 'history'
     let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1').split(/\s/).join('|') + ')'
