@@ -442,6 +442,12 @@ class AutoComplete extends React.Component {
   registerRef = (input) => {
     this.suggestionsContainer = input
   };
+  registerEl = (el) => {
+    this.el = el
+  };
+  componentDidMount () {
+    this.isSmall = getCoords(this.el).width <= 600
+  }
 
   render () {
     const {
@@ -462,11 +468,12 @@ class AutoComplete extends React.Component {
     const klassContainer = classNames(className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused,
+      'ola-autosuggest-small': this.isSmall,
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
     const queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
     return (
-      <div className={klassContainer}>
+      <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>
           <Input
             q={queryTerm}

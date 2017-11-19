@@ -260,7 +260,9 @@ const utilities = {
 
     return {
       top: Math.round(top),
-      left: Math.round(left)
+      left: Math.round(left),
+      width: box.width,
+      height: box.height,
     }
   },
   decimalAdjust (type, value, exp) {
