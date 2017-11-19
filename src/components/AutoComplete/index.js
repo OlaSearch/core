@@ -103,9 +103,9 @@ class AutoComplete extends React.Component {
       fuzzyQuery: null,
       results: this.props.showHistory
                 ? mergeResultsWithHistory({
-                    history: this.props.history,
-                    showHistoryForQuery: this.props.showHistoryForQuery
-                  })
+                  history: this.props.history,
+                  showHistoryForQuery: this.props.showHistoryForQuery
+                })
                 : [],
       isOpen: this.props.history.length > 0
     }, cb)
@@ -114,9 +114,9 @@ class AutoComplete extends React.Component {
     this.setState({
       results: this.props.showHistory
                 ? mergeResultsWithHistory({
-                    history: newHistory,
-                    showHistoryForQuery: this.props.showHistoryForQuery
-                  })
+                  history: newHistory,
+                  showHistoryForQuery: this.props.showHistoryForQuery
+                })
                 : []
     })
   };
@@ -215,11 +215,11 @@ class AutoComplete extends React.Component {
 
           const finalResults = this.props.showHistory
             ? mergeResultsWithHistory({
-                history: this.props.history,
-                results: res,
-                query: this.state.q,
-                showHistoryForQuery: this.props.showHistoryForQuery
-              })
+              history: this.props.history,
+              results: res,
+              query: this.state.q,
+              showHistoryForQuery: this.props.showHistoryForQuery
+            })
             : res
 
           this.setState({
@@ -407,11 +407,11 @@ class AutoComplete extends React.Component {
       isOpen: true,
       results: this.props.showHistory
                 ? mergeResultsWithHistory({
-                    history: this.props.history,
-                    results: this.state.results,
-                    query: this.state.q,
-                    showHistoryForQuery: this.props.showHistoryForQuery
-                  })
+                  history: this.props.history,
+                  results: this.state.results,
+                  query: this.state.q,
+                  showHistoryForQuery: this.props.showHistoryForQuery
+                })
                 : this.state.results
     })
 
