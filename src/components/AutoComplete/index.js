@@ -52,6 +52,8 @@ class AutoComplete extends React.Component {
     visibleCategoryGroups: null,
     autoFocus: false,
     forceRedirect: false,
+    showHistory: true,
+    showHistoryForQuery: false,
     q: '',
     scrollOnFocus: true,
     scrollPadding: 16,
@@ -99,13 +101,23 @@ class AutoComplete extends React.Component {
     this.setState({
       q: '',
       fuzzyQuery: null,
-      results: mergeResultsWithHistory(this.props.history, []),
+      results: this.props.showHistory
+                ? mergeResultsWithHistory({
+                    history: this.props.history,
+                    showHistoryForQuery: this.props.showHistoryForQuery
+                  })
+                : [],
       isOpen: this.props.history.length > 0
     }, cb)
   };
   handleHistoryChange = (newHistory) => {
     this.setState({
-      results: mergeResultsWithHistory(newHistory, [])
+      results: this.props.showHistory
+                ? mergeResultsWithHistory({
+                    history: newHistory,
+                    showHistoryForQuery: this.props.showHistoryForQuery
+                  })
+                : []
     })
   };
   terminateAutoSuggest = () => {
@@ -201,9 +213,18 @@ class AutoComplete extends React.Component {
             }
           }
 
+          const finalResults = this.props.showHistory
+            ? mergeResultsWithHistory({
+                history: this.props.history,
+                results: res,
+                query: this.state.q,
+                showHistoryForQuery: this.props.showHistoryForQuery
+              })
+            : res
+
           this.setState({
-            results: mergeResultsWithHistory(this.props.history, res, this.state.q),
-            isOpen: this.state.q ? !!results.length : false
+            results: finalResults,
+            isOpen: this.state.q ? !!finalResults.length : false
           })
         })
     }
@@ -224,7 +245,9 @@ class AutoComplete extends React.Component {
     let fullActiveClass = '.' + activeClassName
     let nodes = this.suggestionsContainer.querySelectorAll(classNames)
 
-    if (!nodes.length) return
+    if (!nodes.length) {
+      if (this.props.history.length) return this.clearQueryTerm()
+    }
 
     let target = this.suggestionsContainer.querySelector(fullActiveClass)
     let index = target ? [].indexOf.call(nodes, target) : -1
@@ -382,7 +405,14 @@ class AutoComplete extends React.Component {
     this.setState({
       isFocused: true,
       isOpen: true,
-      results: mergeResultsWithHistory(this.props.history, this.state.results, this.state.q)
+      results: this.props.showHistory
+                ? mergeResultsWithHistory({
+                    history: this.props.history,
+                    results: this.state.results,
+                    query: this.state.q,
+                    showHistoryForQuery: this.props.showHistoryForQuery
+                  })
+                : this.state.results
     })
 
     this.props.onFocus && this.props.onFocus(event)

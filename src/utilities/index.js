@@ -299,7 +299,11 @@ const utilities = {
     if (typeof text !== 'string') return text
     return parseFloat(text.replace(/<(?:.*|\n)*?>/gm, ''))
   },
-  mergeResultsWithHistory (history, results, query, limit = 5) {
+  mergeResultsWithHistory (options) {
+    let { history, results = [], query, limit = 5, showHistoryForQuery } = options
+    /* Filter history when results are empty */
+    const shouldShowHistoryForQuery = showHistoryForQuery || !results.length
+
     /* Check if answer exists in the first result */
     if (results.length && results[0]['answer']) return results
 
@@ -316,23 +320,31 @@ const utilities = {
 
     if (query) {
       /* Only history that starts with */
-      history = []
-      // history = history
-      //           .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
-      //           .sort((a, b) => {
-      //             /* Sort by match */
-      //             if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
-      //             if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
-      //             return 0
-      //           })
+      if (shouldShowHistoryForQuery) {
+        history = history
+                  .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
+                  .sort((a, b) => {
+                    /* Sort by match */
+                    if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
+                    if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
+                    return 0
+                  })
+      } else {
+        history = []
+      }
     } else {
+      /* If no query, should we show history */
       return history.filter((_, i) => i < limit)
     }
-    /* 3 */
-    // let historyTerms = history.map(({ term }) => term)
 
-    /* Remove results that contains the history term */
-    // results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
+    /* Show history suggestions when query is not empty */
+    if (query && shouldShowHistoryForQuery) {
+      /* 3 */
+      let historyTerms = history.map(({ term }) => term)
+
+      /* Remove results that contains the history term */
+      results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
+    }
 
     /* Only take top 3 history terms */
     history = history.filter((_, i) => i < limit)
