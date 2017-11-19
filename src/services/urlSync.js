@@ -87,6 +87,10 @@ var urlSync = {
     var facetQueryObject = {}
     var filtersObject = {}
     /**
+     * If no qs
+     */
+    if (!Object.keys(qs).length) qs = { q: '' }
+    /**
      * Validate query string
      */
     for (let p in qs) {
@@ -150,7 +154,7 @@ var urlSync = {
       }
     } else {
       facetQueryObject = {
-        facet_query: [] // initialState.facet_query
+        facet_query: []
       }
     }
 
@@ -186,7 +190,7 @@ var urlSync = {
       }
     } else {
       filtersObject = {
-        filters: [] // initialState.filters
+        filters: []
       }
     }
     return {
