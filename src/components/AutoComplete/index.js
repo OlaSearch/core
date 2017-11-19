@@ -24,6 +24,7 @@ class AutoComplete extends React.Component {
       q: props.q,
       results: []
     }
+    this.isSizeSmall = false
   }
 
   static propTypes = {
@@ -309,10 +310,6 @@ class AutoComplete extends React.Component {
       isOpen: false
     })
 
-    /* Remove all selected facets */
-    /* Keep the selected facets if its a freeform search */
-    // this.props.removeAllFacets()
-
     /* Update query term */
     this.props.updateQueryTerm(this.state.q, this.state.searchInput)
 
@@ -446,7 +443,8 @@ class AutoComplete extends React.Component {
     this.el = el
   };
   componentDidMount () {
-    this.isSmall = getCoords(this.el).width <= 600
+    if (!this.el) return
+    this.isSizeSmall = getCoords(this.el).width <= 600
   }
 
   render () {
@@ -468,7 +466,7 @@ class AutoComplete extends React.Component {
     const klassContainer = classNames(className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused,
-      'ola-autosuggest-small': this.isSmall,
+      'ola-autosuggest-small': this.isSizeSmall,
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
     const queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q

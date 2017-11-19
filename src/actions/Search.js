@@ -387,6 +387,8 @@ export function initSearch ({ config, urlSync = true }) {
         dispatch(executeSearch({
           routeChange: false
         }))
+      } else {
+        dispatch(terminateSearch())
       }
     } else {
       dispatch(executeSearch({
