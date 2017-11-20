@@ -72,6 +72,12 @@ class AutoComplete extends React.Component {
         results: []
       })
     }
+    /* Eg: page changes with empty query */
+    if (nextProps.q !== this.state.q) {
+      this.setState({
+        q: nextProps.q
+      })
+    }
     if (nextProps.history !== this.props.history) {
       this.handleHistoryChange(nextProps.history)
     }

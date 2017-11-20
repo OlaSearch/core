@@ -9,6 +9,9 @@ import { SEARCH_INPUTS } from './../../constants/Settings'
 import { escapeRegEx, scrollTo } from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
+import ContentEditable from './../ContentEditable'
+
+const PatternMatch = new RegExp(/(Singapore)/gi)
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -156,6 +159,26 @@ export default class Input extends React.Component {
             onKeyDown={this.onKeyDown}
             autoFocus={this.props.autoFocus}
           />
+          {/* <ContentEditable
+            value={q}
+            ref={this.registerRef}
+            onChange={this.handleInputChange}
+            onFocus={this.onFocus}
+            onBlur={onBlur}
+            autoComplete='off'
+            autoCorrect='off'
+            autoCapitalize='off'
+            spellCheck='false'
+            placeholder={placeholder}
+            onKeyDown={this.onKeyDown}
+            autoFocus={this.props.autoFocus}
+            onSubmit={this.props.onSubmit}
+            formatValue={(value) => {
+              return value.replace(PatternMatch, (match, text) => {
+                return `<span>${text}</span>`
+              })
+            }}
+          /> */}
 
           <InputShadow
             value={shadowTerm}

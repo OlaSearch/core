@@ -168,6 +168,27 @@ module.exports = (options = {}) => {
         }
 
         /**
+         * Get facets or filters selected by intent engine
+         */
+        let facetQuery = null
+        if (answer &&
+            answer.search &&
+            answer.search.facet_query &&
+            answer.search.facet_query.length) {
+              facetQuery = []
+              for (let i = 0; i < answer.search.facet_query.length; i++) {
+                let selectedFacet = facets.filter(({ name }) => name === answer.search.facet_query[i].name)
+                if (selectedFacet.length) {
+                  facetQuery.push({
+                    ...selectedFacet.reduce((a, b) => a),
+                    ...answer.search.facet_query[i],
+                    values: []
+                  })
+                }
+              }
+        }
+
+        /**
          * Check if
          * Total results = 0 && Has Spell Suggestions
          */
@@ -187,7 +208,8 @@ module.exports = (options = {}) => {
             api,
             payload,
             context,
-            responseTime
+            responseTime,
+            facetQuery
           })
         }
 
@@ -205,7 +227,8 @@ module.exports = (options = {}) => {
           error: null,
           skipSearchResultsUpdate,
           api,
-          responseTime
+          responseTime,
+          facetQuery
         })
 
         /**

@@ -14,7 +14,10 @@
     "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "standard": "standard --verbose --fix | snazzy",
     "retire": "retire",
-    "s3-deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js"
+    "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public",
+    "cdn:invalidate": "aws-cloudfront-invalidate E1MMHSLEW3SZPY /assets/js/*",
+    "styleguide": "styleguidist server",
+    "styleguidist:build": "styleguidist build"
   },
   "engines": {
     "node": ">=6.4.0",
@@ -77,6 +80,7 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
+    "react-styleguidist": "^6.0.33",
     "react-test-renderer": "^16.1.1",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
@@ -98,6 +102,7 @@
     "redux-thunk": "^2.2.0"
   },
   "dependencies": {
+    "aws-cloudfront-invalidate": "^0.1.3",
     "babel-runtime": "^6.25.0",
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.1",

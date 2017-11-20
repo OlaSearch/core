@@ -77,8 +77,7 @@ export default (state = initialState, action) => {
         ...state,
         ...action.stateFromUrl,
         referrer: '',
-        searchInput: SEARCH_INPUTS.URL,
-        skip_intent: false
+        searchInput: SEARCH_INPUTS.URL
       }
 
     case types.UPDATE_QUERY_TERM:
@@ -187,14 +186,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         facet_query: [],
-        page: 1
+        page: 1,
       }
 
     case types.CHANGE_SORT:
       return {
         ...state,
         sort: action.sort || '',
-        page: 1
+        page: 1,
       }
 
     case types.CHANGE_PAGE:
@@ -222,26 +221,11 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-      /*
-       * 1. Query can be enriched by the intent engine
-       * 2. Facets can be added by the intent engine
-       * Facet definitions are in config.facets
-       * {
-       *  answer: {
-       *    search: {
-       *      facet_query: [
-       *        {
-       *          name: '',
-       *          selected: []
-       *        }
-       *      ]
-       *    }
-       *  }
-       * }
-       */
       return {
         ...state,
         enriched_q: action.enriched_q || '',
+        facet_query: action.facetQuery ? action.facetQuery : state.facet_query,
+        /* Reset source */
         source: null
       }
 

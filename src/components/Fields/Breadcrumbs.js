@@ -1,5 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
+/**
+ * Displays a section breadcrumb in snippet
+ * @example ./../../../examples/Fields.Breadcrumbs.md
+ */
 const Breadcrumbs = ({ crumbs }) => {
   if (!crumbs) return null
 
@@ -19,6 +24,13 @@ const Breadcrumbs = ({ crumbs }) => {
       })}
     </div>
   )
+}
+
+Breadcrumbs.propTypes = {
+  crumbs: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.string
+  ])
 }
 
 module.exports = Breadcrumbs
