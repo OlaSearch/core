@@ -186,14 +186,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         facet_query: [],
-        page: 1,
+        page: 1
       }
 
     case types.CHANGE_SORT:
       return {
         ...state,
         sort: action.sort || '',
-        page: 1,
+        page: 1
       }
 
     case types.CHANGE_PAGE:

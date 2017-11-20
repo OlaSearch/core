@@ -175,17 +175,17 @@ module.exports = (options = {}) => {
             answer.search &&
             answer.search.facet_query &&
             answer.search.facet_query.length) {
-              facetQuery = []
-              for (let i = 0; i < answer.search.facet_query.length; i++) {
-                let selectedFacet = facets.filter(({ name }) => name === answer.search.facet_query[i].name)
-                if (selectedFacet.length) {
-                  facetQuery.push({
-                    ...selectedFacet.reduce((a, b) => a),
-                    ...answer.search.facet_query[i],
-                    values: []
-                  })
-                }
-              }
+          facetQuery = []
+          for (let i = 0; i < answer.search.facet_query.length; i++) {
+            let selectedFacet = facets.filter(({ name }) => name === answer.search.facet_query[i].name)
+            if (selectedFacet.length) {
+              facetQuery.push({
+                ...selectedFacet.reduce((a, b) => a),
+                ...answer.search.facet_query[i],
+                values: []
+              })
+            }
+          }
         }
 
         /**

@@ -9,9 +9,9 @@ import { SEARCH_INPUTS } from './../../constants/Settings'
 import { escapeRegEx, scrollTo } from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
-import ContentEditable from './../ContentEditable'
+// import ContentEditable from './../ContentEditable'
 
-const PatternMatch = new RegExp(/(Singapore)/gi)
+// const PatternMatch = new RegExp(/(Singapore)/gi)
 
 export default class Input extends React.Component {
   static propTypes = {

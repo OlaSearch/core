@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 /**
  * Display fields that are arrays in a snippet, separated by a separator
- * 
+ *
  * @example ./../../../examples/Fields.ArrayField.md
  */
 const ArrayField = ({ field, suffix = '', separator = ', ' }) => {
