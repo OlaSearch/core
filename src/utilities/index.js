@@ -304,7 +304,7 @@ const utilities = {
   mergeResultsWithHistory (options) {
     let { history, results = [], query, limit = 5, showHistoryForQuery } = options
     /* Filter history when results are empty */
-    const shouldShowHistoryForQuery = showHistoryForQuery || !results.length
+    const shouldShowHistoryForQuery = showHistoryForQuery || (!results.length && !query)
 
     /* Check if answer exists in the first result */
     if (results.length && results[0]['answer']) return results
@@ -353,6 +353,26 @@ const utilities = {
 
     /* Merge history with results */
     return [...history, ...results]
+  },
+  getCaretPosition () {
+    var x = 0
+    var y = 0
+    var sel = window.getSelection()
+    if (sel.rangeCount) {
+      var range = sel.getRangeAt(0).cloneRange()
+      if (range.getClientRects()) {
+        range.collapse(true)
+        var rect = range.getClientRects()[0]
+        if (rect) {
+          y = rect.top
+          x = rect.left
+        }
+      }
+    }
+    return {
+      x: x,
+      y: y
+    }
   }
 }
 

@@ -78,7 +78,7 @@ class AutoComplete extends React.Component {
         q: nextProps.q
       })
     }
-    if (nextProps.history !== this.props.history) {
+    if (nextProps.history !== this.props.history && this.state.q) {
       this.handleHistoryChange(nextProps.history)
     }
   }
@@ -122,6 +122,7 @@ class AutoComplete extends React.Component {
       results: this.props.showHistory
                 ? mergeResultsWithHistory({
                   history: newHistory,
+                  q: this.state.q,
                   showHistoryForQuery: this.props.showHistoryForQuery
                 })
                 : []
@@ -198,7 +199,7 @@ class AutoComplete extends React.Component {
                 suggestion_raw: payload.suggestion_raw,
                 label: payload.label,
                 answer: payload.answer,
-                type: 'query' /* The first item is a query */
+                type: payload.type /* The first item is a query */
               })
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.taxo_terms[j].split('|')
@@ -405,18 +406,20 @@ class AutoComplete extends React.Component {
       document.documentElement.scrollTop = document.body.scrollTop = getCoords(event.target).top - this.props.scrollPadding
     }
 
-    this.setState({
-      isFocused: true,
-      isOpen: true,
-      results: this.props.showHistory
-                ? mergeResultsWithHistory({
-                  history: this.props.history,
-                  results: this.state.results,
-                  query: this.state.q,
-                  showHistoryForQuery: this.props.showHistoryForQuery
-                })
-                : this.state.results
-    })
+    if (!this.state.q) {
+      this.setState({
+        isFocused: true,
+        isOpen: true,
+        results: this.props.showHistory
+                  ? mergeResultsWithHistory({
+                    history: this.props.history,
+                    results: this.state.results,
+                    query: this.state.q,
+                    showHistoryForQuery: this.props.showHistoryForQuery
+                  })
+                  : this.state.results
+      })
+    }
 
     this.props.onFocus && this.props.onFocus(event)
   };
@@ -475,7 +478,9 @@ class AutoComplete extends React.Component {
       'ola-autosuggest-small': this.isSizeSmall,
       'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
     })
+
     const queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
+
     return (
       <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>
@@ -536,7 +541,6 @@ function mapStateToProps (state, ownProps) {
   return {
     isPhone: state.Device.isPhone,
     isDesktop: state.Device.isDesktop,
-    facets: state.QueryState.facet_query,
     history: state.AppState.history
   }
 }

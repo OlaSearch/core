@@ -14,8 +14,8 @@
     "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "standard": "standard --verbose --fix | snazzy",
     "retire": "retire",
-    "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public",
-    "cdn:invalidate": "aws-cloudfront-invalidate E1MMHSLEW3SZPY /assets/js/*",
+    "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public && s3-deploy './dist/olasearch.core.min.css' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/css --cache 604800,public",
+    "cdn:invalidate": "aws-cloudfront-invalidate E1MMHSLEW3SZPY /assets/*",
     "styleguide": "styleguidist server",
     "styleguidist:build": "styleguidist build"
   },

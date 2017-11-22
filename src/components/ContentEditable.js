@@ -21,6 +21,10 @@ export default class ContentEditable extends React.Component {
   componentDidUpdate () {
     if (this.el && this.props.value !== this.el.textContent) {
       this.el.textContent = this.props.value
+      /* Check if its active element */
+      if (document && document.activeElement === this.el) {
+        console.log('called')
+      }
     }
     this.updateFakeEl(this.el.textContent)
   }
@@ -52,10 +56,21 @@ export default class ContentEditable extends React.Component {
     return { __html: this.props.value }
   };
   onKeyDown = (evt) => {
+    if (this.props.onKeyDown) return this.props.onKeyDown(evt)
     if (evt.which === 13) {
-      evt.preventDefault()
-      this.props.onSubmit && this.props.onSubmit(this.props.value)
+      evt && evt.preventDefault()
+      this.props.onSubmit && this.props.onSubmit(this.props.value, evt)
     }
+  };
+  onFocus = (event) => {
+    const newEvent = {
+      ...event,
+      target: {
+        ...event.target,
+        value: this.props.value
+      }
+    }
+    this.props.onFocus && this.props.onFocus(newEvent)
   };
   render () {
     let { formatValue, value, ...rest } = this.props
@@ -66,8 +81,8 @@ export default class ContentEditable extends React.Component {
           {...rest}
           ref={this.registerRef}
           contentEditable
+          onFocus={this.onFocus}
           onInput={this.emitChange}
-          dangerouslySetInnerHTML={this.createMarkup()}
           onKeyDown={this.onKeyDown}
           className='ContentEditable-Input'
         />
