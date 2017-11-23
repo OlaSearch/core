@@ -85,7 +85,8 @@ class AutoComplete extends React.Component {
 
   clearFuzzyQueryTerm = () => {
     this.setState({
-      fuzzyQuery: null
+      fuzzyQuery: null,
+      results: []
     })
   };
   updateFuzzyQueryTerm = (term) => {
@@ -151,11 +152,15 @@ class AutoComplete extends React.Component {
 
   onChange = (term, searchInput) => {
     let { q } = this.state
+
     /* Trim text */
     if (term && term.length && trim(term) === '') return
-
+    
     if (!term && !q) {
+      /* Close auto suggest */
       this.closeAutoSuggest()
+      /* Remove fuzzy term */
+      this.clearFuzzyQueryTerm()
       return
     }
 
