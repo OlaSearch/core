@@ -6,7 +6,7 @@ import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { clearHistory } from './../../actions/History'
 import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource } from './../../actions/Search'
 import Input from './Input'
-import { checkForAllowedCharacters, trim, getCoords, mergeResultsWithHistory } from './../../utilities'
+import { checkForAllowedCharacters, trim, getCoords, mergeResultsWithHistory, redirect } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
@@ -85,8 +85,7 @@ class AutoComplete extends React.Component {
 
   clearFuzzyQueryTerm = () => {
     this.setState({
-      fuzzyQuery: null,
-      results: []
+      fuzzyQuery: null
     })
   };
   updateFuzzyQueryTerm = (term) => {
@@ -161,6 +160,9 @@ class AutoComplete extends React.Component {
       this.closeAutoSuggest()
       /* Remove fuzzy term */
       this.clearFuzzyQueryTerm()
+
+      /* terminate */
+      this.terminateAutoSuggest()
       return
     }
 
@@ -187,6 +189,8 @@ class AutoComplete extends React.Component {
             let { payload, ...rest } = results[i]
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
+            let { topClicks } = payload
+            let hasTopClicks = topClicks && topClicks.length
 
             /* If categories are found, we will need to create additional array items */
             if (isCategory) {
@@ -198,7 +202,7 @@ class AutoComplete extends React.Component {
               let totalCategories = categories.length
               /* Get the display names of the facets */
               let facet = find(propEq('name', payload.taxo_label))(this.context.config.facets)
-
+              /* First term in the suggestion */
               res.push({
                 ...rest,
                 suggestion_raw: payload.suggestion_raw,
@@ -206,6 +210,11 @@ class AutoComplete extends React.Component {
                 answer: payload.answer,
                 type: payload.type /* The first item is a query */
               })
+
+              if (topClicks) {
+                res = [...res, ...topClicks.map((item) => ({ term: item.title, type: 'doc', ...item }))]
+              }
+
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.taxo_terms[j].split('|')
                 let [ path ] = payload.taxo_paths ? payload.taxo_paths[j].split('|') : []
@@ -365,6 +374,7 @@ class AutoComplete extends React.Component {
     let isEntity = type === 'entity'
     let isQuery = type === 'query'
     let isHistory = type === 'history'
+    let isDoc = type === 'doc'
     // let hasQueryTerm = isQuery || (isEntity && suggestion.taxo_terms)
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
@@ -375,6 +385,11 @@ class AutoComplete extends React.Component {
         isOpen: false,
         fuzzyQuery: null
       })
+    }
+
+    if (isDoc) {
+      /* Update state */
+      return redirect(suggestion.url)
     }
 
     /* Update state */

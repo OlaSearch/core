@@ -373,6 +373,9 @@ const utilities = {
       x: x,
       y: y
     }
+  },
+  redirect (url) {
+    window.location.href = url
   }
 }
 

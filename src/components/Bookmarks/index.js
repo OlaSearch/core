@@ -12,8 +12,13 @@ import NoBookmarks from './NoBookmarks'
 class Bookmarks extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    bookmarks: PropTypes.array.isRequired
+    bookmarks: PropTypes.array.isRequired,
+    showLabel: PropTypes.bool
   };
+
+  static defaultProps = {
+    showLabel: false
+  }
 
   constructor (props) {
     super(props)
@@ -59,25 +64,36 @@ class Bookmarks extends React.Component {
     var {
       bookmarks,
       dispatch,
-      translate
+      translate,
+      showLabel
     } = this.props
 
     var {
       isOpen
     } = this.state
 
-    var klass = classNames({
+    const hasBookmarks = bookmarks.length > 0
+    const klass = classNames({
       'ola-module': true,
       'ola-js-hide': !isOpen
     })
+    const bookmarkKlass = classNames('ola-bookmarks-container', {
+      'ola-bookmarks-hasLabel': showLabel,
+      'ola-bookmarks-hasBookmarks': hasBookmarks
+    })
+    const badgeClass = classNames('ola-badge', {
+      'ola-badge-active': hasBookmarks
+    })
     return (
-      <div className='ola-bookmarks-container'>
+      <div className={bookmarkKlass}>
         <button
           type='button'
           className='ola-link-bookmark'
           onClick={this.toggleVisibility}
           tabIndex='-1'
         >
+          {showLabel && <span className='ola-bookmarks-label'>{translate('bookmarks_label')}</span>}
+          {showLabel && <span className={badgeClass}>{bookmarks.length}</span>}
           <span className='ola-btn-hint hint--top' aria-label={translate('bookmarks_label')} />
         </button>
         <div className={klass}>

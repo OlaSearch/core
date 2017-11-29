@@ -6,12 +6,12 @@ var version = process.env.VERSION || 'latest'
 
 module.exports = {
   entry: [
-    './src/polyfill',
+    // './src/polyfill',
     './src/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: `olasearch.core.min.${version}.js`,
+    filename: `olasearch.core.${version}.js`,
     library: 'OlaSearch',
     libraryTarget: 'umd'
   },
