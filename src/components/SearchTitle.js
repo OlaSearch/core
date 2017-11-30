@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/OlaTranslate'
 
-const SearchTitle = ({ totalResults, page, perPage, isPhone, translate }, context) => {
+function SearchTitle ({ totalResults, page, perPage, isPhone, translate }, context) {
   let title = translate('title')
   let showTitle = title || totalResults > 0
   if (!showTitle) return null

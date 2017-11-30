@@ -5,7 +5,7 @@ import LoadMore from './InfiniteScroll/LoadMore'
 import { changePage, executeSearch, loadMore } from './../actions/Search'
 import { bindActionCreators } from 'redux'
 
-const SearchFooter = (props, context) => {
+function SearchFooter (props, context) {
   let { infiniteScroll } = context.config
   let { isPhone, dispatch, totalResults, infiniteScroll: infiniteScrollOverride, beforeChangePage } = props
 

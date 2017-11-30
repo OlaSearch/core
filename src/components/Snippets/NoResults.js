@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
 
-const NoResults = ({
+function NoResults ({
     totalResults,
     isLoading,
     q,
@@ -11,7 +11,7 @@ const NoResults = ({
     suggestedTerm,
     facets,
     dispatch
-  }) => {
+  }) {
   /*
     Removed `q` (23/6/17 - Vinay)
     q can be empty when filters are used

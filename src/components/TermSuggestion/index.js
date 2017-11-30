@@ -1,7 +1,7 @@
 import React from 'react'
 import injectTranslate from './../../decorators/OlaTranslate'
 
-const TermSuggestion = ({ term, answer, totalResults, translate, className }) => {
+function TermSuggestion ({ term, answer, totalResults, translate, className }) {
   if (!term) return null
   if ((
         answer &&

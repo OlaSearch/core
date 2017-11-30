@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Share = ({ title, url }) => {
+function Share ({ title, url }) {
   let { location } = window
   let emailUrl = `mailto:?&subject=${title}&body=${url}`
   let facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&title=${title}&redirect_uri=${location.href}`

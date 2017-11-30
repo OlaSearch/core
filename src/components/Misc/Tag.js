@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { supplant, getDisplayName } from './../../utilities'
 import DateParser from './../../utilities/dateParser'
 
-const Tag = (props) => {
+function Tag (props) {
   var displayName = ''
   var { name, onRemove, facet } = props
   var { type, label, template, facetNames, dateFormat, interval } = facet

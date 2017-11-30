@@ -4,7 +4,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 import { log } from './../actions/Logger'
 
 module.exports = (WrappedComponent) => {
-  const WithLogger = (props, { store }) => {
+  function WithLogger (props, { store }) {
     function logFn (params) {
       store.dispatch(log(params))
     }

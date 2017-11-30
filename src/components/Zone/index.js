@@ -11,7 +11,7 @@ import propEq from 'ramda/src/propEq'
 /* Create a zone facet */
 const createZoneFacet = (name) => ({ name, zone: true, type: 'string' })
 
-const Zone = (props, context) => {
+function Zone (props, context) {
   function onChange (event) {
     let { value } = event.target
     let { onChange, replaceFacet, removeFacet } = props

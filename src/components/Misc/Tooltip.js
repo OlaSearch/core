@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Tooltip = ({ isShown, onClose, content }) => {
+function Tooltip ({ isShown, onClose, content }) {
   if (!isShown) return null
   return (
     <div className='ola-tooltip-holder'>

@@ -2,7 +2,7 @@ import React from 'react'
 import { removeAllFacets, executeSearch } from './../actions/Search'
 import injectTranslate from './../decorators/OlaTranslate'
 
-const ClearAllFacets = ({ selected, dispatch, translate }) => {
+function ClearAllFacets ({ selected, dispatch, translate }) {
   function handleClick () {
     dispatch(removeAllFacets())
     dispatch(executeSearch())

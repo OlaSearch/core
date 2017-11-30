@@ -4,7 +4,7 @@ import { updateQueryTerm, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/OlaTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
-const SpellSuggestion = (props) => {
+function SpellSuggestion (props) {
   function onChange (term) {
     var { dispatch } = props
     dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { changeSort, executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/OlaTranslate'
 
-const Sort = (props, context) => {
+function Sort (props, context) {
   function handleChange (event) {
     let { dispatch } = props
     dispatch(changeSort(event.target.value))

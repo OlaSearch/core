@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
 
-const LoadMore = ({ totalResults, currentPage, perPage, actions, onLoadMore, isLoading, beforeChangePage, translate }) => {
+function LoadMore ({ totalResults, currentPage, perPage, actions, onLoadMore, isLoading, beforeChangePage, translate }) {
   if (currentPage * perPage >= totalResults) return null
   let klass = classNames('ola-link-load-more', {
     'ola-link-load-more-active': isLoading

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 
-const FilterButton = ({ toggleSidebar, facets }) => {
+function FilterButton ({ toggleSidebar, facets }) {
   const hasFilter = facets.some((item) => item.values.length > 0)
   if (!hasFilter) return null
   return (

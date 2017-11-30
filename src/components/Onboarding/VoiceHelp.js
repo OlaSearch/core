@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const VoiceHelp = ({ hasUsedVoice, onDismiss }) => {
+function VoiceHelp ({ hasUsedVoice, onDismiss }) {
   if (hasUsedVoice) return null
   return (
     <div className='ola-onboarding'>

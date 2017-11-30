@@ -2,7 +2,7 @@ import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
 import Bookmark from './../SnippetActions/Bookmark'
 
-const DefaultAnswerSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
+function DefaultAnswerSnippet ({ result, bookmarks, dispatch, ...rest }) {
   let { ola_answer: answer } = result
   return (
     <div className='ola-snippet ola-snippet-static-answer'>

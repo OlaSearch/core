@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/OlaTranslate'
 
-const PopularKeywords = ({ onClick, translate }, context) => {
+function PopularKeywords ({ onClick, translate }, context) {
   let { popularKeywords } = context.config
   return (
     <div className='ola-popular-keywords'>

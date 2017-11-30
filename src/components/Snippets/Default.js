@@ -5,7 +5,7 @@ import Thumbnail from './../Fields/Thumbnail'
 import TextField from './../Fields/TextField'
 import Bookmark from './../SnippetActions/Bookmark'
 
-const DefaultSnippet = ({ result, bookmarks, dispatch, ...rest }) => {
+function DefaultSnippet ({ result, bookmarks, dispatch, ...rest }) {
   return (
     <div className='ola-snippet'>
       <div className='ola-snippet-image'>

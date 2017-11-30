@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/OlaTranslate'
 
-const Error = ({ error, translate }) => {
+function Error ({ error, translate }) {
   if (!error) return null
 
   var message

@@ -6,7 +6,7 @@ import React from 'react'
  * var feedback = data.get('ola_escalation_feedback')
  */
 
-const EscalationForm = (props) => {
+function EscalationForm (props) {
   let { label, placeholder, buttonLabel, formUrl, visible, onSubmit, children } = props
   if (!visible) return null
   return (
