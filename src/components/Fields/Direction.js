@@ -3,7 +3,7 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
-const Directions = (props) => {
+function Directions (props) {
   var { latlong, translate, label, iconLeft = null, iconRight = null, onClick, result, log, fieldLabel, snippetId, ...rest } = props
 
   if (!latlong) return null

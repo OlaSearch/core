@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
  *
  * @example ./../../../examples/Fields.ArrayField.md
  */
-const ArrayField = ({ field, suffix = '', separator = ', ' }) => {
+function ArrayField ({ field, suffix = '', separator = ', ' }) {
   if (!field) return null
   if (!Array.isArray(field)) return field
   return (

@@ -14,6 +14,7 @@ import FuzzySuggestions from './FuzzySuggestions'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
 
+const OLA_DOC_TYPE = 'doc'
 class AutoComplete extends React.Component {
   constructor (props) {
     super(props)
@@ -191,7 +192,9 @@ class AutoComplete extends React.Component {
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
             let { topClicks } = payload
-            let hasTopClicks = topClicks && topClicks.length
+            let topClickDocs = topClicks && topClicks.length
+              ? topClicks.map((item) => ({ term: item.title, type: OLA_DOC_TYPE, ...item }))
+              : []
 
             /* If categories are found, we will need to create additional array items */
             if (isCategory) {
@@ -203,18 +206,15 @@ class AutoComplete extends React.Component {
               let totalCategories = categories.length
               /* Get the display names of the facets */
               let facet = find(propEq('name', payload.taxo_label))(this.context.config.facets)
+
               /* First term in the suggestion */
-              res.push({
+              res = [...res, {
                 ...rest,
                 suggestion_raw: payload.suggestion_raw,
                 label: payload.label,
                 answer: payload.answer,
                 type: payload.type /* The first item is a query */
-              })
-
-              if (topClicks) {
-                res = [...res, ...topClicks.map((item) => ({ term: item.title, type: 'doc', ...item }))]
-              }
+              }, ...topClickDocs]
 
               for (let j = 0; j < totalCategories; j++) {
                 let [ name ] = payload.taxo_terms[j].split('|')
@@ -232,7 +232,7 @@ class AutoComplete extends React.Component {
                 categoryFound = true
               }
             } else {
-              res.push({ ...rest, ...payload })
+              res = [...res, { ...rest, ...payload }, ...topClickDocs]
             }
           }
 
@@ -306,7 +306,7 @@ class AutoComplete extends React.Component {
     }
 
     let term = this.state.results[index] ? this.state.results[index] : null
-    term && this.updateFuzzyQueryTerm(term)
+    term && term.type !== OLA_DOC_TYPE && this.updateFuzzyQueryTerm(term)
 
     /* Add a timeout */
     if (this.props.searchOnSelect && !this.props.isPhone && term) {
@@ -375,8 +375,7 @@ class AutoComplete extends React.Component {
     let isEntity = type === 'entity'
     let isQuery = type === 'query'
     let isHistory = type === 'history'
-    let isDoc = type === 'doc'
-    // let hasQueryTerm = isQuery || (isEntity && suggestion.taxo_terms)
+    let isDoc = type === OLA_DOC_TYPE
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
 

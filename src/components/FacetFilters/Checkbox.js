@@ -206,7 +206,7 @@ class CheckboxFilter extends React.Component {
  * Checkbox Item
  * JSX No Bind
  */
-const CheckBoxItem = (props) => {
+function CheckBoxItem (props) {
   function onChecked (event) {
     let { name, handleAddFacet, handleRemoveFacet } = props
     if (event.target.checked) {

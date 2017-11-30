@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { isSvg } from './../../utilities'
 
-const AnswerCard = ({ result, onSelect, cdn, imagePlaceholder, isActive, module }) => {
+export default function AnswerCard ({ result, onSelect, cdn, imagePlaceholder, isActive, module }) {
   function handleSelect () {
     if (result.hasOwnProperty('additional_data')) return onSelect(result)
   }
@@ -36,5 +36,3 @@ const AnswerCard = ({ result, onSelect, cdn, imagePlaceholder, isActive, module 
     </div>
   )
 }
-
-module.exports = AnswerCard

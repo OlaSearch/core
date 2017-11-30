@@ -3,7 +3,7 @@ import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { addFacet, executeSearch } from './../../actions/Search'
 
-const TagCloud = (props) => {
+function TagCloud (props) {
   function handleAddFacet (value) {
     var { dispatch, facet } = props
     dispatch(addFacet(facet, value))
@@ -64,7 +64,7 @@ TagCloud.defaultProps = {
 /**
  * Tag cloud item
  */
-const TagCloudItem = ({ onSelect, value, min, max, fontSizeMin, fontSizeMax }) => {
+function TagCloudItem ({ onSelect, value, min, max, fontSizeMin, fontSizeMax }) {
   function handleClick () {
     onSelect(value.name)
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import withLogger from './../../decorators/OlaLogger'
 
-const Button = ({ title, label, className, url, fullWidth, onClick, result, snippetId, log, target, openInNewWindow, eventLabel, eventCategory }) => {
+function Button ({ title, label, className, url, fullWidth, onClick, result, snippetId, log, target, openInNewWindow, eventLabel, eventCategory }) {
   if (title) label = title
   function handleClick (event) {
     log({

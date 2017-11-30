@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ItemDetail = ({ data: { description, title } }) => {
+export default function ItemDetail ({ data: { description, title } }) {
   return (
     <div className='ola-answer-itemdetail'>
       <div className='ola-answer-title'>{title}</div>
@@ -8,5 +8,3 @@ const ItemDetail = ({ data: { description, title } }) => {
     </div>
   )
 }
-
-module.exports = ItemDetail

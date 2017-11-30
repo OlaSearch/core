@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FieldLabel = ({ label }) => {
+function FieldLabel ({ label }) {
   if (!label) return null
   return (
     <div className='ola-field-component-label'>{label}</div>

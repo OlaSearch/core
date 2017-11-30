@@ -1,7 +1,7 @@
 import React from 'react'
 import FieldLabel from './FieldLabel'
 
-const Rating = ({ rating, interval, activeClass, inActiveClass, emptyClass, fieldLabel }) => {
+function Rating ({ rating, interval, activeClass, inActiveClass, emptyClass, fieldLabel }) {
   let normalized = rating / interval
   let star = []
   let total = Math.max(Math.ceil(normalized), 1)

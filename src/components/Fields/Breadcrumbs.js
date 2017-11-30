@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
  * Displays a section breadcrumb in snippet
  * @example ./../../../examples/Fields.Breadcrumbs.md
  */
-const Breadcrumbs = ({ crumbs }) => {
+function Breadcrumbs ({ crumbs }) {
   if (!crumbs) return null
 
   if (typeof crumbs === 'string') {

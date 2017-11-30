@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatText } from './../../../utilities'
 
-const ListKeyValue = ({ data }) => {
+export default function ListKeyValue ({ data }) {
   if (!data) return null
   return (
     <div className='ola-answer-keyvalue'>
@@ -22,5 +22,3 @@ const ListKeyValue = ({ data }) => {
     </div>
   )
 }
-
-module.exports = ListKeyValue

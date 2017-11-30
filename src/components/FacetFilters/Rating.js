@@ -5,7 +5,7 @@ import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 import { parseRangeValues } from './../../utilities'
 
-const RatingFilter = (props) => {
+function RatingFilter (props) {
   function handleFacet (event) {
     var { dispatch, facet } = props
     var min = parseInt(event.target.value, 10)

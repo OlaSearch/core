@@ -3,7 +3,7 @@ import withFacetToggle from './../../decorators/OlaFacetToggle'
 import { replaceFacet, removeFacet, executeSearch } from './../../actions/Search'
 import classNames from 'classnames'
 
-const RangeNumericFilter = (props) => {
+function RangeNumericFilter (props) {
   function handleClick (from, to) {
     let { facet, dispatch } = props
 
@@ -44,7 +44,7 @@ const RangeNumericFilter = (props) => {
 /**
  * Numeric item
  */
-const RangeNumericItem = ({ value, handleClick }) => {
+function RangeNumericItem ({ value, handleClick }) {
   function onItemClick () {
     let { from, to } = value
     handleClick(from, to)

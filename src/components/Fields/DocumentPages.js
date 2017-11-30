@@ -85,7 +85,7 @@ DocumentPages.defaultProps = {
 /**
  * Page detail
  */
-const PageDetail = ({ page, contentField, onSelectPage }) => {
+function PageDetail ({ page, contentField, onSelectPage }) {
   function handleSelect (event) {
     onSelectPage(page)
   }

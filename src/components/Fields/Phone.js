@@ -4,7 +4,7 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
-const Phone = (props) => {
+function Phone (props) {
   let { phone, label, translate, log, onClick, result, snippetId, fieldLabel, ...rest } = props
 
   if (!phone) return null

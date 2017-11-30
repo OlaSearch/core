@@ -1,7 +1,7 @@
 import React from 'react'
 import injectTranslate from './../../decorators/OlaTranslate'
 
-const NoBookmarks = ({ translate, bookmarks }) => {
+function NoBookmarks ({ translate, bookmarks }) {
   if (bookmarks.length) return null
   return (
     <div className='ola-snippet ola-snippet-noresults'>
@@ -10,4 +10,4 @@ const NoBookmarks = ({ translate, bookmarks }) => {
   )
 }
 
-module.exports = injectTranslate(NoBookmarks)
+export default injectTranslate(NoBookmarks)

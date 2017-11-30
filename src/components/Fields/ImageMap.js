@@ -3,7 +3,7 @@ import Thumbnail from './Thumbnail'
 import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
-const Map = (props) => {
+function Map (props) {
   var { latlong, apiKey, width, height, onClick, result, log, fieldLabel } = props
 
   if (!latlong) return null

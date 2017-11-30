@@ -250,7 +250,7 @@ class DateRange extends React.Component {
 /**
  * Date label
  */
-const DateLabel = ({ label, value, onSelect }) => {
+function DateLabel ({ label, value, onSelect }) {
   function handleClick () {
     onSelect(value)
   }

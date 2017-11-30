@@ -5,7 +5,7 @@ import { createHTMLMarkup } from './../../utilities'
 import { RE_ESCAPE } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
 
-const Suggestions = ({ q, results, ...rest }) => {
+export default function Suggestions ({ q, results, ...rest }) {
   return (
     <div className='ola-fuzzy-suggestions'>
       {results.map((result, idx) => <SuggestionItem key={idx} index={idx} q={q} result={result} {...rest} />)}
@@ -93,5 +93,3 @@ class SuggestionItem extends React.Component {
     )
   }
 }
-
-module.exports = Suggestions

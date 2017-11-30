@@ -110,7 +110,7 @@ class HierarchicalFilter extends React.Component {
 /**
  * Group
  */
-const CheckboxGroup = (props) => {
+function CheckboxGroup (props) {
   let { values, rollUp, selected, handleAddFacet, handleRemoveFacet } = props
   if (!values) return null
   let isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
@@ -152,38 +152,35 @@ const CheckboxGroup = (props) => {
 /**
  * Item
  */
-
-class CheckBoxItem extends React.Component {
-  onChecked = (event) => {
-    let { value: { name }, handleAddFacet, handleRemoveFacet } = this.props
+function CheckBoxItem ({ value, handleAddFacet, handleRemoveFacet, isActive }) {
+  function onChecked (event) {
+    let { name } = value
     if (event.target.checked) {
       handleAddFacet(name)
     } else {
       handleRemoveFacet(name)
     }
   }
-  render () {
-    let { value: { count, displayName }, isActive } = this.props
-    let labelKlass = classNames({
-      'ola-checkbox ola-checkbox-label': true,
-      'ola-checkbox-active': isActive
-    })
-    return (
-      <label className={labelKlass}>
-        <input
-          type='checkbox'
-          checked={isActive}
-          onChange={this.onChecked}
-          style={{
-            opacity: 0,
-            position: 'absolute'
-          }}
-          />
-        <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
-        <span className='ola-search-facet-count'>{count}</span>
-      </label>
-    )
-  }
+  const { count, displayName } = value
+  const labelKlass = classNames({
+    'ola-checkbox ola-checkbox-label': true,
+    'ola-checkbox-active': isActive
+  })
+  return (
+    <label className={labelKlass}>
+      <input
+        type='checkbox'
+        checked={isActive}
+        onChange={onChecked}
+        style={{
+          opacity: 0,
+          position: 'absolute'
+        }}
+        />
+      <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
+      <span className='ola-search-facet-count'>{count}</span>
+    </label>
+  )
 }
 
 module.exports = injectTranslate(withFacetToggle(HierarchicalFilter))

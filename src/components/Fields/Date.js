@@ -2,7 +2,7 @@ import React from 'react'
 import DateParser from './../../utilities/dateParser'
 import FieldLabel from './FieldLabel'
 
-const DateField = ({ date, format, fieldLabel, dependentField, result, showIfEmpty }) => {
+function DateField ({ date, format, fieldLabel, dependentField, result, showIfEmpty }) {
   if (!date) return null
   if (dependentField) {
     if (dependentField === date) {

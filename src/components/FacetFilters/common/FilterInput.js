@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FilterInput = ({ placeholder = '', value, onChange }) => {
+export default function FilterInput ({ placeholder = '', value, onChange }) {
   return (
     <input
       type='text'
@@ -12,5 +12,3 @@ const FilterInput = ({ placeholder = '', value, onChange }) => {
     />
   )
 }
-
-export default FilterInput

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InputShadow = ({ value }) => {
+export default function InputShadow ({ value }) {
   return (
     <input
       type='text'
@@ -14,5 +14,3 @@ const InputShadow = ({ value }) => {
     />
   )
 }
-
-module.exports = InputShadow

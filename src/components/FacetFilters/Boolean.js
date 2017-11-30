@@ -4,7 +4,7 @@ import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 
-const BooleanFilter = (props) => {
+function BooleanFilter (props) {
   function onChange (event) {
     let { dispatch, facet } = props
     if (event.target.checked) {

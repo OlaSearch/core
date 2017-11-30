@@ -196,50 +196,41 @@ class LinkFilter extends React.Component {
 /**
  * Facet item component
  */
-
-class Item extends React.Component {
-  handleClick = () => {
-    this.props.onItemClick(this.props.name)
-  };
-  render () {
-    let { count, displayName, isSelected } = this.props
-    let itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected })
-
-    return (
-      <div className='ola-btn-wrap'>
-        <button
-          className={itemKlass}
-          type='button'
-          onClick={this.handleClick}
-          title={displayName}
-        >
-          <span className='ola-search-facet-name'>{displayName}</span>
-        </button>
-        <span className='ola-search-facet-count'>{count}</span>
-      </div>
-    )
+function Item ({ name, count, displayName, isSelected, onItemClick }) {
+  function onClick () {
+    onItemClick(name)
   }
+  const itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected })
+  return (
+    <div className='ola-btn-wrap'>
+      <button
+        className={itemKlass}
+        type='button'
+        onClick={onClick}
+        title={displayName}
+      >
+        <span className='ola-search-facet-name'>{displayName}</span>
+      </button>
+      <span className='ola-search-facet-count'>{count}</span>
+    </div>
+  )
 }
 
 /**
  * Selected Tag
  */
-
-class SelectedItem extends React.Component {
-  handleRemove = () => {
-    this.props.handleRemove(this.props.name)
-  };
-  render () {
-    let { name, facet, buttonLabel } = this.props
-    return (
-      <Tag
-        onRemove={this.handleRemove}
-        name={name}
-        facet={facet}
-        buttonLabel={buttonLabel}
-      />
-    )
+function SelectedItem ({ name, facet, buttonLabel, handleRemove }) {
+  function onRemove () {
+    handleRemove(name)
   }
+  return (
+    <Tag
+      onRemove={onRemove}
+      name={name}
+      facet={facet}
+      buttonLabel={buttonLabel}
+    />
+  )
 }
 
 module.exports = injectTranslate(withFacetToggle(LinkFilter))
