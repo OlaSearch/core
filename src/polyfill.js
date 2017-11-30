@@ -6,7 +6,7 @@
  * Array.prototype.findIndex
  * Number.isNaN
  */
-(function(undefined) {
+;(function(undefined) {
   
   // Object.assign
   Object.assign = function assign(target, source) { // eslint-disable-line no-unused-vars

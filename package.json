@@ -1,6 +1,6 @@
 {
   "name": "olasearch",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "cdn:invalidate": "aws-cloudfront-invalidate E1MMHSLEW3SZPY /assets/*",
     "styleguide": "styleguidist server",
     "styleguidist:build": "styleguidist build",
-    "prettier-standard": "prettier-standard 'src/**/*.js'"
+    "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'"
   },
   "prettier": {
     "semi": false
@@ -80,9 +80,9 @@
     "gulp-uglify": "^3.0.0",
     "isparta": "^4.0.0",
     "jsdom": "^11.5.1",
+    "lint-staged": "^5.0.0",
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
-    "pre-commit": "^1.2.2",
     "prettier-standard": "^7.0.3",
     "react": "^16.2.0",
     "react-addons-perf": "^15.4.2",
@@ -129,7 +129,7 @@
     "redux-logger": "^3.0.6",
     "xss-filters": "^1.2.7"
   },
-  "pre-commit": [
+  "lint-staged": [
     "prettier-standard"
   ]
 }
