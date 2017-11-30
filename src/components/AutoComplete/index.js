@@ -306,7 +306,9 @@ class AutoComplete extends React.Component {
     }
 
     let term = this.state.results[index] ? this.state.results[index] : null
-    term && term.type !== OLA_DOC_TYPE && this.updateFuzzyQueryTerm(term)
+    if (term && term.type !== OLA_DOC_TYPE) {
+      this.updateFuzzyQueryTerm(term)
+    }
 
     /* Add a timeout */
     if (this.props.searchOnSelect && !this.props.isPhone && term) {
