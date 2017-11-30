@@ -17,7 +17,9 @@
     "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public && s3-deploy './dist/olasearch.core.min.css' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/css --cache 604800,public",
     "cdn:invalidate": "aws-cloudfront-invalidate E1MMHSLEW3SZPY /assets/*",
     "styleguide": "styleguidist server",
-    "styleguidist:build": "styleguidist build"
+    "styleguidist:build": "styleguidist build",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
+    "prettier-standard": "prettier-standard 'src/**/*.js'"
   },
   "engines": {
     "node": ">=6.4.0",
@@ -67,36 +69,38 @@
     "enzyme": "^3.2.0",
     "eslint": "3.19.0",
     "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-react": "^7.5.0",
+    "eslint-plugin-react": "^7.5.1",
     "expect": "^1.20.2",
     "expose-loader": "^0.7.4",
     "express": "^4.16.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
-    "gulp-jsmin": "^0.1.5",
     "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
     "isparta": "^4.0.0",
-    "jsdom": "^11.3.0",
+    "jsdom": "^11.5.1",
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
-    "react": "^16.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier-standard": "^7.0.3",
+    "react": "^16.2.0",
     "react-addons-perf": "^15.4.2",
     "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.1.1",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-styleguidist": "^6.0.33",
-    "react-test-renderer": "^16.1.1",
+    "react-test-renderer": "^16.2.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "retire": "^1.4.0",
     "rimraf": "^2.6.2",
-    "s3-deploy": "^0.7.6",
+    "s3-deploy": "^0.8.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3",
-    "webpack": "^3.8.1",
+    "webpack": "^3.9.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
-    "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.20.0"
+    "webpack-dev-middleware": "^1.12.2",
+    "webpack-hot-middleware": "^2.21.0"
   },
   "peerDependencies": {
     "react": "^16.1.1",
@@ -110,7 +114,7 @@
     "babel-runtime": "^6.25.0",
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.1",
-    "fecha": "^2.3.1",
+    "fecha": "^2.3.2",
     "hoist-non-react-statics": "^2.3.1",
     "ismobilejs": "^0.4.1",
     "nouislider": "^10.1.0",
@@ -120,11 +124,11 @@
     "react-list": "^0.8.8",
     "react-onclickoutside": "^6.7.0",
     "react-pikaday-datepicker": "3.0.1",
-    "react-responsive": "^4.0.0",
+    "react-responsive": "^4.0.3",
     "redux-logger": "^3.0.6",
     "xss-filters": "^1.2.7"
   },
   "pre-commit": [
-    "standard"
+    "prettier-standard"
   ]
 }

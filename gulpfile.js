@@ -1,10 +1,10 @@
 const gulp = require('gulp')
 const concat = require('gulp-concat')
-const jsmin = require('gulp-jsmin')
+const uglify = require('gulp-uglify')
 
 gulp.task('polyfill', () => {
   gulp.src(['./src/polyfill.js'])
-    .pipe(jsmin())
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'))
 })
 
