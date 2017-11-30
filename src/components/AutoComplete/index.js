@@ -404,7 +404,7 @@ class AutoComplete extends React.Component {
   };
 
   onFuzzySelect = (suggestion, options) => {
-    let { type, path } = suggestion
+    let { type } = suggestion
     let facet
     let isTaxonomy = type === 'taxonomy'
     let isEntity = type === 'entity'
