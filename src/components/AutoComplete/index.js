@@ -431,10 +431,8 @@ class AutoComplete extends React.Component {
       if (suggestion.taxo_label && suggestion.taxo_term) {
         facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
-        this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
-      } else {
-        this.props.updateQueryTerm(path || term, SEARCH_INPUTS.SUGGESTION)
       }
+      this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
     if (isQuery || isHistory) {
       if (suggestion.taxo_label && suggestion.taxo_term) {
