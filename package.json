@@ -19,6 +19,9 @@
     "styleguidist:build": "styleguidist build",
     "prettier-standard": "prettier-standard 'src/**/*.js'"
   },
+  "prettier": {
+    "semi": false
+  },
   "engines": {
     "node": ">=6.4.0",
     "npm": ">=3"
