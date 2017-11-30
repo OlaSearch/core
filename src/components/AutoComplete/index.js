@@ -176,7 +176,6 @@ class AutoComplete extends React.Component {
   }
 
   onChange = (term, searchInput) => {
-    console.log('called')
     let { q } = this.state
 
     /* Trim text */
