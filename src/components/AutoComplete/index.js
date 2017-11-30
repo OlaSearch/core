@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { clearHistory } from './../../actions/History'
-import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource } from './../../actions/Search'
+import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource } from
+'./../../actions/Search'
+import { log } from './../../actions/Logger'
 import Input from './Input'
 import { checkForAllowedCharacters, trim, getCoords, mergeResultsWithHistory, redirect } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -13,6 +15,7 @@ import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
+import { SEARCH_INPUTS } from './../../constants/Settings'
 
 const OLA_DOC_TYPE = 'doc'
 class AutoComplete extends React.Component {
@@ -23,7 +26,8 @@ class AutoComplete extends React.Component {
       fuzzyQuery: null,
       isOpen: false,
       q: props.q,
-      results: []
+      results: [],
+      searchInput: null
     }
     this.isSizeSmall = false
   }
@@ -192,8 +196,8 @@ class AutoComplete extends React.Component {
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
             let { topClicks } = payload
-            let topClickDocs = i == 0 && topClicks && topClicks.length
-              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({ term: item.title, type: OLA_DOC_TYPE, ...item }))
+            let topClickDocs = (i === 0 && topClicks && topClicks.length)
+              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({ term: rest.term, title: item.title, type: OLA_DOC_TYPE, ...item }))
               : []
 
             /* If categories are found, we will need to create additional array items */
@@ -306,7 +310,7 @@ class AutoComplete extends React.Component {
     }
 
     let term = this.state.results[index] ? this.state.results[index] : null
-    if (term && term.type !== OLA_DOC_TYPE) {
+    if (term) {
       this.updateFuzzyQueryTerm(term)
     }
 
@@ -348,15 +352,44 @@ class AutoComplete extends React.Component {
     event && event.preventDefault()
   };
 
-  onSelect = (suggestion) => {
+  onSelect = (suggestion, options) => {
     if (this.props.onSelect) {
       this.props.onSelect(suggestion, {
         removeAllFacets: this.props.removeAllFacets,
         updateQueryTerm: this.props.updateQueryTerm
       })
     }
+
     if (this.props.forceRedirect) {
       this.props.setSearchSource('suggest')
+    }
+
+    /* Check if user deliberately clicked on selected the query */
+    if (options && options.fromSuggestion) {
+      this.props.log({
+        eventType: 'C',
+        eventSource: 'suggest',
+        eventCategory: 'autosuggest',
+        query: this.state.q, /* override query */
+        eventAction: 'click',
+        suggestion_taxo_label: suggestion.taxo_label,
+        suggestion_taxo_term: suggestion.taxo_term,
+        suggestion: suggestion.term,
+        position: options.position,
+        result: suggestion.id
+          ? {
+            title: suggestion.title,
+            url: suggestion.url,
+            id: suggestion.id
+          }
+          : null
+      })
+    }
+
+    /* If its a document */
+    if (suggestion.type === OLA_DOC_TYPE) {
+      /* Update state */
+      return redirect(suggestion.url)
     }
 
     this.props.executeSearch({
@@ -377,7 +410,6 @@ class AutoComplete extends React.Component {
     let isEntity = type === 'entity'
     let isQuery = type === 'query'
     let isHistory = type === 'history'
-    let isDoc = type === OLA_DOC_TYPE
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
 
@@ -387,11 +419,6 @@ class AutoComplete extends React.Component {
         isOpen: false,
         fuzzyQuery: null
       })
-    }
-
-    if (isDoc) {
-      /* Update state */
-      return redirect(suggestion.url)
     }
 
     /* Update state */
@@ -404,9 +431,9 @@ class AutoComplete extends React.Component {
       if (suggestion.taxo_label && suggestion.taxo_term) {
         facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
-        this.props.updateQueryTerm(term)
+        this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
       } else {
-        this.props.updateQueryTerm(path || term)
+        this.props.updateQueryTerm(path || term, SEARCH_INPUTS.SUGGESTION)
       }
     }
     if (isQuery || isHistory) {
@@ -416,12 +443,11 @@ class AutoComplete extends React.Component {
         facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
         this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
       }
-      this.props.updateQueryTerm(term)
+      this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
 
-    return this.onSelect(suggestion)
+    return this.onSelect(suggestion, { ...options, fromSuggestion: true })
   };
-
   onFocus = (event) => {
     /* Set scroll position on phone */
     if (this.props.isPhone && this.props.scrollOnFocus) {
@@ -567,4 +593,4 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource, clearHistory })(injectTranslate(listensToClickOutside(AutoComplete)))
+module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource, clearHistory, log })(injectTranslate(listensToClickOutside(AutoComplete)))

@@ -37,7 +37,7 @@ class SuggestionItem extends React.Component {
     })
   };
   onSelect = (event, result) => {
-    this.props.onSelect(result || this.props.result)
+    this.props.onSelect(result || this.props.result, { position: this.props.index + 1 })
     event && event.preventDefault()
   };
   removeHistory = (event) => {
@@ -48,12 +48,17 @@ class SuggestionItem extends React.Component {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let { index, result } = this.props
     if (!result) return null
-    let { type, term, taxo_term: taxoTerm, isLastCategory, isFirstCategory, answer } = result
+    let { type, term, title, taxo_term: taxoTerm, isLastCategory, isFirstCategory, answer } = result
     const isHistory = type === 'history'
+    const isDoc = type === 'doc'
     let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1').split(/\s/).join('|') + ')'
 
     /* Create term */
-    term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+    if (isDoc) {
+      term = title
+    } else {
+      term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+    }
 
     let klass = classNames('ola-suggestion-item', activeClass, `ola-suggestion-type-${type}`, {
       'ola-suggestion-category-last': isLastCategory,

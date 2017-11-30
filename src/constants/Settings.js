@@ -28,5 +28,6 @@ export const SEARCH_INPUTS = {
   KEYBOARD: 'keyboard',
   VOICE: 'voice',
   URL: 'url',
-  DID_YOU_MEAN_SUGGESTION: 'suggestion'
+  DID_YOU_MEAN_SUGGESTION: 'autosuggest',
+  SUGGESTION: 'suggest'
 }
