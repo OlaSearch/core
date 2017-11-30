@@ -143,50 +143,42 @@ class TabsFilter extends React.Component {
 /**
  * Tag Item All
  */
-
-class TabItemAll extends React.Component {
-  handleClick = () => {
-    if (!this.props.isSelected) this.props.handleClick(this.props.facet)
+function TabItemAll ({ isSelected, totalCount, label, handleClick, facet }) {
+  function onClick () {
+    if (!isSelected) handleClick(facet)
   }
-  render () {
-    let { isSelected, totalCount, label } = this.props
-    var klassTab = classNames({
-      'ola-tabs-label': true,
-      'ola-tab-active': isSelected
-    })
-    return (
-      <a className={klassTab} onClick={this.handleClick}>
-        {label}
-        <span className='ola-search-facet-count'>{totalCount}</span>
-      </a>
-    )
-  }
+  var klassTab = classNames({
+    'ola-tabs-label': true,
+    'ola-tab-active': isSelected
+  })
+  return (
+    <a className={klassTab} onClick={onClick}>
+      {label}
+      <span className='ola-search-facet-count'>{totalCount}</span>
+    </a>
+  )
 }
 
 /**
  * Tab Item
  */
-class TabItem extends React.Component {
-  handleClick = () => {
-    let { facet, value, isActive } = this.props
+function TabItem ({ facet, value, isActive, handleClick }) {
+  function onClick () {
     let { name, count } = value
-    if (!isActive && count) this.props.handleClick(facet, name)
+    if (!isActive && count) handleClick(facet, name)
   }
-  render () {
-    let { isActive, value, facet } = this.props
-    let { name, count } = value
-    let { facetNames } = facet
-    let klass = classNames({
-      'ola-tabs-label': true,
-      'ola-tab-active': isActive
-    })
-    return (
-      <a className={klass} type='button' onClick={this.handleClick}>
-        <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
-        <span className='ola-search-facet-count'>{count}</span>
-      </a>
-    )
-  }
+  let { name, count } = value
+  let { facetNames } = facet
+  let klass = classNames({
+    'ola-tabs-label': true,
+    'ola-tab-active': isActive
+  })
+  return (
+    <a className={klass} type='button' onClick={onClick}>
+      <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
+      <span className='ola-search-facet-count'>{count}</span>
+    </a>
+  )
 }
 
 module.exports = injectTranslate(TabsFilter)
