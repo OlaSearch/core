@@ -15,9 +15,15 @@ import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
-import { SEARCH_INPUTS } from './../../constants/Settings'
+import {
+  SEARCH_INPUTS,
+  TYPE_HISTORY,
+  TYPE_TAXONOMY,
+  TYPE_ENTITY,
+  TYPE_QUERY,
+  TYPE_DOC
+} from './../../constants/Settings'
 
-const OLA_DOC_TYPE = 'doc'
 class AutoComplete extends React.Component {
   constructor (props) {
     super(props)
@@ -194,10 +200,10 @@ class AutoComplete extends React.Component {
           for (let i = 0, len = results.length; i < len; i++) {
             let { payload, ...rest } = results[i]
             if (typeof payload === 'string') payload = JSON.parse(payload)
-            let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
+            let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== TYPE_TAXONOMY
             let { topClicks } = payload
             let topClickDocs = (i === 0 && topClicks && topClicks.length)
-              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({ term: rest.term, title: item.title, type: OLA_DOC_TYPE, ...item }))
+              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({ term: rest.term, title: item.title, type: TYPE_DOC, ...item }))
               : []
 
             /* If categories are found, we will need to create additional array items */
@@ -387,7 +393,7 @@ class AutoComplete extends React.Component {
     }
 
     /* If its a document */
-    if (suggestion.type === OLA_DOC_TYPE) {
+    if (suggestion.type === TYPE_DOC) {
       /* Update state */
       return redirect(suggestion.url)
     }
@@ -406,10 +412,10 @@ class AutoComplete extends React.Component {
   onFuzzySelect = (suggestion, options) => {
     let { type } = suggestion
     let facet
-    let isTaxonomy = type === 'taxonomy'
-    let isEntity = type === 'entity'
-    let isQuery = type === 'query'
-    let isHistory = type === 'history'
+    let isTaxonomy = type === TYPE_TAXONOMY
+    let isEntity = type === TYPE_ENTITY
+    let isQuery = type === TYPE_QUERY
+    let isHistory = type === TYPE_HISTORY
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
 

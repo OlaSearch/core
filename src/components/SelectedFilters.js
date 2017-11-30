@@ -154,7 +154,7 @@ class SelectedFilters extends React.Component {
 /**
  * Selected Tag
  */
-const FacetItem = ({ facet, name, handleRemove }) => {
+function FacetItem ({ facet, name, handleRemove }) {
   function onRemove () {
     handleRemove(facet, name)
   }
@@ -174,7 +174,7 @@ const FacetItem = ({ facet, name, handleRemove }) => {
  * Selected Tag
  */
 
-const FilterItem = ({ filter, handleRemove }) => {
+function FilterItem ({ filter, handleRemove }) {
   function onRemove () {
     handleRemove(filter)
   }

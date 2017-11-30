@@ -3,7 +3,7 @@ import { getKey, uuid } from './../utilities'
 import sessionStorage from './../services/sessionStorage'
 import { USER_SESSION_KEY, USER_NEW_KEY, USER_SESSION_EXPIRY_DAYS, SEARCH_SESSION_KEY } from './../constants/Settings'
 
-export const prepareUserState = ({ config }) => {
+export function prepareUserState ({ config }) {
   /* Create user cookie */
   var userSession = storage.cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = storage.cookies.get(USER_NEW_KEY, config.namespace)

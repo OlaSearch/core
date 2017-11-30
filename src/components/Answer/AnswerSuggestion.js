@@ -4,7 +4,7 @@ import equals from 'ramda/src/equals'
 
 const WILDCARD_MODULE_NAMES = ['spices.wildcard', 'spices.meeting']
 
-const AnswerSuggestion = ({ answer, onChange, onSkipIntent }) => {
+function AnswerSuggestion ({ answer, onChange, onSkipIntent }) {
   if (!answer.suggestions || !Object.keys(answer.suggestions).length) return null
   let { suggestions, original, module } = answer
   let keys = Object.keys(suggestions)

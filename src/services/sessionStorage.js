@@ -1,7 +1,7 @@
 /**
  * sessionStorage polyfill
  */
-var Storage = function (type) {
+function Storage (type) {
   function setData (data) {
     data = JSON.stringify(data)
     window.name = data

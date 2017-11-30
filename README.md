@@ -166,13 +166,12 @@ logger: {
 
 ## Polyfills
 
-1. - Event
-2. - CustomEvent
-3. Element.prototype.classList
-4. Object.assign
-5. requestAnimationFrame
-6. ~html5-elements
-7. Array.prototype.findIndex
+* Object.assign
+* Map
+* Set
+* Request animation frame
+* Array.prototype.findIndex
+* Number.isNaN
 
 https://cdn.polyfill.io/v2/polyfill.min.js?features=Event|always,CustomEvent|always,requestAnimationFrame|always,~html5-elements|always,Object.assign|always,Element.prototype.classList|always
 

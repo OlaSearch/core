@@ -6,7 +6,7 @@ import classNames from 'classnames'
 /**
  * Generic answer template
  */
-const Generic = ({ card }) => {
+function Generic ({ card }) {
   return <span className='ola-answer-quick-title'>{card.title}</span>
 }
 
@@ -98,7 +98,7 @@ class LineChart extends React.Component {
 /**
  * List template
  */
-const List = ({ card, onSelect }) => {
+function List ({ card, onSelect }) {
   let { elements } = card
   function handleClick (e) {
     e.stopPropagation()
@@ -155,7 +155,7 @@ function getTemplate (card, onSelect) {
   }
 }
 
-const AnswerQuick = ({ answer, onSelect }) => {
+function AnswerQuick ({ answer, onSelect }) {
   if (!answer) return null
   let { card } = answer
   let { template } = card

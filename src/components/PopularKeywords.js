@@ -27,7 +27,7 @@ PopularKeywords.contextTypes = {
 /**
  * Item
  */
-const PopularKeywordItem = ({ keyword, onClick }) => {
+function PopularKeywordItem ({ keyword, onClick }) {
   function handleClick () {
     onClick(keyword)
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { createHTMLMarkup, truncate } from './../../utilities'
 import FieldLabel from './FieldLabel'
 
-const TextField = ({ field, fallbackFields, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass, fieldLabel, className, showIfEmpty, placeholderText }) => {
+function TextField ({ field, fallbackFields, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass, fieldLabel, className, showIfEmpty, placeholderText }) {
   let fieldContent = result[field] || staticText
   if (!fieldContent && fallbackFields.length) {
     for (let i = 0; i < fallbackFields.length; i++) {

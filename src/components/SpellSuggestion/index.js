@@ -54,7 +54,7 @@ SpellSuggestion.defaultProps = {
 /**
  * Spell suggestion term
  */
-const TermItem = ({ item, showCount, handleClick }) => {
+function TermItem ({ item, showCount, handleClick }) {
   function onClick () {
     handleClick(item.term)
   }

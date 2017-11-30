@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AnswerField = ({ label, field, value, url, className }) => {
+function AnswerField ({ label, field, value, url, className }) {
   return (
     <div className={className}>
       <div className='ola-answer-value'>

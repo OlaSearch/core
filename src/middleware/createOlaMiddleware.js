@@ -8,10 +8,11 @@ import { debounceLog, submitLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
-
-const FUZZY_SUGGEST_KEY = 'suggest'
-const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
-const API_IGNORE_LOGGING = ['answer', 'get']
+import {
+  FUZZY_SUGGEST_KEY,
+  INTENT_SUPPORTED_API_KEYS,
+  API_IGNORE_LOGGING
+} from './../constants/Settings'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {

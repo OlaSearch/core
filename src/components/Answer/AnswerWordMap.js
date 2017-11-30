@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AnswerWordMap = ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSizeMax }) => {
+function AnswerWordMap ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSizeMax }) {
   /* Return null if nothing */
   if (!data.length) return null
 
@@ -36,7 +36,7 @@ const AnswerWordMap = ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSizeM
   )
 }
 
-const WordMapItem = ({ title, count, size, onSelect }) => {
+function WordMapItem ({ title, count, size, onSelect }) {
   function handleClick (title) {
     onSelect && onSelect(title)
   }

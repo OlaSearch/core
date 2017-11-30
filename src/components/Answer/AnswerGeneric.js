@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AnswerGeneric = ({ title, subtitle, buttons }) => {
+function AnswerGeneric ({ title, subtitle, buttons }) {
   return (
     <div className='ola-answer-item'>
       <div className='ola-answer-content'>

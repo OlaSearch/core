@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { createHTMLMarkup } from './../../utilities'
-import { RE_ESCAPE } from './../../constants/Settings'
+import { RE_ESCAPE, TYPE_DOC, TYPE_HISTORY, TYPE_TAXONOMY } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
 
 export default function Suggestions ({ q, results, ...rest }) {
@@ -49,8 +49,8 @@ class SuggestionItem extends React.Component {
     let { index, result } = this.props
     if (!result) return null
     let { type, term, title, taxo_term: taxoTerm, isLastCategory, isFirstCategory, answer } = result
-    const isHistory = type === 'history'
-    const isDoc = type === 'doc'
+    const isHistory = type === TYPE_HISTORY
+    const isDoc = type === TYPE_DOC
     let pattern = '(^' + this.props.q.replace(RE_ESCAPE, '\\$1').split(/\s/).join('|') + ')'
 
     /* Create term */
@@ -70,7 +70,7 @@ class SuggestionItem extends React.Component {
     /**
      * If its a category
      */
-    if (taxoTerm && type !== 'taxonomy') {
+    if (taxoTerm && type !== TYPE_TAXONOMY) {
       term = term + (taxoTerm ? '<span class="ola-suggestion-separator"> in </span><span class="ola-suggestion-category-name">' + taxoTerm + '</span>' : '')
     }
     return (

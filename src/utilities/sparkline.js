@@ -11,7 +11,7 @@ function scaleAndTransform (data, range) {
   })
 }
 
-export const SparkLine = function () {
+export function SparkLine () {
   if (window.HTMLCanvasElement) {
     return {
       init (options) {

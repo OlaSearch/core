@@ -4,7 +4,7 @@ import Media from 'react-responsive'
 import omit from 'ramda/src/omit'
 import withLogger from './../../decorators/OlaLogger'
 
-const Thumbnail = (props, context) => {
+function Thumbnail (props, context) {
   var { mediaQuery, cdn } = context.config
   var {
     thumbnail,

@@ -4,7 +4,6 @@ import injectTranslate from './../decorators/OlaTranslate'
 
 function Error ({ error, translate }) {
   if (!error) return null
-
   var message
   var title
   switch (error.status) {
