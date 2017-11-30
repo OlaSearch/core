@@ -14,7 +14,7 @@ class Bookmarks extends React.Component {
     dispatch: PropTypes.func.isRequired,
     bookmarks: PropTypes.array.isRequired,
     showLabel: PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     showLabel: false
@@ -32,25 +32,30 @@ class Bookmarks extends React.Component {
     this.setState({
       isOpen: false
     })
-  };
+  }
 
   toggleVisibility = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    }, () => {
-      if (this.state.isOpen) {
-        this.props.onOpen && this.props.onOpen()
+    this.setState(
+      {
+        isOpen: !this.state.isOpen
+      },
+      () => {
+        if (this.state.isOpen) {
+          this.props.onOpen && this.props.onOpen()
 
-        this.props.dispatch(log({
-          eventType: 'C',
-          eventCategory: 'Bookmark button',
-          eventAction: 'open',
-          eventLabel: 'Bookmarks',
-          debounce: true
-        }))
+          this.props.dispatch(
+            log({
+              eventType: 'C',
+              eventCategory: 'Bookmark button',
+              eventAction: 'open',
+              eventLabel: 'Bookmarks',
+              debounce: true
+            })
+          )
+        }
       }
-    })
-  };
+    )
+  }
   shouldComponentUpdate (nextProps, nextState) {
     return (
       this.props.bookmarks !== nextProps.bookmarks ||
@@ -59,18 +64,11 @@ class Bookmarks extends React.Component {
   }
   onRemove = (bookmark) => {
     this.props.dispatch(removeBookmark(bookmark))
-  };
+  }
   render () {
-    var {
-      bookmarks,
-      dispatch,
-      translate,
-      showLabel
-    } = this.props
+    var { bookmarks, dispatch, translate, showLabel } = this.props
 
-    var {
-      isOpen
-    } = this.state
+    var { isOpen } = this.state
 
     const hasBookmarks = bookmarks.length > 0
     const klass = classNames({
@@ -92,16 +90,21 @@ class Bookmarks extends React.Component {
           onClick={this.toggleVisibility}
           tabIndex='-1'
         >
-          {showLabel && <span className='ola-bookmarks-label'>{translate('bookmarks_label')}</span>}
+          {showLabel && (
+            <span className='ola-bookmarks-label'>
+              {translate('bookmarks_label')}
+            </span>
+          )}
           {showLabel && <span className={badgeClass}>{bookmarks.length}</span>}
-          <span className='ola-btn-hint hint--top' aria-label={translate('bookmarks_label')} />
+          <span
+            className='ola-btn-hint hint--top'
+            aria-label={translate('bookmarks_label')}
+          />
         </button>
         <div className={klass}>
           <div className='ola-module-title'>{translate('bookmarks_label')}</div>
           <div className='ola-module-body'>
-            <NoBookmarks
-              bookmarks={bookmarks}
-            />
+            <NoBookmarks bookmarks={bookmarks} />
             <SearchResults
               bookmarks={bookmarks}
               results={bookmarks}
@@ -121,7 +124,9 @@ function mapStateToProps (state) {
   }
 }
 
-const BookmarksContainer = connect(mapStateToProps)(injectTranslate(listensToClickOutside(Bookmarks)))
+const BookmarksContainer = connect(mapStateToProps)(
+  injectTranslate(listensToClickOutside(Bookmarks))
+)
 const BookMarksWrapper = (props, { config: { bookmarking } }) => {
   if (bookmarking) return <BookmarksContainer {...props} />
   return null

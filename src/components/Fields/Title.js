@@ -2,10 +2,31 @@ import React from 'react'
 import { createHTMLMarkup } from './../../utilities'
 import withLogger from './../../decorators/OlaLogger'
 
-function Title ({ result, isLink, field, url, children, baseUrl, target, isBookmark, isAutosuggest, iconLeft, iconRight, log, snippetId, onClick, fieldLabel, openInNewWindow, eventLabel, eventCategory }) {
+function Title ({
+  result,
+  isLink,
+  field,
+  url,
+  children,
+  baseUrl,
+  target,
+  isBookmark,
+  isAutosuggest,
+  iconLeft,
+  iconRight,
+  log,
+  snippetId,
+  onClick,
+  fieldLabel,
+  openInNewWindow,
+  eventLabel,
+  eventCategory
+}) {
   function logClick (event) {
     /* Send Log */
-    let _eventCategory = eventCategory || (isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : 'serp')
+    let _eventCategory =
+      eventCategory ||
+      (isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : 'serp')
     log({
       eventType: 'C',
       result,
@@ -37,10 +58,16 @@ function Title ({ result, isLink, field, url, children, baseUrl, target, isBookm
   return (
     <h3 className='ola-field ola-field-title'>
       {iconLeft}
-      {isLink
-        ? <a href={url} target={target} onClick={logClick} dangerouslySetInnerHTML={createHTMLMarkup(title)} />
-        : <span dangerouslySetInnerHTML={createHTMLMarkup(title)} />
-      }
+      {isLink ? (
+        <a
+          href={url}
+          target={target}
+          onClick={logClick}
+          dangerouslySetInnerHTML={createHTMLMarkup(title)}
+        />
+      ) : (
+        <span dangerouslySetInnerHTML={createHTMLMarkup(title)} />
+      )}
       {children}
       {iconRight}
     </h3>

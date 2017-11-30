@@ -9,13 +9,13 @@ class OlaIntlProvider extends React.Component {
     super(props)
     let { locale, translations: t = {} } = props
     this.messages = {
-      ..._t[locale] ? _t[locale]['messages'] : {},
-      ...t[locale] ? t[locale]['messages'] : {}
+      ...(_t[locale] ? _t[locale]['messages'] : {}),
+      ...(t[locale] ? t[locale]['messages'] : {})
     }
   }
   static childContextTypes = {
     translate: PropTypes.func
-  };
+  }
   translate = (key, placeholders, isHTML, options = {}) => {
     let result = translateKey(key, this.messages)
     let tagName = options.tagName || 'div'
@@ -24,9 +24,13 @@ class OlaIntlProvider extends React.Component {
     }
     let finalResult = supplant(result, placeholders)
     return isHTML
-    ? React.createElement(tagName, { dangerouslySetInnerHTML: createHTMLMarkup(finalResult) }, null)
-    : finalResult
-  };
+      ? React.createElement(
+          tagName,
+          { dangerouslySetInnerHTML: createHTMLMarkup(finalResult) },
+          null
+        )
+      : finalResult
+  }
   getChildContext () {
     return {
       translate: this.translate

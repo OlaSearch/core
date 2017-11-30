@@ -29,7 +29,7 @@ module.exports = {
     engine: ['google', 'logstash'],
     url: '/log',
     headers: {
-        // 'Authorization': 'Basic b2xhOm9sYTIwMTY='
+      // 'Authorization': 'Basic b2xhOm9sYTIwMTY='
     }
   },
   searchPageUrl: 'search.html',
@@ -77,7 +77,7 @@ module.exports = {
       key: 'highlight_fields',
       value: ['title_t', 'description_t'],
       matched_fields: [['title_t', 'title_t.word', 'title_t.ngram'], []],
-      pre_tags: ['<em class=\'ola-highlight\'>'],
+      pre_tags: ["<em class='ola-highlight'>"],
       post_tags: ['</em>']
     }
   ],
@@ -108,12 +108,19 @@ module.exports = {
       key: 'highlight_fields',
       value: ['title_t', 'description_t'],
       matched_fields: [['title_t', 'title_t.word', 'title_t.ngram'], []],
-      pre_tags: ['<em class=\'ola-highlight\'>'],
+      pre_tags: ["<em class='ola-highlight'>"],
       post_tags: ['</em>']
     }
   ],
   facetsToDisplay: {
-    '*': ['genres_sm', 'cast_sm', 'mpaa_rating_s', 'year_i', 'runtime_i', 'audience_score_i']
+    '*': [
+      'genres_sm',
+      'cast_sm',
+      'mpaa_rating_s',
+      'year_i',
+      'runtime_i',
+      'audience_score_i'
+    ]
   },
   tabsToDisplay: ['Unrated', 'R', 'PG', 'PG-13'],
   nullFacetName: 'Uncategorised',

@@ -13,7 +13,9 @@ function PerPage ({ perPage, translate, dispatch }, context) {
 
   return (
     <div className='ola-per-page'>
-      <label className='ola-per-page-label'>{translate('per_page_label')}</label>
+      <label className='ola-per-page-label'>
+        {translate('per_page_label')}
+      </label>
       <select
         defaultValue={perPage}
         className='ola-per-page-select'

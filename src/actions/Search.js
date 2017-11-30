@@ -1,7 +1,15 @@
 import types from './../constants/ActionTypes'
 import { debouceAddHistory } from './History'
-import { parseQueryString, pushState, buildQueryString } from './../services/urlSync'
-import { debounce, checkForAllowedCharacters, castNumberToStringArray } from './../utilities'
+import {
+  parseQueryString,
+  pushState,
+  buildQueryString
+} from './../services/urlSync'
+import {
+  debounce,
+  checkForAllowedCharacters,
+  castNumberToStringArray
+} from './../utilities'
 import omit from 'ramda/src/omit'
 import xssFilters from 'xss-filters'
 
@@ -69,10 +77,12 @@ export function loadMore () {
 
     dispatch(changePage(++currentPage))
 
-    dispatch(executeSearch({
-      routeChange: false,
-      appendResult: true
-    }))
+    dispatch(
+      executeSearch({
+        routeChange: false,
+        appendResult: true
+      })
+    )
   }
 }
 
@@ -98,11 +108,8 @@ export function executeSearch (payload) {
 
     /* If no query and search is not active (searchOnLoad = false) */
     if (
-        (
-          allowedCharacters &&
-          !checkForAllowedCharacters(q, allowedCharacters)
-        ) ||
-        !(isSearchActive || (!!q || facet_query.length))
+      (allowedCharacters && !checkForAllowedCharacters(q, allowedCharacters)) ||
+      !(isSearchActive || (!!q || facet_query.length))
     ) {
       // Terminate search
       dispatch(terminateSearch())
@@ -115,7 +122,10 @@ export function executeSearch (payload) {
      * If searching from another page
      */
     if (payload && payload.forceRedirect) {
-      window.location.href = payload.searchPageUrl + '?' + buildQueryString(query, payload.replaceQueryParamName)
+      window.location.href =
+        payload.searchPageUrl +
+        '?' +
+        buildQueryString(query, payload.replaceQueryParamName)
       return
     }
 
@@ -129,8 +139,7 @@ export function executeSearch (payload) {
       context,
       api: 'search',
       payload
-    })
-    .then(() => debouceAddHistory(dispatch))
+    }).then(() => debouceAddHistory(dispatch))
 
     /**
      * Check if route should be enabled
@@ -231,7 +240,10 @@ export function replaceFacet (facet, value) {
   /**
    * For heirarchical facet
    */
-  if (facet.rootLevel && parseInt(facet.rootLevel) === value.split('/').length) {
+  if (
+    facet.rootLevel &&
+    parseInt(facet.rootLevel) === value.split('/').length
+  ) {
     return {
       type: types.REMOVE_FACET_ITEM,
       facet
@@ -384,16 +396,20 @@ export function initSearch ({ config, urlSync = true }) {
       })
 
       if (shouldSearch) {
-        dispatch(executeSearch({
-          routeChange: false
-        }))
+        dispatch(
+          executeSearch({
+            routeChange: false
+          })
+        )
       } else {
         dispatch(terminateSearch())
       }
     } else {
-      dispatch(executeSearch({
-        routeChange: false
-      }))
+      dispatch(
+        executeSearch({
+          routeChange: false
+        })
+      )
     }
   }
 }

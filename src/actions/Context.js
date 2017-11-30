@@ -37,19 +37,22 @@ export function requestGeoLocation (onSuccess, onFailure) {
     dispatch({
       type: types.REQUEST_GEO_LOCATION
     })
-    navigator.geolocation.getCurrentPosition((event) => {
-      dispatch({
-        type: types.REQUEST_GEO_LOCATION_SUCCESS,
-        payload: event
-      })
-      onSuccess && onSuccess(event)
-    }, (error) => {
-      dispatch({
-        type: types.REQUEST_GEO_LOCATION_FAILURE,
-        payload: error
-      })
-      onFailure && onFailure(error)
-    })
+    navigator.geolocation.getCurrentPosition(
+      (event) => {
+        dispatch({
+          type: types.REQUEST_GEO_LOCATION_SUCCESS,
+          payload: event
+        })
+        onSuccess && onSuccess(event)
+      },
+      (error) => {
+        dispatch({
+          type: types.REQUEST_GEO_LOCATION_FAILURE,
+          payload: error
+        })
+        onFailure && onFailure(error)
+      }
+    )
   }
 }
 

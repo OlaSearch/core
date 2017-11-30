@@ -4,11 +4,22 @@ import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { clearHistory } from './../../actions/History'
-import { updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource } from
-'./../../actions/Search'
+import {
+  updateQueryTerm,
+  replaceFacet,
+  removeAllFacets,
+  executeSearch,
+  setSearchSource
+} from './../../actions/Search'
 import { log } from './../../actions/Logger'
 import Input from './Input'
-import { checkForAllowedCharacters, trim, getCoords, mergeResultsWithHistory, redirect } from './../../utilities'
+import {
+  checkForAllowedCharacters,
+  trim,
+  getCoords,
+  mergeResultsWithHistory,
+  redirect
+} from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
@@ -45,11 +56,11 @@ class AutoComplete extends React.Component {
     onSubmit: PropTypes.func,
     viewAllClassName: PropTypes.string,
     placeholder: PropTypes.string
-  };
+  }
 
   static contextTypes = {
     config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  }
 
   static defaultProps = {
     showBookmarks: true,
@@ -73,7 +84,7 @@ class AutoComplete extends React.Component {
     resultLimitDesktop: 10,
     searchOnSelect: false,
     searchTimeout: 400
-  };
+  }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.q !== this.props.q) {
@@ -98,54 +109,57 @@ class AutoComplete extends React.Component {
     this.setState({
       fuzzyQuery: null
     })
-  };
+  }
   updateFuzzyQueryTerm = (term) => {
     this.setState({
       fuzzyQuery: term
     })
-  };
+  }
   closeAutoSuggest = () => {
     this.setState({
       isOpen: false
     })
-  };
+  }
   updateQueryTerm = (term, searchInput) => {
     this.setState({
       q: term,
       searchInput
     })
-  };
+  }
   clearQueryTerm = (cb) => {
-    this.setState({
-      q: '',
-      fuzzyQuery: null,
-      results: this.props.showHistory
-                ? mergeResultsWithHistory({
-                  history: this.props.history,
-                  showHistoryForQuery: this.props.showHistoryForQuery
-                })
-                : [],
-      isOpen: this.props.history.length > 0
-    }, cb)
-  };
+    this.setState(
+      {
+        q: '',
+        fuzzyQuery: null,
+        results: this.props.showHistory
+          ? mergeResultsWithHistory({
+            history: this.props.history,
+            showHistoryForQuery: this.props.showHistoryForQuery
+          })
+          : [],
+        isOpen: this.props.history.length > 0
+      },
+      cb
+    )
+  }
   handleHistoryChange = (newHistory) => {
     this.setState({
       results: this.props.showHistory
-                ? mergeResultsWithHistory({
-                  history: newHistory,
-                  results: this.state.results,
-                  query: this.state.q,
-                  showHistoryForQuery: this.props.showHistoryForQuery
-                })
-                : []
+        ? mergeResultsWithHistory({
+          history: newHistory,
+          results: this.state.results,
+          query: this.state.q,
+          showHistoryForQuery: this.props.showHistoryForQuery
+        })
+        : []
     })
-  };
+  }
   terminateAutoSuggest = () => {
     this.setState({
       isOpen: false,
       results: []
     })
-  };
+  }
   handleClickOutside = (event) => {
     /* Prevent rendering when autocomplete is closed */
     if (this.state.isOpen) {
@@ -159,7 +173,7 @@ class AutoComplete extends React.Component {
     }
     if (event && event.type === 'keydown') return
     this.onBlur()
-  };
+  }
 
   onChange = (term, searchInput) => {
     let { q } = this.state
@@ -186,92 +200,116 @@ class AutoComplete extends React.Component {
 
     this.clearFuzzyQueryTerm()
 
-    if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
+    if (
+      allowedCharacters &&
+      !checkForAllowedCharacters(term, allowedCharacters)
+    ) {
       this.terminateAutoSuggest()
     } else {
-      this.props.executeFuzzyAutoSuggest(term)
-        .then((results) => {
-          if (!results) return
+      this.props.executeFuzzyAutoSuggest(term).then((results) => {
+        if (!results) return
 
-          /* Parse payload */
-          let res = []
-          let categoryFound = false
+        /* Parse payload */
+        let res = []
+        let categoryFound = false
 
-          for (let i = 0, len = results.length; i < len; i++) {
-            let { payload, ...rest } = results[i]
-            if (typeof payload === 'string') payload = JSON.parse(payload)
-            let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== TYPE_TAXONOMY
-            let { topClicks } = payload
-            let topClickDocs = (i === 0 && topClicks && topClicks.length)
-              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({ term: rest.term, title: item.title, type: TYPE_DOC, ...item }))
+        for (let i = 0, len = results.length; i < len; i++) {
+          let { payload, ...rest } = results[i]
+          if (typeof payload === 'string') payload = JSON.parse(payload)
+          let isCategory =
+            payload.taxo_terms &&
+            payload.taxo_terms.length > 0 &&
+            !categoryFound &&
+            payload.type !== TYPE_TAXONOMY
+          let { topClicks } = payload
+          let topClickDocs =
+            i === 0 && topClicks && topClicks.length
+              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({
+                term: rest.term,
+                title: item.title,
+                type: TYPE_DOC,
+                ...item
+              }))
               : []
 
-            /* If categories are found, we will need to create additional array items */
-            if (isCategory) {
-              let categories = this.props.visibleCategoryGroups ? payload.taxo_terms.filter((item) => {
+          /* If categories are found, we will need to create additional array items */
+          if (isCategory) {
+            let categories = this.props.visibleCategoryGroups
+              ? payload.taxo_terms.filter((item) => {
                 let [name] = item.split('|')
                 return this.props.visibleCategoryGroups.indexOf(name) !== -1
-              }) : payload.taxo_terms
+              })
+              : payload.taxo_terms
 
-              let totalCategories = categories.length
-              /* Get the display names of the facets */
-              let facet = find(propEq('name', payload.taxo_label))(this.context.config.facets)
+            let totalCategories = categories.length
+            /* Get the display names of the facets */
+            let facet = find(propEq('name', payload.taxo_label))(
+              this.context.config.facets
+            )
 
-              /* First term in the suggestion */
-              res = [...res, {
+            /* First term in the suggestion */
+            res = [
+              ...res,
+              {
                 ...rest,
                 suggestion_raw: payload.suggestion_raw,
                 label: payload.label,
                 answer: payload.answer,
                 type: payload.type /* The first item is a query */
-              }, ...topClickDocs]
+              },
+              ...topClickDocs
+            ]
 
-              for (let j = 0; j < totalCategories; j++) {
-                let [ name ] = payload.taxo_terms[j].split('|')
-                let [ path ] = payload.taxo_paths ? payload.taxo_paths[j].split('|') : []
-                let displayName = facet ? facet.facetNames[name] || name : name
-                res.push({
-                  ...rest,
-                  taxo_term: displayName,
-                  isLastCategory: j === totalCategories - 1,
-                  isFirstCategory: j === 0,
-                  ...payload,
-                  suggestion_raw: payload.suggestion_raw,
-                  taxo_path: path
-                })
-                categoryFound = true
-              }
-            } else {
-              res = [...res, { ...rest, ...payload }, ...topClickDocs]
+            for (let j = 0; j < totalCategories; j++) {
+              let [name] = payload.taxo_terms[j].split('|')
+              let [path] = payload.taxo_paths
+                ? payload.taxo_paths[j].split('|')
+                : []
+              let displayName = facet ? facet.facetNames[name] || name : name
+              res.push({
+                ...rest,
+                taxo_term: displayName,
+                isLastCategory: j === totalCategories - 1,
+                isFirstCategory: j === 0,
+                ...payload,
+                suggestion_raw: payload.suggestion_raw,
+                taxo_path: path
+              })
+              categoryFound = true
             }
+          } else {
+            res = [...res, { ...rest, ...payload }, ...topClickDocs]
           }
+        }
 
-          const finalResults = this.props.showHistory
-            ? mergeResultsWithHistory({
-              history: this.props.history,
-              results: res,
-              query: this.state.q,
-              showHistoryForQuery: this.props.showHistoryForQuery
-            })
-            : res
-
-          this.setState({
-            results: finalResults,
-            isOpen: this.state.q ? !!finalResults.length : false
+        const finalResults = this.props.showHistory
+          ? mergeResultsWithHistory({
+            history: this.props.history,
+            results: res,
+            query: this.state.q,
+            showHistoryForQuery: this.props.showHistoryForQuery
           })
+          : res
+
+        this.setState({
+          results: finalResults,
+          isOpen: this.state.q ? !!finalResults.length : false
         })
+      })
     }
 
     /* Remove currently selected item from the autosuggest */
     this.clearActiveClass()
-  };
+  }
 
   clearActiveClass = () => {
-    let nodes = this.suggestionsContainer.querySelectorAll(this.props.classNames)
+    let nodes = this.suggestionsContainer.querySelectorAll(
+      this.props.classNames
+    )
     for (let i = 0, len = nodes.length; i < len; i++) {
       nodes[i].classList.remove(this.props.activeClassName)
     }
-  };
+  }
 
   onKeyDown = (direction) => {
     let { classNames, activeClassName } = this.props
@@ -331,7 +369,7 @@ class AutoComplete extends React.Component {
     scrollIntoView(next, this.suggestionsContainer, {
       onlyScrollIfNeeded: true
     })
-  };
+  }
 
   onSubmit = (event, options) => {
     /* If there is a fuzzy term */
@@ -356,7 +394,7 @@ class AutoComplete extends React.Component {
     }
 
     event && event.preventDefault()
-  };
+  }
 
   onSelect = (suggestion, options) => {
     if (this.props.onSelect) {
@@ -376,7 +414,7 @@ class AutoComplete extends React.Component {
         eventType: 'C',
         eventSource: 'suggest',
         eventCategory: 'autosuggest',
-        query: this.state.q, /* override query */
+        query: this.state.q /* override query */,
         eventAction: 'click',
         suggestion_taxo_label: suggestion.taxo_label,
         suggestion_taxo_term: suggestion.taxo_term,
@@ -407,7 +445,7 @@ class AutoComplete extends React.Component {
 
     /* Clear timeout */
     if (this._autosearch) clearTimeout(this._autosearch)
-  };
+  }
 
   onFuzzySelect = (suggestion, options) => {
     let { type } = suggestion
@@ -435,8 +473,13 @@ class AutoComplete extends React.Component {
        * For Barack Obama in Climate
        */
       if (suggestion.taxo_label && suggestion.taxo_term) {
-        facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
-        this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
+        facet = find(propEq('name', suggestion.taxo_label))(
+          this.context.config.facets
+        )
+        this.props.replaceFacet(
+          facet,
+          suggestion.taxo_path || suggestion.taxo_term
+        )
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
@@ -444,18 +487,24 @@ class AutoComplete extends React.Component {
       if (suggestion.taxo_label && suggestion.taxo_term) {
         /* Remove all selected facets */
         this.props.removeAllFacets()
-        facet = find(propEq('name', suggestion.taxo_label))(this.context.config.facets)
-        this.props.replaceFacet(facet, suggestion.taxo_path || suggestion.taxo_term)
+        facet = find(propEq('name', suggestion.taxo_label))(
+          this.context.config.facets
+        )
+        this.props.replaceFacet(
+          facet,
+          suggestion.taxo_path || suggestion.taxo_term
+        )
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
 
     return this.onSelect(suggestion, { ...options, fromSuggestion: true })
-  };
+  }
   onFocus = (event) => {
     /* Set scroll position on phone */
     if (this.props.isPhone && this.props.scrollOnFocus) {
-      document.documentElement.scrollTop = document.body.scrollTop = getCoords(event.target).top - this.props.scrollPadding
+      document.documentElement.scrollTop = document.body.scrollTop =
+        getCoords(event.target).top - this.props.scrollPadding
     }
 
     if (!this.state.q) {
@@ -463,18 +512,18 @@ class AutoComplete extends React.Component {
         isFocused: true,
         isOpen: true,
         results: this.props.showHistory
-                  ? mergeResultsWithHistory({
-                    history: this.props.history,
-                    results: this.state.results,
-                    query: this.state.q,
-                    showHistoryForQuery: this.props.showHistoryForQuery
-                  })
-                  : this.state.results
+          ? mergeResultsWithHistory({
+            history: this.props.history,
+            results: this.state.results,
+            query: this.state.q,
+            showHistoryForQuery: this.props.showHistoryForQuery
+          })
+          : this.state.results
       })
     }
 
     this.props.onFocus && this.props.onFocus(event)
-  };
+  }
 
   onBlur = (event) => {
     this.setState({
@@ -483,7 +532,7 @@ class AutoComplete extends React.Component {
     })
 
     this.props.onBlur && this.props.onBlur(event)
-  };
+  }
 
   onSoftBlur = (e) => {
     if (!e.relatedTarget) return
@@ -495,14 +544,14 @@ class AutoComplete extends React.Component {
       fuzzyQuery: null,
       results: []
     })
-  };
+  }
 
   registerRef = (input) => {
     this.suggestionsContainer = input
-  };
+  }
   registerEl = (el) => {
     this.el = el
-  };
+  }
   componentDidMount () {
     if (!this.el) return
     this.isSizeSmall = getCoords(this.el).width <= 600
@@ -528,7 +577,9 @@ class AutoComplete extends React.Component {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused,
       'ola-autosuggest-small': this.isSizeSmall,
-      'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
+      'ola-speech-not-supported': !(
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      )
     })
 
     const queryTerm = fuzzyQuery ? fuzzyQuery.term || q : q
@@ -561,18 +612,23 @@ class AutoComplete extends React.Component {
 
           <div className={klass}>
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
-              {showSuggestionHelp
-                ? <div className='ola-suggestions-help'>
-                  {q
-                      ? translate('autosuggest_help')
-                      : <span>
-                        {translate('autosuggest_help_history')}
-                        <a onClick={this.props.clearHistory} className='ola-suggestions-clear'>clear</a>
-                      </span>
-                    }
+              {showSuggestionHelp ? (
+                <div className='ola-suggestions-help'>
+                  {q ? (
+                    translate('autosuggest_help')
+                  ) : (
+                    <span>
+                      {translate('autosuggest_help_history')}
+                      <a
+                        onClick={this.props.clearHistory}
+                        className='ola-suggestions-clear'
+                      >
+                        clear
+                      </a>
+                    </span>
+                  )}
                 </div>
-                : null
-              }
+              ) : null}
               <FuzzySuggestions
                 results={results}
                 onSelect={this.onFuzzySelect}
@@ -582,7 +638,6 @@ class AutoComplete extends React.Component {
               />
             </div>
           </div>
-
         </div>
       </div>
     )
@@ -597,4 +652,13 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-module.exports = connect(mapStateToProps, { executeFuzzyAutoSuggest, updateQueryTerm, replaceFacet, removeAllFacets, executeSearch, setSearchSource, clearHistory, log })(injectTranslate(listensToClickOutside(AutoComplete)))
+module.exports = connect(mapStateToProps, {
+  executeFuzzyAutoSuggest,
+  updateQueryTerm,
+  replaceFacet,
+  removeAllFacets,
+  executeSearch,
+  setSearchSource,
+  clearHistory,
+  log
+})(injectTranslate(listensToClickOutside(AutoComplete)))

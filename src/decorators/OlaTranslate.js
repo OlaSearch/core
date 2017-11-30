@@ -7,7 +7,9 @@ module.exports = (WrappedComponent) => {
   function WithTranslate (props, context) {
     return <WrappedComponent {...props} translate={context.translate} />
   }
-  WithTranslate.displayName = `withTranslate(${getComponentDisplayName(WrappedComponent)})`
+  WithTranslate.displayName = `withTranslate(${getComponentDisplayName(
+    WrappedComponent
+  )})`
   WithTranslate.contextTypes = {
     translate: PropTypes.func
   }

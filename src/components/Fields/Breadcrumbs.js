@@ -18,19 +18,14 @@ function Breadcrumbs ({ crumbs }) {
   return (
     <div className='ola-field ola-field-crumbs'>
       {crumbs.map((crumb, idx) => {
-        return (
-          <span key={idx}>{crumb}</span>
-        )
+        return <span key={idx}>{crumb}</span>
       })}
     </div>
   )
 }
 
 Breadcrumbs.propTypes = {
-  crumbs: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.string
-  ])
+  crumbs: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 }
 
 module.exports = Breadcrumbs

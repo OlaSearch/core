@@ -9,34 +9,38 @@ class BookmarkActions extends React.Component {
   addBookmark = () => {
     let { dispatch, result } = this.props
     dispatch(addBookmark(result))
-    dispatch(log({
-      eventType: 'C',
-      eventCategory: 'Add bookmark',
-      eventAction: 'click',
-      debounce: true,
-      result,
-      snippetId: this.props.snippetId
-    }))
-  };
+    dispatch(
+      log({
+        eventType: 'C',
+        eventCategory: 'Add bookmark',
+        eventAction: 'click',
+        debounce: true,
+        result,
+        snippetId: this.props.snippetId
+      })
+    )
+  }
 
   removeBookmark = () => {
     let { dispatch, result } = this.props
     dispatch(removeBookmark(result))
-    dispatch(log({
-      eventType: 'C',
-      eventCategory: 'Remove bookmark',
-      eventAction: 'click',
-      debounce: true,
-      result,
-      snippetId: this.props.snippetId
-    }))
-  };
+    dispatch(
+      log({
+        eventType: 'C',
+        eventCategory: 'Remove bookmark',
+        eventAction: 'click',
+        debounce: true,
+        result,
+        snippetId: this.props.snippetId
+      })
+    )
+  }
 
   static propTypes = {
     bookmarks: PropTypes.array,
     result: PropTypes.object,
     dispatch: PropTypes.func
-  };
+  }
   shouldComponentUpdate (nextProps) {
     return (
       this.props.bookmarks !== nextProps.bookmarks ||
@@ -45,7 +49,8 @@ class BookmarkActions extends React.Component {
   }
   render () {
     let { bookmarks, result, translate, isBookmark } = this.props
-    let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id).length
+    let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id)
+      .length
     let removeLabel = translate('remove_bookmark_label')
     let addLabel = translate('add_bookmark_label')
     let removeClassName = classnames({
@@ -58,7 +63,8 @@ class BookmarkActions extends React.Component {
           type='button'
           className={removeClassName}
           title={removeLabel}
-          onClick={this.removeBookmark}>
+          onClick={this.removeBookmark}
+        >
           <span>{removeLabel}</span>
         </button>
       )
@@ -68,7 +74,8 @@ class BookmarkActions extends React.Component {
           type='button'
           className='ola-link-bookmark-action'
           title={addLabel}
-          onClick={this.addBookmark}>
+          onClick={this.addBookmark}
+        >
           <span>{addLabel}</span>
         </button>
       )

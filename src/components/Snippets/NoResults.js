@@ -4,14 +4,14 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
 
 function NoResults ({
-    totalResults,
-    isLoading,
-    q,
-    translate,
-    suggestedTerm,
-    facets,
-    dispatch
-  }) {
+  totalResults,
+  isLoading,
+  q,
+  translate,
+  suggestedTerm,
+  facets,
+  dispatch
+}) {
   /*
     Removed `q` (23/6/17 - Vinay)
     q can be empty when filters are used
@@ -30,29 +30,41 @@ function NoResults ({
     dispatch(executeSearch())
   }
   let message
-  if (totalResults === 0 &&
-      suggestedTerm &&
-      facets.length > 0) {
+  if (totalResults === 0 && suggestedTerm && facets.length > 0) {
     message = (
       <div>
-        {translate('no_results_found_filters_too_restrictive', { q }, true, { tagName: 'span' })}<button className='ola-reset-filters' type='button' onClick={removeFilters}>Remove filters</button>
+        {translate('no_results_found_filters_too_restrictive', { q }, true, {
+          tagName: 'span'
+        })}
+        <button
+          className='ola-reset-filters'
+          type='button'
+          onClick={removeFilters}
+        >
+          Remove filters
+        </button>
       </div>
     )
   } else {
     if (!q && facets.length) {
       message = (
         <div>
-          {translate('no_results_found_filters_only', null, true, { tagName: 'span' })}<button className='ola-reset-filters' type='button' onClick={removeFilters}>Remove filters</button>
+          {translate('no_results_found_filters_only', null, true, {
+            tagName: 'span'
+          })}
+          <button
+            className='ola-reset-filters'
+            type='button'
+            onClick={removeFilters}
+          >
+            Remove filters
+          </button>
         </div>
       )
     } else message = translate('no_results_found', { q }, true)
   }
 
-  return (
-    <div className='ola-snippet ola-snippet-noresults'>
-      {message}
-    </div>
-  )
+  return <div className='ola-snippet ola-snippet-noresults'>{message}</div>
 }
 
 NoResults.defaultProps = {

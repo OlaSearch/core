@@ -1,6 +1,6 @@
 {
   "name": "olasearch",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -12,13 +12,11 @@
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
     "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
-    "standard": "standard --verbose --fix | snazzy",
     "retire": "retire",
     "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public && s3-deploy './dist/olasearch.core.min.css' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/css --cache 604800,public",
     "cdn:invalidate": "aws-cloudfront-invalidate E1MMHSLEW3SZPY /assets/*",
     "styleguide": "styleguidist server",
     "styleguidist:build": "styleguidist build",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
     "prettier-standard": "prettier-standard 'src/**/*.js'"
   },
   "engines": {

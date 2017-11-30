@@ -12,21 +12,24 @@ class DocumentPages extends React.Component {
     }
   }
   toggle = () => {
-    this.setState({
-      isVisible: !this.state.isVisible
-    }, () => {
-      if (this.state.isVisible) {
-        this.props.log({
-          eventType: 'C',
-          result: this.props.result,
-          eventCategory: this.props.translate('doc_view_pages'),
-          eventLabel: 'Pages',
-          eventAction: 'click',
-          snippetId: this.props.snippetId
-        })
+    this.setState(
+      {
+        isVisible: !this.state.isVisible
+      },
+      () => {
+        if (this.state.isVisible) {
+          this.props.log({
+            eventType: 'C',
+            result: this.props.result,
+            eventCategory: this.props.translate('doc_view_pages'),
+            eventLabel: 'Pages',
+            eventAction: 'click',
+            snippetId: this.props.snippetId
+          })
+        }
       }
-    })
-  };
+    )
+  }
   onSelect = (page) => {
     this.props.onClick && this.props.onClick(page, this.props.result)
     this.props.log({
@@ -38,9 +41,16 @@ class DocumentPages extends React.Component {
       eventAction: 'click',
       snippetId: this.props.snippetId
     })
-  };
+  }
   render () {
-    let { pages, q, contentField, translate, fieldLabel, showIfEmpty } = this.props
+    let {
+      pages,
+      q,
+      contentField,
+      translate,
+      fieldLabel,
+      showIfEmpty
+    } = this.props
     let { isVisible } = this.state
 
     if (!pages.length && !showIfEmpty) return null
@@ -51,23 +61,30 @@ class DocumentPages extends React.Component {
       return (
         <div className='ola-field ola-field-pages'>
           {label}
-          <a className='ola-link-view-pages' onClick={this.toggle}>{translate('doc_view_pages')}</a>
+          <a className='ola-link-view-pages' onClick={this.toggle}>
+            {translate('doc_view_pages')}
+          </a>
         </div>
       )
     }
     return (
       <div className='ola-field ola-field-pages'>
         {label}
-        <a className='ola-link-view-pages ola-link-view-pages-hide' onClick={this.toggle}>{translate('doc_hide_pages')}</a>
-        {pages.map((page, idx) =>
-          (<PageDetail
+        <a
+          className='ola-link-view-pages ola-link-view-pages-hide'
+          onClick={this.toggle}
+        >
+          {translate('doc_hide_pages')}
+        </a>
+        {pages.map((page, idx) => (
+          <PageDetail
             onSelectPage={this.onSelect}
             page={page}
             contentField={contentField}
             key={idx}
             q={q}
-          />)
-        )}
+          />
+        ))}
       </div>
     )
   }
@@ -92,10 +109,7 @@ function PageDetail ({ page, contentField, onSelectPage }) {
   let { pageNumber } = page
   return (
     <div className='ola-snippet-page'>
-      <a
-        onClick={handleSelect}
-        className='ola-page-number'
-      >
+      <a onClick={handleSelect} className='ola-page-number'>
         <span>p. {pageNumber}</span>
       </a>
       <TextField field={contentField} result={page} />

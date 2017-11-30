@@ -17,11 +17,18 @@ function Thumbnail (props, context) {
     ...rest
   } = props
 
-  let restProps = omit(['size', 'result', 'snippetId', 'collectionId', 'showIfEmpty'], rest)
+  let restProps = omit(
+    ['size', 'result', 'snippetId', 'collectionId', 'showIfEmpty'],
+    rest
+  )
 
   if (!thumbnail && !thumbnailMobile) return null
 
-  let isSvg = thumbnail.split('.').pop().indexOf('svg') === 0
+  let isSvg =
+    thumbnail
+      .split('.')
+      .pop()
+      .indexOf('svg') === 0
   /**
    * If cdn exists
    */
@@ -50,34 +57,42 @@ function Thumbnail (props, context) {
     : {}
 
   let imageUrl = `${baseUrl}${thumbnail}`
-  let imgThumbnail = useBackgroundImage
-    ? <div className='ola-img ola-img-bg' {...restProps} style={{ backgroundImage: `url(${imageUrl})` }} />
-    : <img className='ola-img' {...restProps} src={`${baseUrl}${thumbnail}`} alt='' />
+  let imgThumbnail = useBackgroundImage ? (
+    <div
+      className='ola-img ola-img-bg'
+      {...restProps}
+      style={{ backgroundImage: `url(${imageUrl})` }}
+    />
+  ) : (
+    <img
+      className='ola-img'
+      {...restProps}
+      src={`${baseUrl}${thumbnail}`}
+      alt=''
+    />
+  )
 
   if (!thumbnailMobile) {
     if (isLink) {
       return (
         <div className='ola-field ola-field-img'>
-          <a {...linkProps}>
-            {imgThumbnail}
-          </a>
+          <a {...linkProps}>{imgThumbnail}</a>
         </div>
       )
     }
-    return (
-      <div className='ola-field ola-field-img'>
-        {imgThumbnail}
-      </div>
-    )
+    return <div className='ola-field ola-field-img'>{imgThumbnail}</div>
   }
 
   return (
     <div className='ola-field ola-field-img'>
-      <Media query={mediaQuery.tablet}>
-        {imgThumbnail}
-      </Media>
+      <Media query={mediaQuery.tablet}>{imgThumbnail}</Media>
       <Media query={mediaQuery.mobile}>
-        <img className='ola-img ola-img-mobile' {...restProps} src={`${baseUrl}${thumbnailMobile}`} alt='' />
+        <img
+          className='ola-img ola-img-mobile'
+          {...restProps}
+          src={`${baseUrl}${thumbnailMobile}`}
+          alt=''
+        />
       </Media>
     </div>
   )

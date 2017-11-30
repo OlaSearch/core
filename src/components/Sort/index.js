@@ -19,9 +19,13 @@ function Sort (props, context) {
         className='ola-sort-select'
         value={selected}
         onChange={handleChange}
-        >
+      >
         <option value=''>Relevance</option>
-        {sortBy.map((sort, idx) => <option key={idx} value={sort.value}>{sort.name}</option>)}
+        {sortBy.map((sort, idx) => (
+          <option key={idx} value={sort.value}>
+            {sort.name}
+          </option>
+        ))}
       </select>
     </div>
   )

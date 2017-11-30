@@ -13,8 +13,8 @@ class AnswerList extends React.Component {
   }
   static defaultProps = {
     max: 3
-  };
-  toggle = () => this.setState({ isOpen: !this.state.isOpen });
+  }
+  toggle = () => this.setState({ isOpen: !this.state.isOpen })
   render () {
     let { data, max, translate } = this.props
     let { elements } = data
@@ -23,9 +23,7 @@ class AnswerList extends React.Component {
     return (
       <div className='ola-answer-list-info-detail'>
         <div className='ola-answer-list-items'>
-          {elements
-          .slice(0, isOpen ? undefined : max)
-          .map((item, idx) => {
+          {elements.slice(0, isOpen ? undefined : max).map((item, idx) => {
             let { title, subtitle, fields, buttons = [] } = item
             return (
               <div className='ola-answer-item' key={idx}>
@@ -36,35 +34,31 @@ class AnswerList extends React.Component {
                   </div>
 
                   <div className='ola-answer-keyvalue'>
-                    {fields
-                      .map((field, idx) => {
-                        let klass = classNames('ola-answer-row', `ola-answer-row-${field.label}`)
-                        return (
-                          <AnswerField className={klass} {...field} key={idx} />
-                        )
-                      })}
+                    {fields.map((field, idx) => {
+                      let klass = classNames(
+                        'ola-answer-row',
+                        `ola-answer-row-${field.label}`
+                      )
+                      return (
+                        <AnswerField className={klass} {...field} key={idx} />
+                      )
+                    })}
                   </div>
                   {buttons.map((button, idx) => {
-                    return (
-                      <AnswerButton {...button} key={idx} />
-                    )
+                    return <AnswerButton {...button} key={idx} />
                   })}
-
                 </div>
               </div>
             )
-          })
-        }
+          })}
         </div>
-        {size > max
-          ? <button className='ola-answer-link-more' onClick={this.toggle}>
+        {size > max ? (
+          <button className='ola-answer-link-more' onClick={this.toggle}>
             {isOpen
-                ? translate('answers_show_less')
-                : translate('answers_show_more')
-              }
+              ? translate('answers_show_less')
+              : translate('answers_show_more')}
           </button>
-          : null
-        }
+        ) : null}
       </div>
     )
   }

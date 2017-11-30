@@ -26,14 +26,14 @@ class LinkFilter extends React.Component {
     facet: PropTypes.object.isRequired,
     showIfEmpty: PropTypes.bool,
     showSelectedFacetItem: PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     listType: 'uniform',
     showIfEmpty: false,
     showSelectedFacetItem: false,
     debug: false
-  };
+  }
 
   handleAddFacet = (value) => {
     let { dispatch, facet } = this.props
@@ -44,29 +44,29 @@ class LinkFilter extends React.Component {
 
     dispatch(addFacet(facet, value))
     dispatch(executeSearch())
-  };
+  }
 
   handleRemoveFacet = (value) => {
     let { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
     dispatch(executeSearch())
-  };
+  }
 
   toggleshowMore = () => {
     this.setState({
       showMore: !this.state.showMore
     })
-  };
+  }
 
   onChangeFilterText = (event) => {
     this.setState({
       filterText: xssFilters.inHTMLData(event.target.value)
     })
-  };
+  }
 
   isSelected = (name) => {
     return this.props.selected.indexOf(name) > -1
-  };
+  }
 
   itemRenderer = (values, index, key) => {
     let { name, count } = values[index]
@@ -83,13 +83,10 @@ class LinkFilter extends React.Component {
         onItemClick={this.handleAddFacet}
       />
     )
-  };
+  }
 
   render () {
-    var {
-      filterText,
-      showMore
-    } = this.state
+    var { filterText, showMore } = this.state
 
     var {
       facet,
@@ -120,7 +117,9 @@ class LinkFilter extends React.Component {
     /* Remove values in exclusion list */
     values = values.filter(({ name }) => exclusions.indexOf(name) === -1)
 
-    if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
+    if (!showSelectedFacetItem) {
+      values = values.filter((item) => selected.indexOf(item.name) === -1)
+    }
 
     var originalSize = values.length
 
@@ -128,7 +127,9 @@ class LinkFilter extends React.Component {
     if (!originalSize && !showIfEmpty) return null
 
     /* Filter values */
-    values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
+    values = values.filter((item) =>
+      item.name.toString().match(new RegExp(filterText, 'i'))
+    )
 
     var size = values.length
 
@@ -138,9 +139,18 @@ class LinkFilter extends React.Component {
     /* Show more */
     if (!showMore) values = values.slice(0, limit)
 
-    var showMoreLink = shouldDisplayShowMore
-      ? <button className={`ola-btn ola-link-show-more ${showMore ? 'ola-link-show-less' : ''}`} onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
-      : null
+    var showMoreLink = shouldDisplayShowMore ? (
+      <button
+        className={`ola-btn ola-link-show-more ${showMore
+          ? 'ola-link-show-less'
+          : ''}`}
+        onClick={this.toggleshowMore}
+      >
+        {showMore
+          ? translate('facet_filter_showless')
+          : translate('facet_filter_showmore')}
+      </button>
+    ) : null
 
     var klass = classNames('ola-facet ola-facet-default', {
       'ola-facet-collapsed': isCollapsed
@@ -148,21 +158,24 @@ class LinkFilter extends React.Component {
 
     var itemRendererBound = this.itemRenderer.bind(this, values)
 
-    var filterInput = originalSize > limit
-      ? (<FilterInput
-        value={filterText}
-        onChange={this.onChangeFilterText}
-        placeholder={translate('facet_filter_placeholder')}
-        />)
-      : null
+    var filterInput =
+      originalSize > limit ? (
+        <FilterInput
+          value={filterText}
+          onChange={this.onChangeFilterText}
+          placeholder={translate('facet_filter_placeholder')}
+        />
+      ) : null
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>
+          {facet.displayName}
+        </h4>
         <div className='ola-facet-wrapper'>
           {filterInput}
-          {showSelectedTag || debug
-            ? <div className='ola-facet-tags-selected'>
+          {showSelectedTag || debug ? (
+            <div className='ola-facet-tags-selected'>
               {selected.map((item, idx) => {
                 return (
                   <SelectedItem
@@ -175,8 +188,7 @@ class LinkFilter extends React.Component {
                 )
               })}
             </div>
-            : null
-          }
+          ) : null}
           <div className='ola-facet-list'>
             <div className='ola-facet-scroll-list'>
               <ReactList
@@ -200,7 +212,9 @@ function Item ({ name, count, displayName, isSelected, onItemClick }) {
   function onClick () {
     onItemClick(name)
   }
-  const itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': isSelected })
+  const itemKlass = classNames('ola-btn', 'ola-facet-link', {
+    'ola-facet-link-active': isSelected
+  })
   return (
     <div className='ola-btn-wrap'>
       <button

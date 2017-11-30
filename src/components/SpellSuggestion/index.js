@@ -11,13 +11,11 @@ function SpellSuggestion (props) {
     dispatch(executeSearch())
   }
   function handleClick (term) {
-    props.onChange ? props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION) : onChange(term)
+    props.onChange
+      ? props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION)
+      : onChange(term)
   }
-  var {
-    suggestions,
-    showCount,
-    translate
-  } = props
+  var { suggestions, showCount, translate } = props
 
   if (!suggestions.length) return null
 
@@ -61,11 +59,7 @@ function TermItem ({ item, showCount, handleClick }) {
 
   let { term, count } = item
   return (
-    <button
-      type='button'
-      className='ola-spell-links'
-      onClick={onClick}
-    >
+    <button type='button' className='ola-spell-links' onClick={onClick}>
       <span className='ola-spell-term'>{term}</span>
       {showCount && <span className='ola-spell-count'>{count}</span>}
     </button>

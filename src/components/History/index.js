@@ -13,7 +13,7 @@ class History extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     history: PropTypes.array.isRequired
-  };
+  }
 
   constructor (props) {
     super(props)
@@ -26,7 +26,7 @@ class History extends React.Component {
     this.setState({
       isOpen: false
     })
-  };
+  }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.isOpen !== this.props.isOpen) {
@@ -37,41 +37,43 @@ class History extends React.Component {
   }
 
   toggleVisibility = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    }, () => {
-      if (this.state.isOpen) {
-        this.props.onOpen && this.props.onOpen()
+    this.setState(
+      {
+        isOpen: !this.state.isOpen
+      },
+      () => {
+        if (this.state.isOpen) {
+          this.props.onOpen && this.props.onOpen()
 
-        this.props.dispatch(log({
-          eventType: 'C',
-          eventCategory: 'History button',
-          eventAction: 'open',
-          eventLabel: 'History',
-          debounce: true
-        }))
+          this.props.dispatch(
+            log({
+              eventType: 'C',
+              eventCategory: 'History button',
+              eventAction: 'open',
+              eventLabel: 'History',
+              debounce: true
+            })
+          )
+        }
       }
-    })
-  };
+    )
+  }
 
   clearHistory = () => {
     this.props.dispatch(clearHistory())
-  };
+  }
 
   shouldComponentUpdate (nextProps, nextState) {
-    return nextProps.history !== this.props.history || nextState.isOpen !== this.state.isOpen
+    return (
+      nextProps.history !== this.props.history ||
+      nextState.isOpen !== this.state.isOpen
+    )
   }
 
   render () {
-    var {
-      history,
-      translate,
-      searchPageUrl
-    } = this.props
+    var { history, translate, searchPageUrl } = this.props
 
-    var {
-      isOpen
-    } = this.state
+    var { isOpen } = this.state
 
     var klass = classNames({
       'ola-module': true,
@@ -90,29 +92,37 @@ class History extends React.Component {
           className='ola-link-history'
           onClick={this.toggleVisibility}
         >
-          <span className='ola-btn-hint hint--top' aria-label={translate('history_label')} />
+          <span
+            className='ola-btn-hint hint--top'
+            aria-label={translate('history_label')}
+          />
         </button>
         <div className={klass}>
           <div className='ola-module-title'>
             <span>{translate('history_label')} </span>
-            {hasHistory
-              ? <button
+            {hasHistory ? (
+              <button
                 type='button'
                 className='ola-fake-button ola-clear'
                 onClick={this.clearHistory}
-                >
-                  (clear)
+              >
+                (clear)
               </button>
-              : null
-            }
+            ) : null}
           </div>
           <div className='ola-module-body'>
-            {!hasHistory &&
+            {!hasHistory && (
               <div className='ola-module-item'>
                 {translate('history_empty_label')}
               </div>
-            }
-            {history.map((item, idx) => <HistoryItem searchPageUrl={searchPageUrl} history={item} key={idx} />)}
+            )}
+            {history.map((item, idx) => (
+              <HistoryItem
+                searchPageUrl={searchPageUrl}
+                history={item}
+                key={idx}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -126,9 +136,16 @@ function mapStateToProps (state) {
   }
 }
 
-const HistoryContainer = connect(mapStateToProps)(injectTranslate(listensToClickOutside(History)))
-const HistoryWrapper = (props, { config: { searchHistory, searchPageUrl } }) => {
-  if (searchHistory) return <HistoryContainer searchPageUrl={searchPageUrl} {...props} />
+const HistoryContainer = connect(mapStateToProps)(
+  injectTranslate(listensToClickOutside(History))
+)
+const HistoryWrapper = (
+  props,
+  { config: { searchHistory, searchPageUrl } }
+) => {
+  if (searchHistory) {
+    return <HistoryContainer searchPageUrl={searchPageUrl} {...props} />
+  }
   return null
 }
 HistoryWrapper.contextTypes = {

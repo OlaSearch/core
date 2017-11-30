@@ -4,7 +4,10 @@ import omit from 'ramda/src/omit'
 export function addBookmark (snippet) {
   return {
     type: types.ADD_BOOKMARK,
-    snippet: omit(['highlighting'], snippet) /* Remove highlighting in snippet */
+    snippet: omit(
+      ['highlighting'],
+      snippet
+    ) /* Remove highlighting in snippet */
   }
 }
 

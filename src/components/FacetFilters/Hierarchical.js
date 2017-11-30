@@ -1,5 +1,9 @@
 import React from 'react'
-import { replaceFacet, executeSearch, removeFacetItem } from './../../actions/Search'
+import {
+  replaceFacet,
+  executeSearch,
+  removeFacetItem
+} from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
@@ -18,10 +22,10 @@ class HierarchicalFilter extends React.Component {
     this.setState({
       filterText: xssFilters.inHTMLData(event.target.value)
     })
-  };
+  }
   isSelected = (name) => {
     return this.props.selected.indexOf(name) > -1
-  };
+  }
   handleAddFacet = (value) => {
     var { dispatch, facet } = this.props
 
@@ -36,7 +40,7 @@ class HierarchicalFilter extends React.Component {
      */
     dispatch(replaceFacet(facet, value))
     dispatch(executeSearch())
-  };
+  }
 
   handleRemoveFacet = (value) => {
     let { dispatch, facet } = this.props
@@ -48,13 +52,9 @@ class HierarchicalFilter extends React.Component {
       dispatch(replaceFacet(facet, path))
     }
     dispatch(executeSearch())
-  };
+  }
   render () {
-    var {
-      facet,
-      isCollapsed,
-      toggleDisplay
-    } = this.props
+    var { facet, isCollapsed, toggleDisplay } = this.props
 
     var {
       values,
@@ -82,15 +82,21 @@ class HierarchicalFilter extends React.Component {
     /* Get Hierarchical values */
     values = toNestedArray(values, rootLevel, parentNode)
     /* Selected */
-    let selected = this.props.selected.map((item) => item.split('/')).reduce((o, i) => i, [])
+    let selected = this.props.selected
+      .map((item) => item.split('/'))
+      .reduce((o, i) => i, [])
     let selectedPath = []
     for (let i = 0, len = selected.length; i < len; i++) {
-      selectedPath.push(selected[i - 1] ? selectedPath[i - 1] + '/' + selected[i] : selected[i])
+      selectedPath.push(
+        selected[i - 1] ? selectedPath[i - 1] + '/' + selected[i] : selected[i]
+      )
     }
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>
+          {displayName}
+        </h4>
         <div className='ola-facet-wrapper'>
           <div className='ola-facet-list'>
             <CheckboxGroup
@@ -99,7 +105,7 @@ class HierarchicalFilter extends React.Component {
               handleRemoveFacet={this.handleRemoveFacet}
               selected={selectedPath}
               rollUp={rollUp}
-              />
+            />
           </div>
         </div>
       </div>
@@ -130,16 +136,15 @@ function CheckboxGroup (props) {
                 handleRemoveFacet={handleRemoveFacet}
                 isActive={isActive}
               />
-              {value.children && isActive
-                ? <CheckboxGroup
+              {value.children && isActive ? (
+                <CheckboxGroup
                   values={value.children}
                   handleAddFacet={handleAddFacet}
                   handleRemoveFacet={handleRemoveFacet}
                   selected={selected}
                   rollUp={rollUp}
                 />
-                : null
-              }
+              ) : null}
             </div>
           )
         }
@@ -176,8 +181,10 @@ function CheckBoxItem ({ value, handleAddFacet, handleRemoveFacet, isActive }) {
           opacity: 0,
           position: 'absolute'
         }}
-        />
-      <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
+      />
+      <span className='ola-search-facet-name' title={displayName}>
+        {displayName}
+      </span>
       <span className='ola-search-facet-count'>{count}</span>
     </label>
   )

@@ -44,7 +44,7 @@ export function submitLog (args) {
     state,
     ...rest
   })
-  if (typeof (setNewUser) !== 'undefined' && !setNewUser) return
+  if (typeof setNewUser !== 'undefined' && !setNewUser) return
   /* Check if the user is new User */
   if (state.Context.isNewUser) {
     /* Set new user flag to false */

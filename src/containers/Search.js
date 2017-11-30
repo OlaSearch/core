@@ -29,7 +29,7 @@ class Search extends React.Component {
 
   static contextTypes = {
     config: PropTypes.object
-  };
+  }
 
   componentDidMount () {
     this.props.dispatch(initSearch({ config: this.context.config }))
@@ -39,16 +39,10 @@ class Search extends React.Component {
     this.setState({
       isSidebarOpen: !this.state.isSidebarOpen
     })
-  };
+  }
 
   render () {
-    var {
-      dispatch,
-      AppState,
-      QueryState,
-      components,
-      Device
-    } = this.props
+    var { dispatch, AppState, QueryState, components, Device } = this.props
 
     var {
       results,
@@ -70,13 +64,9 @@ class Search extends React.Component {
       referrer
     } = QueryState
 
-    var {
-      isPhone
-    } = Device
+    var { isPhone } = Device
 
-    var {
-      isSidebarOpen
-    } = this.state
+    var { isSidebarOpen } = this.state
 
     var klassSearchContainer = classNames({
       'ola-search-container': true,
@@ -93,7 +83,6 @@ class Search extends React.Component {
       <div>
         <div className={klassModal} onClick={this.toggleSidebar} />
         <div className='ola-form-container ola-header-section'>
-
           <a href='index.html' className='ola-logo' />
 
           <InstantSearchForm
@@ -104,30 +93,27 @@ class Search extends React.Component {
         </div>
 
         <div className={klassSearchContainer}>
-
-          <button type='button' className='ola-link-open-filter' onClick={this.toggleSidebar} />
+          <button
+            type='button'
+            className='ola-link-open-filter'
+            onClick={this.toggleSidebar}
+          />
 
           <div className='ola-sidebar'>
-
             <h3>Refine your results</h3>
 
-            <ClearAllFacets
-              dispatch={dispatch}
-              selected={facetQuery}
-            />
+            <ClearAllFacets dispatch={dispatch} selected={facetQuery} />
 
             <SearchFilters
               facets={facets}
               selected={facetQuery}
-              dispatch={dispatch} />
+              dispatch={dispatch}
+            />
           </div>
 
           <div className='ola-results-container'>
             <div className='ola-title-container'>
-              <Sort
-                dispatch={dispatch}
-                selected={sort}
-              />
+              <Sort dispatch={dispatch} selected={sort} />
 
               <SearchTitle
                 totalResults={totalResults}
@@ -135,10 +121,7 @@ class Search extends React.Component {
                 perPage={perPage}
               />
 
-              <TermSuggestion
-                term={suggestedTerm}
-                q={q}
-              />
+              <TermSuggestion term={suggestedTerm} q={q} />
 
               <SpellSuggestion
                 suggestions={spellSuggestions}
@@ -147,11 +130,7 @@ class Search extends React.Component {
               />
             </div>
 
-            <Tabs
-              facets={facets}
-              dispatch={dispatch}
-              selected={facetQuery}
-            />
+            <Tabs facets={facets} dispatch={dispatch} selected={facetQuery} />
 
             <SelectedFilters
               facets={facetQuery}
@@ -159,14 +138,9 @@ class Search extends React.Component {
               referrer={referrer}
             />
 
-            <Error
-              error={error}
-            />
+            <Error error={error} />
 
-            <NoResults
-              results={results}
-              isLoading={isLoading}
-            />
+            <NoResults results={results} isLoading={isLoading} />
 
             <SearchResults
               q={q}

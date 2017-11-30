@@ -44,16 +44,12 @@ npm run retire
 
 ## Coding collaboration guidelines
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
-Please use Javascript Standard Guide [https://github.com/feross/standard](https://github.com/feross/standard)
-Please use eslint guidelines in `.eslintrc`
+Uses [Prettier](prettier.io) and [Prettier standard](https://github.com/sheerun/prettier-standard) for code formatting and linting
 
 Always run
 
 ````
-npm run standard
-npm run lint
+npm run prettier-standard
 ````
 
 And fixing any JS style issues before committing files

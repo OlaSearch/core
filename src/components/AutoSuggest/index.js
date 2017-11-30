@@ -2,7 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import listensToClickOutside from 'react-onclickoutside'
-import { updateQueryTerm, executeAutoSuggest, clearQueryTerm, closeAutoSuggest, terminateAutoSuggest } from './../../actions/AutoSuggest'
+import {
+  updateQueryTerm,
+  executeAutoSuggest,
+  clearQueryTerm,
+  closeAutoSuggest,
+  terminateAutoSuggest
+} from './../../actions/AutoSuggest'
 import SearchResults from './../SearchResults'
 import Input from './Input'
 import TermSuggestion from './../TermSuggestion'
@@ -32,11 +38,11 @@ class AutoSuggest extends React.Component {
     viewAllClassName: PropTypes.string,
     placeholder: PropTypes.string,
     facetSuggestionName: PropTypes.string
-  };
+  }
 
   static contextTypes = {
     config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  }
 
   static defaultProps = {
     showBookmarks: true,
@@ -47,14 +53,14 @@ class AutoSuggest extends React.Component {
     placeholder: 'Enter keywords',
     facetSuggestionName: '',
     showZone: false
-  };
+  }
 
   handleClickOutside = (event) => {
     if (this.props.AutoSuggest.isOpen) {
       this.props.dispatch(closeAutoSuggest())
     }
     this.onBlur()
-  };
+  }
 
   onChange = (term, searchInput) => {
     let { dispatch, AutoSuggest } = this.props
@@ -73,7 +79,10 @@ class AutoSuggest extends React.Component {
 
     dispatch(updateQueryTerm(term, searchInput))
 
-    if (allowedCharacters && !checkForAllowedCharacters(term, allowedCharacters)) {
+    if (
+      allowedCharacters &&
+      !checkForAllowedCharacters(term, allowedCharacters)
+    ) {
       dispatch(terminateAutoSuggest())
     } else {
       dispatch(executeAutoSuggest())
@@ -81,18 +90,20 @@ class AutoSuggest extends React.Component {
 
     /* Remove currently selected item from the autosuggest */
     this.clearActiveClass()
-  };
+  }
 
   onClear = () => {
     this.props.dispatch(clearQueryTerm())
-  };
+  }
 
   clearActiveClass = () => {
-    let nodes = this.refs.suggestionsContainer.querySelectorAll(this.props.classNames)
+    let nodes = this.refs.suggestionsContainer.querySelectorAll(
+      this.props.classNames
+    )
     for (let i = 0, len = nodes.length; i < len; i++) {
       nodes[i].classList.remove(this.props.activeClassName)
     }
-  };
+  }
 
   onKeyDown = (direction) => {
     let { classNames, activeClassName } = this.props
@@ -136,19 +147,22 @@ class AutoSuggest extends React.Component {
     scrollIntoView(next, suggestionsContainer, {
       onlyScrollIfNeeded: true
     })
-  };
+  }
 
   onSubmit = (event) => {
     /* Check if there is active class */
-    let target = this.refs.suggestionsContainer.querySelector('.' + this.props.activeClassName)
+    let target = this.refs.suggestionsContainer.querySelector(
+      '.' + this.props.activeClassName
+    )
     if (target) {
-      let linkTarget = target.nodeName === 'A' ? target : target.querySelector('a')
+      let linkTarget =
+        target.nodeName === 'A' ? target : target.querySelector('a')
       if (linkTarget) linkTarget.click()
       return
     }
     this.handleViewAll()
     event && event.preventDefault()
-  };
+  }
 
   handleViewAll = () => {
     let { q, facet_query } = this.props.AutoSuggest
@@ -161,8 +175,11 @@ class AutoSuggest extends React.Component {
     if (onSubmit) return onSubmit(q)
 
     /* Redirect to search results page */
-    window.location.href = searchPageUrl + getHistoryCharacter(history) + buildQueryString({ q, facet_query })
-  };
+    window.location.href =
+      searchPageUrl +
+      getHistoryCharacter(history) +
+      buildQueryString({ q, facet_query })
+  }
 
   onFocus = (event) => {
     this.setState({
@@ -170,7 +187,7 @@ class AutoSuggest extends React.Component {
     })
 
     this.props.onFocus && this.props.onFocus(event)
-  };
+  }
 
   onBlur = (event) => {
     this.setState({
@@ -178,7 +195,7 @@ class AutoSuggest extends React.Component {
     })
 
     this.props.onBlur && this.props.onBlur(event)
-  };
+  }
 
   render () {
     var {
@@ -206,9 +223,12 @@ class AutoSuggest extends React.Component {
     var klassContainer = classNames('ola-autosuggest', className, {
       'ola-autosuggest-focus': isFocused,
       'ola-autosuggest-blur': !isFocused,
-      'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
+      'ola-speech-not-supported': !(
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      )
     })
-    var shouldShowFacetSuggestions = showFacetSuggestions && !suggestedTerm && !spellSuggestions.length
+    var shouldShowFacetSuggestions =
+      showFacetSuggestions && !suggestedTerm && !spellSuggestions.length
 
     return (
       <div className={klassContainer}>
@@ -239,8 +259,7 @@ class AutoSuggest extends React.Component {
             />
 
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
-
-              {shouldShowFacetSuggestions &&
+              {shouldShowFacetSuggestions && (
                 <FacetSuggestion
                   facets={facets}
                   q={q}
@@ -248,7 +267,7 @@ class AutoSuggest extends React.Component {
                   dispatch={dispatch}
                   onSubmit={this.handleViewAll}
                 />
-              }
+              )}
               <SearchResults
                 results={results}
                 isOpen={isOpen}
@@ -258,10 +277,8 @@ class AutoSuggest extends React.Component {
                 {...this.props.Device}
               />
             </div>
-            <a
-              className={viewAllClassName}
-              onClick={this.handleViewAll}
-            >{translate('autosuggest_viewall')}
+            <a className={viewAllClassName} onClick={this.handleViewAll}>
+              {translate('autosuggest_viewall')}
             </a>
           </div>
         </div>
@@ -278,4 +295,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(injectTranslate(listensToClickOutside(AutoSuggest)))
+module.exports = connect(mapStateToProps)(
+  injectTranslate(listensToClickOutside(AutoSuggest))
+)

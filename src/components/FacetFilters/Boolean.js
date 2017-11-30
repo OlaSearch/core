@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
+import {
+  removeFacet,
+  replaceFacet,
+  executeSearch
+} from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'
 
@@ -14,12 +18,7 @@ function BooleanFilter (props) {
     dispatch(executeSearch())
   }
 
-  var {
-    facet,
-    selected,
-    toggleDisplay,
-    isCollapsed
-  } = props
+  var { facet, selected, toggleDisplay, isCollapsed } = props
 
   if (!facet.values.length) return null
 
@@ -34,14 +33,12 @@ function BooleanFilter (props) {
 
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
+      <h4 className='ola-facet-title' onClick={toggleDisplay}>
+        {displayName}
+      </h4>
       <div className='ola-facet-wrapper'>
         <label className='ola-checkbox ola-checkbox-label'>
-          <input
-            type='checkbox'
-            checked={isChecked}
-            onChange={onChange}
-          />
+          <input type='checkbox' checked={isChecked} onChange={onChange} />
           {template}
         </label>
       </div>

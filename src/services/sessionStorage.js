@@ -49,4 +49,7 @@ function Storage (type) {
   }
 }
 
-module.exports = typeof window.sessionStorage !== 'undefined' ? window.sessionStorage : new Storage()
+module.exports =
+  typeof window.sessionStorage !== 'undefined'
+    ? window.sessionStorage
+    : new Storage()

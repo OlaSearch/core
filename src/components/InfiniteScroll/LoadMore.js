@@ -3,18 +3,27 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
 
-function LoadMore ({ totalResults, currentPage, perPage, actions, onLoadMore, isLoading, beforeChangePage, translate }) {
+function LoadMore ({
+  totalResults,
+  currentPage,
+  perPage,
+  actions,
+  onLoadMore,
+  isLoading,
+  beforeChangePage,
+  translate
+}) {
   if (currentPage * perPage >= totalResults) return null
   let klass = classNames('ola-link-load-more', {
     'ola-link-load-more-active': isLoading
   })
   function handleClick () {
     if (beforeChangePage) beforeChangePage()
-    onLoadMore
-      ? onLoadMore()
-      : actions.loadMore()
+    onLoadMore ? onLoadMore() : actions.loadMore()
   }
-  let text = isLoading ? translate('load_more_button_loading') : translate('load_more_button')
+  let text = isLoading
+    ? translate('load_more_button_loading')
+    : translate('load_more_button')
   return (
     <button
       type='button'

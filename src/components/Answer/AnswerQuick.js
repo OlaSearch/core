@@ -35,8 +35,8 @@ class LineChart extends React.Component {
         width: this.props.width
       })
     }
-  };
-  shouldComponentUpdate(nextProps, nextState) {
+  }
+  shouldComponentUpdate (nextProps, nextState) {
     return nextProps.card !== this.props.card
   }
   componentDidUpdate () {
@@ -44,24 +44,30 @@ class LineChart extends React.Component {
   }
   registerRef = (el) => {
     this.el = el
-  };
+  }
   getData = () => {
-    let { card: { record_data: recordData, record_keys: recordKeys } } = this.props
+    let {
+      card: { record_data: recordData, record_keys: recordKeys }
+    } = this.props
     recordKeys = recordKeys.filter((_, idx) => idx !== 0)
     return recordData.map((item) => {
       return recordKeys.map((key) => sanitizeNumbers(item[key]))
     })
-  };
+  }
   shouldComponentUpdate (nextProps) {
     return this.props.card.record_data !== nextProps.card.record_data
   }
   getChartLabel = () => {
-    let lastKey = this.props.card.record_keys[this.props.card.record_keys.length - 1]
+    let lastKey = this.props.card.record_keys[
+      this.props.card.record_keys.length - 1
+    ]
     let label = this.props.card.record_data[0][lastKey]
-    let unit = this.props.card.record_units ? this.props.card.record_units['data'] : ''
+    let unit = this.props.card.record_units
+      ? this.props.card.record_units['data']
+      : ''
 
     return `<span class='ola-answer-quick-value'>${label}${unit}</span> (${lastKey})`
-  };
+  }
   render () {
     let values = this.getData()
     let { card: { record_units: recordUnits } } = this.props
@@ -70,11 +76,14 @@ class LineChart extends React.Component {
       let chartLabel = this.getChartLabel()
       return (
         <div className='ola-answer-quick-chart'>
-          <canvas className='ola-answer-quick-canvas' ref={this.registerRef} width={this.props.width} height={this.props.height} />
+          <canvas
+            className='ola-answer-quick-canvas'
+            ref={this.registerRef}
+            width={this.props.width}
+            height={this.props.height}
+          />
           <div className='ola-answer-quick-chart-label'>
-            <div
-              dangerouslySetInnerHTML={createHTMLMarkup(chartLabel)}
-            />
+            <div dangerouslySetInnerHTML={createHTMLMarkup(chartLabel)} />
           </div>
         </div>
       )
@@ -85,10 +94,9 @@ class LineChart extends React.Component {
           <span className='ola-answer-quick-value'>
             {values[0].map((v) => v)}
           </span>
-          {recordUnits.data
-            ? <span className='ola-answer-quick-unit'>{recordUnits.data}</span>
-            : null
-          }
+          {recordUnits.data ? (
+            <span className='ola-answer-quick-unit'>{recordUnits.data}</span>
+          ) : null}
         </div>
       )
     }
@@ -103,7 +111,7 @@ function List ({ card, onSelect }) {
   function handleClick (e) {
     e.stopPropagation()
   }
-  function handleCardClick(e, title) {
+  function handleCardClick (e, title) {
     onSelect(e, {
       term: title,
       type: 'query'
@@ -115,10 +123,16 @@ function List ({ card, onSelect }) {
     <div className='ola-answer-quick-listItems'>
       {elements.map(({ title, subtitle, buttons }, idx) => {
         return (
-          <div key={idx} className='ola-answer-quick-listItem' onClick={(e) => handleCardClick(e, title)}>
+          <div
+            key={idx}
+            className='ola-answer-quick-listItem'
+            onClick={(e) => handleCardClick(e, title)}
+          >
             <div className='ola-answer-quick-listItemInner'>
               {title && <p className='ola-answer-quick-list-title'>{title}</p>}
-              {subtitle && <p className='ola-answer-quick-list-subtitle'>{subtitle}</p>}
+              {subtitle && (
+                <p className='ola-answer-quick-list-subtitle'>{subtitle}</p>
+              )}
               <div className='ola-answer-quick-list-buttons'>
                 {buttons.map((button, i) => {
                   return (

@@ -14,14 +14,14 @@ class RangeFilter extends React.Component {
     dispatch: PropTypes.func.isRequired,
     selected: PropTypes.array.isRequired,
     facet: PropTypes.object.isRequired
-  };
+  }
 
   static defaultProps = {
     pips: [0, 26, 44.5, 63, 81.5, 100],
     pipsDensity: 4,
     pipsMode: 'positions',
     showPips: false
-  };
+  }
 
   onChange = (value) => {
     var { facet, dispatch } = this.props
@@ -36,17 +36,11 @@ class RangeFilter extends React.Component {
     dispatch(replaceFacet(facet, [start, end]))
 
     dispatch(executeSearch())
-  };
+  }
 
   setUpSlider = () => {
     if (!this.sliderInput) return
-    var {
-      facet,
-      showPips,
-      pips,
-      pipsDensity,
-      pipsMode
-    } = this.props
+    var { facet, showPips, pips, pipsDensity, pipsMode } = this.props
 
     var options = this.getSliderValues(this.props)
 
@@ -55,7 +49,7 @@ class RangeFilter extends React.Component {
     /* Convert to numeric value */
     let step = dateFormat ? stepValue : parseFloat(stepValue)
 
-    var {min, max, value} = options
+    var { min, max, value } = options
 
     if (min === max) {
       min -= 60
@@ -68,7 +62,9 @@ class RangeFilter extends React.Component {
     /* Tooltip format */
     var formatTooltip = {
       to: (value) => {
-        return dateFormat ? DateParser.format(value, dateFormat) : decimalAdjust('round', value, -1)
+        return dateFormat
+          ? DateParser.format(value, dateFormat)
+          : decimalAdjust('round', value, -1)
       }
     }
 
@@ -89,18 +85,23 @@ class RangeFilter extends React.Component {
       }
     }
 
-    var pipsOptions = showPips ? {
-      pips: {
-        mode: pipsMode,
-        values: pips,
-        density: pipsDensity,
-        stepped: true
+    var pipsOptions = showPips
+      ? {
+        pips: {
+          mode: pipsMode,
+          values: pips,
+          density: pipsDensity,
+          stepped: true
+        }
       }
-    } : {}
+      : {}
 
     /* Initialize Slider */
 
-    this.slider = noUiSlider.create(this.sliderInput, { ...sliderOptions, ...pipsOptions })
+    this.slider = noUiSlider.create(this.sliderInput, {
+      ...sliderOptions,
+      ...pipsOptions
+    })
 
     /* Bind to onchange */
 
@@ -114,7 +115,9 @@ class RangeFilter extends React.Component {
     /**
      * Check if there are values
      */
-    if (!this.props.facet.values.length) return this.sliderInput.setAttribute('disabled', true)
+    if (!this.props.facet.values.length) {
+      return this.sliderInput.setAttribute('disabled', true)
+    }
 
     var options = this.getSliderValues(this.props)
     var { step: stepValue = 1, dateFormat } = this.props.facet
@@ -147,7 +150,7 @@ class RangeFilter extends React.Component {
   }
 
   getSliderValues (props) {
-    var {facet, selected} = props
+    var { facet, selected } = props
 
     var { values, singleHandle, dateFormat } = facet
     var min = 0
@@ -182,7 +185,7 @@ class RangeFilter extends React.Component {
     if (singleHandle) {
       value = arr && arr.length ? arr[1] : [max]
     }
-    return {min, max, value}
+    return { min, max, value }
   }
 
   componentDidMount () {
@@ -202,7 +205,7 @@ class RangeFilter extends React.Component {
   }
   registerRef = (input) => {
     this.sliderInput = input
-  };
+  }
   render () {
     var { facet, isCollapsed, toggleDisplay } = this.props
     var { displayName, values, showHistogram } = facet
@@ -215,7 +218,9 @@ class RangeFilter extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>
+          {displayName}
+        </h4>
         <div className='ola-facet-wrapper'>
           {showHistogram && <Histogram data={values} />}
           <div className='ola-slider'>
@@ -225,6 +230,6 @@ class RangeFilter extends React.Component {
       </div>
     )
   }
-};
+}
 
 module.exports = withFacetToggle(RangeFilter)

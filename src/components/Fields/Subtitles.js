@@ -2,7 +2,13 @@ import React from 'react'
 import { createHTMLMarkup, sanitizeAnchor } from './../../utilities'
 import FieldLabel from './FieldLabel'
 
-function Subtitles ({ subtitles, baseUrl, iconLeft = null, iconRight = null, fieldLabel }) {
+function Subtitles ({
+  subtitles,
+  baseUrl,
+  iconLeft = null,
+  iconRight = null,
+  fieldLabel
+}) {
   if (!subtitles) return null
   return (
     <div className='ola-field ola-field-subtitles'>

@@ -1,5 +1,8 @@
 import types from './../constants/ActionTypes'
-import { buildQueryString, character as hashCharacter } from './../services/urlSync'
+import {
+  buildQueryString,
+  character as hashCharacter
+} from './../services/urlSync'
 import omit from 'ramda/src/omit'
 import flatten from 'ramda/src/flatten'
 import { debounce, supplant } from './../utilities'
@@ -14,28 +17,30 @@ export function addHistory (options) {
 
     /* Filtering history */
     var query = omit(['page', 'per_page', 'referrer'], QueryState)
-    var activeFacets = flatten(facet_query.map((item) => {
-      let { selected, template, dateFormat, type, name } = item
-      switch (type) {
-        case 'range':
-        case 'daterange':
-        case 'datepicker':
-          if (typeof selected === 'string') {
-            return selected
-          } else {
-            return selected.map((item) => {
-              let [from, to] = item
-              return `${name}:${supplant(template, {
-                from: dateFormat ? DateParser.format(from, dateFormat) : from,
-                to: dateFormat ? DateParser.format(to, dateFormat) : to
-              })}`
-            })
-          }
+    var activeFacets = flatten(
+      facet_query.map((item) => {
+        let { selected, template, dateFormat, type, name } = item
+        switch (type) {
+          case 'range':
+          case 'daterange':
+          case 'datepicker':
+            if (typeof selected === 'string') {
+              return selected
+            } else {
+              return selected.map((item) => {
+                let [from, to] = item
+                return `${name}:${supplant(template, {
+                  from: dateFormat ? DateParser.format(from, dateFormat) : from,
+                  to: dateFormat ? DateParser.format(to, dateFormat) : to
+                })}`
+              })
+            }
 
-        default:
-          return `${name}:${selected}`
-      }
-    }))
+          default:
+            return `${name}:${selected}`
+        }
+      })
+    )
 
     /* Check if it already exists */
     var exists = history.some((item) => item.q === q)

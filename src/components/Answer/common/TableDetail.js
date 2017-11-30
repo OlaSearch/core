@@ -11,10 +11,14 @@ class TableDetail extends React.Component {
   }
   static defaultProps = {
     max: 5
-  };
-  toggle = () => this.setState({ isOpen: !this.state.isOpen });
+  }
+  toggle = () => this.setState({ isOpen: !this.state.isOpen })
   render () {
-    let { data: { record_data, record_keys, caption, footnote }, max, translate } = this.props
+    let {
+      data: { record_data, record_keys, caption, footnote },
+      max,
+      translate
+    } = this.props
     let { isOpen } = this.state
     let size = record_data.length
     return (
@@ -23,9 +27,7 @@ class TableDetail extends React.Component {
         <div className='ola-answer-table-wrapper'>
           <table className='ola-answer-table'>
             <thead>
-              <tr>
-                {record_keys.map((key, idx) => <th key={idx}>{key}</th>)}
-              </tr>
+              <tr>{record_keys.map((key, idx) => <th key={idx}>{key}</th>)}</tr>
             </thead>
             <tbody>
               {record_data
@@ -37,34 +39,32 @@ class TableDetail extends React.Component {
                         return (
                           <td key={idx}>
                             <div
-                              dangerouslySetInnerHTML={createHTMLMarkup(row[key])}
+                              dangerouslySetInnerHTML={createHTMLMarkup(
+                                row[key]
+                              )}
                             />
                           </td>
                         )
                       })}
                     </tr>
                   )
-                })
-              }
+                })}
             </tbody>
           </table>
         </div>
-        {footnote
-          ? <div
+        {footnote ? (
+          <div
             className='ola-answer-footnote'
             dangerouslySetInnerHTML={createHTMLMarkup(footnote)}
-            />
-          : null
-        }
-        {size > max
-          ? <button className='ola-answer-link-more' onClick={this.toggle}>
+          />
+        ) : null}
+        {size > max ? (
+          <button className='ola-answer-link-more' onClick={this.toggle}>
             {isOpen
-                ? translate('answers_show_less')
-                : translate('answers_show_more')
-              }
+              ? translate('answers_show_less')
+              : translate('answers_show_more')}
           </button>
-          : null
-        }
+        ) : null}
       </div>
     )
   }

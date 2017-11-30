@@ -14,7 +14,7 @@ export default class Input extends React.Component {
   static propTypes = {
     q: PropTypes.string,
     onChange: PropTypes.func
-  };
+  }
 
   onClear = (event) => {
     // event && event.preventDefault()
@@ -29,7 +29,7 @@ export default class Input extends React.Component {
     /* Clear query term */
     /* Focus input */
     this.props.onClear(() => this.input.focus())
-  };
+  }
 
   onFocus = (event) => {
     /* Scroll to input */
@@ -44,11 +44,11 @@ export default class Input extends React.Component {
     event.persist()
 
     setTimeout(() => this.props.onChange(event.target.value))
-  };
+  }
 
   onChangeZone = () => {
     this.input.focus()
-  };
+  }
 
   onKeyDown = (event) => {
     var { onKeyDown, onSubmit, isOpen, q } = this.props
@@ -68,7 +68,7 @@ export default class Input extends React.Component {
          */
         if (event.shiftKey || !this.getShadowTerm()) return
         return onKeyDown('down')
-        // return this.props.onChange(this.getShadowTerm(true))
+      // return this.props.onChange(this.getShadowTerm(true))
 
       case 38: // Up
         /**
@@ -91,19 +91,21 @@ export default class Input extends React.Component {
         event.preventDefault() // Prevents firing onChange
         return onSubmit()
     }
-  };
+  }
 
   onSearchButtonClick = () => {
-    return this.props.onSearchButtonClick ? this.props.onSearchButtonClick() : this.input.focus()
-  };
+    return this.props.onSearchButtonClick
+      ? this.props.onSearchButtonClick()
+      : this.input.focus()
+  }
 
   handleInputChange = (arg, searchInput) => {
     this.props.onChange(arg.target ? arg.target.value : arg, searchInput)
-  };
+  }
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
     this.props.onSubmit()
-  };
+  }
   getShadowTerm = (raw = false) => {
     let { fuzzyQuery, q, results } = this.props
     let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
@@ -112,20 +114,16 @@ export default class Input extends React.Component {
     if (!reg.test(shadowTerm) || shadowTerm === q) {
       return ''
     } else {
-      return raw ? shadowTerm : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi'), q)
+      return raw
+        ? shadowTerm
+        : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi'), q)
     }
-  };
+  }
   registerRef = (input) => {
     this.input = input
-  };
+  }
   render () {
-    var {
-      q,
-      placeholder,
-      onBlur,
-      showZone,
-      showGeoLocation
-    } = this.props
+    var { q, placeholder, onBlur, showZone, showGeoLocation } = this.props
 
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
@@ -133,12 +131,7 @@ export default class Input extends React.Component {
     let shadowTerm = this.getShadowTerm()
     return (
       <div className={klass}>
-        {showZone &&
-          <Zone
-            isAutosuggest
-            onChange={this.onChangeZone}
-          />
-        }
+        {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <div className='ola-form-input-wrapper'>
           <input
             ref={this.registerRef}
@@ -157,23 +150,27 @@ export default class Input extends React.Component {
             autoFocus={this.props.autoFocus}
           />
 
-          <InputShadow
-            value={shadowTerm}
-          />
+          <InputShadow value={shadowTerm} />
         </div>
 
-        {q && <button type='button' className='ola-clear-button' tabIndex='-1' onClick={this.onClear} />}
+        {q && (
+          <button
+            type='button'
+            className='ola-clear-button'
+            tabIndex='-1'
+            onClick={this.onClear}
+          />
+        )}
 
-        {showGeoLocation
-          ? <GeoLocation
+        {showGeoLocation ? (
+          <GeoLocation
             active={false}
             onSuccess={this.props.onGeoLocationSuccess}
             onFailure={this.props.onGeoLocationFailure}
             onDisable={this.props.onGeoLocationDisable}
             onError={this.props.onGeoError}
           />
-          : null
-        }
+        ) : null}
 
         <SpeechInput
           onResult={this.handleSpeechChange}
@@ -181,13 +178,9 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
-        <History
-          onOpen={this.props.handleClose}
-        />
+        <History onOpen={this.props.handleClose} />
 
-        <Bookmarks
-          onOpen={this.props.handleClose}
-        />
+        <Bookmarks onOpen={this.props.handleClose} />
 
         <button
           type='button'

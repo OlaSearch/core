@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { replaceFacet, removeFacet } from './../../actions/Search'
-import { addFacet as addFacetAutoSuggest, removeFacet as removeFacetAutoSuggest } from './../../actions/AutoSuggest'
+import {
+  addFacet as addFacetAutoSuggest,
+  removeFacet as removeFacetAutoSuggest
+} from './../../actions/AutoSuggest'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import flatten from 'ramda/src/flatten'
@@ -26,20 +29,25 @@ function Zone (props, context) {
 
   let { zone: { defaultValue, values, filter } } = context.config
   let { selected } = props
-  let selectedValues = flatten(selected.filter((item) => item.name === filter).map((item) => item.selected))
+  let selectedValues = flatten(
+    selected.filter((item) => item.name === filter).map((item) => item.selected)
+  )
   let selectedValue = selectedValues.length ? selectedValues[0] : defaultValue
-  let selectedDisplayName = find(propEq('name', selectedValue))(values)['displayName']
+  let selectedDisplayName = find(propEq('name', selectedValue))(values)[
+    'displayName'
+  ]
 
   return (
     <div className='ola-zone'>
       <label className='ola-zone-label'>Select zone</label>
       <span className='ola-zone-selected'>{selectedDisplayName}</span>
-      <select
-        onChange={onChange}
-        value={selectedValue}
-      >
+      <select onChange={onChange} value={selectedValue}>
         {values.map(({ name, displayName }) => {
-          return <option key={name} value={name}>{displayName}</option>
+          return (
+            <option key={name} value={name}>
+              {displayName}
+            </option>
+          )
         })}
       </select>
     </div>
@@ -56,7 +64,9 @@ Zone.defaultProps = {
 
 function mapStateToProps (state, ownProps) {
   return {
-    selected: ownProps.isAutosuggest ? state.AutoSuggest.facet_query : state.QueryState.facet_query
+    selected: ownProps.isAutosuggest
+      ? state.AutoSuggest.facet_query
+      : state.QueryState.facet_query
   }
 }
 

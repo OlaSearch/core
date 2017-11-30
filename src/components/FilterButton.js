@@ -10,7 +10,9 @@ function FilterButton ({ toggleSidebar, facets }) {
       className='ola-link-open-filter'
       onClick={toggleSidebar}
       type='button'
-    >Filter</button>
+    >
+      Filter
+    </button>
   )
 }
 

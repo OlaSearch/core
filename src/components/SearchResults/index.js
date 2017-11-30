@@ -10,17 +10,17 @@ class SearchResults extends React.Component {
     results: PropTypes.array.isRequired,
     bookmarks: PropTypes.array,
     dispatch: PropTypes.func.isRequired
-  };
+  }
 
   static defaultProps = {
     alwaysUpdate: false,
     results: [],
     bookmarks: []
-  };
+  }
 
   static contextTypes = {
     config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  }
 
   shouldComponentUpdate (nextProps) {
     if (nextProps.alwaysUpdate) return true
@@ -38,15 +38,14 @@ class SearchResults extends React.Component {
       <div className={klass}>
         {results.map((result, idx) => {
           let { ola_answer: isAnswer } = result
-          let OlaSnippet = isAnswer ? Answer : snippetOverride || getMatchingSnippet(snippetRules, result) || defaultSnippet || SnippetFallback
+          let OlaSnippet = isAnswer
+            ? Answer
+            : snippetOverride ||
+              getMatchingSnippet(snippetRules, result) ||
+              defaultSnippet ||
+              SnippetFallback
           let key = result.id || idx
-          return (
-            <OlaSnippet
-              result={result}
-              key={key}
-              {...rest}
-            />
-          )
+          return <OlaSnippet result={result} key={key} {...rest} />
         })}
       </div>
     )

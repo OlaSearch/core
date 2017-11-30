@@ -1,5 +1,8 @@
 import types from './../constants/ActionTypes'
-import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY } from './../constants/Settings'
+import {
+  BOOKMARKS_STORAGE_KEY,
+  HISTORY_STORAGE_KEY
+} from './../constants/Settings'
 import storage from './../services/storage'
 
 export const initialState = {
@@ -34,7 +37,17 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-      var { results, payload, spellSuggestions, qt, suggestedTerm, totalResults, facets, answer, skipSearchResultsUpdate } = action
+      var {
+        results,
+        payload,
+        spellSuggestions,
+        qt,
+        suggestedTerm,
+        totalResults,
+        facets,
+        answer,
+        skipSearchResultsUpdate
+      } = action
       /* Handle skip update */
       if (skipSearchResultsUpdate) {
         return {
@@ -48,7 +61,7 @@ export default (state = initialState, action) => {
       if (payload.appendResult) {
         return {
           ...state,
-          results: [ ...state.results, ...results ],
+          results: [...state.results, ...results],
           isLoading: false,
           error: null
         }
@@ -145,7 +158,10 @@ export default (state = initialState, action) => {
     case types.REMOVE_HISTORY:
       return {
         ...state,
-        history: state.history.filter(({ q, dateAdded }) => q !== action.result.term && dateAdded !== action.result.dateAdded)
+        history: state.history.filter(
+          ({ q, dateAdded }) =>
+            q !== action.result.term && dateAdded !== action.result.dateAdded
+        )
       }
 
     case types.TERMINATE_SEARCH:

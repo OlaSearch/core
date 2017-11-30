@@ -16,23 +16,35 @@ import { prepareUserState } from './prepareStore'
  * )
  */
 
-module.exports = (config, searchProvider, reducers = {}, middlewares = [], enhancers = []) => {
+module.exports = (
+  config,
+  searchProvider,
+  reducers = {},
+  middlewares = [],
+  enhancers = []
+) => {
   if (!config) {
-    throw new Error('Invalid: Could not find config while creating store in `createStore`')
+    throw new Error(
+      'Invalid: Could not find config while creating store in `createStore`'
+    )
   }
   if (!searchProvider) {
-    throw new Error('Invalid: Could not find searchProvider while creating store in `createStore`')
+    throw new Error(
+      'Invalid: Could not find searchProvider while creating store in `createStore`'
+    )
   }
   /* Options that should be passed to OlaProvider */
   const { Parser, QueryBuilder, Http } = searchProvider
 
   if (!Parser || !QueryBuilder || !Http) {
-    throw new Error('Invalid: Search adapters must contain Parser, QueryBuilder and Http functions')
+    throw new Error(
+      'Invalid: Search adapters must contain Parser, QueryBuilder and Http functions'
+    )
   }
   const options = {
     config,
-    parser: new Parser(config), /* For olaMiddleware */
-    queryBuilder: new QueryBuilder(config), /* For olaMiddleware */
+    parser: new Parser(config) /* For olaMiddleware */,
+    queryBuilder: new QueryBuilder(config) /* For olaMiddleware */,
     searchService: new Http(config) /* For olaMiddleware */
   }
   const olaMiddleWare = createOlaMiddleware(options)

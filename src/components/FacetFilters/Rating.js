@@ -39,12 +39,15 @@ function RatingFilter (props) {
 
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+      <h4 className='ola-facet-title' onClick={toggleDisplay}>
+        {facet.displayName}
+      </h4>
       <div className='ola-facet-wrapper'>
         <div className='ola-facet-list'>
           {values.map((value, idx) => {
             var stars = []
-            var normalized = Math.max(Math.ceil(parseInt(value.name) / interval), 0) + 1
+            var normalized =
+              Math.max(Math.ceil(parseInt(value.name) / interval), 0) + 1
             var isActive = isSelected(bounds, value.name)
             var labelKlass = classNames({
               'ola-checkbox ola-checkbox-label': true,
@@ -52,7 +55,9 @@ function RatingFilter (props) {
             })
 
             for (let i = 0; i < normalized; i++) {
-              stars.push(<em key={i} className='ion ion-ios-star ola-rating-active' />)
+              stars.push(
+                <em key={i} className='ion ion-ios-star ola-rating-active' />
+              )
             }
 
             return (

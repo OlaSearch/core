@@ -11,8 +11,25 @@ export const USER_NEW_KEY = 'ola_new_user'
 export const USER_SESSION_EXPIRY_DAYS = 365
 export const INTENT_SESSION_KEY = 'ola_intent_session'
 export const INTENT_SESSION_EXPIRY_DAYS = 365
-export const RE_ESCAPE = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join('|\\') + ')', 'g')
-export const REMOVE_FROM_QUERY_STRING = ['isSearchActive', 'searchInput', 'enriched_q', 'per_page', 'skip_intent', 'projectId', 'env', 'ola_collection_name', 'debug']
+export const RE_ESCAPE = new RegExp(
+  '(\\' +
+    ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join(
+      '|\\'
+    ) +
+    ')',
+  'g'
+)
+export const REMOVE_FROM_QUERY_STRING = [
+  'isSearchActive',
+  'searchInput',
+  'enriched_q',
+  'per_page',
+  'skip_intent',
+  'projectId',
+  'env',
+  'ola_collection_name',
+  'debug'
+]
 export const SEARCH_COLLECTION_IDENTIFIER = 'ola_collection_name'
 export const ALL_VALUES = 'All'
 export const STYLE_TAG_ID = 'ola-styles'

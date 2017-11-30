@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { removeFacet, replaceFacet, removeAllFacets, executeSearch } from './../../actions/Search'
+import {
+  removeFacet,
+  replaceFacet,
+  removeAllFacets,
+  executeSearch
+} from './../../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
@@ -14,11 +19,11 @@ class TabsFilter extends React.Component {
     selected: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
     resetFacetsOnSelect: PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     resetFacetsOnSelect: true
-  };
+  }
 
   handleReplaceFacet = (facet, value) => {
     /**
@@ -33,25 +38,29 @@ class TabsFilter extends React.Component {
     this.props.beforeSelect && this.props.beforeSelect(facet, value)
 
     dispatch(executeSearch())
-  };
+  }
 
   handleRemoveFacet = (facet) => {
     var { dispatch, resetFacetsOnSelect } = this.props
 
     if (resetFacetsOnSelect) dispatch(removeAllFacets())
 
-    dispatch(removeFacet(facet, null, true)) /* 3rd argument is to reset all facets: resetAllFacets */
+    dispatch(
+      removeFacet(facet, null, true)
+    ) /* 3rd argument is to reset all facets: resetAllFacets */
 
     this.props.beforeSelect && this.props.beforeSelect(facet)
 
     dispatch(executeSearch())
-  };
+  }
 
   getTabsForDisplay = (facet, values) => {
     var { tabsToDisplay } = facet
 
     if (!tabsToDisplay) {
-      throw new Error('tabsToDisplay is required. It should be part of the individual facet')
+      throw new Error(
+        'tabsToDisplay is required. It should be part of the individual facet'
+      )
     }
 
     var tabs = []
@@ -73,7 +82,7 @@ class TabsFilter extends React.Component {
     }
 
     return tabs
-  };
+  }
   shouldComponentUpdate (nextProps) {
     return (
       this.props.facets !== nextProps.facets ||
@@ -81,12 +90,7 @@ class TabsFilter extends React.Component {
     )
   }
   render () {
-    var {
-      facets,
-      selected,
-      name,
-      translate
-    } = this.props
+    var { facets, selected, name, translate } = this.props
 
     var facet = find(propEq('name', name))(facets)
 
@@ -96,7 +100,11 @@ class TabsFilter extends React.Component {
 
     var { values } = facet
     var tabs = this.getTabsForDisplay(facet, values)
-    var selectedItems = flatten(selected.filter((item) => item.name === facet.name).map((item) => item.selected))
+    var selectedItems = flatten(
+      selected
+        .filter((item) => item.name === facet.name)
+        .map((item) => item.selected)
+    )
 
     /* Calculate Total for All Tab */
 
@@ -139,7 +147,7 @@ class TabsFilter extends React.Component {
 class TabItemAll extends React.Component {
   handleClick = () => {
     if (!this.props.isSelected) this.props.handleClick(this.props.facet)
-  };
+  }
   render () {
     let { isSelected, totalCount, label } = this.props
     var klassTab = classNames({
@@ -147,10 +155,7 @@ class TabItemAll extends React.Component {
       'ola-tab-active': isSelected
     })
     return (
-      <a
-        className={klassTab}
-        onClick={this.handleClick}
-      >
+      <a className={klassTab} onClick={this.handleClick}>
         {label}
         <span className='ola-search-facet-count'>{totalCount}</span>
       </a>
@@ -166,7 +171,7 @@ class TabItem extends React.Component {
     let { facet, value, isActive } = this.props
     let { name, count } = value
     if (!isActive && count) this.props.handleClick(facet, name)
-  };
+  }
   render () {
     let { isActive, value, facet } = this.props
     let { name, count } = value
@@ -176,10 +181,7 @@ class TabItem extends React.Component {
       'ola-tab-active': isActive
     })
     return (
-      <a
-        className={klass}
-        type='button'
-        onClick={this.handleClick}>
+      <a className={klass} type='button' onClick={this.handleClick}>
         <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
         <span className='ola-search-facet-count'>{count}</span>
       </a>

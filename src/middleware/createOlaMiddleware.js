@@ -59,7 +59,9 @@ module.exports = (options = {}) => {
     }
 
     if (!config) {
-      throw new Error('No parser, queryBuilder, searchService, config file present in OlaMiddleWare options')
+      throw new Error(
+        'No parser, queryBuilder, searchService, config file present in OlaMiddleWare options'
+      )
     }
 
     let { logger, proxy, intentEngineEnabled } = config
@@ -72,13 +74,14 @@ module.exports = (options = {}) => {
       throw new Error('Expected an array of three string types.')
     }
 
-    const [ requestType, successType, failureType ] = types
+    const [requestType, successType, failureType] = types
 
-    shouldDispatchActions && next({
-      ...payload,
-      type: requestType,
-      api
-    })
+    shouldDispatchActions &&
+      next({
+        ...payload,
+        type: requestType,
+        api
+      })
 
     /* Add timestamp to query */
     var currentState = getState()
@@ -95,30 +98,53 @@ module.exports = (options = {}) => {
     let callApi
     let mapping = getMapping(api, config)
     let params = proxy
-        ? { ...query, ...payload.extraParams, ...payload.answer ? { answer: payload.answer } : {}, api, ...context, projectId, env }
-        : api === FUZZY_SUGGEST_KEY ? query : queryBuilder.transform(query, mapping, acl, context)
+      ? {
+        ...query,
+        ...payload.extraParams,
+        ...(payload.answer ? { answer: payload.answer } : {}),
+        api,
+        ...context,
+        projectId,
+        env
+      }
+      : api === FUZZY_SUGGEST_KEY
+        ? query
+        : queryBuilder.transform(query, mapping, acl, context)
 
     /* Api url when intent engine is active */
-    let apiUrl = intentEngineEnabled && INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 ? config.api.intent : undefined
+    let apiUrl =
+      intentEngineEnabled && INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1
+        ? config.api.intent
+        : undefined
 
     if (typeof api === 'function') {
       /* Should returns a promise */
       callApi = () => api(params)
     } else {
-      callApi = () => searchService.hasOwnProperty(api)
-        ? searchService[api](timestampObj, params, apiUrl)
-        : null
+      callApi = () =>
+        searchService.hasOwnProperty(api)
+          ? searchService[api](timestampObj, params, apiUrl)
+          : null
     }
     if (typeof callApi !== 'function') {
-      throw new Error('Expected callApi to be a function. Check your dispatch call.')
+      throw new Error(
+        'Expected callApi to be a function. Check your dispatch call.'
+      )
     }
 
     return callApi().then(
       (response, xhr) => {
         if (xhr && 'responseURL' in xhr) {
           let responseURL = xhr.responseURL.split('?').pop()
-          let timestampFromResponse = parseInt(queryString.parse(responseURL).timestamp)
-          if (timestampFromResponse && getState().Timestamp.timestamp[api] !== timestampFromResponse) return nullResponse
+          let timestampFromResponse = parseInt(
+            queryString.parse(responseURL).timestamp
+          )
+          if (
+            timestampFromResponse &&
+            getState().Timestamp.timestamp[api] !== timestampFromResponse
+          ) {
+            return nullResponse
+          }
         }
         let type = successType
 
@@ -172,13 +198,17 @@ module.exports = (options = {}) => {
          * Get facets or filters selected by intent engine
          */
         let facetQuery = null
-        if (answer &&
-            answer.search &&
-            answer.search.facet_query &&
-            answer.search.facet_query.length) {
+        if (
+          answer &&
+          answer.search &&
+          answer.search.facet_query &&
+          answer.search.facet_query.length
+        ) {
           facetQuery = []
           for (let i = 0; i < answer.search.facet_query.length; i++) {
-            let selectedFacet = facets.filter(({ name }) => name === answer.search.facet_query[i].name)
+            let selectedFacet = facets.filter(
+              ({ name }) => name === answer.search.facet_query[i].name
+            )
             if (selectedFacet.length) {
               facetQuery.push({
                 ...selectedFacet.reduce((a, b) => a),
@@ -193,7 +223,8 @@ module.exports = (options = {}) => {
          * Check if
          * Total results = 0 && Has Spell Suggestions
          */
-        if (totalResults === 0 &&
+        if (
+          totalResults === 0 &&
           spellSuggestions.length &&
           !enrichedQuery &&
           !(answer && (answer.card !== null || answer.reply))
@@ -214,23 +245,24 @@ module.exports = (options = {}) => {
           })
         }
 
-        shouldDispatchActions && next({
-          payload,
-          results,
-          spellSuggestions,
-          totalResults,
-          facets,
-          type,
-          suggestedTerm,
-          qt,
-          answer,
-          enriched_q: enrichedQuery,
-          error: null,
-          skipSearchResultsUpdate,
-          api,
-          responseTime,
-          facetQuery
-        })
+        shouldDispatchActions &&
+          next({
+            payload,
+            results,
+            spellSuggestions,
+            totalResults,
+            facets,
+            type,
+            suggestedTerm,
+            qt,
+            answer,
+            enriched_q: enrichedQuery,
+            error: null,
+            skipSearchResultsUpdate,
+            api,
+            responseTime,
+            facetQuery
+          })
 
         /**
          * Logger
@@ -244,7 +276,11 @@ module.exports = (options = {}) => {
         let isBotReply = answer && 'awaiting_user_input' in answer
         let sendImmediateLog = isBotReply && !answer.awaiting_user_input
         let logFn = sendImmediateLog ? submitLog : debounceLog
-        if (logger && logger.enabled && API_IGNORE_LOGGING.indexOf(api) === -1) {
+        if (
+          logger &&
+          logger.enabled &&
+          API_IGNORE_LOGGING.indexOf(api) === -1
+        ) {
           logFn({
             dispatch,
             eventType: 'Q',
@@ -275,11 +311,12 @@ module.exports = (options = {}) => {
         }
       },
       (error) => {
-        shouldDispatchActions && next({
-          payload,
-          error,
-          type: failureType
-        })
+        shouldDispatchActions &&
+          next({
+            payload,
+            error,
+            type: failureType
+          })
       }
     )
   }

@@ -30,12 +30,16 @@ function TagCloud (props) {
     'ola-facet-collapsed': isCollapsed
   })
 
-  if (!showSelectedFacetItem) values = values.filter((item) => selected.indexOf(item.name) === -1)
+  if (!showSelectedFacetItem) {
+    values = values.filter((item) => selected.indexOf(item.name) === -1)
+  }
 
   if (!values.length) return null
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>{facet.displayName}</h4>
+      <h4 className='ola-facet-title' onClick={toggleDisplay}>
+        {facet.displayName}
+      </h4>
       <div className='ola-facet-wrapper'>
         {values.map((value, idx) => {
           return (
@@ -69,12 +73,16 @@ function TagCloudItem ({ onSelect, value, min, max, fontSizeMin, fontSizeMax }) 
     onSelect(value.name)
   }
   let { name, count } = value
-  let size = (count === min) ? fontSizeMin : ((count / max) * (fontSizeMax - fontSizeMin)) + fontSizeMin
+  let size =
+    count === min
+      ? fontSizeMin
+      : count / max * (fontSizeMax - fontSizeMin) + fontSizeMin
   return (
     <button
       className='ola-btn-tag'
       style={{ fontSize: size + 'px' }}
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       {name}
     </button>
   )

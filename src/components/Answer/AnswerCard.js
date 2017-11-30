@@ -2,7 +2,14 @@ import React from 'react'
 import classNames from 'classnames'
 import { isSvg } from './../../utilities'
 
-export default function AnswerCard ({ result, onSelect, cdn, imagePlaceholder, isActive, module }) {
+export default function AnswerCard ({
+  result,
+  onSelect,
+  cdn,
+  imagePlaceholder,
+  isActive,
+  module
+}) {
   function handleSelect () {
     if (result.hasOwnProperty('additional_data')) return onSelect(result)
   }
@@ -18,19 +25,21 @@ export default function AnswerCard ({ result, onSelect, cdn, imagePlaceholder, i
     'ola-answer-item-deActive': !exists
   })
   image = image || imagePlaceholder
-  let bgImage = image ? isSvg(image) ? image : `${cdn ? cdn + '/' : ''}${image}` : null
+  let bgImage = image
+    ? isSvg(image) ? image : `${cdn ? cdn + '/' : ''}${image}`
+    : null
   return (
     <div className={klass} onClick={handleSelect}>
-      {image
-        ? <div className='ola-answer-image' style={{
-          backgroundImage: `url("${bgImage}")`
-        }} />
-        : null
-      }
+      {image ? (
+        <div
+          className='ola-answer-image'
+          style={{
+            backgroundImage: `url("${bgImage}")`
+          }}
+        />
+      ) : null}
       <div className='ola-answer-content'>
-        <h3 className='ola-answer-title'>
-          {title}
-        </h3>
+        <h3 className='ola-answer-title'>{title}</h3>
         <div className='ola-answer-subtitle'>{subtitle}</div>
       </div>
     </div>

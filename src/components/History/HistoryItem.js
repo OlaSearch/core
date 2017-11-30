@@ -7,7 +7,11 @@ function HistoryItem ({ history, searchPageUrl }) {
       <a href={url}>{history.q}</a>
       {history.facets.map((facet, idx) => {
         let name = facet.split(':').pop()
-        return <span key={idx} className='ola-search-facet-count'>{name}</span>
+        return (
+          <span key={idx} className='ola-search-facet-count'>
+            {name}
+          </span>
+        )
       })}
     </div>
   )

@@ -11,7 +11,7 @@ export default class Input extends React.Component {
   static propTypes = {
     q: PropTypes.string,
     onChange: PropTypes.func
-  };
+  }
 
   onClear = (event) => {
     event && event.preventDefault()
@@ -28,7 +28,7 @@ export default class Input extends React.Component {
 
     /* Focus input */
     this.refs.Input.focus()
-  };
+  }
 
   onFocus = (event) => {
     this.props.onFocus && this.props.onFocus(event)
@@ -39,11 +39,11 @@ export default class Input extends React.Component {
     event.persist()
 
     setTimeout(() => this.props.onChange(event.target.value))
-  };
+  }
 
   onChangeZone = () => {
     this.refs.Input.focus()
-  };
+  }
 
   onKeyDown = (event) => {
     var { onKeyDown, onSubmit, isOpen, q } = this.props
@@ -75,39 +75,45 @@ export default class Input extends React.Component {
       case 13: // Enter
         return onSubmit()
     }
-  };
+  }
 
   onSearchButtonClick = () => {
-    return this.props.onSearchButtonClick ? this.props.onSearchButtonClick() : this.refs.Input.focus()
-  };
+    return this.props.onSearchButtonClick
+      ? this.props.onSearchButtonClick()
+      : this.refs.Input.focus()
+  }
 
   handleInputChange = (arg, searchInput) => {
     this.props.onChange(arg.target ? arg.target.value : arg, searchInput)
-  };
+  }
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
-  };
+  }
   shouldComponentUpdate (nextProps) {
     return (
-      nextProps.q !== this.props.q ||
-      nextProps.results !== this.props.results
+      nextProps.q !== this.props.q || nextProps.results !== this.props.results
     )
   }
   render () {
-    var {
-      q,
-      placeholder,
-      onBlur,
-      showZone
-    } = this.props
+    var { q, placeholder, onBlur, showZone } = this.props
 
     /**
      * Show clear or submit button
      */
 
-    var button = q
-      ? <button type='reset' className='ola-clear-button' onClick={this.onClear} />
-      : <button type='button' className='ola-search-button' onClick={this.onSearchButtonClick} />
+    var button = q ? (
+      <button
+        type='reset'
+        className='ola-clear-button'
+        onClick={this.onClear}
+      />
+    ) : (
+      <button
+        type='button'
+        className='ola-search-button'
+        onClick={this.onSearchButtonClick}
+      />
+    )
 
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
@@ -115,12 +121,7 @@ export default class Input extends React.Component {
 
     return (
       <div className={klass}>
-        {showZone &&
-          <Zone
-            isAutosuggest
-            onChange={this.onChangeZone}
-          />
-        }
+        {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <input
           ref='Input'
           type='text'
@@ -145,13 +146,9 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
-        <Bookmarks
-          onOpen={this.props.handleClose}
-        />
+        <Bookmarks onOpen={this.props.handleClose} />
 
-        <History
-          onOpen={this.props.handleClose}
-        />
+        <History onOpen={this.props.handleClose} />
       </div>
     )
   }

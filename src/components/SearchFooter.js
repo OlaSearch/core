@@ -7,22 +7,39 @@ import { bindActionCreators } from 'redux'
 
 function SearchFooter (props, context) {
   let { infiniteScroll } = context.config
-  let { isPhone, dispatch, totalResults, infiniteScroll: infiniteScrollOverride, beforeChangePage } = props
+  let {
+    isPhone,
+    dispatch,
+    totalResults,
+    infiniteScroll: infiniteScrollOverride,
+    beforeChangePage
+  } = props
 
   if (!totalResults) {
     return null
   }
 
-  let boundActionCreators = bindActionCreators({ changePage, executeSearch, loadMore }, dispatch)
+  let boundActionCreators = bindActionCreators(
+    { changePage, executeSearch, loadMore },
+    dispatch
+  )
 
   if (infiniteScrollOverride || infiniteScroll || isPhone) {
     return (
-      <LoadMore {...props} actions={boundActionCreators} beforeChangePage={beforeChangePage} />
+      <LoadMore
+        {...props}
+        actions={boundActionCreators}
+        beforeChangePage={beforeChangePage}
+      />
     )
   }
 
   return (
-    <Pagination {...props} actions={boundActionCreators} beforeChangePage={beforeChangePage} />
+    <Pagination
+      {...props}
+      actions={boundActionCreators}
+      beforeChangePage={beforeChangePage}
+    />
   )
 }
 

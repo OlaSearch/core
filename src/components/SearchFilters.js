@@ -16,7 +16,7 @@ import { getFacetsToDisplay } from './../utilities'
 class SearchFilters extends React.Component {
   static contextTypes = {
     config: PropTypes.object
-  };
+  }
 
   static propTypes = {
     facets: PropTypes.array.isRequired,
@@ -24,12 +24,12 @@ class SearchFilters extends React.Component {
     dispatch: PropTypes.func,
     conditional: PropTypes.bool,
     showSelectedFacetItem: PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     conditional: true,
     facets: []
-  };
+  }
 
   shouldComponentUpdate (nextProps) {
     return (
@@ -39,13 +39,7 @@ class SearchFilters extends React.Component {
   }
 
   render () {
-    var {
-      facets,
-      selected,
-      conditional,
-      className,
-      ...props
-    } = this.props
+    var { facets, selected, conditional, className, ...props } = this.props
 
     /* Remove tabs */
     facets = facets.filter(({ type }) => type !== 'tab')
@@ -53,7 +47,11 @@ class SearchFilters extends React.Component {
     /* Check for facets to display conditional */
     if (conditional) {
       /* Agree with `facetsToDisplay` */
-      facets = getFacetsToDisplay(selected, facets, this.context.config.facetsToDisplay)
+      facets = getFacetsToDisplay(
+        selected,
+        facets,
+        this.context.config.facetsToDisplay
+      )
     }
     if (!facets.length) return null
 
@@ -66,8 +64,8 @@ class SearchFilters extends React.Component {
             /* Recalculate Selected values */
 
             let selectedFacets = selected
-                  .filter((item) => item.name === facet.name)
-                  .map((item) => item.selected)
+              .filter((item) => item.name === facet.name)
+              .map((item) => item.selected)
             let selectedItems = flatten(selectedFacets)
             let { type, name } = facet
             let passProps = {

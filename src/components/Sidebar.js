@@ -10,7 +10,9 @@ class Sidebar extends React.Component {
     var style = document.createElement('style')
     style.id = STYLE_TAG_ID
     style.type = 'text/css'
-    style.innerHTML = this.props.isDesktop ? `` : `
+    style.innerHTML = this.props.isDesktop
+      ? ``
+      : `
       .${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body{
         -webkit-overflow-scrolling : touch !important;
         overflow: hidden !important;
@@ -20,7 +22,10 @@ class Sidebar extends React.Component {
   }
   componentDidUpdate (prevProps) {
     if (prevProps.isSidebarOpen !== this.props.isSidebarOpen) {
-      document.documentElement.classList.toggle(MODAL_ROOT_CLASSNAME, this.props.isSidebarOpen)
+      document.documentElement.classList.toggle(
+        MODAL_ROOT_CLASSNAME,
+        this.props.isSidebarOpen
+      )
     }
   }
   render () {
@@ -32,7 +37,9 @@ class Sidebar extends React.Component {
           onClick={toggleSidebar}
           type='button'
           className='ola-close-sidebar'
-        >Close</button>
+        >
+          Close
+        </button>
       </div>
     )
   }

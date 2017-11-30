@@ -63,11 +63,14 @@ export default (state = initialState, action) => {
       let filtered = state.fields.filter((field) => field.name !== action.name)
       return {
         ...state,
-        fields: [...filtered, {
-          name: action.name,
-          value: action.value,
-          filename: action.filename
-        }]
+        fields: [
+          ...filtered,
+          {
+            name: action.name,
+            value: action.value,
+            filename: action.filename
+          }
+        ]
       }
     case types.REMOVE_DYNAMIC_FIELD:
       return {
@@ -93,17 +96,24 @@ export default (state = initialState, action) => {
     case types.ADD_FACET:
       return {
         ...state,
-        filter_term_sequence: [...state.filter_term_sequence, `${action.facet.name}:${action.value}`]
+        filter_term_sequence: [
+          ...state.filter_term_sequence,
+          `${action.facet.name}:${action.value}`
+        ]
       }
 
     case types.REMOVE_FACET:
       return {
         ...state,
-        filter_term_sequence: state.filter_term_sequence.filter((item) => item !== `${action.facet.name}:${action.value}`)
+        filter_term_sequence: state.filter_term_sequence.filter(
+          (item) => item !== `${action.facet.name}:${action.value}`
+        )
       }
 
     case types.REPLACE_FACET:
-      let fts = state.filter_term_sequence.filter((item) => item.split(':')[0] === action.facet.name)
+      let fts = state.filter_term_sequence.filter(
+        (item) => item.split(':')[0] === action.facet.name
+      )
       return {
         ...state,
         filter_term_sequence: [...fts, `${action.facet.name}:${action.value}`]
@@ -112,7 +122,9 @@ export default (state = initialState, action) => {
     case types.REMOVE_FACET_ITEM:
       return {
         ...state,
-        filter_term_sequence: state.filter_term_sequence.filter((item) => item.split(':')[0] !== action.facet.name)
+        filter_term_sequence: state.filter_term_sequence.filter(
+          (item) => item.split(':')[0] !== action.facet.name
+        )
       }
 
     case types.REMOVE_ALL_FACETS:
@@ -129,10 +141,15 @@ export default (state = initialState, action) => {
 
     case types.OLA_REHYDRATE:
       let { userSession, searchSession, isNewUser, userId } = action
-      let contextFromStorage = storage.cookies.get(CONTEXT_STORAGE_KEY, action.namespace)
+      let contextFromStorage = storage.cookies.get(
+        CONTEXT_STORAGE_KEY,
+        action.namespace
+      )
       if (typeof contextFromStorage === 'string') {
         try {
-          contextFromStorage = JSON.parse(decodeURIComponent(contextFromStorage))
+          contextFromStorage = JSON.parse(
+            decodeURIComponent(contextFromStorage)
+          )
         } catch (e) {
           contextFromStorage = {}
         }

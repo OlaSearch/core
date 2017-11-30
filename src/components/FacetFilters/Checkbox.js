@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { addFacet, removeFacet, replaceFacet, executeSearch } from './../../actions/Search'
+import {
+  addFacet,
+  removeFacet,
+  replaceFacet,
+  executeSearch
+} from './../../actions/Search'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
@@ -21,13 +26,13 @@ class CheckboxFilter extends React.Component {
 
   static defaultProps = {
     listType: 'uniform'
-  };
+  }
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     selected: PropTypes.array.isRequired,
     facet: PropTypes.object.isRequired
-  };
+  }
 
   handleAddFacet = (value) => {
     var { dispatch, facet } = this.props
@@ -42,29 +47,29 @@ class CheckboxFilter extends React.Component {
       dispatch(addFacet(facet, value))
     }
     dispatch(executeSearch())
-  };
+  }
 
   handleRemoveFacet = (value) => {
     let { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
     dispatch(executeSearch())
-  };
+  }
 
   toggleshowMore = () => {
     this.setState({
       showMore: !this.state.showMore
     })
-  };
+  }
 
   onChangeFilterText = (event) => {
     this.setState({
       filterText: xssFilters.inHTMLData(event.target.value)
     })
-  };
+  }
 
   isSelected = (name) => {
     return this.props.selected.indexOf(name) > -1
-  };
+  }
 
   itemRenderer = (values, index, key) => {
     let { facet: { facetNames } } = this.props
@@ -83,13 +88,10 @@ class CheckboxFilter extends React.Component {
         isActive={isActive}
       />
     )
-  };
+  }
 
   render () {
-    var {
-      filterText,
-      showMore
-    } = this.state
+    var { filterText, showMore } = this.state
 
     var {
       facet,
@@ -131,8 +133,13 @@ class CheckboxFilter extends React.Component {
        * selectedValue = ['All', 'Archived', 'Online']
        * acceptedValues = ['All', 'Online']
        */
-      let selectedValue = [...defaultValue.map((item) => item.replace(/(-)/gi, '')), ...fixedValues]
-      let acceptedValues = values.filter(({ name, count }) => selectedValue.indexOf(name) !== -1)
+      let selectedValue = [
+        ...defaultValue.map((item) => item.replace(/(-)/gi, '')),
+        ...fixedValues
+      ]
+      let acceptedValues = values.filter(
+        ({ name, count }) => selectedValue.indexOf(name) !== -1
+      )
 
       if (!acceptedValues.length && !showIfEmpty) return null
       let totalValueCount = acceptedValues.reduce((acc, item) => {
@@ -141,10 +148,15 @@ class CheckboxFilter extends React.Component {
       }, 0)
       values = fixedValues.map((item) => ({
         name: item,
-        count: item === ALL_VALUES ? totalValueCount : acceptedValues.filter(({ name }) => name === item).reduce((acc, item) => {
-          acc += item.count
-          return acc
-        }, 0)
+        count:
+          item === ALL_VALUES
+            ? totalValueCount
+            : acceptedValues
+                .filter(({ name }) => name === item)
+                .reduce((acc, item) => {
+                  acc += item.count
+                  return acc
+                }, 0)
       }))
       originalSize = values.length
     }
@@ -153,7 +165,9 @@ class CheckboxFilter extends React.Component {
     if (!originalSize && !showIfEmpty) return null
 
     /* Filter values */
-    values = values.filter((item) => item.name.toString().match(new RegExp(filterText, 'i')))
+    values = values.filter((item) =>
+      item.name.toString().match(new RegExp(filterText, 'i'))
+    )
 
     var size = values.length
 
@@ -163,27 +177,39 @@ class CheckboxFilter extends React.Component {
     /* Show more */
     if (!showMore) values = values.slice(0, limit)
 
-    var showMoreLink = shouldDisplayShowMore
-      ? <button className={`ola-btn ola-link-show-more ${showMore ? 'ola-link-show-less' : ''}`} onClick={this.toggleshowMore}>{showMore ? translate('facet_filter_showless') : translate('facet_filter_showmore')}</button>
-      : null
+    var showMoreLink = shouldDisplayShowMore ? (
+      <button
+        className={`ola-btn ola-link-show-more ${showMore
+          ? 'ola-link-show-less'
+          : ''}`}
+        onClick={this.toggleshowMore}
+      >
+        {showMore
+          ? translate('facet_filter_showless')
+          : translate('facet_filter_showmore')}
+      </button>
+    ) : null
 
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed,
       'ola-facet-single-select': allowSingleSelection
     })
-    var filterInput = originalSize > limit
-      ? (<FilterInput
-        value={filterText}
-        onChange={this.onChangeFilterText}
-        placeholder={translate('facet_filter_placeholder')}
-        />)
-      : null
+    var filterInput =
+      originalSize > limit ? (
+        <FilterInput
+          value={filterText}
+          onChange={this.onChangeFilterText}
+          placeholder={translate('facet_filter_placeholder')}
+        />
+      ) : null
     var itemRendererBound = this.itemRenderer.bind(this, values)
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
+        <h4 className='ola-facet-title' onClick={toggleDisplay}>
+          {displayName}
+        </h4>
         <div className='ola-facet-wrapper'>
           {filterInput}
           <div className='ola-facet-list'>
@@ -223,12 +249,10 @@ function CheckBoxItem (props) {
   })
   return (
     <label className={labelKlass}>
-      <input
-        type='checkbox'
-        checked={isActive}
-        onChange={onChecked}
-      />
-      <span className='ola-search-facet-name' title={displayName}>{displayName}</span>
+      <input type='checkbox' checked={isActive} onChange={onChecked} />
+      <span className='ola-search-facet-name' title={displayName}>
+        {displayName}
+      </span>
       {count && <span className='ola-search-facet-count'>{count}</span>}
     </label>
   )

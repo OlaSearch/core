@@ -4,7 +4,19 @@ import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
 function Directions (props) {
-  var { latlong, translate, label, iconLeft = null, iconRight = null, onClick, result, log, fieldLabel, snippetId, ...rest } = props
+  var {
+    latlong,
+    translate,
+    label,
+    iconLeft = null,
+    iconRight = null,
+    onClick,
+    result,
+    log,
+    fieldLabel,
+    snippetId,
+    ...rest
+  } = props
 
   if (!latlong) return null
   if (typeof latlong === 'object') {
@@ -28,7 +40,8 @@ function Directions (props) {
   return (
     <div className='ola-field ola-field-directions'>
       <FieldLabel label={fieldLabel} />
-      <a className='ola-btn ola-btn-directions'
+      <a
+        className='ola-btn ola-btn-directions'
         onClick={handleClick}
         href={url}
         {...rest}

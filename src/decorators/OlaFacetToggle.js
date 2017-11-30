@@ -10,7 +10,9 @@ export default function withFacetToggle (WrappedComponent) {
         isCollapsed: props.facet.isCollapsed || false
       }
     }
-    static displayName = `withFacetToggle(${getComponentDisplayName(WrappedComponent)})`;
+    static displayName = `withFacetToggle(${getComponentDisplayName(
+      WrappedComponent
+    )})`
     componentWillReceiveProps (nextProps) {
       if (nextProps.facet.isCollapsed !== this.props.facet.isCollapsed) {
         this.setState({
@@ -22,9 +24,15 @@ export default function withFacetToggle (WrappedComponent) {
       this.setState({
         isCollapsed: !this.state.isCollapsed
       })
-    };
+    }
     render () {
-      return <WrappedComponent {...this.props} isCollapsed={this.state.isCollapsed} toggleDisplay={this.toggleDisplay} />
+      return (
+        <WrappedComponent
+          {...this.props}
+          isCollapsed={this.state.isCollapsed}
+          toggleDisplay={this.toggleDisplay}
+        />
+      )
     }
   }
   return hoistNonReactStatics(WithFacetToggle, WrappedComponent)

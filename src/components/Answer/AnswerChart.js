@@ -8,18 +8,20 @@ export default class AnswerCharts extends React.Component {
     this.drawChart()
   }
   prepareData = (props) => {
-    let { data: { record_keys: recordKeys = [], record_data: recordData = [] } } = props
+    let {
+      data: { record_keys: recordKeys = [], record_data: recordData = [] }
+    } = props
     let keys = recordKeys.filter((key, idx) => idx !== 0)
     let data = recordData.slice(0, 5).map((item, idx) => {
       let country = item['Country']
-      return [].concat(country, keys.map((key) => {
-        return key in item ? sanitizeNumbers(item[key]) : null
-      }))
+      return [].concat(
+        country,
+        keys.map((key) => {
+          return key in item ? sanitizeNumbers(item[key]) : null
+        })
+      )
     })
-    return [
-      ['x', ...keys],
-      ...data
-    ]
+    return [['x', ...keys], ...data]
   }
   drawChart () {
     /* Check if record_keys <= 2 */
@@ -47,7 +49,7 @@ export default class AnswerCharts extends React.Component {
         top: 20
       }
     })
-  };
+  }
   shouldComponentUpdate (nextProps) {
     return nextProps.data !== this.props.data
   }
@@ -69,7 +71,7 @@ export default class AnswerCharts extends React.Component {
   }
   registerRef = (el) => {
     this.chartRef = el
-  };
+  }
   render () {
     let { title } = this.props
     return (

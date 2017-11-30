@@ -15,10 +15,10 @@ class GeoLocation extends React.Component {
   }
   static defaultProps = {
     active: false
-  };
+  }
   static contextTypes = {
     config: PropTypes.object
-  };
+  }
   componentDidUpdate (prevProps) {
     if (prevProps.active !== this.props.active && prevProps.active) {
       // Ask for users gelocation
@@ -35,23 +35,29 @@ class GeoLocation extends React.Component {
   }
   requestGeoLocation = () => {
     this.props.dispatch(requestGeoLocation(this.onSuccess, this.onError))
-  };
+  }
   prompt = (props) => {
     let _props = props || this.props
     let { q, isLoading } = _props
-    let { location, isRequestingLocation, hasRequestedLocation } = _props.Context
+    let {
+      location,
+      isRequestingLocation,
+      hasRequestedLocation
+    } = _props.Context
     let { geoLocationKeywords } = this.context.config
 
-    if (!location &&
+    if (
+      !location &&
       !isLoading &&
       !isRequestingLocation &&
       !hasRequestedLocation &&
       geoLocationKeywords &&
-      q.match(new RegExp(geoLocationKeywords, 'gi'))) {
+      q.match(new RegExp(geoLocationKeywords, 'gi'))
+    ) {
       /* Prompt and ask for location */
       this._debouceLocation()
     }
-  };
+  }
   getLocation = () => {
     let { dispatch } = this.props
     /* If location is already stored */
@@ -61,22 +67,24 @@ class GeoLocation extends React.Component {
       return
     }
 
-    dispatch(log({
-      eventType: 'C',
-      eventCategory: 'Geolocation button',
-      eventAction: 'request_location',
-      eventLabel: 'Geolocation',
-      debounce: true
-    }))
+    dispatch(
+      log({
+        eventType: 'C',
+        eventCategory: 'Geolocation button',
+        eventAction: 'request_location',
+        eventLabel: 'Geolocation',
+        debounce: true
+      })
+    )
 
     dispatch(requestGeoLocation(this.onSuccess, this.onError))
   }
   onSuccess = (results) => {
     this.props.onSuccess && this.props.onSuccess(results)
-  };
+  }
   onError = (results) => {
     this.props.onError && this.props.onError(results)
-  };
+  }
   render () {
     if (!('geolocation' in navigator)) return null
 
@@ -90,7 +98,11 @@ class GeoLocation extends React.Component {
     let hintklass = classNames('ola-btn-hint hint--top', {
       'hint--always': isRequestingLocation
     })
-    let title = isRequestingLocation ? translate('geo_location_requesting') : isGeoEnabled ? translate('geo_location_enabled') : translate('geo_location_prompt')
+    let title = isRequestingLocation
+      ? translate('geo_location_requesting')
+      : isGeoEnabled
+        ? translate('geo_location_enabled')
+        : translate('geo_location_prompt')
     return (
       <button type='button' className={klass} onClick={this.getLocation}>
         <span className={hintklass} aria-label={title} />

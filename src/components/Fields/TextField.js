@@ -3,7 +3,21 @@ import PropTypes from 'prop-types'
 import { createHTMLMarkup, truncate } from './../../utilities'
 import FieldLabel from './FieldLabel'
 
-function TextField ({ field, fallbackFields, result, staticText, length, prefix = '', suffix = '', ellipsis, dynamicClass, fieldLabel, className, showIfEmpty, placeholderText }) {
+function TextField ({
+  field,
+  fallbackFields,
+  result,
+  staticText,
+  length,
+  prefix = '',
+  suffix = '',
+  ellipsis,
+  dynamicClass,
+  fieldLabel,
+  className,
+  showIfEmpty,
+  placeholderText
+}) {
   let fieldContent = result[field] || staticText
   if (!fieldContent && fallbackFields.length) {
     for (let i = 0; i < fallbackFields.length; i++) {
@@ -39,7 +53,10 @@ function TextField ({ field, fallbackFields, result, staticText, length, prefix 
   }
   if (prefix) fieldContent = prefix + fieldContent
   if (suffix) fieldContent = fieldContent + suffix
-  let userClass = dynamicClass && fieldContent ? ` ${field}-${fieldContent.toLowerCase()}` : ''
+  let userClass =
+    dynamicClass && fieldContent
+      ? ` ${field}-${fieldContent.toLowerCase()}`
+      : ''
   let klass = `ola-field ola-field-text ola-field-${field}${userClass} ${className}`
   return (
     <div className={klass}>

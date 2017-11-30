@@ -13,7 +13,9 @@ function ClearAllFacets ({ selected, dispatch, translate }) {
       type='button'
       className='ola-link-clear-all-filters'
       onClick={handleClick}
-    >{translate('clear_all_filters')}</button>
+    >
+      {translate('clear_all_filters')}
+    </button>
   )
 }
 

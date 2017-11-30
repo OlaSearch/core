@@ -16,7 +16,12 @@ function DefaultSnippet ({ result, bookmarks, dispatch, ...rest }) {
         />
       </div>
       <div className='ola-snippet-content'>
-        <Bookmark result={result} bookmarks={bookmarks} dispatch={dispatch} {...rest} />
+        <Bookmark
+          result={result}
+          bookmarks={bookmarks}
+          dispatch={dispatch}
+          {...rest}
+        />
         <Title result={result} {...rest} />
         <TextField result={result} {...rest} />
       </div>

@@ -5,13 +5,16 @@ import GoogleMaps from './maputils'
 class AnswerMap extends React.Component {
   static defaultProps = {
     markerIcon: null
-  };
+  }
   componentDidMount () {
-    GoogleMaps.load({ apiKey: 'AIzaSyAfccsQVW0CrUzGHQ1AhQpnCYhWjZgs7bw' }, this.initMap)
+    GoogleMaps.load(
+      { apiKey: 'AIzaSyAfccsQVW0CrUzGHQ1AhQpnCYhWjZgs7bw' },
+      this.initMap
+    )
   }
   initMap = () => {
     this.map = new google.maps.Map(this.mapEl, {
-      center: {lat: -34.0622928, lng: 23.3755341},
+      center: { lat: -34.0622928, lng: 23.3755341 },
       zoom: 4,
       scrollwheel: false
     })
@@ -37,10 +40,10 @@ class AnswerMap extends React.Component {
 
     /* Add markers */
     this.refreshMap()
-  };
+  }
   handleMapClick = (event) => {
     if (this.infowindow) this.infowindow.close()
-  };
+  }
   shouldComponentUpdate (nextProps) {
     return nextProps.data !== this.props.data
   }
@@ -52,7 +55,7 @@ class AnswerMap extends React.Component {
     for (var i = 0; i < this.markers.length; i++) {
       this.markers[i].setMap(null)
     }
-  };
+  }
   handleMarkerClick = (marker) => {
     let { title } = marker
     let content = `
@@ -62,12 +65,12 @@ class AnswerMap extends React.Component {
     `
     this.infowindow.setContent(content)
     this.infowindow.open(this.map, marker)
-  };
+  }
   refreshMap = () => {
     let { data } = this.props
 
     data.forEach(({ title, location }) => {
-      let [ lat, lng ] = location.split(',')
+      let [lat, lng] = location.split(',')
       let position = { lat: parseFloat(lat), lng: parseFloat(lng) }
       let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
 
@@ -92,7 +95,7 @@ class AnswerMap extends React.Component {
   }
   registerMap = (el) => {
     this.mapEl = el
-  };
+  }
   render () {
     return (
       <div className='ola-answer-map'>

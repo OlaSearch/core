@@ -1,6 +1,10 @@
 import React from 'react'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
-import { replaceFacet, removeFacet, executeSearch } from './../../actions/Search'
+import {
+  replaceFacet,
+  removeFacet,
+  executeSearch
+} from './../../actions/Search'
 import classNames from 'classnames'
 
 function RangeNumericFilter (props) {
@@ -23,7 +27,9 @@ function RangeNumericFilter (props) {
   })
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>{displayName}</h4>
+      <h4 className='ola-facet-title' onClick={toggleDisplay}>
+        {displayName}
+      </h4>
       <div className='ola-facet-wrapper'>
         <div className='ola-facet-list'>
           {values.map((value, idx) => {
@@ -48,15 +54,14 @@ function RangeNumericItem ({ value, handleClick }) {
   function onItemClick () {
     let { from, to } = value
     handleClick(from, to)
-  };
+  }
 
   let { count, name } = value
-  let itemKlass = classNames('ola-btn', 'ola-facet-link', { 'ola-facet-link-active': false })
+  let itemKlass = classNames('ola-btn', 'ola-facet-link', {
+    'ola-facet-link-active': false
+  })
   return (
-    <div
-      className={itemKlass}
-      onClick={onItemClick}
-    >
+    <div className={itemKlass} onClick={onItemClick}>
       <span className='ola-search-facet-count'>{count}</span>
       <span className='ola-search-facet-name'>{name}</span>
     </div>

@@ -14,7 +14,7 @@ export default class AnswerGrid extends React.Component {
   }
   static contextTypes = {
     config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  }
   componentWillReceiveProps (nextProps) {
     if (nextProps.answer !== this.props.answer) {
       this.hideAnswerCard()
@@ -28,18 +28,18 @@ export default class AnswerGrid extends React.Component {
       isOpen: true,
       selectedAnswer: answer
     })
-  };
+  }
   hideAnswerCard = () => {
     this.setState({
       isOpen: false,
       selectedAnswer: null
     })
-  };
+  }
   handleClickOutside = () => {
     this.setState({
       isOpen: false
     })
-  };
+  }
   render () {
     let { data, answer } = this.props
     let klass = classNames('ola-answer-items', {
@@ -48,27 +48,26 @@ export default class AnswerGrid extends React.Component {
     return (
       <div className='ola-answer-grid'>
         <div className={klass}>
-          {data
-            .slice(0, 4)
-            .map((result, idx) => {
-              return (
-                <AnswerCard
-                  key={result.title}
-                  cdn={this.context.config.cdn}
-                  imagePlaceholder={this.context.config.imagePlaceholder}
-                  result={result}
-                  module={answer.module}
-                  onSelect={this.showAnswerCard}
-                  isActive={this.state.selectedAnswer === result}
-                />
-              )
-            })
-          }
+          {data.slice(0, 4).map((result, idx) => {
+            return (
+              <AnswerCard
+                key={result.title}
+                cdn={this.context.config.cdn}
+                imagePlaceholder={this.context.config.imagePlaceholder}
+                result={result}
+                module={answer.module}
+                onSelect={this.showAnswerCard}
+                isActive={this.state.selectedAnswer === result}
+              />
+            )
+          })}
         </div>
-        {this.state.isOpen
-          ? <ListKeyValue data={this.state.selectedAnswer.additional_data} onClose={this.hideAnswerCard} />
-          : null
-        }
+        {this.state.isOpen ? (
+          <ListKeyValue
+            data={this.state.selectedAnswer.additional_data}
+            onClose={this.hideAnswerCard}
+          />
+        ) : null}
       </div>
     )
   }

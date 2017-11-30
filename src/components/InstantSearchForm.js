@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { updateQueryTerm, executeSearch, clearQueryTerm } from './../actions/Search'
+import {
+  updateQueryTerm,
+  executeSearch,
+  clearQueryTerm
+} from './../actions/Search'
 import Bookmarks from './Bookmarks'
 import History from './History'
 import SpeechInput from './Speech'
@@ -24,9 +28,10 @@ class InstantSearchForm extends React.Component {
     /**
      * Add url Sync option
      */
-    this.executeSearch = () => props.executeSearch({
-      urlSync: props.urlSync
-    })
+    this.executeSearch = () =>
+      props.executeSearch({
+        urlSync: props.urlSync
+      })
     /**
      * Debounce search
      */
@@ -44,16 +49,16 @@ class InstantSearchForm extends React.Component {
     urlSync: true,
     autoFocus: false,
     className: null
-  };
+  }
 
   static contextTypes = {
     config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  }
 
   static propTypes = {
     q: PropTypes.string,
     minCharacters: PropTypes.number
-  };
+  }
 
   componentDidMount () {
     if (this.props.autoFocus) this.refs.Input.focus()
@@ -74,25 +79,25 @@ class InstantSearchForm extends React.Component {
     !isEvent && this.refs.Input.focus()
 
     isEvent ? this.searchDebounce() : this.executeSearch()
-  };
+  }
 
   onSpeechChange = (text) => {
     this.onChange(text, SEARCH_INPUTS.VOICE)
-  };
+  }
 
   onClear = () => {
     setTimeout(() => this.refs.Input.focus(), 100)
     this.props.clearQueryTerm()
     this.executeSearch()
-  };
+  }
 
-  onSubmit = (event) => event.preventDefault();
+  onSubmit = (event) => event.preventDefault()
   onChangeZone = () => {
     this.refs.Input.focus()
 
     if (this.props.onChangeZone) return this.props.onChangeZone()
     if (this.props.q) this.executeSearch()
-  };
+  }
 
   render () {
     let {
@@ -106,13 +111,27 @@ class InstantSearchForm extends React.Component {
       placeholder
     } = this.props
 
-    let button = q
-      ? <button type='button' className='ola-clear-button' onClick={this.onClear} aria-label='Clear' />
-      : <button type='button' className='ola-search-button' onClick={this.onClear} aria-label='Submit' />
+    let button = q ? (
+      <button
+        type='button'
+        className='ola-clear-button'
+        onClick={this.onClear}
+        aria-label='Clear'
+      />
+    ) : (
+      <button
+        type='button'
+        className='ola-search-button'
+        onClick={this.onClear}
+        aria-label='Submit'
+      />
+    )
 
     let klass = classNames('ola-search-form', this.props.className, {
       'ola-search-zone-enabled': showZone,
-      'ola-speech-not-supported': !(window.SpeechRecognition || window.webkitSpeechRecognition)
+      'ola-speech-not-supported': !(
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      )
     })
 
     let _placeholder = placeholder || translate('instantsearch_placeholder')
@@ -120,11 +139,7 @@ class InstantSearchForm extends React.Component {
     return (
       <form className={klass} onSubmit={this.onSubmit}>
         <div className='ola-search-form-container'>
-          {showZone &&
-            <Zone
-              onChange={this.onChangeZone}
-            />
-          }
+          {showZone && <Zone onChange={this.onChangeZone} />}
           <input
             ref='Input'
             type='text'
@@ -141,35 +156,27 @@ class InstantSearchForm extends React.Component {
             onChange={this.onChange}
           />
 
-          {showBookmarks
-            ? <Bookmarks />
-            : null
-          }
+          {showBookmarks ? <Bookmarks /> : null}
 
-          {showGeoLocation
-            ? <GeoLocation
+          {showGeoLocation ? (
+            <GeoLocation
               active={false}
               onSuccess={this.props.onGeoLocationSuccess}
               onFailure={this.props.onGeoLocationFailure}
               onDisable={this.props.onGeoLocationDisable}
               onError={this.props.onGeoError}
             />
-            : null
-          }
+          ) : null}
 
-          {showHistory
-            ? <History searchUrl={this.props.searchUrl} />
-            : null
-          }
+          {showHistory ? <History searchUrl={this.props.searchUrl} /> : null}
 
-          {showSpeech
-            ? <SpeechInput
+          {showSpeech ? (
+            <SpeechInput
               onResult={this.onSpeechChange}
               onFinalResult={this.onSpeechChange}
               isInstantSearch
             />
-            : null
-          }
+          ) : null}
 
           {button}
         </div>
@@ -184,4 +191,8 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { updateQueryTerm, executeSearch, clearQueryTerm })(injectTranslate(InstantSearchForm))
+module.exports = connect(mapStateToProps, {
+  updateQueryTerm,
+  executeSearch,
+  clearQueryTerm
+})(injectTranslate(InstantSearchForm))

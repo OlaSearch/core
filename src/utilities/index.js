@@ -81,12 +81,24 @@ const utilities = {
         for (let j = 0, len = rule.length; j < len; j++) {
           let { field, value } = rule[j]
           let fieldValue = result[field]
-          if (!fieldValue || (fieldValue && !fieldValue.toString().match(new RegExp(value, 'gi')))) matched = false
+          if (
+            !fieldValue ||
+            (fieldValue &&
+              !fieldValue.toString().match(new RegExp(value, 'gi')))
+          ) {
+            matched = false
+          }
         }
       } else {
         for (let field in rule) {
           let fieldValue = result[field]
-          if (!fieldValue || (fieldValue && !fieldValue.toString().match(new RegExp(rule[field] + '$', 'gi')))) matched = false
+          if (
+            !fieldValue ||
+            (fieldValue &&
+              !fieldValue.toString().match(new RegExp(rule[field] + '$', 'gi')))
+          ) {
+            matched = false
+          }
         }
       }
       if (matched) return rules[i].template
@@ -127,7 +139,7 @@ const utilities = {
     /* Loop through selections and find Facets to display */
     for (let i = 0, len = selections.length; i < len; i++) {
       if (facetsToDisplay.hasOwnProperty(selections[i])) {
-        names = [ ...names, ...facetsToDisplay[selections[i]] ]
+        names = [...names, ...facetsToDisplay[selections[i]]]
         hasKey = true
       }
     }
@@ -139,19 +151,21 @@ const utilities = {
      * Found
      * Ignore tabs
      */
-    return facets.filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
-    .sort((a, b) => {
-      let aIndex = names.indexOf(a.name)
-      let bIndex = names.indexOf(b.name)
-      if (aIndex > bIndex) return 1
-      if (aIndex < bIndex) return -1
-      return 0
-    })
+    return facets
+      .filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
+      .sort((a, b) => {
+        let aIndex = names.indexOf(a.name)
+        let bIndex = names.indexOf(b.name)
+        if (aIndex > bIndex) return 1
+        if (aIndex < bIndex) return -1
+        return 0
+      })
   },
   sanitizeAnchor (str) {
     if (!str) return null
     if (typeof str !== 'string') str = str.toString()
-    return str.toLowerCase()
+    return str
+      .toLowerCase()
       .replace(/<(\/?)em>/gi, '') // remove solr's <em> tags..
       .replace(/<em.*?>/gi, '')
       .replace(/[^a-z0-9_\s-]/gi, '') // make alphanumeric (removes all other characters)
@@ -160,7 +174,8 @@ const utilities = {
   },
   sanitizePhone (str) {
     if (typeof str !== 'string') str = str.toString()
-    return str.split('/')
+    return str
+      .split('/')
       .shift()
       .replace(/[a-z_\s-()]/gi, '')
   },
@@ -188,7 +203,13 @@ const utilities = {
   },
   truncate (str, length, ellipsis = '...') {
     if (str.toString().length > length) {
-      return str.substr(0, length).split(' ').slice(0, -1).join(' ') + ellipsis
+      return (
+        str
+          .substr(0, length)
+          .split(' ')
+          .slice(0, -1)
+          .join(' ') + ellipsis
+      )
     }
     return str
   },
@@ -203,10 +224,10 @@ const utilities = {
       var hasParent = items.length > rootLevel
       if (hasParent) {
         let parent = rootLevel
-        ? items.length === rootLevel
-          ? null
+          ? items.length === rootLevel
+            ? null
+            : items.slice(0, items.length - 1).join('/') || null
           : items.slice(0, items.length - 1).join('/') || null
-        : items.slice(0, items.length - 1).join('/') || null
         output.push({
           displayName: items.pop(),
           count,
@@ -233,8 +254,8 @@ const utilities = {
   },
   uuid () {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      var r = Math.random() * 16 | 0
-      var v = c === 'x' ? r : (r & 0x3 | 0x8)
+      var r = (Math.random() * 16) | 0
+      var v = c === 'x' ? r : (r & 0x3) | 0x8
       return v.toString(16)
     })
   },
@@ -242,7 +263,12 @@ const utilities = {
     return namespace ? `${key}_${namespace}` : key
   },
   isSvg (path) {
-    return path.split('.').pop().indexOf('svg') === 0
+    return (
+      path
+        .split('.')
+        .pop()
+        .indexOf('svg') === 0
+    )
   },
   scrollTo (element) {
     /* To be implemented */
@@ -282,10 +308,10 @@ const utilities = {
     }
     // Shift
     value = value.toString().split('e')
-    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)))
+    value = Math[type](+(value[0] + 'e' + (value[1] ? +value[1] - exp : -exp)))
     // Shift back
     value = value.toString().split('e')
-    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp))
+    return +(value[0] + 'e' + (value[1] ? +value[1] + exp : exp))
   },
   isValidUrl (str) {
     var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
@@ -293,7 +319,11 @@ const utilities = {
   },
   formatText (str, label) {
     if (utilities.isValidUrl(str)) {
-      return <a className='ola-email-link' href={str}>{label}</a>
+      return (
+        <a className='ola-email-link' href={str}>
+          {label}
+        </a>
+      )
     }
     return str
   },
@@ -302,35 +332,51 @@ const utilities = {
     return parseFloat(text.replace(/<(?:.*|\n)*?>/gm, ''))
   },
   mergeResultsWithHistory (options) {
-    let { history, results = [], query, limit = 5, showHistoryForQuery } = options
+    let {
+      history,
+      results = [],
+      query,
+      limit = 5,
+      showHistoryForQuery
+    } = options
     /* Filter history when results are empty */
-    const shouldShowHistoryForQuery = showHistoryForQuery || (!results.length && !query)
+    const shouldShowHistoryForQuery =
+      showHistoryForQuery || (!results.length && !query)
 
     /* Check if answer exists in the first result */
     if (results.length && results[0]['answer']) return results
 
     history = history
-              .map(({ q, dateAdded }) => ({ term: q.toLowerCase(), type: 'history', dateAdded }))
-              .filter((his) => his.term && his.term !== '*')
-              .sort((a, b) => {
-                /* Sort by recency */
-                if (a.dateAdded < b.dateAdded) return 1
-                if (a.dateAdded > b.dateAdded) return -1
-                return 0
-              })
-              .filter((his, index, self) => self.findIndex((t) => t.term.match(new RegExp('^' + his.term + '$', 'gi'))) === index)
+      .map(({ q, dateAdded }) => ({
+        term: q.toLowerCase(),
+        type: 'history',
+        dateAdded
+      }))
+      .filter((his) => his.term && his.term !== '*')
+      .sort((a, b) => {
+        /* Sort by recency */
+        if (a.dateAdded < b.dateAdded) return 1
+        if (a.dateAdded > b.dateAdded) return -1
+        return 0
+      })
+      .filter(
+        (his, index, self) =>
+          self.findIndex((t) =>
+            t.term.match(new RegExp('^' + his.term + '$', 'gi'))
+          ) === index
+      )
 
     if (query) {
       /* Only history that starts with */
       if (shouldShowHistoryForQuery) {
         history = history
-                  .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
-                  .sort((a, b) => {
-                    /* Sort by match */
-                    if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
-                    if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
-                    return 0
-                  })
+          .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
+          .sort((a, b) => {
+            /* Sort by match */
+            if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
+            if (a.term.indexOf(query) > b.term.indexOf(query)) return -1
+            return 0
+          })
       } else {
         history = []
       }
@@ -345,7 +391,10 @@ const utilities = {
       let historyTerms = history.map(({ term }) => term)
 
       /* Remove results that contains the history term */
-      results = results.filter(({ term, type }) => !(type === 'query' && historyTerms.indexOf(term) !== -1))
+      results = results.filter(
+        ({ term, type }) =>
+          !(type === 'query' && historyTerms.indexOf(term) !== -1)
+      )
     }
 
     /* Only take top 3 history terms */
@@ -370,8 +419,8 @@ const utilities = {
       }
     }
     return {
-      x: x,
-      y: y
+      x,
+      y
     }
   },
   redirect (url) {

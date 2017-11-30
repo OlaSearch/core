@@ -47,11 +47,7 @@ const FacetSuggestionItem = ({ facet, name, q, onItemClick }) => {
     onItemClick(facet, name)
   }
   return (
-    <a
-      className='ola-facet-suggestion'
-      tabIndex={0}
-      onClick={handleClick}
-    >
+    <a className='ola-facet-suggestion' tabIndex={0} onClick={handleClick}>
       <strong>{q}</strong> in {name}
     </a>
   )

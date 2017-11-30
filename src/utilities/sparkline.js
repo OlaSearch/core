@@ -15,7 +15,16 @@ export function SparkLine () {
   if (window.HTMLCanvasElement) {
     return {
       init (options) {
-        let { el, data, endpoint, color = 'rgba(0,0,0,0.5)', fillColor = 'rgba(0, 129, 189, 0.25)', style = 'line', height: elHeight, width: elWidth } = options
+        let {
+          el,
+          data,
+          endpoint,
+          color = 'rgba(0,0,0,0.5)',
+          fillColor = 'rgba(0, 129, 189, 0.25)',
+          style = 'line',
+          height: elHeight,
+          width: elWidth
+        } = options
         var ctx = el.getContext('2d')
         var height = elHeight - 3
         var width = elWidth
@@ -49,7 +58,9 @@ export function SparkLine () {
           d = data[i]
           x = x + xstep
           y = height - d / ystep + 2
-          if (style === 'bar') { ctx.moveTo(x, height) }
+          if (style === 'bar') {
+            ctx.moveTo(x, height)
+          }
           ctx.lineTo(x, y)
         }
 

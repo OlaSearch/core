@@ -1,4 +1,10 @@
-import { phone, android, apple, tablet, seven_inch as sevenInch } from 'ismobilejs'
+import {
+  phone,
+  android,
+  apple,
+  tablet,
+  seven_inch as sevenInch
+} from 'ismobilejs'
 
 /* Structure
   {

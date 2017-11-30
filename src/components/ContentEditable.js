@@ -5,7 +5,7 @@ export default class ContentEditable extends React.Component {
     formatValue: null,
     onChange: null,
     onSubmit: null
-  };
+  }
   emitChange = (event) => {
     if (!this.el) return
     let text = this.el.textContent
@@ -14,10 +14,12 @@ export default class ContentEditable extends React.Component {
     }
     this.lastText = text
     this.updateFakeEl(text)
-  };
+  }
   updateFakeEl = (text) => {
-    this.fakeEl.innerHTML = this.props.formatValue ? this.props.formatValue(text) : text
-  };
+    this.fakeEl.innerHTML = this.props.formatValue
+      ? this.props.formatValue(text)
+      : text
+  }
   componentDidUpdate () {
     if (this.el && this.props.value !== this.el.textContent) {
       this.el.textContent = this.props.value
@@ -48,20 +50,20 @@ export default class ContentEditable extends React.Component {
   }
   registerRef = (el) => {
     this.el = el
-  };
+  }
   registerFakeRef = (el) => {
     this.fakeEl = el
-  };
+  }
   createMarkup = () => {
     return { __html: this.props.value }
-  };
+  }
   onKeyDown = (evt) => {
     if (this.props.onKeyDown) return this.props.onKeyDown(evt)
     if (evt.which === 13) {
       evt && evt.preventDefault()
       this.props.onSubmit && this.props.onSubmit(this.props.value, evt)
     }
-  };
+  }
   onFocus = (event) => {
     const newEvent = {
       ...event,
@@ -71,7 +73,7 @@ export default class ContentEditable extends React.Component {
       }
     }
     this.props.onFocus && this.props.onFocus(newEvent)
-  };
+  }
   render () {
     let { formatValue, value, ...rest } = this.props
 

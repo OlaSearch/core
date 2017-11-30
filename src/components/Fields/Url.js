@@ -1,7 +1,16 @@
 import React from 'react'
 import withLogger from './../../decorators/OlaLogger'
 
-function Url ({ result, field, onClick, log, snippetId, anchorLink, label, className }) {
+function Url ({
+  result,
+  field,
+  onClick,
+  log,
+  snippetId,
+  anchorLink,
+  label,
+  className
+}) {
   let { url } = result
   if (field) {
     url = result[field]
@@ -26,12 +35,7 @@ function Url ({ result, field, onClick, log, snippetId, anchorLink, label, class
   }
 
   return (
-    <a
-      className={klassName}
-      href={url}
-      title={url}
-      onClick={handleClick}
-      >
+    <a className={klassName} href={url} title={url} onClick={handleClick}>
       {label}
     </a>
   )

@@ -9,20 +9,21 @@ class SpeechInput extends React.Component {
     super(props)
     this.state = {
       isRecording: false,
-      isSpeechSupported: window.SpeechRecognition || window.webkitSpeechRecognition
+      isSpeechSupported:
+        window.SpeechRecognition || window.webkitSpeechRecognition
     }
   }
 
   static contextTypes = {
     store: PropTypes.object,
     config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  }
 
   static defaultProps = {
     lang: 'en',
     continuous: true,
     interimResults: true
-  };
+  }
 
   shouldComponentUpdate (nextProps, nextState) {
     return nextState.isRecording !== this.state.isRecording
@@ -44,15 +45,20 @@ class SpeechInput extends React.Component {
     /**
      * Log
      */
-    let eventLabel = this.props.isInstantSearch ? 'instantsearch' : this.props.isAutosuggest ? 'autosuggest' : null
-    this.context.store.dispatch(log({
-      eventType: 'C',
-      eventCategory: 'Voice',
-      eventAction: 'click',
-      eventLabel
-    }))
+    let eventLabel = this.props.isInstantSearch
+      ? 'instantsearch'
+      : this.props.isAutosuggest ? 'autosuggest' : null
+    this.context.store.dispatch(
+      log({
+        eventType: 'C',
+        eventCategory: 'Voice',
+        eventAction: 'click',
+        eventLabel
+      })
+    )
 
-    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    let SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition
 
     this.recog = new SpeechRecognition()
     this.recog.lang = lang
@@ -70,21 +76,21 @@ class SpeechInput extends React.Component {
 
     /* Start recognizing */
     this.recog.start()
-  };
+  }
 
   stopRecording = () => {
     this.setState({
       isRecording: false
     })
     if (this.recog) this.recog.stop()
-  };
+  }
 
   handleError = (err) => {
     this.setState({
       isRecording: false
     })
     console.warn(err)
-  };
+  }
 
   handleEvent = (event) => {
     switch (event && event.type) {
@@ -93,15 +99,17 @@ class SpeechInput extends React.Component {
           let result = event.results[event.resultIndex]
           let item = result[0]
 
-          this.props.onResult && this.props.onResult(item.transcript, item.confidence)
+          this.props.onResult &&
+            this.props.onResult(item.transcript, item.confidence)
 
           if (result.isFinal) {
-            this.props.onFinalResult && this.props.onFinalResult(item.transcript)
+            this.props.onFinalResult &&
+              this.props.onFinalResult(item.transcript)
           }
         })
         break
     }
-  };
+  }
 
   render () {
     let { isRecording, isSpeechSupported } = this.state
@@ -115,11 +123,11 @@ class SpeechInput extends React.Component {
 
     return (
       <div className='ola-speech-input'>
-        <button
-          type='button'
-          className={klassName}
-          onClick={this.onLaunch}>
-          <span className='ola-btn-hint hint--top' aria-label={translate('speech_label')} />
+        <button type='button' className={klassName} onClick={this.onLaunch}>
+          <span
+            className='ola-btn-hint hint--top'
+            aria-label={translate('speech_label')}
+          />
         </button>
       </div>
     )

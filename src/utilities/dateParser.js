@@ -15,8 +15,10 @@ const DateParser = {
        */
       if (mask === defaultMask) {
         let d = new Date(date)
-        if (Object.prototype.toString.call(d) === '[object Date]' &&
-          !isNaN(d.getTime())) {
+        if (
+          Object.prototype.toString.call(d) === '[object Date]' &&
+          !isNaN(d.getTime())
+        ) {
           // Valid date
           return fecha.format(d, mask)
         }
@@ -36,8 +38,10 @@ const DateParser = {
        */
       if (mask === defaultMask) {
         let d = new Date(date)
-        if (Object.prototype.toString.call(d) === '[object Date]' &&
-          !isNaN(d.getTime())) {
+        if (
+          Object.prototype.toString.call(d) === '[object Date]' &&
+          !isNaN(d.getTime())
+        ) {
           // Valid date
           return d
         }

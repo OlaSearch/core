@@ -1,7 +1,12 @@
 import storage from './../services/storage'
 import { getKey, uuid } from './../utilities'
 import sessionStorage from './../services/sessionStorage'
-import { USER_SESSION_KEY, USER_NEW_KEY, USER_SESSION_EXPIRY_DAYS, SEARCH_SESSION_KEY } from './../constants/Settings'
+import {
+  USER_SESSION_KEY,
+  USER_NEW_KEY,
+  USER_SESSION_EXPIRY_DAYS,
+  SEARCH_SESSION_KEY
+} from './../constants/Settings'
 
 export function prepareUserState ({ config }) {
   /* Create user cookie */
@@ -37,10 +42,15 @@ export function prepareUserState ({ config }) {
    * searchSession
    * Session storage
    */
-  var searchSession = sessionStorage.getItem(getKey(SEARCH_SESSION_KEY, config.namespace))
+  var searchSession = sessionStorage.getItem(
+    getKey(SEARCH_SESSION_KEY, config.namespace)
+  )
   if (searchSession === null || searchSession === undefined) {
     searchSession = uuid()
-    sessionStorage.setItem(getKey(SEARCH_SESSION_KEY, config.namespace), searchSession)
+    sessionStorage.setItem(
+      getKey(SEARCH_SESSION_KEY, config.namespace),
+      searchSession
+    )
   }
 
   return {

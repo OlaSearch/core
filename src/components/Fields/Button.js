@@ -2,7 +2,21 @@ import React from 'react'
 import classNames from 'classnames'
 import withLogger from './../../decorators/OlaLogger'
 
-function Button ({ title, label, className, url, fullWidth, onClick, result, snippetId, log, target, openInNewWindow, eventLabel, eventCategory }) {
+function Button ({
+  title,
+  label,
+  className,
+  url,
+  fullWidth,
+  onClick,
+  result,
+  snippetId,
+  log,
+  target,
+  openInNewWindow,
+  eventLabel,
+  eventCategory
+}) {
   if (title) label = title
   function handleClick (event) {
     log({
@@ -32,12 +46,7 @@ function Button ({ title, label, className, url, fullWidth, onClick, result, sni
   if (!label) return null
   return (
     <div className='ola-field ola-field-button'>
-      <a
-        className={klass}
-        onClick={handleClick}
-        href={url}
-        target={target}
-      >
+      <a className={klass} onClick={handleClick} href={url} target={target}>
         {label}
       </a>
     </div>

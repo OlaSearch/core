@@ -19,10 +19,7 @@ ArrayField.propTypes = {
   /**
    * The value that should be rendered
    */
-  field: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.string
-  ]),
+  field: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   /**
    * String that appears before the field
    */

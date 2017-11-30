@@ -5,7 +5,17 @@ import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
 function Phone (props) {
-  let { phone, label, translate, log, onClick, result, snippetId, fieldLabel, ...rest } = props
+  let {
+    phone,
+    label,
+    translate,
+    log,
+    onClick,
+    result,
+    snippetId,
+    fieldLabel,
+    ...rest
+  } = props
 
   if (!phone) return null
 
@@ -29,7 +39,8 @@ function Phone (props) {
         href={url}
         className='ola-cta-button ola-btn-call'
         onClick={handleClick}
-        {...rest}>
+        {...rest}
+      >
         {label || translate('call_label')}
       </a>
     </div>

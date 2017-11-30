@@ -7,17 +7,24 @@ import AnswerGrid from './AnswerGrid'
 import AnswerGeneric from './AnswerGeneric'
 import AnswerList from './AnswerList'
 import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
-import { updateQueryTerm, executeSearch, changeAnswerSelection, setSkipIntent } from './../../actions/Search'
+import {
+  updateQueryTerm,
+  executeSearch,
+  changeAnswerSelection,
+  setSkipIntent
+} from './../../actions/Search'
 
 class Answer extends React.Component {
   handleChange = (option, index, itemKey) => {
-    this.props.dispatch(changeAnswerSelection(index, itemKey, this.props.answer))
-  };
+    this.props.dispatch(
+      changeAnswerSelection(index, itemKey, this.props.answer)
+    )
+  }
   handleSkipIntent = () => {
     this.props.dispatch(updateQueryTerm(this.props.answer.original))
     this.props.dispatch(setSkipIntent(true))
     this.props.dispatch(executeSearch())
-  };
+  }
   templatePicker = (template, data, module) => {
     /* Check for user defined templates */
     if (this.props.templates && this.props.templates.hasOwnProperty(template)) {
@@ -26,11 +33,7 @@ class Answer extends React.Component {
     }
     switch (template) {
       case 'table_detail':
-        return (
-          <TableDetail
-            data={data}
-          />
-        )
+        return <TableDetail data={data} />
 
       case 'person_info_grid':
       case 'text':
@@ -57,7 +60,7 @@ class Answer extends React.Component {
       default:
         return null
     }
-  };
+  }
   render () {
     const { answer, isLoading } = this.props
 
@@ -74,8 +77,15 @@ class Answer extends React.Component {
     let { card, module, intent } = answer
     let { template, source } = card
     let intentName = intent ? intent.split('.').pop() : null
-    let snippetClass = classNames('ola-snippet-answer', `ola-snippet-template-${template}`)
-    let answerKlass = classNames('ola-answer', `ola-answer-intent-${intentName}`, `ola-answer-template-${template}`)
+    let snippetClass = classNames(
+      'ola-snippet-answer',
+      `ola-snippet-template-${template}`
+    )
+    let answerKlass = classNames(
+      'ola-answer',
+      `ola-answer-intent-${intentName}`,
+      `ola-answer-template-${template}`
+    )
     /**
      * If the answer is from Intent engine
      */
@@ -90,12 +100,14 @@ class Answer extends React.Component {
           <div className={answerKlass}>
             {this.templatePicker(template, card, module)}
           </div>
-          {source
-            ? <div className='ola-answer-source'>
-              Source: <a target='_blank' href={source.url}>{source.name}</a>
+          {source ? (
+            <div className='ola-answer-source'>
+              Source:{' '}
+              <a target='_blank' href={source.url}>
+                {source.name}
+              </a>
             </div>
-            : null
-          }
+          ) : null}
         </div>
       )
     }

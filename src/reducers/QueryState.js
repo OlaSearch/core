@@ -5,7 +5,7 @@ import equals from 'ramda/src/equals'
 
 export const initialState = {
   q: '',
-  enriched_q: '', /* From Intent engine */
+  enriched_q: '' /* From Intent engine */,
   page: 1,
   per_page: 10,
   facet_query: [],
@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
-          filters: [ ...state.filters, { ...filter, selected } ]
+          filters: [...state.filters, { ...filter, selected }]
         }
       }
 
@@ -113,7 +113,7 @@ export default (state = initialState, action) => {
             if (item.name === action.facet.name) {
               return {
                 ...item,
-                selected: [ ...item.selected, action.value ]
+                selected: [...item.selected, action.value]
               }
             }
             return item
@@ -123,10 +123,13 @@ export default (state = initialState, action) => {
         return {
           ...state,
           page: 1,
-          facet_query: [ ...state.facet_query, {
-            ...action.facet,
-            selected: [action.value]
-          }]
+          facet_query: [
+            ...state.facet_query,
+            {
+              ...action.facet,
+              selected: [action.value]
+            }
+          ]
         }
       }
 
@@ -134,18 +137,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         page: 1,
-        facet_query: state.facet_query.map((item) => {
-          if (item.name === action.facet.name) {
-            return {
-              ...item,
-              selected: item.selected.filter((val) => {
-                return !equals(val, action.value)
-              })
+        facet_query: state.facet_query
+          .map((item) => {
+            if (item.name === action.facet.name) {
+              return {
+                ...item,
+                selected: item.selected.filter((val) => {
+                  return !equals(val, action.value)
+                })
+              }
             }
-          }
-          return item
-        })
-        .filter((item) => item.selected.length)
+            return item
+          })
+          .filter((item) => item.selected.length)
       }
 
     case types.REPLACE_FACET:
@@ -168,10 +172,13 @@ export default (state = initialState, action) => {
         return {
           ...state,
           page: 1,
-          facet_query: [ ...state.facet_query, {
-            ...action.facet,
-            selected: [action.value]
-          }]
+          facet_query: [
+            ...state.facet_query,
+            {
+              ...action.facet,
+              selected: [action.value]
+            }
+          ]
         }
       }
 
@@ -179,7 +186,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         page: 1,
-        facet_query: state.facet_query.filter((item) => item.name !== action.facet.name)
+        facet_query: state.facet_query.filter(
+          (item) => item.name !== action.facet.name
+        )
       }
 
     case types.REMOVE_ALL_FACETS:

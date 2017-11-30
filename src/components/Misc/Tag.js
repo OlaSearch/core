@@ -15,7 +15,7 @@ function Tag (props) {
       if (typeof name === 'string') {
         displayName = name
       } else {
-        let [ from, to ] = name
+        let [from, to] = name
         displayName = supplant(template, {
           from: dateFormat ? DateParser.format(from, dateFormat) : from,
           to: dateFormat ? DateParser.format(to, dateFormat) : to
@@ -44,7 +44,9 @@ function Tag (props) {
   return (
     <div className='ola-facet-tag'>
       <span className='ola-facet-tag-name'>{displayName}</span>
-      <button className='ola-facet-tag-remove' onClick={onRemove}><span>{props.buttonLabel}</span></button>
+      <button className='ola-facet-tag-remove' onClick={onRemove}>
+        <span>{props.buttonLabel}</span>
+      </button>
     </div>
   )
 }

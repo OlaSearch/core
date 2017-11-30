@@ -1,6 +1,13 @@
 import React from 'react'
 
-function AnswerWordMap ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSizeMax }) {
+function AnswerWordMap ({
+  data,
+  maxLen,
+  shuffle,
+  onSelect,
+  fontSizeMin,
+  fontSizeMax
+}) {
   /* Return null if nothing */
   if (!data.length) return null
 
@@ -17,21 +24,21 @@ function AnswerWordMap ({ data, maxLen, shuffle, onSelect, fontSizeMin, fontSize
   let min = Math.min.apply(this, counts)
   return (
     <div className='ola-answer-wordmap'>
-      {data
-        .slice(0, maxLen)
-        .map(({ title, count }, idx) => {
-          let size = (count === min) ? fontSizeMin : ((count / max) * (fontSizeMax - fontSizeMin)) + fontSizeMin
-          return (
-            <WordMapItem
-              key={idx}
-              title={title}
-              count={count}
-              onSelect={onSelect}
-              size={size}
-            />
-          )
-        })
-      }
+      {data.slice(0, maxLen).map(({ title, count }, idx) => {
+        let size =
+          count === min
+            ? fontSizeMin
+            : count / max * (fontSizeMax - fontSizeMin) + fontSizeMin
+        return (
+          <WordMapItem
+            key={idx}
+            title={title}
+            count={count}
+            onSelect={onSelect}
+            size={size}
+          />
+        )
+      })}
     </div>
   )
 }

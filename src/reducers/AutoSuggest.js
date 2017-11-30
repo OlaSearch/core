@@ -49,7 +49,9 @@ export default (state = initialState, action) => {
         qt
       } = action
 
-      let isOpen = (!!results.length || !!spellSuggestions.length || !!suggestedTerm) && !!state.q
+      let isOpen =
+        (!!results.length || !!spellSuggestions.length || !!suggestedTerm) &&
+        !!state.q
 
       return {
         ...state,
@@ -76,18 +78,27 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_FACET_AUTOSUGGEST:
-      var { name, displayName, type, multiSelect, template, label } = action.facet
+      var {
+        name,
+        displayName,
+        type,
+        multiSelect,
+        template,
+        label
+      } = action.facet
       return {
         ...state,
-        facet_query: [{
-          name,
-          type,
-          displayName,
-          multiSelect,
-          template,
-          label,
-          selected: [action.value]
-        }]
+        facet_query: [
+          {
+            name,
+            type,
+            displayName,
+            multiSelect,
+            template,
+            label,
+            selected: [action.value]
+          }
+        ]
       }
 
     case types.REMOVE_FACET_AUTOSUGGEST:

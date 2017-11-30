@@ -17,10 +17,15 @@ var urlSync = {
         let r = new RegExp(/\/(.*)?\//gi)
         let matches = r.exec(window.location.hash)
         if (matches) {
-          window.location.hash = char + urlSync.buildQueryString(qs, replaceQueryParamName)
+          window.location.hash =
+            char + urlSync.buildQueryString(qs, replaceQueryParamName)
         }
       }
-      window.history.pushState(null, '', char + urlSync.buildQueryString(qs, replaceQueryParamName))
+      window.history.pushState(
+        null,
+        '',
+        char + urlSync.buildQueryString(qs, replaceQueryParamName)
+      )
     }
   },
   getHistoryCharacter (type) {
@@ -54,7 +59,9 @@ var urlSync = {
       if (name === 'filters') {
         value = value.filter((item) => !item.hidden).map((item) => {
           var { name, selected } = item
-          if (typeof selected === 'object') selected = queryString.stringify(selected)
+          if (typeof selected === 'object') {
+            selected = queryString.stringify(selected)
+          }
           return name + ':' + selected
         })
       }
@@ -66,22 +73,23 @@ var urlSync = {
       if (Array.isArray(value)) {
         for (let i = 0, len = value.length; i < len; i++) {
           str.push(
-            encodeURIComponent(name) + '=' +
-            encodeURIComponent(value[i])
+            encodeURIComponent(name) + '=' + encodeURIComponent(value[i])
           )
         }
       } else {
-        value && str.push(
-          encodeURIComponent(name) + '=' +
-          encodeURIComponent(value)
-        )
+        value &&
+          str.push(encodeURIComponent(name) + '=' + encodeURIComponent(value))
       }
     }
 
     return str.join('&')
   },
   parseQueryString (initialState, config) {
-    let loc = config.history ? config.history === 'pushState' ? window.location.search : window.location.hash.slice(2) : window.location.search
+    let loc = config.history
+      ? config.history === 'pushState'
+        ? window.location.search
+        : window.location.hash.slice(2)
+      : window.location.search
     var qs = queryString.parse(loc)
     var { filters, facet_query: facetQuery } = qs
     var facetQueryObject = {}
@@ -129,12 +137,14 @@ var urlSync = {
 
       var fq = facetQuery
         .filter((item) => {
-          let [ name, value ] = item.split(':')
+          let [name, value] = item.split(':')
           if (!value) return false
           return find(propEq('name', name))(configFacets)
         })
         .map((item) => {
-          let [ name, value ] = item.split(/:(.+)?/) /* Split the first : Date strings can contain : */
+          let [name, value] = item.split(
+            /:(.+)?/
+          ) /* Split the first : Date strings can contain : */
           value = value.split('+')
           let facet = find(propEq('name', name))(configFacets)
           let { type } = facet
@@ -171,19 +181,18 @@ var urlSync = {
         }
       }
 
-      var filterQuery = filters
-        .map((item) => {
-          var [ name, value ] = item.split(':')
-          /* Parse query string */
-          if (value.indexOf('=') !== -1) value = queryString.parse(value)
+      var filterQuery = filters.map((item) => {
+        var [name, value] = item.split(':')
+        /* Parse query string */
+        if (value.indexOf('=') !== -1) value = queryString.parse(value)
 
-          var currentFilter = find(propEq('name', name))(config.filters)
+        var currentFilter = find(propEq('name', name))(config.filters)
 
-          return {
-            ...currentFilter,
-            selected: value
-          }
-        })
+        return {
+          ...currentFilter,
+          selected: value
+        }
+      })
 
       filtersObject = {
         filters: filterQuery

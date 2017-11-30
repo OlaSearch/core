@@ -12,7 +12,7 @@ class Pagination extends React.Component {
     currentPage: 1,
     totalResults: 0,
     onChangePage: null
-  };
+  }
 
   static propTypes = {
     totalResults: PropTypes.number.isRequired,
@@ -23,7 +23,7 @@ class Pagination extends React.Component {
       changePage: PropTypes.func.isRequired,
       executeSearch: PropTypes.func.isRequired
     })
-  };
+  }
 
   prevPage = () => {
     let { currentPage } = this.props
@@ -33,7 +33,7 @@ class Pagination extends React.Component {
     if (currentPage < 1) currentPage = 1
 
     this.selectPage(currentPage)
-  };
+  }
 
   nextPage = () => {
     let { currentPage, totalResults, perPage } = this.props
@@ -44,7 +44,7 @@ class Pagination extends React.Component {
     if (currentPage > totalPages) currentPage = totalPages
 
     this.selectPage(currentPage)
-  };
+  }
 
   selectPage = (page) => {
     let { actions, onChangePage } = this.props
@@ -63,12 +63,10 @@ class Pagination extends React.Component {
   createPageList (start, end, limit, left, right, ellipsis) {
     let list = []
     for (let i = start; i <= end; i++) {
-      if (i === 1 ||
-        i === parseInt(end) ||
-        end < limit) {
+      if (i === 1 || i === parseInt(end) || end < limit) {
         list.push(i)
       } else {
-        if (i === (right + 1) || i === (left - 1)) list.push(ellipsis)
+        if (i === right + 1 || i === left - 1) list.push(ellipsis)
 
         if (i <= right && i >= left) list.push(i)
       }
@@ -85,7 +83,7 @@ class Pagination extends React.Component {
   }
   registerRef = (input) => {
     this.pagination = input
-  };
+  }
   render () {
     let {
       totalResults,
@@ -102,7 +100,14 @@ class Pagination extends React.Component {
     let start = 1
     let left = Math.max(currentPageInt - edges, 0)
     let right = Math.min(currentPageInt + edges, totalPages)
-    let pages = this.createPageList(start, totalPages, limit, left, right, ellipsis)
+    let pages = this.createPageList(
+      start,
+      totalPages,
+      limit,
+      left,
+      right,
+      ellipsis
+    )
 
     let prevPageClass = classNames('ola-page ola-page-previous', {
       'ola-page-disabled': currentPageInt === 1
@@ -115,7 +120,9 @@ class Pagination extends React.Component {
 
     return (
       <nav className='ola-pagination' ref={this.registerRef}>
-        <button className={prevPageClass} onClick={this.prevPage}>{translate('pagination_prev_label')}</button>
+        <button className={prevPageClass} onClick={this.prevPage}>
+          {translate('pagination_prev_label')}
+        </button>
         {pages.map((page, idx) => {
           return (
             <PageNumber
@@ -126,7 +133,9 @@ class Pagination extends React.Component {
             />
           )
         })}
-        <button className={nextPageClass} onClick={this.nextPage}>{translate('pagination_next_label')}</button>
+        <button className={nextPageClass} onClick={this.nextPage}>
+          {translate('pagination_next_label')}
+        </button>
       </nav>
     )
   }
@@ -146,10 +155,9 @@ function PageNumber ({ page, isActive, selectPage }) {
     'ola-page-ellipsis': isNaN(page)
   })
   return (
-    <button
-      className={klass}
-      onClick={handleClick}
-    >{page}</button>
+    <button className={klass} onClick={handleClick}>
+      {page}
+    </button>
   )
 }
 

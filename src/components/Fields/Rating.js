@@ -1,7 +1,14 @@
 import React from 'react'
 import FieldLabel from './FieldLabel'
 
-function Rating ({ rating, interval, activeClass, inActiveClass, emptyClass, fieldLabel }) {
+function Rating ({
+  rating,
+  interval,
+  activeClass,
+  inActiveClass,
+  emptyClass,
+  fieldLabel
+}) {
   let normalized = rating / interval
   let star = []
   let total = Math.max(Math.ceil(normalized), 1)
@@ -20,9 +27,7 @@ function Rating ({ rating, interval, activeClass, inActiveClass, emptyClass, fie
   return (
     <div className='ola-field ola-field-rating'>
       <FieldLabel label={fieldLabel} />
-      <div className='ola-field-rating-stars'>
-        {star}
-      </div>
+      <div className='ola-field-rating-stars'>{star}</div>
     </div>
   )
 }
