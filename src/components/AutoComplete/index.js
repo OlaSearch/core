@@ -78,7 +78,7 @@ class AutoComplete extends React.Component {
         q: nextProps.q
       })
     }
-    if (nextProps.history !== this.props.history && this.state.q) {
+    if (nextProps.history !== this.props.history) {
       this.handleHistoryChange(nextProps.history)
     }
   }
@@ -122,7 +122,8 @@ class AutoComplete extends React.Component {
       results: this.props.showHistory
                 ? mergeResultsWithHistory({
                   history: newHistory,
-                  q: this.state.q,
+                  results: this.state.results,
+                  query: this.state.q,
                   showHistoryForQuery: this.props.showHistoryForQuery
                 })
                 : []
@@ -154,7 +155,7 @@ class AutoComplete extends React.Component {
 
     /* Trim text */
     if (term && term.length && trim(term) === '') return
-    
+
     if (!term && !q) {
       /* Close auto suggest */
       this.closeAutoSuggest()
