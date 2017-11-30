@@ -192,8 +192,8 @@ class AutoComplete extends React.Component {
             if (typeof payload === 'string') payload = JSON.parse(payload)
             let isCategory = payload.taxo_terms && payload.taxo_terms.length > 0 && !categoryFound && payload.type !== 'taxonomy'
             let { topClicks } = payload
-            let topClickDocs = topClicks && topClicks.length
-              ? topClicks.map((item) => ({ term: item.title, type: OLA_DOC_TYPE, ...item }))
+            let topClickDocs = i == 0 && topClicks && topClicks.length
+              ? topClicks.filter((_, idx) => idx === 0).map((item) => ({ term: item.title, type: OLA_DOC_TYPE, ...item }))
               : []
 
             /* If categories are found, we will need to create additional array items */
