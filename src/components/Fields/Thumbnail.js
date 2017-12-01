@@ -73,14 +73,14 @@ function Thumbnail (props, context) {
   )
 
   if (!thumbnailMobile) {
-    if (isLink) {
-      return (
-        <div className='ola-field ola-field-img'>
-          <a {...linkProps}>{imgThumbnail}</a>
-        </div>
-      )
-    }
-    return <div className='ola-field ola-field-img'>{imgThumbnail}</div>
+    return (
+      <div className='ola-field ola-field-img'>
+        {isLink
+          ? <a {...linkProps}>{imgThumbnail}</a>
+          : imgThumbnail
+        }
+      </div>
+    )
   }
 
   return (
