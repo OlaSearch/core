@@ -803,6 +803,7 @@
     }
   }(this));  
 
+  // Promise polyfill
   !function(n){function t(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return n[e].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var r={};t.m=n,t.c=r,t.p="",t(0)}({0:
   /*!***********************!*\
   !*** ./src/global.js ***!
