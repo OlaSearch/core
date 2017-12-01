@@ -235,8 +235,7 @@ export default (state = initialState, action) => {
         enriched_q: action.enriched_q || '',
         facet_query: action.facetQuery ? action.facetQuery : state.facet_query,
         /* Reset source */
-        source: null,
-        skip_intent: true
+        source: null
       }
 
     case types.OLA_REHYDRATE:

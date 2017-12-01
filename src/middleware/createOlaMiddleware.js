@@ -3,6 +3,7 @@
  * # Functions
  * 1. State persistence for Bookmarks, History and Context
  * 2. Ajax requests for search adapters
+ * 3. Set skip_intent to true if page > 1 or enriched_q !== ''
  */
 import { debounceLog, submitLog } from './../actions/Logger'
 import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
@@ -97,9 +98,11 @@ module.exports = (options = {}) => {
     let acl = currentState.Acl
     let callApi
     let mapping = getMapping(api, config)
+    let skipIntentEngine = query.page > 1 || query.enriched_q !== ''
     let params = proxy
       ? {
         ...query,
+        ...(skipIntentEngine ? { skip_intent: true } : {}),
         ...payload.extraParams,
         ...(payload.answer ? { answer: payload.answer } : {}),
         api,
