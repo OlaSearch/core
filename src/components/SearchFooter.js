@@ -25,10 +25,8 @@ function SearchFooter (props, context) {
   )
 
   return React.createElement(
-    infiniteScrollOverride || infiniteScroll || isPhone
-      ? LoadMore
-      : Pagination
-    , {
+    infiniteScrollOverride || infiniteScroll || isPhone ? LoadMore : Pagination,
+    {
       ...props,
       actions: boundActionCreators,
       beforeChangePage
