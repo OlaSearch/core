@@ -63,14 +63,10 @@ class DocumentPages extends React.Component {
     return (
       <div className='ola-field ola-field-pages'>
         {label}
-        <a
-          className={klass}
-          onClick={this.toggle}
-        >
+        <a className={klass} onClick={this.toggle}>
           {isVisible
             ? translate('doc_hide_pages')
-            : translate('doc_view_pages')
-          }
+            : translate('doc_view_pages')}
         </a>
         {isVisible
           ? pages.map((page, idx) => (
@@ -82,8 +78,7 @@ class DocumentPages extends React.Component {
                 q={q}
               />
             ))
-          : null
-          }
+          : null}
       </div>
     )
   }
