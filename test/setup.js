@@ -1,4 +1,31 @@
 import { JSDOM } from 'jsdom'
+const babelRegister = require('babel-register')
+
+function babelModules (whitelist) {
+  whitelist = whitelist || []
+  babelRegister({
+    ignore: function (filename) {
+      var ignore = false
+
+      if (filename.match('/node_modules/')) {
+        ignore = true
+
+        for (var i = 0, len = whitelist.length; i < len; i++) {
+          var moduleName = whitelist[i]
+
+          if (filename.match('/' + moduleName + '/')) {
+            ignore = false
+            break
+          }
+        }
+      }
+
+      return ignore
+    }
+  })
+}
+/* Register rambda */
+babelModules(['rambda'])
 
 global.dom = new JSDOM('<!doctype html><html><body></body></html>',{
   url: 'http://localhost'

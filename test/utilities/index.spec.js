@@ -1,5 +1,5 @@
 import expect from 'expect'
-import utils from './../../src/utilities'
+import * as utils from './../../src/utilities'
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 

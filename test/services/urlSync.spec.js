@@ -1,4 +1,4 @@
-import urlSync from './../../src/services/urlSync'
+import * as urlSync from './../../src/services/urlSync'
 import expect from 'expect'
 
 const QUERY = {
