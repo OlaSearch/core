@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
-import flatten from 'ramda/src/flatten'
+import flatten from 'rambda/modules/flatten'
 import noUiSlider from 'nouislider'
 import withFacetToggle from './../../decorators/OlaFacetToggle'
 import classNames from 'classnames'

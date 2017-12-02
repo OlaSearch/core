@@ -1,6 +1,6 @@
 import React from 'react'
 import AnswerDropdown from './AnswerDropdown'
-import equals from 'ramda/src/equals'
+import equals from 'rambda/modules/equals'
 
 const WILDCARD_MODULE_NAMES = ['spices.wildcard', 'spices.meeting']
 

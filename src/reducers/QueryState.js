@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
 import { checkIfFacetExists } from './../utilities'
 import { SEARCH_INPUTS } from './../constants/Settings'
-import equals from 'ramda/src/equals'
+import equals from 'rambda/modules/equals'
 
 export const initialState = {
   q: '',

@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var startYear = 2016
 var currentYear = new Date().getFullYear()
 var version = process.env.VERSION || 'latest'
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: [
@@ -23,12 +24,7 @@ module.exports = {
       }
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      },
-      comments: false
-    }),
+    new UglifyJsPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),

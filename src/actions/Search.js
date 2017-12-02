@@ -10,7 +10,7 @@ import {
   checkForAllowedCharacters,
   castNumberToStringArray
 } from './../utilities'
-import omit from 'ramda/src/omit'
+import omit from 'rambda/modules/omit'
 import xssFilters from 'xss-filters'
 
 /* Update Browser URL */

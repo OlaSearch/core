@@ -24,8 +24,8 @@ import injectTranslate from './../../decorators/OlaTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
-import find from 'ramda/src/find'
-import propEq from 'ramda/src/propEq'
+import find from 'rambda/modules/find'
+import propEq from 'rambda/modules/propEq'
 import {
   SEARCH_INPUTS,
   TYPE_HISTORY,

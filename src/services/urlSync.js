@@ -1,9 +1,9 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS, REMOVE_FROM_QUERY_STRING } from './../constants/Settings'
-import propEq from 'ramda/src/propEq'
-import find from 'ramda/src/find'
-import flatten from 'ramda/src/flatten'
+import propEq from 'rambda/modules/propEq'
+import find from 'rambda/modules/find'
+import flatten from 'rambda/modules/flatten'
 import xssFilters from 'xss-filters'
 
 const QUERY_ALT_NAME = 'keywords'
@@ -13,14 +13,7 @@ var urlSync = {
   pushState (qs, type, replaceQueryParamName) {
     var char = urlSync.getHistoryCharacter(type)
     if (window.history.pushState) {
-      if (type !== 'pushState') {
-        let r = new RegExp(/\/(.*)?\//gi)
-        let matches = r.exec(window.location.hash)
-        if (matches) {
-          window.location.hash =
-            char + urlSync.buildQueryString(qs, replaceQueryParamName)
-        }
-      }
+      /* Deprecated hash */
       window.history.pushState(
         null,
         '',
@@ -85,15 +78,11 @@ var urlSync = {
     return str.join('&')
   },
   parseQueryString (initialState, config) {
-    let loc = config.history
-      ? config.history === 'pushState'
-        ? window.location.search
-        : window.location.hash.slice(2)
-      : window.location.search
+    let loc = window.location.search /* Deprecated hash */
     var qs = queryString.parse(loc)
     var { filters, facet_query: facetQuery } = qs
-    var facetQueryObject = {}
-    var filtersObject = {}
+    var facetQueryObject = { facet_query: [] }
+    var filtersObject = { filters: [] }
     /**
      * If no qs
      */
@@ -116,10 +105,6 @@ var urlSync = {
           qs[p] = parseInt(qs[p])
         }
       }
-      /* Validate states: Prevent over-ride */
-      if (!qs['per_page']) qs['per_page'] = initialState['per_page']
-      if (!qs['page']) qs['page'] = initialState['page']
-      if (!qs['q']) qs['q'] = ''
     }
 
     /**
@@ -147,8 +132,7 @@ var urlSync = {
           ) /* Split the first : Date strings can contain : */
           value = value.split('+')
           let facet = find(propEq('name', name))(configFacets)
-          let { type } = facet
-          if (RANGE_FACETS.indexOf(type) !== -1 && value.length > 1) {
+          if (RANGE_FACETS.indexOf(facet.type) !== -1 && value.length > 1) {
             value = parseRangeValues(value)
           }
 
@@ -161,10 +145,6 @@ var urlSync = {
       /* Extend */
       facetQueryObject = {
         facet_query: fq
-      }
-    } else {
-      facetQueryObject = {
-        facet_query: []
       }
     }
 
@@ -196,10 +176,6 @@ var urlSync = {
 
       filtersObject = {
         filters: filterQuery
-      }
-    } else {
-      filtersObject = {
-        filters: []
       }
     }
     return {
