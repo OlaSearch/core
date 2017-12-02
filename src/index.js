@@ -22,7 +22,7 @@
  * }
  *
  */
-// require('./polyfill.js');
+import * as utilities from './utilities'
 
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
@@ -42,17 +42,12 @@ module.exports = {
   FacetFilters: require('./components/FacetFilters'),
   Sidebar: require('./components/Sidebar'),
   FilterButton: require('./components/FilterButton'),
-  Decorators: {
-    OlaRoute: require('./decorators/OlaRoute'),
-    OlaToggle: require('./decorators/OlaToggle'),
-    injectTranslate: require('./decorators/OlaTranslate'),
-    withLogger: require('./decorators/OlaLogger')
-  },
+  Decorators: require('./decorators'),
   olaReducer: require('./reducers'),
   createOlaMiddleware: require('./middleware/createOlaMiddleware'),
   createStore: require('./store/createStore'),
   prepareStore: require('./store/prepareStore'),
-  utilities: require('./utilities'),
+  utilities,
   DateParser: require('./utilities/dateParser'),
   urlSync: require('./services/urlSync'),
   storage: require('./services/storage'),
