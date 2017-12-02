@@ -28,8 +28,8 @@ export default function withToggle (WrappedComponent) {
         isCollapsed: !this.state.isCollapsed
       })
     }
-    hide = () => this.setState({ isCollapsed: false });
-    open = () => this.setState({ isCollapsed: true });
+    hide = () => this.setState({ isCollapsed: false })
+    open = () => this.setState({ isCollapsed: true })
     render () {
       return (
         <WrappedComponent

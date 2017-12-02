@@ -3,7 +3,13 @@ import ListKeyValue from './common/ListKeyValue'
 import injectTranslate from './../../decorators/OlaTranslate'
 import withToggle from './../../decorators/OlaToggle'
 
-function AnswerPersonInfoDetail ({ isCollapsed, toggleDispay, data, max, translate }) {
+function AnswerPersonInfoDetail ({
+  isCollapsed,
+  toggleDispay,
+  data,
+  max,
+  translate
+}) {
   let { caption } = data
   let size = data.length
   return (

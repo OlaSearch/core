@@ -16,9 +16,7 @@ import {
 
 function Answer ({ result, answer, isLoading, dispatch, templates }) {
   function handleChange (option, index, itemKey) {
-    dispatch(
-      changeAnswerSelection(index, itemKey, answer)
-    )
+    dispatch(changeAnswerSelection(index, itemKey, answer))
   }
   function handleSkipIntent () {
     dispatch(updateQueryTerm(answer.original))
@@ -37,13 +35,7 @@ function Answer ({ result, answer, isLoading, dispatch, templates }) {
 
       case 'person_info_grid':
       case 'text':
-        return (
-          <AnswerGrid
-            data={data}
-            result={result}
-            answer={answer}
-          />
-        )
+        return <AnswerGrid data={data} result={result} answer={answer} />
 
       case 'item_detail':
         return <ItemDetail data={data} />

@@ -20,12 +20,11 @@ function DocumentPages ({
   isCollapsed,
   toggleDisplay
 }) {
-
   function onSelect (page) {
     onClick && onClick(page, result)
     log({
       eventType: 'C',
-      result: result,
+      result,
       eventCategory: 'Page number',
       eventValue: page.pageNumber,
       eventLabel: 'Pages',
@@ -38,7 +37,7 @@ function DocumentPages ({
     toggleDisplay()
     log({
       eventType: 'C',
-      result: result,
+      result,
       eventCategory: event.target.innerText,
       eventLabel: 'Pages',
       eventAction: 'click',
