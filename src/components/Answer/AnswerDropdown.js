@@ -1,47 +1,32 @@
 import React from 'react'
 import classNames from 'classnames'
 import listensToClickOutside from 'react-onclickoutside'
+import withToggle from './../../decorators/OlaToggle'
 
 class AnswerDropdown extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isOpen: false
-    }
-  }
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
-  }
   handleClickOutside = () => {
-    if (this.state.isOpen) {
-      this.setState({
-        isOpen: false
-      })
-    }
+    this.props.toggleDisplay()
   }
   onChange = (option, index) => {
     this.props.onChange(option, index, this.props.item)
     this.handleClickOutside()
   }
   render () {
-    let { active, options } = this.props
-    let { isOpen } = this.state
+    let { active, options, isCollapsed, toggleDisplay } = this.props
     if (!options) return null
     let label = options[this.props.active].name
     if (options.length < 2) {
       return <div className='ola-answer-label'>{label}</div>
     }
     let klass = classNames('ola-answer-dropdown', {
-      'ola-answer-dropdown-active': isOpen
+      'ola-answer-dropdown-active': isCollapsed
     })
     return (
       <div className={klass}>
-        <div className='ola-answer-dropdown-label' onClick={this.toggle}>
+        <div className='ola-answer-dropdown-label' onClick={toggleDisplay}>
           {label}
         </div>
-        {isOpen ? (
+        {isCollapsed ? (
           <div className='ola-answer-dropdown-box'>
             {options.map((option, idx) => {
               return (
@@ -64,7 +49,7 @@ class AnswerDropdown extends React.Component {
 /**
  * Dropdown Item
  */
-const AnswerDropdownItem = (props) => {
+function AnswerDropdownItem (props) {
   function handleClick () {
     props.onChange(props.option, props.index)
   }
@@ -84,4 +69,4 @@ const AnswerDropdownItem = (props) => {
   )
 }
 
-module.exports = listensToClickOutside(AnswerDropdown)
+module.exports = listensToClickOutside(withToggle(AnswerDropdown))

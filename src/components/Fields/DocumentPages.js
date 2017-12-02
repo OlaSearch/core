@@ -2,86 +2,76 @@ import React from 'react'
 import TextField from './TextField'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
+import withToggle from './../../decorators/OlaToggle'
 import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
 
-class DocumentPages extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isVisible: false
-    }
-  }
-  toggle = () => {
-    this.setState(
-      {
-        isVisible: !this.state.isVisible
-      },
-      () => {
-        if (this.state.isVisible) {
-          this.props.log({
-            eventType: 'C',
-            result: this.props.result,
-            eventCategory: this.props.translate('doc_view_pages'),
-            eventLabel: 'Pages',
-            eventAction: 'click',
-            snippetId: this.props.snippetId
-          })
-        }
-      }
-    )
-  }
-  onSelect = (page) => {
-    this.props.onClick && this.props.onClick(page, this.props.result)
-    this.props.log({
+function DocumentPages ({
+  onClick,
+  result,
+  snippetId,
+  log,
+  pages,
+  q,
+  contentField,
+  translate,
+  fieldLabel,
+  showIfEmpty,
+  isCollapsed,
+  toggleDisplay
+}) {
+
+  function onSelect (page) {
+    onClick && onClick(page, result)
+    log({
       eventType: 'C',
-      result: this.props.result,
+      result: result,
       eventCategory: 'Page number',
       eventValue: page.pageNumber,
       eventLabel: 'Pages',
       eventAction: 'click',
-      snippetId: this.props.snippetId
+      snippetId
     })
   }
-  render () {
-    let {
-      pages,
-      q,
-      contentField,
-      translate,
-      fieldLabel,
-      showIfEmpty
-    } = this.props
-    let { isVisible } = this.state
 
-    if (!pages.length && !showIfEmpty) return null
-
-    let label = <FieldLabel label={fieldLabel} />
-    let klass = classNames('ola-link-view-pages', {
-      'ola-link-view-pages-hide': isVisible
+  function toggle (event) {
+    toggleDisplay()
+    log({
+      eventType: 'C',
+      result: result,
+      eventCategory: event.target.innerText,
+      eventLabel: 'Pages',
+      eventAction: 'click',
+      snippetId
     })
-    return (
-      <div className='ola-field ola-field-pages'>
-        {label}
-        <a className={klass} onClick={this.toggle}>
-          {isVisible
-            ? translate('doc_hide_pages')
-            : translate('doc_view_pages')}
-        </a>
-        {isVisible
-          ? pages.map((page, idx) => (
-              <PageDetail
-                onSelectPage={this.onSelect}
-                page={page}
-                contentField={contentField}
-                key={idx}
-                q={q}
-              />
-            ))
-          : null}
-      </div>
-    )
   }
+
+  if (!pages.length && !showIfEmpty) return null
+  let label = <FieldLabel label={fieldLabel} />
+  let klass = classNames('ola-link-view-pages', {
+    'ola-link-view-pages-hide': isCollapsed
+  })
+  return (
+    <div className='ola-field ola-field-pages'>
+      {label}
+      <a className={klass} onClick={toggle}>
+        {isCollapsed
+          ? translate('doc_hide_pages')
+          : translate('doc_view_pages')}
+      </a>
+      {isCollapsed
+        ? pages.map((page, idx) => (
+            <PageDetail
+              onSelectPage={onSelect}
+              page={page}
+              contentField={contentField}
+              key={idx}
+              q={q}
+            />
+          ))
+        : null}
+    </div>
+  )
 }
 
 /**
@@ -111,4 +101,4 @@ function PageDetail ({ page, contentField, onSelectPage }) {
   )
 }
 
-module.exports = injectTranslate(withLogger(DocumentPages))
+module.exports = injectTranslate(withLogger(withToggle(DocumentPages)))

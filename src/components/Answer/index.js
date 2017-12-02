@@ -14,21 +14,21 @@ import {
   setSkipIntent
 } from './../../actions/Search'
 
-class Answer extends React.Component {
-  handleChange = (option, index, itemKey) => {
-    this.props.dispatch(
-      changeAnswerSelection(index, itemKey, this.props.answer)
+function Answer ({ result, answer, isLoading, dispatch, templates }) {
+  function handleChange (option, index, itemKey) {
+    dispatch(
+      changeAnswerSelection(index, itemKey, answer)
     )
   }
-  handleSkipIntent = () => {
-    this.props.dispatch(updateQueryTerm(this.props.answer.original))
-    this.props.dispatch(setSkipIntent(true))
-    this.props.dispatch(executeSearch())
+  function handleSkipIntent () {
+    dispatch(updateQueryTerm(answer.original))
+    dispatch(setSkipIntent(true))
+    dispatch(executeSearch())
   }
-  templatePicker = (template, data, module) => {
+  function templatePicker (template, data, module) {
     /* Check for user defined templates */
-    if (this.props.templates && this.props.templates.hasOwnProperty(template)) {
-      let Component = this.props.templates[template]
+    if (templates && templates.hasOwnProperty(template)) {
+      let Component = templates[template]
       return <Component data={data} module={module} />
     }
     switch (template) {
@@ -40,8 +40,8 @@ class Answer extends React.Component {
         return (
           <AnswerGrid
             data={data}
-            result={this.props.result}
-            answer={this.props.answer}
+            result={result}
+            answer={answer}
           />
         )
 
@@ -61,58 +61,55 @@ class Answer extends React.Component {
         return null
     }
   }
-  render () {
-    const { answer, isLoading } = this.props
 
-    if (isLoading) {
-      return (
-        <div className='ola-answer-loading'>
-          <p>Loading instant answer</p>
-        </div>
-      )
-    }
-
-    if (!answer || !answer.card) return null
-
-    let { card, module, intent } = answer
-    let { template, source } = card
-    let intentName = intent ? intent.split('.').pop() : null
-    let snippetClass = classNames(
-      'ola-snippet-answer',
-      `ola-snippet-template-${template}`
+  if (isLoading) {
+    return (
+      <div className='ola-answer-loading'>
+        <p>Loading instant answer</p>
+      </div>
     )
-    let answerKlass = classNames(
-      'ola-answer',
-      `ola-answer-intent-${intentName}`,
-      `ola-answer-template-${template}`
-    )
-    /**
-     * If the answer is from Intent engine
-     */
-    if (card) {
-      return (
-        <div className={snippetClass}>
-          <AnswerSuggestion
-            answer={answer}
-            onChange={this.handleChange}
-            onSkipIntent={this.handleSkipIntent}
-          />
-          <div className={answerKlass}>
-            {this.templatePicker(template, card, module)}
-          </div>
-          {source ? (
-            <div className='ola-answer-source'>
-              Source:{' '}
-              <a target='_blank' href={source.url}>
-                {source.name}
-              </a>
-            </div>
-          ) : null}
-        </div>
-      )
-    }
-    return null
   }
+
+  if (!answer || !answer.card) return null
+
+  let { card, module, intent } = answer
+  let { template, source } = card
+  let intentName = intent ? intent.split('.').pop() : null
+  let snippetClass = classNames(
+    'ola-snippet-answer',
+    `ola-snippet-template-${template}`
+  )
+  let answerKlass = classNames(
+    'ola-answer',
+    `ola-answer-intent-${intentName}`,
+    `ola-answer-template-${template}`
+  )
+  /**
+   * If the answer is from Intent engine
+   */
+  if (card) {
+    return (
+      <div className={snippetClass}>
+        <AnswerSuggestion
+          answer={answer}
+          onChange={handleChange}
+          onSkipIntent={handleSkipIntent}
+        />
+        <div className={answerKlass}>
+          {templatePicker(template, card, module)}
+        </div>
+        {source ? (
+          <div className='ola-answer-source'>
+            Source:{' '}
+            <a target='_blank' href={source.url}>
+              {source.name}
+            </a>
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+  return null
 }
 
 module.exports = Answer

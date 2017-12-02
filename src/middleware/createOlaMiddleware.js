@@ -272,9 +272,9 @@ module.exports = (options = {}) => {
          * searchInput = `voice`|`url`|`keyboard`
          */
         /* Query becomes empty for long conversations */
-        let isBotReply = answer && 'awaiting_user_input' in answer
-        let sendImmediateLog = isBotReply && !answer.awaiting_user_input
-        let logFn = sendImmediateLog ? submitLog : debounceLog
+        const isBotReply = answer && 'awaiting_user_input' in answer
+        const sendImmediateLog = isBotReply && !answer.awaiting_user_input
+        const logFn = sendImmediateLog ? submitLog : debounceLog
         if (
           logger &&
           logger.enabled &&

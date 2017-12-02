@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
-import withFacetToggle from './../../decorators/OlaFacetToggle'
+import withFacetToggle from './../../decorators/OlaToggle'
 import DateParser from './../../utilities/dateParser'
 import classNames from 'classnames'
 import DatePicker from 'react-pikaday-datepicker'

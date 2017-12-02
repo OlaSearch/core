@@ -9,6 +9,7 @@ import xssFilters from 'xss-filters'
 const QUERY_ALT_NAME = 'keywords'
 
 export const character = '?'
+
 export function pushState (qs, type, replaceQueryParamName) {
   var char = getHistoryCharacter(type)
   if (window.history.pushState) {
@@ -20,15 +21,18 @@ export function pushState (qs, type, replaceQueryParamName) {
     )
   }
 }
+
 export function getHistoryCharacter (type) {
   return type === 'pushState' ? '?' : '#/?'
 }
+
 export function replaceState (qs, type) {
   var char = getHistoryCharacter(type)
   if (window.history.replaceState) {
     window.history.replaceState(null, '', char + buildQueryString(qs))
   }
 }
+
 export function buildQueryString (params, replaceQueryParamName) {
   var str = []
   /* Loop */
@@ -64,9 +68,7 @@ export function buildQueryString (params, replaceQueryParamName) {
 
     if (Array.isArray(value)) {
       for (let i = 0, len = value.length; i < len; i++) {
-        str.push(
-          encodeURIComponent(name) + '=' + encodeURIComponent(value[i])
-        )
+        str.push(encodeURIComponent(name) + '=' + encodeURIComponent(value[i]))
       }
     } else {
       value &&

@@ -4,7 +4,7 @@ import {
   executeSearch,
   removeFacetItem
 } from './../../actions/Search'
-import withFacetToggle from './../../decorators/OlaFacetToggle'
+import withFacetToggle from './../../decorators/OlaToggle'
 import injectTranslate from './../../decorators/OlaTranslate'
 import classNames from 'classnames'
 import { toNestedArray } from './../../utilities'

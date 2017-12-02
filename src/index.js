@@ -44,7 +44,7 @@ module.exports = {
   FilterButton: require('./components/FilterButton'),
   Decorators: {
     OlaRoute: require('./decorators/OlaRoute'),
-    OlaFacetToggle: require('./decorators/OlaFacetToggle'),
+    OlaToggle: require('./decorators/OlaToggle'),
     injectTranslate: require('./decorators/OlaTranslate'),
     withLogger: require('./decorators/OlaLogger')
   },
