@@ -167,7 +167,6 @@ class DateRange extends React.Component {
 
   render () {
     let { facet, dateLabels, isCollapsed, toggleDisplay, isPhone } = this.props
-
     let { values } = facet
 
     /* Check if dates exists */

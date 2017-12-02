@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
-    "release": "cross-env NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js && gulp build",
+    "release": "cross-env NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js --json > stats.json && gulp build",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
@@ -123,7 +123,6 @@
     "react-list": "^0.8.8",
     "react-onclickoutside": "^6.7.0",
     "react-pikaday-datepicker": "3.0.1",
-    "react-responsive": "^4.0.3",
     "redux-logger": "^3.0.6",
     "xss-filters": "^1.2.7"
   },

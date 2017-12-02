@@ -1,5 +1,6 @@
 import React from 'react'
 import TextField from './TextField'
+import classNames from 'classnames'
 import injectTranslate from './../../decorators/OlaTranslate'
 import withLogger from './../../decorators/OlaLogger'
 import FieldLabel from './FieldLabel'
@@ -56,35 +57,33 @@ class DocumentPages extends React.Component {
     if (!pages.length && !showIfEmpty) return null
 
     let label = <FieldLabel label={fieldLabel} />
-
-    if (!isVisible) {
-      return (
-        <div className='ola-field ola-field-pages'>
-          {label}
-          <a className='ola-link-view-pages' onClick={this.toggle}>
-            {translate('doc_view_pages')}
-          </a>
-        </div>
-      )
-    }
+    let klass = classNames('ola-link-view-pages', {
+      'ola-link-view-pages-hide': isVisible
+    })
     return (
       <div className='ola-field ola-field-pages'>
         {label}
         <a
-          className='ola-link-view-pages ola-link-view-pages-hide'
+          className={klass}
           onClick={this.toggle}
         >
-          {translate('doc_hide_pages')}
+          {isVisible
+            ? translate('doc_hide_pages')
+            : translate('doc_view_pages')
+          }
         </a>
-        {pages.map((page, idx) => (
-          <PageDetail
-            onSelectPage={this.onSelect}
-            page={page}
-            contentField={contentField}
-            key={idx}
-            q={q}
-          />
-        ))}
+        {isVisible
+          ? pages.map((page, idx) => (
+              <PageDetail
+                onSelectPage={this.onSelect}
+                page={page}
+                contentField={contentField}
+                key={idx}
+                q={q}
+              />
+            ))
+          : null
+          }
       </div>
     )
   }

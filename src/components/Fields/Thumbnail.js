@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Media from 'react-responsive'
 import omit from 'ramda/src/omit'
 import withLogger from './../../decorators/OlaLogger'
 
@@ -8,7 +7,6 @@ function Thumbnail (props, context) {
   var { mediaQuery, cdn } = context.config
   var {
     thumbnail,
-    thumbnail_mobile: thumbnailMobile,
     baseUrl,
     isLink,
     url,
@@ -22,7 +20,7 @@ function Thumbnail (props, context) {
     rest
   )
 
-  if (!thumbnail && !thumbnailMobile) return null
+  if (!thumbnail) return null
 
   let isSvg =
     thumbnail
@@ -72,25 +70,9 @@ function Thumbnail (props, context) {
     />
   )
 
-  if (!thumbnailMobile) {
-    return (
-      <div className='ola-field ola-field-img'>
-        {isLink ? <a {...linkProps}>{imgThumbnail}</a> : imgThumbnail}
-      </div>
-    )
-  }
-
   return (
     <div className='ola-field ola-field-img'>
-      <Media query={mediaQuery.tablet}>{imgThumbnail}</Media>
-      <Media query={mediaQuery.mobile}>
-        <img
-          className='ola-img ola-img-mobile'
-          {...restProps}
-          src={`${baseUrl}${thumbnailMobile}`}
-          alt=''
-        />
-      </Media>
+      {isLink ? <a {...linkProps}>{imgThumbnail}</a> : imgThumbnail}
     </div>
   )
 }
@@ -100,8 +82,7 @@ Thumbnail.contextTypes = {
 }
 
 Thumbnail.propTypes = {
-  thumbnail: PropTypes.string,
-  thumbnail_mobile: PropTypes.string
+  thumbnail: PropTypes.string
 }
 
 Thumbnail.defaultProps = {
