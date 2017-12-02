@@ -3,7 +3,7 @@ const concat = require('gulp-concat')
 const uglify = require('gulp-uglify')
 
 gulp.task('polyfill', () => {
-  gulp.src(['./src/polyfill.js'])
+  return gulp.src(['./src/polyfill.js'])
     .pipe(uglify())
     .pipe(gulp.dest('./dist'))
 })

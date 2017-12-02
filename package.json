@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
-    "watch2": "BABEL_ENV=production babel --watch ./node_modules/rambda/modules --out-dir ./node_modules/rambda/modules2",
+    "watch2": "BABEL_ENV=production babel ./node_modules/rambda/modules --out-dir ./node_modules/rambda/modules",
     "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && gulp build",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
@@ -121,7 +121,7 @@
     "nouislider": "^10.1.0",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
-    "rambda": "^1.0.5",
+    "rambda": "^1.0.6",
     "react-list": "^0.8.8",
     "react-onclickoutside": "^6.7.0",
     "react-pikaday-datepicker": "3.0.1",

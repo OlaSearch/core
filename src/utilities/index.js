@@ -1,5 +1,5 @@
 import React from 'react'
-import flatten from 'rambda/modules/flatten'
+import flatten from 'rambda/lib/flatten'
 
 export function supplant (s, d) {
   for (var p in d) {

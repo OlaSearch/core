@@ -9,20 +9,21 @@
 ;(function(undefined) {
   
   // Object.assign
-  Object.assign = function assign(target, source) { // eslint-disable-line no-unused-vars
-    for (var index = 1, key, src; index < arguments.length; ++index) {
-      src = arguments[index];
-  
-      for (key in src) {
-        if (Object.prototype.hasOwnProperty.call(src, key)) {
-          target[key] = src[key];
+  if (typeof Object.assign != 'function') {
+    Object.assign = function assign(target, source) { // eslint-disable-line no-unused-vars
+      for (var index = 1, key, src; index < arguments.length; ++index) {
+        src = arguments[index];
+    
+        for (key in src) {
+          if (Object.prototype.hasOwnProperty.call(src, key)) {
+            target[key] = src[key];
+          }
         }
       }
-    }
-  
-    return target;
-  };
-  
+    
+      return target;
+    };
+  }  
   
   // Symbol
   // A modification of https://github.com/WebReflection/get-own-property-symbols
@@ -729,7 +730,7 @@
   };
 
   /* Polyfill for findIndex */
-  if (!Array.prototype.findIndex) {
+  if (typeof Array.prototype.findIndex != 'function') {
     Object.defineProperty(Array.prototype, 'findIndex', {value: function (predicate) {
       if (this == null) { throw new TypeError('"this" is null or not defined') }
       var o = Object(this); var len = o.length >>> 0; if (typeof predicate !== 'function') { throw new TypeError('predicate must be a function') }
@@ -743,8 +744,7 @@
 
   // performance.now
   (function (global) {
-    var
-  startTime = Date.now()
+    var startTime = Date.now()
 
     if (!global.performance) {
       global.performance = {}
@@ -801,7 +801,89 @@
         clearTimeout(id)
       }
     }
-  }(this));  
+  }(this));
+
+  // Array.prototype.includes
+  if (typeof Array.prototype.includes != 'function') {
+    Object.defineProperty(Array.prototype, 'includes', {
+      configurable: true,
+      value: function includes (searchElement /*, fromIndex*/) {
+        'use strict';
+        var O = Object(this);
+        var len = parseInt(O.length) || 0;
+        if (len === 0) {
+          return false;
+        }
+        var n = parseInt(arguments[1]) || 0;
+        var k;
+        if (n >= 0) {
+          k = n;
+        } else {
+          k = len + n;
+          if (k < 0) {
+            k = 0;
+          }
+        }
+        var currentElement;
+        while (k < len) {
+          currentElement = O[k];
+          if (searchElement === currentElement ||
+            (searchElement !== searchElement && currentElement !== currentElement)) {
+            return true;
+          }
+          k++;
+        }
+        return false;
+      },
+      writable: true
+    });
+  }
+
+  // Array.prototype.find
+  if (typeof Array.prototype.find != 'function') {
+    Object.defineProperty(Array.prototype, 'find', {
+      configurable: true,
+      value: function find(callback) {
+        if (this === undefined || this === null) {
+          throw new TypeError(this + ' is not an object');
+        }
+
+        if (typeof callback !== 'function') {
+          throw new TypeError(callback + ' is not a function');
+        }
+
+        var
+        object = Object(this),
+        scope = arguments[1],
+        arraylike = object instanceof String ? object.split('') : object,
+        length = Math.max(Math.min(arraylike.length, 9007199254740991), 0) || 0,
+        index = -1,
+        element;
+
+        while (++index < length) {
+          if (index in arraylike) {
+            element = arraylike[index];
+
+            if (callback.call(scope, element, index, object)) {
+              return element;
+            }
+          }
+        }
+      },
+      writable: true
+    });
+  }
+
+  /**
+  * @license MIT, GPL, do whatever you want
+  * @requires polyfill: Array.prototype.slice fix {@link https://gist.github.com/brettz9/6093105}
+  */
+  if (!Array.from) {
+    Array.from = function (object) {
+        'use strict';
+        return [].slice.call(object);
+    };
+  }
 
   // Promise polyfill
   !function(n){function t(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return n[e].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var r={};t.m=n,t.c=r,t.p="",t(0)}({0:

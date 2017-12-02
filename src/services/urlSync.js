@@ -1,9 +1,9 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
 import { RANGE_FACETS, REMOVE_FROM_QUERY_STRING } from './../constants/Settings'
-import propEq from 'rambda/modules/propEq'
-import find from 'rambda/modules/find'
-import flatten from 'rambda/modules/flatten'
+import propEq from 'rambda/lib/propEq'
+import find from 'rambda/lib/find'
+import flatten from 'rambda/lib/flatten'
 import xssFilters from 'xss-filters'
 
 const QUERY_ALT_NAME = 'keywords'

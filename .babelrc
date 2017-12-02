@@ -1,3 +1,9 @@
 {
-  presets: ["olasearch"]
+  "presets": ["olasearch", ["env", {
+    "loose": true,
+    "modules": false
+  }]],
+  "plugins": [
+    "transform-class-properties"
+  ]
 }

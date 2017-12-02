@@ -24,10 +24,10 @@ module.exports = {
       }
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new UglifyJsPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
+    new UglifyJsPlugin(),    
     new webpack.BannerPlugin({ banner: `Copyright Ola Search Pte Ltd ${startYear} - ${currentYear}`, raw: false, entryOnly: true })
   ],
   resolve: {
@@ -49,11 +49,14 @@ module.exports = {
   module: {
     rules: [{
       test: /\.js?/,
-      use: ['babel-loader'],
+      use: {
+        loader: 'babel-loader'
+      },
       exclude: /node_modules/,
       include: [
         path.join(__dirname, './'),
-        path.join(__dirname, './../src')
+        path.join(__dirname, './src'),
+        path.resolve(__dirname, 'node_modules', 'rambda')
       ]
     },
     { test: require.resolve('react'), loader: 'expose-loader?React' },

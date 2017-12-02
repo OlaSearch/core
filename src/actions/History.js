@@ -3,8 +3,8 @@ import {
   buildQueryString,
   character as hashCharacter
 } from './../services/urlSync'
-import omit from 'rambda/modules/omit'
-import flatten from 'rambda/modules/flatten'
+import omit from 'rambda/lib/omit'
+import flatten from 'rambda/lib/flatten'
 import { debounce, supplant } from './../utilities'
 import DateParser from './../utilities/dateParser'
 
