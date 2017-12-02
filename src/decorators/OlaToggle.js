@@ -23,7 +23,7 @@ export default function withToggle (WrappedComponent) {
         })
       }
     }
-    toggleDisplay = () => {
+    toggle = () => {
       this.setState({
         isCollapsed: !this.state.isCollapsed
       })
@@ -35,9 +35,9 @@ export default function withToggle (WrappedComponent) {
         <WrappedComponent
           {...this.props}
           isCollapsed={this.state.isCollapsed}
-          toggleDisplay={this.toggleDisplay}
-          open={open}
-          hide={hide}
+          toggleDisplay={this.toggle}
+          open={this.open}
+          hide={this.hide}
         />
       )
     }
