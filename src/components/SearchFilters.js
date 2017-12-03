@@ -8,8 +8,8 @@ import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
 import DatePicker from './FacetFilters/DatePicker'
 import TagCloud from './FacetFilters/TagCloud'
-import flatten from 'rambda/lib/flatten'
-import equals from 'rambda/lib/equals'
+import flatten from 'ramda/src/flatten'
+import equals from 'ramda/src/equals'
 import classNames from 'classnames'
 import { getFacetsToDisplay } from './../utilities'
 
@@ -32,6 +32,8 @@ class SearchFilters extends React.Component {
   }
 
   shouldComponentUpdate (nextProps) {
+    // console.log(this.props.selected, nextProps.selected)
+    // console.log(equals(this.props.selected, nextProps.selected))
     return (
       this.props.facets !== nextProps.facets ||
       !equals(this.props.selected, nextProps.selected)

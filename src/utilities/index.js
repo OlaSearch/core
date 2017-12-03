@@ -1,5 +1,5 @@
 import React from 'react'
-import flatten from 'rambda/lib/flatten'
+import flatten from 'ramda/src/flatten'
 
 export function supplant (s, d) {
   for (var p in d) {
@@ -451,4 +451,15 @@ export function getCaretPosition () {
 
 export function redirect (url) {
   window.location.href = url
+}
+
+export function once (fn, context) {
+  var result
+  return () => { 
+    if (fn) {
+      result = fn.apply(context || this, arguments)
+      fn = null
+    }
+    return result
+  }
 }

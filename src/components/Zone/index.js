@@ -7,9 +7,9 @@ import {
 } from './../../actions/AutoSuggest'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import flatten from 'rambda/lib/flatten'
-import find from 'rambda/lib/find'
-import propEq from 'rambda/lib/propEq'
+import flatten from 'ramda/src/flatten'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 
 /* Create a zone facet */
 const createZoneFacet = (name) => ({ name, zone: true, type: 'string' })

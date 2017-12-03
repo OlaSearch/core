@@ -47,6 +47,7 @@ module.exports = (
     queryBuilder: new QueryBuilder(config) /* For olaMiddleware */,
     searchService: new Http(config) /* For olaMiddleware */
   }
+  const { namespace, env, projectId } = config
   const olaMiddleWare = createOlaMiddleware(options)
 
   /* Reducer */
@@ -85,12 +86,12 @@ module.exports = (
    */
   store.dispatch({
     type: types.OLA_REHYDRATE,
-    namespace: config.namespace,
+    namespace,
     isNewUser,
-    projectId: config.projectId,
+    projectId,
     searchSession,
     userSession,
-    env: config.env
+    env
   })
 
   return store

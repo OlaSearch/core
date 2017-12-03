@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import omit from 'rambda/lib/omit'
+import omit from 'ramda/src/omit'
 import withLogger from './../../decorators/OlaLogger'
 
 function Thumbnail (props, context) {

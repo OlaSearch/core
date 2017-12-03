@@ -1,7 +1,8 @@
+coverage
 dist
-devServer.js
-webpack.*
-demo
+examples
+node_modules
 src
 test
 webpack.*
+demo

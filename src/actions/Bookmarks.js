@@ -1,5 +1,5 @@
 import types from './../constants/ActionTypes'
-import omit from 'rambda/lib/omit'
+import omit from 'ramda/src/omit'
 
 export function addBookmark (snippet) {
   return {

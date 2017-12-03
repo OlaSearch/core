@@ -1,6 +1,6 @@
 import React from 'react'
-import find from 'rambda/lib/find'
-import propEq from 'rambda/lib/propEq'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 import { addFacet } from './../../actions/AutoSuggest'
 
 const FacetSuggestion = (props) => {

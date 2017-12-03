@@ -9,9 +9,9 @@ import {
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
 import injectTranslate from './../../decorators/OlaTranslate'
-import flatten from 'rambda/lib/flatten'
-import find from 'rambda/lib/find'
-import propEq from 'rambda/lib/propEq'
+import flatten from 'ramda/src/flatten'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
 
 class TabsFilter extends React.Component {
   static propTypes = {
