@@ -7,7 +7,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: [
-    // './src/polyfill',
     './src/index'
   ],
   output: {

@@ -191,6 +191,7 @@ module.exports = (options = {}) => {
           totalResults = parser.normalizeTotalResults(response)
           facets = parser.normalizeFacets(response)
           qt = parser.queryTime(response)
+          responseTime = response.responseTime
         }
 
         /**

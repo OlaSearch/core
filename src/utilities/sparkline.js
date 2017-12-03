@@ -1,16 +1,3 @@
-function convertRange (value, [min, max], [rangeMin, rangeMax]) {
-  return (value - min) * (rangeMax - rangeMin) / (max - min) + rangeMin
-}
-
-function scaleAndTransform (data, range) {
-  var max = Math.max.apply(Math, data)
-  var min = Math.min.apply(Math, data)
-  return data.map((i) => {
-    let d = i - (min < 0 ? min : 0)
-    return convertRange(d, [min, max], range)
-  })
-}
-
 export function SparkLine () {
   if (window.HTMLCanvasElement) {
     return {
@@ -89,4 +76,17 @@ export function SparkLine () {
       }
     }
   }
+}
+
+function convertRange (value, [min, max], [rangeMin, rangeMax]) {
+  return (value - min) * (rangeMax - rangeMin) / (max - min) + rangeMin
+}
+
+function scaleAndTransform (data, range) {
+  var max = Math.max.apply(Math, data)
+  var min = Math.min.apply(Math, data)
+  return data.map((i) => {
+    let d = i - (min < 0 ? min : 0)
+    return convertRange(d, [min, max], range)
+  })
 }
