@@ -4,7 +4,7 @@ import {
   character as hashCharacter
 } from './../services/urlSync'
 import omit from 'rambda/lib/omit'
-import flatten from 'rambda/lib/flatten'
+// import flatten from 'rambda/lib/flatten'
 import { debounce, supplant } from './../utilities'
 import DateParser from './../utilities/dateParser'
 
@@ -16,31 +16,35 @@ export function addHistory (options) {
     if (!q || !totalResults || q === '*') return
 
     /* Filtering history */
-    var query = omit(['page', 'per_page', 'referrer'], QueryState)
-    var activeFacets = flatten(
-      facet_query.map((item) => {
-        let { selected, template, dateFormat, type, name } = item
-        switch (type) {
-          case 'range':
-          case 'daterange':
-          case 'datepicker':
-            if (typeof selected === 'string') {
-              return selected
-            } else {
-              return selected.map((item) => {
-                let [from, to] = item
-                return `${name}:${supplant(template, {
-                  from: dateFormat ? DateParser.format(from, dateFormat) : from,
-                  to: dateFormat ? DateParser.format(to, dateFormat) : to
-                })}`
-              })
-            }
-
-          default:
-            return `${name}:${selected}`
-        }
-      })
+    var query = omit(
+      ['page', 'per_page', 'referrer', 'facet_query', 'filters'],
+      QueryState
     )
+    var activeFacets = []
+    // flatten(
+    //   facet_query.map((item) => {
+    //     let { selected, template, dateFormat, type, name } = item
+    //     switch (type) {
+    //       case 'range':
+    //       case 'daterange':
+    //       case 'datepicker':
+    //         if (typeof selected === 'string') {
+    //           return selected
+    //         } else {
+    //           return selected.map((item) => {
+    //             let [from, to] = item
+    //             return `${name}:${supplant(template, {
+    //               from: dateFormat ? DateParser.format(from, dateFormat) : from,
+    //               to: dateFormat ? DateParser.format(to, dateFormat) : to
+    //             })}`
+    //           })
+    //         }
+
+    //       default:
+    //         return `${name}:${selected}`
+    //     }
+    //   })
+    // )
 
     /* Check if it already exists */
     var exists = history.some((item) => item.q === q)

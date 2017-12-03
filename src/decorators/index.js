@@ -1,11 +1,4 @@
-import OlaRoute from './OlaRoute'
-import withToggle from './OlaToggle'
-import injectTranslate from './OlaTranslate'
-import withLogger from './OlaLogger'
-
-export {
-  OlaRoute,
-  withToggle,
-  injectTranslate,
-  withLogger
-}
+export OlaRoute from './OlaRoute'
+export withToggle from './OlaToggle'
+export injectTranslate from './OlaTranslate'
+export withLogger from './OlaLogger'

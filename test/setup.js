@@ -25,7 +25,7 @@ function babelModules (whitelist) {
   })
 }
 /* Register rambda */
-babelModules(['rambda'])
+// babelModules(['rambda'])
 
 global.dom = new JSDOM('<!doctype html><html><body></body></html>',{
   url: 'http://localhost'

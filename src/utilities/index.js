@@ -452,4 +452,3 @@ export function getCaretPosition () {
 export function redirect (url) {
   window.location.href = url
 }
-

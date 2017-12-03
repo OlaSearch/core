@@ -22,7 +22,6 @@
  * }
  *
  */
-import * as utilities from './utilities'
 
 module.exports = {
   OlaProvider: require('./containers/OlaProvider'),
@@ -47,7 +46,7 @@ module.exports = {
   createOlaMiddleware: require('./middleware/createOlaMiddleware'),
   createStore: require('./store/createStore'),
   prepareStore: require('./store/prepareStore'),
-  utilities,
+  utilities: require('./utilities'),
   DateParser: require('./utilities/dateParser'),
   urlSync: require('./services/urlSync'),
   storage: require('./services/storage'),
