@@ -4,6 +4,9 @@
  * Set
  * Request animation frame
  * Array.prototype.findIndex
+ * Array.prototype.find
+ * Array.prototype.includes
+ * Array.prototype.from
  * Number.isNaN
  */
 ;(function(undefined) {
