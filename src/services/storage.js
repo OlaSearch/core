@@ -2,12 +2,19 @@ import { getKey } from './../utilities'
 /**
  * Use try {} catch (e) {} for localStorage because of users browser privacy settings
  */
+/**
+ * A cookie cache to prevent accessing document.cookie
+ * Accessing document.cookie adds 0.5ms to ola.rehydrate
+ */
+var cookieCache = document.cookie
+/* Default export */
 module.exports = {
   get (key, namespace) {
     let _key = getKey(key, namespace)
     try {
-      if (window.localStorage.getItem(_key)) {
-        return JSON.parse(window.localStorage.getItem(_key))
+      let value = window.localStorage.getItem(_key)
+      if (value) {
+        return JSON.parse(value)
       }
     } catch (err) {
       console.warn(err)
@@ -40,7 +47,7 @@ module.exports = {
         expires = `; expires=${date.toGMTString()}`
       } else expires = ''
       try {
-        document.cookie = `${getKey(
+        document.cookie = cookieCache = `${getKey(
           name,
           namespace
         )}=${value}${expires}; path=/`
@@ -51,7 +58,7 @@ module.exports = {
     get (name, namespace) {
       try {
         var nameEQ = `${getKey(name, namespace)}=`
-        var ca = document.cookie.split(';')
+        var ca = cookieCache.split(';')
         for (let i = 0, len = ca.length; i < len; i++) {
           var c = ca[i]
           while (c.charAt(0) === ' ') c = c.substring(1, c.length)
