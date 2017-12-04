@@ -150,7 +150,7 @@ module.exports = (options = {}) => {
         /* Check if process response is false */
 
         if (processData) {
-          response = processData(response)
+          response = processData(response, payload, currentState)
         }
 
         /* For autocomplete */

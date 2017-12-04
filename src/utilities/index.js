@@ -455,7 +455,7 @@ export function redirect (url) {
 
 export function once (fn, context) {
   var result
-  return () => { 
+  return () => {
     if (fn) {
       result = fn.apply(context || this, arguments)
       fn = null
