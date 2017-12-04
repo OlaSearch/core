@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
-    "watch2": "BABEL_ENV=production babel ./node_modules/rambda/modules --out-dir ./node_modules/rambda/modules",
+    "prepublish": "BABEL_ENV=production babel --watch src --out-dir lib && gulp styles",
     "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && gulp build && rimraf dist/polyfill.js dist/olasearch.core.latest.js",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
