@@ -59,3 +59,5 @@ export function prepareUserState ({ config }) {
     isNewUser
   }
 }
+
+export default prepareUserState

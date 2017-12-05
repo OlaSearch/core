@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
-module.exports = (WrappedComponent) => {
+export default function (WrappedComponent) {
   function WithTranslate (props, context) {
     return <WrappedComponent {...props} translate={context.translate} />
   }

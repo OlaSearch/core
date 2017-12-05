@@ -12,6 +12,8 @@ export const initialState = {
   userId: null,
   isNewUser: false,
   hasUsedVoice: false,
+  alerts: [],
+  
   /* Filter sequence */
   filter_term_sequence: [] /* For logging the sequence of filters that the user used */
 }

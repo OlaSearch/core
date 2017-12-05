@@ -173,6 +173,7 @@ module.exports = (options = {}) => {
         var enrichedQuery
         var skipSearchResultsUpdate = false
         var responseTime
+        var extra = response.extra
         if (proxy) {
           results = response.results
           spellSuggestions = response.spellSuggestions
@@ -261,7 +262,8 @@ module.exports = (options = {}) => {
             skipSearchResultsUpdate,
             api,
             responseTime,
-            facetQuery
+            facetQuery,
+            extra
           })
 
         /**

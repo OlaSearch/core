@@ -21,7 +21,8 @@ export const initialState = {
   answer: null /* Used for instant answers */,
 
   /* Individual result */
-  result: [],
+  resultIds: [],
+  resultsById: {},
   isLoadingResult: false,
 
   /* Sidebar */
@@ -94,10 +95,15 @@ export default (state = initialState, action) => {
         ...state,
         isLoadingResult: true
       }
+
     case types.REQUEST_RESULT_SUCCESS:
       return {
         ...state,
-        result: action.results,
+        resultIds: action.extra.resultIds,
+        resultsById: {
+          ...state.resultsById,
+          ...action.extra.resultsById
+        },
         isLoadingResult: false
       }
 

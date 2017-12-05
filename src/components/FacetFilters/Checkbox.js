@@ -14,6 +14,7 @@ import { getDisplayName } from './../../utilities'
 import { ALL_VALUES } from './../../constants/Settings'
 import FilterInput from './common/FilterInput'
 import xssFilters from 'xss-filters'
+import VirtualList from 'react-tiny-virtual-list'
 
 class CheckboxFilter extends React.Component {
   constructor (props) {
@@ -71,7 +72,7 @@ class CheckboxFilter extends React.Component {
     return this.props.selected.indexOf(name) > -1
   }
 
-  itemRenderer = (values, index, key) => {
+  itemRenderer = (values, index, style) => {
     let { facet: { facetNames } } = this.props
     let { name, count } = values[index]
     let displayName = getDisplayName(facetNames, name)
@@ -80,6 +81,7 @@ class CheckboxFilter extends React.Component {
     return (
       <CheckBoxItem
         key={index}
+        style={style}
         name={name}
         displayName={displayName}
         count={count}
@@ -214,10 +216,10 @@ class CheckboxFilter extends React.Component {
           {filterInput}
           <div className='ola-facet-list'>
             <div className='ola-facet-scroll-list'>
-              <ReactList
+              <VirtualList
                 itemRenderer={itemRendererBound}
-                length={values.length}
-                type={listType}
+                itemCount={values.length}
+                itemSize={50}
               />
             </div>
             {showMoreLink}
@@ -242,13 +244,13 @@ function CheckBoxItem (props) {
     }
   }
 
-  let { isActive, count, displayName } = props
+  let { isActive, count, displayName, style } = props
   let labelKlass = classNames({
     'ola-checkbox ola-checkbox-label': true,
     'ola-checkbox-active': isActive
   })
   return (
-    <label className={labelKlass}>
+    <label className={labelKlass} style={style}>
       <input type='checkbox' checked={isActive} onChange={onChecked} />
       <span className='ola-search-facet-name' title={displayName}>
         {displayName}

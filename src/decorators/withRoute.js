@@ -4,13 +4,13 @@ import { initSearch } from './../actions/Search'
 import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
-module.exports = (WrappedComponent) => {
-  class OlaRoute extends React.Component {
+export default function (WrappedComponent) {
+  class WithRoute extends React.Component {
     static contextTypes = {
       config: PropTypes.object,
       router: PropTypes.object
     }
-    static displayName = `olaRoute(${getComponentDisplayName(
+    static displayName = `withRoute(${getComponentDisplayName(
       WrappedComponent
     )})`
     componentWillMount () {
@@ -38,5 +38,5 @@ module.exports = (WrappedComponent) => {
       return <WrappedComponent {...this.props} />
     }
   }
-  return hoistNonReactStatics(OlaRoute, WrappedComponent)
+  return hoistNonReactStatics(WithRoute, WrappedComponent)
 }

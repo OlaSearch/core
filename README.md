@@ -1,48 +1,57 @@
 # OlaSearch
-OlaSearch is a fully customisable front-end search interface that brings your information collection to life
+OlaSearch is a fully customisable front-end search interface that brings your information collection to life.
 
 [![build status](https://gitlab.com/olasearch/olasearch-core/badges/master/build.svg)](https://gitlab.com/olasearch/olasearch-core/commits/master)
 
-Using [https://yarnpkg.com](Yarn) as package manager
+Pre-requisites: [https://yarnpkg.com](Yarn) package manager and Node 6+
 
-## Todo
+## Installation
 
-- [x] Search history
-- [x] i18n Translations - React-intl
-- [x] Contextual Information - Send Device data and Location data to Solr. Add Device State
-- [x] URL Routing with _.debounce
-- [x] Guide tooltips
-- [x] Visualizations should respect Range boundaries for Rating/Range inputs
-- [x] Voice Search - Only supported in Chrome desktop
-- [x] Selected facets should be Immutable (It is immutable. ShouldComponentUpdate will work, but there is no multiple renders, hence no performance loss)
-- [x] Tests
-- [x] Move Adapters and HTTP services to NPM packages
-- [x] Move components to config file
-- [x] Improve rendering speed even when the facet size is very high 10,000+ (Using shouldComponentUpdate on SearchResults)
-- [x] Added tag cloud
+### 1. Install olasearch core
+
+```
+yarn add @olasearch/core
+```
+
+### 2. Download configurations
+Download the configurations from [https://admin.olasearch.com](https://admin.olasearch.com)
+
+1. Login to [https://admin.olasearch.com](https://admin.olasearch.com)
+2. Navigate to Project -> Settings
+3. Copy the Configuration file URL and Open the URL in a new window
+4. Save the file as `olasearch.config.js`
+
+### 3. Download OlaSearch starter kit
+
+```
+git clone https://gitlab.com/olasearch/olasearch-project-starter.git
+cd olasearch-project-starter
+yarn install
+```
+
+### Initialize Ola Search
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Parser, QueryBuilder, Http } from '@olasearch/solr-adapter';
+import { createStore, OlaProvider } from '@olasearch/core'
+import App from './App'
+
+/* Store */
+let store = createStore(config, { Parser, QueryBuilder, Http })
+
+ReactDOM.render(
+  <OlaProvider config={config} store={store}>
+    <App />
+  </OlaProvider>
+  , document.getElementById('root')
+);
+```
 
 
-## Publish to CDN
-1. Make sure you have your aws credentials in `~/.aws/credentials`
 
-````
-# Latest version
-VERSION=latest npm run release
-npm run s3-deploy
-
-# A tag
-VERSION=1.9.0 npm run release
-````
-
-## Security
-
-1. Remove vulnerable node packages
-
-````
-npm run retire
-````
-
-## Coding collaboration guidelines
+## Collaboration guidelines
 
 Uses [Prettier](prettier.io) and [Prettier standard](https://github.com/sheerun/prettier-standard) for code formatting and linting
 
@@ -52,125 +61,9 @@ Always run
 npm run prettier-standard
 ````
 
-And fixing any JS style issues before committing files
+And fix any JS style issues before committing files
 
-## Features
-
-### Search
-
-1. Framework agnostic - OlaSearch is Javascript based, hence can run on any back-end languages
-2. Works with Solr, Elastic Search, Sharepoint
-3. Server-side rendering using Node
-
-### Components
-
-1. Guided Search - a step-by-step way to introduce faceting
-2. AutoSuggest
-3. Faceting
-4. Search Snippet Customization
-5. Spell Suggestions
-5. Range, Checkbox, Star rating, Tabs for Facets
-6. Visualization
-7. Sort results based on relevancy and fields
-8. Speech Input
-9. Bookmark search results
-10. Store and Save search history and query
-11. Show different sets of facets based on user-selection
-12. Share search results via E-mail or to other social networks
-13. Infinite scroll with Load more
-14. Highlighting results
-
-## Javascript stack
-
-1. React 0.14 with ES6 and webpack
-2. Redux
-3. React-intl for translations and formatting
-
-
-## Packaging/Bundling
-
-1. Core Files
-	- Services	
-	- Actions
-	- Reducers
-	- Middleware
-	- React
-	- ReactDOM
-	- Decorators
-
-2. Components
-	- All components
-
-
-## Installation
-
-#### Step 1
-
-````
-git clone git+ssh://git@bitbucket.org/olasearch/olasearch-core.git
-cd olasearch-core/
-npm install
-````
-
-#### Step 2
-
-````
-Create a configuration file from src/CONFIG.SAMPLE.js
-````
-
-#### Step 3
-
-Initialize Ola Search
-````
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Parser, QueryBuilder, Http } from 'olasearch-elasticsearch-adapter';
-import config from './config.elasticsearch';
-import { createStore, OlaProvider, Search } from 'olasearch'
-
-/* DOM */
-var root = document.getElementById('ola-serp')
-
-/* Store */
-let store = createStore(config, { Parser, QueryBuilder, Http }, {}, [])
-
-/* Render */
-
-ReactDOM.render(
-  <OlaProvider config={config} store = {store}>
-    <Search />
-  </OlaProvider>
-  , root
-);
-
-````
-
-## Sending logs
-
-Sending logs are handled by the Search adapter. To enable logging, add the below to the config file
-
-````
-logger: {
-    enabled: true,
-    url: 'http://54.169.244.143:8080/',
-    headers: {
-        "Authorization": "Basic b2xhOm9sYTIwMTY="
-    }
-},
-````
-
-
-## Polyfills
-
-* Object.assign
-* Map
-* Set
-* Request animation frame
-* Array.prototype.findIndex
-* Number.isNaN
-
-https://cdn.polyfill.io/v2/polyfill.min.js?features=Event|always,CustomEvent|always,requestAnimationFrame|always,~html5-elements|always,Object.assign|always,Element.prototype.classList|always
 
 ## License
 
-Copyright OlaSearch Pte Ltd 2015
+Copyright OlaSearch Pte Ltd 2015 - 2018

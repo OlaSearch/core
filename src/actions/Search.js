@@ -169,7 +169,9 @@ export function fetchAnswer (url) {
   }
 }
 
-export function fetchResult (id) {
+export function fetchResult (ids) {
+  if (!Array.isArray(ids)) ids = [ids]
+  let q = ids.map((id) => `id:${id}`).join(' OR ')
   return (dispatch, getState) => {
     dispatch({
       types: [
@@ -177,8 +179,36 @@ export function fetchResult (id) {
         types.REQUEST_RESULT_SUCCESS,
         types.REQUEST_RESULT_FAILURE
       ],
-      query: { q: `id:${id}`, searchAdapterOptions: { disableBestBets: true } },
+      processData: (response) => {
+        let { results } = response
+        return {
+          ...response,
+          extra: {
+            resultIds: results.map(({ id }) => id),
+            resultsById: results.reduce((acc, obj) => {
+              acc[obj.id] = obj
+              return acc
+            }, {})
+          }
+        }
+      },
+      query: { q, searchAdapterOptions: { disableBestBets: true }, wt: 'json' },
       api: 'get'
+    })
+  }
+}
+
+export function fetchAlerts () {
+  return (dispatch, getState) => {
+    const { userId } = getState().Context
+    dispatch({
+      types: [
+        types.REQUEST_RESULT,
+        types.REQUEST_RESULT_SUCCESS,
+        types.REQUEST_RESULT_FAILURE
+      ],
+      query: { userId },
+      api: 'alert'
     })
   }
 }
