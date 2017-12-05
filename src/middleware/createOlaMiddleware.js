@@ -131,8 +131,10 @@ module.exports = (options = {}) => {
       throw new Error('Expect API call to return a promise.')
     }
 
-    return callApi.then(
-      (response, xhr) => {
+    return callApi
+      .then((xhr) => {
+        /* Validate resonse */
+        let { responseText } = xhr
         if (xhr && 'responseURL' in xhr) {
           const responseURL = xhr.responseURL.split('?').pop()
           const timestampFromResponse = parseInt(
@@ -145,6 +147,14 @@ module.exports = (options = {}) => {
             return nullResponse
           }
         }
+        return /^[\{\[]/.test(responseText)
+            ? JSON.parse(responseText)
+            : responseText
+      })
+      .then((response) => {
+        /* If null response, pass it on */
+        if (!response) return response
+
         const type = successType
 
         /* Check if process response is false */

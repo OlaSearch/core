@@ -5,3 +5,6 @@ src
 test
 webpack.*
 demo
+test
+examples
+styleguide*

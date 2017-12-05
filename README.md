@@ -36,14 +36,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Parser, QueryBuilder, Http } from '@olasearch/solr-adapter';
 import { createStore, OlaProvider } from '@olasearch/core'
-import App from './App'
+import Search from '@olasearch/core/lib/containers/Search'
 
 /* Store */
 let store = createStore(config, { Parser, QueryBuilder, Http })
 
 ReactDOM.render(
   <OlaProvider config={config} store={store}>
-    <App />
+    <Search />
   </OlaProvider>
   , document.getElementById('root')
 );
