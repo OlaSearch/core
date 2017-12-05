@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { changePerPage, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 
 function PerPage ({ perPage, translate, dispatch }, context) {
   let values = context.config.perPage

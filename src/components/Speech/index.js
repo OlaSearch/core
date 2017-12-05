@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
 
 class SpeechInput extends React.Component {

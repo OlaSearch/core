@@ -1,5 +1,5 @@
 import React from 'react'
-import withFacetToggle from './../../decorators/OlaToggle'
+import withFacetToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import { addFacet, executeSearch } from './../../actions/Search'
 

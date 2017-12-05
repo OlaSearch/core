@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import withLogger from './../../decorators/OlaLogger'
+import withLogger from './../../decorators/withLogger'
 
 function Button ({
   title,

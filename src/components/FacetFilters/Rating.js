@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
-import withFacetToggle from './../../decorators/OlaToggle'
+import withFacetToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import { parseRangeValues } from './../../utilities'
 

@@ -5,7 +5,7 @@ import {
   replaceFacet,
   executeSearch
 } from './../../actions/Search'
-import withFacetToggle from './../../decorators/OlaToggle'
+import withFacetToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 
 function BooleanFilter (props) {

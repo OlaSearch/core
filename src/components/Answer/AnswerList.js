@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/OlaTranslate'
-import withToggle from './../../decorators/OlaToggle'
+import injectTranslate from './../../decorators/injectTranslate'
+import withToggle from './../../decorators/withToggle'
 import AnswerField from './AnswerField'
 import AnswerButton from './AnswerButton'
 

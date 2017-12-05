@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import omit from 'ramda/src/omit'
-import withLogger from './../../decorators/OlaLogger'
+import withLogger from './../../decorators/withLogger'
 
 function Thumbnail (props, context) {
   var { mediaQuery, cdn } = context.config

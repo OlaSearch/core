@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 
 function NoBookmarks ({ translate, bookmarks }) {
   if (bookmarks.length) return null

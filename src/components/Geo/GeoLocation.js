@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
 
 class GeoLocation extends React.Component {

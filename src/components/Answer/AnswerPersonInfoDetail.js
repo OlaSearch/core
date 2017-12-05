@@ -1,7 +1,7 @@
 import React from 'react'
 import ListKeyValue from './common/ListKeyValue'
-import injectTranslate from './../../decorators/OlaTranslate'
-import withToggle from './../../decorators/OlaToggle'
+import injectTranslate from './../../decorators/injectTranslate'
+import withToggle from './../../decorators/withToggle'
 
 function AnswerPersonInfoDetail ({
   isCollapsed,

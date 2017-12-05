@@ -20,7 +20,7 @@ import {
   mergeResultsWithHistory,
   redirect
 } from './../../utilities'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'

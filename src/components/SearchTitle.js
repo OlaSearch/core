@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import injectTranslate from './../decorators/OlaTranslate'
+import injectTranslate from './../decorators/injectTranslate'
 
 function SearchTitle (
   { totalResults, page, perPage, isPhone, translate },

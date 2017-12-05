@@ -1,5 +1,5 @@
 import React from 'react'
-import withLogger from './../../decorators/OlaLogger'
+import withLogger from './../../decorators/withLogger'
 
 function Url ({
   result,

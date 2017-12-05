@@ -1,5 +1,5 @@
 import React from 'react'
-import withFacetToggle from './../../decorators/OlaToggle'
+import withFacetToggle from './../../decorators/withToggle'
 import {
   replaceFacet,
   removeFacet,

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { changeSort, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 
 function Sort (props, context) {
   function handleChange (event) {

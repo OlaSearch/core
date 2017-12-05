@@ -5,7 +5,7 @@ import { clearHistory } from './../../actions/History'
 import listensToClickOutside from 'react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
 import { sortHistory } from './../../utilities'
 

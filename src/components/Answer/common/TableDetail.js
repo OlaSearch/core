@@ -1,6 +1,6 @@
 import React from 'react'
-import injectTranslate from './../../../decorators/OlaTranslate'
-import withToggle from './../../../decorators/OlaToggle'
+import injectTranslate from './../../../decorators/injectTranslate'
+import withToggle from './../../../decorators/withToggle'
 import { createHTMLMarkup } from './../../../utilities'
 
 function TableDetail (props) {

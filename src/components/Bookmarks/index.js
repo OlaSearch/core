@@ -5,7 +5,7 @@ import { removeBookmark } from './../../actions/Bookmarks'
 import listensToClickOutside from 'react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
 import NoBookmarks from './NoBookmarks'
 

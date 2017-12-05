@@ -1,6 +1,6 @@
 import React from 'react'
 import Thumbnail from './Thumbnail'
-import withLogger from './../../decorators/OlaLogger'
+import withLogger from './../../decorators/withLogger'
 import FieldLabel from './FieldLabel'
 
 function Map (props) {

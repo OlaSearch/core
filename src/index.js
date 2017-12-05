@@ -77,6 +77,5 @@ module.exports = {
   TermSuggestion: require('./components/TermSuggestion'),
   PerPage: require('./components/PerPage'),
   // AutoSuggest: require('./components/AutoSuggest'),
-  ActionTypes: require('./constants/ActionTypes'),
-  Tab: require('./components/Tab')
+  ActionTypes: require('./constants/ActionTypes')
 }

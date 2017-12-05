@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
     "prepublish": "BABEL_ENV=production babel src --out-dir lib && gulp styles",
     "postinstall": "BABEL_ENV=production babel src --out-dir lib && gulp styles",
-    "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && gulp build && rimraf dist/polyfill.js dist/olasearch.core.latest.js",
+    "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && gulp build && rimraf dist/polyfill.js dist/olasearch.core.latest.js && gulp styles",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
     "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
@@ -126,7 +126,6 @@
     "react-list": "^0.8.8",
     "react-onclickoutside": "^6.7.0",
     "react-pikaday-datepicker": "3.0.1",
-    "react-tiny-virtual-list": "^2.1.4",
     "redux-logger": "^3.0.6",
     "xss-filters": "^1.2.7"
   },

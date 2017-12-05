@@ -1,9 +1,9 @@
 import React from 'react'
 import TextField from './TextField'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/OlaTranslate'
-import withToggle from './../../decorators/OlaToggle'
-import withLogger from './../../decorators/OlaLogger'
+import injectTranslate from './../../decorators/injectTranslate'
+import withToggle from './../../decorators/withToggle'
+import withLogger from './../../decorators/withLogger'
 import FieldLabel from './FieldLabel'
 
 function DocumentPages ({

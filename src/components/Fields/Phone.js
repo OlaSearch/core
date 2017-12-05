@@ -1,7 +1,7 @@
 import React from 'react'
 import { sanitizePhone } from './../../utilities'
-import injectTranslate from './../../decorators/OlaTranslate'
-import withLogger from './../../decorators/OlaLogger'
+import injectTranslate from './../../decorators/injectTranslate'
+import withLogger from './../../decorators/withLogger'
 import FieldLabel from './FieldLabel'
 
 function Phone (props) {

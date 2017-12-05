@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { updateQueryTerm, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
 function SpellSuggestion (props) {

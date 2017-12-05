@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import listensToClickOutside from 'react-onclickoutside'
-import withToggle from './../../decorators/OlaToggle'
+import withToggle from './../../decorators/withToggle'
 
 class AnswerDropdown extends React.Component {
   handleClickOutside = () => {

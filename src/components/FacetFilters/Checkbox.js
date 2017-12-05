@@ -6,15 +6,14 @@ import {
   replaceFacet,
   executeSearch
 } from './../../actions/Search'
-import withFacetToggle from './../../decorators/OlaToggle'
-import injectTranslate from './../../decorators/OlaTranslate'
+import withFacetToggle from './../../decorators/withToggle'
+import injectTranslate from './../../decorators/injectTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
 import { ALL_VALUES } from './../../constants/Settings'
 import FilterInput from './common/FilterInput'
 import xssFilters from 'xss-filters'
-import VirtualList from 'react-tiny-virtual-list'
 
 class CheckboxFilter extends React.Component {
   constructor (props) {
@@ -72,7 +71,7 @@ class CheckboxFilter extends React.Component {
     return this.props.selected.indexOf(name) > -1
   }
 
-  itemRenderer = (values, index, style) => {
+  itemRenderer = (values, index) => {
     let { facet: { facetNames } } = this.props
     let { name, count } = values[index]
     let displayName = getDisplayName(facetNames, name)
@@ -81,7 +80,6 @@ class CheckboxFilter extends React.Component {
     return (
       <CheckBoxItem
         key={index}
-        style={style}
         name={name}
         displayName={displayName}
         count={count}
@@ -216,10 +214,10 @@ class CheckboxFilter extends React.Component {
           {filterInput}
           <div className='ola-facet-list'>
             <div className='ola-facet-scroll-list'>
-              <VirtualList
+              <ReactList
                 itemRenderer={itemRendererBound}
-                itemCount={values.length}
-                itemSize={50}
+                length={values.length}
+                type={listType}
               />
             </div>
             {showMoreLink}
@@ -244,13 +242,13 @@ function CheckBoxItem (props) {
     }
   }
 
-  let { isActive, count, displayName, style } = props
+  let { isActive, count, displayName } = props
   let labelKlass = classNames({
     'ola-checkbox ola-checkbox-label': true,
     'ola-checkbox-active': isActive
   })
   return (
-    <label className={labelKlass} style={style}>
+    <label className={labelKlass}>
       <input type='checkbox' checked={isActive} onChange={onChecked} />
       <span className='ola-search-facet-name' title={displayName}>
         {displayName}

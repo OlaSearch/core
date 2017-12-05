@@ -8,7 +8,7 @@ import {
 } from './../../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'

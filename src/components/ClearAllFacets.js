@@ -1,6 +1,6 @@
 import React from 'react'
 import { removeAllFacets, executeSearch } from './../actions/Search'
-import injectTranslate from './../decorators/OlaTranslate'
+import injectTranslate from './../decorators/injectTranslate'
 
 function ClearAllFacets ({ selected, dispatch, translate }) {
   function handleClick () {

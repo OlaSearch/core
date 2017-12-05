@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
-import injectTranslate from './../../decorators/OlaTranslate'
+import injectTranslate from './../../decorators/injectTranslate'
 import classnames from 'classnames'
 import { log } from './../../actions/Logger'
 
