@@ -6,7 +6,7 @@ import {
   replaceFacet,
   executeSearch
 } from './../../actions/Search'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import injectTranslate from './../../decorators/injectTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
@@ -258,4 +258,4 @@ function CheckBoxItem (props) {
   )
 }
 
-module.exports = injectTranslate(withFacetToggle(CheckboxFilter))
+module.exports = injectTranslate(withToggle(CheckboxFilter))

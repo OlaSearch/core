@@ -43,6 +43,9 @@ export const FUZZY_SUGGEST_KEY = 'suggest'
 export const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
 export const API_IGNORE_LOGGING = ['answer', 'get', 'alert']
 export const DEFAULT_API_HANDLER = 'default'
+export const DATE_FORMAT_MOBILE = 'YYYY-MM-DD'
+export const DEFAULT_DATE_FORMAT = 'DD-MM-YYYY'
+export const DATEPICKER_YEAR_RANGE = 20
 
 /**
  * Search Input types

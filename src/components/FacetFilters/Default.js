@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import Tag from './../Misc/Tag'
 import ReactList from 'react-list'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import injectTranslate from './../../decorators/injectTranslate'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
@@ -247,4 +247,4 @@ function SelectedItem ({ name, facet, buttonLabel, handleRemove }) {
   )
 }
 
-module.exports = injectTranslate(withFacetToggle(LinkFilter))
+module.exports = injectTranslate(withToggle(LinkFilter))

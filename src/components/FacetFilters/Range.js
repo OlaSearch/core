@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import flatten from 'ramda/src/flatten'
 import noUiSlider from 'nouislider'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import Histogram from './Histogram'
 import DateParser from './../../utilities/dateParser'
@@ -232,4 +232,4 @@ class RangeFilter extends React.Component {
   }
 }
 
-module.exports = withFacetToggle(RangeFilter)
+module.exports = withToggle(RangeFilter)

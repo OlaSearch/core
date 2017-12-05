@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import DateParser from './../../utilities/dateParser'
+import { DATE_FORMAT_MOBILE, DEFAULT_DATE_FORMAT, DATEPICKER_YEAR_RANGE } from './../../constants/Settings'
 import classNames from 'classnames'
 import DatePicker from 'react-pikaday-datepicker'
 import { connect } from 'react-redux'
 
-const DATE_FORMAT = 'DD-MM-YYYY'
-const DATE_FORMAT_MOBILE = 'YYYY-MM-DD'
 class DateRange extends React.Component {
   constructor (props) {
     super(props)
@@ -48,7 +47,7 @@ class DateRange extends React.Component {
   }
 
   getDateFormat = () => {
-    return this.props.isPhone ? DATE_FORMAT_MOBILE : DATE_FORMAT
+    return this.props.isPhone ? DATE_FORMAT_MOBILE : DEFAULT_DATE_FORMAT
   }
 
   onCustomChange = () => {
@@ -176,7 +175,6 @@ class DateRange extends React.Component {
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
     })
-    let yearRange = 20
     let fromDate = DateParser.parse(this.state.fromDate, this.getDateFormat())
     let toDate = DateParser.parse(this.state.toDate, this.getDateFormat())
     return (
@@ -211,12 +209,12 @@ class DateRange extends React.Component {
                     />
                   ) : (
                     <DatePicker
-                      format={DATE_FORMAT}
+                      format={DEFAULT_DATE_FORMAT}
                       onChange={this.onFromChange}
                       parse={this.parseDate}
                       toString={this.toDateString}
                       value={fromDate}
-                      yearRange={yearRange}
+                      yearRange={DATEPICKER_YEAR_RANGE}
                       maxDate={toDate}
                     />
                   )}
@@ -232,12 +230,12 @@ class DateRange extends React.Component {
                     />
                   ) : (
                     <DatePicker
-                      format={DATE_FORMAT}
+                      format={DEFAULT_DATE_FORMAT}
                       parse={this.parseDate}
                       toString={this.toDateString}
                       onChange={this.onToChange}
                       value={toDate}
-                      yearRange={yearRange}
+                      yearRange={DATEPICKER_YEAR_RANGE}
                       minDate={fromDate}
                     />
                   )}
@@ -275,4 +273,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, null)(withFacetToggle(DateRange))
+module.exports = connect(mapStateToProps, null)(withToggle(DateRange))

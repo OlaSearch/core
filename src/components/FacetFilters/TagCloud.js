@@ -1,5 +1,5 @@
 import React from 'react'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import { addFacet, executeSearch } from './../../actions/Search'
 
@@ -88,4 +88,4 @@ function TagCloudItem ({ onSelect, value, min, max, fontSizeMin, fontSizeMax }) 
   )
 }
 
-module.exports = withFacetToggle(TagCloud)
+module.exports = withToggle(TagCloud)

@@ -5,7 +5,7 @@ import {
   replaceFacet,
   executeSearch
 } from './../../actions/Search'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 
 function BooleanFilter (props) {
@@ -52,4 +52,4 @@ BooleanFilter.propTypes = {
   selected: PropTypes.array.isRequired
 }
 
-module.exports = withFacetToggle(BooleanFilter)
+module.exports = withToggle(BooleanFilter)

@@ -1,5 +1,5 @@
 import React from 'react'
-import withFacetToggle from './../../decorators/withToggle'
+import withToggle from './../../decorators/withToggle'
 import {
   replaceFacet,
   removeFacet,
@@ -68,4 +68,4 @@ function RangeNumericItem ({ value, handleClick }) {
   )
 }
 
-module.exports = withFacetToggle(RangeNumericFilter)
+module.exports = withToggle(RangeNumericFilter)
