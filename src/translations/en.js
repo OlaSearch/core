@@ -29,6 +29,7 @@ module.exports = {
     autosuggest_help: 'Search suggestions',
     autosuggest_help_history: 'Search history',
     suggestions_did_you_mean: 'Did you mean',
+    autosuggest_clear_history_label: 'clear',
     suggestions_showing_results_for:
       'Showing results for <strong>{term}</strong>',
     facet_tabs_all_label: 'All',

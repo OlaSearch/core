@@ -6,9 +6,16 @@ import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
-import { escapeRegEx, scrollTo } from './../../utilities'
+import {
+  escapeRegEx,
+  scrollTo,
+  stringToColor,
+  hexToRGBa
+} from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
+import ContentEditable from './../ContentEditable'
+import equals from 'ramda/src/equals'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -17,16 +24,6 @@ export default class Input extends React.Component {
   }
 
   onClear = (event) => {
-    // event && event.preventDefault()
-
-    // /* Do not call blur event when its a button */
-    // if (event.target.nodeName === 'INPUT' && !event.target.value) {
-    //   event.target.blur()
-    //   this.props.handleClickOutside(event)
-    //   return
-    // }
-
-    /* Clear query term */
     /* Focus input */
     this.props.onClear(() => this.input.focus())
   }
@@ -43,7 +40,7 @@ export default class Input extends React.Component {
     /* Persist event */
     event.persist()
 
-    setTimeout(() => this.props.onChange(event.target.value))
+    setTimeout(() => this.props.onChange(event))
   }
 
   onChangeZone = () => {
@@ -84,9 +81,12 @@ export default class Input extends React.Component {
         if (!isOpen && q) return this.props.onChange(q)
         return onKeyDown('down')
 
+      case 32: // Space
+        return onKeyDown('space', event)
+
       case 9: // Tab
-        this.props.onBlur && this.props.onBlur(event)
-        break
+        return onKeyDown('tab', event)
+
       case 13: // Enter
         event.preventDefault() // Prevents firing onChange
         return onSubmit()
@@ -100,7 +100,13 @@ export default class Input extends React.Component {
   }
 
   handleInputChange = (arg, searchInput) => {
-    this.props.onChange(arg.target ? arg.target.value : arg, searchInput)
+    this.props.onChange(arg, searchInput)
+
+    /* Check if tokens have been changed */
+    let [oldTokens, newTokens] = this.formatValue(arg.target.value, true)
+    if (!newTokens || !equals(oldTokens, newTokens)) {
+      setTimeout(() => this.props.onTokenChange(newTokens))
+    }
   }
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
@@ -122,6 +128,26 @@ export default class Input extends React.Component {
   registerRef = (input) => {
     this.input = input
   }
+  formatValue = (value, returnTokens = false) => {
+    if (!value) return ''
+    const terms = this.props.tokens.map(({ value }) => value)
+    const tokenIndexes = this.props.tokens.map(({ startToken }) => startToken)
+    const regX = new RegExp('\\b(' + terms.join('|') + ')\\b', 'gi')
+    const newTokens = []
+    value = value.replace(regX, (match, startToken) => {
+      // if (tokenIndexes.indexOf(startToken - 1) === -1) return match
+      /* Add to list of token */
+      newTokens.push(match)
+      // let facet = selectedFacets
+      //   .filter(({ suggestion_raw }) => suggestion_raw === match)
+      //   .reduce((acc, i) => i.label, null)
+      // if (!facet) return ''
+      let color = hexToRGBa(stringToColor(match))
+      return `<span style='background-color: ${color}' class='ola-input-tag'>${match}</span>`
+    })
+
+    return returnTokens ? [terms, newTokens] : value
+  }
   render () {
     var { q, placeholder, onBlur, showZone, showGeoLocation } = this.props
 
@@ -133,7 +159,7 @@ export default class Input extends React.Component {
       <div className={klass}>
         {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <div className='ola-form-input-wrapper'>
-          <input
+          <ContentEditable
             ref={this.registerRef}
             type='text'
             value={q}
@@ -148,6 +174,7 @@ export default class Input extends React.Component {
             placeholder={placeholder}
             onKeyDown={this.onKeyDown}
             autoFocus={this.props.autoFocus}
+            formatValue={this.formatValue}
           />
 
           <InputShadow value={shadowTerm} />

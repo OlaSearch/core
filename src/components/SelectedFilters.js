@@ -91,7 +91,8 @@ class SelectedFilters extends React.Component {
 
     /* Remove tabs and zones */
     facets = facets.filter(
-      (item) => (showTabs ? true : !item.tab) && (showZones ? true : !item.zone)
+      ({ tab, zone, options }, idx) =>
+        (showTabs ? true : !tab) && (showZones ? true : !zone)
     )
 
     if (!facets.length && !q && !filters.length) return null
@@ -109,7 +110,12 @@ class SelectedFilters extends React.Component {
           </div>
         ) : null}
         {facets.map((facet, idx) => {
-          const { selected: tags, displayName } = facet
+          let { selected: tags, displayName, options } = facet
+          /* Remove hidden tags */
+          tags = tags.filter(
+            (_, idx) =>
+              options && options[idx] ? !options[idx].isHidden : true
+          )
           /* Error with babel-traverse */
           const _displayName = displayName ? (
             <span className='ola-facet-tags-heading'>{displayName}</span>

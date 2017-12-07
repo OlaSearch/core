@@ -39,6 +39,7 @@ export const TYPE_TAXONOMY = 'taxonomy'
 export const TYPE_ENTITY = 'entity'
 export const TYPE_QUERY = 'query'
 export const TYPE_DOC = 'doc'
+export const TYPE_FACET = 'facet'
 export const FUZZY_SUGGEST_KEY = 'suggest'
 export const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
 export const API_IGNORE_LOGGING = ['answer', 'get', 'alert']
