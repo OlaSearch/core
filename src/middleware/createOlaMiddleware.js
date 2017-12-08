@@ -1,19 +1,13 @@
 /**
  * Ola Middleware
  * # Functions
- * 1. State persistence for Bookmarks, History and Context
- * 2. Ajax requests for search adapters
- * 3. Set skip_intent to true if page > 1 or enriched_q !== ''
+ * 1. Ajax requests for search adapters
+ * 2. Set skip_intent to true if page > 1 or enriched_q !== ''
  */
 import { debounceLog, submitLog } from './../actions/Logger'
-import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
-import {
-  FUZZY_SUGGEST_KEY,
-  INTENT_SUPPORTED_API_KEYS,
-  API_IGNORE_LOGGING
-} from './../constants/Settings'
+import { FUZZY_SUGGEST_KEY, API_IGNORE_LOGGING } from './../constants/Settings'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -23,6 +17,7 @@ module.exports = (options = {}) => {
       query,
       context,
       payload = {},
+      meta = {},
       suggestedTerm,
       nullResponse = null,
       processResponse = true,
@@ -30,11 +25,6 @@ module.exports = (options = {}) => {
       shouldDispatchActions = true,
       returnWithoutDispatch = false
     } = action
-
-    /* Persist store state */
-    if (STATE_TYPE_KEYS.indexOf(action.type) !== -1) {
-      debouncePersistState(action, getState, options.config.namespace)
-    }
 
     // Normal action: pass it on
     if (!types) return next(action)
@@ -118,6 +108,9 @@ module.exports = (options = {}) => {
             context
           )
 
+    const shouldLog = meta.log !== false
+    const apiOptions = meta.apiOptions ? meta.apiOptions : null
+
     /* Api url when intent engine is active */
     const apiUrl =
       intentEngineEnabled && INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1
@@ -129,7 +122,7 @@ module.exports = (options = {}) => {
       callApi = api(params)
     } else {
       callApi = searchService.hasOwnProperty(api)
-        ? searchService[api](timestampObj, params, apiUrl)
+        ? searchService[api](timestampObj, params, apiUrl, apiOptions)
         : null
     }
     if (typeof callApi !== 'object' || typeof callApi.then !== 'function') {
@@ -297,7 +290,8 @@ module.exports = (options = {}) => {
           if (
             logger &&
             logger.enabled &&
-            API_IGNORE_LOGGING.indexOf(api) === -1
+            API_IGNORE_LOGGING.indexOf(api) === -1 &&
+            shouldLog
           ) {
             logFn({
               dispatch,

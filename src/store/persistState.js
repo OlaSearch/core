@@ -7,7 +7,8 @@ import {
   LOCALE_STORAGE_KEY,
   LOCALE_STORAGE_TTL,
   CONTEXT_STORAGE_KEY,
-  CONTEXT_STORAGE_TTL
+  CONTEXT_STORAGE_TTL,
+  ALERT_STORAGE_KEY
 } from './../constants/Settings'
 
 /**
@@ -32,7 +33,10 @@ export const STATE_TYPE_KEYS = [
   types.REMOVE_DYNAMIC_FIELD,
   types.ADD_CONTEXT_FIELD,
   types.UPDATE_HISTORY,
-  types.REMOVE_HISTORY
+  types.REMOVE_HISTORY,
+  types.REQUEST_ALERT_SUCCESS,
+  types.REQUEST_DELETE_ALERT_SUCCESS,
+  types.REQUEST_CREATE_ALERT_SUCCESS
 ]
 
 /* Based on actions: persist states to localstorage */
@@ -72,6 +76,18 @@ function persistState (action, getState, namespace) {
         CONTEXT_STORAGE_KEY,
         state.Context,
         CONTEXT_STORAGE_TTL,
+        namespace
+      )
+
+    case types.REQUEST_ALERT_SUCCESS:
+    case types.REQUEST_DELETE_ALERT_SUCCESS:
+    case types.REQUEST_CREATE_ALERT_SUCCESS:
+      return storage.set(
+        ALERT_STORAGE_KEY,
+        {
+          queryIds: state.AppState.queryIds,
+          queriesById: state.AppState.queriesById
+        },
         namespace
       )
   }

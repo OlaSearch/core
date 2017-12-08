@@ -155,14 +155,24 @@ export function executeSearch (payload) {
   }
 }
 
-function replaceQuery (q, tokenValues) {
+/**
+ * Removes token values from query
+ * @param {String} q
+ * @param {Array} tokenValues
+ */
+function removeTokenFromQuery (q, tokenValues) {
   return q.replace(
     new RegExp('\\b(' + tokenValues.join('|') + ')\\b', 'gi'),
     ''
   )
 }
 
-export function executeFacetSearch (fullTerm, term) {
+/**
+ * Search for facet values
+ * @param {String} fullTerm Full query term, default is '*'
+ * @param {String} term Partial query
+ */
+export function executeFacetSearch (fullTerm = '*', term) {
   return (dispatch, getState) => {
     const state = getState()
     const context = state.Context
@@ -173,23 +183,13 @@ export function executeFacetSearch (fullTerm, term) {
       name,
       multiSelect: true
     }))
-    // const tokenIndex = tokens.map(({ startToken, endToken }) => [
-    //   startToken,
-    //   endToken
-    // ])
-    // const tokenValues = tokens.map(({ value }) => value).concat(term)
 
     /* Remove tokens from the query */
     let initialStart = 0
-    let q = replaceQuery(
+    let q = removeTokenFromQuery(
       fullTerm,
       tokens.map(({ value }) => value).concat(term)
     )
-    // for (let i = 0; i < tokenIndex.length; i++ ){
-    //   let [ start, end ] = tokenIndex[i]
-    //   q = fullTerm.substr(initialStart, start) + fullTerm.substr(end)
-    //   initialStart = start
-    // }
 
     return dispatch({
       types: [
@@ -208,6 +208,9 @@ export function executeFacetSearch (fullTerm, term) {
           facetPrefix: term.toLowerCase() /* Always lowercase facet term */,
           per_page: 0
         }
+      },
+      meta: {
+        log: false
       },
       api: 'search'
     })
@@ -253,21 +256,6 @@ export function fetchResult (ids) {
       },
       query: { q, searchAdapterOptions: { disableBestBets: true }, wt: 'json' },
       api: 'get'
-    })
-  }
-}
-
-export function fetchAlerts () {
-  return (dispatch, getState) => {
-    const { userId } = getState().Context
-    dispatch({
-      types: [
-        types.REQUEST_RESULT,
-        types.REQUEST_RESULT_SUCCESS,
-        types.REQUEST_RESULT_FAILURE
-      ],
-      query: { userId },
-      api: 'alert'
     })
   }
 }

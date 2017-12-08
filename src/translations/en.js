@@ -28,6 +28,7 @@ module.exports = {
     autosuggest_viewall: 'View all results',
     autosuggest_help: 'Search suggestions',
     autosuggest_help_history: 'Search history',
+    autosuggest_help_facets: 'Facet suggestions',
     suggestions_did_you_mean: 'Did you mean',
     autosuggest_clear_history_label: 'clear',
     suggestions_showing_results_for:

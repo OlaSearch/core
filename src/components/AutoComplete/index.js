@@ -654,6 +654,7 @@ class AutoComplete extends React.Component {
       : q
 
     const leftPosition = this.state.leftPosition - this.props.leftPadding
+    const isFacetSuggestion = leftPosition > this.props.leftPadding
 
     return (
       <div className={klassContainer} ref={this.registerEl}>
@@ -692,10 +693,14 @@ class AutoComplete extends React.Component {
             }}
           >
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
-              {showSuggestionHelp && leftPosition < this.props.leftPadding ? (
+              {showSuggestionHelp ? (
                 <div className='ola-suggestions-help'>
                   {q ? (
-                    translate('autosuggest_help')
+                    isFacetSuggestion ? (
+                      translate('autosuggest_help_facets')
+                    ) : (
+                      translate('autosuggest_help')
+                    )
                   ) : (
                     <span>
                       {translate('autosuggest_help_history')}
