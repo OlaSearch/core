@@ -412,9 +412,10 @@ class AutoComplete extends React.Component {
 
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
-      // this.props.removeAllFacets()
+      this.props.removeAllFacets()
       this.props.tokens.forEach(({ value, name }) => {
-        this.props.addFacet(name, value)
+        let facet = find(propEq('name', name))(this.context.config.facets)
+        this.props.addFacet(facet, value)
       })
     }
 
@@ -691,7 +692,7 @@ class AutoComplete extends React.Component {
             }}
           >
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
-              {showSuggestionHelp ? (
+              {showSuggestionHelp && leftPosition < this.props.leftPadding ? (
                 <div className='ola-suggestions-help'>
                   {q ? (
                     translate('autosuggest_help')

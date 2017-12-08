@@ -155,23 +155,35 @@ export function executeSearch (payload) {
   }
 }
 
+function replaceQuery (q, tokenValues) {
+  return q.replace(
+    new RegExp('\\b(' + tokenValues.join('|') + ')\\b', 'gi'),
+    ''
+  )
+}
+
 export function executeFacetSearch (fullTerm, term) {
   return (dispatch, getState) => {
     const state = getState()
     const context = state.Context
     const query = state.QueryState
     const { tokens } = query
-    const tokenIndex = tokens.map(({ startToken, endToken }) => [
-      startToken,
-      endToken
-    ])
-    const tokenValues = tokens.map(({ value }) => value).concat(term)
+    const facet_query = tokens.map(({ value, name }) => ({
+      selected: [value],
+      name,
+      multiSelect: true
+    }))
+    // const tokenIndex = tokens.map(({ startToken, endToken }) => [
+    //   startToken,
+    //   endToken
+    // ])
+    // const tokenValues = tokens.map(({ value }) => value).concat(term)
 
     /* Remove tokens from the query */
     let initialStart = 0
-    let q = fullTerm.replace(
-      new RegExp('\\b(' + tokenValues.join('|') + ')\\b', 'gi'),
-      ''
+    let q = replaceQuery(
+      fullTerm,
+      tokens.map(({ value }) => value).concat(term)
     )
     // for (let i = 0; i < tokenIndex.length; i++ ){
     //   let [ start, end ] = tokenIndex[i]
@@ -188,13 +200,7 @@ export function executeFacetSearch (fullTerm, term) {
       query: {
         ...query,
         q,
-        facet_query: tokens.map((item) => {
-          return {
-            ...item,
-            selected: [item.value],
-            multiSelect: true
-          }
-        })
+        facet_query
       },
       context,
       payload: {

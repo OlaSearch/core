@@ -152,7 +152,8 @@ export default (state = initialState, action) => {
             }
             return item
           })
-          .filter((item) => item.selected.length)
+          .filter((item) => item.selected.length),
+        tokens: state.tokens.filter(({ value }) => value !== action.value)
       }
 
     case types.REPLACE_FACET:
