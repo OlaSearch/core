@@ -571,7 +571,8 @@ class AutoComplete extends React.Component {
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
-    return
+    
+    if (this.props.wordSuggestion) return
 
     return this.onSelect(suggestion, { ...options, fromSuggestion: true })
   }
