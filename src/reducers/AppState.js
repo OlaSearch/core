@@ -222,7 +222,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoadingAlert: false
       }
-    
+
     case types.REQUEST_CREATE_ALERT:
       return {
         ...state,
@@ -233,8 +233,8 @@ export default (state = initialState, action) => {
       const queries = [...state.queryIds, action.extra.queryId]
       return {
         ...state,
-        queryIds: queries.filter(function(item, pos) {
-          return queries.indexOf(item) == pos;
+        queryIds: queries.filter(function (item, pos) {
+          return queries.indexOf(item) == pos
         }),
         queriesById: {
           ...state.queriesById,
@@ -242,26 +242,25 @@ export default (state = initialState, action) => {
         },
         inProgressAlert: false
       }
-    
+
     case types.REQUEST_ALERT_DELETE:
       return {
         ...state,
         inProgressAlert: true
       }
-    
 
     case types.REQUEST_DELETE_ALERT_DOCS_SUCCESS:
       return {
         ...state,
         queriesById: {
           ...state.queriesById,
-          [action.payload.queryId] : {
+          [action.payload.queryId]: {
             ...state.queriesById[action.payload.queryId],
             docIds: []
           }
         }
       }
-    
+
     case types.REQUEST_DELETE_ALERT:
       return {
         ...state,

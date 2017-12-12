@@ -139,7 +139,9 @@ export default class Input extends React.Component {
     value = value.replace(regX, (match, startToken) => {
       /* Add to list of token */
       returnTokens && newTokens.push(match)
-      let name = this.props.tokens.filter(({ value }) => value === match).reduce((acc, o) => o.name, null)
+      let name = this.props.tokens
+        .filter(({ value }) => value === match)
+        .reduce((acc, o) => o.name, null)
       if (!name) return match
       let color = hexToRGBa(stringToColor(name))
       return `<span style='background-color: ${color}' class='ola-input-tag'>${match}</span>`
@@ -148,7 +150,14 @@ export default class Input extends React.Component {
     return returnTokens ? [terms, newTokens] : value
   }
   render () {
-    var { q, placeholder, onBlur, showZone, showGeoLocation, showWordSuggestion } = this.props
+    var {
+      q,
+      placeholder,
+      onBlur,
+      showZone,
+      showGeoLocation,
+      showWordSuggestion
+    } = this.props
 
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone

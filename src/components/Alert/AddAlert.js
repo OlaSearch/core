@@ -5,7 +5,16 @@ import cx from 'classnames'
 import injectTranslate from './../../decorators/injectTranslate'
 import withLogger from './../../decorators/withLogger'
 
-const AddAlert = ({ q, queriesById, queryIds, translate, createAlert, deleteAlert, log, inProgressAlert }) => {
+const AddAlert = ({
+  q,
+  queriesById,
+  queryIds,
+  translate,
+  createAlert,
+  deleteAlert,
+  log,
+  inProgressAlert
+}) => {
   if (!q) return null
   let exists = queryIds.some((id) => q === queriesById[id].query)
   let classes = cx('ola-alert-add', {
@@ -14,25 +23,28 @@ const AddAlert = ({ q, queriesById, queryIds, translate, createAlert, deleteAler
   function handleClick () {
     let queryId
     if (exists) {
-      queryId = queryIds.filter((id) => q === queriesById[id].query).reduce((acc, obj) => obj, null)
+      queryId = queryIds
+        .filter((id) => q === queriesById[id].query)
+        .reduce((acc, obj) => obj, null)
     }
-    exists
-      ? queryId && deleteAlert(queryId)
-      : createAlert(q)
+    exists ? queryId && deleteAlert(queryId) : createAlert(q)
     /* Log */
     log({
       eventType: 'C',
       eventCategory: 'alert',
       eventAction: 'click',
-      eventLabel: exists ? 'Remove' : 'Add',
+      eventLabel: exists ? 'Remove' : 'Add'
     })
   }
   return (
-    <button className={classes} onClick={handleClick} disabled={inProgressAlert}>
+    <button
+      className={classes}
+      onClick={handleClick}
+      disabled={inProgressAlert}
+    >
       {exists
         ? translate('alert_button_remove')
-        : translate('alert_button_add')
-      }
+        : translate('alert_button_add')}
     </button>
   )
 }

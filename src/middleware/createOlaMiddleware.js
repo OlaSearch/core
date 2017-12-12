@@ -7,7 +7,11 @@
 import { debounceLog, submitLog } from './../actions/Logger'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
-import { FUZZY_SUGGEST_KEY, API_IGNORE_LOGGING, INTENT_SUPPORTED_API_KEYS } from './../constants/Settings'
+import {
+  FUZZY_SUGGEST_KEY,
+  API_IGNORE_LOGGING,
+  INTENT_SUPPORTED_API_KEYS
+} from './../constants/Settings'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {

@@ -105,7 +105,9 @@ export function createAlert (query) {
             queryId,
             queriesById: {
               [queryId]: {
-                query, timestamp, docIds
+                query,
+                timestamp,
+                docIds
               }
             }
           }

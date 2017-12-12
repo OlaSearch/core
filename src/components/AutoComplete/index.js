@@ -262,7 +262,8 @@ class AutoComplete extends React.Component {
 
     /* No of words in the query */
     const hasMoreTerms = term.match(/\s/gi)
-    const showWordSuggestion = this.props.wordSuggestion && !!(hasMoreTerms && hasMoreTerms.length)
+    const showWordSuggestion =
+      this.props.wordSuggestion && !!(hasMoreTerms && hasMoreTerms.length)
 
     const { allowedCharacters } = this.context.config
 
@@ -585,14 +586,15 @@ class AutoComplete extends React.Component {
     this.setState({
       isFocused: true,
       isOpen: true,
-      results: !this.state.q && this.props.showHistory
-        ? mergeResultsWithHistory({
-          history: this.props.history,
-          results: this.state.results,
-          query: this.state.q,
-          showHistoryForQuery: this.props.showHistoryForQuery
-        })
-        : this.state.results
+      results:
+        !this.state.q && this.props.showHistory
+          ? mergeResultsWithHistory({
+            history: this.props.history,
+            results: this.state.results,
+            query: this.state.q,
+            showHistoryForQuery: this.props.showHistoryForQuery
+          })
+          : this.state.results
     })
 
     this.props.onFocus && this.props.onFocus(event)
@@ -642,7 +644,15 @@ class AutoComplete extends React.Component {
       resultLimitDesktop,
       isDesktop
     } = this.props
-    let { isFocused, fuzzyQuery, q, results, startToken, endToken, showWordSuggestion } = this.state
+    let {
+      isFocused,
+      fuzzyQuery,
+      q,
+      results,
+      startToken,
+      endToken,
+      showWordSuggestion
+    } = this.state
     if (results.length > resultLimit) {
       results.length = isDesktop ? resultLimitDesktop : resultLimit
     }
@@ -662,7 +672,9 @@ class AutoComplete extends React.Component {
       ? q.substr(0, startToken) + fuzzyQuery.term + q.substr(endToken) || q
       : q
 
-    const leftPosition = showWordSuggestion ? Math.max(0, this.state.leftPosition - this.props.leftPadding) : 0
+    const leftPosition = showWordSuggestion
+      ? Math.max(0, this.state.leftPosition - this.props.leftPadding)
+      : 0
     return (
       <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>
@@ -699,7 +711,10 @@ class AutoComplete extends React.Component {
             className={klass}
             style={{
               left: leftPosition,
-              width: showWordSuggestion && leftPosition > 0 ? this.props.wordSuggestionWidth : 'auto'
+              width:
+                showWordSuggestion && leftPosition > 0
+                  ? this.props.wordSuggestionWidth
+                  : 'auto'
             }}
           >
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
@@ -733,9 +748,11 @@ class AutoComplete extends React.Component {
               />
             </div>
           </div>
-          
-          {!isOpen && isFocused && !queryTerm && this.props.showHelp && <QueryHelp />}
 
+          {!isOpen &&
+            isFocused &&
+            !queryTerm &&
+            this.props.showHelp && <QueryHelp />}
         </div>
       </div>
     )

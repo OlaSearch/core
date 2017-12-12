@@ -106,7 +106,12 @@ class GeoLocation extends React.Component {
         ? translate('geo_location_enabled')
         : translate('geo_location_prompt')
     return (
-      <button type='button' className={klass} onClick={this.getLocation} disabled={isRequestingLocation}>
+      <button
+        type='button'
+        className={klass}
+        onClick={this.getLocation}
+        disabled={isRequestingLocation}
+      >
         <span className={hintklass} aria-label={title} />
       </button>
     )
@@ -121,4 +126,9 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { executeSearch, log, removeContext, requestGeoLocation })(injectTranslate(GeoLocation))
+export default connect(mapStateToProps, {
+  executeSearch,
+  log,
+  removeContext,
+  requestGeoLocation
+})(injectTranslate(GeoLocation))
