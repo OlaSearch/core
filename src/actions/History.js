@@ -13,7 +13,7 @@ export function addHistory (options) {
     let { QueryState, AppState } = getState()
     let { q, facet_query } = QueryState
     let { totalResults, history } = AppState
-    if (!q || !totalResults || q === '*') return
+    if (!q || !totalResults || q === '*' || q.indexOf('*') !== -1) return
 
     /* Filtering history */
     var query = omit(

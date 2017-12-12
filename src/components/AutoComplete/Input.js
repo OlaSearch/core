@@ -1,14 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Bookmarks from './../Bookmarks'
-import History from './../History'
 import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
-import { escapeRegEx, scrollTo } from './../../utilities'
+import {
+  escapeRegEx,
+  scrollTo,
+  stringToColor,
+  hexToRGBa
+} from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
+import ContentEditable from './../ContentEditable'
+import equals from 'ramda/src/equals'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -17,18 +23,8 @@ export default class Input extends React.Component {
   }
 
   onClear = (event) => {
-    // event && event.preventDefault()
-
-    // /* Do not call blur event when its a button */
-    // if (event.target.nodeName === 'INPUT' && !event.target.value) {
-    //   event.target.blur()
-    //   this.props.handleClickOutside(event)
-    //   return
-    // }
-
-    /* Clear query term */
     /* Focus input */
-    this.props.onClear(() => this.input.focus())
+    this.props.onClear(() => this.input._input.focus())
   }
 
   onFocus = (event) => {
@@ -43,11 +39,11 @@ export default class Input extends React.Component {
     /* Persist event */
     event.persist()
 
-    setTimeout(() => this.props.onChange(event.target.value))
+    setTimeout(() => this.props.onChange(event))
   }
 
   onChangeZone = () => {
-    this.input.focus()
+    this.input._input.focus()
   }
 
   onKeyDown = (event) => {
@@ -67,7 +63,7 @@ export default class Input extends React.Component {
          * If fuzzy query, do nothing
          */
         if (event.shiftKey || !this.getShadowTerm()) return
-        return onKeyDown('down')
+        return onKeyDown('down', event)
       // return this.props.onChange(this.getShadowTerm(true))
 
       case 38: // Up
@@ -76,17 +72,20 @@ export default class Input extends React.Component {
          * Once closed, when user presses Arrow up/down, we should show the results
          */
         event.preventDefault()
-        if (!isOpen && q) return this.props.onChange(q)
-        return onKeyDown('up')
+        if (!isOpen && q) return this.props.onChange(event)
+        return onKeyDown('up', event)
 
       case 40: // Down
         event.preventDefault()
-        if (!isOpen && q) return this.props.onChange(q)
-        return onKeyDown('down')
+        if (!isOpen && q) return this.props.onChange(event)
+        return onKeyDown('down', event)
+
+      case 32: // Space
+        return onKeyDown('space', event)
 
       case 9: // Tab
-        this.props.onBlur && this.props.onBlur(event)
-        break
+        return onKeyDown('tab', event)
+
       case 13: // Enter
         event.preventDefault() // Prevents firing onChange
         return onSubmit()
@@ -100,7 +99,13 @@ export default class Input extends React.Component {
   }
 
   handleInputChange = (arg, searchInput) => {
-    this.props.onChange(arg.target ? arg.target.value : arg, searchInput)
+    this.props.onChange(arg, searchInput)
+
+    /* Check if tokens have been changed */
+    let [oldTokens, newTokens] = this.formatValue(arg.target.value, true)
+    if (!newTokens || !equals(oldTokens, newTokens)) {
+      setTimeout(() => this.props.onTokenChange(newTokens))
+    }
   }
   handleSpeechChange = (text) => {
     this.handleInputChange(text, SEARCH_INPUTS.VOICE)
@@ -122,18 +127,38 @@ export default class Input extends React.Component {
   registerRef = (input) => {
     this.input = input
   }
+  formatValue = (value, returnTokens = false) => {
+    if (!value) return ''
+    const terms = this.props.tokens.map(({ value }) => value)
+    /* If no tokens, return value */
+    if (!terms.length) return value
+
+    /* Token regex */
+    const regX = new RegExp('\\b(' + terms.join('|') + ')\\b', 'gi')
+    const newTokens = []
+    value = value.replace(regX, (match, startToken) => {
+      /* Add to list of token */
+      returnTokens && newTokens.push(match)
+      let name = this.props.tokens.filter(({ value }) => value === match).reduce((acc, o) => o.name, null)
+      if (!name) return match
+      let color = hexToRGBa(stringToColor(name))
+      return `<span style='background-color: ${color}' class='ola-input-tag'>${match}</span>`
+    })
+
+    return returnTokens ? [terms, newTokens] : value
+  }
   render () {
-    var { q, placeholder, onBlur, showZone, showGeoLocation } = this.props
+    var { q, placeholder, onBlur, showZone, showGeoLocation, showWordSuggestion } = this.props
 
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
-    let shadowTerm = this.getShadowTerm()
+    let shadowTerm = showWordSuggestion ? '' : this.getShadowTerm()
     return (
       <div className={klass}>
         {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <div className='ola-form-input-wrapper'>
-          <input
+          <ContentEditable
             ref={this.registerRef}
             type='text'
             value={q}
@@ -148,6 +173,8 @@ export default class Input extends React.Component {
             placeholder={placeholder}
             onKeyDown={this.onKeyDown}
             autoFocus={this.props.autoFocus}
+            formatValue={this.formatValue}
+            onClick={this.onFocus}
           />
 
           <InputShadow value={shadowTerm} />
@@ -162,12 +189,14 @@ export default class Input extends React.Component {
           />
         )}
 
+        {this.props.showAlert && null}
+
         {showGeoLocation ? (
           <GeoLocation
             active={false}
             onSuccess={this.props.onGeoLocationSuccess}
-            onFailure={this.props.onGeoLocationFailure}
             onDisable={this.props.onGeoLocationDisable}
+            refreshOnGeoChange={this.props.refreshOnGeoChange}
             onError={this.props.onGeoError}
           />
         ) : null}
@@ -177,8 +206,6 @@ export default class Input extends React.Component {
           onFinalResult={this.handleSpeechChange}
           isAutosuggest
         />
-
-        <History onOpen={this.props.handleClose} />
 
         <Bookmarks onOpen={this.props.handleClose} />
 

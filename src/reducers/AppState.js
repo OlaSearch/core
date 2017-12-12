@@ -1,7 +1,8 @@
 import types from './../constants/ActionTypes'
 import {
   BOOKMARKS_STORAGE_KEY,
-  HISTORY_STORAGE_KEY
+  HISTORY_STORAGE_KEY,
+  ALERT_STORAGE_KEY
 } from './../constants/Settings'
 import storage from './../services/storage'
 
@@ -24,6 +25,12 @@ export const initialState = {
   resultIds: [],
   resultsById: {},
   isLoadingResult: false,
+
+  /* Alerts */
+  queryIds: [],
+  queriesById: {},
+  isLoadingAlert: false,
+  inProgressAlert: false,
 
   /* Sidebar */
   isSidebarOpen: false
@@ -175,12 +182,16 @@ export default (state = initialState, action) => {
         ...initialState,
         bookmarks: state.bookmarks,
         history: state.history,
+        queryIds: state.queryIds,
+        queriesById: state.queriesById,
         namespace: state.namespace
       }
 
     case types.OLA_REHYDRATE:
+      let alerts = storage.get(ALERT_STORAGE_KEY, action.namespace)
       return {
         ...state,
+        ...alerts,
         bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
         history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
         namespace: action.namespace
@@ -190,6 +201,78 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSidebarOpen: !state.isSidebarOpen
+      }
+
+    case types.REQUEST_ALERT:
+      return {
+        ...state,
+        isLoadingAlert: true
+      }
+
+    case types.REQUEST_ALERT_SUCCESS:
+      return {
+        ...state,
+        queriesById: action.extra.queriesById,
+        queryIds: action.extra.queryIds,
+        isLoadingAlert: false
+      }
+
+    case types.REQUEST_ALERT_FAILURE:
+      return {
+        ...state,
+        isLoadingAlert: false
+      }
+    
+    case types.REQUEST_CREATE_ALERT:
+      return {
+        ...state,
+        inProgressAlert: true
+      }
+
+    case types.REQUEST_CREATE_ALERT_SUCCESS:
+      const queries = [...state.queryIds, action.extra.queryId]
+      return {
+        ...state,
+        queryIds: queries.filter(function(item, pos) {
+          return queries.indexOf(item) == pos;
+        }),
+        queriesById: {
+          ...state.queriesById,
+          ...action.extra.queriesById
+        },
+        inProgressAlert: false
+      }
+    
+    case types.REQUEST_ALERT_DELETE:
+      return {
+        ...state,
+        inProgressAlert: true
+      }
+    
+
+    case types.REQUEST_DELETE_ALERT_DOCS_SUCCESS:
+      return {
+        ...state,
+        queriesById: {
+          ...state.queriesById,
+          [action.payload.queryId] : {
+            ...state.queriesById[action.payload.queryId],
+            docIds: []
+          }
+        }
+      }
+    
+    case types.REQUEST_DELETE_ALERT:
+      return {
+        ...state,
+        inProgressAlert: true
+      }
+
+    case types.REQUEST_DELETE_ALERT_SUCCESS:
+      return {
+        ...state,
+        queryIds: state.queryIds.filter((id) => id !== action.payload.queryId),
+        inProgressAlert: false
       }
 
     default:

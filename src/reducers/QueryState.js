@@ -18,6 +18,9 @@ export const initialState = {
   debug: false,
   source: null,
 
+  /* Query tokens */
+  tokens: [],
+
   /* project info */
   projectId: null,
   env: null
@@ -149,7 +152,8 @@ export default (state = initialState, action) => {
             }
             return item
           })
-          .filter((item) => item.selected.length)
+          .filter((item) => item.selected.length),
+        tokens: state.tokens.filter(({ value }) => value !== action.value)
       }
 
     case types.REPLACE_FACET:
@@ -196,6 +200,24 @@ export default (state = initialState, action) => {
         ...state,
         facet_query: [],
         page: 1
+      }
+
+    case types.ADD_TOKEN:
+      return {
+        ...state,
+        tokens: [...state.tokens, action.options]
+      }
+
+    case types.REMOVE_TOKEN:
+      return {
+        ...state,
+        tokens: state.tokens.filter(({ value }) => value !== action.value)
+      }
+
+    case types.REMOVE_ALL_TOKENS:
+      return {
+        ...state,
+        tokens: []
       }
 
     case types.CHANGE_SORT:

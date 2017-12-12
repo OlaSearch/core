@@ -1,92 +1,42 @@
 import React from 'react'
+import equals from 'ramda/src/equals'
 
 export default class ContentEditable extends React.Component {
   static defaultProps = {
-    formatValue: null,
-    onChange: null,
-    onSubmit: null
+    formatValue: null
   }
-  emitChange = (event) => {
-    if (!this.el) return
-    let text = this.el.textContent
-    if (this.props.onChange && text !== this.lastText) {
-      this.props.onChange(text)
-    }
-    this.lastText = text
-    this.updateFakeEl(text)
-  }
-  updateFakeEl = (text) => {
+  updateFakeEl = () => {
     this.fakeEl.innerHTML = this.props.formatValue
-      ? this.props.formatValue(text)
-      : text
-  }
-  componentDidUpdate () {
-    if (this.el && this.props.value !== this.el.textContent) {
-      this.el.textContent = this.props.value
-      /* Check if its active element */
-      if (document && document.activeElement === this.el) {
-        console.log('called')
-      }
-    }
-    this.updateFakeEl(this.el.textContent)
+      ? this.props.formatValue(this.props.value)
+      : this.props.value
   }
   componentDidMount () {
-    this.updateFakeEl(this.el.textContent)
-  }
-  shouldComponentUpdate (nextProps) {
-    // We need not rerender if the change of props simply reflects the user's
-    // edits. Rerendering in this case would make the cursor/caret jump.
-    return (
-      // Rerender if there is no element yet... (somehow?)
-      !this.el ||
-      // ...or if html really changed... (programmatically, not by user edit)
-      (nextProps.value !== this.el.textContent &&
-        nextProps.value !== this.props.value) ||
-      // ...or if editing is enabled or disabled.
-      this.props.disabled !== nextProps.disabled ||
-      // ...or if className changed
-      this.props.className !== nextProps.className
-    )
-  }
-  registerRef = (el) => {
-    this.el = el
+    this.updateFakeEl()
   }
   registerFakeRef = (el) => {
     this.fakeEl = el
   }
-  createMarkup = () => {
-    return { __html: this.props.value }
+  static defaultProps = {
+    matches: []
   }
-  onKeyDown = (evt) => {
-    if (this.props.onKeyDown) return this.props.onKeyDown(evt)
-    if (evt.which === 13) {
-      evt && evt.preventDefault()
-      this.props.onSubmit && this.props.onSubmit(this.props.value, evt)
+  componentDidUpdate (prevProps) {
+    if (!equals(prevProps.matches, this.props.matches)) {
+      this.props.onMatchChange && this.props.onMatchChange(this.props.matches)
     }
+    // if (this.props.value !== prevProps.value) {
+    this.updateFakeEl()
+    // }
   }
-  onFocus = (event) => {
-    const newEvent = {
-      ...event,
-      target: {
-        ...event.target,
-        value: this.props.value
-      }
-    }
-    this.props.onFocus && this.props.onFocus(newEvent)
-  }
+  registerRef = (el) => (this._input = el)
   render () {
-    let { formatValue, value, ...rest } = this.props
-
+    let { formatValue, onMatchChange, ...rest } = this.props
     return (
       <div className='ContentEditableWrapper'>
-        <div
-          {...rest}
+        <input
+          type='text'
+          className='ola-text-input ola-text-input-round'
           ref={this.registerRef}
-          contentEditable
-          onFocus={this.onFocus}
-          onInput={this.emitChange}
-          onKeyDown={this.onKeyDown}
-          className='ContentEditable-Input'
+          {...rest}
         />
         <div
           ref={this.registerFakeRef}

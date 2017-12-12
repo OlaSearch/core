@@ -6,5 +6,6 @@ module.exports = {
   Intl: require('./Intl'),
   Logger: require('./Logger'),
   Search: require('./Search'),
-  Ui: require('./Ui')
+  Ui: require('./Ui'),
+  Alert: require('./Alert')
 }

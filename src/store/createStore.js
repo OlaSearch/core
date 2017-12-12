@@ -1,6 +1,7 @@
 import { compose, combineReducers, applyMiddleware, createStore } from 'redux'
 import olaReducer from './../reducers'
 import createOlaMiddleware from './../middleware/createOlaMiddleware'
+import createPersistMiddleware from './../middleware/createPersistMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
 import { prepareUserState } from './prepareStore'
@@ -49,6 +50,7 @@ module.exports = (
   }
   const { namespace, env, projectId } = config
   const olaMiddleWare = createOlaMiddleware(options)
+  const persistMiddleware = createPersistMiddleware({ namespace })
 
   /* Reducer */
   const olaReducers = combineReducers({ ...olaReducer, ...reducers })
@@ -60,7 +62,12 @@ module.exports = (
     store = createStore(
       olaReducers,
       compose(
-        applyMiddleware(thunk, olaMiddleWare, ...middlewares),
+        applyMiddleware(
+          thunk,
+          olaMiddleWare,
+          persistMiddleware,
+          ...middlewares
+        ),
         ...enhancers
       )
     )
@@ -73,7 +80,13 @@ module.exports = (
     store = createStore(
       olaReducers,
       compose(
-        applyMiddleware(thunk, olaMiddleWare, logger, ...middlewares),
+        applyMiddleware(
+          thunk,
+          olaMiddleWare,
+          persistMiddleware,
+          logger,
+          ...middlewares
+        ),
         window.devToolsExtension ? window.devToolsExtension() : (f) => f,
         ...enhancers
       )

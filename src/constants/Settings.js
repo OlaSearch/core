@@ -11,6 +11,7 @@ export const USER_NEW_KEY = 'ola_new_user'
 export const USER_SESSION_EXPIRY_DAYS = 365
 export const INTENT_SESSION_KEY = 'ola_intent_session'
 export const INTENT_SESSION_EXPIRY_DAYS = 365
+export const ALERT_STORAGE_KEY = '_ola_alert_'
 export const RE_ESCAPE = new RegExp(
   '(\\' +
     ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join(
@@ -39,6 +40,7 @@ export const TYPE_TAXONOMY = 'taxonomy'
 export const TYPE_ENTITY = 'entity'
 export const TYPE_QUERY = 'query'
 export const TYPE_DOC = 'doc'
+export const TYPE_FACET = 'facet'
 export const FUZZY_SUGGEST_KEY = 'suggest'
 export const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
 export const API_IGNORE_LOGGING = ['answer', 'get', 'alert']

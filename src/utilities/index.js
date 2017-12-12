@@ -1,5 +1,8 @@
 import React from 'react'
 import flatten from 'ramda/src/flatten'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
+import { TYPE_TAXONOMY, TYPE_DOC, TYPE_FACET } from './../constants/Settings'
 
 export function supplant (s, d) {
   for (var p in d) {
@@ -462,4 +465,182 @@ export function once (fn, context) {
     }
     return result
   }
+}
+
+export function hexToRGBa (hex, opacity = 0.5) {
+  hex = hex.replace('#', '')
+  let r = parseInt(hex.substring(0, 2), 16)
+  let g = parseInt(hex.substring(2, 4), 16)
+  let b = parseInt(hex.substring(4, 6), 16)
+
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')'
+}
+
+export function stringToColor (str) {
+  return intToRGB(hashCode(str.toLowerCase()))
+}
+
+export function intToRGB (i) {
+  var c = (i & 0x00ffffff).toString(16).toUpperCase()
+  return '#' + '00000'.substring(0, 6 - c.length) + c
+}
+
+export function hashCode (str) {
+  var hash = 0
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  return hash
+}
+
+export function getWordPosition (textInput) {
+  /* Break early */
+  if (!textInput && textInput['selectionEnd']) return
+  var carPos = textInput.selectionEnd
+  const AUTOCOMPLETE_FAKE_ID = 'ola-autocomplete-fake-input'
+
+  if (document.getElementById(AUTOCOMPLETE_FAKE_ID)) {
+    var div = document.getElementById(AUTOCOMPLETE_FAKE_ID)
+    var span = div.firstChild
+  } else {
+    var div = document.createElement('div')
+    var span = document.createElement('span')
+    var copyStyle = getComputedStyle(textInput)
+    var coords = {}
+    /* Copy styles */
+    for (let i = 0; i < copyStyle.length; i++) {
+      div.style[copyStyle[i]] = copyStyle[copyStyle[i]]
+    }
+    div.setAttribute('id', AUTOCOMPLETE_FAKE_ID)
+    div.style.position = 'absolute'
+    document.body.appendChild(div)
+  }
+
+  var letter
+  var startToken = carPos
+  do {
+    letter = textInput.value.substring(carPos - 1, carPos)
+    if (letter !== ' ') {
+      carPos = carPos - 1
+    }
+  } while (letter && letter !== ' ' && carPos > 0)
+
+  var currentWord = textInput.value
+  var tmpCarPos = carPos
+  var char
+  do {
+    tmpCarPos = tmpCarPos + 1
+    char = currentWord.substring(tmpCarPos, tmpCarPos + 1)
+  } while (char && char !== ' ')
+
+  var activeWord = textInput.value.substring(carPos, tmpCarPos)
+
+  div.textContent = textInput.value.substr(0, carPos)
+  span.textContent = textInput.value.substr(carPos) || '.'
+  div.appendChild(span)
+  coords = {
+    TOP: span.offsetTop,
+    LEFT: span.offsetLeft
+  }
+  /* Remove the div */
+  document.body.removeChild(div)
+
+  return {
+    leftPosition: textInput.offsetLeft - textInput.scrollLeft + coords.LEFT,
+    topPosition: textInput.offsetTop - textInput.scrollTop + coords.TOP + 14,
+    word: activeWord,
+    startToken: carPos,
+    endToken: tmpCarPos
+  }
+}
+
+export function getAutoCompleteResults (
+  results,
+  allFacets,
+  showWordSuggestion,
+  tokens
+) {
+  /* Parse payload */
+  let res = []
+  let categoryFound = false
+  let tokenNames = tokens.map(({ value }) => value)
+
+  /* Check if word suggestion is turned on */
+  if (showWordSuggestion) {
+    results.facets.forEach(({ values, name }) => {
+      for (let i = 0; i < values.length; i++) {
+        let term = values[i].name
+        if (tokenNames.indexOf(term) === -1) {
+          res.push({
+            term,
+            suggestion_raw: term,
+            type: TYPE_FACET,
+            taxo_label: name
+          })
+        }
+      }
+    })
+    return res
+  }
+
+  for (let i = 0, len = results.length; i < len; i++) {
+    let { payload, ...rest } = results[i]
+    if (typeof payload === 'string') payload = JSON.parse(payload)
+    let isCategory =
+      payload.taxo_terms &&
+      payload.taxo_terms.length > 0 &&
+      !categoryFound &&
+      payload.type !== TYPE_TAXONOMY
+    let { topClicks } = payload
+    /* Add top clicked document */
+    let topClickDocs =
+      i === 0 && topClicks && topClicks.length
+        ? topClicks.filter((_, idx) => idx === 0).map((item) => ({
+          term: rest.term,
+          title: item.title,
+          type: TYPE_DOC,
+          ...item
+        }))
+        : []
+
+    /* If categories are found, we will need to create additional array items */
+    if (isCategory) {
+      let categories = payload.taxo_terms
+      let totalCategories = categories.length
+      /* Get the display names of the facets */
+      let facet = find(propEq('name', payload.taxo_label))(allFacets)
+
+      /* First term in the suggestion */
+      res = [
+        ...res,
+        {
+          ...rest,
+          suggestion_raw: payload.suggestion_raw,
+          label: payload.label,
+          answer: payload.answer,
+          type: payload.type /* The first item is a query */
+        },
+        ...topClickDocs
+      ]
+
+      for (let j = 0; j < totalCategories; j++) {
+        let [name] = payload.taxo_terms[j].split('|')
+        let [path] = payload.taxo_paths ? payload.taxo_paths[j].split('|') : []
+        let displayName = facet ? facet.facetNames[name] || name : name
+        res.push({
+          ...rest,
+          taxo_term: displayName,
+          isLastCategory: j === totalCategories - 1,
+          isFirstCategory: j === 0,
+          ...payload,
+          suggestion_raw: payload.suggestion_raw,
+          taxo_path: path
+        })
+        categoryFound = true
+      }
+    } else {
+      res = [...res, { ...rest, ...payload }, ...topClickDocs]
+    }
+  }
+  return res
 }

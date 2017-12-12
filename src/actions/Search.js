@@ -155,6 +155,72 @@ export function executeSearch (payload) {
   }
 }
 
+/**
+ * Removes token values from query
+ * @param {String} q
+ * @param {Array} tokenValues
+ */
+function removeTokenFromQuery (q, tokenValues) {
+  return q.replace(
+    new RegExp('\\b(' + tokenValues.join('|') + ')\\b', 'gi'),
+    ''
+  )
+}
+
+/**
+ * Search for facet values
+ * @param {String} fullTerm Full query term, default is '*'
+ * @param {String} term Partial query
+ */
+export function executeFacetSearch (fullTerm = '*', term) {
+  /* replace backslash */
+  term = term.replace(/\\/gi, '')
+  term = xssFilters.inHTMLData(term)
+  return (dispatch, getState) => {
+    const state = getState()
+    const context = state.Context
+    const query = state.QueryState
+    const { tokens } = query
+    const facet_query = tokens.map(({ value, name }) => ({
+      selected: [value],
+      name,
+      multiSelect: true
+    }))
+
+    /* Remove tokens from the query */
+    let initialStart = 0
+    let q = removeTokenFromQuery(
+      fullTerm,
+      tokens.map(({ value }) => value).concat(term)
+    )
+
+    return dispatch({
+      types: [
+        types.REQUEST_FACET,
+        types.REQUEST_FACET_SUCCESS,
+        types.REQUEST_FACET_FAILURE
+      ],
+      query: {
+        ...query,
+        q,
+        facet_query,
+        skip_intent: true
+      },
+      context,
+      payload: {
+        extraParams: {
+          facetPrefix: term.toLowerCase() /* Always lowercase facet term */,
+          per_page: 0
+        }
+      },
+      meta: {
+        log: false
+      },
+      api: 'search'
+    })
+  }
+}
+
 export function fetchAnswer (url) {
   return (dispatch, getState) => {
     dispatch({
@@ -194,21 +260,6 @@ export function fetchResult (ids) {
       },
       query: { q, searchAdapterOptions: { disableBestBets: true }, wt: 'json' },
       api: 'get'
-    })
-  }
-}
-
-export function fetchAlerts () {
-  return (dispatch, getState) => {
-    const { userId } = getState().Context
-    dispatch({
-      types: [
-        types.REQUEST_RESULT,
-        types.REQUEST_RESULT_SUCCESS,
-        types.REQUEST_RESULT_FAILURE
-      ],
-      query: { userId },
-      api: 'alert'
     })
   }
 }
@@ -448,5 +499,25 @@ export function setSearchSource (source) {
   return {
     type: types.SET_SEARCH_SOURCE,
     source
+  }
+}
+
+export function addToken (options) {
+  return {
+    type: types.ADD_TOKEN,
+    options
+  }
+}
+
+export function removeToken (value) {
+  return {
+    type: types.REMOVE_TOKEN,
+    value
+  }
+}
+
+export function removeAllTokens () {
+  return {
+    type: types.REMOVE_ALL_TOKENS
   }
 }

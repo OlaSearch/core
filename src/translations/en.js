@@ -1,7 +1,7 @@
 module.exports = {
   locales: 'en-US',
   messages: {
-    title: 'Collections',
+    title: 'Search results',
     refine_results: 'Refine your results',
     showing: 'Showing {current} - {next} of {total} results',
     showing_no_results: 'Showing {total} results',
@@ -28,7 +28,9 @@ module.exports = {
     autosuggest_viewall: 'View all results',
     autosuggest_help: 'Search suggestions',
     autosuggest_help_history: 'Search history',
+    autosuggest_help_facets: 'Facet suggestions',
     suggestions_did_you_mean: 'Did you mean',
+    autosuggest_clear_history_label: 'clear',
     suggestions_showing_results_for:
       'Showing results for <strong>{term}</strong>',
     facet_tabs_all_label: 'All',
@@ -61,6 +63,10 @@ module.exports = {
 
     /* Infinite scroll */
     load_more_button: 'Load more',
-    load_more_button_loading: 'Loading'
+    load_more_button_loading: 'Loading',
+
+    /* Alert */
+    alert_button_add: 'Add to alerts',
+    alert_button_remove: 'Remove from alert'
   }
 }

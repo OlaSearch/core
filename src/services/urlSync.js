@@ -62,6 +62,13 @@ export function buildQueryString (params, replaceQueryParamName) {
       })
     }
 
+    /* Tokens */
+    if (name === 'tokens') {
+      value = value.map(({ startToken, endToken, value: val, name }) => {
+        return `${name}:${val}:${startToken}:${endToken}`
+      })
+    }
+
     /**
      * Check if Value is an array
      */
@@ -82,9 +89,10 @@ export function buildQueryString (params, replaceQueryParamName) {
 export function parseQueryString (initialState, config) {
   let loc = window.location.search /* Deprecated hash */
   var qs = queryString.parse(loc)
-  var { filters, facet_query: facetQuery } = qs
+  var { filters, facet_query: facetQuery, tokens } = qs
   var facetQueryObject = { facet_query: [] }
   var filtersObject = { filters: [] }
+  var tokensObject = { tokens: [] }
   /**
    * If no qs
    */
@@ -115,11 +123,7 @@ export function parseQueryString (initialState, config) {
   if (facetQuery) {
     var { facets: configFacets } = config
     if (typeof facetQuery === 'string') {
-      try {
-        facetQuery = JSON.parse('["' + facetQuery + '"]')
-      } catch (e) {
-        facetQuery = []
-      }
+      facetQuery = [facetQuery]
     }
 
     var fq = facetQuery
@@ -156,11 +160,7 @@ export function parseQueryString (initialState, config) {
    */
   if (filters) {
     if (typeof filters === 'string') {
-      try {
-        filters = JSON.parse('["' + filters + '"]')
-      } catch (e) {
-        filters = []
-      }
+      filters = [filters]
     }
 
     var filterQuery = filters.map((item) => {
@@ -180,10 +180,32 @@ export function parseQueryString (initialState, config) {
       filters: filterQuery
     }
   }
+
+  /**
+   * tokens
+   */
+  if (tokens) {
+    if (typeof tokens === 'string') {
+      tokens = [tokens]
+    }
+    tokensObject = {
+      tokens: tokens.map((t) => {
+        let [name, value, startToken, endToken] = t.split(':')
+        return {
+          name,
+          value,
+          startToken: parseInt(startToken),
+          endToken: parseInt(endToken)
+        }
+      })
+    }
+  }
+
   return {
     ...initialState,
     ...qs,
     ...facetQueryObject,
-    ...filtersObject
+    ...filtersObject,
+    ...tokensObject
   }
 }

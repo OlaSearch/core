@@ -1,19 +1,13 @@
 /**
  * Ola Middleware
  * # Functions
- * 1. State persistence for Bookmarks, History and Context
- * 2. Ajax requests for search adapters
- * 3. Set skip_intent to true if page > 1 or enriched_q !== ''
+ * 1. Ajax requests for search adapters
+ * 2. Set skip_intent to true if page > 1 or enriched_q !== ''
  */
 import { debounceLog, submitLog } from './../actions/Logger'
-import { debouncePersistState, STATE_TYPE_KEYS } from './../store/persistState'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
-import {
-  FUZZY_SUGGEST_KEY,
-  INTENT_SUPPORTED_API_KEYS,
-  API_IGNORE_LOGGING
-} from './../constants/Settings'
+import { FUZZY_SUGGEST_KEY, API_IGNORE_LOGGING, INTENT_SUPPORTED_API_KEYS } from './../constants/Settings'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -23,6 +17,7 @@ module.exports = (options = {}) => {
       query,
       context,
       payload = {},
+      meta = {},
       suggestedTerm,
       nullResponse = null,
       processResponse = true,
@@ -30,11 +25,6 @@ module.exports = (options = {}) => {
       shouldDispatchActions = true,
       returnWithoutDispatch = false
     } = action
-
-    /* Persist store state */
-    if (STATE_TYPE_KEYS.indexOf(action.type) !== -1) {
-      debouncePersistState(action, getState, options.config.namespace)
-    }
 
     // Normal action: pass it on
     if (!types) return next(action)
@@ -110,8 +100,16 @@ module.exports = (options = {}) => {
         env
       }
       : api === FUZZY_SUGGEST_KEY
-        ? query
-        : queryBuilder.transform(query, null, acl, context)
+        ? { ...query, ...payload.extraParams }
+        : queryBuilder.transform(
+            { ...query, ...payload.extraParams },
+            null,
+            acl,
+            context
+          )
+
+    const shouldLog = meta.log !== false
+    const apiOptions = meta.apiOptions ? meta.apiOptions : null
 
     /* Api url when intent engine is active */
     const apiUrl =
@@ -124,7 +122,7 @@ module.exports = (options = {}) => {
       callApi = api(params)
     } else {
       callApi = searchService.hasOwnProperty(api)
-        ? searchService[api](timestampObj, params, apiUrl)
+        ? searchService[api](timestampObj, params, apiUrl, apiOptions)
         : null
     }
     if (typeof callApi !== 'object' || typeof callApi.then !== 'function') {
@@ -148,117 +146,175 @@ module.exports = (options = {}) => {
           }
         }
         return /^[\{\[]/.test(responseText)
-            ? JSON.parse(responseText)
-            : responseText
+          ? JSON.parse(responseText)
+          : responseText
       })
-      .then((response) => {
-        /* If null response, pass it on */
-        if (!response) return response
+      .then(
+        (response) => {
+          /* If null response, pass it on */
+          if (!response) return response
 
-        const type = successType
+          const type = successType
 
-        /* Check if process response is false */
+          /* Check if process response is false */
 
-        if (processData) {
-          response = processData(response, payload, currentState)
-        }
+          if (processData) {
+            response = processData(response, payload, currentState)
+          }
 
-        /* For autocomplete */
-        if (returnWithoutDispatch) return response
+          /* For autocomplete */
+          if (returnWithoutDispatch) return response
 
-        if (!processResponse) {
-          return next({
-            type,
-            response
-          })
-        }
+          if (!processResponse) {
+            return next({
+              type,
+              response
+            })
+          }
 
-        /* Parse only when the timestamp matches */
-        var results
-        var spellSuggestions
-        var totalResults
-        var facets
-        var qt
-        var answer
-        var enrichedQuery
-        var skipSearchResultsUpdate = false
-        var responseTime
-        var extra = response.extra
-        if (proxy) {
-          results = response.results
-          spellSuggestions = response.spellSuggestions
-          totalResults = response.totalResults
-          facets = response.facets
-          qt = response.qt
-          enrichedQuery = response.enriched_q
-          skipSearchResultsUpdate = response.skipSearchResultsUpdate
-          responseTime = response.responseTime
+          /* Parse only when the timestamp matches */
+          var results
+          var spellSuggestions
+          var totalResults
+          var facets
+          var qt
+          var answer
+          var enrichedQuery
+          var skipSearchResultsUpdate = false
+          var responseTime
+          var extra = response.extra
+          var version
+          if (proxy) {
+            results = response.results
+            spellSuggestions = response.spellSuggestions
+            totalResults = response.totalResults
+            facets = response.facets
+            qt = response.qt
+            enrichedQuery = response.enriched_q
+            skipSearchResultsUpdate = response.skipSearchResultsUpdate
+            responseTime = response.responseTime
+            version = response.version
 
-          /* Instant answer */
-          answer = api === 'answer' ? response : response.answer
-        } else {
-          results = parser.normalizeResults(response)
-          spellSuggestions = parser.normalizeSpellSuggestions(response)
-          totalResults = parser.normalizeTotalResults(response)
-          facets = parser.normalizeFacets(response)
-          qt = parser.queryTime(response)
-          responseTime = response.responseTime
-        }
+            /* Instant answer */
+            answer = api === 'answer' ? response : response.answer
+          } else {
+            results = parser.normalizeResults(response)
+            spellSuggestions = parser.normalizeSpellSuggestions(response)
+            totalResults = parser.normalizeTotalResults(response)
+            facets = parser.normalizeFacets(response)
+            qt = parser.queryTime(response)
+            responseTime = response.responseTime
+            version = parser.version()
+          }
 
-        /**
+          /**
          * Get facets or filters selected by intent engine
          */
-        let facetQuery = null
-        if (
-          answer &&
-          answer.search &&
-          answer.search.facet_query &&
-          answer.search.facet_query.length
-        ) {
-          facetQuery = []
-          for (let i = 0; i < answer.search.facet_query.length; i++) {
-            let selectedFacet = facets.filter(
-              ({ name }) => name === answer.search.facet_query[i].name
-            )
-            if (selectedFacet.length) {
-              facetQuery.push({
-                ...selectedFacet.reduce((a, b) => a),
-                ...answer.search.facet_query[i],
-                values: []
-              })
+          let facetQuery = null
+          if (
+            answer &&
+            answer.search &&
+            answer.search.facet_query &&
+            answer.search.facet_query.length
+          ) {
+            facetQuery = []
+            for (let i = 0; i < answer.search.facet_query.length; i++) {
+              let selectedFacet = facets.filter(
+                ({ name }) => name === answer.search.facet_query[i].name
+              )
+              if (selectedFacet.length) {
+                facetQuery.push({
+                  ...selectedFacet.reduce((a, b) => a),
+                  ...answer.search.facet_query[i],
+                  values: []
+                })
+              }
             }
           }
-        }
 
-        /**
+          /**
          * Check if
          * Total results = 0 && Has Spell Suggestions
          */
-        if (
-          totalResults === 0 &&
-          spellSuggestions.length &&
-          !enrichedQuery &&
-          !(answer && (answer.card !== null || answer.reply))
-        ) {
-          let { term } = spellSuggestions[0]
-          return dispatch({
-            types,
-            query: {
-              ...query,
-              q: term
-            },
-            suggestedTerm: term,
-            api,
-            payload,
-            context,
-            responseTime,
-            facetQuery
-          })
-        }
+          if (
+            totalResults === 0 &&
+            spellSuggestions.length &&
+            !enrichedQuery &&
+            !(answer && (answer.card !== null || answer.reply))
+          ) {
+            let { term } = spellSuggestions[0]
+            return dispatch({
+              types,
+              query: {
+                ...query,
+                q: term
+              },
+              suggestedTerm: term,
+              api,
+              payload,
+              context,
+              responseTime,
+              facetQuery
+            })
+          }
 
-        shouldDispatchActions &&
-          next({
-            payload,
+          shouldDispatchActions &&
+            next({
+              payload,
+              results,
+              spellSuggestions,
+              totalResults,
+              facets,
+              type,
+              suggestedTerm,
+              qt,
+              answer,
+              enriched_q: enrichedQuery,
+              error: null,
+              skipSearchResultsUpdate,
+              api,
+              responseTime,
+              facetQuery,
+              extra,
+              version
+            })
+
+          /**
+         * Logger
+         * Parameters
+         * Q or C
+         * results
+         * eventSource
+         * searchInput = `voice`|`url`|`keyboard`
+         */
+          /* Query becomes empty for long conversations */
+          const isBotReply = answer && 'awaiting_user_input' in answer
+          const sendImmediateLog = isBotReply && !answer.awaiting_user_input
+          const logFn = sendImmediateLog ? submitLog : debounceLog
+          if (
+            logger &&
+            logger.enabled &&
+            API_IGNORE_LOGGING.indexOf(api) === -1 &&
+            shouldLog
+          ) {
+            logFn({
+              dispatch,
+              eventType: 'Q',
+              eventSource: currentState.QueryState.source || api,
+              state: getState(),
+              responseTime
+            })
+          }
+
+          /**
+         * If answer is a callback
+         * SPICE
+         */
+          if (answer && answer.callback) {
+            dispatch(fetchAnswer(answer.callback))
+          }
+
+          return {
             results,
             spellSuggestions,
             totalResults,
@@ -267,69 +323,17 @@ module.exports = (options = {}) => {
             suggestedTerm,
             qt,
             answer,
-            enriched_q: enrichedQuery,
-            error: null,
-            skipSearchResultsUpdate,
-            api,
-            responseTime,
-            facetQuery,
-            extra
-          })
-
-        /**
-         * Logger
-         * Parameters
-         * Q or C
-         * results
-         * eventSource
-         * searchInput = `voice`|`url`|`keyboard`
-         */
-        /* Query becomes empty for long conversations */
-        const isBotReply = answer && 'awaiting_user_input' in answer
-        const sendImmediateLog = isBotReply && !answer.awaiting_user_input
-        const logFn = sendImmediateLog ? submitLog : debounceLog
-        if (
-          logger &&
-          logger.enabled &&
-          API_IGNORE_LOGGING.indexOf(api) === -1
-        ) {
-          logFn({
-            dispatch,
-            eventType: 'Q',
-            eventSource: currentState.QueryState.source || api,
-            state: getState(),
             responseTime
-          })
+          }
+        },
+        (error) => {
+          shouldDispatchActions &&
+            next({
+              payload,
+              error,
+              type: failureType
+            })
         }
-
-        /**
-         * If answer is a callback
-         * SPICE
-         */
-        if (answer && answer.callback) {
-          dispatch(fetchAnswer(answer.callback))
-        }
-
-        return {
-          results,
-          spellSuggestions,
-          totalResults,
-          facets,
-          type,
-          suggestedTerm,
-          qt,
-          answer,
-          responseTime
-        }
-      },
-      (error) => {
-        shouldDispatchActions &&
-          next({
-            payload,
-            error,
-            type: failureType
-          })
-      }
-    )
+      )
   }
 }

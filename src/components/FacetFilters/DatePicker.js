@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import withToggle from './../../decorators/withToggle'
 import DateParser from './../../utilities/dateParser'
-import { DATE_FORMAT_MOBILE, DEFAULT_DATE_FORMAT, DATEPICKER_YEAR_RANGE } from './../../constants/Settings'
+import {
+  DATE_FORMAT_MOBILE,
+  DEFAULT_DATE_FORMAT,
+  DATEPICKER_YEAR_RANGE
+} from './../../constants/Settings'
 import classNames from 'classnames'
 import DatePicker from 'react-pikaday-datepicker'
 import { connect } from 'react-redux'
