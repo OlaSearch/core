@@ -64,7 +64,7 @@ export default class Input extends React.Component {
          * If fuzzy query, do nothing
          */
         if (event.shiftKey || !this.getShadowTerm()) return
-        return onKeyDown('down')
+        return onKeyDown('down', event)
       // return this.props.onChange(this.getShadowTerm(true))
 
       case 38: // Up
@@ -73,13 +73,13 @@ export default class Input extends React.Component {
          * Once closed, when user presses Arrow up/down, we should show the results
          */
         event.preventDefault()
-        if (!isOpen && q) return this.props.onChange(q)
-        return onKeyDown('up')
+        if (!isOpen && q) return this.props.onChange(event)
+        return onKeyDown('up', event)
 
       case 40: // Down
         event.preventDefault()
-        if (!isOpen && q) return this.props.onChange(q)
-        return onKeyDown('down')
+        if (!isOpen && q) return this.props.onChange(event)
+        return onKeyDown('down', event)
 
       case 32: // Space
         return onKeyDown('space', event)
@@ -131,30 +131,30 @@ export default class Input extends React.Component {
   formatValue = (value, returnTokens = false) => {
     if (!value) return ''
     const terms = this.props.tokens.map(({ value }) => value)
-    const tokenIndexes = this.props.tokens.map(({ startToken }) => startToken)
+    /* If no tokens, return value */
+    if (!terms.length) return value
+
+    /* Token regex */
     const regX = new RegExp('\\b(' + terms.join('|') + ')\\b', 'gi')
     const newTokens = []
     value = value.replace(regX, (match, startToken) => {
-      // if (tokenIndexes.indexOf(startToken - 1) === -1) return match
       /* Add to list of token */
-      newTokens.push(match)
-      // let facet = selectedFacets
-      //   .filter(({ suggestion_raw }) => suggestion_raw === match)
-      //   .reduce((acc, i) => i.label, null)
-      // if (!facet) return ''
-      let color = hexToRGBa(stringToColor(match))
+      returnTokens && newTokens.push(match)
+      let name = this.props.tokens.filter(({ value }) => value === match).reduce((acc, o) => o.name, null)
+      if (!name) return match
+      let color = hexToRGBa(stringToColor(name))
       return `<span style='background-color: ${color}' class='ola-input-tag'>${match}</span>`
     })
 
     return returnTokens ? [terms, newTokens] : value
   }
   render () {
-    var { q, placeholder, onBlur, showZone, showGeoLocation } = this.props
+    var { q, placeholder, onBlur, showZone, showGeoLocation, showWordSuggestion } = this.props
 
     let klass = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
-    let shadowTerm = this.getShadowTerm()
+    let shadowTerm = showWordSuggestion ? '' : this.getShadowTerm()
     return (
       <div className={klass}>
         {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
@@ -188,6 +188,8 @@ export default class Input extends React.Component {
             onClick={this.onClear}
           />
         )}
+
+        {this.props.showAlert && null}
 
         {showGeoLocation ? (
           <GeoLocation

@@ -63,6 +63,10 @@ module.exports = {
 
     /* Infinite scroll */
     load_more_button: 'Load more',
-    load_more_button_loading: 'Loading'
+    load_more_button_loading: 'Loading',
+
+    /* Alert */
+    alert_button_add: 'Add to alerts',
+    alert_button_remove: 'Remove from alert'
   }
 }

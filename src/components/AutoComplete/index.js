@@ -42,6 +42,7 @@ import {
   TYPE_DOC,
   TYPE_FACET
 } from './../../constants/Settings'
+import QueryHelp from './../Onboarding/QueryHelp'
 
 class AutoComplete extends React.Component {
   constructor (props) {
@@ -55,13 +56,17 @@ class AutoComplete extends React.Component {
       searchInput: null,
 
       /* word suggestion */
-      leftPosition: props.leftPadding
+      leftPosition: props.leftPadding,
+      partialWord: null,
+      showWordSuggestion: props.wordSuggestion
     }
     this.isSizeSmall = false
   }
 
   static propTypes = {
     showFacetSuggestions: PropTypes.bool,
+    showAlert: PropTypes.bool,
+    showHelp: PropTypes.bool,
     autoFocus: PropTypes.bool,
     forceRedirect: PropTypes.bool,
     onSubmit: PropTypes.func,
@@ -75,6 +80,8 @@ class AutoComplete extends React.Component {
 
   static defaultProps = {
     showBookmarks: true,
+    showAlert: false,
+    showHelp: false,
     classNames: '.ola-snippet, .ola-facet-suggestion, .ola-suggestion-item',
     activeClassName: 'ola-active',
     viewAllClassName: 'ola-autosuggest-all',
@@ -141,7 +148,7 @@ class AutoComplete extends React.Component {
   closeAutoSuggest = () => {
     this.setState({
       isOpen: false,
-      leftPosition: this.props.leftPadding
+      leftPosition: 0
     })
   }
   updateQueryTerm = ({ term, ...rest }) => {
@@ -252,8 +259,8 @@ class AutoComplete extends React.Component {
     if (!term) return this.clearQueryTerm()
 
     /* No of words in the query */
-    const numberOfWords = term.split(' ').length
-    const showWordSuggestion = this.props.wordSuggestion && numberOfWords > 1
+    const hasMoreTerms = term.match(/\s/gi)
+    const showWordSuggestion = this.props.wordSuggestion && !!(hasMoreTerms && hasMoreTerms.length)
 
     const { allowedCharacters } = this.context.config
 
@@ -263,7 +270,9 @@ class AutoComplete extends React.Component {
       searchInput,
       startToken,
       endToken,
-      leftPosition
+      leftPosition,
+      showWordSuggestion,
+      partialWord
     })
 
     /* Clear fuzzy term selection on query change */
@@ -528,8 +537,6 @@ class AutoComplete extends React.Component {
         value: suggestion.term,
         name: facet.name
       })
-      return
-      // return this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
 
     if (isEntity || isTaxonomy) {
@@ -561,6 +568,7 @@ class AutoComplete extends React.Component {
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
+    return
 
     return this.onSelect(suggestion, { ...options, fromSuggestion: true })
   }
@@ -571,20 +579,19 @@ class AutoComplete extends React.Component {
         getCoords(event.target).top - this.props.scrollPadding
     }
 
-    if (!this.state.q) {
-      this.setState({
-        isFocused: true,
-        isOpen: true,
-        results: this.props.showHistory
-          ? mergeResultsWithHistory({
-            history: this.props.history,
-            results: this.state.results,
-            query: this.state.q,
-            showHistoryForQuery: this.props.showHistoryForQuery
-          })
-          : this.state.results
-      })
-    }
+    /* Set focus status */
+    this.setState({
+      isFocused: true,
+      isOpen: true,
+      results: !this.state.q && this.props.showHistory
+        ? mergeResultsWithHistory({
+          history: this.props.history,
+          results: this.state.results,
+          query: this.state.q,
+          showHistoryForQuery: this.props.showHistoryForQuery
+        })
+        : this.state.results
+    })
 
     this.props.onFocus && this.props.onFocus(event)
   }
@@ -633,12 +640,12 @@ class AutoComplete extends React.Component {
       resultLimitDesktop,
       isDesktop
     } = this.props
-    let { isFocused, fuzzyQuery, q, results, startToken, endToken } = this.state
+    let { isFocused, fuzzyQuery, q, results, startToken, endToken, showWordSuggestion } = this.state
     if (results.length > resultLimit) {
       results.length = isDesktop ? resultLimitDesktop : resultLimit
     }
     const { showSuggestionHelp } = this.context.config
-    const isOpen = !results.length ? false : this.state.isOpen
+    const isOpen = !results.length || !(this.props.wordSuggestion && this.state.partialWord) ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     const klassContainer = classNames(className, {
       'ola-autosuggest-focus': isFocused,
@@ -653,9 +660,7 @@ class AutoComplete extends React.Component {
       ? q.substr(0, startToken) + fuzzyQuery.term + q.substr(endToken) || q
       : q
 
-    const leftPosition = this.state.leftPosition - this.props.leftPadding
-    const isFacetSuggestion = leftPosition > this.props.leftPadding
-
+    const leftPosition = showWordSuggestion ? this.state.leftPosition - this.props.leftPadding : 0
     return (
       <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>
@@ -683,20 +688,22 @@ class AutoComplete extends React.Component {
             handleClose={this.terminateAutoSuggest}
             tokens={this.props.tokens}
             onTokenChange={this.onTokenChange}
+            showWordSuggestion={showWordSuggestion}
+            showAlert={this.props.showAlert}
           />
 
           <div
             className={klass}
             style={{
               left: leftPosition,
-              width: leftPosition > 0 ? this.props.wordSuggestionWidth : 'auto'
+              width: showWordSuggestion && leftPosition > 0 ? this.props.wordSuggestionWidth : 'auto'
             }}
           >
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
               {showSuggestionHelp ? (
                 <div className='ola-suggestions-help'>
                   {q ? (
-                    isFacetSuggestion ? (
+                    showWordSuggestion ? (
                       translate('autosuggest_help_facets')
                     ) : (
                       translate('autosuggest_help')
@@ -723,6 +730,9 @@ class AutoComplete extends React.Component {
               />
             </div>
           </div>
+          
+          {!isOpen && isFocused && !queryTerm && this.props.showHelp && <QueryHelp />}
+
         </div>
       </div>
     )

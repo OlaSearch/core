@@ -5,12 +5,11 @@ import { fetchAlerts, deleteAlert, createAlert } from './../../actions/Alert'
 class Alert extends React.Component {
   componentDidMount () {
     this.props.fetchAlerts()
-    // this.props.createAlert('fox' + Math.random())
   }
   render () {
     let { queryIds, queriesById, deleteAlert } = this.props
     return (
-      <div>
+      <div className='ola-alerts'>
         {queryIds.map((id) => {
           let { query, docs } = queriesById[id]
           return (
@@ -33,7 +32,7 @@ const Query = ({ id, query, docs, onDelete }) => {
     onDelete(id)
   }
   return (
-    <div>
+    <div className='ola-alerts-item'>
       <a>{query}</a>
       <button type='button' onClick={handleDelete}>
         Delete query

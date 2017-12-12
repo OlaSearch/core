@@ -7,7 +7,7 @@
 import { debounceLog, submitLog } from './../actions/Logger'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
-import { FUZZY_SUGGEST_KEY, API_IGNORE_LOGGING } from './../constants/Settings'
+import { FUZZY_SUGGEST_KEY, API_IGNORE_LOGGING, INTENT_SUPPORTED_API_KEYS } from './../constants/Settings'
 
 module.exports = (options = {}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -183,6 +183,7 @@ module.exports = (options = {}) => {
           var skipSearchResultsUpdate = false
           var responseTime
           var extra = response.extra
+          var version
           if (proxy) {
             results = response.results
             spellSuggestions = response.spellSuggestions
@@ -192,6 +193,7 @@ module.exports = (options = {}) => {
             enrichedQuery = response.enriched_q
             skipSearchResultsUpdate = response.skipSearchResultsUpdate
             responseTime = response.responseTime
+            version = response.version
 
             /* Instant answer */
             answer = api === 'answer' ? response : response.answer
@@ -202,6 +204,7 @@ module.exports = (options = {}) => {
             facets = parser.normalizeFacets(response)
             qt = parser.queryTime(response)
             responseTime = response.responseTime
+            version = parser.version()
           }
 
           /**
@@ -272,7 +275,8 @@ module.exports = (options = {}) => {
               api,
               responseTime,
               facetQuery,
-              extra
+              extra,
+              version
             })
 
           /**

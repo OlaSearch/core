@@ -28,6 +28,7 @@ export function fetchAlerts () {
         log: false,
         apiOptions: {
           path: '/docs',
+          method: 'GET',
           params: {
             userId
           }
@@ -62,6 +63,30 @@ export function deleteAlert (queryId) {
   }
 }
 
+export function removeDocs (queryId) {
+  return (dispatch, getState) => {
+    let payload = { queryId }
+    dispatch({
+      types: [
+        types.REQUEST_DELETE_ALERT_DOCS,
+        types.REQUEST_DELETE_ALERT_DOCS_SUCCESS,
+        types.REQUEST_DELETE_ALERT_DOCS_FAILURE
+      ],
+      query: {},
+      meta: {
+        log: false,
+        apiOptions: {
+          method: 'POST',
+          path: '/docs/remove',
+          params: payload
+        }
+      },
+      payload,
+      api: 'alert'
+    })
+  }
+}
+
 export function createAlert (query) {
   return (dispatch, getState) => {
     const { userId } = getState().Context
@@ -73,10 +98,17 @@ export function createAlert (query) {
         types.REQUEST_CREATE_ALERT_FAILURE
       ],
       processData: (response) => {
-        console.log(response)
+        let { queryId, query, timestamp, docIds } = response
         return {
           ...response,
-          extra: {}
+          extra: {
+            queryId,
+            queriesById: {
+              [queryId]: {
+                query, timestamp, docIds
+              }
+            }
+          }
         }
       },
       query: {},

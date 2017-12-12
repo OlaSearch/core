@@ -78,5 +78,6 @@ module.exports = {
   PerPage: require('./components/PerPage'),
   // AutoSuggest: require('./components/AutoSuggest'),
   ActionTypes: require('./constants/ActionTypes'),
-  Alert: require('./components/Alert')
+  Alert: require('./components/Alert'),
+  AddAlert: require('./components/Alert/AddAlert')
 }
