@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { removeContext, requestGeoLocation } from './../../actions/Context'
+import { executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
 
@@ -33,7 +34,7 @@ class GeoLocation extends React.Component {
     )
   }
   requestGeoLocation = () => {
-    this.props.dispatch(requestGeoLocation(this.onSuccess, this.onError))
+    this.props.requestGeoLocation(this.onSuccess, this.onError)
   }
   prompt = (props) => {
     let _props = props || this.props
@@ -58,27 +59,29 @@ class GeoLocation extends React.Component {
     }
   }
   getLocation = () => {
-    let { dispatch } = this.props
     /* If location is already stored */
     if (this.props.Context.location) {
-      dispatch(removeContext('geo'))
+      this.props.removeContext('geo')
+      /* Refresh results */
+      if (this.props.refreshOnGeoChange) this.props.executeSearch()
       this.props.onDisable && this.props.onDisable()
       return
     }
 
-    dispatch(
-      log({
-        eventType: 'C',
-        eventCategory: 'Geolocation button',
-        eventAction: 'request_location',
-        eventLabel: 'Geolocation',
-        debounce: true
-      })
-    )
+    this.props.log({
+      eventType: 'C',
+      eventCategory: 'Geolocation button',
+      eventAction: 'request_location',
+      eventLabel: 'Geolocation',
+      debounce: true
+    })
 
-    dispatch(requestGeoLocation(this.onSuccess, this.onError))
+    this.props.requestGeoLocation(this.onSuccess, this.onError)
   }
   onSuccess = (results) => {
+    if (this.props.refreshOnGeoChange) {
+      this.props.executeSearch()
+    }
     this.props.onSuccess && this.props.onSuccess(results)
   }
   onError = (results) => {
@@ -103,8 +106,8 @@ class GeoLocation extends React.Component {
         ? translate('geo_location_enabled')
         : translate('geo_location_prompt')
     return (
-      <button type='button' className={klass} onClick={this.getLocation}>
-        <span className={hintklass} aria-label={title} />
+      <button type='button' className={klass} onClick={this.getLocation} disabled={isRequestingLocation}>
+        <span className={hintklass} aria-label={title}>{title}</span>
       </button>
     )
   }
@@ -118,4 +121,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(injectTranslate(GeoLocation))
+export default connect(mapStateToProps, { executeSearch, log, removeContext, requestGeoLocation })(injectTranslate(GeoLocation))

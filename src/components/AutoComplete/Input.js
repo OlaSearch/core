@@ -196,8 +196,8 @@ export default class Input extends React.Component {
           <GeoLocation
             active={false}
             onSuccess={this.props.onGeoLocationSuccess}
-            onFailure={this.props.onGeoLocationFailure}
             onDisable={this.props.onGeoLocationDisable}
+            refreshOnGeoChange={this.props.refreshOnGeoChange}
             onError={this.props.onGeoError}
           />
         ) : null}

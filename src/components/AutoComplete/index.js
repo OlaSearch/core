@@ -71,7 +71,8 @@ class AutoComplete extends React.Component {
     forceRedirect: PropTypes.bool,
     onSubmit: PropTypes.func,
     viewAllClassName: PropTypes.string,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    refreshOnGeoChange: PropTypes.bool
   }
 
   static contextTypes = {
@@ -82,6 +83,7 @@ class AutoComplete extends React.Component {
     showBookmarks: true,
     showAlert: false,
     showHelp: false,
+    refreshOnGeoChange: false,
     classNames: '.ola-snippet, .ola-facet-suggestion, .ola-suggestion-item',
     activeClassName: 'ola-active',
     viewAllClassName: 'ola-autosuggest-all',
@@ -682,6 +684,7 @@ class AutoComplete extends React.Component {
             showGeoLocation={this.props.showGeoLocation}
             onGeoLocationSuccess={this.props.onGeoLocationSuccess}
             onGeoLocationDisable={this.props.onGeoLocationDisable}
+            refreshOnGeoChange={this.props.refreshOnGeoChange}
             autoFocus={this.props.autoFocus}
             isPhone={this.props.isPhone}
             onBlur={this.onSoftBlur}
