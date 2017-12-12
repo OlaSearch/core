@@ -90,7 +90,7 @@ class AutoComplete extends React.Component {
     className: 'ola-autosuggest',
     containerClass: 'ola-autosuggest-container',
     showGeoLocation: false,
-    wordSuggestion: true,
+    wordSuggestion: false,
     wordSuggestionWidth: 300,
     leftPadding: 10,
     autoFocus: false,
@@ -645,7 +645,7 @@ class AutoComplete extends React.Component {
       results.length = isDesktop ? resultLimitDesktop : resultLimit
     }
     const { showSuggestionHelp } = this.context.config
-    const isOpen = !results.length || !(this.props.wordSuggestion && this.state.partialWord) ? false : this.state.isOpen
+    const isOpen = !results.length || (this.props.wordSuggestion && !this.state.partialWord) ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     const klassContainer = classNames(className, {
       'ola-autosuggest-focus': isFocused,
@@ -660,7 +660,7 @@ class AutoComplete extends React.Component {
       ? q.substr(0, startToken) + fuzzyQuery.term + q.substr(endToken) || q
       : q
 
-    const leftPosition = showWordSuggestion ? this.state.leftPosition - this.props.leftPadding : 0
+    const leftPosition = showWordSuggestion ? Math.max(0, this.state.leftPosition - this.props.leftPadding) : 0
     return (
       <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>

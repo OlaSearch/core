@@ -1,7 +1,7 @@
 module.exports = {
   locales: 'en-US',
   messages: {
-    title: 'Collections',
+    title: 'Search results',
     refine_results: 'Refine your results',
     showing: 'Showing {current} - {next} of {total} results',
     showing_no_results: 'Showing {total} results',

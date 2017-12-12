@@ -173,6 +173,9 @@ function removeTokenFromQuery (q, tokenValues) {
  * @param {String} term Partial query
  */
 export function executeFacetSearch (fullTerm = '*', term) {
+  /* replace backslash */
+  term = term.replace(/\\/gi, '')
+  term = xssFilters.inHTMLData(term)
   return (dispatch, getState) => {
     const state = getState()
     const context = state.Context
@@ -200,7 +203,8 @@ export function executeFacetSearch (fullTerm = '*', term) {
       query: {
         ...query,
         q,
-        facet_query
+        facet_query,
+        skip_intent: true
       },
       context,
       payload: {

@@ -175,6 +175,7 @@ export default class Input extends React.Component {
             onKeyDown={this.onKeyDown}
             autoFocus={this.props.autoFocus}
             formatValue={this.formatValue}
+            onClick={this.onFocus}
           />
 
           <InputShadow value={shadowTerm} />

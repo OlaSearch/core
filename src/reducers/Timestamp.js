@@ -13,6 +13,7 @@ export default (state = initialState, action) => {
     case types.REQUEST_SEARCH:
     case types.REQUEST_GUIDE:
     case types.REQUEST_AUTOSUGGEST:
+    case types.REQUEST_FACET:
       if (!action.api) return state
       return {
         ...state,
