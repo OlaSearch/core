@@ -647,7 +647,7 @@ class AutoComplete extends React.Component {
       results.length = isDesktop ? resultLimitDesktop : resultLimit
     }
     const { showSuggestionHelp } = this.context.config
-    const isOpen = !results.length || (this.props.wordSuggestion && !this.state.partialWord) ? false : this.state.isOpen
+    const isOpen = !results.length ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     const klassContainer = classNames(className, {
       'ola-autosuggest-focus': isFocused,

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Bookmarks from './../Bookmarks'
-import History from './../History'
 import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
@@ -25,7 +24,7 @@ export default class Input extends React.Component {
 
   onClear = (event) => {
     /* Focus input */
-    this.props.onClear(() => this.input.focus())
+    this.props.onClear(() => this.input._input.focus())
   }
 
   onFocus = (event) => {
@@ -44,7 +43,7 @@ export default class Input extends React.Component {
   }
 
   onChangeZone = () => {
-    this.input.focus()
+    this.input._input.focus()
   }
 
   onKeyDown = (event) => {
@@ -207,8 +206,6 @@ export default class Input extends React.Component {
           onFinalResult={this.handleSpeechChange}
           isAutosuggest
         />
-
-        <History onOpen={this.props.handleClose} />
 
         <Bookmarks onOpen={this.props.handleClose} />
 

@@ -107,7 +107,7 @@ class GeoLocation extends React.Component {
         : translate('geo_location_prompt')
     return (
       <button type='button' className={klass} onClick={this.getLocation} disabled={isRequestingLocation}>
-        <span className={hintklass} aria-label={title}>{title}</span>
+        <span className={hintklass} aria-label={title} />
       </button>
     )
   }
