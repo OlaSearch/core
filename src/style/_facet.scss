@@ -1,0 +1,179 @@
+.ola-facet {
+  border: 1px solid #ddd;
+  margin-bottom: 30px;
+  border-top: 2px solid #666;
+  padding: 0;
+}
+
+.ola-facet-title {
+  margin: 0;
+  border-bottom: 1px #e5e5e5 solid;
+  padding: 12px 14px;
+  line-height: 1;
+  font-size: 20px;
+  color: #333;
+
+  &:before {
+    top: 8px;
+    right: 14px;
+    color: #444;
+  }
+}
+
+.ola-facet-wrapper {
+  padding: 14px;
+}
+
+/**
+ * Name
+ */
+
+ .ola-search-facet-name {
+  display: inline;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  .ola-checkbox-label & {
+    display: inline-block;
+    margin-left: 5px;
+  }
+}
+  /* Override adb */
+  .ola-checkbox-label {
+    input[type='checkbox'] {
+      margin-top: 0 !important;
+    }
+  }
+
+  .ola-search-facet-count {
+    float: none;
+  }
+
+/**
+ * Link
+ */
+
+.ola-facet-link {
+  color: $link-color;
+  border: none;
+}
+
+/**
+ * Show more
+ */
+
+.ola-link-show-more {
+  color: #002569;
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+
+  &:before {
+    @extend .iconfont;
+    // content: "arrow_down";
+    // margin-right: 5px;
+  }
+}
+
+  .ola-link-show-less {
+    &:before {
+      content: "\f147";
+    }
+  }
+
+
+/**
+ * Datepicker
+ */
+
+.ola-date-list {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+  .ola-btn-date-select{
+    background: none;
+    padding: 0;
+    color: #002569;
+    display: block;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 3px 0;
+    clear: both;
+    margin: 0;
+    @include prefix(display, flex, webkit ms moz);
+  }
+
+  .ola-date-custom .ola-btn-date-select {
+    color: #666;
+  }
+
+  .ola-date-custom-input {
+    @include prefix(display, flex, webkit ms moz);
+    font-size: 14px;
+    .ola-label-date {
+      @include prefix(flex, 1, webkit ms moz);
+      margin-right: 16px;
+      span {
+        display: block;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+
+
+  /**
+   * Facet
+   */
+  .ola-facet-scroll-list {
+    max-height: none;
+  }
+
+
+  /**
+   * facet wrapper
+   */
+  .ola-btn-wrap {
+    @include prefix(display, flex, webkit ms moz);
+    @include prefix(align-items, center, webkit ms moz);
+    padding: 4px 0;
+
+    .ola-facet-link {
+      @include prefix(flex, 1, webkit ms moz);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: auto;
+      text-align: left;
+      padding-left: 2px;
+    }
+
+    .ola-search-facet-count {
+      font-size: 14px;
+    }
+  }
+
+
+/**
+ * reset filters
+ */
+
+.ola-reset-filters {
+  background: none;
+  padding: 0;
+  border: none;
+  margin-left: 8px;
+  color: #002569;
+}

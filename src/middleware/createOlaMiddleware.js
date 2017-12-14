@@ -47,6 +47,14 @@ module.exports = (options = {}) => {
      */
     if (typeof config === 'function') {
       config = config(getState)
+      /**
+       * Only used for admin console compatiblity
+       * Disable intent engine so that config files are read from Javascript itself. If you enable intent engine, config file is used in the proxy
+       */
+      if (payload.disableIntentEngine) {
+        config.proxy = false
+        config.intentEngineEnabled = false
+      }
       let currentEngine = options.engineConfig[config.search_engine_type]
       parser = new currentEngine.Parser(config)
       queryBuilder = new currentEngine.QueryBuilder(config)

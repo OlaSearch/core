@@ -13,6 +13,7 @@
     border: 1px #eee solid;
     cursor: pointer;
     margin-right: -1px;
+    border-radius: 0;    
 
     @include media(tablet){
       display: inline-block;
@@ -21,6 +22,7 @@
 
   .ola-page-ellipsis{
     cursor: text;
+    border: none;
   }
 
   /**

@@ -1,0 +1,83 @@
+.ola-facet-tags {
+  @include flexbox;
+  padding-left: 0;
+  align-items: flex-start;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.ola-facet-tags-group {
+  @include flexbox;
+  -ms-flex-pack: center;
+  background-color: #ebebeb;
+  color: #666;
+  margin-right: 8px;
+  padding: 8px 10px;
+  position: relative;
+  padding-right: 36px;
+  margin-top: 8px;
+  line-height: 1.2;
+  border-radius: 2px;
+
+  .ola-facet-tag {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    position: static;
+  }
+}
+
+  .ola-facet-tags-heading {
+    font-size: 14px;
+
+    &:after {
+      content: ":";
+      padding-right: 5px;
+    }
+  }
+
+
+/**
+ * Remove link
+ */
+
+.ola-facet-tag-remove{
+	color: #666;
+	width: 26px;
+	text-align: center;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 0;
+	border-radius: 0 3px 3px 0;
+	border: none;
+	background: transparent;
+	overflow: hidden;
+
+	&:hover{
+		// background-color: darken($brand-color, 60%);
+	}
+
+	&:before{
+		// @extend .fontawesome;
+		content: "\f00d";
+	}
+}
+
+  /**
+   * Remove
+   */
+  
+  .ola-facet-tag-remove {
+    border-radius: 0;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+    span {
+      display: none;
+    }
+  }

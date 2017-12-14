@@ -433,7 +433,7 @@ export function changeEnvironment (env) {
  * @param  {[type]} options [description]
  * @return {[type]}         [description]
  */
-export function initSearch ({ config, urlSync = true }) {
+export function initSearch ({ config, urlSync = true, payload = {} }) {
   return (dispatch, getState) => {
     let { history, filters, searchOnLoad = true } = config
 
@@ -479,7 +479,8 @@ export function initSearch ({ config, urlSync = true }) {
       if (shouldSearch) {
         dispatch(
           executeSearch({
-            routeChange: false
+            routeChange: false,
+            ...payload
           })
         )
       } else {
@@ -488,7 +489,8 @@ export function initSearch ({ config, urlSync = true }) {
     } else {
       dispatch(
         executeSearch({
-          routeChange: false
+          routeChange: false,
+          ...payload
         })
       )
     }

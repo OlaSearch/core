@@ -512,10 +512,17 @@ class AutoComplete extends React.Component {
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
 
-    term =
-      this.state.q.substr(0, this.state.startToken) +
-      term +
-      this.state.q.substr(this.state.endToken)
+    /* Focus on the input if click event */
+    if (options && options.event && options.event.type === 'click') {
+      // To do
+    }
+
+    if (this.props.wordSuggestion) {
+      term =
+        this.state.q.substr(0, this.state.startToken) +
+        term +
+        this.state.q.substr(this.state.endToken)
+    }
 
     if (!stayOpen) {
       this.setState({
@@ -540,6 +547,9 @@ class AutoComplete extends React.Component {
         value: suggestion.term,
         name: facet.name
       })
+
+      // /* Do not submit if user is continuing to filter */
+      return
     }
 
     if (isEntity || isTaxonomy) {
@@ -571,8 +581,6 @@ class AutoComplete extends React.Component {
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
-    
-    if (this.props.wordSuggestion) return
 
     return this.onSelect(suggestion, { ...options, fromSuggestion: true })
   }
@@ -670,7 +678,9 @@ class AutoComplete extends React.Component {
     })
 
     const queryTerm = fuzzyQuery
-      ? q.substr(0, startToken) + fuzzyQuery.term + q.substr(endToken) || q
+      ? showWordSuggestion
+        ? q.substr(0, startToken) + fuzzyQuery.term + q.substr(endToken) || q
+        : fuzzyQuery.term
       : q
 
     const leftPosition = showWordSuggestion

@@ -1,0 +1,152 @@
+/* Container */
+.ola-autosuggest-container{
+	position: relative;	
+  text-align: left;
+  display: flex;
+}
+
+/* Suggestions */
+.ola-suggestions {
+  background: #fff;
+  box-shadow: $autocomplete-box-shadow;
+  border: 1px $autocomplete-border-color solid;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 1;
+  margin-top: -1px;
+
+  .ola-spell-suggestions{
+    padding: 1em;
+  }
+  .ola-active {
+    background-color: #eee;
+  }
+}
+
+/* Category name */
+.ola-suggestion-category-name {
+  color: #0081bf;
+  font-weight: normal;
+}
+
+/* Separator */
+.ola-suggestion-separator {
+  font-weight: normal;
+}
+
+/* Wrapper */
+.ola-suggestions-wrapper{
+  max-height: 400px;
+  overflow: auto;
+}
+
+/**
+ * Shadow
+ */
+
+ .ola-search-form-container{
+	position: relative;
+  background-color: #fff;
+  flex: 1;
+  @include flexbox;
+  border: 1px solid #ccc;
+  margin-bottom: 0;
+
+  input, input:focus, input:active {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .ola-autosuggest-focus & {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(3,173,224,.6);
+    border-color: #03ade0;
+  }
+}
+
+/* Text input */
+.ola-autosuggest .ola-text-input{
+	z-index: 2;
+	background-color: transparent !important;
+	position: relative;
+}
+
+/* Text shadow */
+.ola-text-inputshadow{
+	position: absolute !important;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	color: silver !important;
+	background-color: transparent !important;
+	-webkit-text-fill-color: silver !important;
+	z-index: 1 !important;
+	box-shadow: none !important;
+  border-color: transparent !important;
+  display: none;
+
+  @include media (desktop) {
+		display: block;
+	}
+}
+
+/* Suggestion item */
+.ola-suggestion-item {
+  text-align: left;
+  padding: 6px 10px;
+  display: block;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  border-bottom: 1px #ddd solid;
+  background: none;
+  font-weight: bold;
+
+  strong {
+    font-weight: normal;
+  }
+
+  @include media (tablet) {
+    border-bottom: none;
+  }
+
+  @include media (desktop) {
+    padding: 4px 10px;
+  }
+}
+
+/* Last category */
+.ola-suggestion-category-last {
+	@include media (desktop) {
+		border-bottom: 1px #d8d8d8 solid;
+	}
+}
+
+/* Wrapper */
+.ola-form-input-wrapper {
+  @include prefix(flex, 1, webkit ms moz);
+  position: relative;
+
+  .ola-text-input {
+    border: none;
+  }
+}
+
+
+/* History */
+.ola-suggestion-type-history {
+  color:$link-color;
+  font-weight: normal;
+}
+
+/* Hide clear button on desktop */
+.ola-search-form-container {
+  .ola-clear-button {
+    @include media (desktop) {
+      display: none;
+    }
+  }
+}

@@ -90,17 +90,17 @@ class GeoLocation extends React.Component {
   render () {
     if (!('geolocation' in navigator)) return null
 
-    let { Context, active, translate } = this.props
-    let { isRequestingLocation } = Context
-    let isGeoEnabled = active || !!Context.location
-    let klass = classNames('ola-link-geo', {
+    const { Context, active, translate } = this.props
+    const { isRequestingLocation } = Context
+    const isGeoEnabled = active || !!Context.location
+    const klass = classNames('ola-link-geo', 'ola-has-hint', {
       'ola-link-geo-requesting': isRequestingLocation,
       'ola-link-geo-active': isGeoEnabled
     })
-    let hintklass = classNames('ola-btn-hint hint--top', {
+    const hintklass = classNames('ola-btn-hint hint--top', {
       'hint--always': isRequestingLocation
     })
-    let title = isRequestingLocation
+    const title = isRequestingLocation
       ? translate('geo_location_requesting')
       : isGeoEnabled
         ? translate('geo_location_enabled')

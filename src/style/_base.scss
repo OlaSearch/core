@@ -1,0 +1,29 @@
+.ola-search {
+  font-size: $base-font-size;
+  font-family: $base-font-family;
+  padding: 2rem;
+
+  *, &:before, &:after {
+    box-sizing: border-box;
+  }
+
+  a {
+    color: $link-color;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
+  /* Remove underline from links */
+  @if $is_link_underlined == true {
+    a {
+      text-decoration: underline;
+    }
+  } @else {
+    // Default if it’s neither
+    a {
+      text-decoration: none;
+    }
+  }
+}

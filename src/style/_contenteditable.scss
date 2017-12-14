@@ -1,0 +1,37 @@
+/**
+ * Content Editable
+ */
+.ContentEditableWrapper {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+.ContentEditableWrapper .ola-text-input {
+  position: relative;
+  z-index: 1;
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+.ContentEditable-Fake {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: transparent;
+  background: transparent;
+  white-space: pre;
+  color: transparent;
+  padding: 10px;
+}
+
+.ola-input-tag {
+  padding: 2px 0;
+  cursor: pointer;
+  border-radius: 3px;
+  background: #eef7fd !important;
+  outline: 1px #888 dashed;
+}

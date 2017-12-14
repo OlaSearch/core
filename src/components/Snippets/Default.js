@@ -23,7 +23,7 @@ function DefaultSnippet ({ result, bookmarks, dispatch, ...rest }) {
           {...rest}
         />
         <Title result={result} {...rest} />
-        <TextField result={result} {...rest} />
+        <TextField result={result} field='summary' {...rest} />
       </div>
     </div>
   )

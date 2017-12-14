@@ -171,7 +171,7 @@ export default class Input extends React.Component {
             ref={this.registerRef}
             type='text'
             value={q}
-            className='ola-text-input ola-text-input-round'
+            className='ola-text-input'
             onChange={this.handleInputChange}
             onFocus={this.onFocus}
             onBlur={onBlur}

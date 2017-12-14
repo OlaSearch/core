@@ -1,0 +1,32 @@
+$base-color: #333;
+$base-font-size: 16px;
+$base-font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+$base-border-color: #ddd;
+$base-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+/* Brand */
+$brand-color: #002569;
+
+/* Links */
+$link-color: #002569;
+$link-hover-color: #03a5d6;
+
+/* Primary button */
+$button-primary-background: #002569;
+$button-primary-color: white;
+
+/* Icon button default width */
+$button-icon-width: 40px;
+
+/* Search button */
+$button-search-width: 50px;
+
+/* Geo button */
+$button-geo-active-color: red;
+
+/* Settings */
+$is_link_underlined: false;
+
+/* Autocomplete */
+$autocomplete-box-shadow: $base-box-shadow;
+$autocomplete-border-color: #ccc;

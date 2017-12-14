@@ -45,7 +45,8 @@ class SuggestionItem extends React.Component {
   }
   onSelect = (event, result) => {
     this.props.onSelect(result || this.props.result, {
-      position: this.props.index + 1
+      position: this.props.index + 1,
+      event
     })
     event && event.preventDefault()
   }

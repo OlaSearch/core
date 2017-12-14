@@ -1,0 +1,121 @@
+/* Common button styles */
+.ola-icon-button {
+  border: none;
+  background: none;
+  border-radius: 0;
+  cursor: pointer;
+  min-width: $button-icon-width;
+  color: $base-color;
+  padding: 0;
+  text-align: center;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &:before {
+    vertical-align: middle;
+  }
+}
+
+/* Search button */
+.ola-search-button {
+  @extend .ola-icon-button;
+  background: $button-primary-background;
+  color: $button-primary-color;
+  width: $button-search-width;
+
+  &:before {
+    @extend .iconfont;
+    content: 'search';
+  }
+}
+
+/* Geo location icon */
+.ola-link-geo {
+  @extend .ola-icon-button;
+
+  &:before {
+    @extend .iconfont;
+    content: 'my_location';
+  }
+
+  &.ola-link-geo-active {
+    color: $button-geo-active-color;
+  }
+}
+
+/* bookmarking */
+.ola-link-bookmark, .ola-link-bookmark-action {
+  @extend .ola-icon-button;
+  height: 100%; /* Its inside a flex box */
+
+  &:before {
+    @extend .iconfont;
+    content: 'bookmark_border';
+  }
+
+  .ola-bookmarks-hasBookmarks  &, &.action-remove {
+    &:before {
+      content: 'bookmark';
+    }
+  }
+
+  /* Hide text */
+  span {
+    display: none;
+  }
+}
+
+/* Clear button */
+.ola-clear-button {
+  @extend .ola-icon-button;
+
+  &:before {
+    @extend .iconfont;
+    content: 'close';
+  }  
+}
+
+/* Load more */
+
+.ola-link-load-more {
+  @extend .ola-icon-button;
+  width: 100%;
+  border: 1px $base-border-color solid;
+  padding: 0.8rem 1rem;
+}
+
+
+/* Spell links */
+.ola-spell-links {
+  @extend .ola-icon-button; 
+  color: $link-color;
+}
+
+
+/* Hint */
+/**
+ * Hint
+ */
+
+ .ola-btn-hint{
+	position: absolute;
+	top: 0;
+	right:0;
+	left: 0;
+	bottom: 0;
+	z-index: 1;
+}
+
+
+/* regular button */
+.ola-btn {
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:hover  {
+    background: none;
+  }
+}
