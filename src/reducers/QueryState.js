@@ -255,7 +255,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         enriched_q: action.enriched_q || '',
-        facet_query: action.facetQuery ? action.facetQuery : state.facet_query,
+        facet_query: action.facetQuery
+          ? [...action.facetQuery, ...state.facet_query]
+          : state.facet_query,
         /* Reset source */
         source: null
       }

@@ -67,6 +67,10 @@ module.exports = {
 
     /* Alert */
     alert_button_add: 'Add to alerts',
-    alert_button_remove: 'Remove from alert'
+    alert_button_remove: 'Remove from alert',
+
+    /* Sidebar */
+    filter_button_open: 'Show filters',
+    filter_button_close: 'Hide filters'
   }
 }

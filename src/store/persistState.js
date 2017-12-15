@@ -92,8 +92,12 @@ function persistState (action, getState, namespace) {
         },
         namespace
       )
-    
+
     case types.TOGGLE_SIDEBAR:
-      return storage.set(SIDEBAR_STORAGE_KEY, state.AppState.isSidebarOpen, namespace)
+      return storage.set(
+        SIDEBAR_STORAGE_KEY,
+        state.AppState.isSidebarOpen,
+        namespace
+      )
   }
 }

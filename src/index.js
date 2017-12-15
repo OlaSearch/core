@@ -80,5 +80,5 @@ module.exports = {
   ActionTypes: require('./constants/ActionTypes'),
   Alert: require('./components/Alert'),
   AddAlert: require('./components/Alert/AddAlert'),
-  SearchBar: require('./components/SearchBar'),
+  SearchBar: require('./components/SearchBar')
 }

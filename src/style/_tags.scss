@@ -66,6 +66,11 @@
     display: none;
   }
 
+  &:hover {
+    background-color: $base-grey-color;
+    color: white;
+  }
+
 	&:before{
 		@extend .iconfont;
     content: "close";

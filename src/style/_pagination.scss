@@ -1,25 +1,42 @@
 .ola-pagination{
   padding: 2em 0;
+  display: flex;
 }
 
   .ola-page{
     @extend %ola-button;
     min-width: 0;
-    display: inline-block;
     padding: 5px 10px;
     vertical-align: top;
     text-decoration: none;
     vertical-align: middle;
     display: none;
     background: none;
-    border: 1px #eee solid;
+    border: 1px $base-border-color solid;
     cursor: pointer;
     color: $base-color;
     margin-right: -1px;
-    border-radius: 0;    
+    border-radius: 0;  
+    height: $pagination-button-height;
+    min-width: $pagination-button-width;
+    text-align: center;
 
     @include media(tablet){
-      display: inline-block;
+      display: block;
+    }
+
+    &:hover {
+      background: #eee;
+    }
+
+    &[disabled] {
+      opacity: 0.6;
+    }
+
+    &.ola-page-current {
+      font-weight: bold;
+      background-color: #eee;
+      opacity: 1;
     }
   }
 
@@ -29,49 +46,25 @@
   }
 
   /**
-   * Current page
-   */
-
-  .ola-page-current{
-    font-weight: bold;
-    background-color: #eee;
-  }
-
-  /**
    * Previous
    */
 
   .ola-page-previous{
-    display: inline-block;
-    &:before{
-      // @extend .fontawesome;
-      // content: "\f053";
-      margin-right: 0.5em;
-      margin-top: -2px;
-      vertical-align: middle;
-    }
     margin-right: 1em;
+    &:before{
+      @extend .iconfont;
+      content: "navigate_before";
+      vertical-align: top;
+      margin-top: -3px;
+    }
   }
 
   .ola-page-next{
-    float: right;
     margin-left: 1em;
-    display: inline-block;
-    @include media(tablet){
-      float: none;
-    }
     &:after{
-      // @extend .fontawesome;
-      // content: "\f054";
-      margin-left: 0.5em;
-      margin-top: -2px;
-      vertical-align: middle;
+      @extend .iconfont;
+      content: "navigate_next";
+      vertical-align: top;
+      margin-top: -3px;
     }
   }
-
-
-/* Disable */
-
-.ola-page-disabled{
-  opacity: 0.5;
-}

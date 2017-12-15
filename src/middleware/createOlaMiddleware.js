@@ -107,7 +107,10 @@ module.exports = (options = {}) => {
         ...payload.extraParams,
         ...(payload.answer ? { answer: payload.answer } : {}),
         api,
-        ...context,
+        userId: context.userId,
+        userSession: context.userSession,
+        searchSession: context.searchSession,
+        context,
         projectId,
         env
       }

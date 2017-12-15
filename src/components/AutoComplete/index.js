@@ -513,7 +513,7 @@ class AutoComplete extends React.Component {
     let isFacet = type === TYPE_FACET
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
-    
+
     /* Focus on the input if click event */
     if (options && options.event && options.event.type === 'click') {
       // To do
@@ -583,7 +583,7 @@ class AutoComplete extends React.Component {
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
-    
+
     return this.onSelect(suggestion, { ...options, fromSuggestion: true })
   }
   onFocus = (event) => {

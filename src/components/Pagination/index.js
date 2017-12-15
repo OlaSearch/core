@@ -121,7 +121,11 @@ class Pagination extends React.Component {
 
     return (
       <nav className='ola-pagination' ref={this.registerRef}>
-        <button className={prevPageClass} onClick={this.prevPage} disabled={isPrevPageDisabled}>
+        <button
+          className={prevPageClass}
+          onClick={this.prevPage}
+          disabled={isPrevPageDisabled}
+        >
           {translate('pagination_prev_label')}
         </button>
         {pages.map((page, idx) => {
@@ -134,7 +138,11 @@ class Pagination extends React.Component {
             />
           )
         })}
-        <button className={nextPageClass} onClick={this.nextPage} disabled={isNextPageDisabled}>
+        <button
+          className={nextPageClass}
+          onClick={this.nextPage}
+          disabled={isNextPageDisabled}
+        >
           {translate('pagination_next_label')}
         </button>
       </nav>

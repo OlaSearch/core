@@ -9,7 +9,7 @@
   color: $button-primary-color;
   width: $button-search-width;
 
-  &, &:hover, &:active, &:hover {
+  &, &:hover, &:active, &:focus {
     background: $button-primary-background;
   }
 
