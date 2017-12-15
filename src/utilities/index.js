@@ -239,6 +239,11 @@ export function escapeRegEx (str) {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
 
+export function sanitizeText (str) {
+  return str
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 export function toNestedArray (data, rootLevel = 0, parentNode) {
   let output = []
   for (let i = 0, len = data.length; i < len; i++) {

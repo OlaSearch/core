@@ -8,7 +8,8 @@ import {
   LOCALE_STORAGE_TTL,
   CONTEXT_STORAGE_KEY,
   CONTEXT_STORAGE_TTL,
-  ALERT_STORAGE_KEY
+  ALERT_STORAGE_KEY,
+  SIDEBAR_STORAGE_KEY
 } from './../constants/Settings'
 
 /**
@@ -36,7 +37,8 @@ export const STATE_TYPE_KEYS = [
   types.REMOVE_HISTORY,
   types.REQUEST_ALERT_SUCCESS,
   types.REQUEST_DELETE_ALERT_SUCCESS,
-  types.REQUEST_CREATE_ALERT_SUCCESS
+  types.REQUEST_CREATE_ALERT_SUCCESS,
+  types.TOGGLE_SIDEBAR
 ]
 
 /* Based on actions: persist states to localstorage */
@@ -90,5 +92,8 @@ function persistState (action, getState, namespace) {
         },
         namespace
       )
+    
+    case types.TOGGLE_SIDEBAR:
+      return storage.set(SIDEBAR_STORAGE_KEY, state.AppState.isSidebarOpen, namespace)
   }
 }

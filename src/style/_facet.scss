@@ -1,54 +1,53 @@
+/* Facet */
 .ola-facet {
   border: 1px solid #ddd;
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
   border-top: 2px solid #666;
   padding: 0;
+  font-size: 0.875rem;
 }
 
+/* Title */
 .ola-facet-title {
-  margin: 0;
-  border-bottom: 1px #e5e5e5 solid;
-  padding: 12px 14px;
-  line-height: 1;
-  font-size: 20px;
-  color: #333;
+
+  &, &:first-child {
+    margin: 0;
+    border-bottom: 1px #e5e5e5 solid;
+    padding: 12px 1rem;
+    line-height: 1;
+    font-size: 1rem;
+    font-weight: normal;
+    color: $base-color;
+    cursor: pointer;
+    position: relative;
+  }
 
   &:before {
     top: 8px;
     right: 14px;
     color: #444;
-  }
-}
+    @extend .iconfont;
+    content: 'indeterminate_check_box';
+    position: absolute;
 
-.ola-facet-wrapper {
-  padding: 14px;
-}
-
-/**
- * Name
- */
-
- .ola-search-facet-name {
-  display: inline;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-
-  .ola-checkbox-label & {
-    display: inline-block;
-    margin-left: 5px;
-  }
-}
-  /* Override adb */
-  .ola-checkbox-label {
-    input[type='checkbox'] {
-      margin-top: 0 !important;
+    .ola-facet-collapsed & {
+      content: 'add_box';
     }
   }
+}
 
-  .ola-search-facet-count {
-    float: none;
+/* Body */
+.ola-facet-wrapper {
+  padding: 1rem;
+}
+
+/* Colapse */
+.ola-facet-collapsed {
+  .ola-facet-wrapper {
+    @extend .ola-js-hide;
   }
+}
+
 
 /**
  * Link
@@ -66,8 +65,8 @@
 .ola-link-show-more {
   color: #002569;
   padding: 5px 0;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: bold;
   text-transform: uppercase;
   border: none;
 
@@ -80,7 +79,7 @@
 
   .ola-link-show-less {
     &:before {
-      content: "\f147";
+      // content: "\f147";
     }
   }
 
@@ -148,7 +147,7 @@
   .ola-btn-wrap {
     @include prefix(display, flex, webkit ms moz);
     @include prefix(align-items, center, webkit ms moz);
-    padding: 4px 0;
+    padding: $facet-padding;
 
     .ola-facet-link {
       @include prefix(flex, 1, webkit ms moz);
@@ -157,12 +156,15 @@
       overflow: hidden;
       width: auto;
       text-align: left;
-      padding-left: 2px;
     }
+  }
 
-    .ola-search-facet-count {
-      font-size: 14px;
-    }
+  /* Facet count */
+  .ola-search-facet-count {
+    font-size: 14px;
+    color: $base-grey-color;
+    min-width: 40px;
+    text-align: right;
   }
 
 
@@ -176,4 +178,12 @@
   border: none;
   margin-left: 8px;
   color: #002569;
+}
+
+/* Facet filter */
+.ola-facet-filter-input {
+  &, &[type="text"] {
+    padding: 6px 10px;
+    margin-bottom: 0.5rem;
+  }
 }

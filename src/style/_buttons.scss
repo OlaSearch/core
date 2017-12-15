@@ -1,29 +1,17 @@
 /* Common button styles */
 .ola-icon-button {
-  border: none;
-  background: none;
-  border-radius: 0;
-  cursor: pointer;
-  min-width: $button-icon-width;
-  color: $base-color;
-  padding: 0;
-  text-align: center;
-
-  &:disabled {
-    opacity: 0.6;
-  }
-
-  &:before {
-    vertical-align: middle;
-  }
+  @extend %ola-button;
 }
 
 /* Search button */
 .ola-search-button {
-  @extend .ola-icon-button;
-  background: $button-primary-background;
+  @extend %ola-button;
   color: $button-primary-color;
   width: $button-search-width;
+
+  &, &:hover, &:active, &:hover {
+    background: $button-primary-background;
+  }
 
   &:before {
     @extend .iconfont;
@@ -33,7 +21,7 @@
 
 /* Geo location icon */
 .ola-link-geo {
-  @extend .ola-icon-button;
+  @extend %ola-button;
 
   &:before {
     @extend .iconfont;
@@ -47,7 +35,7 @@
 
 /* bookmarking */
 .ola-link-bookmark, .ola-link-bookmark-action {
-  @extend .ola-icon-button;
+  @extend %ola-button;
   height: 100%; /* Its inside a flex box */
 
   &:before {
@@ -69,7 +57,7 @@
 
 /* Clear button */
 .ola-clear-button {
-  @extend .ola-icon-button;
+  @extend %ola-button;
 
   &:before {
     @extend .iconfont;
@@ -80,7 +68,7 @@
 /* Load more */
 
 .ola-link-load-more {
-  @extend .ola-icon-button;
+  @extend %ola-button;
   width: 100%;
   border: 1px $base-border-color solid;
   padding: 0.8rem 1rem;
@@ -89,8 +77,10 @@
 
 /* Spell links */
 .ola-spell-links {
-  @extend .ola-icon-button; 
+  @extend %ola-button;
   color: $link-color;
+  margin-left: 0.5rem;
+  font-weight: bold;
 }
 
 
@@ -111,11 +101,5 @@
 
 /* regular button */
 .ola-btn {
-  background: none;
-  border: none;
-  padding: 0;
-
-  &:hover  {
-    background: none;
-  }
+  @extend %ola-button;
 }

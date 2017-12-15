@@ -10,7 +10,32 @@
 
 /* Text input */
 .ola-text-input {
-  padding: 10px 10px;
-  font-size: $base-font-size;
-  width: 100%;
+  &, &[type="text"] {
+    padding: 10px;
+    font-size: $base-font-size;
+    width: 100%;
+    line-height: 1;
+  }
 }
+
+/* Check box */
+.ola-checkbox {
+  display: flex;
+  align-items: center;
+  padding: $facet-padding;
+  margin: 0;
+  font-weight: normal;
+  cursor: pointer;
+
+  input {
+    margin: 0;
+  }
+
+  .ola-search-facet-name {
+    padding-left: 5px;
+  }
+}
+
+  .ola-search-facet-name {
+    flex: 1;
+  }

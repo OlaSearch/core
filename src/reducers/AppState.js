@@ -2,7 +2,8 @@ import types from './../constants/ActionTypes'
 import {
   BOOKMARKS_STORAGE_KEY,
   HISTORY_STORAGE_KEY,
-  ALERT_STORAGE_KEY
+  ALERT_STORAGE_KEY,
+  SIDEBAR_STORAGE_KEY
 } from './../constants/Settings'
 import storage from './../services/storage'
 
@@ -194,7 +195,8 @@ export default (state = initialState, action) => {
         ...alerts,
         bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
         history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
-        namespace: action.namespace
+        namespace: action.namespace,
+        isSidebarOpen: storage.get(SIDEBAR_STORAGE_KEY, action.namespace)
       }
 
     case types.TOGGLE_SIDEBAR:

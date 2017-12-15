@@ -4,6 +4,7 @@ export const HISTORY_STORAGE_KEY = '_ola_history_'
 export const CONTEXT_STORAGE_KEY = '_ola_context_'
 export const CONTEXT_STORAGE_TTL = 30
 export const LOCALE_STORAGE_KEY = '_ola_locale_'
+export const SIDEBAR_STORAGE_KEY = '_ola_sidebar_'
 export const LOCALE_STORAGE_TTL = 30 /* Days */
 export const SEARCH_SESSION_KEY = 'ola_search_session'
 export const USER_SESSION_KEY = 'ola_user_session' /* used for analytics only */

@@ -279,10 +279,9 @@ export function addFacet (facet, value) {
      * [1, 2] => ["1", "2"]
      */
     if (value instanceof Array) value = castNumberToStringArray(value)
-
     dispatch({
       type: types.ADD_FACET,
-      facet: omit('values', facet),
+      facet: omit(['values'], facet),
       value
     })
   }

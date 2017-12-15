@@ -37,14 +37,19 @@
     }
   }
 
+/* Single tag */
+.ola-facet-tag {
+  position: relative;
+}
 
 /**
  * Remove link
  */
 
 .ola-facet-tag-remove{
-	color: #666;
-	width: 26px;
+  @extend %ola-button;
+	color: $base-color;
+  min-width: 26px;
 	text-align: center;
 	cursor: pointer;
 	position: absolute;
@@ -57,27 +62,14 @@
 	background: transparent;
 	overflow: hidden;
 
-	&:hover{
-		// background-color: darken($brand-color, 60%);
-	}
+	span {
+    display: none;
+  }
 
 	&:before{
-		// @extend .fontawesome;
-		content: "\f00d";
+		@extend .iconfont;
+    content: "close";
+    vertical-align: middle;
+    font-size: 20px;
 	}
 }
-
-  /**
-   * Remove
-   */
-  
-  .ola-facet-tag-remove {
-    border-radius: 0;
-
-    &:hover {
-      background-color: rgba(0,0,0,0.1);
-    }
-    span {
-      display: none;
-    }
-  }

@@ -21,6 +21,15 @@
 @import 'pagination';
 @import 'typography';
 
+/* widgets */
+@import 'spelling';
+@import 'modal';
+@import 'progress';
+@import 'searchbar';
+
 /* Layout */
 @import 'layout';
 @import 'facet';
+
+/* Onboarding */
+@import 'onboarding';

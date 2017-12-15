@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 function QueryHelp ({ isNewUser }) {
+  // console.log(isNewUser)
   if (!isNewUser) return null
   return (
     <div className='ola-query-help'>

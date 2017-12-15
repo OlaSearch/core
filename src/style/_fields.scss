@@ -90,11 +90,13 @@
 
 /* Title */
 .ola-field-title {
-  margin: 0;
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  font-weight: normal;
 }
 
 /* URL */
-.ola-field-url {
+a.ola-field-url {
   font-size: 13px;
   color: #666;
   display: block;
@@ -115,4 +117,34 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+
+/* Snippet: Events|Articles */
+/* Date-Date-TextField */
+.ola-fg-horizontal {
+  &.Date-Date-TextField, &.Date-TextField {
+    line-height: 1;
+    font-size: 14px;
+    color: $base-grey-color;
+    padding-bottom: 8px;
+
+    .ola-field {
+      padding-bottom: 0;
+    }
+
+    .ola-field-date+.ola-field-date {
+      padding-left: 8px;
+      &:before {
+        content: '-';
+        padding-right: 8px;
+      }
+    }
+
+    .ola-field-text {
+      border-left: 1px solid $base-grey-color;
+      margin-left: 8px;
+      padding-left: 8px;
+      padding-bottom: 0;
+    }
+  }
 }

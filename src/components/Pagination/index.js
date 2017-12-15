@@ -109,18 +109,19 @@ class Pagination extends React.Component {
       ellipsis
     )
 
+    let isPrevPageDisabled = currentPageInt === 1
     let prevPageClass = classNames('ola-page ola-page-previous', {
-      'ola-page-disabled': currentPageInt === 1
+      'ola-page-disabled': isPrevPageDisabled
     })
-
+    let isNextPageDisabled = currentPageInt === totalPages || !totalPages
     let nextPageClass = classNames({
       'ola-page ola-page-next': true,
-      'ola-page-disabled': currentPageInt === totalPages || !totalPages
+      'ola-page-disabled': isNextPageDisabled
     })
 
     return (
       <nav className='ola-pagination' ref={this.registerRef}>
-        <button className={prevPageClass} onClick={this.prevPage}>
+        <button className={prevPageClass} onClick={this.prevPage} disabled={isPrevPageDisabled}>
           {translate('pagination_prev_label')}
         </button>
         {pages.map((page, idx) => {
@@ -133,7 +134,7 @@ class Pagination extends React.Component {
             />
           )
         })}
-        <button className={nextPageClass} onClick={this.nextPage}>
+        <button className={nextPageClass} onClick={this.nextPage} disabled={isNextPageDisabled}>
           {translate('pagination_next_label')}
         </button>
       </nav>
@@ -154,8 +155,9 @@ function PageNumber ({ page, isActive, selectPage }) {
     'ola-page-current': isActive,
     'ola-page-ellipsis': isNaN(page)
   })
+  let isDisabled = isNaN(page) || isActive
   return (
-    <button className={klass} onClick={handleClick}>
+    <button className={klass} onClick={handleClick} disabled={isDisabled}>
       {page}
     </button>
   )

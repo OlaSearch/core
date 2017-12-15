@@ -58,7 +58,7 @@ class AutoComplete extends React.Component {
       /* word suggestion */
       leftPosition: props.leftPadding,
       partialWord: null,
-      showWordSuggestion: props.wordSuggestion
+      showWordSuggestion: props.wordSuggestion && this.props.isDesktop
     }
     this.isSizeSmall = false
   }
@@ -387,12 +387,14 @@ class AutoComplete extends React.Component {
 
       case 'tab':
       case 'space':
-        if (this.state.results[index]) {
-          if (direction === 'tab') event.preventDefault()
-          return this.onFuzzySelect(this.state.results[index])
-        } else {
-          if (direction === 'tab') this.onSoftBlur(event)
-          return
+        if (this.props.wordSuggestion) {
+          if (this.state.results[index]) {
+            if (direction === 'tab') event.preventDefault()
+            return this.onFuzzySelect(this.state.results[index])
+          } else {
+            if (direction === 'tab') this.onSoftBlur(event)
+            return
+          }
         }
         break
     }
@@ -511,7 +513,7 @@ class AutoComplete extends React.Component {
     let isFacet = type === TYPE_FACET
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
-
+    
     /* Focus on the input if click event */
     if (options && options.event && options.event.type === 'click') {
       // To do
@@ -581,7 +583,7 @@ class AutoComplete extends React.Component {
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
-
+    
     return this.onSelect(suggestion, { ...options, fromSuggestion: true })
   }
   onFocus = (event) => {
@@ -775,7 +777,8 @@ function mapStateToProps (state, ownProps) {
     isPhone: state.Device.isPhone,
     isDesktop: state.Device.isDesktop,
     history: state.AppState.history,
-    tokens: state.QueryState.tokens
+    tokens: state.QueryState.tokens,
+    wordSuggestion: ownProps.wordSuggestion && state.Device.isDesktop
   }
 }
 

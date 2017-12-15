@@ -79,5 +79,6 @@ module.exports = {
   // AutoSuggest: require('./components/AutoSuggest'),
   ActionTypes: require('./constants/ActionTypes'),
   Alert: require('./components/Alert'),
-  AddAlert: require('./components/Alert/AddAlert')
+  AddAlert: require('./components/Alert/AddAlert'),
+  SearchBar: require('./components/SearchBar'),
 }

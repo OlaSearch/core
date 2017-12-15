@@ -6,7 +6,7 @@ import ReactList from 'react-list'
 import withToggle from './../../decorators/withToggle'
 import injectTranslate from './../../decorators/injectTranslate'
 import classNames from 'classnames'
-import { getDisplayName } from './../../utilities'
+import { getDisplayName, sanitizeText } from './../../utilities'
 import FilterInput from './common/FilterInput'
 import xssFilters from 'xss-filters'
 
@@ -60,7 +60,7 @@ class LinkFilter extends React.Component {
 
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: xssFilters.inHTMLData(event.target.value)
+      filterText: sanitizeText(xssFilters.inHTMLData(event.target.value))
     })
   }
 

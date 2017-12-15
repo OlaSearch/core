@@ -1,17 +1,21 @@
 import React from 'react'
+import cx from 'classnames'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 
-function FilterButton ({ toggleSidebar, facets }) {
+function FilterButton ({ toggleSidebar, facets, isSidebarOpen }) {
   const hasFilter = facets.some((item) => item.values.length > 0)
-  if (!hasFilter) return null
+  const classes = cx('ola-link-open-filter', {
+    'ola-link-open-filter-active': isSidebarOpen
+  })
   return (
     <button
-      className='ola-link-open-filter'
+      className={classes}
       onClick={toggleSidebar}
       type='button'
+      disabled={!hasFilter}
     >
-      Filter
+      <span>Filter</span>
     </button>
   )
 }
@@ -20,4 +24,11 @@ FilterButton.defaultProps = {
   facets: []
 }
 
-module.exports = connect(null, { toggleSidebar })(FilterButton)
+function mapStateToProps (state) {
+  return {
+    isSidebarOpen: state.AppState.isSidebarOpen,
+    facets: state.AppState.facets
+  }
+}
+
+module.exports = connect(mapStateToProps, { toggleSidebar })(FilterButton)

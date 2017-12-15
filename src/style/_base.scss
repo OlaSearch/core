@@ -1,7 +1,6 @@
 .ola-search {
   font-size: $base-font-size;
   font-family: $base-font-family;
-  padding: 2rem;
 
   *, &:before, &:after {
     box-sizing: border-box;
@@ -26,4 +25,8 @@
       text-decoration: none;
     }
   }
+}
+
+body {
+  padding: 2rem;
 }
