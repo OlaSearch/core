@@ -102,7 +102,7 @@ class LinkFilter extends React.Component {
 
     var {
       values,
-      showSelectedTag = true,
+      showSelectedTag = false,
       removeLabel,
       exclusions = [],
       limit = 6
@@ -212,13 +212,13 @@ function Item ({ name, count, displayName, isSelected, onItemClick }) {
   function onClick () {
     onItemClick(name)
   }
-  const itemKlass = classNames('ola-btn', 'ola-facet-link', {
+  const classes = classNames('ola-btn', 'ola-facet-link', {
     'ola-facet-link-active': isSelected
   })
   return (
     <div className='ola-btn-wrap'>
       <button
-        className={itemKlass}
+        className={classes}
         type='button'
         onClick={onClick}
         title={displayName}

@@ -4,6 +4,7 @@ $base-font-family: Helvetica,Arial,sans-serif;
 $base-border-color: #ddd;
 $base-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 $base-grey-color: #888;
+$base-border-radius: 3px;
 
 /* Brand */
 $brand-color: #002569;
@@ -38,3 +39,9 @@ $facet-padding: 4px 0;
 /* Pagination */
 $pagination-button-width: 40px;
 $pagination-button-height: 40px;
+
+/* Tag background */
+$input-tag-bg: #eef7fd;
+
+/* Colors */
+$color-highlight: #ffc;

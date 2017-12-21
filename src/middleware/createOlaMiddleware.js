@@ -19,7 +19,7 @@ module.exports = (options = {}) => {
       types,
       api,
       query,
-      context,
+      context = {},
       payload = {},
       meta = {},
       suggestedTerm,
@@ -224,25 +224,26 @@ module.exports = (options = {}) => {
 
           /**
          * Get facets or filters selected by intent engine
+         * 1. Check if facet already exists
          */
-          let facetQuery = null
+          let facetQuery = currentState.QueryState.facet_query
           if (
             answer &&
             answer.search &&
             answer.search.facet_query &&
             answer.search.facet_query.length
           ) {
-            facetQuery = []
             for (let i = 0; i < answer.search.facet_query.length; i++) {
-              let selectedFacet = facets.filter(
-                ({ name }) => name === answer.search.facet_query[i].name
-              )
-              if (selectedFacet.length) {
-                facetQuery.push({
-                  ...selectedFacet.reduce((a, b) => a),
-                  ...answer.search.facet_query[i],
-                  values: []
+              let { name, selected, ...rest } = answer.search.facet_query[i]
+              /* Check if it already exists */
+              let exists = facetQuery.some(({ name: _name }) => _name === name)
+              if (exists) {
+                facetQuery = facetQuery.map((item) => {
+                  if (item.name === name) item.selected = selected
+                  return item
                 })
+              } else {
+                facetQuery = [...facetQuery, ...answer.search.facet_query[i]]
               }
             }
           }
@@ -338,7 +339,8 @@ module.exports = (options = {}) => {
             suggestedTerm,
             qt,
             answer,
-            responseTime
+            responseTime,
+            facetQuery
           }
         },
         (error) => {

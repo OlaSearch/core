@@ -9,7 +9,9 @@ import {
   escapeRegEx,
   scrollTo,
   stringToColor,
-  hexToRGBa
+  hexToRGBa,
+  highlightTokens,
+  sortArrayByLength
 } from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
@@ -40,6 +42,16 @@ export default class Input extends React.Component {
     event.persist()
 
     setTimeout(() => this.props.onChange(event))
+  }
+
+  handleMouseDown = (event) => {
+    if (!this.props.q) return
+    event.persist()
+    event.stopPropagation()
+    /* Check if element already is focused. Only then fire */
+    if (document.activeElement === event.target) {
+      setTimeout(() => this.props.onChange(event))
+    }
   }
 
   onChangeZone = () => {
@@ -129,7 +141,12 @@ export default class Input extends React.Component {
   }
   formatValue = (value, returnTokens = false) => {
     if (!value) return ''
-    const terms = this.props.tokens.map(({ value }) => value)
+    const tokens = this.props.fuzzyTokens || this.props.tokens
+    const terms = tokens
+      .map(({ value }) => value)
+      .concat()
+      .sort(sortArrayByLength)
+
     /* If no tokens, return value */
     if (!terms.length) return value
 
@@ -139,8 +156,8 @@ export default class Input extends React.Component {
     value = value.replace(regX, (match, startToken) => {
       /* Add to list of token */
       returnTokens && newTokens.push(match)
-      let name = this.props.tokens
-        .filter(({ value }) => value === match)
+      let name = tokens
+        .filter(({ value }) => value.match(new RegExp('^' + match + '$', 'gi')))
         .reduce((acc, o) => o.name, null)
       if (!name) return match
       let color = hexToRGBa(stringToColor(name))
@@ -183,7 +200,7 @@ export default class Input extends React.Component {
             onKeyDown={this.onKeyDown}
             autoFocus={this.props.autoFocus}
             formatValue={this.formatValue}
-            onClick={this.onFocus}
+            onMouseDown={this.handleMouseDown}
           />
 
           <InputShadow value={shadowTerm} />

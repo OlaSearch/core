@@ -97,6 +97,12 @@ export function parseQueryString (initialState, config) {
    * If no qs
    */
   if (!Object.keys(qs).length) qs = { q: '' }
+
+  /**
+   * If no q
+   */
+  if (!qs['q']) qs['q'] = ''
+
   /**
    * Validate query string
    */
@@ -114,6 +120,26 @@ export function parseQueryString (initialState, config) {
       } else {
         qs[p] = parseInt(qs[p])
       }
+    }
+  }
+
+  /**
+   * tokens
+   */
+  if (tokens) {
+    if (typeof tokens === 'string') {
+      tokens = [tokens]
+    }
+    tokensObject = {
+      tokens: tokens.map((t) => {
+        let [name, value, startToken, endToken] = t.split(':')
+        return {
+          name,
+          value,
+          startToken: parseInt(startToken),
+          endToken: parseInt(endToken)
+        }
+      })
     }
   }
 
@@ -141,10 +167,12 @@ export function parseQueryString (initialState, config) {
         if (RANGE_FACETS.indexOf(facet.type) !== -1 && value.length > 1) {
           value = parseRangeValues(value)
         }
-
         return {
           ...facet,
-          selected: value
+          selected: value,
+          isToken: tokensObject.tokens.some(
+            ({ name: n, value: v }) => n === name && value.indexOf(v) !== -1
+          )
         }
       })
 
@@ -178,26 +206,6 @@ export function parseQueryString (initialState, config) {
 
     filtersObject = {
       filters: filterQuery
-    }
-  }
-
-  /**
-   * tokens
-   */
-  if (tokens) {
-    if (typeof tokens === 'string') {
-      tokens = [tokens]
-    }
-    tokensObject = {
-      tokens: tokens.map((t) => {
-        let [name, value, startToken, endToken] = t.split(':')
-        return {
-          name,
-          value,
-          startToken: parseInt(startToken),
-          endToken: parseInt(endToken)
-        }
-      })
     }
   }
 

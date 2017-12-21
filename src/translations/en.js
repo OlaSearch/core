@@ -71,6 +71,12 @@ module.exports = {
 
     /* Sidebar */
     filter_button_open: 'Show filters',
-    filter_button_close: 'Hide filters'
+    filter_button_close: 'Hide filters',
+
+    /* Token */
+    filter_suggestions: 'You can narrow down your search by selecting',
+
+    /* Layout */
+    change_layout: 'Change layout to {view}'
   }
 }

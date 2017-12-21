@@ -141,11 +141,6 @@ describe('Reducer: QueryState', () => {
     expect(state.per_page).toEqual(20)
   })
 
-  it('can change view', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.CHANGE_VIEW, { view: 'grid'}))
-    expect(state.view).toEqual('grid')
-  })
-
   it('can change search status', () => {
     let state = reducer(initialState, MAKE_ACTION(types.SET_SEARCH_STATUS, { status: false }))
     expect(state.isSearchActive).toEqual(false)

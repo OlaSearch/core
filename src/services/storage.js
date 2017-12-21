@@ -16,6 +16,7 @@ module.exports = {
       if (value) {
         return JSON.parse(value)
       }
+      return undefined
     } catch (err) {
       console.warn(err)
       return undefined

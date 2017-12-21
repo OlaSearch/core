@@ -118,6 +118,11 @@ describe('Reducer: AppState', () => {
     expect(state).toEqual(initialState)
   })
 
+  it('can change view', () => {
+    let state = reducer(initialState, MAKE_ACTION(types.CHANGE_VIEW, { view: 'grid'}))
+    expect(state.view).toEqual('grid')
+  })
+
   /**
    * Add more tests
    */

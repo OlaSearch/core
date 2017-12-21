@@ -53,6 +53,12 @@ const DateParser = {
     }
     return date
   },
+  formatUTC (date, mask = defaultMask) {
+    const d = new Date(date)
+    const userTimezoneOffset = d.getTimezoneOffset() * 60000
+    const _d = new Date(d.getTime() + userTimezoneOffset)
+    return this.format(_d, mask)
+  },
   toUTC (date, mask = defaultMask) {
     return DateParser.parse(date, mask).toISOString()
   },

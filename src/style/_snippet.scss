@@ -8,3 +8,29 @@
     display: none;
   }
 }
+
+/* Highlight */
+.ola-highlight {
+  background: $color-highlight;
+  font-style: normal;
+}
+
+/* Grid view snippets */
+@include media (tablet) {
+  .ola-results-view-grid {
+    .ola-results {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .ola-snippet {
+      width: 33.333%;
+      padding: 0 1rem 1rem 0;
+      border: none;
+    }
+    .ola-snippet-inner {
+      border: 1px $base-border-color solid;
+      padding: 1em;
+      min-height: 100%;
+    }
+  }
+}

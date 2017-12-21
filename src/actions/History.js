@@ -11,7 +11,7 @@ import DateParser from './../utilities/dateParser'
 export function addHistory (options) {
   return (dispatch, getState) => {
     let { QueryState, AppState } = getState()
-    let { q, facet_query } = QueryState
+    let { q, facet_query, tokens } = QueryState
     let { totalResults, history } = AppState
     if (!q || !totalResults || q === '*' || q.indexOf('*') !== -1) return
 
@@ -48,7 +48,6 @@ export function addHistory (options) {
 
     /* Check if it already exists */
     var exists = history.some((item) => item.q === q)
-
     /* Check if history already exists */
     if (exists) {
       return dispatch({
@@ -65,6 +64,7 @@ export function addHistory (options) {
         url: hashCharacter + buildQueryString(query),
         dateAdded: new Date().getTime(),
         facets: activeFacets,
+        tokens,
         popularity: 1
       }
     })

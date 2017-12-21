@@ -1,0 +1,15 @@
+/* Tokens */
+.ola-answer-tokens {
+  padding: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+}
+
+/* Token */
+.ola-btn-token-add {
+  &, &:hover, &:focus, &:active {
+    background: $input-tag-bg;
+    padding: 5px 6px;
+    margin: 0 6px;
+    border-radius: $base-border-radius;
+  }
+}

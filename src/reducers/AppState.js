@@ -1,11 +1,4 @@
 import types from './../constants/ActionTypes'
-import {
-  BOOKMARKS_STORAGE_KEY,
-  HISTORY_STORAGE_KEY,
-  ALERT_STORAGE_KEY,
-  SIDEBAR_STORAGE_KEY
-} from './../constants/Settings'
-import storage from './../services/storage'
 
 export const initialState = {
   totalResults: 0,
@@ -34,7 +27,10 @@ export const initialState = {
   inProgressAlert: false,
 
   /* Sidebar */
-  isSidebarOpen: false
+  isSidebarOpen: false,
+
+  /* View */
+  view: 'list'
 }
 
 export default (state = initialState, action) => {
@@ -189,14 +185,11 @@ export default (state = initialState, action) => {
       }
 
     case types.OLA_REHYDRATE:
-      let alerts = storage.get(ALERT_STORAGE_KEY, action.namespace)
       return {
         ...state,
-        ...alerts,
-        bookmarks: storage.get(BOOKMARKS_STORAGE_KEY, action.namespace) || [],
-        history: storage.get(HISTORY_STORAGE_KEY, action.namespace) || [],
-        namespace: action.namespace,
-        isSidebarOpen: storage.get(SIDEBAR_STORAGE_KEY, action.namespace)
+        ...action.storeState,
+        view: action.storeState ? action.storeState.view : initialState.view,
+        namespace: action.namespace
       }
 
     case types.TOGGLE_SIDEBAR:
@@ -274,6 +267,12 @@ export default (state = initialState, action) => {
         ...state,
         queryIds: state.queryIds.filter((id) => id !== action.payload.queryId),
         inProgressAlert: false
+      }
+
+    case types.CHANGE_VIEW:
+      return {
+        ...state,
+        view: action.view
       }
 
     default:

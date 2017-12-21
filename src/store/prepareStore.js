@@ -5,13 +5,30 @@ import {
   USER_SESSION_KEY,
   USER_NEW_KEY,
   USER_SESSION_EXPIRY_DAYS,
-  SEARCH_SESSION_KEY
+  SEARCH_SESSION_KEY,
+  OLA_STORAGE_KEY,
+  CONTEXT_STORAGE_KEY,
+  LOCALE_STORAGE_KEY,
+  DEFAULT_LOCALE
 } from './../constants/Settings'
 
 export function prepareUserState ({ config }) {
   /* Create user cookie */
   var userSession = storage.cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = storage.cookies.get(USER_NEW_KEY, config.namespace)
+  var storeState = storage.get(OLA_STORAGE_KEY, config.namespace) || {}
+  var contextState =
+    storage.cookies.get(CONTEXT_STORAGE_KEY, config.namespace) || {}
+  var locale =
+    storage.cookies.get(LOCALE_STORAGE_KEY, config.namespace) || DEFAULT_LOCALE
+
+  if (typeof contextState === 'string') {
+    try {
+      contextState = JSON.parse(decodeURIComponent(contextState))
+    } catch (e) {
+      contextState = {}
+    }
+  }
 
   /* Cast isNewUser to Boolean */
   if (typeof isNewUser === 'string') {
@@ -56,7 +73,10 @@ export function prepareUserState ({ config }) {
   return {
     searchSession,
     userSession,
-    isNewUser
+    isNewUser,
+    storeState,
+    contextState,
+    locale
   }
 }
 

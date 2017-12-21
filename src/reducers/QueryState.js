@@ -7,11 +7,10 @@ export const initialState = {
   q: '',
   enriched_q: '' /* From Intent engine */,
   page: 1,
-  per_page: 10,
+  per_page: 12,
   facet_query: [],
   sort: '',
   filters: [],
-  view: '',
   isSearchActive: true,
   searchInput: null,
   skip_intent: false,
@@ -214,10 +213,23 @@ export default (state = initialState, action) => {
         tokens: state.tokens.filter(({ value }) => value !== action.value)
       }
 
+    case types.REPLACE_TOKENS:
+      return {
+        ...state,
+        tokens: action.tokens,
+        facet_query: state.facet_query.filter(({ isToken }) => !isToken)
+      }
+
     case types.REMOVE_ALL_TOKENS:
       return {
         ...state,
         tokens: []
+      }
+
+    case types.REMOVE_TOKEN_FACETS:
+      return {
+        ...state,
+        facet_query: state.facet_query.filter(({ isToken }) => !isToken)
       }
 
     case types.CHANGE_SORT:
@@ -239,12 +251,6 @@ export default (state = initialState, action) => {
         per_page: action.perPage
       }
 
-    case types.CHANGE_VIEW:
-      return {
-        ...state,
-        view: action.view
-      }
-
     case types.SET_SEARCH_STATUS:
       return {
         ...state,
@@ -255,10 +261,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         enriched_q: action.enriched_q || '',
-        facet_query: action.facetQuery
-          ? [...action.facetQuery, ...state.facet_query]
-          : state.facet_query,
-        /* Reset source */
+        facet_query:
+          action.facetQuery || state.facet_query /* From intent engine */,
         source: null
       }
 

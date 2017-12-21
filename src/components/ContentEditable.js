@@ -20,12 +20,7 @@ export default class ContentEditable extends React.Component {
     matches: []
   }
   componentDidUpdate (prevProps) {
-    if (!equals(prevProps.matches, this.props.matches)) {
-      this.props.onMatchChange && this.props.onMatchChange(this.props.matches)
-    }
-    // if (this.props.value !== prevProps.value) {
     this.updateFakeEl()
-    // }
   }
   registerRef = (el) => (this._input = el)
   render () {

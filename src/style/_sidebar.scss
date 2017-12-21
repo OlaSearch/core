@@ -71,20 +71,21 @@
 /* Open Filter */
 .ola-link-open-filter {
   float: right;
-	border: 1px #ccc solid;
+	border: 1px $base-grey-color solid;
   background: none;
   font-size: 13px;
   text-transform: uppercase;
 	text-align: center;
   position: relative;
-  margin: 0 0 0 1rem;
+  margin: 0 0 0 5px;
   // float: right;
   height: 40px;
 
-  &:hover, &:active, &:focus, &.ola-link-open-filter-active {
-    background: $brand-color;
-    border-color: white;
-    color: white;
+  & {
+    color: $brand-color;
+  }
+  &:hover, &:active, &:focus, &.ola-link-open-filter-active  {
+    border-color: $brand-color;
   }
 
   &:before {

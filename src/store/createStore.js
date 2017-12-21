@@ -87,13 +87,14 @@ module.exports = (
           logger,
           ...middlewares
         ),
-        window.devToolsExtension ? window.devToolsExtension() : (f) => f,
         ...enhancers
       )
     )
   }
 
-  const { userSession, searchSession, isNewUser } = prepareUserState({ config })
+  const { userSession, searchSession, isNewUser, ...rest } = prepareUserState({
+    config
+  })
   /**
    * Rehydrate store
    */
@@ -104,7 +105,8 @@ module.exports = (
     projectId,
     searchSession,
     userSession,
-    env
+    env,
+    ...rest
   })
 
   return store

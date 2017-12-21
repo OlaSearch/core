@@ -29,10 +29,10 @@ class Sidebar extends React.Component {
     }
   }
   render () {
-    let { children, toggleSidebar } = this.props
+    let { children, toggleSidebar, isSidebarOpen } = this.props
     return (
       <div className='ola-sidebar'>
-        {children}
+        {isSidebarOpen && children}
         <button
           onClick={toggleSidebar}
           type='button'

@@ -2,7 +2,12 @@ import React from 'react'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
-import { TYPE_TAXONOMY, TYPE_DOC, TYPE_FACET } from './../constants/Settings'
+import {
+  TYPE_TAXONOMY,
+  TYPE_DOC,
+  TYPE_FACET,
+  LAYOUT_OPTIONS
+} from './../constants/Settings'
 
 export function supplant (s, d) {
   for (var p in d) {
@@ -377,11 +382,11 @@ export function mergeResultsWithHistory (options) {
 
   /* Check if answer exists in the first result */
   if (results.length && results[0]['answer']) return results
-
   history = history
-    .map(({ q, dateAdded }) => ({
+    .map(({ q, dateAdded, tokens }) => ({
       term: q.toLowerCase(),
       type: 'history',
+      tokens,
       dateAdded
     }))
     .filter((his) => his.term && his.term !== '*')
@@ -648,4 +653,46 @@ export function getAutoCompleteResults (
     }
   }
   return res
+}
+
+export function highlightTokens (text, tokens) {
+  if (!tokens || !tokens.length) return text
+  let arr = []
+  let start = 0
+  for (let i = 0; i < tokens.length; i++) {
+    let { startToken, endToken } = tokens[i]
+    arr.push(text.substring(start, startToken))
+    arr.push(
+      '<span class="ola-input-tag">' +
+        text.substring(startToken, endToken) +
+        '</span>'
+    )
+    start = endToken
+  }
+  return arr.join('')
+}
+
+export function sortArrayByLength (a, b) {
+  if (a.length > b.length) return -1
+  if (a.length < b.length) return 1
+  return 0
+}
+
+export function pick (keys, obj) {
+  let res = {}
+  var len = keys.length
+  var idx = -1
+
+  while (++idx < len) {
+    var key = keys[idx]
+    if (key in obj) {
+      res[key] = obj[key]
+    }
+  }
+  return res
+}
+
+export function getNextView (view) {
+  const curIndex = LAYOUT_OPTIONS.indexOf(view) + 1
+  return LAYOUT_OPTIONS[curIndex >= LAYOUT_OPTIONS.length ? 0 : curIndex]
 }

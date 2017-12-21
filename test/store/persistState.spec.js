@@ -1,7 +1,7 @@
 import expect from 'expect'
 import storage from './../../src/services/storage'
 import { STATE_TYPE_KEYS, debouncePersistState } from './../../src/store/persistState'
-import { BOOKMARKS_STORAGE_KEY, HISTORY_STORAGE_KEY, LOCALE_STORAGE_KEY, CONTEXT_STORAGE_KEY } from './../../src/constants/Settings'
+import { LOCALE_STORAGE_KEY, CONTEXT_STORAGE_KEY, OLA_STORAGE_KEY } from './../../src/constants/Settings'
 import types from './../../src/constants/ActionTypes'
 
 describe('persistState', () => {
@@ -31,7 +31,7 @@ describe('persistState', () => {
       debouncePersistState({type: types.ADD_BOOKMARK }, getState, namespace)
       debouncePersistState({type: types.ADD_BOOKMARK }, getState, namespace)
       setTimeout(() => {
-        expect(storage.get(BOOKMARKS_STORAGE_KEY, namespace)).toEqual(['hello'])
+        expect(storage.get(OLA_STORAGE_KEY, namespace).bookmarks).toEqual(['hello'])
         done()
       }, 510)
     })
@@ -40,7 +40,7 @@ describe('persistState', () => {
       debouncePersistState({type: types.REMOVE_BOOKMARK }, getState, namespace)
       debouncePersistState({type: types.REMOVE_BOOKMARK }, getState, namespace)
       setTimeout(() => {
-        expect(storage.get(BOOKMARKS_STORAGE_KEY, namespace)).toEqual(['hello'])
+        expect(storage.get(OLA_STORAGE_KEY, namespace).bookmarks).toEqual(['hello'])
         done()
       }, 510)
     })
@@ -48,7 +48,7 @@ describe('persistState', () => {
     it('should add history', (done) => {
       debouncePersistState({type: types.ADD_HISTORY }, getState, namespace)
       setTimeout(() => {
-        expect(storage.get(HISTORY_STORAGE_KEY, namespace)).toEqual(['world'])
+        expect(storage.get(OLA_STORAGE_KEY, namespace).history).toEqual(['world'])
         done()
       }, 510)
     })
@@ -56,7 +56,7 @@ describe('persistState', () => {
     it('should clear history', (done) => {
       debouncePersistState({type: types.CLEAR_HISTORY }, getState, namespace)
       setTimeout(() => {
-        expect(storage.get(HISTORY_STORAGE_KEY, namespace)).toEqual(['world'])
+        expect(storage.get(OLA_STORAGE_KEY, namespace).history).toEqual(['world'])
         done()
       }, 510)
     })
@@ -64,8 +64,18 @@ describe('persistState', () => {
 
   describe('Locale', () => {
     var locale = 'en'
+    var getState
+    beforeEach(() => {
+      getState = () => {
+        return {
+          Intl: {
+            locale: 'en'
+          }
+        }
+      }
+    })
     it('should set locale in cookie', (done) => {
-      debouncePersistState({type: types.SET_LOCALE, locale }, () => {})
+      debouncePersistState({type: types.SET_LOCALE, locale }, getState)
       setTimeout(() => {
         expect(storage.cookies.get(LOCALE_STORAGE_KEY)).toEqual('en')
         done()

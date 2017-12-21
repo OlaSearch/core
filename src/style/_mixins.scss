@@ -76,8 +76,9 @@ $breakpoints: (
   text-align: center;
   font-weight: normal;
 
-  &:disabled {
+  &:disabled{
     opacity: 0.6;
+    cursor: text;
   }
 
   &:before {

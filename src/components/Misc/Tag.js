@@ -2,11 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { supplant, getDisplayName } from './../../utilities'
 import DateParser from './../../utilities/dateParser'
+import {
+  DEFAULT_DISPLAY_DATE_FORMAT,
+  DEFAULT_RANGE_TEMPLATE
+} from './../../constants/Settings'
 
 function Tag (props) {
   var displayName = ''
   var { name, onRemove, facet } = props
-  var { type, label, template, facetNames, dateFormat, interval } = facet
+  var {
+    type,
+    label,
+    template = DEFAULT_RANGE_TEMPLATE,
+    facetNames,
+    dateFormat = DEFAULT_DISPLAY_DATE_FORMAT,
+    interval
+  } = facet
 
   switch (type) {
     case 'range':
@@ -16,9 +27,11 @@ function Tag (props) {
         displayName = name
       } else {
         let [from, to] = name
+        /* All dates will be in UTC */
         displayName = supplant(template, {
-          from: dateFormat ? DateParser.format(from, dateFormat) : from,
-          to: dateFormat ? DateParser.format(to, dateFormat) : to
+          from: dateFormat ? DateParser.formatUTC(from, dateFormat) : from,
+          to: dateFormat ? DateParser.formatUTC(to, dateFormat) : to,
+          name: facet.displayName || facet.name
         })
       }
       break

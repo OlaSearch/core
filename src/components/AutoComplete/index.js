@@ -14,7 +14,9 @@ import {
   addFacet,
   addToken,
   removeToken,
-  removeAllTokens
+  removeAllTokens,
+  replaceTokens,
+  removeTokenFacets
 } from './../../actions/Search'
 import { log } from './../../actions/Logger'
 import Input from './Input'
@@ -210,7 +212,9 @@ class AutoComplete extends React.Component {
   }
 
   onTokenChange = (tokens) => {
-    if (!tokens || !tokens.length) return this.props.removeAllTokens()
+    if ((!tokens || !tokens.length) && this.props.tokens.length) {
+      return this.props.removeAllTokens()
+    }
     let tokensToRemove = this.props.tokens.filter(
       ({ value }) => tokens.indexOf(value) === -1
     )
@@ -228,6 +232,15 @@ class AutoComplete extends React.Component {
       startToken,
       endToken
     } = getWordPosition(event.target)
+
+    /* if its the same word stop */
+    if (
+      this.state.partialWord === partialWord &&
+      event &&
+      event.type !== 'keydown'
+    ) {
+      return
+    }
 
     /* Update facet if startToken + endToken has changed */
     let changedTokens = this.props.tokens.filter(
@@ -317,7 +330,9 @@ class AutoComplete extends React.Component {
 
         this.setState({
           results: finalResults,
-          isOpen: this.state.q ? !!finalResults.length : false
+          isOpen: this.state.q
+            ? !!finalResults.length
+            : this.props.history.length > 0
         })
       })
     }
@@ -423,12 +438,14 @@ class AutoComplete extends React.Component {
     if (this.state.fuzzyQuery) {
       return this.onFuzzySelect(this.state.fuzzyQuery, options)
     }
-
+    /* Remove facets that are tokens */
+    this.props.removeTokenFacets()
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
-      this.props.removeAllFacets()
       this.props.tokens.forEach(({ value, name }) => {
         let facet = find(propEq('name', name))(this.context.config.facets)
+        /* Set from query as true */
+        facet.isToken = true
         this.props.addFacet(facet, value)
       })
     }
@@ -581,6 +598,17 @@ class AutoComplete extends React.Component {
           suggestion.taxo_path || suggestion.taxo_term
         )
       }
+
+      /* Check for tokens */
+      if (suggestion.tokens) {
+        this.props.replaceTokens(suggestion.tokens)
+        for (let i = 0; i < suggestion.tokens.length; i++) {
+          facet = find(propEq('name', suggestion.tokens[i].name))(
+            this.context.config.facets
+          )
+          this.props.replaceFacet(facet, suggestion.tokens[i].value)
+        }
+      }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
     }
 
@@ -614,7 +642,8 @@ class AutoComplete extends React.Component {
   onBlur = (event) => {
     this.setState({
       isFocused: false,
-      results: []
+      results: [],
+      partialWord: null
     })
 
     this.props.onBlur && this.props.onBlur(event)
@@ -685,6 +714,8 @@ class AutoComplete extends React.Component {
         : fuzzyQuery.term
       : q
 
+    const fuzzyTokens = fuzzyQuery ? fuzzyQuery.tokens : null
+
     const leftPosition = showWordSuggestion
       ? Math.max(0, this.state.leftPosition - this.props.leftPadding)
       : 0
@@ -718,6 +749,7 @@ class AutoComplete extends React.Component {
             onTokenChange={this.onTokenChange}
             showWordSuggestion={showWordSuggestion}
             showAlert={this.props.showAlert}
+            fuzzyTokens={fuzzyTokens}
           />
 
           <div
@@ -795,5 +827,7 @@ module.exports = connect(mapStateToProps, {
   addFacet,
   addToken,
   removeToken,
-  removeAllTokens
+  removeAllTokens,
+  replaceTokens,
+  removeTokenFacets
 })(injectTranslate(listensToClickOutside(AutoComplete)))

@@ -1,10 +1,8 @@
 export const RANGE_FACETS = ['range', 'rating', 'daterange', 'datepicker']
-export const BOOKMARKS_STORAGE_KEY = '_ola_bookmarks_'
-export const HISTORY_STORAGE_KEY = '_ola_history_'
-export const CONTEXT_STORAGE_KEY = '_ola_context_'
+export const OLA_STORAGE_KEY = 'olastore_'
+export const CONTEXT_STORAGE_KEY = 'ola_context_'
 export const CONTEXT_STORAGE_TTL = 30
-export const LOCALE_STORAGE_KEY = '_ola_locale_'
-export const SIDEBAR_STORAGE_KEY = '_ola_sidebar_'
+export const LOCALE_STORAGE_KEY = 'ola_locale_'
 export const LOCALE_STORAGE_TTL = 30 /* Days */
 export const SEARCH_SESSION_KEY = 'ola_search_session'
 export const USER_SESSION_KEY = 'ola_user_session' /* used for analytics only */
@@ -12,7 +10,8 @@ export const USER_NEW_KEY = 'ola_new_user'
 export const USER_SESSION_EXPIRY_DAYS = 365
 export const INTENT_SESSION_KEY = 'ola_intent_session'
 export const INTENT_SESSION_EXPIRY_DAYS = 365
-export const ALERT_STORAGE_KEY = '_ola_alert_'
+export const DEFAULT_LOCALE = 'en'
+export const LAYOUT_OPTIONS = ['list', 'grid']
 export const RE_ESCAPE = new RegExp(
   '(\\' +
     ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join(
@@ -49,6 +48,8 @@ export const DEFAULT_API_HANDLER = 'default'
 export const DATE_FORMAT_MOBILE = 'YYYY-MM-DD'
 export const DEFAULT_DATE_FORMAT = 'DD-MM-YYYY'
 export const DATEPICKER_YEAR_RANGE = 20
+export const DEFAULT_RANGE_TEMPLATE = '{name}: {from} - {to}'
+export const DEFAULT_DISPLAY_DATE_FORMAT = 'DD MMMM YYYY'
 
 /**
  * Search Input types

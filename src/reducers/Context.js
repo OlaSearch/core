@@ -1,6 +1,5 @@
 import types from './../constants/ActionTypes'
-import { CONTEXT_STORAGE_KEY } from './../constants/Settings'
-import storage from './../services/storage'
+import flatten from 'ramda/src/flatten'
 
 export const initialState = {
   location: null,
@@ -12,7 +11,6 @@ export const initialState = {
   userId: null,
   isNewUser: false,
   hasUsedVoice: false,
-  alerts: [],
 
   /* Filter sequence */
   filter_term_sequence: [] /* For logging the sequence of filters that the user used */
@@ -80,18 +78,15 @@ export default (state = initialState, action) => {
         fields: state.fields.filter((field) => field.name !== action.name)
       }
 
-    /* Filter sequence from url */
+    /* Filter sequence from facet_query */
     case types.UPDATE_STATE_FROM_QUERY:
-      let seq = []
-      let fq = action.stateFromUrl.facet_query
-      for (let i = 0, len = fq.length; i < len; i++) {
-        for (let j = 0; j < fq[i].selected.length; j++) {
-          seq.push(`${fq[i].name}:${fq[i].selected[j]}`)
-        }
-      }
       return {
         ...state,
-        filter_term_sequence: seq
+        filter_term_sequence: flatten(
+          action.stateFromUrl.facet_query.map(({ name, selected }) =>
+            selected.map((value) => `${name}:${value}`)
+          )
+        )
       }
 
     /** Filter sequence */
@@ -142,25 +137,18 @@ export default (state = initialState, action) => {
       }
 
     case types.OLA_REHYDRATE:
-      let { userSession, searchSession, isNewUser, userId } = action
-      let contextFromStorage = storage.cookies.get(
-        CONTEXT_STORAGE_KEY,
-        action.namespace
-      )
-      if (typeof contextFromStorage === 'string') {
-        try {
-          contextFromStorage = JSON.parse(
-            decodeURIComponent(contextFromStorage)
-          )
-        } catch (e) {
-          contextFromStorage = {}
-        }
-      }
+      let {
+        userSession,
+        searchSession,
+        isNewUser,
+        userId,
+        contextState
+      } = action
       return {
         ...state,
         userSession,
         searchSession,
-        ...contextFromStorage,
+        ...contextState,
         userId: userId || userSession,
         isNewUser
       }

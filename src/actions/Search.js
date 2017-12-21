@@ -161,10 +161,9 @@ export function executeSearch (payload) {
  * @param {Array} tokenValues
  */
 function removeTokenFromQuery (q, tokenValues) {
-  return q.replace(
-    new RegExp('\\b(' + tokenValues.join('|') + ')\\b', 'gi'),
-    ''
-  )
+  return q
+    .replace(new RegExp('\\b(' + tokenValues.join('|') + ')\\b', 'gi'), '')
+    .trim()
 }
 
 /**
@@ -279,6 +278,13 @@ export function addFacet (facet, value) {
      * [1, 2] => ["1", "2"]
      */
     if (value instanceof Array) value = castNumberToStringArray(value)
+    /* Check if it already exists */
+    let exists = getState().QueryState.facet_query.some(
+      ({ name, selected }) =>
+        name === facet.name && selected.indexOf(value) !== -1
+    )
+    if (exists) return false
+
     dispatch({
       type: types.ADD_FACET,
       facet: omit(['values'], facet),
@@ -390,15 +396,6 @@ export function changeSort (sort) {
   return {
     type: types.CHANGE_SORT,
     sort
-  }
-}
-
-/* Change view */
-
-export function changeView (view) {
-  return {
-    type: types.CHANGE_VIEW,
-    view
   }
 }
 
@@ -520,5 +517,18 @@ export function removeToken (value) {
 export function removeAllTokens () {
   return {
     type: types.REMOVE_ALL_TOKENS
+  }
+}
+
+export function replaceTokens (tokens) {
+  return {
+    type: types.REPLACE_TOKENS,
+    tokens
+  }
+}
+
+export function removeTokenFacets () {
+  return {
+    type: types.REMOVE_TOKEN_FACETS
   }
 }

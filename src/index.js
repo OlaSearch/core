@@ -80,5 +80,8 @@ module.exports = {
   ActionTypes: require('./constants/ActionTypes'),
   Alert: require('./components/Alert'),
   AddAlert: require('./components/Alert/AddAlert'),
-  SearchBar: require('./components/SearchBar')
+  SearchBar: require('./components/SearchBar'),
+  ContentWrapper: require('./components/ContentWrapper'),
+  SearchContent: require('./components/SearchContent'),
+  ProgressBar: require('./components/ProgressBar')
 }

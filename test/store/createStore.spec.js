@@ -2,7 +2,7 @@ import expect from 'expect'
 import createStore from './../../src/store/createStore'
 import { MOCK_SEARCH_ADAPTER } from './../common'
 import storage from './../../src/services/storage'
-import { BOOKMARKS_STORAGE_KEY } from './../../src/constants/Settings'
+import { OLA_STORAGE_KEY } from './../../src/constants/Settings'
 
 const NAMESPACE = 'ola'
 describe('createStore', () => {
@@ -36,8 +36,9 @@ describe('createStore', () => {
 
   it('Rehydrates the store', () => {
     /* Key_Namespace */
-    storage.set(`${BOOKMARKS_STORAGE_KEY}`, ['hey'], NAMESPACE)
+    storage.set(`${OLA_STORAGE_KEY}`, { bookmarks: ['hey'], history: [] }, NAMESPACE)
     let store = createStore({ namespace: NAMESPACE }, MOCK_SEARCH_ADAPTER)
     expect(store.getState().AppState.bookmarks.length).toEqual(1)
+    expect(store.getState().AppState.history.length).toEqual(0)
   })
 })

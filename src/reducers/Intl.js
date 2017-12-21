@@ -1,8 +1,6 @@
 import types from './../constants/ActionTypes'
-import { LOCALE_STORAGE_KEY } from './../constants/Settings'
-import storage from './../services/storage'
+import { DEFAULT_LOCALE } from './../constants/Settings'
 
-var DEFAULT_LOCALE = 'en'
 var initialState = {
   locale: DEFAULT_LOCALE
 }
@@ -16,7 +14,7 @@ export default (state = initialState, action) => {
     case types.OLA_REHYDRATE:
       return {
         ...state,
-        locale: storage.cookies.get(LOCALE_STORAGE_KEY) || DEFAULT_LOCALE
+        locale: action.locale
       }
 
     case types.SET_LOCALE:

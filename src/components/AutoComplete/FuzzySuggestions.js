@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { createHTMLMarkup } from './../../utilities'
+import { createHTMLMarkup, highlightTokens } from './../../utilities'
 import {
   RE_ESCAPE,
   TYPE_DOC,
@@ -54,6 +54,12 @@ class SuggestionItem extends React.Component {
     this.props.onRemoveHistory(this.props.result)
     event.stopPropagation()
   }
+  createMarkup = (term, tokens) => {
+    /* Highlight tokens if available */
+    if (tokens) term = highlightTokens(term, tokens)
+
+    return createHTMLMarkup(term)
+  }
   render () {
     let activeClass = this.state.isActive ? this.props.activeClassName : null
     let { index, result } = this.props
@@ -65,7 +71,8 @@ class SuggestionItem extends React.Component {
       taxo_term: taxoTerm,
       isLastCategory,
       isFirstCategory,
-      answer
+      answer,
+      tokens
     } = result
     const isHistory = type === TYPE_HISTORY
     const isDoc = type === TYPE_DOC
@@ -81,7 +88,9 @@ class SuggestionItem extends React.Component {
     if (isDoc) {
       term = title
     } else {
-      term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+      if (!isHistory) {
+        term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+      }
     }
 
     let klass = classNames(
@@ -118,7 +127,7 @@ class SuggestionItem extends React.Component {
         >
           <div
             className='ola-suggestion-item-text'
-            dangerouslySetInnerHTML={createHTMLMarkup(term)}
+            dangerouslySetInnerHTML={this.createMarkup(term, tokens)}
           />
           {index === 0 ? (
             <AnswerQuick
