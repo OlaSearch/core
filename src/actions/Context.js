@@ -1,5 +1,6 @@
 import types from './../constants/ActionTypes'
 
+/* Phasing out */
 export function addDynamicField (name, value, filename) {
   return {
     type: types.ADD_DYNAMIC_FIELD,
@@ -16,15 +17,17 @@ export function removeDynamicField (name) {
   }
 }
 
+/* Phasing out: ADD_CONTEXT */
 export function addContext (contextType, value) {
-  return {
-    type: types.ADD_CONTEXT,
-    contextType,
-    value
+  if (contextType === 'geo') {
+    return addContextField('location', value)
   }
+  /* Phasing out: ADD_CONTEXT */
 }
 
+/* Phasing out: REMOVE_CONTEXT */
 export function removeContext (contextType) {
+  
   return {
     type: types.REMOVE_CONTEXT,
     contextType
@@ -61,5 +64,12 @@ export function addContextField (field, value) {
     type: types.ADD_CONTEXT_FIELD,
     field,
     value
+  }
+}
+
+export function removeContextField (field) {
+  return {
+    type: types.REMOVE_CONTEXT_FIELD,
+    field
   }
 }

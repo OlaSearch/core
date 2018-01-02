@@ -83,5 +83,6 @@ module.exports = {
   SearchBar: require('./components/SearchBar'),
   ContentWrapper: require('./components/ContentWrapper'),
   SearchContent: require('./components/SearchContent'),
-  ProgressBar: require('./components/ProgressBar')
+  ProgressBar: require('./components/ProgressBar'),
+  AnswerToken: require('./components/Answer/AnswerToken')
 }

@@ -151,17 +151,23 @@ export default class Input extends React.Component {
     if (!terms.length) return value
 
     /* Token regex */
-    const regX = new RegExp('\\b(' + terms.join('|') + ')\\b', 'gi')
+    const regX = new RegExp(
+      '(' + terms.join('|').replace(/(\(|\))/gi, '\\$1') + ')',
+      'gi'
+    )
     const newTokens = []
     value = value.replace(regX, (match, startToken) => {
+      let escapedMatch = match.replace(/(\(|\))/gi, '\\$1')
       /* Add to list of token */
       returnTokens && newTokens.push(match)
       let name = tokens
-        .filter(({ value }) => value.match(new RegExp('^' + match + '$', 'gi')))
+        .filter(({ value }) => {
+          return value.match(new RegExp('^' + escapedMatch + '$', 'gi'))
+        })
         .reduce((acc, o) => o.name, null)
       if (!name) return match
       let color = hexToRGBa(stringToColor(name))
-      return `<span style='background-color: ${color}' class='ola-input-tag'>${match}</span>`
+      return `<span class='ola-input-tag'>${match}</span>`
     })
 
     return returnTokens ? [terms, newTokens] : value

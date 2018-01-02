@@ -9,6 +9,7 @@
 
 /* Title */
 .ola-facet-title {
+  user-select: none;
 
   &, &:first-child {
     margin: 0;
@@ -185,5 +186,6 @@
   &, &[type="text"] {
     padding: 6px 10px;
     margin-bottom: 0.5rem;
+    font-size: $base-font-size;
   }
 }

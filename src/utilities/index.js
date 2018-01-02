@@ -565,7 +565,7 @@ export function getWordPosition (textInput) {
 }
 
 export function getAutoCompleteResults (
-  results,
+  results = [],
   allFacets,
   showWordSuggestion,
   tokens

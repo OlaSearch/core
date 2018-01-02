@@ -8,22 +8,24 @@ import Bookmark from './../SnippetActions/Bookmark'
 function DefaultSnippet ({ result, bookmarks, dispatch, ...rest }) {
   return (
     <div className='ola-snippet'>
-      <div className='ola-snippet-image'>
-        <Thumbnail
-          thumbnail={result.thumbnail}
-          thumbnail_mobile={result.thumbnail_mobile}
-          {...rest}
-        />
-      </div>
-      <div className='ola-snippet-content'>
-        <Bookmark
-          result={result}
-          bookmarks={bookmarks}
-          dispatch={dispatch}
-          {...rest}
-        />
-        <Title result={result} {...rest} />
-        <TextField result={result} field='summary' {...rest} />
+      <div className='ola-snippet-inner'>
+        <div className='ola-snippet-image'>
+          <Thumbnail
+            thumbnail={result.thumbnail}
+            thumbnail_mobile={result.thumbnail_mobile}
+            {...rest}
+          />
+        </div>
+        <div className='ola-snippet-content'>
+          <Bookmark
+            result={result}
+            bookmarks={bookmarks}
+            dispatch={dispatch}
+            {...rest}
+          />
+          <Title result={result} {...rest} />
+          <TextField result={result} field='summary' {...rest} />
+        </div>
       </div>
     </div>
   )

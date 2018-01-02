@@ -13,8 +13,12 @@
   &, &[type="text"] {
     padding: 10px;
     font-size: $base-font-size;
+    @include media (desktop) {
+      font-size: $autocomplete-font-size;
+    }
     width: 100%;
-    line-height: 1;
+    line-height: normal;
+    margin: 0;
   }
 }
 

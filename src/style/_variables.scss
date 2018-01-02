@@ -7,24 +7,24 @@ $base-grey-color: #888;
 $base-border-radius: 3px;
 
 /* Brand */
-$brand-color: #002569;
+$brand-color: #3F51B5;
 
 /* Links */
-$link-color: #002569;
-$link-hover-color: #03a5d6;
+$link-color: #3F51B5;
+$link-hover-color: #1A237E;
 
 /* Primary button */
-$button-primary-background: #002569;
+$button-primary-background: #3F51B5;
 $button-primary-color: white;
 
 /* Icon button default width */
-$button-icon-width: 40px;
+$button-icon-width: 45px;
 
 /* Search button */
 $button-search-width: 40px;
 
 /* Geo button */
-$button-geo-active-color: red;
+$button-geo-active-color: #F44336;
 
 /* Settings */
 $is_link_underlined: false;
@@ -32,6 +32,7 @@ $is_link_underlined: false;
 /* Autocomplete */
 $autocomplete-box-shadow: $base-box-shadow;
 $autocomplete-border-color: #ccc;
+$autocomplete-font-size: 20px;
 
 /* Facet */
 $facet-padding: 4px 0;
@@ -45,3 +46,27 @@ $input-tag-bg: #eef7fd;
 
 /* Colors */
 $color-highlight: #ffc;
+
+/* Fields */
+$field-title-font-size: 18px;
+$field-bottom-padding: 1rem;
+
+/* Heading*/
+$search-heading-font-size: 20px;
+
+/* Elevation */
+$elevation-0: 0 0 0 1px rgba(16, 22, 26, 0.15),
+0 0 0 rgba(16, 22, 26, 0),
+0 0 0 rgba(16, 22, 26, 0) !default;
+$elevation-1: 0 0 0 1px rgba(16, 22, 26, 0.1),
+0 0 0 rgba(16, 22, 26, 0),
+0 1px 1px rgba(16, 22, 26, 0.2) !default;
+$elevation-2: 0 0 0 1px rgba(16, 22, 26, 0.1),
+0 1px 1px rgba(16, 22, 26, 0.2),
+0 2px 6px rgba(16, 22, 26, 0.2) !default;
+$elevation-3: 0 0 0 1px rgba(16, 22, 26, 0.1),
+0 2px 4px rgba(16, 22, 26, 0.2),
+0 8px 24px rgba(16, 22, 26, 0.2) !default;
+$elevation-4: 0 0 0 1px rgba(16, 22, 26, 0.1),
+0 4px 8px rgba(16, 22, 26, 0.2),
+0 18px 46px 6px rgba(16, 22, 26, 0.2) !default;

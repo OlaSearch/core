@@ -39,15 +39,6 @@ export default (state = initialState, action) => {
         location: null
       }
 
-    case types.ADD_CONTEXT:
-      if (action.contextType === 'geo') {
-        return {
-          ...state,
-          location: action.value
-        }
-      }
-      return state
-
     case types.REMOVE_CONTEXT:
       if (action.contextType === 'geo') {
         return {
@@ -58,25 +49,6 @@ export default (state = initialState, action) => {
         }
       }
       return state
-
-    case types.ADD_DYNAMIC_FIELD:
-      let filtered = state.fields.filter((field) => field.name !== action.name)
-      return {
-        ...state,
-        fields: [
-          ...filtered,
-          {
-            name: action.name,
-            value: action.value,
-            filename: action.filename
-          }
-        ]
-      }
-    case types.REMOVE_DYNAMIC_FIELD:
-      return {
-        ...state,
-        fields: state.fields.filter((field) => field.name !== action.name)
-      }
 
     /* Filter sequence from facet_query */
     case types.UPDATE_STATE_FROM_QUERY:
@@ -131,9 +103,16 @@ export default (state = initialState, action) => {
       }
 
     case types.ADD_CONTEXT_FIELD:
+      if (!action.field) return state
       return {
         ...state,
         [action.field]: action.value
+      }
+    case types.REMOVE_CONTEXT_FIELD:
+      if (!action.field) return state
+      return {
+        ...state,
+        [action.field]: null
       }
 
     case types.OLA_REHYDRATE:

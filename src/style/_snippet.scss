@@ -1,7 +1,13 @@
 /* Snippet */
 .ola-snippet {
-  padding: 1em 0;
-  border-bottom: 1px $base-border-color solid;
+  // padding: 1em 0;
+  margin-bottom: 1em;
+  // border-bottom: 1px $base-border-color solid;
+
+  .ola-snippet-inner {
+    box-shadow: $elevation-2;
+    padding: 1em;
+  }
 
   /* Remove bookmarks in snippets */
   .ola-link-bookmark-action {
@@ -24,12 +30,17 @@
     }
     .ola-snippet {
       width: 33.333%;
-      padding: 0 1rem 1rem 0;
-      border: none;
+      padding-right: 1em;
+      // padding: 0 1rem 1rem 0;
+      // border: none;
+
+      &:nth-child(3n+3) {
+        padding-right: 0;
+      }
     }
     .ola-snippet-inner {
-      border: 1px $base-border-color solid;
-      padding: 1em;
+      // border: 1px $base-border-color solid;
+      // padding: 1em;
       min-height: 100%;
     }
   }

@@ -6,6 +6,7 @@
   padding: 0 0 1rem 0;
   margin: 0 0 1rem 0;
   clear: inherit;
+  font-size: $search-heading-font-size;
 
   @include media (tablet) {
     margin-bottom: 1rem;

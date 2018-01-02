@@ -10,14 +10,55 @@ import {
 } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
 
-export default function Suggestions ({ q, results, ...rest }) {
+function groupFacets (suggestions, fieldLabels) {
+  let group = {}
+  suggestions.forEach((s) => {
+    let label = fieldLabels[s.taxo_label] || s.taxo_label
+    if (!(label in group)) {
+      group[label] = []
+    }
+    group[label].push(s)
+  })
+  return group
+}
+
+export default function Suggestions ({ q, results, fieldLabels, ...rest }) {
+  let isFacet = false // results.some(({ type }) => type === 'facet')
+  let groups = isFacet ? groupFacets(results, fieldLabels) : {}
   return (
     <div className='ola-fuzzy-suggestions'>
-      {results.map((result, idx) => (
-        <SuggestionItem key={idx} index={idx} q={q} result={result} {...rest} />
-      ))}
+      {isFacet
+        ? Object.keys(groups).map((key) => {
+          return (
+              <div key={key}>
+                <div className='ola-suggestion-header'>{key}</div>
+                {groups[key].map((result, idx) => (
+                  <SuggestionItem
+                    key={idx}
+                    index={idx}
+                    q={q}
+                    result={result}
+                    {...rest}
+                  />
+                ))}
+              </div>
+          )
+        })
+        : results.map((result, idx) => (
+            <SuggestionItem
+              key={idx}
+              index={idx}
+              q={q}
+              result={result}
+              {...rest}
+            />
+          ))}
     </div>
   )
+}
+
+Suggestions.defaultProps = {
+  fieldLabels: {}
 }
 
 /**

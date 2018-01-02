@@ -2,6 +2,7 @@ import React from 'react'
 import injectTranslate from './../../decorators/injectTranslate'
 import withLogger from './../../decorators/withLogger'
 import FieldLabel from './FieldLabel'
+import { isArray } from 'util';
 
 function Directions (props) {
   var {
@@ -15,15 +16,24 @@ function Directions (props) {
     log,
     fieldLabel,
     snippetId,
+    showIfEmpty,
+    distanceFieldName,
+    collectionId,
     ...rest
   } = props
 
   if (!latlong) return null
-  if (typeof latlong === 'object') {
+  if (Array.isArray(latlong) && latlong.length) {
+    latlong = latlong[0] /* Take the first latlng */
+  }
+  else if (typeof latlong === 'object') {
     latlong = `${latlong.lat},${latlong.lon}`
   }
 
-  var url = `https://www.google.com/maps/dir//${latlong}`
+  const url = `https://www.google.com/maps/dir//${latlong}`
+  /* Calculate distance */
+  const distanceValue = result[distanceFieldName]
+  const distance = distanceValue ? `${parseFloat(Math.round(distanceValue * 100) / 100).toFixed(2)} ${translate('distance_unit')}` : null
 
   function handleClick (event) {
     log({
@@ -50,8 +60,18 @@ function Directions (props) {
         {label || translate('get_directions_label')}
         {iconRight}
       </a>
+      {distance
+        ? <div className='ola-field-distance'>
+            {distance}
+          </div>
+        : null
+      }
     </div>
   )
+}
+
+Directions.defaultProps = {
+  distanceFieldName: 'ola_distance'
 }
 
 module.exports = injectTranslate(withLogger(Directions))

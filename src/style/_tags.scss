@@ -75,6 +75,26 @@
 		@extend .iconfont;
     content: "close";
     vertical-align: middle;
-    font-size: 20px;
+    font-size: 16px;
 	}
 }
+
+/* Input tag */
+.ola-input-tag {
+  padding: 2px 0;
+  cursor: pointer;
+  border-radius: 3px;
+  // background: $input-tag-bg !important;
+  // outline: 1px #888 dashed;
+}
+
+
+  /* All tags */
+  .ola-input-tag {
+    // background: $input-tag-bg;
+    background: darken($input-tag-bg, 10%);
+  }
+
+  .ola-facet-tags-group {
+    background: #eee;
+  }

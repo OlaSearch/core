@@ -84,7 +84,7 @@ class AutoComplete extends React.Component {
   static defaultProps = {
     showBookmarks: true,
     showAlert: false,
-    showHelp: false,
+    showHelp: true,
     refreshOnGeoChange: false,
     classNames: '.ola-snippet, .ola-facet-suggestion, .ola-suggestion-item',
     activeClassName: 'ola-active',
@@ -112,20 +112,26 @@ class AutoComplete extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.q !== this.props.q) {
+      /* Check if the input is focused: then ignore */
+      // if (document.activeElement !== this.inputEl.input._input) {
       this.setState({
         q: nextProps.q,
         fuzzyQuery: null,
         results: []
       })
+      // }
     }
     /* Eg: page changes with empty query */
     if (
       nextProps.q !== this.state.q &&
       nextProps.tokens === this.props.tokens
     ) {
+      /* Check if the input is focused: then ignore */
+      // if (document.activeElement !== this.inputEl.input._input) {
       this.setState({
         q: nextProps.q
       })
+      // }
     }
     if (nextProps.history !== this.props.history) {
       this.handleHistoryChange(nextProps.history)
@@ -158,6 +164,8 @@ class AutoComplete extends React.Component {
   updateQueryTerm = ({ term, ...rest }) => {
     this.setState({
       q: term,
+      /* If the word you are typing has changed */
+      // results: rest.startToken !== this.state.startToken ? [] : this.state.results,
       ...rest
     })
   }
@@ -226,6 +234,7 @@ class AutoComplete extends React.Component {
     let term = event.target ? event.target.value : event
 
     /* Get partial term */
+    // const tokenRange = this.props.tokens.map(({startToken, endToken}) => [startToken, endToken])
     let {
       word: partialWord,
       leftPosition,
@@ -237,7 +246,7 @@ class AutoComplete extends React.Component {
     if (
       this.state.partialWord === partialWord &&
       event &&
-      event.type !== 'keydown'
+      event.type === 'mousedown'
     ) {
       return
     }
@@ -259,7 +268,6 @@ class AutoComplete extends React.Component {
 
     /* Trim text */
     if (term && term.length && trim(term) === '') return
-
     if (!term && !q) {
       /* Close auto suggest */
       this.closeAutoSuggest()
@@ -295,6 +303,7 @@ class AutoComplete extends React.Component {
     this.clearFuzzyQueryTerm()
 
     /* Close auto suggest early */
+    // console.log(showWordSuggestion, partialWord)
     if (showWordSuggestion && !partialWord) {
       return this.closeAutoSuggest()
     }
@@ -327,12 +336,21 @@ class AutoComplete extends React.Component {
             showHistoryForQuery: this.props.showHistoryForQuery
           })
           : res
+        /* Refactor */
 
         this.setState({
           results: finalResults,
-          isOpen: this.state.q
-            ? !!finalResults.length
-            : this.props.history.length > 0
+          isOpen: showWordSuggestion
+            ? this.state.startToken !== startToken
+              ? false
+              : !!finalResults.length
+            : this.props.wordSuggestion
+              ? showWordSuggestion !== this.state.showWordSuggestion
+                ? false
+                : !!finalResults.length
+              : this.state.q
+                ? !!finalResults.length
+                : this.props.history.length > 0
         })
       })
     }
@@ -719,6 +737,7 @@ class AutoComplete extends React.Component {
     const leftPosition = showWordSuggestion
       ? Math.max(0, this.state.leftPosition - this.props.leftPadding)
       : 0
+
     return (
       <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>
@@ -766,9 +785,7 @@ class AutoComplete extends React.Component {
               {showSuggestionHelp ? (
                 <div className='ola-suggestions-help'>
                   {q ? (
-                    showWordSuggestion ? (
-                      translate('autosuggest_help_facets')
-                    ) : (
+                    showWordSuggestion ? null : (
                       translate('autosuggest_help')
                     )
                   ) : (
@@ -789,6 +806,7 @@ class AutoComplete extends React.Component {
                 onSelect={this.onFuzzySelect}
                 onRemoveHistory={this.onRemoveHistory}
                 activeClassName={this.props.activeClassName}
+                fieldLabels={this.context.config.fieldLabels}
                 q={q}
               />
             </div>

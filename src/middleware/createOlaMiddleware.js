@@ -99,7 +99,10 @@ module.exports = (options = {}) => {
     /* ACL Rules */
     const acl = currentState.Acl
     let callApi
-    const skipIntentEngine = query.page > 1 || query.enriched_q !== ''
+    const skipIntentEngine =
+      query.page > 1 ||
+      query.enriched_q !== '' ||
+      (query.enriched_q === '' && query.q === '')
     const params = proxy
       ? {
         ...query,

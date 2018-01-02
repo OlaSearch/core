@@ -74,9 +74,12 @@ module.exports = {
     filter_button_close: 'Hide filters',
 
     /* Token */
-    filter_suggestions: 'You can narrow down your search by selecting',
+    filter_suggestions: 'Narrow your search by including',
 
     /* Layout */
-    change_layout: 'Change layout to {view}'
+    change_layout: 'Change layout to {view}',
+
+    /* Distance */
+    distance_unit: 'km away'
   }
 }

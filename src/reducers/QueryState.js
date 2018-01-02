@@ -271,6 +271,7 @@ export default (state = initialState, action) => {
         ...state,
         projectId: action.projectId,
         env: action.env,
+        // per_page: action.configState.perPage || initialState.per_page,
         debug: action.debug
       }
 

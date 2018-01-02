@@ -17,6 +17,7 @@
 
 .ContentEditable-Fake {
   position: absolute;
+  overflow: hidden;
   top: 0;
   right: 0;
   bottom: 0;
@@ -27,12 +28,5 @@
   color: transparent;
   padding: 10px;
   line-height: 1;
-}
-
-.ola-input-tag {
-  padding: 2px 0;
-  cursor: pointer;
-  border-radius: 3px;
-  background: $input-tag-bg !important;
-  outline: 1px #888 dashed;
+  font-size: $autocomplete-font-size;
 }

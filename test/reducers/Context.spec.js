@@ -52,29 +52,28 @@ describe('Reducer: Context', () => {
   })
 
   it('can add context', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.ADD_CONTEXT, {
-      value: 'context'
-    }))
+    let state = reducer(initialState, MAKE_ACTION(types.ADD_CONTEXT_FIELD))
     expect(state).toEqual(initialState)
 
-    state = reducer(initialState, MAKE_ACTION(types.ADD_CONTEXT, {
+    state = reducer(initialState, MAKE_ACTION(types.ADD_CONTEXT_FIELD, {
       value: '1, 2',
-      contextType: 'geo'
+      field: 'location'
     }))
     expect(state.location).toEqual('1, 2')
   })
 
   it('can remove context', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT, {
-      value: 'context',
-      contextType: 'geo'
+    let state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT_FIELD, {
+      field: 'location'
     }))
     expect(state.location).toEqual(null)
 
-    state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT))
+    state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT_FIELD))
     expect(state).toEqual(initialState)
   })
 
+  /*
+  Phased out field
   it('can add dynamic field', () => {
     let state = reducer(initialState, MAKE_ACTION(types.ADD_DYNAMIC_FIELD, {
       name: 'field_name',
@@ -86,6 +85,7 @@ describe('Reducer: Context', () => {
     expect(state.fields[0].value).toEqual('field_value')
     expect(state.fields[0].filename).toEqual('script_filename')
   })
+  */
 
   it('can remove dynamic field', () => {
     let state = reducer(initialState, MAKE_ACTION(types.ADD_DYNAMIC_FIELD, {

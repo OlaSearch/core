@@ -1,15 +1,45 @@
 /* Tokens */
 .ola-answer-tokens {
-  padding: 0.5rem 0 0 0;
+  padding: 0.5rem 0 1em 0;
   font-size: 0.875rem;
 }
 
 /* Token */
 .ola-btn-token-add {
   &, &:hover, &:focus, &:active {
-    background: $input-tag-bg;
-    padding: 5px 6px;
-    margin: 0 6px;
+    background: darken($input-tag-bg, 10%);
+    padding: 8px 12px;    
     border-radius: $base-border-radius;
+    margin: 6px 6px 0 0;
+    color: #666;
+    padding-right: 40px;
+    position: relative;
+    // color: $link-color;
+    // font-weight: bold;
+  }
+
+  &:after {
+    @extend .iconfont;
+    content: 'add';
+    position: absolute;
+    right: 0;
+    top: 6px;
+    bottom: 0;
+    vertical-align: middle;
+    font-size: 20px;
+    width: 30px;
+    text-align: center;
+    // vertical-align: middle;
+    // font-size: 18px;
+    // margin: 0 0 0 5px;
+  }
+}
+
+/* Answer token text */
+.ola-answer-tokens-text {
+  display: block;
+  @include media (tablet) {
+    display: inline;
+    margin-right: 6px;
   }
 }

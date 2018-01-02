@@ -36,7 +36,9 @@ function AnswerToken (
   }
   return (
     <div className='ola-answer-tokens'>
-      {translate('filter_suggestions')}
+      <span className='ola-answer-tokens-text'>
+        {translate('filter_suggestions')}
+      </span>
       {tokens.map(({ name, value }, idx) => {
         let facet = facets
           .filter(({ name: _name }) => _name === name)

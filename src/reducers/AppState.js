@@ -188,7 +188,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...action.storeState,
-        view: action.storeState ? action.storeState.view : initialState.view,
+        view:
+          action.storeState && action.storeState.view
+            ? action.storeState.view
+            : initialState.view,
         namespace: action.namespace
       }
 

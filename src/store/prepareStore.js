@@ -16,11 +16,12 @@ export function prepareUserState ({ config }) {
   /* Create user cookie */
   var userSession = storage.cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = storage.cookies.get(USER_NEW_KEY, config.namespace)
-  var storeState = storage.get(OLA_STORAGE_KEY, config.namespace) || {}
+  const storeState = storage.get(OLA_STORAGE_KEY, config.namespace) || {}
   var contextState =
     storage.cookies.get(CONTEXT_STORAGE_KEY, config.namespace) || {}
-  var locale =
+  const locale =
     storage.cookies.get(LOCALE_STORAGE_KEY, config.namespace) || DEFAULT_LOCALE
+  var { perPage } = config
 
   if (typeof contextState === 'string') {
     try {
@@ -76,7 +77,8 @@ export function prepareUserState ({ config }) {
     isNewUser,
     storeState,
     contextState,
-    locale
+    locale,
+    configState: { perPage }
   }
 }
 

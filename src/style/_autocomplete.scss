@@ -110,6 +110,11 @@
   border-bottom: 1px #ddd solid;
   background: none;
   font-weight: bold;
+  font-size: $base-font-size;
+
+  @include media (desktop) {
+    font-size: $autocomplete-font-size;
+  }
 
   strong {
     font-weight: normal;
@@ -181,3 +186,11 @@
       content: ')'
     }
   }
+
+
+/* Header */
+.ola-suggestion-header {
+  padding: 5px 10px;
+  background: #eee;
+  font-size: 14px;
+}
