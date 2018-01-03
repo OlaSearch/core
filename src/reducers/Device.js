@@ -1,3 +1,4 @@
+// @flow
 import {
   phone,
   android,
@@ -33,15 +34,23 @@ import {
   }
 */
 
+type State = {
+  isAndroid: Object,
+  isApple: Object,
+  isTablet: boolean,
+  isPhone: boolean,
+  isDesktop: boolean,
+}
+
 var initialState = {
-  isPhone: phone,
   isAndroid: android,
   isApple: apple,
+  isPhone: phone,
   isTablet: tablet,
   isDesktop: !phone && !tablet && !sevenInch
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     default:
       return state

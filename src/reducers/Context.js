@@ -1,5 +1,19 @@
+// @flow
 import types from './../constants/ActionTypes'
 import flatten from 'ramda/src/flatten'
+
+type State = {
+  location: ?string,
+  fields: Array<Object>,
+  isRequestingLocation: boolean,
+  hasRequestedLocation: boolean,
+  userSession: ?string,
+  searchSession: ?string,
+  userId: ?string,
+  isNewUser: boolean,
+  hasUsedVoice: boolean,
+  filter_term_sequence: Array<string>
+}
 
 export const initialState = {
   location: null,
@@ -16,7 +30,7 @@ export const initialState = {
   filter_term_sequence: [] /* For logging the sequence of filters that the user used */
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case types.REQUEST_GEO_LOCATION:
       return {

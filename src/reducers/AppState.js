@@ -1,4 +1,30 @@
+// @flow
 import types from './../constants/ActionTypes'
+
+type State = {
+  totalResults: number,
+  results: Array<Object>,
+  facets: Array<Object>,
+  spellSuggestions: Array<Object>,
+  suggestedTerm: string,
+  isLoading: boolean,
+  isLoadingAnswer: boolean,
+  bookmarks: Array<Object>,
+  history: Array<Object>,
+  error: ?string,
+  qt: ?number,
+  namespace: string,
+  answer: ?Object,
+  resultIds: Array<number>,
+  resultsById: Object,
+  isLoadingResult: boolean,
+  queryIds: Array<number>,
+  queriesById: Object,
+  isLoadingAlert: boolean,
+  inProgressAlert: boolean,
+  isSidebarOpen: boolean,
+  view: 'list' | 'grid'
+}
 
 export const initialState = {
   totalResults: 0,
@@ -33,7 +59,7 @@ export const initialState = {
   view: 'list'
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case types.REQUEST_SEARCH:
       return {

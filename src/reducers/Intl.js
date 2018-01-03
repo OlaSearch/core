@@ -1,11 +1,16 @@
+// @flow
 import types from './../constants/ActionTypes'
 import { DEFAULT_LOCALE } from './../constants/Settings'
+
+type State = {
+  locale: string
+}
 
 var initialState = {
   locale: DEFAULT_LOCALE
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case undefined:
     default:

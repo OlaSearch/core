@@ -1,7 +1,7 @@
 /* Sidebar */
 .ola-sidebar {
   position: fixed;
-  z-index: 13;
+  z-index: 1000;
   right: 0;
   top: 16px;
   left: 16px;
@@ -32,6 +32,7 @@
     @include prefix(transform, translate3d(0%, 0, 0), webkit ms moz);
     visibility: visible;
     background-color: white;
+    box-shadow: $elevation-4;
 
     /* On desktop */
     @include media(desktop){
@@ -52,6 +53,7 @@
       z-index: 0;
       background-color: transparent;
       display: block;
+      box-shadow: none;
     }
   }
 }
@@ -73,13 +75,16 @@
   float: right;
 	border: 1px $base-grey-color solid;
   background: none;
-  font-size: 13px;
   text-transform: uppercase;
 	text-align: center;
   position: relative;
-  margin: 0 0 0 5px;
-  // float: right;
-  // height: 40px;
+  margin: 5px 0 0 5px;
+  // display: none;
+  min-height: $button-default-height;
+
+  @include media (tablet) {
+    display: none;
+  }
 
   & {
     color: $brand-color;
@@ -95,7 +100,17 @@
 
 	span{
 		display: none;
-	}
+  }
+  
+  /* Hide in searchbar in mobile */
+  .ola-search-bar & {
+    display: none;
+    float: none;
+    margin-top: 0;
+    @include media (tablet) {
+      display: block;
+    }
+  }
 }
 
 /* Close sidebar */

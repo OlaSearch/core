@@ -1,5 +1,5 @@
 {
-  "presets": ["olasearch", ["env", {
+  "presets": ["flow", "olasearch", ["env", {
     "loose": true,
     "modules": false
   }]],

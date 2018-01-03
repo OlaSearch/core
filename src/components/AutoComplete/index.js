@@ -776,7 +776,7 @@ class AutoComplete extends React.Component {
             style={{
               left: leftPosition,
               width:
-                showWordSuggestion && leftPosition > 0
+                showWordSuggestion
                   ? this.props.wordSuggestionWidth
                   : 'auto'
             }}

@@ -7,9 +7,11 @@
   margin: 0 0 1rem 0;
   clear: inherit;
   font-size: $search-heading-font-size;
+  min-height: $button-default-height + 20px;
 
   @include media (tablet) {
     margin-bottom: 1rem;
+    min-height: 0;
   }
 }
 

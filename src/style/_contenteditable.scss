@@ -29,4 +29,9 @@
   padding: 10px;
   line-height: 1;
   font-size: $autocomplete-font-size;
+  display: none;
+
+  @include media (desktop) {
+    display: block;
+  }
 }

@@ -1,7 +1,26 @@
+// @flow
 import types from './../constants/ActionTypes'
 import { checkIfFacetExists } from './../utilities'
 import { SEARCH_INPUTS } from './../constants/Settings'
 import equals from 'ramda/src/equals'
+
+type State = {
+  q: string,
+  enriched_q: string,
+  page: number,
+  per_page: number,
+  facet_query: Array<Object>,
+  sort: string,
+  filters: Array<Object>,
+  isSearchActive: boolean,
+  searchInput: ?string,
+  skip_intent: boolean,
+  debug: boolean,
+  source: ?string,
+  tokens: Array<Object>,
+  projectId: ?string,
+  env: ?string
+}
 
 export const initialState = {
   q: '',
@@ -28,7 +47,7 @@ export const initialState = {
 /* Prevents redeclared variables for `JS Standard` compatiblity */
 var exists
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case types.ADD_FILTER:
       let { filter, selected } = action

@@ -1,6 +1,23 @@
+// @flow
 import types from './../constants/ActionTypes'
 import omit from 'ramda/src/omit'
 import { SEARCH_INPUTS } from './../constants/Settings'
+
+type State = {
+  q: string,
+  per_page: number,
+  page: number,
+  facet_query: Array<Object>,
+  totalResults: number,
+  results: Array<Object>,
+  facets: Array<Object>,
+  spellSuggestions: Array<Object>,
+  suggestedTerm: string,
+  isLoading: boolean,
+  isOpen: boolean,
+  qt: ?number,
+  searchInput: ?string
+}
 
 export const initialState = {
   q: '',
@@ -18,7 +35,7 @@ export const initialState = {
   searchInput: null
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case types.UPDATE_QUERY_TERM_AUTOSUGGEST:
       return {

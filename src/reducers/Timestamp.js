@@ -1,10 +1,15 @@
+// @flow
 import types from './../constants/ActionTypes'
+
+type State = {
+  timestamp: Object
+};
 
 export const initialState = {
   timestamp: {}
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case undefined:
     default:

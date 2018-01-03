@@ -19,6 +19,15 @@
   }
 }
 
+/* Primary button */
+.ola-primary-button {
+  color: $button-primary-color;
+
+  &, &:hover, &:active, &:focus {
+    background: $button-primary-background;
+  }
+}
+
 /* Geo location icon */
 .ola-link-geo {
   @extend %ola-button;
@@ -69,10 +78,12 @@
 
 .ola-link-load-more {
   @extend %ola-button;
+  @extend .ola-primary-button;
   width: 100%;
-  border: 1px $base-border-color solid;
+  // border: 1px $base-border-color solid;
   padding: 0.8rem 1rem;
   margin-top: 1rem;
+  box-shadow: $elevation-2;
 }
 
 

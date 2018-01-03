@@ -64,6 +64,8 @@
   .ola-search-button {
     margin-top: -1px;
     margin-bottom: -1px;
+    margin-right: -1px;
+    border: 1px darken($button-primary-background, 20%) solid;
   }
 
   .ola-autosuggest-focus & {
