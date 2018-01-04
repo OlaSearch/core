@@ -1,7 +1,11 @@
 import React from 'react'
-import DateParser from './../../utilities/dateParser'
-import FieldLabel from './FieldLabel'
+import PropTypes from 'prop-types'
+import DateParser from './../../../utilities/dateParser'
+import FieldLabel from './../FieldLabel'
 
+/**
+ * Displays a formatted Date field
+ */
 function DateField ({
   date,
   format,
@@ -36,6 +40,15 @@ function DateField ({
       {formattedDate}
     </div>
   )
+}
+
+DateField.propTypes = {
+  date: PropTypes.string,
+  format: PropTypes.string,
+  fieldLabel: PropTypes.string,
+  dependentField: PropTypes.string,
+  result: PropTypes.object,
+  showIfEmpty: PropTypes.bool
 }
 
 DateField.defaultProps = {

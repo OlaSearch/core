@@ -1,9 +1,13 @@
 import React from 'react'
-import injectTranslate from './../../decorators/injectTranslate'
-import withLogger from './../../decorators/withLogger'
-import FieldLabel from './FieldLabel'
+import PropTypes from 'prop-types'
+import injectTranslate from './../../../decorators/injectTranslate'
+import withLogger from './../../../decorators/withLogger'
+import FieldLabel from './../FieldLabel'
 import { isArray } from 'util';
 
+/**
+ * Displays a `Get directions` button with distance
+ */
 function Directions (props) {
   var {
     latlong,
@@ -54,6 +58,7 @@ function Directions (props) {
         className='ola-btn ola-btn-directions'
         onClick={handleClick}
         href={url}
+        target='_blank'
         {...rest}
       >
         {iconLeft}
@@ -70,8 +75,16 @@ function Directions (props) {
   )
 }
 
+Directions.propTypes = {
+  latlong: PropTypes.oneOf([ PropTypes.string, PropTypes.array ]),
+  iconLeft: PropTypes.any,
+  result: PropTypes.object,
+  translate: PropTypes.func,
+}
+
 Directions.defaultProps = {
-  distanceFieldName: 'ola_distance'
+  distanceFieldName: 'ola_distance',
+  result: {}
 }
 
 module.exports = injectTranslate(withLogger(Directions))

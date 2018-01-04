@@ -60,7 +60,7 @@
 
 /* Sidebar filter button */
 .ola-link-open-filter, .ola-close-sidebar {
-  @extend %ola-button;
+  @extend %ola-icon-button;
 }
 
 /* Hide close sidebar on mobile */

@@ -1,10 +1,10 @@
 import React from 'react'
-import TextField from './TextField'
+import TextField from './../TextField'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
-import withToggle from './../../decorators/withToggle'
-import withLogger from './../../decorators/withLogger'
-import FieldLabel from './FieldLabel'
+import injectTranslate from './../../../decorators/injectTranslate'
+import withToggle from './../../../decorators/withToggle'
+import withLogger from './../../../decorators/withLogger'
+import FieldLabel from './../FieldLabel'
 
 function DocumentPages ({
   onClick,

@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 /**
- * Displays a section breadcrumb in snippet
- * @example ./../../../examples/Fields.Breadcrumbs.md
+ * Displays a page hierarchy in the search snippet
  */
 function Breadcrumbs ({ crumbs }) {
   if (!crumbs) return null
@@ -25,6 +24,7 @@ function Breadcrumbs ({ crumbs }) {
 }
 
 Breadcrumbs.propTypes = {
+  /* A string or array of breadcrumbs */
   crumbs: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 }
 

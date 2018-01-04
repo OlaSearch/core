@@ -1,6 +1,6 @@
 $base-color: #333;
 $base-font-size: 16px;
-$base-font-family: Helvetica,Arial,sans-serif;
+$base-font-family: Arial, Helvetica, sans-serif;
 $base-border-color: #ddd;
 $base-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 $base-grey-color: #888;
@@ -16,6 +16,7 @@ $link-hover-color: #1A237E;
 /* Primary button */
 $button-primary-background: #3F51B5;
 $button-primary-color: white;
+$button-padding: 0.5rem 1rem;
 
 /* Icon button default width */
 $button-icon-width: 45px;

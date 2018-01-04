@@ -1,6 +1,6 @@
 /* Change view button */
 .ola-link-change-layout {
-  @extend %ola-button;
+  @extend %ola-icon-button;
   margin-left: 5px;
   border: 1px $base-grey-color solid;
   display: none;

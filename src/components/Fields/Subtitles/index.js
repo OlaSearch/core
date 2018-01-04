@@ -1,6 +1,6 @@
 import React from 'react'
-import { createHTMLMarkup, sanitizeAnchor } from './../../utilities'
-import FieldLabel from './FieldLabel'
+import { createHTMLMarkup, sanitizeAnchor } from './../../../utilities'
+import FieldLabel from './../FieldLabel'
 
 function Subtitles ({
   subtitles,

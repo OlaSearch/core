@@ -1,5 +1,5 @@
 import React from 'react'
-import FieldLabel from './FieldLabel'
+import FieldLabel from './../FieldLabel'
 
 function Rating ({
   rating,

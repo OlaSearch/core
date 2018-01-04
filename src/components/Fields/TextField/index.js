@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { createHTMLMarkup, truncate } from './../../utilities'
-import FieldLabel from './FieldLabel'
+import { createHTMLMarkup, truncate } from './../../../utilities'
+import FieldLabel from './../FieldLabel'
 
 function TextField ({
   field,

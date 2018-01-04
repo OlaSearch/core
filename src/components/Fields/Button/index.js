@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import withLogger from './../../decorators/withLogger'
+import withLogger from './../../../decorators/withLogger'
 
 function Button ({
   title,
@@ -32,7 +33,7 @@ function Button ({
 
     if (target) return
     event.preventDefault()
-    window.location.href = url
+    if (url) window.location.href = url
   }
 
   /* Check if it should be opened in new page */
@@ -40,7 +41,7 @@ function Button ({
     target = '_blank'
   }
 
-  let klass = classNames('ola-cta-button', className, {
+  let klass = classNames('ola-btn', 'ola-cta-button', className, {
     'ola-btn-fullwidth': fullWidth
   })
   if (!label) return null
@@ -51,6 +52,25 @@ function Button ({
       </a>
     </div>
   )
+}
+
+Button.propTypes = {
+  /* Button label */
+  label: PropTypes.string,
+  /* Class name of the button */
+  className: PropTypes.string,
+  url: PropTypes.string,
+  fullWidth: PropTypes.bool,
+  onClick: PropTypes.func,
+  result: PropTypes.object,
+  target: PropTypes.string,
+  log: PropTypes.func,
+  snippetId: PropTypes.string,
+  openInNewWindow: PropTypes.bool,
+  /* Used for logging */
+  eventLabel: PropTypes.string,
+  /* Used for logging */
+  eventCategory: PropTypes.string
 }
 
 Button.defaultProps = {

@@ -1,6 +1,6 @@
 import React from 'react'
-import { createHTMLMarkup } from './../../utilities'
-import withLogger from './../../decorators/withLogger'
+import { createHTMLMarkup } from './../../../utilities'
+import withLogger from './../../../decorators/withLogger'
 
 function Title ({
   result,

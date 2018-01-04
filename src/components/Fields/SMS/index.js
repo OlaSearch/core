@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import FieldLabel from './FieldLabel'
+import FieldLabel from './../FieldLabel'
 
 function SMS ({
   number,

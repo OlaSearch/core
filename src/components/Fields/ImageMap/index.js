@@ -1,9 +1,12 @@
 import React from 'react'
-import Thumbnail from './Thumbnail'
-import withLogger from './../../decorators/withLogger'
-import FieldLabel from './FieldLabel'
+import Thumbnail from './../Thumbnail'
+import withLogger from './../../../decorators/withLogger'
+import FieldLabel from './../FieldLabel'
 
-function Map (props) {
+/**
+ * Displays a Google map image
+ */
+function ImageMap (props) {
   var {
     latlong,
     apiKey,
@@ -39,7 +42,7 @@ function Map (props) {
   return (
     <div classname='ola-field ola-field-map'>
       <FieldLabel label={fieldLabel} />
-      <a href={url} className='field field-url' onClick={handleClick}>
+      <a href={url} target='_blank' className='field field-url' onClick={handleClick}>
         <Thumbnail thumbnail={map} thumbnail_mobile={map} />
       </a>
     </div>
@@ -52,4 +55,4 @@ Map.defaultProps = {
   height: 200
 }
 
-module.exports = withLogger(Map)
+module.exports = withLogger(ImageMap)
