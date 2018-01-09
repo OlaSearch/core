@@ -56,20 +56,27 @@ describe('Reducer: Context', () => {
     expect(state).toEqual(initialState)
 
     state = reducer(initialState, MAKE_ACTION(types.ADD_CONTEXT_FIELD, {
-      value: '1, 2',
+      value: '1,2',
       field: 'location'
     }))
-    expect(state.location).toEqual('1, 2')
+    expect(state.fields).toEqual([{ name: 'location', value: '1,2' }])
   })
 
   it('can remove context', () => {
-    let state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT_FIELD, {
+    let state = reducer(initialState, MAKE_ACTION(types.ADD_CONTEXT_FIELD, {
+      value: '1,2',
       field: 'location'
     }))
-    expect(state.location).toEqual(null)
-
-    state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT_FIELD))
+    state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT_FIELD, {
+      field: 'location'
+    }))
+    expect(state.fields).toEqual([])
     expect(state).toEqual(initialState)
+  })
+
+  it('can remove location', () => {
+    let state = reducer(initialState, MAKE_ACTION(types.REMOVE_CONTEXT_LOCATION))
+    expect(state.location).toEqual(null)
   })
 
   /*
