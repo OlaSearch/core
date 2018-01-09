@@ -15,6 +15,7 @@ type State = {
   qt: ?number,
   namespace: string,
   answer: ?Object,
+  mc: ?Object,
   resultIds: Array<number>,
   resultsById: Object,
   isLoadingResult: boolean,
@@ -40,6 +41,8 @@ export const initialState = {
   qt: null,
   namespace: '' /* Used for creating cookies */,
   answer: null /* Used for instant answers */,
+  mc: null, /* Machine comprehension */
+  isLoadingMc: false,
 
   /* Individual result */
   resultIds: [],
@@ -77,6 +80,7 @@ export default (state: State = initialState, action: Object) => {
         totalResults,
         facets,
         answer,
+        mc,
         skipSearchResultsUpdate
       } = action
       /* Handle skip update */
@@ -85,7 +89,8 @@ export default (state: State = initialState, action: Object) => {
           ...state,
           isLoading: false,
           error: null,
-          answer
+          answer,
+          mc
         }
       }
       /* Handle infinite scroll */
@@ -107,6 +112,7 @@ export default (state: State = initialState, action: Object) => {
         suggestedTerm,
         qt,
         answer,
+        mc,
         isLoading: false,
         error: null
       }
@@ -302,6 +308,25 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         view: action.view
+      }
+
+    case types.REQUEST_MC:
+      return {
+        ...state,
+        isLoadingMc: true
+      }
+    
+    case types.REQUEST_MC_SUCCESS:
+      return {
+        ...state,
+        mc: action.mc,
+        isLoadingMc: false
+      }
+    
+    case types.REQUEST_MC_FAILURE:
+      return {
+        ...state,
+        isLoadingMc: false
       }
 
     default:

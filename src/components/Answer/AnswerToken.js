@@ -20,12 +20,20 @@ function AnswerToken (
 ) {
   if (!answer || !answer.search || !totalResults) return null
   /* Remove tokens that have been already added */
-  const tokens = answer.search.tokens.filter(({ name, value }) => {
+  let tokens = answer.search.tokens.filter(({ name, value }) => {
     return !facetQuery.some(
       ({ name: _name, selected }) =>
         _name === name && selected.indexOf(value) !== -1
     )
   })
+
+  tokens = tokens.filter(({ name, value }) => {
+              let facet = facets.filter(({ name: _name }) => _name === name)
+              if (!facet.length) return false
+              facet = facet.reduce((a, _) => a)
+              /* Check if value exists */
+              return facet.values.some((item) => item.name === value)
+            })
 
   /* If no tokens hide */
   if (!tokens.length) return null
@@ -34,25 +42,32 @@ function AnswerToken (
     addFacet(facet, value)
     executeSearch()
   }
+
+  /**
+   * 1. Check if facet exists
+   * 2. Check if value exists in the facet
+   */
   return (
     <div className='ola-answer-tokens'>
       <span className='ola-answer-tokens-text'>
         {translate('filter_suggestions')}
       </span>
-      {tokens.map(({ name, value }, idx) => {
-        let facet = facets
-          .filter(({ name: _name }) => _name === name)
-          .reduce((a, _) => a)
-        let displayName = facet ? facet.displayName : name
-        return (
-          <AnswerTokenBtn
-            key={`${idx}_${name}`}
-            name={name}
-            value={value}
-            handleAddToken={handleAddToken}
-            displayName={displayName}
-          />
-        )
+      {tokens        
+        .map(({ name, value }, idx) => {
+          let facet = facets
+            .filter(({ name: _name }) => _name === name)
+            .reduce((a, _) => a)
+          
+          let displayName = facet ? facet.displayName : name
+          return (
+            <AnswerTokenBtn
+              key={`${idx}_${name}`}
+              name={name}
+              value={value}
+              handleAddToken={handleAddToken}
+              displayName={displayName}
+            />
+          )
       })}
     </div>
   )

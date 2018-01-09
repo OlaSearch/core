@@ -3,7 +3,7 @@ import types from './../constants/ActionTypes'
 
 type State = {
   timestamp: Object
-};
+}
 
 export const initialState = {
   timestamp: {}

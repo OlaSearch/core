@@ -7,6 +7,7 @@
 import { debounceLog, submitLog } from './../actions/Logger'
 import queryString from 'query-string'
 import { fetchAnswer } from './../actions/Search'
+import { requestGeoLocation } from './../actions/Context'
 import {
   FUZZY_SUGGEST_KEY,
   API_IGNORE_LOGGING,
@@ -197,6 +198,7 @@ module.exports = (options = {}) => {
           var facets
           var qt
           var answer
+          var mc
           var enrichedQuery
           var skipSearchResultsUpdate = false
           var responseTime
@@ -215,6 +217,9 @@ module.exports = (options = {}) => {
 
             /* Instant answer */
             answer = api === 'answer' ? response : response.answer
+
+            /* Machine comprehension */
+            mc = api === 'mc' ? response : response.mc
           } else {
             results = parser.normalizeResults(response)
             spellSuggestions = parser.normalizeSpellSuggestions(response)
@@ -226,9 +231,9 @@ module.exports = (options = {}) => {
           }
 
           /**
-         * Get facets or filters selected by intent engine
-         * 1. Check if facet already exists
-         */
+           * Get facets or filters selected by intent engine
+           * 1. Check if facet already exists
+           */
           let facetQuery = currentState.QueryState.facet_query
           if (
             answer &&
@@ -236,30 +241,59 @@ module.exports = (options = {}) => {
             answer.search.facet_query &&
             answer.search.facet_query.length
           ) {
-            for (let i = 0; i < answer.search.facet_query.length; i++) {
-              let { name, selected, ...rest } = answer.search.facet_query[i]
+            let answerFacets = answer.search.facet_query.map((item) => ({
+              ...item,
+              fromIntentEngine: true
+            }))
+            for (let i = 0; i < answerFacets.length; i++) {
+              let { name, selected, ...rest } = answerFacets[i]
               /* Check if it already exists */
               let exists = facetQuery.some(({ name: _name }) => _name === name)
               if (exists) {
                 facetQuery = facetQuery.map((item) => {
                   if (item.name === name) item.selected = selected
+                  /* from intent engine flag */
                   return item
                 })
               } else {
-                facetQuery = [...facetQuery, ...answer.search.facet_query[i]]
+                facetQuery = [...facetQuery, ...answerFacets[i]]
               }
             }
           }
 
           /**
-         * Check if
-         * Total results = 0 && Has Spell Suggestions
-         */
+           * Check for location
+           */
+          if (
+            answer &&
+            answer.location && /* Check if the intent requires location */
+            !currentState.Context.location && /* Check if location is already present */
+            !currentState.Context.hasRequestedLocation /* Check if location was asked before */
+          ) {
+            dispatch(
+              requestGeoLocation(() => {
+                dispatch({
+                  types,
+                  query,
+                  api,
+                  payload,
+                  context: getState().Context /* Get the new context */,
+                  responseTime,
+                  facetQuery
+                })
+              })
+            )
+          }
+
+          /**
+           * Check if
+           * Total results = 0 && Has Spell Suggestions
+           */
           if (
             totalResults === 0 &&
             spellSuggestions.length &&
             !enrichedQuery &&
-            !(answer && (answer.card !== null || answer.reply))
+            !(answer && (answer.card !== null || answer.reply || answer.intent))
           ) {
             let { term } = spellSuggestions[0]
             return dispatch({
@@ -288,6 +322,7 @@ module.exports = (options = {}) => {
               suggestedTerm,
               qt,
               answer,
+              mc,
               enriched_q: enrichedQuery,
               error: null,
               skipSearchResultsUpdate,
@@ -299,13 +334,13 @@ module.exports = (options = {}) => {
             })
 
           /**
-         * Logger
-         * Parameters
-         * Q or C
-         * results
-         * eventSource
-         * searchInput = `voice`|`url`|`keyboard`
-         */
+           * Logger
+           * Parameters
+           * Q or C
+           * results
+           * eventSource
+           * searchInput = `voice`|`url`|`keyboard`
+           */
           /* Query becomes empty for long conversations */
           const isBotReply = answer && 'awaiting_user_input' in answer
           const sendImmediateLog = isBotReply && !answer.awaiting_user_input
@@ -326,9 +361,9 @@ module.exports = (options = {}) => {
           }
 
           /**
-         * If answer is a callback
-         * SPICE
-         */
+           * If answer is a callback
+           * SPICE
+           */
           if (answer && answer.callback) {
             dispatch(fetchAnswer(answer.callback))
           }

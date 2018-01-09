@@ -2,6 +2,8 @@
 import types from './../constants/ActionTypes'
 import flatten from 'ramda/src/flatten'
 
+const LOCATION_FIELD = 'location'
+
 type State = {
   location: ?string,
   fields: Array<Object>,
@@ -16,14 +18,19 @@ type State = {
 }
 
 export const initialState = {
-  location: null,
   fields: [],
+
+  /* For Geo Location */
+  location: null,
   isRequestingLocation: false,
   hasRequestedLocation: false,
+
   userSession: null,
   searchSession: null,
   userId: null,
   isNewUser: false,
+
+  /* Voice */
   hasUsedVoice: false,
 
   /* Filter sequence */
@@ -43,6 +50,7 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         isRequestingLocation: false,
+        hasRequestedLocation: true,
         location: `${latitude},${longitude}`
       }
 
@@ -50,19 +58,9 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         isRequestingLocation: false,
+        hasRequestedLocation: true,
         location: null
       }
-
-    case types.REMOVE_CONTEXT:
-      if (action.contextType === 'geo') {
-        return {
-          ...state,
-          location: null,
-          fields: [],
-          hasRequestedLocation: !!state.location
-        }
-      }
-      return state
 
     /* Filter sequence from facet_query */
     case types.UPDATE_STATE_FROM_QUERY:
@@ -120,13 +118,20 @@ export default (state: State = initialState, action: Object) => {
       if (!action.field) return state
       return {
         ...state,
-        [action.field]: action.value
+        fields: [...state.fields, { name: action.field, value: action.value }]
       }
+
     case types.REMOVE_CONTEXT_FIELD:
       if (!action.field) return state
       return {
         ...state,
-        [action.field]: null
+        fields: state.fields.filter(({ name }) => name !== action.field)
+      }
+
+    case types.REMOVE_CONTEXT_LOCATION:
+      return {
+        ...state,
+        location: null
       }
 
     case types.OLA_REHYDRATE:

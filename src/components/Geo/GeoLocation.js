@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { removeContext, requestGeoLocation } from './../../actions/Context'
+import { removeContextLocation, requestGeoLocation } from './../../actions/Context'
 import { executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
@@ -61,11 +61,9 @@ class GeoLocation extends React.Component {
   getLocation = () => {
     /* If location is already stored */
     if (this.props.Context.location) {
-      this.props.removeContext('geo')
+      this.props.removeContextLocation()
       /* Refresh results */
-      if (this.props.refreshOnGeoChange) this.props.executeSearch()
-      this.props.onDisable && this.props.onDisable()
-      return
+      return this.props.onSuccess && this.props.onSuccess()
     }
 
     this.props.log({
@@ -93,13 +91,11 @@ class GeoLocation extends React.Component {
     const { Context, active, translate } = this.props
     const { isRequestingLocation } = Context
     const isGeoEnabled = active || !!Context.location
-    const klass = classNames('ola-link-geo', 'ola-has-hint', {
+    const klass = classNames('ola-link-geo', {
       'ola-link-geo-requesting': isRequestingLocation,
       'ola-link-geo-active': isGeoEnabled
     })
-    const hintklass = classNames('ola-btn-hint hint--top', {
-      'hint--always': isRequestingLocation
-    })
+
     const title = isRequestingLocation
       ? translate('geo_location_requesting')
       : isGeoEnabled
@@ -112,7 +108,7 @@ class GeoLocation extends React.Component {
         onClick={this.getLocation}
         disabled={isRequestingLocation}
       >
-        <span className={hintklass} aria-label={title} />
+        <span aria-label={title}>{title}</span>
       </button>
     )
   }
@@ -129,6 +125,6 @@ function mapStateToProps (state) {
 export default connect(mapStateToProps, {
   executeSearch,
   log,
-  removeContext,
+  removeContextLocation,
   requestGeoLocation
 })(injectTranslate(GeoLocation))

@@ -14,8 +14,7 @@
     color: #666;
     padding-right: 40px;
     position: relative;
-    // color: $link-color;
-    // font-weight: bold;
+    border: none;
   }
 
   &:after {
@@ -29,9 +28,6 @@
     font-size: 20px;
     width: 30px;
     text-align: center;
-    // vertical-align: middle;
-    // font-size: 18px;
-    // margin: 0 0 0 5px;
   }
 }
 

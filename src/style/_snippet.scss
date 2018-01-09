@@ -45,3 +45,24 @@
     }
   }
 }
+
+/* Static answer snippet */
+.ola-snippet-static-answer {
+  background: #ffc;
+  padding: 1rem;
+}
+
+/* MC answer snippet */
+.ola-snippet-mc {
+  margin-bottom: 2rem;
+  .ola-field-title {
+    font-size: 20px;
+    padding: 0;
+  }
+
+  .ola-snippet-text {
+    &:after {
+      content: '...'
+    }
+  }
+}

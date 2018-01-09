@@ -399,7 +399,7 @@ export function mergeResultsWithHistory (options) {
     .filter(
       (his, index, self) =>
         self.findIndex((t) =>
-          t.term.match(new RegExp('^' + his.term + '$', 'gi'))
+          t.term.match(new RegExp('^' + his.term.replace(/(\(|\)|\[|\])/gi, '\\$1') + '$', 'gi'))
         ) === index
     )
 
@@ -407,7 +407,7 @@ export function mergeResultsWithHistory (options) {
     /* Only history that starts with */
     if (shouldShowHistoryForQuery) {
       history = history
-        .filter(({ term }) => term.match(new RegExp('^' + query, 'gi')))
+        .filter(({ term }) => term.match(new RegExp('^' + query.replace(/(\(|\)|\[|\])/gi, '\\$1'), 'gi')))
         .sort((a, b) => {
           /* Sort by match */
           if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
@@ -556,7 +556,7 @@ export function getWordPosition (textInput) {
   document.body.removeChild(div)
 
   return {
-    leftPosition: textInput.offsetLeft - textInput.scrollLeft + coords.LEFT,
+    leftPosition: textInput.offsetLeft - textInput.scrollLeft + coords.LEFT - 1,
     topPosition: textInput.offsetTop - textInput.scrollTop + coords.TOP + 14,
     word: activeWord,
     startToken: carPos,
@@ -669,6 +669,9 @@ export function highlightTokens (text, tokens) {
     )
     start = endToken
   }
+  /* Push the last term */
+  arr.push(text.substring(start, text.length))
+  /* Return the final text */
   return arr.join('')
 }
 
@@ -695,4 +698,31 @@ export function pick (keys, obj) {
 export function getNextView (view) {
   const curIndex = LAYOUT_OPTIONS.indexOf(view) + 1
   return LAYOUT_OPTIONS[curIndex >= LAYOUT_OPTIONS.length ? 0 : curIndex]
+}
+
+export function syncTokens (old_text, new_text, tokens) {
+  // http://jsbin.com/futowerilu/1/edit?js,console
+  if (old_text === new_text) return tokens
+  let inc = 1
+  if (old_text.length > new_text.length) {
+    inc = -1
+  }
+  return tokens.map(({ startToken, endToken, value, ...rest}) => {
+    let len = endToken - startToken
+    value = value.toLowerCase()
+    let text = new_text.substring(startToken, endToken)
+    let i = 0
+    while (text !== value && i < 10) {
+      startToken = startToken + inc
+      endToken = len + startToken
+      text = new_text.substring(startToken, endToken)
+      i++
+    }
+    return {
+      ...rest,
+      startToken,
+      endToken,
+      value
+    }
+  })
 }

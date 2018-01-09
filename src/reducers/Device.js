@@ -39,7 +39,7 @@ type State = {
   isApple: Object,
   isTablet: boolean,
   isPhone: boolean,
-  isDesktop: boolean,
+  isDesktop: boolean
 }
 
 var initialState = {

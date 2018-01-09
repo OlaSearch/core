@@ -141,9 +141,9 @@ class LinkFilter extends React.Component {
 
     var showMoreLink = shouldDisplayShowMore ? (
       <button
-        className={`ola-btn ola-link-show-more ${showMore
-          ? 'ola-link-show-less'
-          : ''}`}
+        className={`ola-btn ola-link-show-more ${
+          showMore ? 'ola-link-show-less' : ''
+        }`}
         onClick={this.toggleshowMore}
       >
         {showMore

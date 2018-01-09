@@ -15,6 +15,7 @@ type State = {
   isSearchActive: boolean,
   searchInput: ?string,
   skip_intent: boolean,
+  skip_facet_fields: Array<string>,
   debug: boolean,
   source: ?string,
   tokens: Array<Object>,
@@ -33,6 +34,7 @@ export const initialState = {
   isSearchActive: true,
   searchInput: null,
   skip_intent: false,
+  skip_facet_fields: [],
   debug: false,
   source: null,
 
@@ -108,7 +110,8 @@ export default (state: State = initialState, action: Object) => {
         searchInput: action.searchInput || SEARCH_INPUTS.KEYBOARD,
         enriched_q: '',
         page: action.forcePageReset ? 1 : state.page,
-        skip_intent: false
+        skip_intent: false,
+        skip_facet_fields: []
       }
 
     case types.CLEAR_ENRICHED_QUERY:
@@ -173,6 +176,13 @@ export default (state: State = initialState, action: Object) => {
           .filter((item) => item.selected.length),
         tokens: state.tokens.filter(({ value }) => value !== action.value)
       }
+
+    case types.REMOVE_INTENT_ENGINE_FACETS:
+      return state
+      // return {
+      //   ...state,
+      //   facet_query: state.facet_query.filter((item) =>  !('fromIntentEngine' in item))
+      // }
 
     case types.REPLACE_FACET:
       exists = checkIfFacetExists(state.facet_query, action.facet.name)
@@ -248,7 +258,7 @@ export default (state: State = initialState, action: Object) => {
     case types.REMOVE_TOKEN_FACETS:
       return {
         ...state,
-        facet_query: state.facet_query.filter(({ isToken }) => !isToken)
+        facet_query: state.facet_query // .filter(({ isToken, name }) => !isToken && action.tokenNames.indexOf(name) !== -1)
       }
 
     case types.CHANGE_SORT:
@@ -310,6 +320,18 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         source: action.source
+      }
+
+    case types.ADD_SKIP_FACET_FIELDS:
+      return {
+        ...state,
+        skip_facet_fields: [...state.skip_facet_fields, action.facet.name]
+      }
+
+    case types.CLEAR_SKIP_FACET_FIELDS:
+      return {
+        ...state,
+        skip_facet_fields: []
       }
 
     default:

@@ -68,6 +68,7 @@ $breakpoints: (
 %ola-icon-button {
   border: none;
   background: none;
+  margin: 0;
   border-radius: 0;
   cursor: pointer;
   min-width: $button-icon-width;
@@ -88,4 +89,13 @@ $breakpoints: (
   &:hover, &:active, &:focus {
     background: none;
   }
+}
+
+%ola-link {
+  border: none;
+  background: none;
+  color: $link-color;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
 }

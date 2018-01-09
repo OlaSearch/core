@@ -1,3 +1,6 @@
 ```js
-<Directions latlong='1.2819346999999999,103.8447636' />
+const result = {ola_location: '1.2819346999999999,103.8447636', 'ola_distance': 20};
+<Directions
+  result={result}
+/>
 ```

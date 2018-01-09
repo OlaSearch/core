@@ -80,6 +80,8 @@ module.exports = {
     change_layout: 'Change layout to {view}',
 
     /* Distance */
-    distance_unit: 'km away'
+    distance_unit: 'km away',
+    share_location: 'Share your location to see nearby results',
+    showing_nearby_results: 'Showing results near your location'
   }
 }

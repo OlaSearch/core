@@ -45,9 +45,9 @@ class Sidebar extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
-    isSidebarOpen: state.AppState.isSidebarOpen,
+    isSidebarOpen: ownProps.isSidebarOpen || state.AppState.isSidebarOpen,
     isDesktop: state.Device.isDesktop
   }
 }

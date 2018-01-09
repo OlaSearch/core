@@ -1,9 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import injectTranslate from './../decorators/injectTranslate'
+import GeoNotify from './Geo/GeoNotify'
 
 function SearchTitle (
-  { totalResults, page, perPage, isPhone, translate },
+  {
+    totalResults,
+    page,
+    perPage,
+    isPhone,
+    translate,
+  },
   context
 ) {
   let title = translate('title')
@@ -23,12 +30,15 @@ function SearchTitle (
     ? translate('showing', values)
     : translate('showing_no_results', values)
   return (
-    <h3 className='ola-search-heading'>
-      {title && <span className='ola-search-heading-title'>{title}</span>}
-      {totalResults ? (
-        <small className='ola-search-heading-number'>{titleDesc}</small>
-      ) : null}
-    </h3>
+    <div className='ola-search-heading-container'>
+      <h3 className='ola-search-heading'>
+        {title && <span className='ola-search-heading-title'>{title}</span>}
+        {totalResults ? (
+          <small className='ola-search-heading-number'>{titleDesc}</small>
+        ) : null}
+      </h3>
+      <GeoNotify />
+    </div>
   )
 }
 

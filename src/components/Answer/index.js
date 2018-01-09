@@ -6,6 +6,7 @@ import ItemDetail from './common/ItemDetail'
 import AnswerGrid from './AnswerGrid'
 import AnswerGeneric from './AnswerGeneric'
 import AnswerList from './AnswerList'
+import AnswerMC from './AnswerMC'
 import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
 import {
   updateQueryTerm,
@@ -14,7 +15,7 @@ import {
   setSkipIntent
 } from './../../actions/Search'
 
-function Answer ({ result, answer, isLoading, dispatch, templates }) {
+function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
   function handleChange (option, index, itemKey) {
     dispatch(changeAnswerSelection(index, itemKey, answer))
   }
@@ -61,25 +62,25 @@ function Answer ({ result, answer, isLoading, dispatch, templates }) {
       </div>
     )
   }
-
-  if (!answer || !answer.card) return null
+  if ((!answer || !answer.card) && !mc) return null
 
   let { card, module, intent } = answer
-  let { template, source } = card
-  let intentName = intent ? intent.split('.').pop() : null
-  let snippetClass = classNames(
-    'ola-snippet-answer',
-    `ola-snippet-template-${template}`
-  )
-  let answerKlass = classNames(
-    'ola-answer',
-    `ola-answer-intent-${intentName}`,
-    `ola-answer-template-${template}`
-  )
+
   /**
    * If the answer is from Intent engine
    */
-  if (card) {
+  if (card) {    
+    let { template, source } = card
+    let intentName = intent ? intent.split('.').pop() : null
+    let snippetClass = classNames(
+      'ola-snippet-answer',
+      `ola-snippet-template-${template}`
+    )
+    let answerKlass = classNames(
+      'ola-answer',
+      `ola-answer-intent-${intentName}`,
+      `ola-answer-template-${template}`
+    )
     return (
       <div className={snippetClass}>
         <AnswerSuggestion
@@ -101,7 +102,21 @@ function Answer ({ result, answer, isLoading, dispatch, templates }) {
       </div>
     )
   }
+
+  if (mc) {
+    return (
+      <AnswerMC mc={mc} />
+    )
+  }
+
+  /**
+   * Check
+   */
   return null
+}
+
+Answer.defaultProps = {
+  answer: {}
 }
 
 module.exports = Answer

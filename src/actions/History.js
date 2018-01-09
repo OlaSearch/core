@@ -47,7 +47,7 @@ export function addHistory (options) {
     // )
 
     /* Check if it already exists */
-    var exists = history.some((item) => item.q === q)
+    var exists = history.some((item) => item.q.toLowerCase() === q.toLowerCase())
     /* Check if history already exists */
     if (exists) {
       return dispatch({

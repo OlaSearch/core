@@ -13,6 +13,9 @@ class OlaIntlProvider extends React.Component {
       ...(t[locale] ? t[locale]['messages'] : {})
     }
   }
+  static defaultProps = {
+    locale: 'en'
+  }
   static childContextTypes = {
     translate: PropTypes.func
   }

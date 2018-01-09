@@ -5,7 +5,8 @@ import {
   executeSearch,
   clearQueryTerm,
   removeFilter,
-  removeFacetItem
+  removeFacetItem,
+  setSkipIntent
 } from './../actions/Search'
 import Tag from './Misc/Tag'
 import Tooltip from './Misc/Tooltip'
@@ -43,7 +44,7 @@ class SelectedFilters extends React.Component {
 
   handleRemoveFacet = (facet, value) => {
     let { dispatch } = this.props
-
+    /* Check if the facet is from intent engine `fromIntentEngine` */
     if (facet.type === 'hierarchical') {
       dispatch(removeFacetItem(facet))
     } else {

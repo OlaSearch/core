@@ -16,7 +16,8 @@ import {
   removeToken,
   removeAllTokens,
   replaceTokens,
-  removeTokenFacets
+  removeTokenFacets,
+  removeIntentEngineFacets
 } from './../../actions/Search'
 import { log } from './../../actions/Logger'
 import Input from './Input'
@@ -27,7 +28,8 @@ import {
   mergeResultsWithHistory,
   redirect,
   getAutoCompleteResults,
-  getWordPosition
+  getWordPosition,
+  syncTokens
 } from './../../utilities'
 import injectTranslate from './../../decorators/injectTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -60,7 +62,7 @@ class AutoComplete extends React.Component {
       /* word suggestion */
       leftPosition: props.leftPadding,
       partialWord: null,
-      showWordSuggestion: props.wordSuggestion && this.props.isDesktop
+      showWordSuggestion: false
     }
     this.isSizeSmall = false
   }
@@ -114,6 +116,7 @@ class AutoComplete extends React.Component {
     if (nextProps.q !== this.props.q) {
       /* Check if the input is focused: then ignore */
       // if (document.activeElement !== this.inputEl.input._input) {
+      // console.log('called', nextProps.q)
       this.setState({
         q: nextProps.q,
         fuzzyQuery: null,
@@ -181,7 +184,8 @@ class AutoComplete extends React.Component {
           })
           : [],
         isOpen: this.props.history.length > 0,
-        leftPosition: this.props.leftPadding
+        leftPosition: this.props.leftPadding,
+        showWordSuggestion: false
       },
       cb
     )
@@ -215,6 +219,7 @@ class AutoComplete extends React.Component {
         return this.clearFuzzyQueryTerm()
       }
     }
+    if (!this.state.isFocused) return
     if (event && event.type === 'keydown') return
     this.onBlur()
   }
@@ -257,6 +262,10 @@ class AutoComplete extends React.Component {
         return st === startToken && et !== endToken
       }
     )
+    if (startToken !== this.state.startToken) {
+      // Word has changed, clear the results
+      this.setState({ results: [] })
+    }
     /* Remove facets if tokens are changed */
     if (changedTokens) {
       // changedTokens.forEach(({name, value}) => {
@@ -280,6 +289,15 @@ class AutoComplete extends React.Component {
     }
 
     if (!term) return this.clearQueryTerm()
+
+    if (this.state.q !== term) {
+      // console.log(this.state.q)
+      // console.log(term)
+      // console.log(syncTokens(this.state.q, term, this.props.tokens))
+      // const tokens = syncTokens(this.state.q, term, this.props.tokens)
+      /* Update tokens */
+      // this.props.replaceTokens(tokens)
+    }
 
     /* No of words in the query */
     const hasMoreTerms = term.match(/\s/gi)
@@ -310,7 +328,7 @@ class AutoComplete extends React.Component {
 
     /* Which request */
     const ajaxRequest = showWordSuggestion
-      ? this.props.executeFacetSearch(term, partialWord)
+      ? this.props.executeFacetSearch(term, partialWord, startToken, endToken)
       : this.props.executeFuzzyAutoSuggest(term)
 
     if (
@@ -457,7 +475,10 @@ class AutoComplete extends React.Component {
       return this.onFuzzySelect(this.state.fuzzyQuery, options)
     }
     /* Remove facets that are tokens */
-    this.props.removeTokenFacets()
+    // let tokenNames = this.props.tokens.map(({ name }) => name)
+
+    // this.props.removeTokenFacets(tokenNames)
+
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
       this.props.tokens.forEach(({ value, name }) => {
@@ -474,7 +495,10 @@ class AutoComplete extends React.Component {
     })
 
     /* Update query term */
-    this.props.updateQueryTerm(this.state.q, this.state.searchInput)
+    if (this.state.q !== this.props.q) this.props.updateQueryTerm(this.state.q, this.state.searchInput)
+
+    /* Remove facets from ie */
+    // this.props.removeIntentEngineFacets()
 
     /* Trigger search */
     this.onSelect(this.state.q)
@@ -775,10 +799,9 @@ class AutoComplete extends React.Component {
             className={klass}
             style={{
               left: leftPosition,
-              width:
-                showWordSuggestion
-                  ? this.props.wordSuggestionWidth
-                  : 'auto'
+              width: showWordSuggestion
+                ? this.props.wordSuggestionWidth
+                : 'auto'
             }}
           >
             <div className='ola-suggestions-wrapper' ref={this.registerRef}>
@@ -847,5 +870,6 @@ module.exports = connect(mapStateToProps, {
   removeToken,
   removeAllTokens,
   replaceTokens,
-  removeTokenFacets
+  removeTokenFacets,
+  removeIntentEngineFacets
 })(injectTranslate(listensToClickOutside(AutoComplete)))

@@ -1,7 +1,7 @@
 export const RANGE_FACETS = ['range', 'rating', 'daterange', 'datepicker']
 export const OLA_STORAGE_KEY = 'olastore_'
 export const CONTEXT_STORAGE_KEY = 'ola_context_'
-export const CONTEXT_STORAGE_TTL = 30
+export const CONTEXT_STORAGE_TTL = 0.25 /* Days */
 export const LOCALE_STORAGE_KEY = 'ola_locale_'
 export const LOCALE_STORAGE_TTL = 30 /* Days */
 export const SEARCH_SESSION_KEY = 'ola_search_session'
@@ -29,7 +29,8 @@ export const REMOVE_FROM_QUERY_STRING = [
   'projectId',
   'env',
   'ola_collection_name',
-  'debug'
+  'debug',
+  'skip_facet_fields'
 ]
 export const SEARCH_COLLECTION_IDENTIFIER = 'ola_collection_name'
 export const ALL_VALUES = 'All'

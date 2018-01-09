@@ -1,18 +1,6 @@
 .ola-search {
   font-size: $base-font-size;
-  font-family: $base-font-family;
-
-  *, &:before, &:after {
-    box-sizing: border-box;
-  }
-
-  a {
-    // color: $link-color;
-
-    &:hover {
-      // color: $link-hover-color;
-    }
-  }
+  font-family: $base-font-family;  
 
   /* Remove underline from links */
   @if $is_link_underlined == true {
@@ -25,8 +13,13 @@
       text-decoration: none;
     }
   }
+
+  p {
+    margin:0 0 1rem 0;
+  }
 }
 
 body {
-  // padding: 1rem;
+  // padding: 3rem;
+  // margin: 0;
 }

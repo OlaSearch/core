@@ -34,11 +34,9 @@ export const STATE_TYPE_KEYS = [
   types.SET_LOCALE,
   types.REQUEST_GEO_LOCATION_SUCCESS,
   types.REQUEST_GEO_LOCATION_FAILURE,
-  types.ADD_CONTEXT,
-  types.REMOVE_CONTEXT,
-  types.ADD_DYNAMIC_FIELD,
-  types.REMOVE_DYNAMIC_FIELD,
   types.ADD_CONTEXT_FIELD,
+  types.REMOVE_CONTEXT_FIELD,
+  types.REMOVE_CONTEXT_LOCATION,
   types.UPDATE_HISTORY,
   types.REMOVE_HISTORY,
   types.REQUEST_ALERT_SUCCESS,
@@ -54,11 +52,9 @@ function persistState (action, getState, namespace) {
   switch (action.type) {
     case types.REQUEST_GEO_LOCATION_SUCCESS:
     case types.REQUEST_GEO_LOCATION_FAILURE:
-    case types.ADD_CONTEXT:
-    case types.REMOVE_CONTEXT:
-    case types.ADD_DYNAMIC_FIELD:
-    case types.REMOVE_DYNAMIC_FIELD:
     case types.ADD_CONTEXT_FIELD:
+    case types.REMOVE_CONTEXT_FIELD:
+    case types.REMOVE_CONTEXT_LOCATION:
       return storage.cookies.set(
         CONTEXT_STORAGE_KEY,
         state.Context,

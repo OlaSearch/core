@@ -2,17 +2,9 @@
 
 .ola-search-heading {
   margin: 0;
-  border-bottom: 2px solid #e5e5e5;
-  padding: 0 0 1rem 0;
-  margin: 0 0 1rem 0;
+  padding: 0;
   clear: inherit;
   font-size: $search-heading-font-size;
-  min-height: $button-default-height + 20px;
-
-  @include media (tablet) {
-    margin-bottom: 1rem;
-    min-height: 0;
-  }
 }
 
 /* title */
@@ -27,5 +19,15 @@
 
   @include media (tablet) {
     display: inline;
+  }
+}
+
+/* Location title */
+.ola-location-title {
+  font-size: 1rem;
+  font-weight: 100;
+
+  .ola-link-geo {
+    margin-left: 1rem;
   }
 }

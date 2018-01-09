@@ -70,6 +70,8 @@
   font-weight: bold;
   text-transform: uppercase;
   border: none;
+  background: none;
+  display: block;
 
   &:before {
     @extend .iconfont;
@@ -148,7 +150,6 @@
   .ola-btn-wrap {
     @include prefix(display, flex, webkit ms moz);
     @include prefix(align-items, center, webkit ms moz);
-    padding: $facet-padding;
 
     .ola-facet-link {
       @include prefix(flex, 1, webkit ms moz);
@@ -157,6 +158,9 @@
       overflow: hidden;
       width: auto;
       text-align: left;
+      background: none;
+      display: block;
+      padding: $facet-padding;
     }
   }
 

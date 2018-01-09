@@ -1,9 +1,18 @@
 /* Default button */
 .ola-btn {
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+}
+
+/* Primary button */
+.ola-btn-primary {
   &, &:hover, &:active, &:focus {
     background: $button-primary-background;
     color: $button-primary-color;
     padding: $button-padding;
+    border: none;
     cursor: pointer;
   }
 }
@@ -42,11 +51,12 @@
 
 /* Geo location icon */
 .ola-link-geo {
-  @extend %ola-icon-button;
+  @extend %ola-link;
+  // @extend %ola-icon-button;
 
   &:before {
-    @extend .iconfont;
-    content: 'my_location';
+    // @extend .iconfont;
+    // content: 'my_location';
   }
 
   &.ola-link-geo-active {
@@ -114,12 +124,12 @@
  */
 
  .ola-btn-hint{
-	position: absolute;
-	top: 0;
-	right:0;
-	left: 0;
-	bottom: 0;
-	z-index: 1;
+	// position: absolute;
+	// top: 0;
+	// right:0;
+	// left: 0;
+	// bottom: 0;
+	// z-index: 1;
 }
 
 

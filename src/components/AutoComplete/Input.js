@@ -67,7 +67,7 @@ export default class Input extends React.Component {
          * Clear query term
          */
         // if (!isOpen) return this.onClear(event)
-        if (!isOpen) return this.input.select()
+        if (!isOpen) return this.input._input.select()
         return this.props.handleClickOutside(event)
 
       case 39: // Right
@@ -150,6 +150,9 @@ export default class Input extends React.Component {
     /* If no tokens, return value */
     if (!terms.length) return value
 
+    /* Raw value */
+    let rawValue = value
+
     /* Token regex */
     const regX = new RegExp(
       '(' + terms.join('|').replace(/(\(|\))/gi, '\\$1') + ')',
@@ -170,7 +173,7 @@ export default class Input extends React.Component {
       return `<span class='ola-input-tag'>${match}</span>`
     })
 
-    return returnTokens ? [terms, newTokens] : value
+    return returnTokens ? [terms, newTokens] : highlightTokens(rawValue, tokens)
   }
   render () {
     var {

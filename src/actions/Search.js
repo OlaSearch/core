@@ -171,7 +171,9 @@ function removeTokenFromQuery (q, tokenValues) {
  * @param {String} fullTerm Full query term, default is '*'
  * @param {String} term Partial query
  */
-export function executeFacetSearch (fullTerm = '*', term) {
+export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) {
+  /* Splice based on tokens */
+  fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
   /* replace backslash */
   term = term.replace(/\\/gi, '')
   term = xssFilters.inHTMLData(term)
@@ -185,12 +187,11 @@ export function executeFacetSearch (fullTerm = '*', term) {
       name,
       multiSelect: true
     }))
-
     /* Remove tokens from the query */
     let initialStart = 0
     let q = removeTokenFromQuery(
       fullTerm,
-      tokens.map(({ value }) => value).concat(term)
+      tokens.map(({ value }) => value) // .concat(term)
     )
 
     return dispatch({
@@ -230,6 +231,20 @@ export function fetchAnswer (url) {
       ],
       query: { url },
       api: 'answer'
+    })
+  }
+}
+
+export function fetchMc (key) {
+  return (dispatch, getState) => {
+    dispatch({
+      types: [
+        types.REQUEST_MC,
+        types.REQUEST_MC_SUCCESS,
+        types.REQUEST_MC_FAILURE
+      ],
+      query: { key },
+      api: 'mc'
     })
   }
 }
@@ -294,25 +309,45 @@ export function addFacet (facet, value) {
 }
 
 export function removeFacet (facet, value, resetAllFacets = false) {
-  /**
-   * Always convert Array to strings
-   * [1, 2] => ["1", "2"]
-   */
-  if (value instanceof Array) value = castNumberToStringArray(value)
+  return (dispatch) => {
+    let { fromIntentEngine } = facet
 
-  /*
-    Reset facets is a Root facet (Tabs or Collection)
-    Used in admin console
-  */
-  if (resetAllFacets || facet.resetOnDeSelect) {
-    return {
-      type: types.REMOVE_ALL_FACETS
+    /**
+     * Add to skip_facet_fields
+     */
+    if (fromIntentEngine) {
+      dispatch({
+        type: types.ADD_SKIP_FACET_FIELDS,
+        facet
+      })
     }
+
+    /**
+     * Always convert Array to strings
+     * [1, 2] => ["1", "2"]
+     */
+    if (value instanceof Array) value = castNumberToStringArray(value)
+
+    /*
+      Reset facets is a Root facet (Tabs or Collection)
+      Used in admin console
+    */
+    if (resetAllFacets || facet.resetOnDeSelect) {
+      dispatch({
+        type: types.REMOVE_ALL_FACETS
+      })
+    }
+    return dispatch({
+      type: types.REMOVE_FACET,
+      facet,
+      value
+    })
   }
+}
+
+export function removeIntentEngineFacets () {
   return {
-    type: types.REMOVE_FACET,
-    facet,
-    value
+    type: types.REMOVE_INTENT_ENGINE_FACETS
   }
 }
 
@@ -524,11 +559,5 @@ export function replaceTokens (tokens) {
   return {
     type: types.REPLACE_TOKENS,
     tokens
-  }
-}
-
-export function removeTokenFacets () {
-  return {
-    type: types.REMOVE_TOKEN_FACETS
   }
 }

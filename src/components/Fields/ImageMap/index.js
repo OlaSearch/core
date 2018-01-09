@@ -40,9 +40,14 @@ function ImageMap (props) {
   }
 
   return (
-    <div classname='ola-field ola-field-map'>
+    <div className='ola-field ola-field-map'>
       <FieldLabel label={fieldLabel} />
-      <a href={url} target='_blank' className='field field-url' onClick={handleClick}>
+      <a
+        href={url}
+        target='_blank'
+        className='field field-url'
+        onClick={handleClick}
+      >
         <Thumbnail thumbnail={map} thumbnail_mobile={map} />
       </a>
     </div>
