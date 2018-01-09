@@ -21,8 +21,17 @@ module.exports = {
   },
   sections: [
     {
-      name: 'Fields',
+      name: 'Actions',
       components: 'src/components/Fields/**/*.js'
+    },
+    {
+      name: 'Components',
+      sections: [
+        {
+          name: 'Fields',
+          components: 'src/components/Fields/**/*.js'
+        }
+      ]
     }
   ],
   require: [

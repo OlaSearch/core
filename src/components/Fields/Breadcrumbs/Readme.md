@@ -1,4 +1,9 @@
-Example
+#### Usage 
+
+```html
+import { Fields } from '@olasearch/core'
+const { Breadcrumbs } = Fields
+```
 
 ```js
 <Breadcrumbs

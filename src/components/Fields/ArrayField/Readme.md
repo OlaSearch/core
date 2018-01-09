@@ -1,4 +1,9 @@
-Example
+#### Usage 
+
+```html
+import { Fields } from '@olasearch/core'
+const { ArrayField } = Fields
+```
 
 ```js
 <ArrayField
