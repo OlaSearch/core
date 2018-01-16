@@ -2,7 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { removeContextLocation, requestGeoLocation } from './../../actions/Context'
+import {
+  removeContextLocation,
+  requestGeoLocation
+} from './../../actions/Context'
 import { executeSearch } from './../../actions/Search'
 import injectTranslate from './../../decorators/injectTranslate'
 import { log } from './../../actions/Logger'
@@ -122,7 +125,7 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {
+module.exports = connect(mapStateToProps, {
   executeSearch,
   log,
   removeContextLocation,

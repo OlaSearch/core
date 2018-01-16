@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import listensToClickOutside from 'react-onclickoutside'
+import listensToClickOutside from '@olasearch/react-onclickoutside'
 import {
   updateQueryTerm,
   executeAutoSuggest,

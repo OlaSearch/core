@@ -179,10 +179,10 @@ export default (state: State = initialState, action: Object) => {
 
     case types.REMOVE_INTENT_ENGINE_FACETS:
       return state
-      // return {
-      //   ...state,
-      //   facet_query: state.facet_query.filter((item) =>  !('fromIntentEngine' in item))
-      // }
+    // return {
+    //   ...state,
+    //   facet_query: state.facet_query.filter((item) =>  !('fromIntentEngine' in item))
+    // }
 
     case types.REPLACE_FACET:
       exists = checkIfFacetExists(state.facet_query, action.facet.name)
@@ -300,7 +300,9 @@ export default (state: State = initialState, action: Object) => {
         ...state,
         projectId: action.projectId,
         env: action.env,
-        // per_page: action.configState.perPage || initialState.per_page,
+        per_page: action.configState
+          ? action.configState.perPage
+          : initialState.per_page,
         debug: action.debug
       }
 

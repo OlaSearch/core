@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import listensToClickOutside from 'react-onclickoutside'
+import listensToClickOutside from '@olasearch/react-onclickoutside'
 import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { clearHistory } from './../../actions/History'
 import {
@@ -237,40 +237,40 @@ class AutoComplete extends React.Component {
   onChange = (event, searchInput) => {
     /* Set the term */
     let term = event.target ? event.target.value : event
-
     /* Get partial term */
-    // const tokenRange = this.props.tokens.map(({startToken, endToken}) => [startToken, endToken])
-    let {
-      word: partialWord,
-      leftPosition,
-      startToken,
-      endToken
-    } = getWordPosition(event.target)
+    let startToken, endToken, leftPosition, partialWord
+    if (this.props.wordSuggestion) {
+      let wordPosition = getWordPosition(event.target)
+      partialWord = wordPosition.word
+      leftPosition = wordPosition.leftPosition
+      startToken = wordPosition.startToken
+      endToken = wordPosition.endToken
 
-    /* if its the same word stop */
-    if (
-      this.state.partialWord === partialWord &&
-      event &&
-      event.type === 'mousedown'
-    ) {
-      return
-    }
-
-    /* Update facet if startToken + endToken has changed */
-    let changedTokens = this.props.tokens.filter(
-      ({ startToken: st, endToken: et }) => {
-        return st === startToken && et !== endToken
+      /* if its the same word stop */
+      if (
+        this.state.partialWord === partialWord &&
+        event &&
+        event.type === 'mousedown'
+      ) {
+        return
       }
-    )
-    if (startToken !== this.state.startToken) {
-      // Word has changed, clear the results
-      this.setState({ results: [] })
-    }
-    /* Remove facets if tokens are changed */
-    if (changedTokens) {
-      // changedTokens.forEach(({name, value}) => {
-      //   this.props.removeFacet({ name }, value)
-      // });
+
+      /* Update facet if startToken + endToken has changed */
+      // let changedTokens = this.props.tokens.filter(
+      //   ({ startToken: st, endToken: et }) => {
+      //     return st === startToken && et !== endToken
+      //   }
+      // )
+      if (startToken !== this.state.startToken) {
+        // Word has changed, clear the results
+        this.setState({ results: [] })
+      }
+      /* Remove facets if tokens are changed */
+      // if (changedTokens) {
+      //   changedTokens.forEach(({name, value}) => {
+      //     this.props.removeFacet({ name }, value)
+      //   });
+      // }
     }
 
     let { q } = this.state
@@ -307,21 +307,24 @@ class AutoComplete extends React.Component {
     const { allowedCharacters } = this.context.config
 
     /* Update state */
-    this.updateQueryTerm({
-      term,
-      searchInput,
-      startToken,
-      endToken,
-      leftPosition,
-      showWordSuggestion,
-      partialWord
-    })
+    if (this.props.wordSuggestion) {
+      this.updateQueryTerm({
+        term,
+        searchInput,
+        startToken,
+        endToken,
+        leftPosition,
+        showWordSuggestion,
+        partialWord
+      })
+    } else {
+      this.updateQueryTerm({ term })
+    }
 
     /* Clear fuzzy term selection on query change */
     this.clearFuzzyQueryTerm()
 
     /* Close auto suggest early */
-    // console.log(showWordSuggestion, partialWord)
     if (showWordSuggestion && !partialWord) {
       return this.closeAutoSuggest()
     }
@@ -414,7 +417,10 @@ class AutoComplete extends React.Component {
         next = nodes[Math.max(0, --index)]
         if (index < 0) {
           next.classList.remove(activeClassName)
-          if (index === -1) this.clearFuzzyQueryTerm()
+          if (index === -1) {
+            this.clearFuzzyQueryTerm()
+            this.updateCursor(this.state.endToken)
+          }
         } else {
           next.classList.add(activeClassName)
         }
@@ -431,6 +437,7 @@ class AutoComplete extends React.Component {
         if (index >= nodes.length) {
           this.clearFuzzyQueryTerm()
           this.clearActiveClass()
+          this.updateCursor(this.state.endToken)
         } else {
           next.classList.add(activeClassName)
         }
@@ -495,7 +502,9 @@ class AutoComplete extends React.Component {
     })
 
     /* Update query term */
-    if (this.state.q !== this.props.q) this.props.updateQueryTerm(this.state.q, this.state.searchInput)
+    if (this.state.q !== this.props.q) {
+      this.props.updateQueryTerm(this.state.q, this.state.searchInput)
+    }
 
     /* Remove facets from ie */
     // this.props.removeIntentEngineFacets()

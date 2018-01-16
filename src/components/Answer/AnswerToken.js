@@ -28,12 +28,12 @@ function AnswerToken (
   })
 
   tokens = tokens.filter(({ name, value }) => {
-              let facet = facets.filter(({ name: _name }) => _name === name)
-              if (!facet.length) return false
-              facet = facet.reduce((a, _) => a)
-              /* Check if value exists */
-              return facet.values.some((item) => item.name === value)
-            })
+    let facet = facets.filter(({ name: _name }) => _name === name)
+    if (!facet.length) return false
+    facet = facet.reduce((a, _) => a)
+    /* Check if value exists */
+    return facet.values.some((item) => item.name === value)
+  })
 
   /* If no tokens hide */
   if (!tokens.length) return null
@@ -52,22 +52,21 @@ function AnswerToken (
       <span className='ola-answer-tokens-text'>
         {translate('filter_suggestions')}
       </span>
-      {tokens        
-        .map(({ name, value }, idx) => {
-          let facet = facets
-            .filter(({ name: _name }) => _name === name)
-            .reduce((a, _) => a)
-          
-          let displayName = facet ? facet.displayName : name
-          return (
-            <AnswerTokenBtn
-              key={`${idx}_${name}`}
-              name={name}
-              value={value}
-              handleAddToken={handleAddToken}
-              displayName={displayName}
-            />
-          )
+      {tokens.map(({ name, value }, idx) => {
+        let facet = facets
+          .filter(({ name: _name }) => _name === name)
+          .reduce((a, _) => a)
+
+        let displayName = facet ? facet.displayName : name
+        return (
+          <AnswerTokenBtn
+            key={`${idx}_${name}`}
+            name={name}
+            value={value}
+            handleAddToken={handleAddToken}
+            displayName={displayName}
+          />
+        )
       })}
     </div>
   )

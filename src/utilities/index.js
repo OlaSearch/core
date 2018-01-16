@@ -8,6 +8,7 @@ import {
   TYPE_FACET,
   LAYOUT_OPTIONS
 } from './../constants/Settings'
+import xssFilters from 'xss-filters'
 
 export function supplant (s, d) {
   for (var p in d) {
@@ -245,8 +246,7 @@ export function escapeRegEx (str) {
 }
 
 export function sanitizeText (str) {
-  return str
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return xssFilters.inHTMLData(str)
 }
 
 export function toNestedArray (data, rootLevel = 0, parentNode) {
@@ -399,7 +399,12 @@ export function mergeResultsWithHistory (options) {
     .filter(
       (his, index, self) =>
         self.findIndex((t) =>
-          t.term.match(new RegExp('^' + his.term.replace(/(\(|\)|\[|\])/gi, '\\$1') + '$', 'gi'))
+          t.term.match(
+            new RegExp(
+              '^' + his.term.replace(/(\(|\)|\[|\])/gi, '\\$1') + '$',
+              'gi'
+            )
+          )
         ) === index
     )
 
@@ -407,7 +412,11 @@ export function mergeResultsWithHistory (options) {
     /* Only history that starts with */
     if (shouldShowHistoryForQuery) {
       history = history
-        .filter(({ term }) => term.match(new RegExp('^' + query.replace(/(\(|\)|\[|\])/gi, '\\$1'), 'gi')))
+        .filter(({ term }) =>
+          term.match(
+            new RegExp('^' + query.replace(/(\(|\)|\[|\])/gi, '\\$1'), 'gi')
+          )
+        )
         .sort((a, b) => {
           /* Sort by match */
           if (a.term.indexOf(query) < b.term.indexOf(query)) return 1
@@ -707,7 +716,7 @@ export function syncTokens (old_text, new_text, tokens) {
   if (old_text.length > new_text.length) {
     inc = -1
   }
-  return tokens.map(({ startToken, endToken, value, ...rest}) => {
+  return tokens.map(({ startToken, endToken, value, ...rest }) => {
     let len = endToken - startToken
     value = value.toLowerCase()
     let text = new_text.substring(startToken, endToken)
@@ -726,3 +735,4 @@ export function syncTokens (old_text, new_text, tokens) {
     }
   })
 }
+

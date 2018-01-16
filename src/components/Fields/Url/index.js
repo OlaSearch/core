@@ -41,4 +41,8 @@ function Url ({
   )
 }
 
+Url.defaultProps = {
+  field: 'url'
+}
+
 module.exports = withLogger(Url)

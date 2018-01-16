@@ -4,13 +4,7 @@ import injectTranslate from './../decorators/injectTranslate'
 import GeoNotify from './Geo/GeoNotify'
 
 function SearchTitle (
-  {
-    totalResults,
-    page,
-    perPage,
-    isPhone,
-    translate,
-  },
+  { totalResults, page, perPage, isPhone, translate },
   context
 ) {
   let title = translate('title')

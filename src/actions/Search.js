@@ -235,7 +235,7 @@ export function fetchAnswer (url) {
   }
 }
 
-export function fetchMc (key) {
+export function fetchMc (key, payload) {
   return (dispatch, getState) => {
     dispatch({
       types: [
@@ -243,6 +243,7 @@ export function fetchMc (key) {
         types.REQUEST_MC_SUCCESS,
         types.REQUEST_MC_FAILURE
       ],
+      payload,
       query: { key },
       api: 'mc'
     })

@@ -69,7 +69,7 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
   /**
    * If the answer is from Intent engine
    */
-  if (card) {    
+  if (card) {
     let { template, source } = card
     let intentName = intent ? intent.split('.').pop() : null
     let snippetClass = classNames(
@@ -104,9 +104,7 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
   }
 
   if (mc) {
-    return (
-      <AnswerMC mc={mc} />
-    )
+    return <AnswerMC mc={mc} />
   }
 
   /**

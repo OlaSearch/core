@@ -14,6 +14,8 @@
     padding: $button-padding;
     border: none;
     cursor: pointer;
+    display: inline-block;
+    border-radius: $base-border-radius;
   }
 }
 
@@ -102,10 +104,14 @@
   @extend %ola-icon-button;
   @extend .ola-primary-button;
   width: 100%;
-  // border: 1px $base-border-color solid;
   padding: 0.8rem 1rem;
   margin-top: 1rem;
   box-shadow: $elevation-2;
+
+  .ola-icon {
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
 }
 
 
@@ -136,4 +142,9 @@
 /* regular button */
 .ola-icon-btn {
   @extend %ola-icon-button;
+}
+
+/* Ola cta button */
+.ola-cta-button {
+  @extend .ola-btn-primary;
 }

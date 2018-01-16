@@ -100,13 +100,16 @@ module.exports = (options = {}) => {
     /* ACL Rules */
     const acl = currentState.Acl
     let callApi
+    const { bot } = payload
     const skipIntentEngine =
-      query.page > 1 ||
-      query.enriched_q !== '' ||
-      (query.enriched_q === '' && query.q === '')
+      !bot &&
+      (query.page > 1 ||
+        query.enriched_q !== '' ||
+        (query.enriched_q === '' && query.q === ''))
     const params = proxy
       ? {
         ...query,
+        bot, /* Send to the intent engine */
         ...(skipIntentEngine ? { skip_intent: true } : {}),
         ...payload.extraParams,
         ...(payload.answer ? { answer: payload.answer } : {}),
@@ -236,6 +239,7 @@ module.exports = (options = {}) => {
            */
           let facetQuery = currentState.QueryState.facet_query
           if (
+            !bot && /* Do not fill facet_query if its from bot */
             answer &&
             answer.search &&
             answer.search.facet_query &&
@@ -266,9 +270,11 @@ module.exports = (options = {}) => {
            */
           if (
             answer &&
-            answer.location && /* Check if the intent requires location */
-            !currentState.Context.location && /* Check if location is already present */
-            !currentState.Context.hasRequestedLocation /* Check if location was asked before */
+            answer.location /* Check if the intent requires location */ &&
+            !currentState.Context
+              .location /* Check if location is already present */ &&
+            !currentState.Context
+              .hasRequestedLocation /* Check if location was asked before */
           ) {
             dispatch(
               requestGeoLocation(() => {
@@ -279,7 +285,8 @@ module.exports = (options = {}) => {
                   payload,
                   context: getState().Context /* Get the new context */,
                   responseTime,
-                  facetQuery
+                  facetQuery,
+                  bot
                 })
               })
             )
@@ -356,7 +363,8 @@ module.exports = (options = {}) => {
               eventType: 'Q',
               eventSource: currentState.QueryState.source || api,
               state: getState(),
-              responseTime
+              responseTime,
+              payload
             })
           }
 
@@ -378,7 +386,8 @@ module.exports = (options = {}) => {
             qt,
             answer,
             responseTime,
-            facetQuery
+            facetQuery,
+            payload
           }
         },
         (error) => {

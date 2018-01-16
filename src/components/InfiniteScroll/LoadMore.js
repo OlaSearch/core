@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import injectTranslate from './../../decorators/injectTranslate'
+import ChevronDown from '@olasearch/icons/lib/chevron-down'
 
 function LoadMore ({
   totalResults,
@@ -32,6 +33,7 @@ function LoadMore ({
       onClick={handleClick}
     >
       {text}
+      <ChevronDown />
     </button>
   )
 }

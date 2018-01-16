@@ -111,11 +111,19 @@
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@olasearch/alite/-/alite-1.0.5.tgz#6fa2af2c24ac697acff617030aa9d8f6a2f1a2f3"
 
+"@olasearch/icons@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@olasearch/icons/-/icons-1.0.0.tgz#b0841239fd5eb10a966eee08ae65c3d3126129dc"
+
 "@olasearch/logger@^1.1.5":
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/@olasearch/logger/-/logger-1.1.5.tgz#3c5bff4cb062099a91529a305f6436750398c37a"
   dependencies:
     "@olasearch/alite" "^1.0.2"
+
+"@olasearch/react-onclickoutside@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@olasearch/react-onclickoutside/-/react-onclickoutside-1.0.0.tgz#2cac266a7fed4ec2d954393ef1b3147941484e7b"
 
 "@olasearch/solr-adapter@^1.3.9":
   version "1.3.9"
@@ -7619,10 +7627,6 @@ react-list@^0.8.8:
   resolved "https://registry.yarnpkg.com/react-list/-/react-list-0.8.8.tgz#de2cb768dd210fb3e4835b9277f158e9cd403078"
   dependencies:
     prop-types "15"
-
-react-onclickoutside@^6.7.0:
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.0.tgz#997a4d533114c9a0a104913638aa26afc084f75c"
 
 react-pikaday-datepicker@3.0.1:
   version "3.0.1"

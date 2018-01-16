@@ -13,8 +13,7 @@ const GeoNotify = ({ answer, location, executeSearch, isPhone, translate }) => {
       <span>
         {location
           ? translate('showing_nearby_results')
-          : translate('share_location')
-        }
+          : translate('share_location')}
       </span>
       <GeoLocation onSuccess={executeSearch} />
     </div>
@@ -30,7 +29,5 @@ function mapStateToProps (state) {
 }
 
 module.exports = injectTranslate(
-  connect(mapStateToProps, { executeSearch })(
-    GeoNotify
-  )
+  connect(mapStateToProps, { executeSearch })(GeoNotify)
 )

@@ -18,7 +18,7 @@ function TextField ({
   showIfEmpty,
   placeholderText
 }) {
-  let fieldContent = result[field] || staticText
+  let fieldContent = staticText || result[field]
   if (!fieldContent && fallbackFields.length) {
     for (let i = 0; i < fallbackFields.length; i++) {
       let fieldName = fallbackFields[i]
@@ -57,7 +57,9 @@ function TextField ({
     dynamicClass && fieldContent
       ? ` ${field}-${fieldContent.toLowerCase()}`
       : ''
-  let klass = `ola-field ola-field-text ola-field-${field}${userClass} ${className}`
+  let klass = `ola-field ola-field-text ${
+    field ? `ola-field-${field}${userClass}` : 'ola-field-static'
+  } ${className}`
   return (
     <div className={klass}>
       <FieldLabel label={fieldLabel} />
@@ -69,6 +71,7 @@ function TextField ({
 TextField.defaultProps = {
   length: 200,
   ellipsis: '...',
+  className: '',
   dynamicClass: false,
   fallbackFields: [],
   showIfEmpty: false,

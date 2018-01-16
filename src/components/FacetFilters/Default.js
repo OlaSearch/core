@@ -60,7 +60,7 @@ class LinkFilter extends React.Component {
 
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: sanitizeText(xssFilters.inHTMLData(event.target.value))
+      filterText: sanitizeText(event.target.value)
     })
   }
 

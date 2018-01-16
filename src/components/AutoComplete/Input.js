@@ -49,7 +49,10 @@ export default class Input extends React.Component {
     event.persist()
     event.stopPropagation()
     /* Check if element already is focused. Only then fire */
-    if (document.activeElement === event.target) {
+    if (
+      document.activeElement === event.target &&
+      this.props.showWordSuggestion
+    ) {
       setTimeout(() => this.props.onChange(event))
     }
   }
@@ -60,6 +63,7 @@ export default class Input extends React.Component {
 
   onKeyDown = (event) => {
     var { onKeyDown, onSubmit, isOpen, q } = this.props
+
     switch (event.which) {
       case 27: // Esc
         /**
@@ -91,6 +95,9 @@ export default class Input extends React.Component {
         event.preventDefault()
         if (!isOpen && q) return this.props.onChange(event)
         return onKeyDown('down', event)
+
+      case 37:
+        return this.props.onChange(event)
 
       case 32: // Space
         return onKeyDown('space', event)

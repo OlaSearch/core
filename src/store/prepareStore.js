@@ -9,7 +9,8 @@ import {
   OLA_STORAGE_KEY,
   CONTEXT_STORAGE_KEY,
   LOCALE_STORAGE_KEY,
-  DEFAULT_LOCALE
+  DEFAULT_LOCALE,
+  BOT_STORAGE_KEY
 } from './../constants/Settings'
 
 export function prepareUserState ({ config }) {
@@ -21,6 +22,7 @@ export function prepareUserState ({ config }) {
     storage.cookies.get(CONTEXT_STORAGE_KEY, config.namespace) || {}
   const locale =
     storage.cookies.get(LOCALE_STORAGE_KEY, config.namespace) || DEFAULT_LOCALE
+  const botState = storage.get(BOT_STORAGE_KEY, config.namespace)
   var { perPage } = config
 
   if (typeof contextState === 'string') {
@@ -78,7 +80,8 @@ export function prepareUserState ({ config }) {
     storeState,
     contextState,
     locale,
-    configState: { perPage }
+    configState: { perPage },
+    botState
   }
 }
 

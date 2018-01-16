@@ -80,7 +80,7 @@ Directions.propTypes = {
   iconRight: PropTypes.any,
   result: PropTypes.object,
   translate: PropTypes.func,
-  fieldLabel: PropTypes.string,
+  fieldLabel: PropTypes.string
 }
 
 Directions.defaultProps = {

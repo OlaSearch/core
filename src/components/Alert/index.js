@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import DateParser from './../../utilities/dateParser'
 import { fetchAlerts, deleteAlert, createAlert } from './../../actions/Alert'
 
 class Alert extends React.Component {
@@ -11,12 +12,13 @@ class Alert extends React.Component {
     return (
       <div className='ola-alerts'>
         {queryIds.map((id) => {
-          let { query, docs } = queriesById[id]
+          let { query, docIds, timestamp } = queriesById[id]
           return (
             <Query
               key={id}
               query={query}
-              docs={docs}
+              docs={docIds}
+              timestamp={timestamp}
               id={id}
               onDelete={deleteAlert}
             />
@@ -27,13 +29,18 @@ class Alert extends React.Component {
   }
 }
 
-const Query = ({ id, query, docs, onDelete }) => {
+const Query = ({ id, query, docs, timestamp, onDelete }) => {
   function handleDelete () {
     onDelete(id)
   }
+  const docLen = docs.length
+  const docTmpl = docLen > 0 ? `- ${docLen} doc${docLen > 1 ? 's' : ''}` : null
   return (
     <div className='ola-alerts-item'>
-      <a>{query}</a>
+      <a>
+        {query} {docTmpl}
+      </a>
+      <span>Added on {DateParser.format(timestamp, 'D MMM YYYY')}</span>
       <button type='button' onClick={handleDelete}>
         Delete query
       </button>

@@ -26,16 +26,16 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    // new UglifyJsPlugin({
-    //   sourceMap: true,
-    //   uglifyOptions: {
-    //     ie8: false,
-    //     output: {
-    //       comments: false,
-    //       beautify: false,
-    //     }
-    //   }
-    // }),    
+    new UglifyJsPlugin({
+      sourceMap: true,
+      uglifyOptions: {
+        ie8: false,
+        output: {
+          comments: false,
+          beautify: false,
+        }
+      }
+    }),    
     new webpack.BannerPlugin({ banner: `Copyright Ola Search Pte Ltd ${startYear} - ${currentYear}`, raw: false, entryOnly: true })
   ],
   resolve: {

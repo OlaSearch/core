@@ -35,7 +35,7 @@
   }
 
   a {
-    background-color: transparent; /* 1 */
+    // background-color: transparent; /* 1 */
     -webkit-text-decoration-skip: objects; /* 2 */
     // color: $link-color;
 
@@ -92,7 +92,7 @@
   select,
   textarea {
     // font-family: sans-serif; /* 1 */
-    font-size: 100%; /* 1 */
+    // font-size: 100%; /* 1 */
     line-height: 1.15; /* 1 */
     // margin: 0; /* 2 */
   }

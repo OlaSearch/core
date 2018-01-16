@@ -119,6 +119,8 @@
     "redux-thunk": "^2.2.0"
   },
   "dependencies": {
+    "@olasearch/icons": "^1.0.0",
+    "@olasearch/react-onclickoutside": "^1.0.0",
     "babel-runtime": "^6.25.0",
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.1",
@@ -131,7 +133,6 @@
     "ramda": "^0.25.0",
     "react-line-progress": "^1.0.3",
     "react-list": "^0.8.8",
-    "react-onclickoutside": "^6.7.0",
     "react-pikaday-datepicker": "3.0.1",
     "redux-logger": "^3.0.6",
     "xss-filters": "^1.2.7"
