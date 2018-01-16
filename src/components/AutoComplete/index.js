@@ -114,27 +114,21 @@ class AutoComplete extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.q !== this.props.q) {
-      /* Check if the input is focused: then ignore */
-      // if (document.activeElement !== this.inputEl.input._input) {
-      // console.log('called', nextProps.q)
       this.setState({
         q: nextProps.q,
         fuzzyQuery: null,
         results: []
       })
-      // }
     }
     /* Eg: page changes with empty query */
     if (
       nextProps.q !== this.state.q &&
-      nextProps.tokens === this.props.tokens
+      nextProps.tokens === this.props.tokens &&
+      !this.state.isFocused /* Check if the input is focused: then ignore */
     ) {
-      /* Check if the input is focused: then ignore */
-      // if (document.activeElement !== this.inputEl.input._input) {
       this.setState({
         q: nextProps.q
       })
-      // }
     }
     if (nextProps.history !== this.props.history) {
       this.handleHistoryChange(nextProps.history)
