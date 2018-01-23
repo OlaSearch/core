@@ -21,6 +21,7 @@ function DocumentPages ({
   toggleDisplay
 }) {
   function onSelect (page) {
+    console.log(page, result)
     onClick && onClick(page, result)
     log({
       eventType: 'C',

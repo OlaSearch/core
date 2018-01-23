@@ -228,6 +228,7 @@ export default class Input extends React.Component {
             className='ola-clear-button'
             tabIndex='-1'
             onClick={this.onClear}
+            aria-label='Clear Search'
           />
         )}
 
@@ -255,6 +256,7 @@ export default class Input extends React.Component {
           type='button'
           className='ola-search-button'
           onClick={this.onSearchButtonClick}
+          aria-label='Search'
         />
       </div>
     )

@@ -67,10 +67,14 @@ export function prepareUserState ({ config }) {
   )
   if (searchSession === null || searchSession === undefined) {
     searchSession = uuid()
-    sessionStorage.setItem(
-      getKey(SEARCH_SESSION_KEY, config.namespace),
-      searchSession
-    )
+    try {
+      sessionStorage.setItem(
+        getKey(SEARCH_SESSION_KEY, config.namespace),
+        searchSession
+      )
+    } catch (err) {
+      console.warn(err)
+    }
   }
 
   return {

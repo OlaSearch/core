@@ -4,11 +4,13 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 import { log } from './../actions/Logger'
 
 export default function (WrappedComponent) {
-  function WithLogger (props, { store }) {
-    function logFn (params) {
-      store.dispatch(log(params))
+  class WithLogger extends React.PureComponent {
+    logFn = (params) => {
+      this.context.store.dispatch(log(params))
     }
-    return <WrappedComponent {...props} log={logFn} />
+    render () {
+      return <WrappedComponent {...this.props} log={this.logFn} />
+    }
   }
   WithLogger.contextTypes = {
     store: PropTypes.object

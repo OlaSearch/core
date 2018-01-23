@@ -3,12 +3,11 @@
   display: flex;
 
   @include media (tablet) {
-    padding-top: 1rem;
+    padding-top: 1.5rem;
   }
 }
 
   /* Results container */
   .ola-results-container {
     flex: 1;
-    padding-top: 0.5rem;
   }

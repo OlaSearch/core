@@ -13,9 +13,18 @@
       text-decoration: none;
     }
   }
+
+  line-height: $base-line-height;
 }
 
 body {
-  padding: 3rem;
+  // padding: 3rem;
   // margin: 0;
+}
+
+/* Iframe */
+.ola-iframe {
+  border: none;
+  padding: 0;
+  margin: 0;
 }

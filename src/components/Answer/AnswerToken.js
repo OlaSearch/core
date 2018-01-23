@@ -19,15 +19,15 @@ function AnswerToken (
   { config }
 ) {
   if (!answer || !answer.search || !totalResults) return null
-  /* Remove tokens that have been already added */
-  let tokens = answer.search.tokens.filter(({ name, value }) => {
+  /* Remove slots that have been already added */
+  let slots = answer.search.slots.filter(({ name, value }) => {
     return !facetQuery.some(
       ({ name: _name, selected }) =>
         _name === name && selected.indexOf(value) !== -1
     )
   })
 
-  tokens = tokens.filter(({ name, value }) => {
+  slots = slots.filter(({ name, value }) => {
     let facet = facets.filter(({ name: _name }) => _name === name)
     if (!facet.length) return false
     facet = facet.reduce((a, _) => a)
@@ -35,8 +35,8 @@ function AnswerToken (
     return facet.values.some((item) => item.name === value)
   })
 
-  /* If no tokens hide */
-  if (!tokens.length) return null
+  /* If no slots hide */
+  if (!slots.length) return null
   function handleAddToken (name, value) {
     let facet = find(propEq('name', name))(config.facets)
     addFacet(facet, value)
@@ -48,11 +48,11 @@ function AnswerToken (
    * 2. Check if value exists in the facet
    */
   return (
-    <div className='ola-answer-tokens'>
-      <span className='ola-answer-tokens-text'>
+    <div className='ola-answer-slots'>
+      <span className='ola-answer-slots-text'>
         {translate('filter_suggestions')}
       </span>
-      {tokens.map(({ name, value }, idx) => {
+      {slots.map(({ name, value }, idx) => {
         let facet = facets
           .filter(({ name: _name }) => _name === name)
           .reduce((a, _) => a)
@@ -81,7 +81,7 @@ function AnswerTokenBtn ({ name, value, displayName, handleAddToken }) {
     handleAddToken(name, value)
   }
   return (
-    <button className='ola-btn ola-btn-token-add' onClick={handleAdd}>
+    <button className='ola-btn ola-btn-slot-add' onClick={handleAdd}>
       {displayName}: {value}
     </button>
   )

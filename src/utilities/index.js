@@ -735,4 +735,3 @@ export function syncTokens (old_text, new_text, tokens) {
     }
   })
 }
-

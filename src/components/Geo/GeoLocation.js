@@ -17,7 +17,9 @@ class GeoLocation extends React.Component {
     this._debouceLocation = this.requestGeoLocation
   }
   static defaultProps = {
-    active: false
+    active: false,
+    icon: null,
+    showLabel: true,
   }
   static contextTypes = {
     config: PropTypes.object
@@ -91,10 +93,10 @@ class GeoLocation extends React.Component {
   render () {
     if (!('geolocation' in navigator)) return null
 
-    const { Context, active, translate } = this.props
+    const { Context, active, translate, showLabel } = this.props
     const { isRequestingLocation } = Context
     const isGeoEnabled = active || !!Context.location
-    const klass = classNames('ola-link-geo', {
+    const klass = classNames('ola-link-geo', this.props.className, {
       'ola-link-geo-requesting': isRequestingLocation,
       'ola-link-geo-active': isGeoEnabled
     })
@@ -111,7 +113,8 @@ class GeoLocation extends React.Component {
         onClick={this.getLocation}
         disabled={isRequestingLocation}
       >
-        <span aria-label={title}>{title}</span>
+        {this.props.icon}
+        {showLabel && <span aria-label={title}>{title}</span>}
       </button>
     )
   }

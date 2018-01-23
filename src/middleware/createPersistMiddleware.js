@@ -7,7 +7,11 @@ import {
   API_IGNORE_LOGGING
 } from './../constants/Settings'
 
-module.exports = ({ namespace, types = STATE_TYPE_KEYS, callback = debouncePersistState }) => {
+module.exports = ({
+  namespace,
+  types = STATE_TYPE_KEYS,
+  callback = debouncePersistState
+}) => {
   return ({ dispatch, getState }) => (next) => (action) => {
     /* Persist store state */
     if (types.indexOf(action.type) !== -1) {

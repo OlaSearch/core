@@ -11,7 +11,8 @@ import { requestGeoLocation } from './../actions/Context'
 import {
   FUZZY_SUGGEST_KEY,
   API_IGNORE_LOGGING,
-  INTENT_SUPPORTED_API_KEYS
+  INTENT_SUPPORTED_API_KEYS,
+  IGNORE_INTENTS
 } from './../constants/Settings'
 
 module.exports = (options = {}) => {
@@ -109,7 +110,7 @@ module.exports = (options = {}) => {
     const params = proxy
       ? {
         ...query,
-        bot, /* Send to the intent engine */
+        bot /* Send to the intent engine */,
         ...(skipIntentEngine ? { skip_intent: true } : {}),
         ...payload.extraParams,
         ...(payload.answer ? { answer: payload.answer } : {}),
@@ -239,7 +240,7 @@ module.exports = (options = {}) => {
            */
           let facetQuery = currentState.QueryState.facet_query
           if (
-            !bot && /* Do not fill facet_query if its from bot */
+            !bot /* Do not fill facet_query if its from bot */ &&
             answer &&
             answer.search &&
             answer.search.facet_query &&
@@ -269,6 +270,7 @@ module.exports = (options = {}) => {
            * Check for location
            */
           if (
+            !bot &&
             answer &&
             answer.location /* Check if the intent requires location */ &&
             !currentState.Context
@@ -296,11 +298,16 @@ module.exports = (options = {}) => {
            * Check if
            * Total results = 0 && Has Spell Suggestions
            */
+          /**
+           * Check if 
+           * answer exists
+           *  answer && answer.itentn
+           */
           if (
             totalResults === 0 &&
             spellSuggestions.length &&
             !enrichedQuery &&
-            !(answer && (answer.card !== null || answer.reply || answer.intent))
+            !(answer && answer.intent && IGNORE_INTENTS.indexOf(answer.intent) === -1)
           ) {
             let { term } = spellSuggestions[0]
             return dispatch({

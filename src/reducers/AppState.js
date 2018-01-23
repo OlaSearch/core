@@ -71,11 +71,6 @@ export default (state: State = initialState, action: Object) => {
       }
 
     case types.REQUEST_SEARCH_SUCCESS:
-      /* If its from bot, do nothing */
-      if (action.payload.bot) return {
-        ...state,
-        isLoading: false,
-      }
       var {
         results,
         payload,
@@ -323,9 +318,11 @@ export default (state: State = initialState, action: Object) => {
 
     case types.REQUEST_MC_SUCCESS:
       /* Is the bot requesting for MC */
-      if (action.payload.bot) return {
-        ...state,
-        isLoadingMc: false
+      if (action.payload.bot) {
+        return {
+          ...state,
+          isLoadingMc: false
+        }
       }
       return {
         ...state,

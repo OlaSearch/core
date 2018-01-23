@@ -1,20 +1,24 @@
 $base-color: #333;
 $base-font-size: 16px;
-$base-font-family: Helvetica, Arial, sans-serif;
+$base-font-family: Helvetica, Arial, sans-serif !default;
+$base-line-height: 1.5;
 $base-border-color: #ddd;
 $base-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 $base-grey-color: #888;
 $base-border-radius: 3px;
 
 /* Brand */
-$brand-color: #3F51B5;
+$brand-color: #3F51B5 !default;
+
+/* Progress bar */
+$progress-bar-color: #f86936 !default;
 
 /* Links */
-$link-color: #3F51B5;
-$link-hover-color: #1A237E;
+$link-color: #3F51B5 !default;
+$link-hover-color: #1A237E !default;
 
 /* Primary button */
-$button-primary-background: #3F51B5;
+$button-primary-background: #3F51B5 !default;
 $button-primary-color: white;
 $button-padding: 0.5rem 1rem;
 
@@ -47,7 +51,7 @@ $pagination-button-height: 40px;
 $input-tag-bg: #eef7fd;
 
 /* Colors */
-$color-highlight: #ffc;
+$color-highlight: #ffc !default;
 
 /* Fields */
 $field-title-font-size: 18px;

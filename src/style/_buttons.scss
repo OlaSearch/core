@@ -148,3 +148,14 @@
 .ola-cta-button {
   @extend .ola-btn-primary;
 }
+
+/* Full width */
+.ola-btn-fullwidth {
+  width: 100%;
+  text-align: center;
+}
+
+/* Pages */
+.ola-link-view-pages {
+  cursor: pointer;
+}

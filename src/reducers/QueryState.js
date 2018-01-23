@@ -27,7 +27,7 @@ export const initialState = {
   q: '',
   enriched_q: '' /* From Intent engine */,
   page: 1,
-  per_page: 12,
+  per_page: 3,
   facet_query: [],
   sort: '',
   filters: [],

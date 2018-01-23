@@ -21,3 +21,20 @@
     opacity: 0;
   }
 }
+
+/* Modal close */
+.ola-modal-close {
+  @extend %ola-icon-button;
+  position: absolute;
+  right: 0;
+  top: 0;
+  &, &:hover {
+    background: #eee;
+  }
+  cursor: pointer;
+  height: 40px;
+  &:before {
+    @extend .iconfont;
+    content: 'close';
+  }
+}

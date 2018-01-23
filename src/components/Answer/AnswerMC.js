@@ -18,7 +18,9 @@ class AnswerMC extends React.Component {
     if (prevProps.mc.key !== this.props.mc.key) this.fetch()
   }
   getSnippet = (answer) => {
-    let { snippet, highlight } = answer
+    let { snippet, highlight, highlight_confidence: highlightConfidence } = answer
+    if (highlightConfidence < this.props.highlightConfidenceThreshold) return createHTMLMarkup(snippet)
+    
     let html = snippet.replace(
       new RegExp('(' + highlight.split(' ').join('.*?') + ')', 'gi'),
       '<strong>$1</strong>'
@@ -28,18 +30,20 @@ class AnswerMC extends React.Component {
   static defaultProps = {
     mc: {},
     payload: {},
-    loader: null
+    loader: null,
+    confidenceThreshold: 0.4,
+    highlightConfidenceThreshold: 0.1
   }
   render () {
-    if (this.props.isLoading && this.props.loader) {
+    if (this.props.isLoadingMc && this.props.loader) {
       return this.props.loader
     }
-    let { mc } = this.props
+    let { mc, confidenceThreshold, facetQuery, isLoading, suggestedTerm } = this.props
     let { answer } = mc
-    if (!answer) return null
-    let { snippet, url, title, confidence } = answer
+    if (suggestedTerm || !answer || facetQuery.length > 0 || isLoading) return null
+    let { snippet, url, title, snippet_confidence: confidence } = answer
     /* Do not show answers that are of low confidence */
-    if (confidence < 0.2) return null
+    if (confidence < confidenceThreshold) return null
     return (
       <div className='ola-snippet ola-snippet-mc'>
         <div className='ola-snippet-inner'>
@@ -57,7 +61,11 @@ class AnswerMC extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    isLoading: state.AppState.isLoadingMc
+    isLoadingMc: state.AppState.isLoadingMc,
+    isLoading: state.AppState.isLoading,
+    facetQuery: state.QueryState.facet_query,
+    /* If its a spelling mistake */
+    suggestedTerm: state.AppState.suggestedTerm
   }
 }
 

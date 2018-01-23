@@ -53,6 +53,24 @@ export const DATEPICKER_YEAR_RANGE = 20
 export const DEFAULT_RANGE_TEMPLATE = '{name}: {from} - {to}'
 export const DEFAULT_DISPLAY_DATE_FORMAT = 'DD MMMM YYYY'
 
+export const FEEDBACK_INTENT = 'OLA.FeedbackIntent'
+export const HELP_INTENT = 'OLA.HelpIntent'
+export const PROFANITY_INTENT = 'OLA.ProfanityIntent'
+export const UNFILFILLED_INTENT = 'OLA.UnfulfilledIntent'
+export const WELCOME_INTENT = 'OLA.WelcomeIntent'
+export const NONE_INTENT = 'OLA.NoneIntent'
+export const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
+
+export const IGNORE_INTENTS = [
+  FEEDBACK_INTENT,
+  HELP_INTENT,
+  PROFANITY_INTENT,
+  UNFILFILLED_INTENT,
+  WELCOME_INTENT,
+  DISAMBIGUATION_INTENT_NAME,
+  NONE_INTENT
+]
+
 /**
  * Search Input types
  * SPELL_CORRECT: 'spell_suggestion',  Use suggestedTerm in logs to filter these
