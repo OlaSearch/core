@@ -5,7 +5,7 @@ import {
   removeFacetItem
 } from './../../actions/Search'
 import withToggle from './../../decorators/withToggle'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
 import { toNestedArray } from './../../utilities'
 import xssFilters from 'xss-filters'
@@ -190,4 +190,4 @@ function CheckBoxItem ({ value, handleAddFacet, handleRemoveFacet, isActive }) {
   )
 }
 
-module.exports = injectTranslate(withToggle(HierarchicalFilter))
+module.exports = withTranslate(withToggle(HierarchicalFilter))

@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 
 function Translate ({ id, translate, tagName }) {
   return React.createElement(tagName, null, translate(id))
@@ -9,4 +9,4 @@ Translate.defaultProps = {
   tagName: 'span'
 }
 
-module.exports = injectTranslate(Translate)
+module.exports = withTranslate(Translate)

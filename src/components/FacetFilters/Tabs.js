@@ -8,7 +8,7 @@ import {
 } from './../../actions/Search'
 import classNames from 'classnames'
 import { getDisplayName } from './../../utilities'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
@@ -181,4 +181,4 @@ function TabItem ({ facet, value, isActive, handleClick }) {
   )
 }
 
-module.exports = injectTranslate(TabsFilter)
+module.exports = withTranslate(TabsFilter)

@@ -24,8 +24,14 @@ class AnswerMC extends React.Component {
       highlight,
       highlight_confidence: highlightConfidence
     } = answer
-    if (highlightConfidence < this.props.highlightConfidenceThreshold) { return createHTMLMarkup(snippet) }
-
+    if (highlightConfidence < this.props.highlightConfidenceThreshold) {
+      return createHTMLMarkup(snippet)
+    }
+    console.log(
+      highlight,
+      '(' + highlight.split(' ').join('.*?') + ')',
+      snippet
+    )
     let html = snippet.replace(
       new RegExp('(' + highlight.split(' ').join('.*?') + ')', 'gi'),
       '<strong>$1</strong>'
@@ -45,18 +51,15 @@ class AnswerMC extends React.Component {
     if (this.props.isLoadingMc && this.props.loader) {
       return this.props.loader
     }
-    let {
-      mc,      
-      facetQuery,
-      isLoading,
-      suggestedTerm
-    } = this.props
+    let { mc, facetQuery, isLoading, suggestedTerm } = this.props
     let { mcThreshold = 0.4 } = this.context.config
     /* Always parse threshold */
     mcThreshold = parseFloat(mcThreshold)
 
     let { answer } = mc
-    if (suggestedTerm || !answer || facetQuery.length > 0 || isLoading) { return null }
+    if (suggestedTerm || !answer || facetQuery.length > 0 || isLoading) {
+      return null
+    }
     let { snippet, url, title, snippet_confidence: confidence } = answer
     /* Do not show answers that are of low confidence */
     if (confidence < mcThreshold) return null

@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 
 function TermSuggestion ({ term, answer, totalResults, translate, className }) {
   if (!term) return null
@@ -19,4 +19,4 @@ function TermSuggestion ({ term, answer, totalResults, translate, className }) {
   )
 }
 
-module.exports = injectTranslate(TermSuggestion)
+module.exports = withTranslate(TermSuggestion)

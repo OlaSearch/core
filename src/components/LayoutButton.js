@@ -3,7 +3,7 @@ import cx from 'classnames'
 import { connect } from 'react-redux'
 import { toggleView } from './../actions/Ui'
 import { getNextView } from './../utilities'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 
 function LayoutButton ({ toggleView, facets, view, translate }) {
   const nextView = getNextView(view)
@@ -30,5 +30,5 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps, { toggleView })(
-  injectTranslate(LayoutButton)
+  withTranslate(LayoutButton)
 )

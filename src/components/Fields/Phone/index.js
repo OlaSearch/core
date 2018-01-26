@@ -1,6 +1,6 @@
 import React from 'react'
 import { sanitizePhone } from './../../../utilities'
-import injectTranslate from './../../../decorators/injectTranslate'
+import withTranslate from './../../../decorators/withTranslate'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
 
@@ -47,4 +47,4 @@ function Phone (props) {
   )
 }
 
-module.exports = withLogger(injectTranslate(Phone))
+module.exports = withLogger(withTranslate(Phone))

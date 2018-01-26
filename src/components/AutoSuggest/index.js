@@ -16,7 +16,7 @@ import SpellSuggestion from './../SpellSuggestion'
 import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import { checkForAllowedCharacters, trim } from './../../utilities'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 
@@ -296,5 +296,5 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps)(
-  injectTranslate(listensToClickOutside(AutoSuggest))
+  withTranslate(listensToClickOutside(AutoSuggest))
 )

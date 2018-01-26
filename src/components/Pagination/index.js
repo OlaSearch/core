@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 
 class Pagination extends React.Component {
   static defaultProps = {
@@ -171,4 +171,4 @@ function PageNumber ({ page, isActive, selectPage }) {
   )
 }
 
-module.exports = injectTranslate(Pagination)
+module.exports = withTranslate(Pagination)

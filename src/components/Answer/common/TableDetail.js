@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../../decorators/injectTranslate'
+import withTranslate from './../../../decorators/withTranslate'
 import withToggle from './../../../decorators/withToggle'
 import { createHTMLMarkup } from './../../../utilities'
 
@@ -62,4 +62,4 @@ TableDetail.defaultProps = {
   max: 5
 }
 
-module.exports = injectTranslate(withToggle(TableDetail))
+module.exports = withTranslate(withToggle(TableDetail))

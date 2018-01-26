@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { updateQueryTerm, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
 function SpellSuggestion (props) {
@@ -66,4 +66,4 @@ function TermItem ({ item, showCount, handleClick }) {
   )
 }
 
-module.exports = injectTranslate(SpellSuggestion)
+module.exports = withTranslate(SpellSuggestion)

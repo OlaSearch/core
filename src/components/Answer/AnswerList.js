@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import withToggle from './../../decorators/withToggle'
 import AnswerField from './AnswerField'
 import AnswerButton from './AnswerButton'
@@ -56,4 +56,4 @@ AnswerList.defaultProps = {
   max: 3
 }
 
-module.exports = injectTranslate(withToggle(AnswerList))
+module.exports = withTranslate(withToggle(AnswerList))

@@ -2,7 +2,7 @@ import React from 'react'
 import GeoLocation from './GeoLocation'
 import { connect } from 'react-redux'
 import { executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 
 const GeoNotify = ({ answer, location, executeSearch, isPhone, translate }) => {
   /* Does the intent require user's location */
@@ -28,6 +28,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = injectTranslate(
+module.exports = withTranslate(
   connect(mapStateToProps, { executeSearch })(GeoNotify)
 )

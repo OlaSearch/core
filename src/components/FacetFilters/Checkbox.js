@@ -7,7 +7,7 @@ import {
   executeSearch
 } from './../../actions/Search'
 import withToggle from './../../decorators/withToggle'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
@@ -258,4 +258,4 @@ function CheckBoxItem (props) {
   )
 }
 
-module.exports = injectTranslate(withToggle(CheckboxFilter))
+module.exports = withTranslate(withToggle(CheckboxFilter))

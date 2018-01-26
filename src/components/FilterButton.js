@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 
 function FilterButton ({ toggleSidebar, facets, isSidebarOpen, translate }) {
   const hasFilter = facets.some((item) => item.values.length > 0)
@@ -37,5 +37,5 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps, { toggleSidebar })(
-  injectTranslate(FilterButton)
+  withTranslate(FilterButton)
 )

@@ -1,5 +1,5 @@
 import React from 'react'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 
 function NoBookmarks ({ translate, bookmarks }) {
   if (bookmarks.length) return null
@@ -10,4 +10,4 @@ function NoBookmarks ({ translate, bookmarks }) {
   )
 }
 
-export default injectTranslate(NoBookmarks)
+export default withTranslate(NoBookmarks)

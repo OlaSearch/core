@@ -10,7 +10,7 @@ import History from './History'
 import SpeechInput from './Speech'
 import { debounce, trim } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 import Zone from './Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../constants/Settings'
@@ -195,4 +195,4 @@ module.exports = connect(mapStateToProps, {
   updateQueryTerm,
   executeSearch,
   clearQueryTerm
-})(injectTranslate(InstantSearchForm))
+})(withTranslate(InstantSearchForm))

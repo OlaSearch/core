@@ -7,7 +7,7 @@ import {
   requestGeoLocation
 } from './../../actions/Context'
 import { executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import { log } from './../../actions/Logger'
 
 class GeoLocation extends React.Component {
@@ -133,4 +133,4 @@ module.exports = connect(mapStateToProps, {
   log,
   removeContextLocation,
   requestGeoLocation
-})(injectTranslate(GeoLocation))
+})(withTranslate(GeoLocation))

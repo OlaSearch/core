@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 
 function Error ({ error, translate }) {
   if (!error) return null
@@ -30,4 +30,4 @@ Error.propTypes = {
   error: PropTypes.object
 }
 
-module.exports = injectTranslate(Error)
+module.exports = withTranslate(Error)

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 import GeoNotify from './Geo/GeoNotify'
 
 function SearchTitle (
@@ -40,4 +40,4 @@ SearchTitle.contextTypes = {
   config: PropTypes.object
 }
 
-module.exports = injectTranslate(SearchTitle)
+module.exports = withTranslate(SearchTitle)

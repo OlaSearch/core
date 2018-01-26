@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
 import { addFacet, executeSearch } from './../../actions/Search'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 
 function AnswerToken (
   {
@@ -18,7 +18,7 @@ function AnswerToken (
   },
   { config }
 ) {
-  if (!answer || !answer.search || !answer.search.slots || !totalResults) return null
+  if (!answer || !answer.search || !answer.search.slots || !totalResults) { return null }
   /* Remove slots that have been already added */
   let slots = answer.search.slots.filter(({ name, value }) => {
     return !facetQuery.some(
@@ -101,5 +101,5 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps, { addFacet, executeSearch })(
-  injectTranslate(AnswerToken)
+  withTranslate(AnswerToken)
 )

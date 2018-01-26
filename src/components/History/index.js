@@ -5,7 +5,7 @@ import { clearHistory } from './../../actions/History'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import { log } from './../../actions/Logger'
 import { sortHistory } from './../../utilities'
 
@@ -137,7 +137,7 @@ function mapStateToProps (state) {
 }
 
 const HistoryContainer = connect(mapStateToProps)(
-  injectTranslate(listensToClickOutside(History))
+  withTranslate(listensToClickOutside(History))
 )
 const HistoryWrapper = (
   props,

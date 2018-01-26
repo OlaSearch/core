@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 
 function PopularKeywords ({ onClick, translate }, context) {
   let { popularKeywords } = context.config
@@ -36,4 +36,4 @@ function PopularKeywordItem ({ keyword, onClick }) {
   )
 }
 
-module.exports = injectTranslate(PopularKeywords)
+module.exports = withTranslate(PopularKeywords)

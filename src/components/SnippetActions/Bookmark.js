@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import classnames from 'classnames'
 import { log } from './../../actions/Logger'
 
@@ -83,4 +83,4 @@ class BookmarkActions extends React.Component {
   }
 }
 
-module.exports = injectTranslate(BookmarkActions)
+module.exports = withTranslate(BookmarkActions)

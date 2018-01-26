@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createAlert, deleteAlert } from './../../actions/Alert'
 import cx from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import withLogger from './../../decorators/withLogger'
 
 const AddAlert = ({
@@ -60,4 +60,4 @@ function mapStateToProps (state) {
 module.exports = connect(mapStateToProps, {
   createAlert,
   deleteAlert
-})(withLogger(injectTranslate(AddAlert)))
+})(withLogger(withTranslate(AddAlert)))

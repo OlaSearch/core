@@ -1,6 +1,6 @@
 import React from 'react'
 import ListKeyValue from './common/ListKeyValue'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import withToggle from './../../decorators/withToggle'
 
 function AnswerPersonInfoDetail ({
@@ -52,4 +52,4 @@ AnswerPersonInfoDetail.defaultProps = {
   max: 6
 }
 
-module.exports = injectTranslate(withToggle(AnswerPersonInfoDetail))
+module.exports = withTranslate(withToggle(AnswerPersonInfoDetail))

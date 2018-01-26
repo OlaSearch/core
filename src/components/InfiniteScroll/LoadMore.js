@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import ChevronDown from '@olasearch/icons/lib/chevron-down'
 
 function LoadMore ({
@@ -52,4 +52,4 @@ LoadMore.defaultProps = {
   isLoading: false
 }
 
-module.exports = injectTranslate(LoadMore)
+module.exports = withTranslate(LoadMore)

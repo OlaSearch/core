@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
 
 function NoResults ({
@@ -79,4 +79,4 @@ NoResults.propTypes = {
   facets: PropTypes.array
 }
 
-module.exports = injectTranslate(NoResults)
+module.exports = withTranslate(NoResults)

@@ -1,7 +1,7 @@
 import React from 'react'
 import TextField from './../TextField'
 import classNames from 'classnames'
-import injectTranslate from './../../../decorators/injectTranslate'
+import withTranslate from './../../../decorators/withTranslate'
 import withToggle from './../../../decorators/withToggle'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
@@ -101,4 +101,4 @@ function PageDetail ({ page, contentField, onSelectPage }) {
   )
 }
 
-module.exports = injectTranslate(withLogger(withToggle(DocumentPages)))
+module.exports = withTranslate(withLogger(withToggle(DocumentPages)))

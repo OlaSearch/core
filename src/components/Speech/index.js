@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import { log } from './../../actions/Logger'
 
 class SpeechInput extends React.Component {
@@ -134,4 +134,4 @@ class SpeechInput extends React.Component {
   }
 }
 
-module.exports = injectTranslate(SpeechInput)
+module.exports = withTranslate(SpeechInput)

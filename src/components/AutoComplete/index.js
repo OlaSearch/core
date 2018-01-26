@@ -31,7 +31,7 @@ import {
   getWordPosition,
   syncTokens
 } from './../../utilities'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
@@ -875,4 +875,4 @@ module.exports = connect(mapStateToProps, {
   replaceTokens,
   removeTokenFacets,
   removeIntentEngineFacets
-})(injectTranslate(listensToClickOutside(AutoComplete)))
+})(withTranslate(listensToClickOutside(AutoComplete)))

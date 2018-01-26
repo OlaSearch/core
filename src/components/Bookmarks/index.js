@@ -5,7 +5,7 @@ import { removeBookmark } from './../../actions/Bookmarks'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
-import injectTranslate from './../../decorators/injectTranslate'
+import withTranslate from './../../decorators/withTranslate'
 import { log } from './../../actions/Logger'
 import NoBookmarks from './NoBookmarks'
 
@@ -125,7 +125,7 @@ function mapStateToProps (state) {
 }
 
 const BookmarksContainer = connect(mapStateToProps)(
-  injectTranslate(listensToClickOutside(Bookmarks))
+  withTranslate(listensToClickOutside(Bookmarks))
 )
 const BookMarksWrapper = (props, { config: { bookmarking } }) => {
   if (bookmarking) return <BookmarksContainer {...props} />

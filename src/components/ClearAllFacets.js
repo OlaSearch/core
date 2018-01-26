@@ -1,6 +1,6 @@
 import React from 'react'
 import { removeAllFacets, executeSearch } from './../actions/Search'
-import injectTranslate from './../decorators/injectTranslate'
+import withTranslate from './../decorators/withTranslate'
 
 function ClearAllFacets ({ selected, dispatch, translate }) {
   function handleClick () {
@@ -19,4 +19,4 @@ function ClearAllFacets ({ selected, dispatch, translate }) {
   )
 }
 
-module.exports = injectTranslate(ClearAllFacets)
+module.exports = withTranslate(ClearAllFacets)

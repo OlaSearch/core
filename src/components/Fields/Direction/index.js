@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import injectTranslate from './../../../decorators/injectTranslate'
+import withTranslate from './../../../decorators/withTranslate'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
 
@@ -90,4 +90,4 @@ Directions.defaultProps = {
   fieldLabel: null
 }
 
-module.exports = injectTranslate(withLogger(Directions))
+module.exports = withTranslate(withLogger(Directions))
