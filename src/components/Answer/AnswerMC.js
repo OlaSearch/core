@@ -18,6 +18,16 @@ class AnswerMC extends React.Component {
   componentDidUpdate (prevProps) {
     if (prevProps.mc.key !== this.props.mc.key) this.fetch()
   }
+  createRegex = (term) => {
+    let arr = term.split(/\s/gi)
+    let o = []
+    for (let i = 0; i < arr.length; i++){
+      o.push(arr[i])
+      if (arr[i].length < 2) o.push('\\s')
+      else o.push('.*?')      
+    }
+    return o.join('')
+  }
   getSnippet = (answer) => {
     let {
       snippet,
@@ -27,15 +37,11 @@ class AnswerMC extends React.Component {
     if (highlightConfidence < this.props.highlightConfidenceThreshold) {
       return createHTMLMarkup(snippet)
     }
-    console.log(
-      highlight,
-      '(' + highlight.split(' ').join('.*?') + ')',
-      snippet
-    )
     let html = snippet.replace(
-      new RegExp('(' + highlight.split(' ').join('.*?') + ')', 'gi'),
+      new RegExp('(' + this.createRegex(highlight) + ')', 'gi'),
       '<strong>$1</strong>'
     )
+    console.log(html)
     return createHTMLMarkup(html)
   }
   static contextTypes = {
