@@ -467,7 +467,7 @@ export function changeEnvironment (env) {
  */
 export function initSearch ({ config, urlSync = true, payload = {} }) {
   return (dispatch, getState) => {
-    let { history, filters, searchOnLoad = true } = config
+    let { history, searchOnLoad = true } = config
 
     /* History type: pushState or hash */
     historyType = history || historyType
@@ -484,14 +484,6 @@ export function initSearch ({ config, urlSync = true, payload = {} }) {
 
     /* Global setting */
     globalRouteChange = urlSync
-
-    /* Add filters */
-    if (filters) {
-      for (let i = 0, len = filters.length; i < len; i++) {
-        let { selected } = filters[i]
-        dispatch(addFilter({ filter: filters[i], selected }))
-      }
-    }
 
     /* De-activate search if searchOnLoad is false */
     if (!searchOnLoad) {

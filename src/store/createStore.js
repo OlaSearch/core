@@ -5,6 +5,7 @@ import createPersistMiddleware from './../middleware/createPersistMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
 import { prepareUserState } from './prepareStore'
+import { addFilter } from './../actions/Search'
 
 /**
  * Signature
@@ -48,7 +49,7 @@ module.exports = (
     queryBuilder: new QueryBuilder(config) /* For olaMiddleware */,
     searchService: new Http(config) /* For olaMiddleware */
   }
-  const { namespace, env, projectId } = config
+  const { namespace, env, projectId, filters } = config
   const olaMiddleWare = createOlaMiddleware(options)
   const persistMiddleware = createPersistMiddleware({ namespace })
 
@@ -95,6 +96,7 @@ module.exports = (
   const { userSession, searchSession, isNewUser, ...rest } = prepareUserState({
     config
   })
+
   /**
    * Rehydrate store
    */
@@ -108,6 +110,16 @@ module.exports = (
     env,
     ...rest
   })
+
+  /**
+   * Do we need to add any filters
+   */
+  if (filters && filters.length) {
+    for (let i = 0, len = filters.length; i < len; i++) {
+      let { selected } = filters[i]
+      store.dispatch(addFilter({ filter: filters[i], selected }))
+    }
+  }
 
   return store
 }

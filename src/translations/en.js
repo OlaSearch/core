@@ -54,7 +54,7 @@ module.exports = {
     error_general_description: 'Please email us at support@olasearch.com',
 
     /* Document */
-    doc_view_pages: 'View more',
+    doc_view_pages: 'View pages',
     doc_hide_pages: 'Hide',
 
     /* Answers */

@@ -299,7 +299,7 @@ module.exports = (options = {}) => {
            * Total results = 0 && Has Spell Suggestions
            */
           /**
-           * Check if 
+           * Check if
            * answer exists
            *  answer && answer.itentn
            */
@@ -307,7 +307,11 @@ module.exports = (options = {}) => {
             totalResults === 0 &&
             spellSuggestions.length &&
             !enrichedQuery &&
-            !(answer && answer.intent && IGNORE_INTENTS.indexOf(answer.intent) === -1)
+            !(
+              answer &&
+              answer.intent &&
+              IGNORE_INTENTS.indexOf(answer.intent) === -1
+            )
           ) {
             let { term } = spellSuggestions[0]
             return dispatch({
@@ -318,7 +322,11 @@ module.exports = (options = {}) => {
               },
               suggestedTerm: term,
               api,
-              payload,
+              payload: {
+                ...payload,
+                originalQuery: query.q
+              },
+              processData,
               context,
               responseTime,
               facetQuery
