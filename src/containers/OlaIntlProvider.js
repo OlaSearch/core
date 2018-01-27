@@ -28,10 +28,10 @@ class OlaIntlProvider extends React.Component {
     let finalResult = supplant(result, placeholders)
     return isHTML
       ? React.createElement(
-          tagName,
-          { dangerouslySetInnerHTML: createHTMLMarkup(finalResult) },
-          null
-        )
+        tagName,
+        { dangerouslySetInnerHTML: createHTMLMarkup(finalResult) },
+        null
+      )
       : finalResult
   }
   getChildContext () {

@@ -14,9 +14,9 @@ function Storage (type) {
     if (data) {
       try {
         data = JSON.parse(data)
-      } catch (err) { }
+      } catch (err) {}
       return data
-    } 
+    }
     return {}
   }
 

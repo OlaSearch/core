@@ -215,7 +215,7 @@ export function parseQueryString (initialState, config) {
     })
 
     filtersObject = {
-      filters: [...defaultFilters, ...filterQuery ]
+      filters: [...defaultFilters, ...filterQuery]
     }
   }
 

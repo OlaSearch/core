@@ -21,10 +21,10 @@ class AnswerMC extends React.Component {
   createRegex = (term) => {
     let arr = term.split(/\s/gi)
     let o = []
-    for (let i = 0; i < arr.length; i++){
+    for (let i = 0; i < arr.length; i++) {
       o.push(arr[i])
       if (arr[i].length < 2) o.push('\\s')
-      else o.push('.*?')      
+      else o.push('.*?')
     }
     return o.join('')
   }

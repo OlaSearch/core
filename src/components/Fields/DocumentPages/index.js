@@ -61,14 +61,14 @@ function DocumentPages ({
       </a>
       {isCollapsed
         ? pages.map((page, idx) => (
-            <PageDetail
-              onSelectPage={onSelect}
-              page={page}
-              contentField={contentField}
-              key={idx}
-              q={q}
-            />
-          ))
+          <PageDetail
+            onSelectPage={onSelect}
+            page={page}
+            contentField={contentField}
+            key={idx}
+            q={q}
+          />
+        ))
         : null}
     </div>
   )

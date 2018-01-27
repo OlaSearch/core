@@ -125,11 +125,11 @@ module.exports = (options = {}) => {
       : api === FUZZY_SUGGEST_KEY
         ? { ...query, ...payload.extraParams }
         : queryBuilder.transform(
-            { ...query, ...payload.extraParams },
-            null,
-            acl,
-            context
-          )
+          { ...query, ...payload.extraParams },
+          null,
+          acl,
+          context
+        )
 
     const shouldLog = meta.log !== false
     const apiOptions = meta.apiOptions ? meta.apiOptions : null

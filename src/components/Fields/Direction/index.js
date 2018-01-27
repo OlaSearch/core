@@ -38,8 +38,8 @@ function Directions (props) {
   const distanceValue = result[distanceFieldName]
   const distance = distanceValue
     ? `${parseFloat(Math.round(distanceValue * 100) / 100).toFixed(
-        2
-      )} ${translate('distance_unit')}`
+      2
+    )} ${translate('distance_unit')}`
     : null
 
   function handleClick (event) {

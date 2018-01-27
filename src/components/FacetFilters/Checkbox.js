@@ -152,11 +152,11 @@ class CheckboxFilter extends React.Component {
           item === ALL_VALUES
             ? totalValueCount
             : acceptedValues
-                .filter(({ name }) => name === item)
-                .reduce((acc, item) => {
-                  acc += item.count
-                  return acc
-                }, 0)
+              .filter(({ name }) => name === item)
+              .reduce((acc, item) => {
+                acc += item.count
+                return acc
+              }, 0)
       }))
       originalSize = values.length
     }

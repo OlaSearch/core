@@ -18,7 +18,9 @@ function AnswerToken (
   },
   { config }
 ) {
-  if (!answer || !answer.search || !answer.search.slots || !totalResults) { return null }
+  if (!answer || !answer.search || !answer.search.slots || !totalResults) {
+    return null
+  }
   /* Remove slots that have been already added */
   let slots = answer.search.slots.filter(({ name, value }) => {
     return !facetQuery.some(

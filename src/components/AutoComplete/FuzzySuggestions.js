@@ -30,29 +30,29 @@ export default function Suggestions ({ q, results, fieldLabels, ...rest }) {
       {isFacet
         ? Object.keys(groups).map((key) => {
           return (
-              <div key={key}>
-                <div className='ola-suggestion-header'>{key}</div>
-                {groups[key].map((result, idx) => (
-                  <SuggestionItem
-                    key={idx}
-                    index={idx}
-                    q={q}
-                    result={result}
-                    {...rest}
-                  />
-                ))}
-              </div>
+            <div key={key}>
+              <div className='ola-suggestion-header'>{key}</div>
+              {groups[key].map((result, idx) => (
+                <SuggestionItem
+                  key={idx}
+                  index={idx}
+                  q={q}
+                  result={result}
+                  {...rest}
+                />
+              ))}
+            </div>
           )
         })
         : results.map((result, idx) => (
-            <SuggestionItem
-              key={idx}
-              index={idx}
-              q={q}
-              result={result}
-              {...rest}
-            />
-          ))}
+          <SuggestionItem
+            key={idx}
+            index={idx}
+            q={q}
+            result={result}
+            {...rest}
+          />
+        ))}
     </div>
   )
 }
