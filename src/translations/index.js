@@ -1,3 +1,1 @@
-module.exports = {
-  en: require('./en')
-}
+export en from './en'

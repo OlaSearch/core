@@ -1,7 +1,7 @@
 import React, { Children } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import baseTranslations from './../translations'
+import * as baseTranslations from './../translations'
 import { supplant, translateKey, createHTMLMarkup } from './../utilities'
 
 class OlaIntlProvider extends React.Component {

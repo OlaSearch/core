@@ -18,13 +18,13 @@ import { addFilter } from './../actions/Search'
  * )
  */
 
-module.exports = (
+export default function (
   config,
   searchProvider,
   reducers = {},
   middlewares = [],
   enhancers = []
-) => {
+) {
   if (!config) {
     throw new Error(
       'Invalid: Could not find config while creating store in `createStore`'

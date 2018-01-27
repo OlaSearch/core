@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   /* Query */
   UPDATE_QUERY_TERM: 'UPDATE_QUERY_TERM',
   CLEAR_QUERY_TERM: 'CLEAR_QUERY_TERM',

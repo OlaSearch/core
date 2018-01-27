@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   locales: 'en-US',
   messages: {
     title: 'Search results',

@@ -15,7 +15,7 @@ import {
   IGNORE_INTENTS
 } from './../constants/Settings'
 
-module.exports = (options = {}) => {
+export default function (options = {}) {
   return ({ dispatch, getState }) => (next) => (action) => {
     const {
       types,
