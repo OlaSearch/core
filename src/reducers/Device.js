@@ -51,8 +51,5 @@ var initialState = {
 }
 
 export default (state: State = initialState, action: Object) => {
-  switch (action.type) {
-    default:
-      return state
-  }
+  return state
 }

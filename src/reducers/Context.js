@@ -25,6 +25,7 @@ export const initialState = {
   isRequestingLocation: false,
   hasRequestedLocation: false,
 
+  /* User information */
   userSession: null,
   searchSession: null,
   userId: null,

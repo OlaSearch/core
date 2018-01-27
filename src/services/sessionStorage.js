@@ -1,61 +1,8 @@
 /**
- * sessionStorage polyfill
+ * Due to full browser support
+ * https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
+ *
+ * Polyfill removed on 27/01/2018
  */
-function Storage (type) {
-  function setData (data) {
-    data = JSON.stringify(data)
-    window.name = data
-  }
-  function clearData () {
-    window.name = ''
-  }
-  function getData () {
-    var data = window.name /* On node env, name => 'nodejs' */
-    if (data) {
-      try {
-        data = JSON.parse(data)
-      } catch (err) {}
-      return data
-    }
-    return {}
-  }
 
-  // initialise if there's already data
-  var data = getData()
-
-  return {
-    length: 0,
-    clear () {
-      data = {}
-      this.length = 0
-      clearData()
-    },
-    getItem (key) {
-      return data[key] === undefined ? null : data[key]
-    },
-    key (i) {
-      // not perfect, but works
-      var ctr = 0
-      for (var k in data) {
-        if (ctr === i) return k
-        else ctr++
-      }
-      return null
-    },
-    removeItem (key) {
-      delete data[key]
-      this.length--
-      setData(data)
-    },
-    setItem (key, value) {
-      data[key] = value + '' // forces the value to a string
-      this.length++
-      setData(data)
-    }
-  }
-}
-
-module.exports =
-  typeof window.sessionStorage !== 'undefined'
-    ? window.sessionStorage
-    : new Storage()
+module.exports = window.sessionStorage

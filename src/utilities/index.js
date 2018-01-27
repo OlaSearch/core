@@ -10,6 +10,14 @@ import {
 } from './../constants/Settings'
 import xssFilters from 'xss-filters'
 
+/**
+ * Returns string substituted with placeholders supplied
+ * @param  {string} s String to substitute
+ * @param  {object}
+ * @return {string}
+ *
+ * Example: supplant('Hello {name}', { name: 'John Doe' })
+ */
 export function supplant (s, d) {
   for (var p in d) {
     s = s.replace(new RegExp('{' + p + '}', 'g'), d[p])
@@ -17,15 +25,33 @@ export function supplant (s, d) {
   return s
 }
 
+/**
+ * Joins an array with a custom separator
+ * @param  {string} suffix
+ * @param  {Object[]} arr
+ * @param  {string} separator
+ * @return {string}
+ *
+ * Example: arrayJoin('Names: ', ['John', 'Doe'], ',')
+ */
 export function arrayJoin (suffix, arr, separator = ', ') {
   if (!Array.isArray(arr)) return arr
   return (suffix || '') + arr.join(separator)
 }
 
+/**
+ * Check if facet has already been selected
+ * @param  {Object[]} facets
+ * @param  {string} name
+ * @return {Boolean}
+ */
 export function checkIfFacetExists (facets, name) {
   return facets.some((item) => item.name === name)
 }
 
+/**
+ * @return {Number}
+ */
 export function now () {
   return new Date().getTime()
 }
@@ -245,10 +271,18 @@ export function escapeRegEx (str) {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
 
+/**
+ * Removes special characters from text
+ * @param  {string} str
+ * @return {string}
+ */
 export function sanitizeText (str) {
   return xssFilters.inHTMLData(str)
 }
 
+/**
+ * Used for heirarchical facets
+ */
 export function toNestedArray (data, rootLevel = 0, parentNode) {
   let output = []
   for (let i = 0, len = data.length; i < len; i++) {
@@ -286,6 +320,10 @@ export function toNestedArray (data, rootLevel = 0, parentNode) {
   return getNestedChildren(output, parentNode === '' ? null : parentNode)
 }
 
+/**
+ * Generates a unique UUID
+ * @return {string}
+ */
 export function uuid () {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     var r = (Math.random() * 16) | 0
@@ -305,10 +343,6 @@ export function isSvg (path) {
       .pop()
       .indexOf('svg') === 0
   )
-}
-
-export function scrollTo (element) {
-  /* To be implemented */
 }
 
 export function getCoords (element) {
@@ -353,6 +387,11 @@ export function decimalAdjust (type, value, exp) {
   return +(value[0] + 'e' + (value[1] ? +value[1] + exp : exp))
 }
 
+/**
+ * Check if a string is a URL
+ * @param  {string} str
+ * @return {Boolean}
+ */
 export function isValidUrl (str) {
   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
   return regexp.test(str)
@@ -475,6 +514,12 @@ export function redirect (url) {
   window.location.href = url
 }
 
+/**
+ * Executes a function only once
+ * @param  {Function}
+ * @param  {Object}
+ * @return {string|Object}
+ */
 export function once (fn, context) {
   var result
   return () => {
