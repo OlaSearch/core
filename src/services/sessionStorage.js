@@ -10,8 +10,14 @@ function Storage (type) {
     window.name = ''
   }
   function getData () {
-    var data = window.name
-    return data ? JSON.parse(data) : {}
+    var data = window.name /* On node env, name => 'nodejs' */
+    if (data) {
+      try {
+        data = JSON.parse(data)
+      } catch (err) { }
+      return data
+    } 
+    return {}
   }
 
   // initialise if there's already data

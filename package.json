@@ -1,11 +1,12 @@
 {
   "name": "@olasearch/core",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
+    "build": "BABEL_ENV=production babel src --out-dir lib",
     "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && gulp build && rimraf dist/polyfill.js dist/olasearch.core.latest.js && gulp styles",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
@@ -17,6 +18,7 @@
     "cdn:invalidate": "cf-invalidate E1MMHSLEW3SZPY /assets/*",
     "docs": "styleguidist server",
     "docs:build": "styleguidist build",
+    "postinstall": "npm run build",
     "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'"
   },
   "prettier": {
