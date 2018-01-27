@@ -50,3 +50,40 @@ describe('urlSync', () => {
     })
   })
 })
+
+describe('config', () => {
+  it('should respect default filters from config', () => {
+    let config = {
+      filters: [{
+        name: 'filter_1',
+        selected: ['a']
+      }]
+    }
+    let initialState = {
+      q: 'hello',
+      filters: []
+    }
+    let output = urlSync.parseQueryString(initialState, config)
+    expect(JSON.stringify(output.filters)).toEqual(JSON.stringify(config.filters))
+  })
+
+  it('should not extend filters from initial state', () => {
+    let config = {
+      filters: [{
+        name: 'filter_1',
+        selected: ['a']
+      }]
+    }
+    let initialState = {
+      q: 'hello',
+      filters: [
+        {
+          name: 'filter_2',
+          selected: ['b']
+        }
+      ]
+    }
+    let output = urlSync.parseQueryString(initialState, config)
+    expect(JSON.stringify(output.filters)).toEqual(JSON.stringify(config.filters))
+  })
+})
