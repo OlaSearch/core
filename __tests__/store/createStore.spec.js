@@ -24,7 +24,7 @@ describe('createStore', () => {
 
   it('creates store', () => {
     let store = createStore({ namespace: NAMESPACE }, MOCK_SEARCH_ADAPTER)
-    expect(store).toExist()
+    expect(store).toBeDefined()
   })
 
   it('store has default keys', () => {

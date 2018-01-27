@@ -11,7 +11,7 @@ const CONFIG = {
 
 describe('urlSync', () => {
   it('should have a default history character', () => {
-    expect(urlSync.character).toExist()
+    expect(urlSync.character).toBeDefined()
   })
 
   describe('pushState', () => {

@@ -6,12 +6,12 @@ import types from './../../src/constants/ActionTypes'
 
 describe('persistState', () => {
   it('should export STATE_TYPE_KEYS', () => {
-    expect(STATE_TYPE_KEYS).toNotBe(null)
+    expect(STATE_TYPE_KEYS).not.toBe(null)
     expect(Array.isArray(STATE_TYPE_KEYS)).toBe(true)
   })
 
   it('should export debouncePersistState', () => {
-    expect(debouncePersistState).toExist()
+    expect(debouncePersistState).toBeDefined()
   })
 
   describe('Bookmarks and history', () => {

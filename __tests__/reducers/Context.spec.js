@@ -7,7 +7,7 @@ import { MAKE_ACTION, INIT_TYPE, decodeCookie } from './../common'
 
 describe('Reducer: Context', () => {
   it('should exist', () => {
-    expect(reducer).toExist()
+    expect(reducer).toBeDefined()
     expect(() => reducer(initialState)).toThrow(/undefined/)
   })
 

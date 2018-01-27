@@ -6,7 +6,7 @@ import { MAKE_ACTION, INIT_TYPE } from './../common'
 
 describe('Reducer: AppState', () => {
   it('should exist', () => {
-    expect(reducer).toExist()
+    expect(reducer).toBeDefined()
   })
 
   it('throws an error if action type is not provided', () => {

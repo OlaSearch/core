@@ -3,7 +3,7 @@ import { log } from './../../src/actions/Logger'
 
 describe('Logger', () => {
   it('is a function', () => {
-    expect(log).toExist()
+    expect(log).toBeDefined()
   })
 
   it('throws error when eventype does not exist', () => {
@@ -12,6 +12,6 @@ describe('Logger', () => {
   })
 
   it('returns a dispatch function', () => {
-    expect(() => log({ eventType: 'Q'})).toExist()
+    expect(() => log({ eventType: 'Q'})).toBeDefined()
   })
 })

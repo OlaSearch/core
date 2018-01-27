@@ -5,7 +5,7 @@ import { MAKE_ACTION, INIT_TYPE, FACET_ITEM_AUTOSUGGEST } from './../common'
 
 describe('Reducer: AutoSuggest', () => {
   it('should exist', () => {
-    expect(reducer).toExist()
+    expect(reducer).toBeDefined()
   })
 
   it('throws an error if action type is not provided', () => {

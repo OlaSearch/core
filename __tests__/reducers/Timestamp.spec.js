@@ -6,7 +6,7 @@ import { MAKE_ACTION, INIT_TYPE } from './../common'
 
 describe('Reducer: Timestamp', () => {
   it('should exist', () => {
-    expect(reducer).toExist()
+    expect(reducer).toBeDefined()
   })
 
   it('should return empty timestamp', () => {
@@ -16,7 +16,7 @@ describe('Reducer: Timestamp', () => {
 
   it('should update timestamp', () => {
     let state = reducer(initialState, MAKE_ACTION(types.REQUEST_SEARCH, { api: 'search'}))
-    expect(state.timestamp['search']).toBeLessThanOrEqualTo(new Date().getTime())
+    expect(state.timestamp['search']).toBeLessThanOrEqual(new Date().getTime())
   })
 
   it('should clear timestamp when autosuggest is closed', () => {

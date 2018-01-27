@@ -5,11 +5,11 @@ import { log } from './../actions/Logger'
 
 export default function (WrappedComponent) {
   class WithLogger extends React.PureComponent {
-    logFn = (params) => {
+    log = (params) => {
       this.context.store.dispatch(log(params))
     }
     render () {
-      return <WrappedComponent {...this.props} log={this.logFn} />
+      return <WrappedComponent {...this.props} log={this.log} />
     }
   }
   WithLogger.contextTypes = {

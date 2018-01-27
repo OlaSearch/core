@@ -7,7 +7,7 @@ import { MAKE_ACTION, MAKE_FILTER_ITEM } from './../common'
 const SELECTED_VALUE = 'doc'
 describe('Reducer: QueryState', () => {
   it('should exist', () => {
-    expect(reducer).toExist()
+    expect(reducer).toBeDefined()
   })
 
   it('should return initial state', () => {
@@ -45,7 +45,7 @@ describe('Reducer: QueryState', () => {
     let state = reducer(initialState, MAKE_ACTION(types.ADD_FACET, { facet: MAKE_FILTER_ITEM('document'), value: SELECTED_VALUE }))
     expect(state.facet_query.length).toEqual(1)
     expect(state.facet_query[0]['name']).toEqual('document')
-    expect(state.facet_query[0]['selected']).toEqual(SELECTED_VALUE)
+    expect(state.facet_query[0]['selected']).toEqual([SELECTED_VALUE])
 
     /* Adding multiple filters */
     let multiState = reducer(state, MAKE_ACTION(types.ADD_FACET, { facet: MAKE_FILTER_ITEM('document'), value: SELECTED_VALUE }))

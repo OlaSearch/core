@@ -6,7 +6,7 @@ import { MAKE_ACTION, INIT_TYPE } from './../common'
 
 describe('Reducer: Intl', () => {
   it('should exist', () => {
-    expect(reducer).toExist()
+    expect(reducer).toBeDefined()
   })
 
   it('default locale should be en', () => {

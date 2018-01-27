@@ -103,13 +103,13 @@ describe('Utilities', () => {
 
   describe('now', () => {
     it('returns current time', () => {
-      expect(utils.now()).toBeLessThanOrEqualTo(new Date().getTime())
+      expect(utils.now()).toBeLessThanOrEqual(new Date().getTime())
     })
   })
 
   describe('debounce', () => {
     it('exists', () => {
-      expect(utils.debounce).toExist()
+      expect(utils.debounce).toBeDefined()
     })
 
     it('will be called', (done) => {
@@ -266,7 +266,7 @@ describe('Utilities', () => {
       expect(utils.sanitizeAnchor('HELLO_12')).toBe('hello-12')
     })
     it('converts numbers to string before sanitizing', () => {
-      expect(utils.sanitizeAnchor(1234)).toEqual(1234)
+      expect(utils.sanitizeAnchor(1234)).toEqual('1234')
     })
   })
 
@@ -276,7 +276,7 @@ describe('Utilities', () => {
     })
 
     it('handles numbers', () => {
-      expect(utils.trim(123)).toEqual(123)
+      expect(utils.trim(123)).toEqual('123')
     })
   })
 
@@ -299,8 +299,8 @@ describe('Utilities', () => {
     })
 
     it('can parse numbers and strings', () => {
-      expect(utils.sanitizePhone(90291442)).toEqual(90291442)
-      expect(utils.sanitizePhone(1234)).toEqual(1234)
+      expect(utils.sanitizePhone(90291442)).toEqual('90291442')
+      expect(utils.sanitizePhone(1234)).toEqual('1234')
       expect(utils.sanitizePhone('abc')).toEqual('')
     })
   })
