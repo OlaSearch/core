@@ -10,8 +10,8 @@
     "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && gulp build && rimraf dist/polyfill.js dist/olasearch.core.latest.js && gulp styles",
     "lint": "npm run standard && eslint src",
     "nyc": "nyc npm run test",
-    "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
-    "test:watch": "npm test -- --watch",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
     "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "retire": "retire",
     "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' './dist/olasearch.init.min.js' './dist/olasearch.init.client_demo.min.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public && s3-deploy './dist/olasearch.core.min.css' './dist/olasearch.core.client_demo.min.css'  --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/css --cache 604800,public",
@@ -57,12 +57,27 @@
       "*setup.js"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|svg|css|scss)$": "<rootDir>/__tests__/filemock.js"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup.js",
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "**/src/**"
+    ],
+    "testMatch": [
+      "**/*.spec.js"
+    ],
+    "testURL": "http://localhost/"
+  },
   "devDependencies": {
     "@olasearch/logger": "^1.2.0",
     "@olasearch/solr-adapter": "^1.4.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-flow": "^6.23.0",
@@ -74,6 +89,7 @@
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.7",
     "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "3.19.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-react": "^7.5.1",
@@ -86,9 +102,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0",
     "isparta": "^4.0.0",
+    "jest": "^22.1.4",
     "jsdom": "^11.5.1",
     "lint-staged": "^6.0.0",
-    "mocha": "^4.1.0",
     "node-sass": "^4.7.2",
     "nyc": "^11.4.1",
     "prettier-standard": "^8.0.0",

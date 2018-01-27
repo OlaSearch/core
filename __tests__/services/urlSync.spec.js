@@ -16,7 +16,7 @@ describe('urlSync', () => {
 
   describe('pushState', () => {
     beforeEach(() => {
-      global.window.location.href = BASE_URL
+      global.dom.reconfigure({  url: BASE_URL });
     })
     it('should pushState', () => {
       urlSync.pushState(QUERY, 'pushState')
