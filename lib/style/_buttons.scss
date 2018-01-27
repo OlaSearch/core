@@ -1,0 +1,161 @@
+/* Default button */
+.ola-btn {
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+}
+
+/* Primary button */
+.ola-btn-primary {
+  &, &:hover, &:active, &:focus {
+    background: $button-primary-background;
+    color: $button-primary-color;
+    padding: $button-padding;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: $base-border-radius;
+  }
+}
+
+/* Primary button */
+
+/* Common button styles */
+.ola-icon-button {
+  @extend %ola-icon-button;
+}
+
+/* Search button */
+.ola-search-button {
+  @extend %ola-icon-button;
+  color: $button-primary-color;
+  width: $button-search-width;
+
+  &, &:hover, &:active, &:focus {
+    background: $button-primary-background;
+  }
+
+  &:before {
+    @extend .iconfont;
+    content: 'search';
+  }
+}
+
+/* Primary button */
+.ola-primary-button {
+  color: $button-primary-color;
+
+  &, &:hover, &:active, &:focus {
+    background: $button-primary-background;
+  }
+}
+
+/* Geo location icon */
+.ola-link-geo {
+  @extend %ola-link;
+  // @extend %ola-icon-button;
+
+  &:before {
+    // @extend .iconfont;
+    // content: 'my_location';
+  }
+
+  &.ola-link-geo-active {
+    color: $button-geo-active-color;
+  }
+}
+
+/* bookmarking */
+.ola-link-bookmark, .ola-link-bookmark-action {
+  @extend %ola-icon-button;
+  height: 100%; /* Its inside a flex box */
+
+  &:before {
+    @extend .iconfont;
+    content: 'bookmark_border';
+  }
+
+  .ola-bookmarks-hasBookmarks  &, &.action-remove {
+    &:before {
+      content: 'bookmark';
+    }
+  }
+
+  /* Hide text */
+  span {
+    display: none;
+  }
+}
+
+/* Clear button */
+.ola-clear-button {
+  @extend %ola-icon-button;
+
+  &:before {
+    @extend .iconfont;
+    content: 'close';
+  }  
+}
+
+/* Load more */
+
+.ola-link-load-more {
+  @extend %ola-icon-button;
+  @extend .ola-primary-button;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-top: 1rem;
+  box-shadow: $elevation-2;
+
+  .ola-icon {
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+}
+
+
+/* Spell links */
+.ola-spell-links {
+  @extend %ola-icon-button;
+  color: $link-color;
+  margin-left: 0.5rem;
+  font-weight: bold;
+}
+
+
+/* Hint */
+/**
+ * Hint
+ */
+
+ .ola-btn-hint{
+	// position: absolute;
+	// top: 0;
+	// right:0;
+	// left: 0;
+	// bottom: 0;
+	// z-index: 1;
+}
+
+
+/* regular button */
+.ola-icon-btn {
+  @extend %ola-icon-button;
+}
+
+/* Ola cta button */
+.ola-cta-button {
+  @extend .ola-btn-primary;
+}
+
+/* Full width */
+.ola-btn-fullwidth {
+  width: 100%;
+  text-align: center;
+}
+
+/* Pages */
+.ola-link-view-pages, .ola-page-number {
+  cursor: pointer;
+}

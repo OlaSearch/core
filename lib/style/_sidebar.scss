@@ -1,0 +1,124 @@
+/* Sidebar */
+.ola-sidebar {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  background: #fff;
+  visibility: hidden;
+  @include prefix(transform, translate3d(110%, 0, 0), webkit ms moz);
+  // @include prefix(transition, translate3d 0.3s ease-in-out, webkit ms moz);
+  @include prefix(display, flex, webkit ms moz);
+  @include prefix(flex-direction, column, webkit ms moz); 
+
+  /* Filters */
+  .ola-search-filters {
+    max-height: calc(100% - 60px);
+    flex: 1;
+    overflow: auto;
+    padding: 1em;
+
+    @include media (desktop) {
+      padding: 0;
+      max-height: none;
+      overflow: visible;
+    }
+  }
+
+  .ola-sidebar-open &{
+    @include prefix(transform, translate3d(0%, 0, 0), webkit ms moz);
+    visibility: visible;
+    background-color: white;
+    box-shadow: $elevation-4;
+
+    /* On desktop */
+    @include media(desktop){
+      width: 340px;
+      max-height: none;
+      margin: 0;
+      visibility: visible;
+      max-width: 35%;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      padding-right: 1.5rem;
+      vertical-align: top;
+      transform: translate3d(0, 0, 0);
+      position: relative;
+      padding-left: 0;
+      z-index: 0;
+      background-color: transparent;
+      display: block;
+      box-shadow: none;
+    }
+  }
+}
+
+/* Sidebar filter button */
+.ola-link-open-filter, .ola-close-sidebar {
+  @extend %ola-icon-button;
+}
+
+/* Hide close sidebar on mobile */
+.ola-close-sidebar {
+  @include media (desktop) {
+    display: none;
+  }
+}
+
+/* Open Filter */
+.ola-link-open-filter {
+  float: right;
+	border: 1px $base-grey-color solid;
+  background: none;
+  text-transform: uppercase;
+	text-align: center;
+  position: relative;
+  margin: 5px 0 0 5px;
+  // display: none;
+  min-height: $button-default-height;
+
+  @include media (tablet) {
+    display: none;
+  }
+
+  & {
+    color: $brand-color;
+  }
+  &:hover, &:active, &:focus, &.ola-link-open-filter-active  {
+    border-color: $brand-color;
+  }
+
+  &:before {
+    @extend .iconfont;
+    content: 'tune';
+  }
+
+	span{
+		display: none;
+  }
+  
+  /* Hide in searchbar in mobile */
+  .ola-search-bar & {
+    display: none;
+    float: none;
+    margin-top: 0;
+    @include media (tablet) {
+      display: block;
+    }
+  }
+}
+
+/* Close sidebar */
+.ola-close-sidebar {
+  &, &:hover, &:focus, &:active {
+    background: $link-color;
+    color: white;
+    height: 60px;
+    border-radius: 0;
+  }
+}

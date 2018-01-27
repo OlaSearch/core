@@ -1,0 +1,13 @@
+/* Container */
+.ola-results-flex {
+  display: flex;
+
+  @include media (tablet) {
+    padding-top: 1.5rem;
+  }
+}
+
+  /* Results container */
+  .ola-results-container {
+    flex: 1;
+  }

@@ -18,7 +18,6 @@
     "cdn:invalidate": "cf-invalidate E1MMHSLEW3SZPY /assets/*",
     "docs": "styleguidist server",
     "docs:build": "styleguidist build",
-    "postinstall": "npm run build",
     "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'"
   },
   "prettier": {

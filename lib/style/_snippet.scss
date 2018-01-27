@@ -1,0 +1,83 @@
+/* Snippet */
+.ola-snippet {
+  // padding: 1em 0;
+  margin-bottom: 1em;
+
+  /* Remove bookmarks in snippets */
+  .ola-link-bookmark-action {
+    display: none;
+  }
+}
+
+/* Inner wrapper */
+.ola-snippet-inner {
+  box-shadow: $elevation-2;
+  padding: 1em;
+}
+
+/* Highlight */
+.ola-highlight {
+  background: $color-highlight;
+  font-style: normal;
+}
+
+/* Grid view snippets */
+@include media (tablet) {
+  .ola-results-view-grid {
+    .ola-results {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .ola-snippet {
+      width: 33.333%;
+      padding-right: 1em;
+      // padding: 0 1rem 1rem 0;
+      // border: none;
+
+      &:nth-child(3n+3) {
+        padding-right: 0;
+      }
+    }
+    .ola-snippet-inner {
+      // border: 1px $base-border-color solid;
+      // padding: 1em;
+      min-height: 100%;
+    }
+  }
+}
+
+/* Static answer snippet */
+.ola-snippet-static-answer {
+  background: #ffc;
+  padding: 1rem;
+}
+
+/* MC answer snippet */
+.ola-snippet-mc {
+  margin-bottom: 2rem;
+
+  .ola-results-view-grid &  {
+    width: auto;
+    padding-right: 0;
+  }
+
+  .ola-field-title {
+    // font-size: 20px;
+    padding: 0 0 0.5rem 0;
+  }
+
+  .ola-snippet-text {
+    &:after {
+      content: '...'
+    }
+  }
+
+  strong {
+    text-decoration: underline;
+  }
+}
+
+/* Snippet text */
+.ola-snippet-text {
+  margin: 0 0 0.5rem 0;
+}

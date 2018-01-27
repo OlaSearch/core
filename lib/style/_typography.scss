@@ -1,0 +1,33 @@
+/* Heading */
+
+.ola-search-heading {
+  margin: 0;
+  padding: 0;
+  clear: inherit;
+  font-size: $search-heading-font-size;
+}
+
+/* title */
+.ola-search-heading-title {
+  margin-right: 1rem;
+}
+
+/* Number */
+.ola-search-heading-number {
+  font-weight: 300;
+  display: block;
+
+  @include media (tablet) {
+    display: inline;
+  }
+}
+
+/* Location title */
+.ola-location-title {
+  font-size: 1rem;
+  font-weight: 100;
+
+  .ola-link-geo {
+    margin-left: 1rem;
+  }
+}

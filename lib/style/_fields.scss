@@ -1,0 +1,165 @@
+/**
+ * Fields
+ */
+
+.ola-field {
+  padding-bottom: $field-bottom-padding;
+}
+
+.ola-field-img {
+  display: block;
+  padding: 0;
+  margin-bottom: 1rem;
+
+  @include media (tablet) {
+    width: 180px;
+  }
+
+  img {
+    max-width: 100%;
+    vertical-align: top;
+  }
+
+  .ola-module & {
+    width: 80px;
+  }
+}
+
+.ola-field-component-label {
+  color: $base-grey-color;
+  font-size: 0.875rem;
+  padding-bottom: 0.25rem;
+}
+
+
+/**
+ * Field groups
+ */
+
+.ola-fg-horizontal {
+  @include media (tablet) {
+    @include flexbox;
+
+    > .ola-fg {
+      padding: 0 0.5em 0 0;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+/**
+ * Table inside snippet
+ */
+
+.ola-snippet {
+  table {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+  }
+
+  th, td {
+    padding: 6px 12px;
+    border: 1px #ccc solid;
+  }
+
+  th {
+    font-weight: 500;
+  }
+
+  thead th {
+    background: #eee;
+  }
+}
+
+/* Title */
+.ola-field-title {
+  margin: 0;
+  padding: 0 0 $field-bottom-padding 0;
+  font-weight: normal;
+  font-size: $field-title-font-size;
+}
+
+/* URL */
+a.ola-field-url {
+  font-size: 13px;
+  color: $base-grey-color;
+  display: block;
+  padding-bottom: 0;
+
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Snippet: Events|Articles */
+/* Date-Date-TextField */
+.ola-fg-horizontal {
+  // .ola-field {
+  //   padding-right: 0.5rem;
+  // }
+  &.Date-Date-TextField, &.Date-TextField {
+    line-height: 1;
+    font-size: 14px;
+    color: $base-grey-color;
+    padding-bottom: 8px;
+
+    .ola-field {
+      padding-bottom: 0;
+    }
+
+    .ola-field-date+.ola-field-date {
+      // padding-left: 8px;
+      &:before {
+        content: '-';
+        padding-right: 8px;
+      }
+    }
+
+    .ola-field-text {
+      border-left: 1px solid $base-grey-color;
+      margin-left: 8px;
+      padding-left: 1rem;
+      padding-bottom: 0;
+    }
+  }
+  
+}
+
+/* Distance */
+.ola-field-distance {
+  display: inline;
+  color: $base-grey-color;
+  font-size: 0.8rem;
+  &:before {
+    content: ' (';
+  }
+  &:after {
+    content: ') '
+  }
+}
+
+/* Button */
+.ola-field-button {
+  
+}

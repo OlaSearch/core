@@ -1,0 +1,30 @@
+.ola-search {
+  // font-size: $base-font-size;
+  // font-family: $base-font-family;  
+
+  /* Remove underline from links */
+  @if $is_link_underlined == true {
+    a {
+      text-decoration: underline;
+    }
+  } @else {
+    // Default if it’s neither
+    a {
+      text-decoration: none;
+    }
+  }
+
+  line-height: $base-line-height;
+}
+
+body {
+  // padding: 3rem;
+  // margin: 0;
+}
+
+/* Iframe */
+.ola-iframe {
+  border: none;
+  padding: 0;
+  margin: 0;
+}

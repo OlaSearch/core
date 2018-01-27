@@ -1,0 +1,101 @@
+$desktop-width: 960px;
+
+/*------------------------------------*\
+    $BREAKPOINTS
+\*------------------------------------*/
+
+/* 0 - 480 (mobile), 480+ (medium), 600+ (tablet), 960+ (desktop), 1300+ (wide) */
+$screen: 'only screen';
+
+$breakpoints: (
+    mobile: '#{$screen} and (max-width: 480px)',
+    mobileUp: '#{$screen} and (min-width: 481px)',
+    mediumOnly: '#{$screen} and (min-width: 480px) and (max-width: 600px)',
+    medium: '#{$screen} and (min-width: 601px)',
+    phablet: '#{$screen} and (max-width: 768px)',
+    tablet: '#{$screen} and (min-width: 768px)',
+    tabletonly: '#{$screen} and (min-width: 600px) and (max-width: #{$desktop-width})',
+    desktop: '#{$screen} and (min-width: #{$desktop-width})',
+    wide: '#{$screen} and (min-width: 1100px)'
+);
+
+
+/**
+ * Media query
+ * $breakpoints defined in variables.scss
+ */
+@mixin media($name) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $name) {
+    // Prints a media query based on the value
+    @media #{map-get($breakpoints, $name)} {
+      @content;
+    }
+  }
+
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoints}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
+  }
+}
+
+@mixin flexbox() {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -o-flex;
+  display: flex;
+}
+
+@mixin prefix($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    #{'-' + $prefix + '-' + $property}: $value;
+  }
+  // Output standard non-prefixed declaration
+  #{$property}: $value;
+}
+
+@mixin clearfix () {
+  &:after, &:before {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/* Ola button */
+%ola-icon-button {
+  border: none;
+  background: none;
+  margin: 0;
+  border-radius: 0;
+  cursor: pointer;
+  min-width: $button-icon-width;
+  color: $base-color;
+  padding: 0;
+  text-align: center;
+  font-weight: normal;
+
+  &:disabled{
+    opacity: 0.6;
+    cursor: text;
+  }
+
+  &:before {
+    vertical-align: middle;
+  }
+
+  &:hover, &:active, &:focus {
+    background: none;
+  }
+}
+
+%ola-link {
+  border: none;
+  background: none;
+  color: $link-color;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}

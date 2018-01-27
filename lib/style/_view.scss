@@ -1,0 +1,33 @@
+/* Change view button */
+.ola-link-change-layout {
+  @extend %ola-icon-button;
+  margin-left: 5px;
+  border: 1px $base-grey-color solid;
+  display: none;
+  @include media (tablet) {
+    display: block;
+  }
+
+  span {
+    display: none;
+  }
+
+  &{
+    color: $brand-color;
+  }
+  &:hover, &:active, &:focus  {
+    border-color: $brand-color;
+  }
+
+  &:before {
+    @extend .iconfont;
+    content: 'view_module';
+  }
+}
+
+  /* List */
+  .ola-link-layout-list {
+    &:before {
+      content: 'view_list'
+    }
+  }
