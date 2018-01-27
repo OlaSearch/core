@@ -1,7 +1,6 @@
 coverage
 examples
 node_modules
-src
 test
 webpack.*
 demo
