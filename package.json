@@ -18,7 +18,7 @@
     "docs": "styleguidist server",
     "docs:build": "styleguidist build",
     "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'",
-    "prettier": "yarn prettier-standard && git add . && git status"
+    "prettier": "yarn prettier-standard && git add src/ lib/ && git status"
   },
   "prettier": {
     "semi": false
