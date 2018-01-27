@@ -91,7 +91,17 @@ export function parseQueryString (initialState, config) {
   var qs = queryString.parse(loc)
   var { filters, facet_query: facetQuery, tokens } = qs
   var facetQueryObject = { facet_query: [] }
-  var filtersObject = { filters: [] }
+  /**
+   * Default filters from config
+   */
+  let defaultFilters = []
+  if (config.filters && config.filters.length) {
+    for (let i = 0, len = config.filters.length; i < len; i++) {
+      let { selected } = config.filters[i]
+      defaultFilters.push({ ...config.filters[i], selected })
+    }
+  }
+  var filtersObject = { filters: defaultFilters }
   var tokensObject = { tokens: [] }
   /**
    * If no qs
@@ -205,7 +215,7 @@ export function parseQueryString (initialState, config) {
     })
 
     filtersObject = {
-      filters: filterQuery
+      filters: [...defaultFilters, ...filterQuery ]
     }
   }
 
