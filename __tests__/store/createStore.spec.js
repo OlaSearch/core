@@ -1,7 +1,7 @@
 import expect from 'expect'
 import createStore from './../../src/store/createStore'
 import { MOCK_SEARCH_ADAPTER } from './../common'
-import storage from './../../src/services/storage'
+import * as storage from './../../src/services/storage'
 import { OLA_STORAGE_KEY } from './../../src/constants/Settings'
 
 const NAMESPACE = 'ola'

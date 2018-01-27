@@ -1,7 +1,7 @@
 import { debounce, getKey } from './../utilities'
 import { USER_NEW_KEY, USER_SESSION_EXPIRY_DAYS } from './../constants/Settings'
 import types from './../constants/ActionTypes'
-import storage from './../services/storage'
+import { cookies } from './../services/storage'
 
 /**
  * Ola Logger Middleware intercepts this dispatch event and calls the loggerService
@@ -48,7 +48,7 @@ export function submitLog (args) {
   /* Check if the user is new User */
   if (state.Context.isNewUser) {
     /* Set new user flag to false */
-    storage.cookies.set(
+    cookies.set(
       getKey(USER_NEW_KEY, state.AppState.namespace),
       false,
       USER_SESSION_EXPIRY_DAYS

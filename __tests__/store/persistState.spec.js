@@ -1,5 +1,5 @@
 import expect from 'expect'
-import storage from './../../src/services/storage'
+import * as storage from './../../src/services/storage'
 import { STATE_TYPE_KEYS, debouncePersistState } from './../../src/store/persistState'
 import { LOCALE_STORAGE_KEY, CONTEXT_STORAGE_KEY, OLA_STORAGE_KEY } from './../../src/constants/Settings'
 import types from './../../src/constants/ActionTypes'

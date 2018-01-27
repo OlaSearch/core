@@ -2,7 +2,7 @@ import types from './../../src/constants/ActionTypes'
 import { default as reducer, initialState } from './../../src/reducers/Context'
 import { CONTEXT_STORAGE_KEY } from './../../src/constants/Settings'
 import expect from 'expect'
-import storage from './../../src/services/storage'
+import * as storage from './../../src/services/storage'
 import { MAKE_ACTION, INIT_TYPE, decodeCookie } from './../common'
 
 describe('Reducer: Context', () => {

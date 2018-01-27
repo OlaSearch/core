@@ -5,4 +5,4 @@
  * Polyfill removed on 27/01/2018
  */
 
-module.exports = window.sessionStorage
+export default window.sessionStorage

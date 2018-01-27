@@ -29,7 +29,7 @@ class Alert extends React.Component {
   }
 }
 
-const Query = ({ id, query, docs, timestamp, onDelete }) => {
+function Query ({ id, query, docs, timestamp, onDelete }) {
   function handleDelete () {
     onDelete(id)
   }

@@ -1,16 +1,16 @@
 import React, { Children } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import _t from './../translations'
+import baseTranslations from './../translations'
 import { supplant, translateKey, createHTMLMarkup } from './../utilities'
 
 class OlaIntlProvider extends React.Component {
   constructor (props) {
     super(props)
-    let { locale, translations: t = {} } = props
+    let { locale, translations = {} } = props
     this.messages = {
-      ...(_t[locale] ? _t[locale]['messages'] : {}),
-      ...(t[locale] ? t[locale]['messages'] : {})
+      ...(baseTranslations[locale] ? baseTranslations[locale]['messages'] : {}),
+      ...(translations[locale] ? translations[locale]['messages'] : {})
     }
   }
   static defaultProps = {
@@ -52,4 +52,4 @@ function mapPropsToState (state) {
   }
 }
 
-module.exports = connect(mapPropsToState)(OlaIntlProvider)
+export default connect(mapPropsToState)(OlaIntlProvider)

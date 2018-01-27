@@ -1,5 +1,5 @@
 import expect from 'expect'
-import storage from './../../src/services/storage'
+import * as storage from './../../src/services/storage'
 
 describe('Storage', () => {
   it('set item in storage', () => {

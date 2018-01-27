@@ -1,7 +1,7 @@
 import { debounce } from './../utilities'
 import types from './../constants/ActionTypes'
 import { pick } from './../utilities'
-import storage from './../services/storage'
+import { cookies, set } from './../services/storage'
 import {
   LOCALE_STORAGE_KEY,
   LOCALE_STORAGE_TTL,
@@ -55,14 +55,14 @@ function persistState (action, getState, namespace) {
     case types.ADD_CONTEXT_FIELD:
     case types.REMOVE_CONTEXT_FIELD:
     case types.REMOVE_CONTEXT_LOCATION:
-      return storage.cookies.set(
+      return cookies.set(
         CONTEXT_STORAGE_KEY,
         state.Context,
         CONTEXT_STORAGE_TTL,
         namespace
       )
     case types.SET_LOCALE:
-      return storage.cookies.set(
+      return cookies.set(
         LOCALE_STORAGE_KEY,
         state.Intl.locale,
         LOCALE_STORAGE_TTL,
@@ -80,7 +80,7 @@ function persistState (action, getState, namespace) {
     case types.REQUEST_CREATE_ALERT_SUCCESS:
     case types.TOGGLE_SIDEBAR:
     case types.CHANGE_VIEW:
-      return storage.set(
+      return set(
         OLA_STORAGE_KEY,
         pick(statesToTrack, state.AppState),
         namespace

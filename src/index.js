@@ -23,68 +23,130 @@
  *
  */
 
-module.exports = {
-  OlaProvider: require('./containers/OlaProvider'),
-  OlaIntlProvider: require('./containers/OlaIntlProvider'),
-  AutoComplete: require('./components/AutoComplete'),
-  Pagination: require('./components/Pagination'),
-  SearchFooter: require('./components/SearchFooter'),
-  SearchFilters: require('./components/SearchFilters'),
-  SearchResults: require('./components/SearchResults'),
-  Translate: require('./components/Misc/Translate'),
-  SelectedFilters: require('./components/SelectedFilters'),
-  Actions: require('./actions'),
-  SnippetActions: require('./components/SnippetActions'),
-  version: require('./constants/Version'),
-  Fields: require('./components/Fields'),
-  GeoLocation: require('./components/Geo/GeoLocation'),
-  FacetFilters: require('./components/FacetFilters'),
-  Sidebar: require('./components/Sidebar'),
-  FilterButton: require('./components/FilterButton'),
-  Decorators: require('./decorators'),
-  olaReducer: require('./reducers'),
-  createOlaMiddleware: require('./middleware/createOlaMiddleware'),
-  createPersistMiddleware: require('./middleware/createPersistMiddleware'),
-  createStore: require('./store/createStore'),
-  prepareStore: require('./store/prepareStore'),
-  utilities: require('./utilities'),
-  DateParser: require('./utilities/dateParser'),
-  urlSync: require('./services/urlSync'),
-  storage: require('./services/storage'),
-  Settings: require('./constants/Settings'),
+/* Components */
+import OlaProvider from './containers/OlaProvider'
+import OlaIntlProvider from './containers/OlaIntlProvider'
+import AutoComplete from './components/AutoComplete'
+import Pagination from './components/Pagination'
+import SearchFooter from './components/SearchFooter'
+import SearchFilters from './components/SearchFilters'
+import SearchResults from './components/SearchResults'
+import Translate from './components/Misc/Translate'
+import SelectedFilters from './components/SelectedFilters'
+import SnippetActions from './components/SnippetActions'
+import Fields from './components/Fields'
+import GeoLocation from './components/Geo/GeoLocation'
+import FacetFilters from './components/FacetFilters'
+import Sidebar from './components/Sidebar'
+import FilterButton from './components/FilterButton'
+import SearchTitle from './components/SearchTitle'
+import ClearAllFacets from './components/ClearAllFacets'
+import PopularKeywords from './components/PopularKeywords'
+import ErrorMessage from './components/Error'
+import Sort from './components/Sort'
+import InstantSearchForm from './components/InstantSearchForm'
+import SpellSuggestion from './components/SpellSuggestion'
+import TermSuggestion from './components/TermSuggestion'
+import PerPage from './components/PerPage'
+import Alert from './components/Alert'
+import AddAlert from './components/Alert/AddAlert'
+import SearchBar from './components/SearchBar'
+import ContentWrapper from './components/ContentWrapper'
+import SearchContent from './components/SearchContent'
+import ProgressBar from './components/ProgressBar'
 
-  // Filters
-  DefaultFilter: require('./components/FacetFilters/Default'),
-  FacetCheckbox: require('./components/FacetFilters/Checkbox'),
-  Range: require('./components/FacetFilters/Range'),
-  // RangeNumeric: require('./components/FacetFilters/RangeNumeric'),
-  Rating: require('./components/FacetFilters/Rating'),
-  DatePicker: require('./components/FacetFilters/DatePicker'),
-  TagCloud: require('./components/FacetFilters/TagCloud'),
-  Hierarchical: require('./components/FacetFilters/Hierarchical'),
-  Tabs: require('./components/FacetFilters/Tabs'),
+import * as Actions from './actions'
+import * as Decorators from './decorators'
+import olaReducer from './reducers'
+import * as utilities from './utilities'
+import DateParser from './utilities/dateParser'
+import urlSync from './services/urlSync'
+import * as storage from './services/storage'
 
-  // Optional olasearch/lib/{name}
-  NoResults: require('./components/Snippets/NoResults'),
-  DefaultSnippet: require('./components/Snippets/Default'),
-  SearchTitle: require('./components/SearchTitle'),
-  ClearAllFacets: require('./components/ClearAllFacets'),
-  PopularKeywords: require('./components/PopularKeywords'),
-  Error: require('./components/Error'),
-  Answer: require('./components/Answer'),
-  AnswerMC: require('./components/Answer/AnswerMC'),
-  Sort: require('./components/Sort'),
-  InstantSearchForm: require('./components/InstantSearchForm'),
-  SpellSuggestion: require('./components/SpellSuggestion'),
-  TermSuggestion: require('./components/TermSuggestion'),
-  PerPage: require('./components/PerPage'),
-  // AutoSuggest: require('./components/AutoSuggest'),
-  ActionTypes: require('./constants/ActionTypes'),
-  Alert: require('./components/Alert'),
-  AddAlert: require('./components/Alert/AddAlert'),
-  SearchBar: require('./components/SearchBar'),
-  ContentWrapper: require('./components/ContentWrapper'),
-  SearchContent: require('./components/SearchContent'),
-  ProgressBar: require('./components/ProgressBar'),
-  AnswerToken: require('./components/Answer/AnswerToken')
+/* Store middlewares */
+import createOlaMiddleware from './middleware/createOlaMiddleware'
+import createPersistMiddleware from './middleware/createPersistMiddleware'
+import createStore from './store/createStore'
+import prepareStore from './store/prepareStore'
+
+/* Package version */
+import version from './constants/Version'
+import * as Settings from './constants/Settings'
+import * as ActionTypes from './constants/ActionTypes'
+
+/* Facet filters */
+import DefaultFilter from './components/FacetFilters/Default'
+import FacetCheckbox from './components/FacetFilters/Checkbox'
+import Range from './components/FacetFilters/Range'
+import Rating from './components/FacetFilters/Rating'
+import DatePicker from './components/FacetFilters/DatePicker'
+import TagCloud from './components/FacetFilters/TagCloud'
+import Hierarchical from './components/FacetFilters/Hierarchical'
+import Tabs from './components/FacetFilters/Tabs'
+
+/* Snippet */
+import NoResults from './components/Snippets/NoResults'
+import DefaultSnippet from './components/Snippets/Default'
+
+/* Answers */
+import Answer from './components/Answer'
+import AnswerMC from './components/Answer/AnswerMC'
+import AnswerToken from './components/Answer/AnswerToken'
+
+export {
+  OlaProvider,
+  OlaIntlProvider,
+  AutoComplete,
+  Pagination,
+  SearchFooter,
+  SearchFilters,
+  SearchResults,
+  SelectedFilters,
+  SnippetActions,
+  FacetFilters,
+  Fields,
+  Sidebar,
+  FilterButton,
+  Sort,
+  InstantSearchForm,
+  SpellSuggestion,
+  TermSuggestion,
+  PerPage,
+  Alert,
+  AddAlert,
+  SearchBar,
+  ContentWrapper,
+  SearchContent,
+  ProgressBar,
+  SearchTitle,
+  ClearAllFacets,
+  PopularKeywords,
+  ErrorMessage,
+  version,
+  Settings,
+  Decorators,
+  Actions,
+  olaReducer,
+  utilities,
+  DateParser,
+  urlSync,
+  storage,
+  ActionTypes,
+  createOlaMiddleware,
+  createPersistMiddleware,
+  createStore,
+  prepareStore,
+  DefaultFilter,
+  FacetCheckbox,
+  Range,
+  Rating,
+  DatePicker,
+  TagCloud,
+  Hierarchical,
+  Tabs,
+  NoResults,
+  DefaultSnippet,
+  Answer,
+  AnswerMC,
+  AnswerToken
 }

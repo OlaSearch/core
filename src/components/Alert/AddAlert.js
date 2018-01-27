@@ -5,7 +5,7 @@ import cx from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withLogger from './../../decorators/withLogger'
 
-const AddAlert = ({
+function AddAlert ({
   q,
   queriesById,
   queryIds,
@@ -14,7 +14,7 @@ const AddAlert = ({
   deleteAlert,
   log,
   inProgressAlert
-}) => {
+}) {
   if (!q) return null
   let exists = queryIds.some((id) => q === queriesById[id].query)
   let classes = cx('ola-alert-add', {
@@ -57,7 +57,7 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   createAlert,
   deleteAlert
 })(withLogger(withTranslate(AddAlert)))

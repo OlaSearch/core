@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 
-const GeoNotify = ({ answer, location, executeSearch, isPhone, translate }) => {
+function GeoNotify ({ answer, location, executeSearch, isPhone, translate }) {
   /* Does the intent require user's location */
   const suggestLocation = answer && answer.location
   if (!suggestLocation || isPhone) return null

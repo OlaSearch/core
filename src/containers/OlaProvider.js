@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import OlaIntlProvider from './OlaIntlProvider'
 
-class OlaProvider extends React.Component {
+export default class OlaProvider extends React.Component {
   static childContextTypes = {
     config: PropTypes.any.isRequired
   }
@@ -34,5 +34,3 @@ class OlaProvider extends React.Component {
     )
   }
 }
-
-module.exports = OlaProvider
