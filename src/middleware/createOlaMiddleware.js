@@ -172,226 +172,179 @@ export default function (options = {}) {
           ? JSON.parse(responseText)
           : responseText
       })
-      .then(
-        (response) => {
-          /* If null response, pass it on */
-          if (!response) return response
+      .then((response) => {
+        /* If null response, pass it on */
+        if (!response) return response
 
-          const type = successType
+        const type = successType
 
-          /* Check if process response is false */
+        /* Check if process response is false */
 
-          if (processData) {
-            response = processData(response, payload, currentState)
-          }
+        if (processData) {
+          response = processData(response, payload, currentState)
+        }
 
-          /* For autocomplete */
-          if (returnWithoutDispatch) return response
+        /* For autocomplete */
+        if (returnWithoutDispatch) return response
 
-          if (!processResponse) {
-            return next({
-              type,
-              response
-            })
-          }
+        if (!processResponse) {
+          return next({
+            type,
+            response
+          })
+        }
 
-          /* Parse only when the timestamp matches */
-          var results
-          var spellSuggestions
-          var totalResults
-          var facets
-          var qt
-          var answer
-          var mc
-          var enrichedQuery
-          var skipSearchResultsUpdate = false
-          var responseTime
-          var extra = response.extra
-          var version
-          if (proxy) {
-            results = response.results
-            spellSuggestions = response.spellSuggestions
-            totalResults = response.totalResults
-            facets = response.facets
-            qt = response.qt
-            enrichedQuery = response.enriched_q
-            skipSearchResultsUpdate = response.skipSearchResultsUpdate
-            responseTime = response.responseTime
-            version = response.version
+        /* Parse only when the timestamp matches */
+        var results
+        var spellSuggestions
+        var totalResults
+        var facets
+        var qt
+        var answer
+        var mc
+        var enrichedQuery
+        var skipSearchResultsUpdate = false
+        var responseTime
+        var extra = response.extra
+        var version
+        if (proxy) {
+          results = response.results
+          spellSuggestions = response.spellSuggestions
+          totalResults = response.totalResults
+          facets = response.facets
+          qt = response.qt
+          enrichedQuery = response.enriched_q
+          skipSearchResultsUpdate = response.skipSearchResultsUpdate
+          responseTime = response.responseTime
+          version = response.version
 
-            /* Instant answer */
-            answer = api === 'answer' ? response : response.answer
+          /* Instant answer */
+          answer = api === 'answer' ? response : response.answer
 
-            /* Machine comprehension */
-            mc = api === 'mc' ? response : response.mc
-          } else {
-            results = parser.normalizeResults(response)
-            spellSuggestions = parser.normalizeSpellSuggestions(response)
-            totalResults = parser.normalizeTotalResults(response)
-            facets = parser.normalizeFacets(response)
-            qt = parser.queryTime(response)
-            responseTime = response.responseTime
-            version = parser.version()
-          }
+          /* Machine comprehension */
+          mc = api === 'mc' ? response : response.mc
+        } else {
+          results = parser.normalizeResults(response)
+          spellSuggestions = parser.normalizeSpellSuggestions(response)
+          totalResults = parser.normalizeTotalResults(response)
+          facets = parser.normalizeFacets(response)
+          qt = parser.queryTime(response)
+          responseTime = response.responseTime
+          version = parser.version()
+        }
 
-          /**
-           * Get facets or filters selected by intent engine
-           * 1. Check if facet already exists
-           */
-          let facetQuery = currentState.QueryState.facet_query
-          if (
-            !bot /* Do not fill facet_query if its from bot */ &&
-            answer &&
-            answer.search &&
-            answer.search.facet_query &&
-            answer.search.facet_query.length
-          ) {
-            let answerFacets = answer.search.facet_query.map((item) => ({
-              ...item,
-              fromIntentEngine: true
-            }))
-            for (let i = 0; i < answerFacets.length; i++) {
-              let { name, selected, ...rest } = answerFacets[i]
-              /* Check if it already exists */
-              let exists = facetQuery.some(({ name: _name }) => _name === name)
-              if (exists) {
-                facetQuery = facetQuery.map((item) => {
-                  if (item.name === name) item.selected = selected
-                  /* from intent engine flag */
-                  return item
-                })
-              } else {
-                facetQuery = [...facetQuery, ...answerFacets[i]]
-              }
+        /**
+         * Check if message has no id
+         */
+        if (bot && !answer) {
+          /* throw exception */
+          throw new Error(
+            'The server could not respond in time with a message ID. Please try again'
+          )
+        }
+
+        /**
+         * Get facets or filters selected by intent engine
+         * 1. Check if facet already exists
+         */
+        let facetQuery = currentState.QueryState.facet_query
+        if (
+          !bot /* Do not fill facet_query if its from bot */ &&
+          answer &&
+          answer.search &&
+          answer.search.facet_query &&
+          answer.search.facet_query.length
+        ) {
+          let answerFacets = answer.search.facet_query.map((item) => ({
+            ...item,
+            fromIntentEngine: true
+          }))
+          for (let i = 0; i < answerFacets.length; i++) {
+            let { name, selected, ...rest } = answerFacets[i]
+            /* Check if it already exists */
+            let exists = facetQuery.some(({ name: _name }) => _name === name)
+            if (exists) {
+              facetQuery = facetQuery.map((item) => {
+                if (item.name === name) item.selected = selected
+                /* from intent engine flag */
+                return item
+              })
+            } else {
+              facetQuery = [...facetQuery, ...answerFacets[i]]
             }
           }
+        }
 
-          /**
-           * Check for location
-           */
-          if (
-            !bot &&
-            answer &&
-            answer.location /* Check if the intent requires location */ &&
-            !currentState.Context
-              .location /* Check if location is already present */ &&
-            !currentState.Context
-              .hasRequestedLocation /* Check if location was asked before */
-          ) {
-            dispatch(
-              requestGeoLocation(() => {
-                dispatch({
-                  types,
-                  query,
-                  api,
-                  payload,
-                  context: getState().Context /* Get the new context */,
-                  responseTime,
-                  facetQuery,
-                  bot
-                })
+        /**
+         * Check for location
+         */
+        if (
+          !bot &&
+          answer &&
+          answer.location /* Check if the intent requires location */ &&
+          !currentState.Context
+            .location /* Check if location is already present */ &&
+          !currentState.Context
+            .hasRequestedLocation /* Check if location was asked before */
+        ) {
+          dispatch(
+            requestGeoLocation(() => {
+              dispatch({
+                types,
+                query,
+                api,
+                payload,
+                context: getState().Context /* Get the new context */,
+                responseTime,
+                facetQuery,
+                bot
               })
-            )
-          }
-
-          /**
-           * Check if
-           * Total results = 0 && Has Spell Suggestions
-           */
-          /**
-           * Check if
-           * answer exists
-           *  answer && answer.itentn
-           */
-          if (
-            totalResults === 0 &&
-            spellSuggestions.length &&
-            !enrichedQuery &&
-            !(
-              answer &&
-              answer.intent &&
-              IGNORE_INTENTS.indexOf(answer.intent) === -1
-            )
-          ) {
-            let { term } = spellSuggestions[0]
-            return dispatch({
-              types,
-              query: {
-                ...query,
-                q: term
-              },
-              suggestedTerm: term,
-              api,
-              payload: {
-                ...payload,
-                originalQuery: query.q
-              },
-              processData,
-              context,
-              responseTime,
-              facetQuery
             })
-          }
+          )
+        }
 
-          shouldDispatchActions &&
-            next({
-              payload,
-              results,
-              spellSuggestions,
-              totalResults,
-              facets,
-              type,
-              suggestedTerm,
-              qt,
-              answer,
-              mc,
-              enriched_q: enrichedQuery,
-              error: null,
-              skipSearchResultsUpdate,
-              api,
-              responseTime,
-              facetQuery,
-              extra,
-              version
-            })
+        /**
+         * Check if
+         * Total results = 0 && Has Spell Suggestions
+         */
+        /**
+         * Check if
+         * answer exists
+         *  answer && answer.itentn
+         */
+        if (
+          totalResults === 0 &&
+          spellSuggestions.length &&
+          !enrichedQuery &&
+          !(
+            answer &&
+            answer.intent &&
+            IGNORE_INTENTS.indexOf(answer.intent) === -1
+          )
+        ) {
+          let { term } = spellSuggestions[0]
+          return dispatch({
+            types,
+            query: {
+              ...query,
+              q: term
+            },
+            suggestedTerm: term,
+            api,
+            payload: {
+              ...payload,
+              originalQuery: query.q
+            },
+            processData,
+            context,
+            responseTime,
+            facetQuery
+          })
+        }
 
-          /**
-           * Logger
-           * Parameters
-           * Q or C
-           * results
-           * eventSource
-           * searchInput = `voice`|`url`|`keyboard`
-           */
-          /* Query becomes empty for long conversations */
-          const isBotReply = answer && 'awaiting_user_input' in answer
-          const sendImmediateLog = isBotReply && !answer.awaiting_user_input
-          const logFn = sendImmediateLog ? submitLog : debounceLog
-          if (
-            logger &&
-            logger.enabled &&
-            API_IGNORE_LOGGING.indexOf(api) === -1 &&
-            shouldLog
-          ) {
-            logFn({
-              dispatch,
-              eventType: 'Q',
-              eventSource: currentState.QueryState.source || api,
-              state: getState(),
-              responseTime,
-              payload
-            })
-          }
-
-          /**
-           * If answer is a callback
-           * SPICE
-           */
-          if (answer && answer.callback) {
-            dispatch(fetchAnswer(answer.callback))
-          }
-
-          return {
+        shouldDispatchActions &&
+          next({
+            payload,
             results,
             spellSuggestions,
             totalResults,
@@ -400,19 +353,74 @@ export default function (options = {}) {
             suggestedTerm,
             qt,
             answer,
+            mc,
+            enriched_q: enrichedQuery,
+            error: null,
+            skipSearchResultsUpdate,
+            api,
             responseTime,
             facetQuery,
+            extra,
+            version
+          })
+
+        /**
+         * Logger
+         * Parameters
+         * Q or C
+         * results
+         * eventSource
+         * searchInput = `voice`|`url`|`keyboard`
+         */
+        /* Query becomes empty for long conversations */
+        const isBotReply = answer && 'awaiting_user_input' in answer
+        const sendImmediateLog = isBotReply && !answer.awaiting_user_input
+        const logFn = sendImmediateLog ? submitLog : debounceLog
+        if (
+          logger &&
+          logger.enabled &&
+          API_IGNORE_LOGGING.indexOf(api) === -1 &&
+          shouldLog
+        ) {
+          logFn({
+            dispatch,
+            eventType: 'Q',
+            eventSource: currentState.QueryState.source || api,
+            state: getState(),
+            responseTime,
             payload
-          }
-        },
-        (error) => {
-          shouldDispatchActions &&
-            next({
-              payload,
-              error,
-              type: failureType
-            })
+          })
         }
-      )
+
+        /**
+         * If answer is a callback
+         * SPICE
+         */
+        if (answer && answer.callback) {
+          dispatch(fetchAnswer(answer.callback))
+        }
+
+        return {
+          results,
+          spellSuggestions,
+          totalResults,
+          facets,
+          type,
+          suggestedTerm,
+          qt,
+          answer,
+          responseTime,
+          facetQuery,
+          payload
+        }
+      })
+      .catch((error) => {
+        shouldDispatchActions &&
+          next({
+            payload,
+            error,
+            type: failureType
+          })
+      })
   }
 }
