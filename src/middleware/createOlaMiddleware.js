@@ -236,7 +236,7 @@ export default function (options = {}) {
         /**
          * Check if message has no id
          */
-        if (bot && !answer) {
+        if (bot && (!answer || answer.error)) {
           /* throw exception */
           throw new Error(
             'The server could not respond in time with a message ID. Please try again'

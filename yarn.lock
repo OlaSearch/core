@@ -68,9 +68,9 @@
   dependencies:
     "@olasearch/alite" "^1.0.2"
 
-"@olasearch/react-onclickoutside@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@olasearch/react-onclickoutside/-/react-onclickoutside-1.0.0.tgz#2cac266a7fed4ec2d954393ef1b3147941484e7b"
+"@olasearch/react-onclickoutside@^6.7.1-rc":
+  version "6.7.1-rc"
+  resolved "https://registry.yarnpkg.com/@olasearch/react-onclickoutside/-/react-onclickoutside-6.7.1-rc.tgz#975e27d004491e104d477dcdcc311f1f952883b8"
 
 "@olasearch/solr-adapter@^1.4.7":
   version "1.4.7"

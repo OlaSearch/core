@@ -57,7 +57,7 @@ export prepareStore from './store/prepareStore'
 /* Package version */
 export version from './constants/Version'
 export * as Settings from './constants/Settings'
-export * as ActionTypes from './constants/ActionTypes'
+export ActionTypes from './constants/ActionTypes'
 
 /* Facet filters */
 export DefaultFilter from './components/FacetFilters/Default'

@@ -137,7 +137,7 @@
   },
   "dependencies": {
     "@olasearch/icons": "^1.0.0",
-    "@olasearch/react-onclickoutside": "^1.0.0",
+    "@olasearch/react-onclickoutside": "^6.7.1-rc",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
     "dom-scroll-into-view": "^1.2.1",
