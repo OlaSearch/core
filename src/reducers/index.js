@@ -6,7 +6,7 @@ import Timestamp from './Timestamp'
 import Context from './Context'
 import Intl from './Intl'
 
-module.exports = {
+export default {
   AppState,
   Context,
   QueryState,

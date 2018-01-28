@@ -42,11 +42,11 @@ export ProgressBar from './components/ProgressBar'
 
 export * as Actions from './actions'
 export * as Decorators from './decorators'
-export olaReducer from './reducers'
+export * as storage from './services/storage'
 export * as utilities from './utilities'
+export olaReducer from './reducers'
 export DateParser from './utilities/dateParser'
 export urlSync from './services/urlSync'
-export * as storage from './services/storage'
 
 /* Store middlewares */
 export createOlaMiddleware from './middleware/createOlaMiddleware'

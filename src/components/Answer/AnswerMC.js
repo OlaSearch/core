@@ -41,7 +41,6 @@ class AnswerMC extends React.Component {
       new RegExp('(' + this.createRegex(highlight) + ')', 'gi'),
       '<strong>$1</strong>'
     )
-    console.log(html)
     return createHTMLMarkup(html)
   }
   static contextTypes = {
