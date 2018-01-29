@@ -1,4 +1,6 @@
 // @flow
+import types from './../constants/ActionTypes'
+
 import {
   phone,
   android,
@@ -39,7 +41,8 @@ type State = {
   isApple: Object,
   isTablet: boolean,
   isPhone: boolean,
-  isDesktop: boolean
+  isDesktop: boolean,
+  connection: string
 }
 
 var initialState = {
@@ -47,9 +50,18 @@ var initialState = {
   isApple: apple,
   isPhone: phone,
   isTablet: tablet,
-  isDesktop: !phone && !tablet && !sevenInch
+  isDesktop: !phone && !tablet && !sevenInch,
+  connection: 'online'
 }
 
 export default (state: State = initialState, action: Object) => {
-  return state
+  switch (action.type) {
+    case types.UPDATE_CONNECTION:
+      return {
+        ...state,
+        connection: action.status
+      }
+    default:
+      return state
+  }
 }

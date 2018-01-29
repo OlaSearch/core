@@ -52,4 +52,4 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-module.exports = connect(mapStateToProps, { toggleSidebar })(Sidebar)
+export default connect(mapStateToProps, { toggleSidebar })(Sidebar)

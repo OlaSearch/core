@@ -557,8 +557,7 @@ class AutoComplete extends React.Component {
     this.props.executeSearch({
       forceRedirect: this.props.forceRedirect,
       searchPageUrl: this.context.config.searchPageUrl,
-      routeChange: !this.props.forceRedirect,
-      replaceQueryParamName: this.context.config.replaceQueryParamName
+      routeChange: !this.props.forceRedirect
     })
 
     /* Clear timeout */

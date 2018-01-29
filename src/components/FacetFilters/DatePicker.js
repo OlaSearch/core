@@ -277,4 +277,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, null)(withToggle(DateRange))
+export default connect(mapStateToProps, null)(withToggle(DateRange))

@@ -52,4 +52,4 @@ BooleanFilter.propTypes = {
   selected: PropTypes.array.isRequired
 }
 
-module.exports = withToggle(BooleanFilter)
+export default withToggle(BooleanFilter)

@@ -38,4 +38,4 @@ class Histogram extends React.Component {
   }
 }
 
-module.exports = Histogram
+export default Histogram

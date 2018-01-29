@@ -295,6 +295,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(
+export default connect(mapStateToProps)(
   withTranslate(listensToClickOutside(AutoSuggest))
 )

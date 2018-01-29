@@ -68,4 +68,4 @@ function RangeNumericItem ({ value, handleClick }) {
   )
 }
 
-module.exports = withToggle(RangeNumericFilter)
+export default withToggle(RangeNumericFilter)

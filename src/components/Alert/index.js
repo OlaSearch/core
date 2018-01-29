@@ -55,7 +55,7 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   fetchAlerts,
   deleteAlert,
   createAlert

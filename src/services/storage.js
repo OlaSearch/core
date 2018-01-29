@@ -7,6 +7,7 @@ import { getKey } from './../utilities'
  * Accessing document.cookie adds 0.5ms to ola.rehydrate
  */
 var cookieCache = document.cookie
+
 /* Default export */
 export function get (key, namespace) {
   let _key = getKey(key, namespace)

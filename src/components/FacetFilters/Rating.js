@@ -85,4 +85,4 @@ RatingFilter.propTypes = {
   facet: PropTypes.object.isRequired
 }
 
-module.exports = withToggle(RatingFilter)
+export default withToggle(RatingFilter)

@@ -14,6 +14,7 @@ export function executeAutoSuggest () {
   return (dispatch, getState) => {
     var state = getState()
     var { q, page, per_page, facet_query } = state.AutoSuggest
+    var { replaceQueryParamName } = state.AppState
     var context = state.Context
 
     dispatch({

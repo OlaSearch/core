@@ -135,4 +135,4 @@ BookMarksWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-module.exports = BookMarksWrapper
+export default BookMarksWrapper

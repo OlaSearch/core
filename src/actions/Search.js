@@ -19,14 +19,9 @@ const updateURL = debounce(pushState, 300)
 /* Should route change */
 var globalRouteChange = true
 
-/* Allowed characters */
-
-var allowedCharacters = null
-
 /* URL Parameter */
 
 var historyType = 'pushState'
-var replaceQueryParamName = false
 
 export function updateQueryTerm (term, searchInput, forcePageReset = true) {
   return {
@@ -103,6 +98,7 @@ export function executeSearch (payload) {
     /* Check if there is a suggested term */
     var state = getState()
     var query = state.QueryState
+    var { allowedCharacters, replaceQueryParamName } = state.AppState
     var { q, isSearchActive, facet_query } = query
     var context = state.Context
 
@@ -125,7 +121,7 @@ export function executeSearch (payload) {
       window.location.href =
         payload.searchPageUrl +
         '?' +
-        buildQueryString(query, payload.replaceQueryParamName)
+        buildQueryString(query, replaceQueryParamName)
       return
     }
 
@@ -472,15 +468,8 @@ export function initSearch ({ config, urlSync = true, payload = {} }) {
     /* History type: pushState or hash */
     historyType = history || historyType
 
-    /* Replace `q` with `keywords` */
-    if (config.replaceQueryParamName) replaceQueryParamName = true
-
     /* Always pass configuration to @parseQueryString handler */
-
     urlSync && dispatch(updateStateFromQuery(config))
-
-    /* Set global variable */
-    allowedCharacters = config.allowedCharacters
 
     /* Global setting */
     globalRouteChange = urlSync

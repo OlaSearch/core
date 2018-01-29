@@ -53,4 +53,4 @@ const FacetSuggestionItem = ({ facet, name, q, onItemClick }) => {
   )
 }
 
-module.exports = FacetSuggestion
+export default FacetSuggestion

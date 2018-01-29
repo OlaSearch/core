@@ -13,7 +13,7 @@ import {
   BOT_STORAGE_KEY
 } from './../constants/Settings'
 
-export function prepareUserState ({ config }) {
+export function prepareStoreState ({ config }) {
   /* Create user cookie */
   var userSession = cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = cookies.get(USER_NEW_KEY, config.namespace)
@@ -22,7 +22,7 @@ export function prepareUserState ({ config }) {
   const locale =
     cookies.get(LOCALE_STORAGE_KEY, config.namespace) || DEFAULT_LOCALE
   const botState = get(BOT_STORAGE_KEY, config.namespace)
-  var { perPage } = config
+  const { perPage, allowedCharacters, replaceQueryParamName } = config
 
   if (typeof contextState === 'string') {
     try {
@@ -83,9 +83,11 @@ export function prepareUserState ({ config }) {
     storeState,
     contextState,
     locale,
-    configState: { perPage },
+    configState: {
+      perPage,
+      allowedCharacters,
+      replaceQueryParamName
+    },
     botState
   }
 }
-
-export default prepareUserState

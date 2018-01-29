@@ -258,4 +258,4 @@ function CheckBoxItem (props) {
   )
 }
 
-module.exports = withTranslate(withToggle(CheckboxFilter))
+export default withTranslate(withToggle(CheckboxFilter))

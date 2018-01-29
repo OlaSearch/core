@@ -1,14 +1,14 @@
 import queryString from 'query-string'
 import { parseRangeValues } from './../utilities'
-import { RANGE_FACETS, REMOVE_FROM_QUERY_STRING } from './../constants/Settings'
+import {
+  RANGE_FACETS,
+  REMOVE_FROM_QUERY_STRING,
+  QUERY_ALT_NAME
+} from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
 import flatten from 'ramda/src/flatten'
 import xssFilters from 'xss-filters'
-
-const QUERY_ALT_NAME = 'keywords'
-
-export const character = '?'
 
 export function pushState (qs, type, replaceQueryParamName) {
   var char = getHistoryCharacter(type)

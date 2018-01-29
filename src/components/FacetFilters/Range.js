@@ -232,4 +232,4 @@ class RangeFilter extends React.Component {
   }
 }
 
-module.exports = withToggle(RangeFilter)
+export default withToggle(RangeFilter)

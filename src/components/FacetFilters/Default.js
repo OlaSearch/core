@@ -247,4 +247,4 @@ function SelectedItem ({ name, facet, buttonLabel, handleRemove }) {
   )
 }
 
-module.exports = withTranslate(withToggle(LinkFilter))
+export default withTranslate(withToggle(LinkFilter))

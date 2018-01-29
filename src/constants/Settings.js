@@ -13,6 +13,7 @@ export const INTENT_SESSION_KEY = 'o_intent_session'
 export const INTENT_SESSION_EXPIRY_DAYS = 365
 export const DEFAULT_LOCALE = 'en'
 export const LAYOUT_OPTIONS = ['list', 'grid']
+export const QUERY_ALT_NAME = 'keywords'
 export const RE_ESCAPE = new RegExp(
   '(\\' +
     ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join(
@@ -83,4 +84,11 @@ export const SEARCH_INPUTS = {
   URL: 'url',
   DID_YOU_MEAN_SUGGESTION: 'autosuggest',
   SUGGESTION: 'suggest'
+}
+
+/**
+ * Check env
+ */
+export function isBrowser () {
+  return typeof document !== 'undefined' && document.createElement
 }

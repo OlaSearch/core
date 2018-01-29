@@ -3,9 +3,10 @@ var webpack = require('webpack')
 var startYear = 2016
 var currentYear = new Date().getFullYear()
 var version = process.env.VERSION || 'latest'
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
+  mode: 'production',
   entry: [
     './src/index'
   ],
@@ -26,16 +27,16 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    new UglifyJsPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        ie8: false,
-        output: {
-          comments: false,
-          beautify: false,
-        }
-      }
-    }),    
+    // new UglifyJsPlugin({
+    //   sourceMap: true,
+    //   uglifyOptions: {
+    //     ie8: false,
+    //     output: {
+    //       comments: false,
+    //       beautify: false,
+    //     }
+    //   }
+    // }),    
     new webpack.BannerPlugin({ banner: `Copyright Ola Search Pte Ltd ${startYear} - ${currentYear}`, raw: false, entryOnly: true })
   ],
   resolve: {

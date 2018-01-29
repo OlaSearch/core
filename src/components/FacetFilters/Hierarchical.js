@@ -190,4 +190,4 @@ function CheckBoxItem ({ value, handleAddFacet, handleRemoveFacet, isActive }) {
   )
 }
 
-module.exports = withTranslate(withToggle(HierarchicalFilter))
+export default withTranslate(withToggle(HierarchicalFilter))

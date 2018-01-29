@@ -4,8 +4,9 @@ import createOlaMiddleware from './../middleware/createOlaMiddleware'
 import createPersistMiddleware from './../middleware/createPersistMiddleware'
 import thunk from 'redux-thunk'
 import types from './../constants/ActionTypes'
-import { prepareUserState } from './prepareStore'
+import { prepareStoreState } from './prepareStore'
 import { addFilter } from './../actions/Search'
+import onlineStatusEnhancer from './../enhancer/onlineStatusEnhancer'
 
 /**
  * Signature
@@ -56,6 +57,9 @@ export default function (
   /* Reducer */
   const olaReducers = combineReducers({ ...olaReducer, ...reducers })
 
+  /* Connection status enhancer */
+  const connectionWatcher = onlineStatusEnhancer()
+
   /* Store */
   var store
 
@@ -63,13 +67,9 @@ export default function (
     store = createStore(
       olaReducers,
       compose(
-        applyMiddleware(
-          thunk,
-          olaMiddleWare,
-          persistMiddleware,
-          ...middlewares
-        ),
-        ...enhancers
+        connectionWatcher,
+        ...enhancers,
+        applyMiddleware(thunk, olaMiddleWare, persistMiddleware, ...middlewares)
       )
     )
   } else {
@@ -81,19 +81,20 @@ export default function (
     store = createStore(
       olaReducers,
       compose(
+        connectionWatcher,
+        ...enhancers,
         applyMiddleware(
           thunk,
           olaMiddleWare,
           persistMiddleware,
           logger,
           ...middlewares
-        ),
-        ...enhancers
+        )
       )
     )
   }
 
-  const { userSession, searchSession, isNewUser, ...rest } = prepareUserState({
+  const { userSession, searchSession, isNewUser, ...rest } = prepareStoreState({
     config
   })
 

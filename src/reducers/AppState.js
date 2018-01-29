@@ -24,7 +24,8 @@ type State = {
   isLoadingAlert: boolean,
   inProgressAlert: boolean,
   isSidebarOpen: boolean,
-  view: 'list' | 'grid'
+  view: 'list' | 'grid',
+  allowedCharacters: string
 }
 
 export const initialState = {
@@ -57,6 +58,10 @@ export const initialState = {
 
   /* Sidebar */
   isSidebarOpen: false,
+
+  /* Settings */
+  allowedCharacters: null,
+  replaceQueryParamName: false,
 
   /* View */
   view: 'list'
@@ -219,12 +224,19 @@ export default (state: State = initialState, action: Object) => {
     case types.OLA_REHYDRATE:
       return {
         ...state,
-        ...action.storeState,
+        ...action.storeState /* Includes bookmarks, history */,
         view:
-          action.storeState && action.storeState.view
+          action.storeState &&
+          action.storeState.view /* Results view grid|list */
             ? action.storeState.view
             : initialState.view,
-        namespace: action.namespace
+        namespace: action.namespace /* Project namespace */,
+        allowedCharacters: action.configState /* Allowed characters in the query */
+          ? action.configState.allowedCharacters
+          : state.allowedCharacters,
+        replaceQueryParamName: action.configState
+          ? action.configState.replaceQueryParamName
+          : state.replaceQueryParamName
       }
 
     case types.TOGGLE_SIDEBAR:

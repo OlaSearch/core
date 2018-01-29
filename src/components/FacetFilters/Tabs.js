@@ -181,4 +181,4 @@ function TabItem ({ facet, value, isActive, handleClick }) {
   )
 }
 
-module.exports = withTranslate(TabsFilter)
+export default withTranslate(TabsFilter)

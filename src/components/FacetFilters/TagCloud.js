@@ -88,4 +88,4 @@ function TagCloudItem ({ onSelect, value, min, max, fontSizeMin, fontSizeMax }) 
   )
 }
 
-module.exports = withToggle(TagCloud)
+export default withToggle(TagCloud)
