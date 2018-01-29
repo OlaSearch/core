@@ -1,4 +1,4 @@
-image: node:6.4
+image: node:7
 before_script:
     - npm install -g yarn --silence
     - yarn install
