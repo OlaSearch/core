@@ -24,7 +24,7 @@
     "semi": false
   },
   "engines": {
-    "node": ">=6.11.5",
+    "node": ">=8.0.0",
     "npm": ">=3"
   },
   "repository": {
