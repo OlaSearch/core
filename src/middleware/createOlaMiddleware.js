@@ -24,13 +24,14 @@ export default function (options = {}) {
       context = {},
       payload = {},
       meta = {},
-      suggestedTerm,
       nullResponse = null,
       processResponse = true,
       processData = null,
       shouldDispatchActions = true,
       returnWithoutDispatch = false
     } = action
+
+    let { suggestedTerm } = action
 
     // Normal action: pass it on
     if (!types) return next(action)
@@ -91,6 +92,7 @@ export default function (options = {}) {
     /* Add timestamp to query */
     const currentState = getState()
     const projectId = currentState.QueryState.projectId
+    const tokens = currentState.QueryState.tokens
     const env = currentState.QueryState.env || 'staging'
     const timestampObj = {
       timestamp: currentState.Timestamp.timestamp[api],
@@ -207,6 +209,7 @@ export default function (options = {}) {
         var responseTime
         var extra = response.extra
         var version
+        var spellCheckedQuery
         if (proxy) {
           results = response.results
           spellSuggestions = response.spellSuggestions
@@ -221,6 +224,9 @@ export default function (options = {}) {
           /* Instant answer */
           answer = api === 'answer' ? response : response.answer
 
+          /* Query from the response */
+          spellCheckedQuery = response.spellCheckedQuery
+
           /* Machine comprehension */
           mc = api === 'mc' ? response : response.mc
         } else {
@@ -231,6 +237,13 @@ export default function (options = {}) {
           qt = parser.queryTime(response)
           responseTime = response.responseTime
           version = parser.version()
+        }
+
+        /**
+         * Set suggested term if response query is not equal to search query
+         */
+        if (spellCheckedQuery && spellCheckedQuery !== response.q) {
+          suggestedTerm = spellCheckedQuery
         }
 
         /**
@@ -341,7 +354,9 @@ export default function (options = {}) {
             facetQuery
           })
         }
-
+        /**
+         * Success handler
+         */
         shouldDispatchActions &&
           next({
             payload,
@@ -388,7 +403,8 @@ export default function (options = {}) {
             eventSource: currentState.QueryState.source || api,
             state: getState(),
             responseTime,
-            payload
+            payload,
+            tokens
           })
         }
 

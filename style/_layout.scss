@@ -1,6 +1,7 @@
 /* Container */
 .ola-results-flex {
   display: flex;
+  padding-top: 1em;
 
   @include media (tablet) {
     padding-top: 1.5rem;

@@ -1,13 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { updateQueryTerm, executeSearch } from './../../actions/Search'
+import {
+  updateQueryTerm,
+  executeSearch,
+  removeAllTokens
+} from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
 function SpellSuggestion (props) {
   function onChange (term) {
     var { dispatch } = props
+    /* Update the query term */
     dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))
+    /* Remove any tokens */
+    dispatch(removeAllTokens())
+    /* Do a search */
     dispatch(executeSearch())
   }
   function handleClick (term) {

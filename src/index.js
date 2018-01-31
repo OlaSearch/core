@@ -52,7 +52,7 @@ export urlSync from './services/urlSync'
 export createOlaMiddleware from './middleware/createOlaMiddleware'
 export createPersistMiddleware from './middleware/createPersistMiddleware'
 export createStore from './store/createStore'
-export prepareStore from './store/prepareStore'
+export * as prepareStore from './store/prepareStore'
 
 /* Package version */
 export version from './constants/Version'
