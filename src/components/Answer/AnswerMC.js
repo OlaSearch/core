@@ -56,12 +56,12 @@ class AnswerMC extends React.Component {
     if (this.props.isLoadingMc && this.props.loader) {
       return this.props.loader
     }
-    let { mc, facetQuery, isLoading } = this.props
+    let { mc, facetQuery } = this.props
     let { mcThreshold = 0.4 } = this.context.config
     /* Always parse threshold */
     mcThreshold = parseFloat(mcThreshold)
     let { answer } = mc
-    if (!answer || facetQuery.length > 0 || isLoading) {
+    if (!answer || facetQuery.length > 0) {
       return null
     }
     let { snippet, url, title, snippet_confidence: confidence } = answer
@@ -85,7 +85,7 @@ class AnswerMC extends React.Component {
 function mapStateToProps (state) {
   return {
     isLoadingMc: state.AppState.isLoadingMc,
-    isLoading: state.AppState.isLoading,
+    // isLoading: state.AppState.isLoading,
     facetQuery: state.QueryState.facet_query
     /* If its a spelling mistake: Show the answer */
     // suggestedTerm: state.AppState.suggestedTerm

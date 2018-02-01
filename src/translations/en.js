@@ -33,6 +33,7 @@ export default {
     autosuggest_clear_history_label: 'clear',
     suggestions_showing_results_for:
       'Showing results for <strong>{term}</strong>',
+    suggestions_search_instead: 'Search instead for',
     facet_tabs_all_label: 'All',
 
     /* Pagination */

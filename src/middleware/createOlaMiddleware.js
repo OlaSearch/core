@@ -241,8 +241,13 @@ export default function (options = {}) {
 
         /**
          * Set suggested term if response query is not equal to search query
+         * Not release in Production yet
          */
-        if (spellCheckedQuery && spellCheckedQuery !== response.q) {
+        if (
+          spellCheckedQuery &&
+          response.q &&
+          spellCheckedQuery !== response.q
+        ) {
           suggestedTerm = spellCheckedQuery
         }
 

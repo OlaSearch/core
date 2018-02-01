@@ -12,6 +12,7 @@ import {
   setSearchSource,
   executeFacetSearch,
   addFacet,
+  removeFacet,
   addToken,
   removeToken,
   removeAllTokens,
@@ -476,9 +477,9 @@ class AutoComplete extends React.Component {
       return this.onFuzzySelect(this.state.fuzzyQuery, options)
     }
     /* Remove facets that are tokens */
-    // let tokenNames = this.props.tokens.map(({ name }) => name)
-
-    // this.props.removeTokenFacets(tokenNames)
+    let activeTokens = this.props.tokens.map(
+      ({ name, value }) => `${name}:${value}`
+    )
 
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
@@ -489,13 +490,26 @@ class AutoComplete extends React.Component {
         this.props.addFacet(facet, value)
       })
     }
+    /* Remove facets that are tokens */
+    this.props.facet_query.filter(({ isToken }) => isToken).forEach((item) => {
+      let { selected } = item
+      for (let i = 0; i < selected.length; i++) {
+        if (activeTokens.indexOf(`${item.name}:${selected[i]}`) === -1) {
+          this.props.removeFacet(item, selected[i])
+        }
+      }
+    })
 
+    /* Clear results and close the suggestions */
     this.setState({
       results: [],
       isOpen: false
     })
 
-    /* Update query term */
+    /**
+     * Update query term
+     * Only if query has changed. Should we set skip_spellsuggest or skip_intent to false here ?
+     */
     if (this.state.q !== this.props.q) {
       this.props.updateQueryTerm(this.state.q, this.state.searchInput)
     }
@@ -853,6 +867,7 @@ function mapStateToProps (state, ownProps) {
     isDesktop: state.Device.isDesktop,
     history: state.AppState.history,
     tokens: state.QueryState.tokens,
+    facet_query: state.QueryState.facet_query,
     wordSuggestion: ownProps.wordSuggestion && state.Device.isDesktop
   }
 }
@@ -868,6 +883,7 @@ module.exports = connect(mapStateToProps, {
   log,
   executeFacetSearch,
   addFacet,
+  removeFacet,
   addToken,
   removeToken,
   removeAllTokens,

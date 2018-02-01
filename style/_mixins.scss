@@ -92,10 +92,15 @@ $breakpoints: (
 }
 
 %ola-link {
-  border: none;
-  background: none;
-  color: $link-color;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
+  &, &:hover, &:active, &:focus {
+    border: none;
+    background: none;
+    color: $link-color;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
 }

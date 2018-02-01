@@ -43,6 +43,7 @@ function Title ({
   var title = result[field || 'title']
 
   if (!url) url = result.url || url
+  if (!url) isLink = false
   if (baseUrl) url = baseUrl + url
 
   /* Check for highlighting */

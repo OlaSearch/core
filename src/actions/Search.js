@@ -66,6 +66,13 @@ export function setSkipIntent (flag) {
   }
 }
 
+export function skipSpellcheck (flag) {
+  return {
+    type: types.SET_SKIP_SPELLCHECK,
+    flag
+  }
+}
+
 export function loadMore () {
   return (dispatch, getState) => {
     var currentPage = getState().QueryState.page
@@ -295,7 +302,9 @@ export function addFacet (facet, value) {
       ({ name, selected }) =>
         name === facet.name && selected.indexOf(value) !== -1
     )
-    if (exists) return false
+    if (exists) {
+      return false
+    }
 
     dispatch({
       type: types.ADD_FACET,

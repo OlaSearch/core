@@ -15,6 +15,7 @@ type State = {
   isSearchActive: boolean,
   searchInput: ?string,
   skip_intent: boolean,
+  skip_spellcheck: boolean,
   skip_facet_fields: Array<string>,
   debug: boolean,
   source: ?string,
@@ -34,6 +35,7 @@ export const initialState = {
   isSearchActive: true,
   searchInput: null,
   skip_intent: false,
+  skip_spellcheck: false,
   skip_facet_fields: [],
   debug: false,
   source: null,
@@ -80,6 +82,12 @@ export default (state: State = initialState, action: Object) => {
         skip_intent: action.flag
       }
 
+    case types.SET_SKIP_SPELLCHECK:
+      return {
+        ...state,
+        skip_spellcheck: action.flag
+      }
+
     case types.REMOVE_FILTER:
       return {
         ...state,
@@ -111,6 +119,7 @@ export default (state: State = initialState, action: Object) => {
         enriched_q: '',
         page: action.forcePageReset ? 1 : state.page,
         skip_intent: false,
+        skip_spellcheck: false,
         skip_facet_fields: []
       }
 

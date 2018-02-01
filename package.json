@@ -104,6 +104,7 @@
     "isparta": "^4.0.0",
     "jest": "^22.1.4",
     "jsdom": "^11.6.1",
+    "microbundle": "^0.4.3",
     "node-sass": "^4.7.2",
     "nyc": "^11.4.1",
     "pre-commit": "^1.2.2",

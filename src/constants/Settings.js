@@ -28,6 +28,7 @@ export const REMOVE_FROM_QUERY_STRING = [
   'enriched_q',
   'per_page',
   'skip_intent',
+  'skip_spellcheck',
   'projectId',
   'env',
   'ola_collection_name',

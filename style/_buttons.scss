@@ -26,6 +26,13 @@
   @extend %ola-icon-button;
 }
 
+/**
+ * Buttons that behave like links
+ */
+.ola-btn-link {
+  @extend %ola-link;
+}
+
 /* Search button */
 .ola-search-button {
   @extend %ola-icon-button;

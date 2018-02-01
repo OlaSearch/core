@@ -5,8 +5,7 @@ import {
   executeSearch,
   clearQueryTerm,
   removeFilter,
-  removeFacetItem,
-  setSkipIntent
+  removeFacetItem
 } from './../actions/Search'
 import Tag from './Misc/Tag'
 import Tooltip from './Misc/Tooltip'
