@@ -32,7 +32,7 @@ export default {
     suggestions_did_you_mean: 'Did you mean',
     autosuggest_clear_history_label: 'clear',
     suggestions_showing_results_for:
-      'Showing results for <strong>{term}</strong>',
+      'No results for {q}. Showing results for <strong>{term}</strong> instead.',
     suggestions_search_instead: 'Search instead for',
     facet_tabs_all_label: 'All',
 

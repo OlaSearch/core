@@ -52,7 +52,7 @@ export const DEFAULT_API_HANDLER = 'default'
 export const DATE_FORMAT_MOBILE = 'YYYY-MM-DD'
 export const DEFAULT_DATE_FORMAT = 'DD-MM-YYYY'
 export const DATEPICKER_YEAR_RANGE = 20
-export const DEFAULT_RANGE_TEMPLATE = '{name}: {from} - {to}'
+export const DEFAULT_RANGE_TEMPLATE = '{from} - {to}'
 export const DEFAULT_DISPLAY_DATE_FORMAT = 'DD MMMM YYYY'
 
 export const FEEDBACK_INTENT = 'OLA.FeedbackIntent'

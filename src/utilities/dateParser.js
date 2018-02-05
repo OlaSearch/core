@@ -55,6 +55,8 @@ export function parse (date, mask = defaultMask) {
 }
 
 export function formatUTC (date, mask = defaultMask) {
+  if (date === 'NOW') return 'Today'
+  if (date === '*') return 'Future'
   const d = new Date(date)
   const userTimezoneOffset = d.getTimezoneOffset() * 60000
   const _d = new Date(d.getTime() + userTimezoneOffset)

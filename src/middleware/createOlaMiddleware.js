@@ -210,6 +210,7 @@ export default function (options = {}) {
         var extra = response.extra
         var version
         var spellCheckedQuery
+        var sortCondition
         if (proxy) {
           results = response.results
           spellSuggestions = response.spellSuggestions
@@ -263,7 +264,7 @@ export default function (options = {}) {
 
         /**
          * Get facets or filters selected by intent engine
-         * 1. Check if facet already exists
+         * Always reset facets from intent engine
          */
         let facetQuery = currentState.QueryState.facet_query
         if (
@@ -277,6 +278,15 @@ export default function (options = {}) {
             ...item,
             fromIntentEngine: true
           }))
+          let answerFacetNames = answerFacets.map(({ name }) => name)
+          /**
+           * Remove from facet Query if `fromIntentEngine: true` and name is not contained in answerFacetNames
+           */
+          facetQuery = facetQuery.filter(({ fromIntentEngine, name }) => {
+            return fromIntentEngine
+              ? answerFacetNames.indexOf(name) !== -1
+              : true
+          })
           for (let i = 0; i < answerFacets.length; i++) {
             let { name, selected, ...rest } = answerFacets[i]
             /* Check if it already exists */
@@ -291,6 +301,13 @@ export default function (options = {}) {
               facetQuery = [...facetQuery, ...answerFacets[i]]
             }
           }
+        }
+
+        /**
+         * Check if sort is filled
+         */
+        if (!bot && answer && answer.search && answer.search.sort) {
+          sortCondition = answer.search.sort
         }
 
         /**
@@ -338,7 +355,8 @@ export default function (options = {}) {
             answer &&
             answer.intent &&
             IGNORE_INTENTS.indexOf(answer.intent) === -1
-          )
+          ) &&
+          !currentState.QueryState.skip_spellcheck
         ) {
           let { term } = spellSuggestions[0]
           return dispatch({
@@ -380,6 +398,7 @@ export default function (options = {}) {
             api,
             responseTime,
             facetQuery,
+            sortCondition,
             extra,
             version
           })

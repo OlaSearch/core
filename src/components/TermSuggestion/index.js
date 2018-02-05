@@ -31,9 +31,9 @@ function TermSuggestion ({
   return (
     <div className='ola-term-suggestion' {...className}>
       <span className='ola-term-suggestion-showing'>
-        {translate('suggestions_showing_results_for', { term }, true)}
+        {translate('suggestions_showing_results_for', { term, q }, true)}
       </span>
-      <span className='ola-term-suggestion-instead'>
+      {/* <span className='ola-term-suggestion-instead'>
         {translate('suggestions_search_instead')}{' '}
         <button
           className='ola-btn ola-btn-link'
@@ -46,7 +46,7 @@ function TermSuggestion ({
         >
           {q}
         </button>
-      </span>
+      </span> */}
     </div>
   )
 }

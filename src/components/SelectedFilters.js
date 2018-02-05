@@ -23,6 +23,10 @@ class SelectedFilters extends React.Component {
     }
   }
 
+  static contextTypes = {
+    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+  }
+
   static propTypes: {
     facets: PropTypes.array,
     filters: PropTypes.array,
@@ -88,6 +92,7 @@ class SelectedFilters extends React.Component {
     } = this.props
 
     var { showGuidePopover } = this.state
+    const { fieldLabels } = this.context.config
 
     /* Remove tabs and zones */
     facets = facets.filter(
@@ -116,6 +121,7 @@ class SelectedFilters extends React.Component {
             (_, idx) =>
               options && options[idx] ? !options[idx].isHidden : true
           )
+          if (!displayName) displayName = fieldLabels[facet.name]
           /* Error with babel-traverse */
           const _displayName = displayName ? (
             <span className='ola-facet-tags-heading'>{displayName}</span>

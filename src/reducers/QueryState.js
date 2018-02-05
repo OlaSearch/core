@@ -187,11 +187,12 @@ export default (state: State = initialState, action: Object) => {
       }
 
     case types.REMOVE_INTENT_ENGINE_FACETS:
-      return state
-    // return {
-    //   ...state,
-    //   facet_query: state.facet_query.filter((item) =>  !('fromIntentEngine' in item))
-    // }
+      return {
+        ...state,
+        facet_query: state.facet_query.filter(
+          (item) => !('fromIntentEngine' in item)
+        )
+      }
 
     case types.REPLACE_FACET:
       exists = checkIfFacetExists(state.facet_query, action.facet.name)
@@ -299,6 +300,8 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         enriched_q: action.enriched_q || '',
+        sort:
+          action.sortCondition || state.sort /* Fix bug where sort persists */,
         facet_query:
           action.facetQuery || state.facet_query /* From intent engine */,
         source: null

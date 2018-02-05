@@ -109,6 +109,11 @@ export function executeSearch (payload) {
     var { q, isSearchActive, facet_query } = query
     var context = state.Context
 
+    /* Remove facets from intent engine */
+    facet_query = facet_query.filter(
+      ({ fromIntentEngine }) => !fromIntentEngine
+    )
+
     /* If no query and search is not active (searchOnLoad = false) */
     if (
       (allowedCharacters && !checkForAllowedCharacters(q, allowedCharacters)) ||
@@ -138,7 +143,10 @@ export function executeSearch (payload) {
         types.REQUEST_SEARCH_SUCCESS,
         types.REQUEST_SEARCH_FAILURE
       ],
-      query,
+      query: {
+        ...query,
+        facet_query
+      },
       context,
       api: 'search',
       payload
