@@ -75,7 +75,7 @@ $breakpoints: (
   color: $base-color;
   padding: 0;
   text-align: center;
-  font-weight: normal;
+  font-weight: normal;  
 
   &:disabled{
     opacity: 0.6;
@@ -88,6 +88,10 @@ $breakpoints: (
 
   &:hover, &:active, &:focus {
     background: none;
+  }
+
+  .ola-icon {
+    vertical-align: middle;
   }
 }
 

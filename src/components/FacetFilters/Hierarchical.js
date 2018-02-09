@@ -9,6 +9,7 @@ import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
 import { toNestedArray } from './../../utilities'
 import xssFilters from 'xss-filters'
+import FacetTitle from './common/FacetTitle'
 
 class HierarchicalFilter extends React.Component {
   constructor (props) {
@@ -94,9 +95,11 @@ class HierarchicalFilter extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>
-          {displayName}
-        </h4>
+        <FacetTitle
+          displayName={facet.displayName}
+          toggleDisplay={toggleDisplay}
+          isCollapsed={isCollapsed}
+        />
         <div className='ola-facet-wrapper'>
           <div className='ola-facet-list'>
             <CheckboxGroup

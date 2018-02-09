@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import OlaIntlProvider from './OlaIntlProvider'
+import { ThemeProvider } from './OlaThemeContext'
+import { DEFAULT_THEME } from './../constants/Settings'
 
 export default class OlaProvider extends React.Component {
   static childContextTypes = {
@@ -23,11 +25,12 @@ export default class OlaProvider extends React.Component {
     }
   }
   render () {
+    let theme = { ...DEFAULT_THEME, ...this.props.config.theme }
     return (
       <div className='ola-search'>
         <Provider store={this.props.store}>
           <OlaIntlProvider translations={this.props.translations}>
-            {this.props.children}
+            <ThemeProvider value={theme}>{this.props.children}</ThemeProvider>
           </OlaIntlProvider>
         </Provider>
       </div>

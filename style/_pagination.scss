@@ -38,6 +38,12 @@
       background-color: #eee;
       opacity: 1;
     }
+
+    /* Icon */
+    .ola-icon {
+      vertical-align: middle;
+      margin-right: 0.25rem;
+    }
   }
 
   .ola-page-ellipsis{
@@ -51,20 +57,12 @@
 
   .ola-page-previous{
     margin-right: 1em;
-    &:before{
-      @extend .iconfont;
-      content: "navigate_before";
-      vertical-align: top;
-      margin-top: -3px;
-    }
   }
 
   .ola-page-next{
     margin-left: 1em;
-    &:after{
-      @extend .iconfont;
-      content: "navigate_next";
-      vertical-align: top;
-      margin-top: -3px;
+    .ola-icon {
+      margin-right: 0;
+      margin-left: 0.25rem;  
     }
   }

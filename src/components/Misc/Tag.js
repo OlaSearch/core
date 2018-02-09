@@ -6,6 +6,7 @@ import {
   DEFAULT_DISPLAY_DATE_FORMAT,
   DEFAULT_RANGE_TEMPLATE
 } from './../../constants/Settings'
+import Cross from '@olasearch/icons/lib/x'
 
 function Tag (props) {
   var displayName = ''
@@ -59,6 +60,7 @@ function Tag (props) {
       <span className='ola-facet-tag-name'>{displayName}</span>
       <button className='ola-facet-tag-remove' onClick={onRemove}>
         <span>{props.buttonLabel}</span>
+        <Cross size={16} />
       </button>
     </div>
   )

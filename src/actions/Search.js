@@ -327,7 +327,7 @@ export function removeFacet (facet, value, resetAllFacets = false) {
     let { fromIntentEngine } = facet
 
     /**
-     * Add to skip_facet_fields
+     * Add to skip_facet_fields if the facet is from intent engine
      */
     if (fromIntentEngine) {
       dispatch({

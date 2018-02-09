@@ -1,0 +1,85 @@
+$border-color: #d8d8d8;
+$padding: 10px 12px;
+
+.ola-drop {
+  position: absolute;
+  bottom: 100%;
+  left: 10px;
+  min-width: 260px;
+  background: white;
+  box-shadow: $sharp-box-shadow;
+  font-size: 0.875rem;
+  border-radius: $base-border-radius;
+  opacity: 0;
+  visibility: hidden;
+  margin-bottom: 16px;
+  transition: all 0.1s ease-in;
+  z-index: 2;
+
+  .ola-drop-open & {
+    opacity: 1;
+    visibility: visible;
+    margin-bottom: 12px;
+  }
+
+  &:after, &:before {
+    top: 100%;
+    left: 20px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: #fff;
+    border-width: 8px;
+    margin-left: -8px;
+  }
+
+  &:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: #bbb;
+    border-width: 9px;
+    margin-left: -9px;
+  }
+}
+
+  .ola-drop-title {
+    padding: $padding;
+    font-weight: bold;
+    border-bottom: 1px $border-color solid;
+    text-align: center;
+  }
+
+  .ola-drop-body {
+    > a {
+      padding: $padding;
+      // color: $blue;
+      display: block;
+      border-top: 1px $border-color solid;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:first-child {
+        border-top: none;
+      }
+
+      &:last-child {
+        border-radius: 0 0 5px 5px;
+      }
+
+      &:hover {
+        color: $base-color;
+      }
+    }
+
+    .ola-icon {
+      color: #666;      
+    }
+  }

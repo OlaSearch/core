@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import Histogram from './Histogram'
 import DateParser from './../../utilities/dateParser'
 import { decimalAdjust } from './../../utilities'
+import FacetTitle from './common/FacetTitle'
 
 class RangeFilter extends React.Component {
   static propTypes = {
@@ -218,9 +219,11 @@ class RangeFilter extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>
-          {displayName}
-        </h4>
+        <FacetTitle
+          displayName={facet.displayName}
+          toggleDisplay={toggleDisplay}
+          isCollapsed={isCollapsed}
+        />
         <div className='ola-facet-wrapper'>
           {showHistogram && <Histogram data={values} />}
           <div className='ola-slider'>

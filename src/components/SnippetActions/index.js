@@ -1,4 +1,3 @@
 module.exports = {
-  Bookmark: require('./Bookmark'),
-  Share: require('./Share')
+  Bookmark: require('./Bookmark')
 }

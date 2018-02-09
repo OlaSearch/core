@@ -12,7 +12,7 @@
   background-color: #ebebeb;
   color: #666;
   margin-right: 8px;
-  padding: 8px 10px;
+  padding: 10px 12px;
   position: relative;
   padding-right: 36px;
   margin-top: 8px;
@@ -47,9 +47,8 @@
  */
 
 .ola-facet-tag-remove{
-  @extend %ola-icon-button;
 	color: $base-color;
-  min-width: 26px;
+  min-width: 30px;
 	text-align: center;
 	cursor: pointer;
 	position: absolute;
@@ -66,17 +65,14 @@
     display: none;
   }
 
+  .ola-icon {
+    vertical-align: middle;
+  }
+
   &:hover {
     background-color: $base-grey-color;
     color: white;
   }
-
-	&:before{
-		@extend .iconfont;
-    content: "close";
-    vertical-align: middle;
-    font-size: 16px;
-	}
 }
 
 /* Input tag */

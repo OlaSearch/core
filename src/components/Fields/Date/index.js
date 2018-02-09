@@ -1,59 +1,104 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import DateParser from './../../../utilities/dateParser'
+import classNames from 'classnames'
+import {
+  format as formatDate,
+  isSameDay
+} from './../../../utilities/dateParser'
 import FieldLabel from './../FieldLabel'
+import Calendar from '@olasearch/icons/lib/calendar'
 
+const TIME_REGEX = /h{1,2}\:.*/
 /**
  * Displays a formatted Date field
  */
 function DateField ({
   date,
+  endDate,
+  allDayEvent,
   format,
   fieldLabel,
+  displayIcon,
+  iconSize,
   dependentField,
   result,
   showIfEmpty
 }) {
   if (!date) return null
-  if (dependentField) {
-    if (dependentField === date) {
-      if (showIfEmpty) {
-        return (
-          <div className='ola-field ola-field-date'>
-            <FieldLabel label={fieldLabel} />
-            <em>Date {date}</em>
-          </div>
-        )
-      }
-      return null
-    }
-  }
   let formattedDate = ''
+  let formattedEndDate = null
+  let fallOnSameDay = false
+  let timeFormat = null
   try {
-    formattedDate = DateParser.format(date, format)
+    formattedDate = formatDate(date, format)
   } catch (e) {
+    console.warn(e)
     return null
   }
+  if (endDate) {
+    try {
+      formattedEndDate = formatDate(endDate, format)
+    } catch (e) {
+      console.warn(e)
+    }
+  }
+  /**
+   * 1. check if start and end is the same day
+   * @type {[type]}
+   */
+  if (endDate) {
+    fallOnSameDay = isSameDay(date, endDate)
+    if (fallOnSameDay) {
+      let timeFormatMatches = TIME_REGEX.exec(format)
+      timeFormat = timeFormatMatches ? timeFormatMatches[0] : null
+      format = format.replace(TIME_REGEX, '').trim()
+    }
+  }
+  const classes = classNames('ola-field ola-field-date', {
+    'ola-field-daterange': formattedEndDate
+  })
   return (
-    <div className='ola-field ola-field-date'>
+    <div className={classes}>
       <FieldLabel label={fieldLabel} />
-      {formattedDate}
+      <div className='ola-flex'>
+        {displayIcon && (
+          <span className='ola-flex-icon'>
+            <Calendar size={iconSize} />
+          </span>
+        )}
+        <span className='ola-flex-content'>
+          {formattedEndDate
+            ? formattedEndDate === formattedDate
+              ? formattedDate
+              : fallOnSameDay
+                ? `${formatDate(date, format)}, ${formatDate(
+                  date,
+                  timeFormat
+                )} - ${formatDate(endDate, timeFormat)}`
+                : `${formattedDate} - ${formattedEndDate}`
+            : formattedDate}
+        </span>
+      </div>
     </div>
   )
 }
 
 DateField.propTypes = {
   date: PropTypes.string,
+  endDate: PropTypes.string,
   format: PropTypes.string,
   fieldLabel: PropTypes.string,
-  dependentField: PropTypes.string,
   result: PropTypes.object,
   showIfEmpty: PropTypes.bool
 }
 
 DateField.defaultProps = {
-  dependentField: null,
-  showIfEmpty: false
+  endDate: null,
+  allDayEvent: false,
+  showIfEmpty: false,
+  displayIcon: false,
+  iconSize: 20,
+  type: 'daterange'
 }
 
 module.exports = DateField

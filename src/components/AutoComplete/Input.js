@@ -17,6 +17,8 @@ import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
 import ContentEditable from './../ContentEditable'
 import equals from 'ramda/src/equals'
+import Search from '@olasearch/icons/lib/material-search'
+import Cross from '@olasearch/icons/lib/x'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -229,7 +231,9 @@ export default class Input extends React.Component {
             tabIndex='-1'
             onClick={this.onClear}
             aria-label='Clear Search'
-          />
+          >
+            <Cross />
+          </button>
         )}
 
         {this.props.showAlert && null}
@@ -257,7 +261,20 @@ export default class Input extends React.Component {
           className='ola-search-button'
           onClick={this.onSearchButtonClick}
           aria-label='Search'
-        />
+        >
+          <Search />
+        </button>
+        <style jsx>
+          {`
+            .ola-search-button,
+            .ola-search-button:hover,
+            .ola-search-button:active,
+            .ola-search-button:focus {
+              background: ${this.props.theme.primaryColor};
+              border-color: ${this.props.theme.primaryColor};
+            }
+          `}
+        </style>
       </div>
     )
   }

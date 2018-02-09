@@ -142,6 +142,7 @@
     "@olasearch/react-onclickoutside": "^6.7.1-rc",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.5",
+    "create-react-context": "^0.1.6",
     "dom-scroll-into-view": "^1.2.1",
     "fecha": "^2.3.2",
     "hoist-non-react-statics": "^2.3.1",
@@ -154,6 +155,7 @@
     "react-list": "^0.8.8",
     "react-pikaday-datepicker": "^3.0.1",
     "redux-logger": "^3.0.6",
+    "styled-jsx": "^2.2.3",
     "xss-filters": "^1.2.7"
   },
   "pre-commit": [

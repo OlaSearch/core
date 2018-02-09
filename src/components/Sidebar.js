@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 import { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } from './../constants/Settings'
+import { ThemeConsumer } from './../containers/OlaThemeContext'
 
 class Sidebar extends React.Component {
   componentDidMount () {
@@ -31,16 +32,31 @@ class Sidebar extends React.Component {
   render () {
     let { children, toggleSidebar, isSidebarOpen } = this.props
     return (
-      <div className='ola-sidebar'>
-        {isSidebarOpen && children}
-        <button
-          onClick={toggleSidebar}
-          type='button'
-          className='ola-close-sidebar'
-        >
-          Close
-        </button>
-      </div>
+      <ThemeConsumer>
+        {(theme) => (
+          <div className='ola-sidebar'>
+            {isSidebarOpen && children}
+            <button
+              onClick={toggleSidebar}
+              type='button'
+              className='ola-close-sidebar'
+            >
+              Close
+            </button>
+            <style jsx>
+              {`
+                .ola-sidebar :global(.ola-close-sidebar) {
+                  background: ${theme.primaryButtonBackground};
+                  color: ${theme.primaryButtonColor};
+                }
+                .ola-sidebar :global(.ola-facet-link) {
+                  color: ${theme.primaryColor};
+                }
+              `}
+            </style>
+          </div>
+        )}
+      </ThemeConsumer>
     )
   }
 }

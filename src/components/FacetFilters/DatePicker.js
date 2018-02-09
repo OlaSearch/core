@@ -11,6 +11,7 @@ import {
 import classNames from 'classnames'
 import DatePicker from 'react-pikaday-datepicker'
 import { connect } from 'react-redux'
+import FacetTitle from './common/FacetTitle'
 
 class DateRange extends React.Component {
   constructor (props) {
@@ -183,9 +184,11 @@ class DateRange extends React.Component {
     let toDate = DateParser.parse(this.state.toDate, this.getDateFormat())
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>
-          {facet.displayName}
-        </h4>
+        <FacetTitle
+          displayName={facet.displayName}
+          toggleDisplay={toggleDisplay}
+          isCollapsed={isCollapsed}
+        />
         <div className='ola-facet-wrapper'>
           <ul className='ola-date-list'>
             {dateLabels.map((date) => {

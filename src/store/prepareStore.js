@@ -22,7 +22,14 @@ export function prepareStoreState ({ config }) {
   const locale =
     cookies.get(LOCALE_STORAGE_KEY, config.namespace) || DEFAULT_LOCALE
   const botState = get(BOT_STORAGE_KEY, config.namespace)
-  const { perPage, allowedCharacters, replaceQueryParamName } = config
+  const {
+    perPage,
+    allowedCharacters,
+    replaceQueryParamName,
+    sidebar: showSidebar,
+    layoutSwitching,
+    filterInAutoComplete
+  } = config
 
   if (typeof contextState === 'string') {
     try {
@@ -86,7 +93,10 @@ export function prepareStoreState ({ config }) {
     configState: {
       perPage,
       allowedCharacters,
-      replaceQueryParamName
+      replaceQueryParamName,
+      showSidebar,
+      layoutSwitching,
+      filterInAutoComplete
     },
     botState
   }

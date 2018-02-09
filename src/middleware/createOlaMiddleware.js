@@ -12,7 +12,8 @@ import {
   FUZZY_SUGGEST_KEY,
   API_IGNORE_LOGGING,
   INTENT_SUPPORTED_API_KEYS,
-  IGNORE_INTENTS
+  IGNORE_INTENTS,
+  SLOT_DATE
 } from './../constants/Settings'
 
 export default function (options = {}) {
@@ -271,13 +272,19 @@ export default function (options = {}) {
           !bot /* Do not fill facet_query if its from bot */ &&
           answer &&
           answer.search &&
-          answer.search.facet_query &&
-          answer.search.facet_query.length
+          answer.search.slots &&
+          answer.search.slots.length
         ) {
-          let answerFacets = answer.search.facet_query.map((item) => ({
-            ...item,
-            fromIntentEngine: true
-          }))
+          let answerFacets = answer.search.slots
+            .filter(
+              ({ facet_query, skip }) => facet_query && !skip
+            ) /* Ignore skipped slots */
+            .map((item) => ({
+              ...item,
+              selected: item.value,
+              type: item.type === SLOT_DATE ? 'daterange' : 'string',
+              fromIntentEngine: true
+            }))
           let answerFacetNames = answerFacets.map(({ name }) => name)
           /**
            * Remove from facet Query if `fromIntentEngine: true` and name is not contained in answerFacetNames

@@ -90,6 +90,71 @@ export const SEARCH_INPUTS = {
 /**
  * Check env
  */
-export function isBrowser () {
-  return typeof document !== 'undefined' && document.createElement
+export const isBrowser = typeof document !== 'undefined'
+
+/**
+ * Create filter
+ */
+export const CREATE_FILTER_OBJECT = ({
+  name,
+  displayName,
+  type,
+  isCollapsed = false,
+  showSelectedTag = false,
+  multiSelect = true,
+  ...rest
+}) => {
+  return {
+    displayName,
+    name,
+    type,
+    multiSelect:
+      typeof multiSelect === 'undefined'
+        ? RANGE_FACETS.indexOf(type) !== -1
+        : multiSelect,
+    isCollapsed,
+    showSelectedTag,
+    ...rest
+  }
+}
+
+/**
+ * Slot types
+ */
+export const SLOT_DATE = 'OLA.DATE'
+
+/**
+ * Default theme
+ */
+export const DEFAULT_THEME = {
+  /* Color palette */
+  primaryColor: '#289dcc',
+  primaryInvertColor: 'white',
+  secondaryColor: '#289dcc',
+  errorColor: '#f94d3e',
+
+  /* Search */
+  searchLinkColor: '#232323',
+  searchLinkHoverColor: '#289dcc',
+
+  /* Chat */
+  chatLinkColor: '#289dcc',
+  chatLinkHoverColor: '#289dcc',
+  chatFontFamily: "'Lato', 'Open Sans', sans-serif",
+
+  chatHeaderColor: 'white',
+  chatHeaderBackground: '#289dcc',
+
+  chatBubbleBackground: '#289dcc',
+  chatBubbleBackgroundHover: '#289dcc',
+
+  chatUserMessageBackground: '#289dcc',
+  chatUserMessageColor: 'white',
+  chatBotMessageBackground: '#ddd',
+  chatBotMessageColor: '#444',
+
+  primaryButtonColor: 'white',
+  primaryButtonBackground: '#289dcc',
+  shareButtonColor: '#289dcc',
+  shareButtonBackground: 'white'
 }

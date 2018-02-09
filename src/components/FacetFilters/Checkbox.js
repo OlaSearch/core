@@ -13,6 +13,7 @@ import ReactList from 'react-list'
 import { getDisplayName } from './../../utilities'
 import { ALL_VALUES } from './../../constants/Settings'
 import FilterInput from './common/FilterInput'
+import FacetTitle from './common/FacetTitle'
 import xssFilters from 'xss-filters'
 
 class CheckboxFilter extends React.Component {
@@ -207,9 +208,11 @@ class CheckboxFilter extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>
-          {displayName}
-        </h4>
+        <FacetTitle
+          displayName={facet.displayName}
+          toggleDisplay={toggleDisplay}
+          isCollapsed={isCollapsed}
+        />
         <div className='ola-facet-wrapper'>
           {filterInput}
           <div className='ola-facet-list'>

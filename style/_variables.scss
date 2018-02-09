@@ -6,6 +6,8 @@ $base-border-color: #ddd;
 $base-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 $base-grey-color: #888;
 $base-border-radius: 3px;
+$small-box-shadow: 0 0px 3px 0 rgba(0,0,0,.3);
+$sharp-box-shadow: 0 0 3px 1px rgba(0,0,0,.3);
 
 /* Brand */
 $brand-color: #3F51B5 !default;
@@ -20,7 +22,8 @@ $link-hover-color: #1A237E !default;
 /* Primary button */
 $button-primary-background: #3F51B5 !default;
 $button-primary-color: white;
-$button-padding: 0.5rem 1rem;
+$button-padding: 0.6rem 1.5rem;
+$button-border-radius: 5px;
 
 /* Icon button default width */
 $button-icon-width: 45px;
@@ -38,7 +41,7 @@ $is_link_underlined: false;
 /* Autocomplete */
 $autocomplete-box-shadow: $base-box-shadow;
 $autocomplete-border-color: #ccc;
-$autocomplete-font-size: 20px;
+$autocomplete-font-size: 18px;
 
 /* Facet */
 $facet-padding: 4px 0;
@@ -54,7 +57,8 @@ $input-tag-bg: #eef7fd;
 $color-highlight: #ffc !default;
 
 /* Fields */
-$field-title-font-size: 18px;
+$field-title-font-size: 1.25rem;
+$field-title-bottom-padding: 0.5rem;
 $field-bottom-padding: 1rem;
 
 /* Heading*/
@@ -76,3 +80,4 @@ $elevation-3: 0 0 0 1px rgba(16, 22, 26, 0.1),
 $elevation-4: 0 0 0 1px rgba(16, 22, 26, 0.1),
 0 4px 8px rgba(16, 22, 26, 0.2),
 0 18px 46px 6px rgba(16, 22, 26, 0.2) !default;
+$snippet-shadow: 0 1px 3px rgba(0,0,0,0.3) !default;

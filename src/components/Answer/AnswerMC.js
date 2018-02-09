@@ -5,6 +5,7 @@ import Url from './../Fields/Url'
 import { connect } from 'react-redux'
 import { fetchMc } from './../../actions/Search'
 import { createHTMLMarkup } from './../../utilities'
+import { ThemeConsumer } from './../../containers/OlaThemeContext'
 
 class AnswerMC extends React.Component {
   componentDidMount () {
@@ -16,7 +17,9 @@ class AnswerMC extends React.Component {
     if (key) this.props.fetchMc(key, payload)
   }
   componentDidUpdate (prevProps) {
-    if (prevProps.mc.key !== this.props.mc.key) this.fetch()
+    if (prevProps.mc.key !== this.props.mc.key) {
+      this.fetch()
+    }
   }
   createRegex = (term) => {
     let arr = term.split(/\s/gi)
@@ -50,7 +53,7 @@ class AnswerMC extends React.Component {
     mc: {},
     payload: {},
     loader: null,
-    highlightConfidenceThreshold: 0.25
+    highlightConfidenceThreshold: 0.2
   }
   render () {
     if (this.props.isLoadingMc && this.props.loader) {
@@ -68,16 +71,34 @@ class AnswerMC extends React.Component {
     /* Do not show answers that are of low confidence */
     if (confidence < mcThreshold) return null
     return (
-      <div className='ola-snippet ola-snippet-mc'>
-        <div className='ola-snippet-inner'>
-          <p
-            className='ola-snippet-text'
-            dangerouslySetInnerHTML={this.getSnippet(answer)}
-          />
-          <Title result={answer} />
-          <Url result={answer} />
-        </div>
-      </div>
+      <ThemeConsumer>
+        {(theme) => (
+          <div className='ola-snippet ola-snippet-mc'>
+            <div className='ola-snippet-inner'>
+              <p
+                className='ola-snippet-text'
+                dangerouslySetInnerHTML={this.getSnippet(answer)}
+              />
+              <Title result={answer} />
+              <Url result={answer} />
+            </div>
+            <style jsx>
+              {`
+                .ola-snippet-inner {
+                  border: 1px ${theme.primaryColor} solid;
+                }
+                .ola-snippet :global(.ola-field-title a) {
+                  color: ${theme.searchLinkColor};
+                }
+                .ola-snippet
+                  :global(.ola-field-title a:hover, .ola-field-title a:focus) {
+                  color: ${theme.searchLinkHoverColor};
+                }
+              `}
+            </style>
+          </div>
+        )}
+      </ThemeConsumer>
     )
   }
 }

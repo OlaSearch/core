@@ -5,6 +5,9 @@ import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
 import { addFacet, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
+import Plus from '@olasearch/icons/lib/plus'
+import { CREATE_FILTER_OBJECT, SLOT_DATE } from './../../constants/Settings'
+import { ThemeConsumer } from './../../containers/OlaThemeContext'
 
 function AnswerToken (
   {
@@ -12,8 +15,8 @@ function AnswerToken (
     addFacet,
     totalResults,
     executeSearch,
-    facets,
     facetQuery,
+    facets,
     translate
   },
   { config }
@@ -21,27 +24,47 @@ function AnswerToken (
   if (!answer || !answer.search || !answer.search.slots || !totalResults) {
     return null
   }
-  /* Remove slots that have been already added */
-  let slots = answer.search.slots.filter(({ name, value }) => {
-    return !facetQuery.some(
-      ({ name: _name, selected }) =>
-        _name === name && selected.indexOf(value) !== -1
-    )
-  })
+  /* 1. Remove slots that have been already added */
 
+  let slots = answer.search.slots
+    .filter(({ suggest }) => suggest)
+    .filter(({ name, value }) => {
+      /**
+       * Todo. Compare values also
+       */
+      return !facetQuery.some(({ name: _name, selected }) => _name === name)
+    })
+
+  /* 2. Remove slots that doesnt have any results */
   slots = slots.filter(({ name, value }) => {
-    let facet = facets.filter(({ name: _name }) => _name === name)
-    if (!facet.length) return false
-    facet = facet.reduce((a, _) => a)
-    /* Check if value exists */
-    return facet.values.some((item) => item.name === value)
+    /* 2.1 Check if facet exists */
+    let facet = find(propEq('name', name))(facets)
+    /* Facet exists */
+    if (facet) {
+      /* 2.2 Check if value exists */
+      return facet.values.some(({ name }) => value.indexOf(name) !== -1)
+    }
+    return true
   })
 
   /* If no slots hide */
   if (!slots.length) return null
-  function handleAddToken (name, value) {
+
+  const { fieldLabels } = config
+
+  function handleAddToken (slot) {
+    let { name, value, type } = slot
     let facet = find(propEq('name', name))(config.facets)
-    addFacet(facet, value)
+    if (!facet) {
+      facet = CREATE_FILTER_OBJECT({
+        name,
+        displayName: fieldLabels[name],
+        type: type === SLOT_DATE ? 'daterange' : 'string',
+        fromIntentEngine: true
+      })
+    }
+    /* Take the first value only */
+    addFacet(facet, value[0])
     executeSearch()
   }
 
@@ -50,27 +73,40 @@ function AnswerToken (
    * 2. Check if value exists in the facet
    */
   return (
-    <div className='ola-answer-slots'>
-      <span className='ola-answer-slots-text'>
-        {translate('filter_suggestions')}
-      </span>
-      {slots.map(({ name, value }, idx) => {
-        let facet = facets
-          .filter(({ name: _name }) => _name === name)
-          .reduce((a, _) => a)
-
-        let displayName = facet ? facet.displayName : name
-        return (
-          <AnswerTokenBtn
-            key={`${idx}_${name}`}
-            name={name}
-            value={value}
-            handleAddToken={handleAddToken}
-            displayName={displayName}
-          />
-        )
-      })}
-    </div>
+    <ThemeConsumer>
+      {(theme) => (
+        <div className='ola-answer-slots'>
+          <span className='ola-answer-slots-text'>
+            {translate('filter_suggestions')}
+          </span>
+          {slots.map((slot, idx) => {
+            const facet = config.facets.filter(
+              ({ name: _name }) => _name === slot.name
+            )
+            const displayName =
+              facet && facet.length
+                ? facet[0].displayName
+                : fieldLabels[slot.name]
+            return (
+              <AnswerTokenBtn
+                key={`${idx}_${name}`}
+                slot={slot}
+                handleAddToken={handleAddToken}
+                displayName={displayName}
+              />
+            )
+          })}
+          <style jsx>
+            {`
+              .ola-answer-slots :global(.ola-btn) {
+                background: ${theme.primaryColor};
+                color: ${theme.primaryInvertColor};
+              }
+            `}
+          </style>
+        </div>
+      )}
+    </ThemeConsumer>
   )
 }
 
@@ -78,13 +114,14 @@ AnswerToken.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-function AnswerTokenBtn ({ name, value, displayName, handleAddToken }) {
+function AnswerTokenBtn ({ slot, displayName, handleAddToken }) {
   function handleAdd () {
-    handleAddToken(name, value)
+    handleAddToken(slot)
   }
   return (
     <button className='ola-btn ola-btn-slot-add' onClick={handleAdd}>
-      {displayName}: {value}
+      {displayName}: {slot.match || slot.value}
+      <Plus size={16} />
     </button>
   )
 }
@@ -96,8 +133,8 @@ AnswerToken.defaultProps = {
 function mapStateToProps (state) {
   return {
     answer: state.AppState.answer,
-    facets: state.AppState.facets,
     facetQuery: state.QueryState.facet_query,
+    facets: state.AppState.facets,
     totalResults: state.AppState.totalResults
   }
 }

@@ -9,7 +9,7 @@
 .ContentEditableWrapper .ola-text-input {
   position: relative;
   z-index: 1;
-  font-family: $base-font-family;
+  // font-family: $base-font-family;
   &:focus {
     outline: none;
     border: none;
@@ -31,7 +31,7 @@
   line-height: normal;
   font-size: $autocomplete-font-size;
   display: none;
-  font-family: $base-font-family;
+  // font-family: $base-font-family;
 
   @include media (desktop) {
     display: block;

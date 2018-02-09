@@ -65,7 +65,6 @@
     margin-top: -1px;
     margin-bottom: -1px;
     margin-right: -1px;
-    border: 1px darken($button-primary-background, 20%) solid;
   }
 
   .ola-autosuggest-focus & {
@@ -79,6 +78,7 @@
 	z-index: 2;
 	background-color: transparent !important;
 	position: relative;
+ height: $button-default-height;
 }
 
 /* Text shadow */

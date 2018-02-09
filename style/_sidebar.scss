@@ -73,10 +73,10 @@
 /* Open Filter */
 .ola-link-open-filter {
   float: right;
-	border: 1px $base-grey-color solid;
+	 border: 1px $base-grey-color solid;
   background: none;
   text-transform: uppercase;
-	text-align: center;
+	 text-align: center;
   position: relative;
   margin: 5px 0 0 5px;
   // display: none;
@@ -88,14 +88,6 @@
 
   & {
     color: $brand-color;
-  }
-  &:hover, &:active, &:focus, &.ola-link-open-filter-active  {
-    border-color: $brand-color;
-  }
-
-  &:before {
-    @extend .iconfont;
-    content: 'tune';
   }
 
 	span{

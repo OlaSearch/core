@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
+import ChevronRight from '@olasearch/icons/lib/chevron-right'
+import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 
 class Pagination extends React.Component {
   static defaultProps = {
@@ -126,6 +128,7 @@ class Pagination extends React.Component {
           onClick={this.prevPage}
           disabled={isPrevPageDisabled}
         >
+          <ChevronLeft />
           {translate('pagination_prev_label')}
         </button>
         {pages.map((page, idx) => {
@@ -144,6 +147,7 @@ class Pagination extends React.Component {
           disabled={isNextPageDisabled}
         >
           {translate('pagination_next_label')}
+          <ChevronRight />
         </button>
       </nav>
     )

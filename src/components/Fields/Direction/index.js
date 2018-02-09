@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import withTranslate from './../../../decorators/withTranslate'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
+import MapPin from '@olasearch/icons/lib/map-pin'
 
 /**
  * Displays a Get directions button with distance
@@ -10,9 +11,10 @@ import FieldLabel from './../FieldLabel'
 function Directions (props) {
   var {
     translate,
+    locationName,
     label,
-    iconLeft = null,
-    iconRight = null,
+    iconSize,
+    iconRight,
     onClick,
     result,
     log,
@@ -22,6 +24,7 @@ function Directions (props) {
     distanceFieldName,
     locationFieldName,
     collectionId,
+    displayIcon,
     ...rest
   } = props
 
@@ -48,7 +51,7 @@ function Directions (props) {
       result,
       eventCategory: 'Get Directions',
       eventAction: 'click',
-      debounce: true,
+      debounce: false,
       snippetId
     })
     onClick && onClick(event)
@@ -58,17 +61,28 @@ function Directions (props) {
     <div className='ola-field ola-field-directions'>
       <FieldLabel label={fieldLabel} />
       <a
-        className='ola-btn ola-btn-directions'
+        className='ola-btn ola-flex ola-btn-directions'
         onClick={handleClick}
         href={url}
         target='_blank'
         {...rest}
       >
-        {iconLeft}
-        {label || translate('get_directions_label')}
-        {iconRight}
+        {displayIcon && (
+          <span className='ola-flex-icon'>
+            <MapPin size={iconSize} />
+          </span>
+        )}
+        {locationName && (
+          <span className='ola-flex-content'>
+            {locationName}{' '}
+            {distance ? (
+              <span className='ola-field-distance'>{distance}</span>
+            ) : null}
+          </span>
+        )}
+        {label && <span className='ola-flex-content'>{label}</span>}
+        {iconRight && <span className='ola-flex-icon'>{iconRight}</span>}
       </a>
-      {distance ? <div className='ola-field-distance'>{distance}</div> : null}
     </div>
   )
 }
@@ -87,6 +101,9 @@ Directions.defaultProps = {
   distanceFieldName: 'ola_distance',
   locationFieldName: 'ola_location',
   result: {},
+  iconSize: 20,
+  displayIcon: false,
+  iconRight: null,
   fieldLabel: null
 }
 

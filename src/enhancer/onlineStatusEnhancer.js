@@ -4,7 +4,7 @@ import { isBrowser } from './../constants/Settings'
 export default function () {
   return (createStore) => (...args) => {
     const store = createStore(...args)
-    if (!isBrowser()) return store
+    if (!isBrowser) return store
     /**
      * Observe online and offline events
      */

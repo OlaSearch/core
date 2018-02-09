@@ -150,7 +150,10 @@ export default (state: State = initialState, action: Object) => {
               }
             }
             return item
-          })
+          }),
+          skip_facet_fields: state.skip_facet_fields.filter(
+            (item) => item !== action.facet.name
+          )
         }
       } else {
         return {
@@ -162,7 +165,10 @@ export default (state: State = initialState, action: Object) => {
               ...action.facet,
               selected: [action.value]
             }
-          ]
+          ],
+          skip_facet_fields: state.skip_facet_fields.filter(
+            (item) => item !== action.facet.name
+          )
         }
       }
 

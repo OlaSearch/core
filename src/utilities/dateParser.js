@@ -54,6 +54,10 @@ export function parse (date, mask = defaultMask) {
   return date
 }
 
+export function isSameDay (start, end) {
+  return parse(start).toDateString() === parse(end).toDateString()
+}
+
 export function formatUTC (date, mask = defaultMask) {
   if (date === 'NOW') return 'Today'
   if (date === '*') return 'Future'
@@ -76,5 +80,6 @@ export default {
   parse,
   formatUTC,
   toUTC,
-  today
+  today,
+  isSameDay
 }

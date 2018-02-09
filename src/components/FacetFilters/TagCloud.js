@@ -2,6 +2,7 @@ import React from 'react'
 import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import { addFacet, executeSearch } from './../../actions/Search'
+import FacetTitle from './common/FacetTitle'
 
 function TagCloud (props) {
   function handleAddFacet (value) {
@@ -37,9 +38,11 @@ function TagCloud (props) {
   if (!values.length) return null
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>
-        {facet.displayName}
-      </h4>
+      <FacetTitle
+        displayName={facet.displayName}
+        toggleDisplay={toggleDisplay}
+        isCollapsed={isCollapsed}
+      />
       <div className='ola-facet-wrapper'>
         {values.map((value, idx) => {
           return (

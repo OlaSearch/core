@@ -13,5 +13,7 @@ module.exports = {
   DocumentPages: require('./DocumentPages'),
   Button: require('./Button'),
   Url: require('./Url'),
-  TextField: require('./TextField')
+  TextField: require('./TextField'),
+  Share: require('./Share'),
+  Person: require('./Person')
 }

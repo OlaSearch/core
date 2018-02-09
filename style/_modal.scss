@@ -33,8 +33,4 @@
   }
   cursor: pointer;
   height: 40px;
-  &:before {
-    @extend .iconfont;
-    content: 'close';
-  }
 }

@@ -25,6 +25,15 @@
   }
 }
 
+/**
+ * Background images
+ */
+.ola-img-bg {
+  height: 180px;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
 .ola-field-component-label {
   color: $base-grey-color;
   font-size: 0.875rem;
@@ -52,6 +61,13 @@
       }
     }
   }
+}
+
+/**
+ * Content
+ */
+.ola-fg-content {
+  flex: 1;
 }
 
 /**
@@ -83,7 +99,7 @@
 /* Title */
 .ola-field-title {
   margin: 0;
-  padding: 0 0 $field-bottom-padding 0;
+  padding: 0 0 $field-title-bottom-padding 0;
   font-weight: normal;
   font-size: $field-title-font-size;
 }
@@ -112,43 +128,10 @@ a.ola-field-url {
   hyphens: auto;
 }
 
-/* Snippet: Events|Articles */
-/* Date-Date-TextField */
-.ola-fg-horizontal {
-  // .ola-field {
-  //   padding-right: 0.5rem;
-  // }
-  &.Date-Date-TextField, &.Date-TextField {
-    line-height: 1;
-    font-size: 14px;
-    color: $base-grey-color;
-    padding-bottom: 8px;
-
-    .ola-field {
-      padding-bottom: 0;
-    }
-
-    .ola-field-date+.ola-field-date {
-      // padding-left: 8px;
-      &:before {
-        content: '-';
-        padding-right: 8px;
-      }
-    }
-
-    .ola-field-text {
-      border-left: 1px solid $base-grey-color;
-      margin-left: 8px;
-      padding-left: 1rem;
-      padding-bottom: 0;
-    }
-  }
-  
-}
 
 /* Distance */
 .ola-field-distance {
-  display: inline;
+  display: inline-block;
   color: $base-grey-color;
   font-size: 0.8rem;
   &:before {
@@ -162,4 +145,28 @@ a.ola-field-url {
 /* Button */
 .ola-field-button {
   
+}
+
+
+/**
+ * Flex fields
+ */
+.ola-flex {
+  display: flex;
+}
+
+  /**
+   * Icon
+   */
+  .ola-flex-icon {
+    margin-right: 0.5rem;
+  }
+
+/**
+ * Small fields
+ */
+.ola-field-person, 
+.ola-field-date,
+.ola-field-directions {
+  font-size: 0.875rem;
 }

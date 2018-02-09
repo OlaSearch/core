@@ -15,19 +15,4 @@
   &{
     color: $brand-color;
   }
-  &:hover, &:active, &:focus  {
-    border-color: $brand-color;
-  }
-
-  &:before {
-    @extend .iconfont;
-    content: 'view_module';
-  }
 }
-
-  /* List */
-  .ola-link-layout-list {
-    &:before {
-      content: 'view_list'
-    }
-  }

@@ -17,8 +17,11 @@
   line-height: $base-line-height;
 }
 
+/**
+ * Remove when deploying
+ */
 body {
-  font-family: $base-font-family;
+  // font-family: $base-font-family;
   // padding: 3rem;
   // margin: 0;
 }

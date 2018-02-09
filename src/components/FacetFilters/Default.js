@@ -8,6 +8,7 @@ import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
 import { getDisplayName, sanitizeText } from './../../utilities'
 import FilterInput from './common/FilterInput'
+import FacetTitle from './common/FacetTitle'
 import xssFilters from 'xss-filters'
 
 class LinkFilter extends React.Component {
@@ -169,9 +170,11 @@ class LinkFilter extends React.Component {
 
     return (
       <div className={klass}>
-        <h4 className='ola-facet-title' onClick={toggleDisplay}>
-          {facet.displayName}
-        </h4>
+        <FacetTitle
+          displayName={facet.displayName}
+          toggleDisplay={toggleDisplay}
+          isCollapsed={isCollapsed}
+        />
         <div className='ola-facet-wrapper'>
           {filterInput}
           {showSelectedTag || debug ? (

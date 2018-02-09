@@ -6,6 +6,7 @@ import {
   executeSearch
 } from './../../actions/Search'
 import classNames from 'classnames'
+import FacetTitle from './common/FacetTitle'
 
 function RangeNumericFilter (props) {
   function handleClick (from, to) {
@@ -27,9 +28,11 @@ function RangeNumericFilter (props) {
   })
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>
-        {displayName}
-      </h4>
+      <FacetTitle
+        displayName={facet.displayName}
+        toggleDisplay={toggleDisplay}
+        isCollapsed={isCollapsed}
+      />
       <div className='ola-facet-wrapper'>
         <div className='ola-facet-list'>
           {values.map((value, idx) => {

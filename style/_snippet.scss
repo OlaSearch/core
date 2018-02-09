@@ -11,7 +11,7 @@
 
 /* Inner wrapper */
 .ola-snippet-inner {
-  box-shadow: $elevation-2;
+  box-shadow: $snippet-shadow;
   padding: 1em;
 }
 
@@ -31,17 +31,25 @@
     .ola-snippet {
       width: 33.333%;
       padding-right: 1em;
-      // padding: 0 1rem 1rem 0;
-      // border: none;
 
       &:nth-child(3n+3) {
         padding-right: 0;
       }
     }
     .ola-snippet-inner {
-      // border: 1px $base-border-color solid;
-      // padding: 1em;
       min-height: 100%;
+    }
+    .ola-fg-horizontal {
+      flex-direction: column;
+    }
+    .ola-share-links {
+      display: block;
+    }
+    .ola-cta-button {
+      width: 100%;
+    }
+    .ola-field-button + .ola-share-links {
+      margin-left: 0;
     }
   }
 }

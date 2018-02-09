@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withTranslate from './../decorators/withTranslate'
 import GeoNotify from './Geo/GeoNotify'
+import { ThemeConsumer } from './../containers/OlaThemeContext'
 
 function SearchTitle (
   { totalResults, page, perPage, isPhone, translate },
@@ -24,15 +25,19 @@ function SearchTitle (
     ? translate('showing', values)
     : translate('showing_no_results', values)
   return (
-    <div className='ola-search-heading-container'>
-      <h3 className='ola-search-heading'>
-        {title && <span className='ola-search-heading-title'>{title}</span>}
-        {totalResults ? (
-          <small className='ola-search-heading-number'>{titleDesc}</small>
-        ) : null}
-      </h3>
-      <GeoNotify />
-    </div>
+    <ThemeConsumer>
+      {(theme) => (
+        <div className='ola-search-heading-container'>
+          <div className='ola-search-heading'>
+            {title && <span className='ola-search-heading-title'>{title}</span>}
+            {totalResults ? (
+              <small className='ola-search-heading-number'>{titleDesc}</small>
+            ) : null}
+          </div>
+          <GeoNotify />
+        </div>
+      )}
+    </ThemeConsumer>
   )
 }
 

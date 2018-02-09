@@ -20,7 +20,8 @@ function Title ({
   fieldLabel,
   openInNewWindow,
   eventLabel,
-  eventCategory
+  eventCategory,
+  style
 }) {
   function logClick (event) {
     /* Send Log */

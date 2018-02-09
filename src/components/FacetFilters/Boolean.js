@@ -7,6 +7,7 @@ import {
 } from './../../actions/Search'
 import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
+import FacetTitle from './common/FacetTitle'
 
 function BooleanFilter (props) {
   function onChange (event) {
@@ -33,9 +34,11 @@ function BooleanFilter (props) {
 
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>
-        {displayName}
-      </h4>
+      <FacetTitle
+        displayName={facet.displayName}
+        toggleDisplay={toggleDisplay}
+        isCollapsed={isCollapsed}
+      />
       <div className='ola-facet-wrapper'>
         <label className='ola-checkbox ola-checkbox-label'>
           <input type='checkbox' checked={isChecked} onChange={onChange} />

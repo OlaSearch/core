@@ -15,7 +15,7 @@
     border: none;
     cursor: pointer;
     display: inline-block;
-    border-radius: $base-border-radius;
+    border-radius: $button-border-radius;
   }
 }
 
@@ -23,7 +23,7 @@
 
 /* Common button styles */
 .ola-icon-button {
-  @extend %ola-icon-button;
+  @extend %ola-icon-button;  
 }
 
 /**
@@ -42,11 +42,6 @@
   &, &:hover, &:active, &:focus {
     background: $button-primary-background;
   }
-
-  &:before {
-    @extend .iconfont;
-    content: 'search';
-  }
 }
 
 /* Primary button */
@@ -61,11 +56,8 @@
 /* Geo location icon */
 .ola-link-geo {
   @extend %ola-link;
-  // @extend %ola-icon-button;
 
   &:before {
-    // @extend .iconfont;
-    // content: 'my_location';
   }
 
   &.ola-link-geo-active {
@@ -79,13 +71,10 @@
   height: 100%; /* Its inside a flex box */
 
   &:before {
-    @extend .iconfont;
-    content: 'bookmark_border';
   }
 
   .ola-bookmarks-hasBookmarks  &, &.action-remove {
     &:before {
-      content: 'bookmark';
     }
   }
 
@@ -98,11 +87,6 @@
 /* Clear button */
 .ola-clear-button {
   @extend %ola-icon-button;
-
-  &:before {
-    @extend .iconfont;
-    content: 'close';
-  }  
 }
 
 /* Load more */
@@ -154,6 +138,10 @@
 /* Ola cta button */
 .ola-cta-button {
   @extend .ola-btn-primary;
+  width: 100%;
+  @include media (tablet) {
+    width: auto;
+  }
 }
 
 /* Full width */

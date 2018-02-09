@@ -23,17 +23,10 @@
     position: relative;
   }
 
-  &:before {
-    top: 8px;
-    right: 14px;
-    color: #444;
-    @extend .iconfont;
-    content: 'indeterminate_check_box';
+  .ola-icon {
     position: absolute;
-
-    .ola-facet-collapsed & {
-      content: 'add_box';
-    }
+    right: 1rem;
+    top: 0.5rem; 
   }
 }
 
@@ -72,12 +65,6 @@
   border: none;
   background: none;
   display: block;
-
-  &:before {
-    @extend .iconfont;
-    // content: "arrow_down";
-    // margin-right: 5px;
-  }
 }
 
   .ola-link-show-less {

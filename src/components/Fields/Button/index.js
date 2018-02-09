@@ -47,9 +47,14 @@ function Button ({
   if (!label) return null
   return (
     <div className='ola-field ola-field-button'>
-      <a className={klass} onClick={handleClick} href={url} target={target}>
+      <button
+        type='button'
+        className={klass}
+        onClick={handleClick}
+        target={target}
+      >
         {label}
-      </a>
+      </button>
     </div>
   )
 }

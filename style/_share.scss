@@ -1,0 +1,61 @@
+.ola-share-links {
+  position: relative;
+  margin-bottom: 1rem;
+  @include media (tablet) {
+    display: inline-block;
+  }
+  
+  /* Dropdown */
+  .ola-drop {
+    min-width: 0;
+  }
+  /* Text */
+  .ola-drop-link-text {
+    font-size: 0;
+  }
+
+  /* Body */
+  .ola-drop-body {
+    display: flex;
+  }
+
+  /* Link */
+  .ola-drop-link {
+    border: none;
+    border-right: 1px $base-border-color solid;
+    padding: 10px 12px;
+    cursor: pointer;
+    &:hover {
+      background: #eee;
+    }
+    &:first-child {
+      border-radius: $base-border-radius 0 0 $base-border-radius;
+    }
+    &:last-child {
+      border-right: none;
+      border-radius: 0 $base-border-radius $base-border-radius 0;
+    }
+  }
+}
+
+/**
+ * Btn share
+ */
+.ola-btn-share {
+  @extend .ola-btn-primary;  
+  &, &:hover, &:active, &:focus {
+    box-shadow: $small-box-shadow;
+    min-width: 100px;
+    text-align: center;
+  }
+  width: 100%;
+}
+
+/**
+ * Buttons next to each other
+ */
+.ola-field-button + .ola-share-links {
+  @include media (tablet) {
+    margin-left: 1rem;
+  }
+}

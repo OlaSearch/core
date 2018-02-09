@@ -4,6 +4,7 @@ import { addFacet, removeFacet, executeSearch } from './../../actions/Search'
 import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import { parseRangeValues } from './../../utilities'
+import FacetTitle from './common/FacetTitle'
 
 function RatingFilter (props) {
   function handleFacet (event) {
@@ -39,9 +40,11 @@ function RatingFilter (props) {
 
   return (
     <div className={klass}>
-      <h4 className='ola-facet-title' onClick={toggleDisplay}>
-        {facet.displayName}
-      </h4>
+      <FacetTitle
+        displayName={facet.displayName}
+        toggleDisplay={toggleDisplay}
+        isCollapsed={isCollapsed}
+      />
       <div className='ola-facet-wrapper'>
         <div className='ola-facet-list'>
           {values.map((value, idx) => {
