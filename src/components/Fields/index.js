@@ -15,5 +15,6 @@ module.exports = {
   Url: require('./Url'),
   TextField: require('./TextField'),
   Share: require('./Share'),
-  Person: require('./Person')
+  Person: require('./Person'),
+  Pill: require('./Pill')
 }

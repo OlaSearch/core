@@ -97,6 +97,7 @@ class SuggestionItem extends React.Component {
   }
   createMarkup = (term, tokens) => {
     /* Highlight tokens if available */
+    // console.log(term, tokens, highlightTokens(term, tokens))
     if (tokens) term = highlightTokens(term, tokens)
 
     return createHTMLMarkup(term)
@@ -129,7 +130,7 @@ class SuggestionItem extends React.Component {
     if (isDoc) {
       term = title
     } else {
-      if (!isHistory) {
+      if (!isHistory && !tokens) {
         term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
       }
     }

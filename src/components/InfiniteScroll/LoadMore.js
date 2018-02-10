@@ -32,7 +32,7 @@ function LoadMore ({
       disabled={isLoading}
       onClick={handleClick}
     >
-      {text}
+      <span className='ola-link-load-more-text'>{text}</span>
       <ChevronDown />
     </button>
   )

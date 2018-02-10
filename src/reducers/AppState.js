@@ -253,7 +253,9 @@ export default (state: State = initialState, action: Object) => {
           ? action.configState.filterInAutoComplete
           : state.filterInAutoComplete,
         isSidebarOpen: action.configState
-          ? action.configState.showSidebar ? state.isSidebarOpen : false
+          ? action.configState.showSidebar
+            ? action.storeState.isSidebarOpen
+            : false
           : state.isSidebarOpen
       }
 

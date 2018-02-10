@@ -51,7 +51,7 @@ module.exports = {
       // 'react-redux': path.join(__dirname, './node_modules/react-redux'),
       // 'redux': path.join(__dirname, './node_modules/redux'),
       '@olasearch/icons': path.resolve(__dirname, './../ola-icons'),
-      'styled-jsx': path.join(__dirname, './../../styled-jsx/src')
+      // 'styled-jsx': path.join(__dirname, './../../styled-jsx/src')
     },
     modules: [
       'node_modules', path.resolve(__dirname, './node_modules')
@@ -67,7 +67,8 @@ module.exports = {
       include: [
         path.join(__dirname, './'),
         path.join(__dirname, './src'),
-        path.resolve(__dirname, 'node_modules', 'rambda')
+        // path.join(__dirname, './../../styled-jsx/src'),
+        // path.resolve(__dirname, 'node_modules', 'rambda')
       ]
     },
     { test: require.resolve('react'), loader: 'expose-loader?React' },

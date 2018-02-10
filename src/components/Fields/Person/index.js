@@ -8,13 +8,13 @@ function Person ({ result, iconSize, personName, log, displayIcon, snippetId }) 
   const { url } = result
   return (
     <div className={classes}>
-      <a className='ola-flex ola-btn-person' href={url} title={url}>
+      <a className='ola-flex ola-btn-person' href={url} title={personName}>
         {displayIcon && (
           <span className='ola-flex-icon'>
             <User size={iconSize} />
           </span>
         )}
-        {personName && <span className='ola-flex-content'>{personName}</span>}
+        <span className='ola-flex-content'>{personName}</span>
       </a>
     </div>
   )

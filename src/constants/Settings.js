@@ -156,5 +156,7 @@ export const DEFAULT_THEME = {
   primaryButtonColor: 'white',
   primaryButtonBackground: '#289dcc',
   shareButtonColor: '#289dcc',
-  shareButtonBackground: 'white'
+  shareButtonBackground: 'white',
+
+  dangerColor: '#f94d3e'
 }

@@ -69,6 +69,13 @@ class SearchResults extends React.Component {
                   color: ${theme.shareButtonColor};
                   background: ${theme.shareButtonBackground};
                 }
+                .ola-results :global(.ola-drop-link) {
+                  color: ${theme.primaryColor};
+                  background: white;
+                }
+                .ola-results :global(.ola-drop-link:hover) {
+                  background: #eee;
+                }
                 .ola-results :global(.ola-btn-directions) {
                   color: ${theme.primaryColor};
                 }

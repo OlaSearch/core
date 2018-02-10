@@ -11,7 +11,7 @@ import Mail from '@olasearch/icons/lib/mail'
 import LinkedIn from '@olasearch/icons/lib/linkedin'
 import GPlus from '@olasearch/icons/lib/material-gplus'
 
-class Share extends React.Component {
+class Share extends React.PureComponent {
   handleClick = (e) => {
     let url = e.currentTarget.getAttribute('data-href')
     let type = e.currentTarget.getAttribute('data-type')
@@ -51,90 +51,79 @@ class Share extends React.Component {
       'ola-drop-open': isCollapsed
     })
     return (
-      <ThemeConsumer>
-        {(theme) => (
-          <div className={classes}>
-            <button
-              className='ola-btn ola-btn-share'
-              type='button'
-              onClick={toggleDisplay}
-            >
-              Share
-            </button>
-            <div className='ola-drop'>
-              <div className='ola-drop-body'>
-                {email && (
-                  <button
-                    type='button'
-                    className='ola-drop-link'
-                    data-href={emailUrl}
-                    data-type='email'
-                    onClick={this.handleClick}
-                  >
-                    <Mail />
-                    <span className='ola-drop-link-text'>Email</span>
-                  </button>
-                )}
-                {facebook && (
-                  <button
-                    type='button'
-                    className='ola-drop-link'
-                    data-href={facebookUrl}
-                    data-type='facebook'
-                    onClick={this.handleClick}
-                  >
-                    <Facebook />
-                    <span className='ola-drop-link-text'>Facebook</span>
-                  </button>
-                )}
-                {twitter && (
-                  <button
-                    type='button'
-                    className='ola-drop-link'
-                    data-href={twitterUrl}
-                    data-type='twitter'
-                    onClick={this.handleClick}
-                  >
-                    <Twitter />
-                    <span className='ola-drop-link-text'>Twitter</span>
-                  </button>
-                )}
-                {linkedIn && (
-                  <button
-                    type='button'
-                    className='ola-drop-link'
-                    data-href={linkedInUrl}
-                    data-type='linkedIn'
-                    onClick={this.handleClick}
-                  >
-                    <LinkedIn />
-                    <span className='ola-drop-link-text'>LinkedIn</span>
-                  </button>
-                )}
-                {gplus && (
-                  <button
-                    type='button'
-                    className='ola-drop-link'
-                    data-href={gplusUrl}
-                    data-type='gplus'
-                    onClick={this.handleClick}
-                  >
-                    <GPlus />
-                    <span className='ola-drop-link-text'>Google plus</span>
-                  </button>
-                )}
-              </div>
-            </div>
-            <style jsx>
-              {`
-                .ola-share-links .ola-drop-link {
-                  background: white;
-                }
-              `}
-            </style>
+      <div className={classes}>
+        <button
+          className='ola-btn ola-btn-share'
+          type='button'
+          onClick={toggleDisplay}
+        >
+          Share
+        </button>
+        <div className='ola-drop'>
+          <div className='ola-drop-body'>
+            {email && (
+              <button
+                type='button'
+                className='ola-drop-link'
+                data-href={emailUrl}
+                data-type='email'
+                onClick={this.handleClick}
+              >
+                <Mail />
+                <span className='ola-drop-link-text'>Email</span>
+              </button>
+            )}
+            {facebook && (
+              <button
+                type='button'
+                className='ola-drop-link'
+                data-href={facebookUrl}
+                data-type='facebook'
+                onClick={this.handleClick}
+              >
+                <Facebook />
+                <span className='ola-drop-link-text'>Facebook</span>
+              </button>
+            )}
+            {twitter && (
+              <button
+                type='button'
+                className='ola-drop-link'
+                data-href={twitterUrl}
+                data-type='twitter'
+                onClick={this.handleClick}
+              >
+                <Twitter />
+                <span className='ola-drop-link-text'>Twitter</span>
+              </button>
+            )}
+            {linkedIn && (
+              <button
+                type='button'
+                className='ola-drop-link'
+                data-href={linkedInUrl}
+                data-type='linkedIn'
+                onClick={this.handleClick}
+              >
+                <LinkedIn />
+                <span className='ola-drop-link-text'>LinkedIn</span>
+              </button>
+            )}
+            {gplus && (
+              <button
+                type='button'
+                className='ola-drop-link'
+                data-href={gplusUrl}
+                data-type='gplus'
+                onClick={this.handleClick}
+              >
+                <GPlus />
+                <span className='ola-drop-link-text'>Google plus</span>
+              </button>
+            )}
           </div>
-        )}
-      </ThemeConsumer>
+        </div>
+      </div>
     )
   }
 }
