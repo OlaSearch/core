@@ -130,7 +130,9 @@ class SuggestionItem extends React.Component {
     if (isDoc) {
       term = title
     } else {
-      if (!isHistory && !tokens) {
+      if ((tokens && tokens.length) || isHistory) {
+        // Pass
+      } else {
         term = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
       }
     }
@@ -144,6 +146,7 @@ class SuggestionItem extends React.Component {
         'ola-suggestion-category-first': isFirstCategory,
         'ola-suggestion-category-name': taxoTerm,
         'ola-suggestion-history': isHistory,
+        'ola-suggestion-hasToken': tokens && tokens.length,
         'ola-suggestion-hasAnswer': answer && index === 0
       }
     )
