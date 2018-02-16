@@ -51,6 +51,13 @@ class Sidebar extends React.Component {
                 }
                 .ola-sidebar :global(.ola-facet-link) {
                   color: ${theme.primaryColor};
+                  font-weight: normal;
+                }
+                .ola-sidebar :global(.ola-facet) {
+                  font-size: ${theme.mediumFontSize};
+                }
+                .ola-sidebar :global(.ola-facet-title) {
+                  font-size: ${theme.defaultFontSize};
                 }
               `}
             </style>

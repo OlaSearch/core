@@ -1,7 +1,6 @@
 /* Tokens */
 .ola-answer-slots {
-  padding: 0.5rem 0 1em 0;
-  font-size: 0.875rem;
+  padding: 0.5rem 0;
 }
 
 /* Token */
@@ -21,10 +20,9 @@
     position: absolute;
     right: 0;
     top: 50%;
-    margin-top: -0.5rem;
+    margin-top: -8px;
     bottom: 0;
     vertical-align: middle;
-    font-size: 20px;
     width: 30px;
     text-align: center;
   }
@@ -34,7 +32,9 @@
 .ola-answer-slots-text {
   display: block;
   @include media (tablet) {
-    display: inline;
+    display: inline-block;
     margin-right: 6px;
+    vertical-align: middle;
+    margin-top: 6px;
   }
 }

@@ -9,6 +9,7 @@ import {
 import { executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import { log } from './../../actions/Logger'
+import Navigation from '@olasearch/icons/lib/navigation'
 
 class GeoLocation extends React.Component {
   constructor (props) {
@@ -19,7 +20,7 @@ class GeoLocation extends React.Component {
   static defaultProps = {
     active: false,
     icon: null,
-    showLabel: true
+    showLabel: false
   }
   static contextTypes = {
     config: PropTypes.object
@@ -113,8 +114,12 @@ class GeoLocation extends React.Component {
         onClick={this.getLocation}
         disabled={disabled || isRequestingLocation}
       >
-        {this.props.icon}
-        {showLabel && <span aria-label={title}>{title}</span>}
+        <Navigation size={18} />
+        {showLabel && (
+          <span className='ola-link-geo-text' aria-label={title}>
+            {title}
+          </span>
+        )}
       </button>
     )
   }

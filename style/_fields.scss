@@ -36,10 +36,18 @@
 
 .ola-field-component-label {
   color: $base-grey-color;
-  font-size: 0.875rem;
   padding-bottom: 0.25rem;
 }
 
+/* Inline label */
+.ola-field-label-inline {
+  display: flex;
+  align-items: baseline;
+  .ola-field-component-label {
+    padding-right: 4px;
+    padding-bottom: 0;
+  }
+}
 
 /**
  * Field groups
@@ -49,8 +57,8 @@
   @include media (tablet) {
     @include flexbox;
 
-    > .ola-fg {
-      padding: 0 0.5em 0 0;
+    > .ola-fg, > .ola-field {
+      padding-right: 1em;
 
       &:first-child {
         padding-left: 0;
@@ -101,7 +109,7 @@
   margin: 0;
   padding: 0 0 $field-title-bottom-padding 0;
   font-weight: normal;
-  font-size: $field-title-font-size;
+  // font-size: $field-title-font-size;
 }
 
 /* URL */
@@ -133,7 +141,6 @@ a.ola-field-url {
 .ola-field-distance {
   display: inline-block;
   color: $base-grey-color;
-  font-size: 0.8rem;
   &:before {
     content: ' (';
   }
@@ -168,5 +175,5 @@ a.ola-field-url {
 .ola-field-person, 
 .ola-field-date,
 .ola-field-directions {
-  font-size: 0.875rem;
+  // font-size: 0.875rem;
 }

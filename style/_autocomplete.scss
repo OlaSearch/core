@@ -198,3 +198,32 @@
   background: #eee;
   font-size: 14px;
 }
+
+/* Top hit */
+.ola-suggestion-type-doc {
+  &:before {
+    content: 'Top hit';
+    text-transform: uppercase;
+    background: #eee;
+    font-size: 10px;
+    font-weight: normal;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1;
+    padding: 5px;
+    border-radius: 2px;
+    margin-right: 0.5rem;
+    margin-top: 4px;
+    
+  }
+
+  &:hover:before {
+    background: white;
+  }
+  .ola-suggestion-item-text {
+    display: block;
+    @include media (tablet) {
+      display: inline-block;
+    }
+  }
+}

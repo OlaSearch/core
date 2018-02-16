@@ -18,6 +18,7 @@ function DateField ({
   allDayEvent,
   format,
   fieldLabel,
+  inlineLabel,
   displayIcon,
   iconSize,
   dependentField,
@@ -55,7 +56,8 @@ function DateField ({
     }
   }
   const classes = classNames('ola-field ola-field-date', {
-    'ola-field-daterange': formattedEndDate
+    'ola-field-daterange': formattedEndDate,
+    'ola-field-label-inline': inlineLabel
   })
   return (
     <div className={classes}>

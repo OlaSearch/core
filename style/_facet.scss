@@ -1,10 +1,9 @@
 /* Facet */
 .ola-facet {
   border: 1px solid #ddd;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   border-top: 2px solid #666;
   padding: 0;
-  font-size: 0.875rem;
 }
 
 /* Title */
@@ -16,7 +15,6 @@
     border-bottom: 1px #e5e5e5 solid;
     padding: 12px 1rem;
     line-height: 1;
-    font-size: 1rem;
     font-weight: normal;
     color: $base-color;
     cursor: pointer;
@@ -57,7 +55,6 @@
  */
 
 .ola-link-show-more {
-  color: #002569;
   padding: 5px 0;
   font-size: 12px;
   font-weight: bold;

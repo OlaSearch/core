@@ -101,6 +101,7 @@ function AnswerToken (
               .ola-answer-slots :global(.ola-btn) {
                 background: ${theme.primaryColor};
                 color: ${theme.primaryInvertColor};
+                vertical-align: middle;
               }
             `}
           </style>
@@ -118,9 +119,10 @@ function AnswerTokenBtn ({ slot, displayName, handleAddToken }) {
   function handleAdd () {
     handleAddToken(slot)
   }
+  const { type, value, match } = slot
   return (
     <button className='ola-btn ola-btn-slot-add' onClick={handleAdd}>
-      {displayName}: {slot.match || slot.value}
+      {displayName}: {value && type !== SLOT_DATE ? value[0] : match}
       <Plus size={16} />
     </button>
   )

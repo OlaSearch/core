@@ -16,10 +16,10 @@ class SelectedFilters extends React.Component {
     super(props)
 
     /* Parse queryString to get the referrer */
-    var qString = queryString.parse(window.location.search)
+    // var qString = queryString.parse(window.location.search)
 
     this.state = {
-      showGuidePopover: !!qString.referrer
+      showGuidePopover: false //! !qString.referrer
     }
   }
 

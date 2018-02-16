@@ -131,7 +131,8 @@ export const DEFAULT_THEME = {
   primaryColor: '#289dcc',
   primaryInvertColor: 'white',
   secondaryColor: '#289dcc',
-  errorColor: '#f94d3e',
+  dangerColor: '#f94d3e',
+  borderColor: '#ddd',
 
   /* Search */
   searchLinkColor: '#232323',
@@ -153,10 +154,36 @@ export const DEFAULT_THEME = {
   chatBotMessageBackground: '#ddd',
   chatBotMessageColor: '#444',
 
+  chatBotSlotButtonColor: '#444',
+  chatBotSlotButtonBackground: 'white',
+
+  /* Primary button */
+  /**
+   * Used in
+   * ola cta button
+   * close sidebar
+   * slots
+   * geo
+   *
+   */
   primaryButtonColor: 'white',
   primaryButtonBackground: '#289dcc',
+
+  /* Secondary button */
+  /**
+   * Used in
+   * pagination
+   */
+  secondaryButtonColor: '#333',
+  secondaryButtonBackground: 'white',
+
+  /* Share button */
   shareButtonColor: '#289dcc',
   shareButtonBackground: 'white',
 
-  dangerColor: '#f94d3e'
+  /* Font size */
+  defaultFontSize: '16px',
+  mediumFontSize: '14px',
+  smallFontSize: '12px',
+  titleFontSize: '20px'
 }

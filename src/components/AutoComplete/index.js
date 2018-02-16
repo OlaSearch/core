@@ -666,7 +666,13 @@ class AutoComplete extends React.Component {
           facet = find(propEq('name', suggestion.tokens[i].name))(
             this.context.config.facets
           )
-          this.props.replaceFacet(facet, suggestion.tokens[i].value)
+          /**
+           * Make sure to add isToken attribute
+           */
+          this.props.replaceFacet(
+            { ...facet, isToken: true },
+            suggestion.tokens[i].value
+          )
         }
       }
       this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
@@ -814,6 +820,7 @@ class AutoComplete extends React.Component {
                 showAlert={this.props.showAlert}
                 fuzzyTokens={fuzzyTokens}
                 theme={theme}
+                isFocused={this.state.isFocused}
               />
 
               <div

@@ -4,10 +4,21 @@ import { connect } from 'react-redux'
 import { executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 
-function GeoNotify ({ answer, location, executeSearch, isPhone, translate }) {
+function GeoNotify ({
+  answer,
+  location,
+  executeSearch,
+  isPhone,
+  translate,
+  ...rest
+}) {
   /* Does the intent require user's location */
-  const suggestLocation = answer && answer.location
-  if (!suggestLocation || isPhone) return null
+  const askForLocation = answer && answer.location
+  /**
+   * do we need to ask for location
+   */
+  if ((!askForLocation && !location) || isPhone) return null
+  // if (!suggestLocation || isPhone) return null
   return (
     <div className='ola-location-notify'>
       <span>
@@ -15,7 +26,7 @@ function GeoNotify ({ answer, location, executeSearch, isPhone, translate }) {
           ? translate('showing_nearby_results')
           : translate('share_location')}
       </span>
-      <GeoLocation onSuccess={executeSearch} />
+      <GeoLocation onSuccess={executeSearch} {...rest} />
     </div>
   )
 }

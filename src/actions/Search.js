@@ -126,6 +126,12 @@ export function executeSearch (payload) {
       return
     }
 
+    /* Extend the query */
+    query = {
+      ...query,
+      facet_query
+    }
+
     /**
      * If searching from another page
      */
@@ -143,14 +149,13 @@ export function executeSearch (payload) {
         types.REQUEST_SEARCH_SUCCESS,
         types.REQUEST_SEARCH_FAILURE
       ],
-      query: {
-        ...query,
-        facet_query
-      },
+      query,
       context,
       api: 'search',
       payload
-    }).then(() => debouceAddHistory(dispatch))
+    }).then(() => {
+      debouceAddHistory(dispatch)
+    })
 
     /**
      * Check if route should be enabled
@@ -158,7 +163,6 @@ export function executeSearch (payload) {
      * routeChange - Global configuration
      * urlSync - Used in InstantSearch
      */
-
     if (!payload || payload.routeChange || payload.urlSync) {
       /* Update Browser URL */
       globalRouteChange && updateURL(query, historyType, replaceQueryParamName)

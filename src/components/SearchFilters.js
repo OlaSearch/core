@@ -32,8 +32,6 @@ class SearchFilters extends React.Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    // console.log(this.props.selected, nextProps.selected)
-    // console.log(equals(this.props.selected, nextProps.selected))
     return (
       this.props.facets !== nextProps.facets ||
       !equals(this.props.selected, nextProps.selected)

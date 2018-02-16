@@ -108,6 +108,7 @@ export default (state: State = initialState, action: Object) => {
         ...state,
         ...action.stateFromUrl,
         referrer: '',
+        enriched_q: '',
         searchInput: SEARCH_INPUTS.URL
       }
 
@@ -120,7 +121,8 @@ export default (state: State = initialState, action: Object) => {
         page: action.forcePageReset ? 1 : state.page,
         skip_intent: false,
         skip_spellcheck: false,
-        skip_facet_fields: []
+        skip_facet_fields: [],
+        sort: '' /* Reset sort */
       }
 
     case types.CLEAR_ENRICHED_QUERY:

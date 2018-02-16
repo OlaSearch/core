@@ -45,7 +45,7 @@
       right: auto;
       bottom: auto;
       left: auto;
-      padding-right: 1.5rem;
+      padding-right: 24px;
       vertical-align: top;
       transform: translate3d(0, 0, 0);
       position: relative;
@@ -73,35 +73,35 @@
 /* Open Filter */
 .ola-link-open-filter {
   float: right;
-	 border: 1px $base-grey-color solid;
+  border: 1px $base-grey-color solid;
   background: none;
   text-transform: uppercase;
-	 text-align: center;
+  text-align: center;
   position: relative;
   margin: 5px 0 0 5px;
   // display: none;
   min-height: $button-default-height;
 
   @include media (tablet) {
-    display: none;
+  display: none;
   }
 
   & {
-    color: $brand-color;
+  color: $brand-color;
   }
 
-	span{
-		display: none;
+  span{
+  display: none;
   }
-  
+
   /* Hide in searchbar in mobile */
   .ola-search-bar & {
-    display: none;
-    float: none;
-    margin-top: 0;
-    @include media (tablet) {
-      display: block;
-    }
+  display: none;
+  float: none;
+  margin-top: 0;
+  @include media (tablet) {
+    display: block;
+  }
   }
 }
 

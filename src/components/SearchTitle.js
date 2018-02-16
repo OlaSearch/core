@@ -34,7 +34,7 @@ function SearchTitle (
               <small className='ola-search-heading-number'>{titleDesc}</small>
             ) : null}
           </div>
-          <GeoNotify />
+          <GeoNotify showLabel />
         </div>
       )}
     </ThemeConsumer>

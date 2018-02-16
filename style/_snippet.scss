@@ -1,7 +1,7 @@
 /* Snippet */
 .ola-snippet {
   // padding: 1em 0;
-  margin-bottom: 1em;
+  margin-bottom: 16px;
 
   /* Remove bookmarks in snippets */
   .ola-link-bookmark-action {
@@ -41,6 +41,10 @@
     }
     .ola-fg-horizontal {
       flex-direction: column;
+
+      > .ola-field {
+        padding-right: 0;
+      }
     }
     .ola-share-links {
       display: block;

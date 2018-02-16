@@ -1,13 +1,15 @@
 export default {
   callbacks: [],
   appended: false,
-  load (params, callback) {
+  load (params, win, doc, callback) {
+    this.window = win || window
+    this.document = doc || document
     const index = this.callbacks.push(callback)
-    if (window.google && window.google.maps) {
+    if (this.window.google && this.window.google.maps) {
       setTimeout(this.fireCallbacks.bind(this))
     } else {
       if (!this.appended) {
-        window.mapsCallback = this.mapsCallback.bind(this)
+        this.window.mapsCallback = this.mapsCallback.bind(this)
         this.appendScript(params)
       }
     }
@@ -21,13 +23,13 @@ export default {
   },
   appendScript (params) {
     const src = this.getSrc(params)
-    const script = document.createElement('script')
+    const script = this.document.createElement('script')
     script.setAttribute('src', src)
-    document.head.appendChild(script)
+    this.document.head.appendChild(script)
     this.appended = true
   },
   mapsCallback () {
-    window.mapsCallback = undefined
+    this.window.mapsCallback = undefined
     this.fireCallbacks()
   },
   fireCallbacks () {

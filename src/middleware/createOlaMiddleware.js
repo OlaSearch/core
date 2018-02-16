@@ -108,8 +108,8 @@ export default function (options = {}) {
     const skipIntentEngine =
       !bot &&
       (query.page > 1 ||
-        query.enriched_q !== '' ||
-        (query.enriched_q === '' && query.q === ''))
+        // query.enriched_q !== '' ||
+        query.q === '')
     const params = proxy
       ? {
         ...query,
@@ -308,6 +308,11 @@ export default function (options = {}) {
               facetQuery = [...facetQuery, ...answerFacets[i]]
             }
           }
+        } else {
+          /* Remove queries from intent engine */
+          facetQuery = facetQuery.filter(
+            ({ fromIntentEngine }) => !fromIntentEngine
+          )
         }
 
         /**
@@ -389,7 +394,10 @@ export default function (options = {}) {
          */
         shouldDispatchActions &&
           next({
-            payload,
+            payload: {
+              ...payload,
+              originalQuery: query.q
+            },
             results,
             spellSuggestions,
             totalResults,

@@ -4,6 +4,13 @@
   margin: 0;
   border: none;
   cursor: pointer;
+  font-weight: normal;
+  background: transparent;
+
+  &:disabled{
+    opacity: 0.6;
+    cursor: text;
+  }
 }
 
 /* Primary button */
@@ -56,13 +63,31 @@
 /* Geo location icon */
 .ola-link-geo {
   @extend %ola-link;
+  min-width: 40px;
 
-  &:before {
+  /* Icon */
+  .ola-icon {
+    vertical-align: middle;
+  }
+
+  /* Disabled */
+  &:disabled {
+    opacity: 0.6;
+    cursor: text;
   }
 
   &.ola-link-geo-active {
     color: $button-geo-active-color;
   }
+
+  &.ola-link-geo-requesting {
+    opacity: 0.5;
+  }
+}
+
+/* Geo text */
+.ola-link-geo-text {
+  margin-left: 8px;
 }
 
 /* bookmarking */
@@ -109,9 +134,7 @@
 /* Spell links */
 .ola-spell-links {
   @extend %ola-icon-button;
-  color: $link-color;
   margin-left: 0.5rem;
-  font-weight: bold;
 }
 
 

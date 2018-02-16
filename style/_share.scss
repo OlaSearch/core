@@ -1,6 +1,6 @@
 .ola-share-links {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   @include media (tablet) {
     display: inline-block;
   }
@@ -56,6 +56,6 @@
  */
 .ola-field-button + .ola-share-links {
   @include media (tablet) {
-    margin-left: 1rem;
+    // margin-left: 1rem;
   }
 }

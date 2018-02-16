@@ -3,7 +3,6 @@ import cx from 'classnames'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 import withTranslate from './../decorators/withTranslate'
-import { ThemeConsumer } from './../containers/OlaThemeContext'
 import Tune from '@olasearch/icons/lib/material-tune'
 
 function FilterButton ({
@@ -25,29 +24,16 @@ function FilterButton ({
     ? translate('filter_button_close')
     : translate('filter_button_open')
   return (
-    <ThemeConsumer>
-      {(theme) => (
-        <button
-          className={classes}
-          onClick={toggleSidebar}
-          type='button'
-          disabled={!hasFilter}
-          title={title}
-        >
-          <Tune />
-          <span>{title}</span>
-          <style jsx>
-            {`
-              .ola-link-open-filter,
-              .ola-link-open-filter:hover {
-                color: ${theme.primaryColor};
-                border-color: ${theme.primaryColor};
-              }
-            `}
-          </style>
-        </button>
-      )}
-    </ThemeConsumer>
+    <button
+      className={classes}
+      onClick={toggleSidebar}
+      type='button'
+      disabled={!hasFilter}
+      title={title}
+    >
+      <Tune />
+      <span>{title}</span>
+    </button>
   )
 }
 

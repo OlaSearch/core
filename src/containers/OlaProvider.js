@@ -33,6 +33,58 @@ export default class OlaProvider extends React.Component {
             <ThemeProvider value={theme}>{this.props.children}</ThemeProvider>
           </OlaIntlProvider>
         </Provider>
+        <style jsx>
+          {`
+            .ola-search {
+              font-size: ${theme.defaultFontSize};
+            }
+            .ola-search :global(.ola-field-title) {
+              font-size: ${theme.titleFontSize};
+              padding-bottom: ;
+            }
+            .ola-search
+              :global(.ola-field-date, .ola-field-person, .ola-field-distance, .ola-btn-directions, .ola-answer-slots, .ola-location-notify, .ola-field-component-label) {
+              font-size: ${theme.mediumFontSize};
+            }
+            .ola-search :global(.ola-page),
+            .ola-search :global(.ola-page:hover) {
+              color: ${theme.secondaryButtonColor};
+              background: ${theme.secondaryButtonBackground};
+              border: 1px ${theme.borderColor} solid;
+            }
+            .ola-search :global(.ola-page-current),
+            .ola-search :global(.ola-page-current:hover) {
+              background-color: #eee;
+            }
+            .ola-search :global(.ola-spell-links),
+            .ola-search :global(.ola-spell-links:hover) {
+              color: ${theme.primaryColor};
+            }
+            .ola-search :global(.ola-link-show-more),
+            .ola-search :global(.ola-link-show-more:hover) {
+              color: ${theme.primaryColor};
+              background: none;
+            }
+            .ola-search :global(.ola-link-change-layout),
+            .ola-search :global(.ola-link-change-layout:hover) {
+              color: ${theme.primaryColor};
+              border: 1px ${theme.primaryColor} solid;
+            }
+            .ola-search :global(.ola-link-open-filter),
+            .ola-search :global(.ola-link-open-filter:hover) {
+              color: ${theme.primaryColor};
+              border: 1px ${theme.primaryColor} solid;
+            }
+            .ola-search :global(.ola-suggestions-clear),
+            .ola-search :global(.ola-suggestions-clear:hover) {
+              color: ${theme.primaryColor};
+            }
+
+            .ola-search :global(.ola-btn-pill) {
+              font-size: ${theme.smallFontSize};
+            }
+          `}
+        </style>
       </div>
     )
   }

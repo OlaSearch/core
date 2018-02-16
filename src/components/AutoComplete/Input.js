@@ -32,6 +32,11 @@ export default class Input extends React.Component {
   }
 
   onFocus = (event) => {
+    /**
+     * If its already focused
+     */
+    if (this.props.isFocused) return
+
     /* Scroll to input */
     if (this.props.isPhone) scrollTo(this.input)
 
@@ -245,6 +250,7 @@ export default class Input extends React.Component {
             onDisable={this.props.onGeoLocationDisable}
             refreshOnGeoChange={this.props.refreshOnGeoChange}
             onError={this.props.onGeoError}
+            showLabel={false}
           />
         ) : null}
 

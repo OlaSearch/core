@@ -56,7 +56,7 @@ export function buildQueryString (params, replaceQueryParamName) {
       value = value.filter((item) => !item.hidden).map((item) => {
         var { name, selected } = item
         if (typeof selected === 'object') {
-          selected = queryString.stringify(selected)
+          selected = flatten(selected).join('+')
         }
         return name + ':' + selected
       })
@@ -210,11 +210,11 @@ export function parseQueryString (initialState, config) {
     }
 
     var filterQuery = filters.map((item) => {
-      var [name, value] = item.split(':')
-      /* Parse query string */
-      if (value.indexOf('=') !== -1) value = queryString.parse(value)
+      var [name, value] = item.split(/:(.+)?/)
+      /* Split the value + */
+      value = value.split('+')
 
-      var currentFilter = find(propEq('name', name))(config.filters)
+      const currentFilter = find(propEq('name', name))(config.filters)
 
       return {
         ...currentFilter,
