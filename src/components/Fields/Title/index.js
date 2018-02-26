@@ -21,7 +21,8 @@ function Title ({
   openInNewWindow,
   eventLabel,
   eventCategory,
-  style
+  style,
+  logPayload
 }) {
   function logClick (event) {
     /* Send Log */
@@ -34,7 +35,8 @@ function Title ({
       eventCategory: _eventCategory,
       eventAction: 'click',
       eventLabel: eventLabel || 'Title',
-      snippetId
+      snippetId,
+      payload: logPayload
     })
 
     if (onClick) onClick(event)

@@ -30,8 +30,10 @@ function Tag (props) {
         let [from, to] = name
         /* All dates will be in UTC */
         displayName = supplant(template, {
-          from: dateFormat ? DateParser.formatUTC(from, dateFormat) : from,
-          to: dateFormat ? DateParser.formatUTC(to, dateFormat) : to,
+          from: dateFormat
+            ? DateParser.formatUTC(from, dateFormat, 'from')
+            : from,
+          to: dateFormat ? DateParser.formatUTC(to, dateFormat, 'to') : to,
           name: facet.displayName || facet.name
         })
       }

@@ -1,0 +1,110 @@
+/* Quick answer */
+
+.ola-answer-quick {
+  padding: 0px 0;
+  font-weight: normal;
+  color: #666;
+
+  canvas {
+    vertical-align: top;
+  }
+}
+
+.ola-answer-quick-listItemInner {
+  padding: 0.5em;
+  border: 1px #ccc solid;
+  background: white;
+  margin: 0 0 0 0;
+  min-height: 100%;
+
+  @include media (tablet) {
+    margin-right: 0.5em;
+  }
+}
+
+
+.ola-answer-quick-title {
+  font-size: 1.2rem;
+}
+
+.ola-answer-quick-subtitle {
+  font-size: 1rem;
+}
+
+.ola-answer-quick-buttonList {
+  font-size: 1rem;
+}
+
+.ola-answer-quick-listItems {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  
+}
+
+.ola-answer-quick-listItem {
+  // min-width: 100%;
+  // border-radius: 3px;
+  font-size: 14px;  
+  width: 100%;
+  margin-bottom: 0.5em;
+  @include media (tablet) {
+    width: 50%;
+  }
+
+  .ola-autosuggest-small & {
+    width: 100%;
+    margin-right: 0;
+
+    .ola-answer-quick-listItemInner {
+      margin-right: 0;
+    }
+  }
+
+  &:last-child {
+    .ola-answer-quick-listItemInner{
+      margin-right: 0;
+    }
+  }
+}
+
+
+.ola-answer-quick-list-title {
+  color: #333;
+  margin: 0;
+}
+.ola-answer-quick-list-subtitle {
+  margin: 0;
+}
+
+/* Answer charts */
+.ola-answer-quick-chart {
+  display: flex;
+  align-items: baseline;
+
+  sup {
+    vertical-align: none;
+    padding-left: 2px;
+  }
+}
+  /* Value */
+  .ola-answer-quick-value {
+    font-weight: bold;
+    color: #444;
+  }
+
+/* Line chart loading */
+.ola-answer-linechart {
+  position: relative;
+  &.ola-answer-linechart-loading:before {
+    content: 'Drawing chart';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1em;
+    margin-left: -40px;
+    font-size: 12px;
+    font-style: italic;
+  }
+}

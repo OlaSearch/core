@@ -106,10 +106,9 @@ export default function (options = {}) {
     let callApi
     const { bot } = payload
     const skipIntentEngine =
-      !bot &&
-      (query.page > 1 ||
-        // query.enriched_q !== '' ||
-        query.q === '')
+      !bot /* 26/2/2018 @vinay: Removed this because the Intent engine selects boths `slots` and facet_query. In page 2, we are only sending facet_query, should we send slots too and skip_intent. */ /* query.page > 1 || */ &&
+      // query.enriched_q !== '' ||
+      query.q === ''
     const params = proxy
       ? {
         ...query,
@@ -289,11 +288,21 @@ export default function (options = {}) {
           /**
            * Remove from facet Query if `fromIntentEngine: true` and name is not contained in answerFacetNames
            */
-          facetQuery = facetQuery.filter(({ fromIntentEngine, name }) => {
-            return fromIntentEngine
-              ? answerFacetNames.indexOf(name) !== -1
-              : true
-          })
+          facetQuery = facetQuery
+            .filter(({ fromIntentEngine, name }) => {
+              return fromIntentEngine
+                ? answerFacetNames.indexOf(name) !== -1
+                : true
+            })
+            .map((item) => {
+              if (answerFacetNames.indexOf(item.name) !== -1) {
+                return {
+                  ...item,
+                  fromIntentEngine: true
+                }
+              }
+              return item
+            })
           for (let i = 0; i < answerFacets.length; i++) {
             let { name, selected, ...rest } = answerFacets[i]
             /* Check if it already exists */
@@ -362,7 +371,7 @@ export default function (options = {}) {
         if (
           totalResults === 0 &&
           spellSuggestions.length &&
-          !enrichedQuery &&
+          // (!enrichedQuery || enrichedQuery === query.q) &&
           !(
             answer &&
             answer.intent &&

@@ -18,7 +18,8 @@ function DocumentPages ({
   fieldLabel,
   showIfEmpty,
   isCollapsed,
-  toggleDisplay
+  toggleDisplay,
+  logPayload
 }) {
   function onSelect (page) {
     console.log(page, result)
@@ -30,7 +31,8 @@ function DocumentPages ({
       eventValue: page.pageNumber,
       eventLabel: 'Pages',
       eventAction: 'click',
-      snippetId
+      snippetId,
+      payload: logPayload
     })
   }
 

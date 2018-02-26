@@ -60,6 +60,7 @@
 	border: none;
 	background: transparent;
 	overflow: hidden;
+  min-height: unset;
 
 	span {
     display: none;
@@ -72,6 +73,15 @@
   &:hover {
     background-color: $base-grey-color;
     color: white;
+  }
+}
+
+/**
+ * tags Inside filters
+ */
+.ola-facet-tags-selected {
+  .ola-facet-tag-remove {
+      position: static;
   }
 }
 

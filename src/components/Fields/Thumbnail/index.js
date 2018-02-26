@@ -12,13 +12,13 @@ function Thumbnail (props, context) {
     url,
     log,
     useBackgroundImage,
+    logPayload,
+    snippetId,
+    result,
     ...rest
   } = props
 
-  let restProps = omit(
-    ['size', 'result', 'snippetId', 'collectionId', 'showIfEmpty'],
-    rest
-  )
+  let restProps = omit(['size', 'collectionId', 'showIfEmpty'], rest)
 
   if (!thumbnail) return null
 
@@ -39,10 +39,11 @@ function Thumbnail (props, context) {
   function handleClick (event) {
     log({
       eventType: 'C',
-      result: props.result,
+      result,
       eventCategory: 'Thumbnail',
       eventAction: 'click',
-      snippetId: props.snippetId
+      snippetId,
+      payload: logPayload
     })
   }
 

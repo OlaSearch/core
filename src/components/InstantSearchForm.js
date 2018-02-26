@@ -15,6 +15,8 @@ import Zone from './Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../constants/Settings'
 import { connect } from 'react-redux'
+import Search from '@olasearch/icons/lib/material-search'
+import Cross from '@olasearch/icons/lib/x'
 /**
  * 1. Debounces search for Mobile devices for better performance: Delay can be configured in config file
  *
@@ -117,14 +119,18 @@ class InstantSearchForm extends React.Component {
         className='ola-clear-button'
         onClick={this.onClear}
         aria-label='Clear'
-      />
+      >
+        <Cross />
+      </button>
     ) : (
       <button
         type='button'
         className='ola-search-button'
         onClick={this.onClear}
         aria-label='Submit'
-      />
+      >
+        <Search />
+      </button>
     )
 
     let klass = classNames('ola-search-form', this.props.className, {
@@ -167,8 +173,6 @@ class InstantSearchForm extends React.Component {
               onError={this.props.onGeoError}
             />
           ) : null}
-
-          {showHistory ? <History searchUrl={this.props.searchUrl} /> : null}
 
           {showSpeech ? (
             <SpeechInput

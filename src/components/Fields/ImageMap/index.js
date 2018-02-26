@@ -15,7 +15,8 @@ function ImageMap (props) {
     onClick,
     result,
     log,
-    fieldLabel
+    fieldLabel,
+    logPayload
   } = props
 
   if (!latlong) return null
@@ -34,7 +35,8 @@ function ImageMap (props) {
       eventCategory: 'Map',
       eventAction: 'click',
       eventLabel: 'Map',
-      snippetId: props.snippetId
+      snippetId: props.snippetId,
+      payload: logPayload
     })
     onClick && onClick(event, result)
   }

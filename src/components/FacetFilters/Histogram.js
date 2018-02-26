@@ -6,7 +6,6 @@ class Histogram extends React.Component {
   }
   render () {
     let { data } = this.props
-
     if (!data.length) return null
 
     /* Sort data */
@@ -14,7 +13,6 @@ class Histogram extends React.Component {
 
     let max = data.reduce((a, b) => (a.count > b.count ? a : b))
     let { count: maxCount } = max
-
     return (
       <div className='ola-histogram'>
         {data.map((item, idx) => {

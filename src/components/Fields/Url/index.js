@@ -9,7 +9,8 @@ function Url ({
   snippetId,
   anchorLink,
   label,
-  className
+  className,
+  logPayload
 }) {
   let { url } = result
   if (field) {
@@ -24,7 +25,8 @@ function Url ({
       result,
       eventCategory: 'Title',
       eventAction: 'click',
-      snippetId
+      snippetId,
+      payload: logPayload
     })
     onClick && onClick(event)
   }

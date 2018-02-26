@@ -3,7 +3,8 @@ import { parseRangeValues } from './../utilities'
 import {
   RANGE_FACETS,
   REMOVE_FROM_QUERY_STRING,
-  QUERY_ALT_NAME
+  QUERY_ALT_NAME,
+  CREATE_FILTER_OBJECT
 } from './../constants/Settings'
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
@@ -132,6 +133,10 @@ export function parseQueryString (initialState, config) {
       qs['q'] = xssFilters.inHTMLData(qs[p])
     }
 
+    if (p === 'skip_facet_fields') {
+      qs[p] = qs[p].split(',')
+    }
+
     if (p === 'page' || p === 'per_page') {
       if (isNaN(qs[p])) {
         qs[p] = initialState[p]
@@ -169,19 +174,34 @@ export function parseQueryString (initialState, config) {
     if (typeof facetQuery === 'string') {
       facetQuery = [facetQuery]
     }
-
-    var fq = facetQuery
+    /**
+     * Create facet_query
+     * 26 Feb 2018 @vinay: I was accepting only facets that are in the config file. Validate facet names from fieldMapping
+     */
+    const fq = facetQuery
       .filter((item) => {
         let [name, value] = item.split(':')
-        if (!value) return false
-        return find(propEq('name', name))(configFacets)
+        return name in config.fieldMappings
+        // if (!value) return false
+        // return find(propEq('name', name))(configFacets)
       })
       .map((item) => {
-        let [name, value] = item.split(
-          /:(.+)?/
-        ) /* Split the first : Date strings can contain : */
+        /* Split the first : Date strings can contain : */
+        let [name, value] = item.split(/:(.+)?/)
         value = value.split('+')
         let facet = find(propEq('name', name))(configFacets)
+        /**
+         * Create a facet if it doesnt exist
+         */
+        if (!facet) {
+          facet = CREATE_FILTER_OBJECT({
+            name,
+            displayName: config.fieldLabels[name],
+            type: 'string',
+            fromIntentEngine: false
+          })
+        }
+
         if (RANGE_FACETS.indexOf(facet.type) !== -1 && value.length > 1) {
           value = parseRangeValues(value)
         }

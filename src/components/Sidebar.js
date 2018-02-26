@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 import { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } from './../constants/Settings'
-import { ThemeConsumer } from './../containers/OlaThemeContext'
+import withTheme from './../decorators/withTheme'
 
 class Sidebar extends React.Component {
   componentDidMount () {
@@ -30,49 +30,53 @@ class Sidebar extends React.Component {
     }
   }
   render () {
-    let { children, toggleSidebar, isSidebarOpen } = this.props
+    let {
+      children,
+      showSidebar,
+      toggleSidebar,
+      isSidebarOpen,
+      theme
+    } = this.props
+    if (!showSidebar) return null
     return (
-      <ThemeConsumer>
-        {(theme) => (
-          <div className='ola-sidebar'>
-            {isSidebarOpen && children}
-            <button
-              onClick={toggleSidebar}
-              type='button'
-              className='ola-close-sidebar'
-            >
-              Close
-            </button>
-            <style jsx>
-              {`
-                .ola-sidebar :global(.ola-close-sidebar) {
-                  background: ${theme.primaryButtonBackground};
-                  color: ${theme.primaryButtonColor};
-                }
-                .ola-sidebar :global(.ola-facet-link) {
-                  color: ${theme.primaryColor};
-                  font-weight: normal;
-                }
-                .ola-sidebar :global(.ola-facet) {
-                  font-size: ${theme.mediumFontSize};
-                }
-                .ola-sidebar :global(.ola-facet-title) {
-                  font-size: ${theme.defaultFontSize};
-                }
-              `}
-            </style>
-          </div>
-        )}
-      </ThemeConsumer>
+      <div className='ola-sidebar'>
+        {isSidebarOpen && children}
+        <button
+          onClick={toggleSidebar}
+          type='button'
+          className='ola-close-sidebar'
+        >
+          Close
+        </button>
+        <style jsx>
+          {`
+            .ola-sidebar :global(.ola-close-sidebar) {
+              background: ${theme.primaryButtonBackground};
+              color: ${theme.primaryButtonColor};
+            }
+            .ola-sidebar :global(.ola-facet-link) {
+              color: ${theme.primaryColor};
+              font-weight: normal;
+            }
+            .ola-sidebar :global(.ola-facet) {
+              font-size: ${theme.mediumFontSize};
+            }
+            .ola-sidebar :global(.ola-facet-title) {
+              font-size: ${theme.defaultFontSize};
+            }
+          `}
+        </style>
+      </div>
     )
   }
 }
 
 function mapStateToProps (state, ownProps) {
   return {
-    isSidebarOpen: ownProps.isSidebarOpen || state.AppState.isSidebarOpen,
+    isSidebarOpen: state.AppState.isSidebarOpen,
+    showSidebar: state.AppState.showSidebar,
     isDesktop: state.Device.isDesktop
   }
 }
 
-export default connect(mapStateToProps, { toggleSidebar })(Sidebar)
+export default connect(mapStateToProps, { toggleSidebar })(withTheme(Sidebar))

@@ -16,7 +16,8 @@ function Button ({
   target,
   openInNewWindow,
   eventLabel,
-  eventCategory
+  eventCategory,
+  logPayload
 }) {
   if (title) label = title
   function handleClick (event) {
@@ -26,7 +27,8 @@ function Button ({
       eventCategory: eventCategory || 'button',
       eventAction: 'click',
       eventLabel: eventLabel || label,
-      snippetId
+      snippetId,
+      payload: logPayload
     })
 
     if (onClick) return onClick(event, result)

@@ -110,7 +110,7 @@ class LinkFilter extends React.Component {
     } = facet
 
     /* Parse limit */
-    limit = parseInt(limit)
+    limit = limit && parseInt(limit)
 
     /* Remove values with no name */
     values = values.filter((value) => value.name)
@@ -135,10 +135,10 @@ class LinkFilter extends React.Component {
     var size = values.length
 
     /* Should display show more link */
-    var shouldDisplayShowMore = size > limit
+    var shouldDisplayShowMore = limit ? size > limit : false
 
     /* Show more */
-    if (!showMore) values = values.slice(0, limit)
+    if (!showMore && limit) values = values.slice(0, limit)
 
     var showMoreLink = shouldDisplayShowMore ? (
       <button

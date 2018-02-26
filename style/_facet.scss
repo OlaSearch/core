@@ -1,3 +1,6 @@
+/* ios fix where label was not clickable */
+.ola-search label > * { pointer-events:none; }
+
 /* Facet */
 .ola-facet {
   border: 1px solid #ddd;
@@ -82,16 +85,16 @@
 }
   .ola-btn-date-select{
     background: none;
-    padding: 0;
     color: #002569;
     display: block;
     border: none;
     cursor: pointer;
     width: 100%;
     text-align: left;
-    padding: 3px 0;
+    padding: 4px 0;
     clear: both;
     margin: 0;
+    line-height: 1.2;
     @include prefix(display, flex, webkit ms moz);
   }
 
@@ -125,6 +128,7 @@
    */
   .ola-facet-scroll-list {
     max-height: none;
+    overflow: auto;
   }
 
 
@@ -144,7 +148,9 @@
       text-align: left;
       background: none;
       display: block;
+      line-height: 1.4;
       padding: $facet-padding;
+      min-height: unset;
     }
   }
 

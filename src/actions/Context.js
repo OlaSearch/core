@@ -15,6 +15,7 @@ export function requestGeoLocation (onSuccess, onFailure) {
         onSuccess && onSuccess(event)
       },
       (error) => {
+        console.warn(error)
         dispatch({
           type: types.REQUEST_GEO_LOCATION_FAILURE,
           payload: error

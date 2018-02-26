@@ -26,7 +26,7 @@ export function prepareStoreState ({ config }) {
     perPage,
     allowedCharacters,
     replaceQueryParamName,
-    sidebar: showSidebar,
+    sidebar,
     layoutSwitching,
     filterInAutoComplete
   } = config
@@ -94,7 +94,7 @@ export function prepareStoreState ({ config }) {
       perPage,
       allowedCharacters,
       replaceQueryParamName,
-      showSidebar,
+      sidebar,
       layoutSwitching,
       filterInAutoComplete
     },

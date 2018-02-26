@@ -19,9 +19,19 @@ export default class ContentEditable extends React.Component {
   componentDidUpdate (prevProps) {
     this.updateFakeEl()
   }
-  registerRef = (el) => (this._input = el)
+  registerRef = (el) => {
+    this._input = el
+    this.props.innerRef && this.props.innerRef(el)
+  }
   render () {
-    let { formatValue, onMatchChange, value, placeholder, ...rest } = this.props
+    let {
+      formatValue,
+      onMatchChange,
+      value,
+      placeholder,
+      innerRef,
+      ...rest
+    } = this.props
     /* iOS 8 bug where placeholder is displayed even when value is not empty */
     return (
       <div className='ContentEditableWrapper'>

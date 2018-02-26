@@ -65,6 +65,7 @@
 
 /* Hide close sidebar on mobile */
 .ola-close-sidebar {
+  box-shadow: $small-box-shadow;
   @include media (desktop) {
     display: none;
   }
@@ -79,7 +80,7 @@
   text-align: center;
   position: relative;
   margin: 5px 0 0 5px;
-  // display: none;
+  height: auto;
   min-height: $button-default-height;
 
   @include media (tablet) {

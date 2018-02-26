@@ -14,6 +14,7 @@ function Phone (props) {
     result,
     snippetId,
     fieldLabel,
+    logPayload,
     ...rest
   } = props
 
@@ -27,7 +28,8 @@ function Phone (props) {
       result,
       eventCategory: 'Call',
       eventAction: 'click',
-      snippetId
+      snippetId,
+      payload: logPayload
     })
     onClick && onClick(event, result)
   }

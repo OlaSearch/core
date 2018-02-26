@@ -3,7 +3,7 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import withToggle from './../../../decorators/withToggle'
 import withLogger from './../../../decorators/withLogger'
-import { ThemeConsumer } from './../../../containers/OlaThemeContext'
+import withTheme from './../../../decorators/withTheme'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import Facebook from '@olasearch/icons/lib/facebook'
 import Twitter from '@olasearch/icons/lib/twitter'
@@ -22,7 +22,8 @@ class Share extends React.PureComponent {
       eventAction: 'click',
       eventLabel: type,
       debounce: false,
-      snippetId: this.props.snippetId
+      snippetId: this.props.snippetId,
+      payload: this.props.logPayload
     })
     window.location = url
   }

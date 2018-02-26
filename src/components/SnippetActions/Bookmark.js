@@ -16,6 +16,7 @@ class BookmarkActions extends React.Component {
         eventAction: 'click',
         debounce: true,
         result,
+        payload: this.props.logPayload,
         snippetId: this.props.snippetId
       })
     )
@@ -31,6 +32,7 @@ class BookmarkActions extends React.Component {
         eventAction: 'click',
         debounce: true,
         result,
+        payload: this.props.logPayload,
         snippetId: this.props.snippetId
       })
     )

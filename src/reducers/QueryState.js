@@ -135,6 +135,7 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         q: '',
+        enriched_q: '',
         page: 1
       }
 

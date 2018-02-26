@@ -13,3 +13,10 @@ export function toggleView (view) {
     view
   }
 }
+
+/* Search help */
+export function hideSearchHelp () {
+  return {
+    type: types.HIDE_SEARCH_HELP
+  }
+}

@@ -59,7 +59,6 @@ class AnswerMap extends React.Component {
     )
   }
   componentDidUpdate (prevProps, prevState) {
-    console.log(prevProps, this.props)
     this.clearAllMarkers()
     this.refreshMap()
   }

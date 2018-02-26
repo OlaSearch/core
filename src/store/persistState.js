@@ -20,6 +20,7 @@ export const statesToTrack = [
   'history',
   'bookmarks',
   'isSidebarOpen',
+  'showSearchHelp',
   'queryIds',
   'queriesById',
   'view'
@@ -43,7 +44,8 @@ export const STATE_TYPE_KEYS = [
   types.REQUEST_DELETE_ALERT_SUCCESS,
   types.REQUEST_CREATE_ALERT_SUCCESS,
   types.TOGGLE_SIDEBAR,
-  types.CHANGE_VIEW
+  types.CHANGE_VIEW,
+  types.HIDE_SEARCH_HELP
 ]
 
 /* Based on actions: persist states to localstorage */
@@ -80,6 +82,7 @@ function persistState (action, getState, namespace) {
     case types.REQUEST_CREATE_ALERT_SUCCESS:
     case types.TOGGLE_SIDEBAR:
     case types.CHANGE_VIEW:
+    case types.HIDE_SEARCH_HELP:
       return set(
         OLA_STORAGE_KEY,
         pick(statesToTrack, state.AppState),

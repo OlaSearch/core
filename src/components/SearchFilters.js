@@ -63,12 +63,12 @@ class SearchFilters extends React.Component {
           {facets.map((facet, index) => {
             /* Recalculate Selected values */
 
-            let selectedFacets = selected
+            const selectedFacets = selected
               .filter((item) => item.name === facet.name)
               .map((item) => item.selected)
-            let selectedItems = flatten(selectedFacets)
-            let { type, name } = facet
-            let passProps = {
+            const selectedItems = flatten(selectedFacets)
+            const { type, name } = facet
+            const passProps = {
               facet,
               selected: selectedItems,
               key: name,

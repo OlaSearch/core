@@ -25,6 +25,7 @@ type State = {
   inProgressAlert: boolean,
   isSidebarOpen: boolean,
   showSidebar: boolean,
+  showSearchHelp: boolean,
   layoutSwitching: boolean,
   filterInAutoComplete: boolean,
   view: 'list' | 'grid',
@@ -62,10 +63,13 @@ export const initialState = {
   /* Sidebar */
   isSidebarOpen: false,
 
+  /* Search help */
+  showSearchHelp: true,
+
   /* Settings */
   allowedCharacters: null,
   replaceQueryParamName: false,
-  showSidebar: true,
+  showSidebar: true /* Global config.sidebar variable */,
   layoutSwitching: true,
   filterInAutoComplete: true,
 
@@ -224,38 +228,49 @@ export default (state: State = initialState, action: Object) => {
         history: state.history,
         queryIds: state.queryIds,
         queriesById: state.queriesById,
-        namespace: state.namespace
+        namespace: state.namespace,
+        allowedCharacters: state.allowedCharacters,
+        replaceQueryParamName: state.replaceQueryParamName,
+        showSidebar: state.showSidebar,
+        layoutSwitching: state.layoutSwitching,
+        filterInAutoComplete: state.filterInAutoComplete,
+        isSidebarOpen: state.isSidebarOpen
       }
 
     case types.OLA_REHYDRATE:
+      /**
+       * Todo - refactor and make pass test
+       */
+      const { configState, storeState, namespace } = action
       return {
         ...state,
         ...action.storeState /* Includes bookmarks, history */,
         view:
-          action.storeState &&
-          action.storeState.view /* Results view grid|list */
-            ? action.storeState.view
+          storeState && storeState.view /* Results view grid|list */
+            ? storeState.view
             : initialState.view,
-        namespace: action.namespace /* Project namespace */,
-        allowedCharacters: action.configState /* Allowed characters in the query */
-          ? action.configState.allowedCharacters
+        namespace /* Project namespace */,
+        allowedCharacters: configState /* Allowed characters in the query */
+          ? configState.allowedCharacters
           : state.allowedCharacters,
-        replaceQueryParamName: action.configState
-          ? action.configState.replaceQueryParamName
+        replaceQueryParamName: configState
+          ? configState.replaceQueryParamName
           : state.replaceQueryParamName,
-        showSidebar: action.configState
-          ? action.configState.showSidebar
-          : state.showSidebar,
-        layoutSwitching: action.configState
-          ? action.configState.layoutSwitching
+        showSidebar: configState ? configState.sidebar : state.showSidebar,
+        layoutSwitching: configState
+          ? configState.layoutSwitching
           : state.layoutSwitching,
-        filterInAutoComplete: action.configState
-          ? action.configState.filterInAutoComplete
+        filterInAutoComplete: configState
+          ? configState.filterInAutoComplete
           : state.filterInAutoComplete,
+        /**
+         * During initial page load, should we use saved isSidebarOpen?
+         * sidebar
+         *   ? isSidebarOpen (Use from cache)
+         *   : false
+         */
         isSidebarOpen: action.configState
-          ? action.configState.showSidebar
-            ? action.storeState.isSidebarOpen
-            : false
+          ? configState.sidebar ? storeState.isSidebarOpen : false
           : state.isSidebarOpen
       }
 
@@ -366,6 +381,12 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         isLoadingMc: false
+      }
+
+    case types.HIDE_SEARCH_HELP:
+      return {
+        ...state,
+        showSearchHelp: false
       }
 
     default:

@@ -48,7 +48,7 @@ import {
   TYPE_FACET
 } from './../../constants/Settings'
 import QueryHelp from './../Onboarding/QueryHelp'
-import { ThemeConsumer } from './../../containers/OlaThemeContext'
+import withTheme from './../../decorators/withTheme'
 
 class AutoComplete extends React.Component {
   constructor (props) {
@@ -387,7 +387,7 @@ class AutoComplete extends React.Component {
   }
 
   updateCursor = (start) => {
-    setTimeout(() => this.inputEl.input._input.setSelectionRange(start, start))
+    setTimeout(() => this.inputEl.input.setSelectionRange(start, start))
   }
 
   onKeyDown = (direction, event) => {
@@ -748,7 +748,8 @@ class AutoComplete extends React.Component {
       translate,
       resultLimit,
       resultLimitDesktop,
-      isDesktop
+      isDesktop,
+      theme
     } = this.props
     let {
       isFocused,
@@ -787,98 +788,99 @@ class AutoComplete extends React.Component {
       : 0
 
     return (
-      <ThemeConsumer>
-        {(theme) => (
-          <div className={klassContainer} ref={this.registerEl}>
-            <div className={this.props.containerClass}>
-              <Input
-                q={queryTerm}
-                ref={this.registerInput}
-                onChange={this.onChange}
-                onClear={this.clearQueryTerm}
-                onKeyDown={this.onKeyDown}
-                onSubmit={this.onSubmit}
-                onFocus={this.onFocus}
-                isOpen={isOpen}
-                placeholder={translate('autosuggest_placeholder')}
-                handleClickOutside={this.handleClickOutside}
-                onSearchButtonClick={this.onSubmit}
-                results={results}
-                showZone={showZone}
-                fuzzyQuery={fuzzyQuery}
-                showGeoLocation={this.props.showGeoLocation}
-                onGeoLocationSuccess={this.props.onGeoLocationSuccess}
-                onGeoLocationDisable={this.props.onGeoLocationDisable}
-                refreshOnGeoChange={this.props.refreshOnGeoChange}
-                autoFocus={this.props.autoFocus}
-                isPhone={this.props.isPhone}
-                onBlur={this.onSoftBlur}
-                handleClose={this.terminateAutoSuggest}
-                tokens={this.props.tokens}
-                onTokenChange={this.onTokenChange}
-                showWordSuggestion={showWordSuggestion}
-                showAlert={this.props.showAlert}
-                fuzzyTokens={fuzzyTokens}
-                theme={theme}
-                isFocused={this.state.isFocused}
-              />
+      <div className={klassContainer} ref={this.registerEl}>
+        <div className={this.props.containerClass}>
+          <Input
+            q={queryTerm}
+            ref={this.registerInput}
+            onChange={this.onChange}
+            onClear={this.clearQueryTerm}
+            onKeyDown={this.onKeyDown}
+            onSubmit={this.onSubmit}
+            onFocus={this.onFocus}
+            isOpen={isOpen}
+            placeholder={translate('autosuggest_placeholder')}
+            handleClickOutside={this.handleClickOutside}
+            onSearchButtonClick={this.onSubmit}
+            results={results}
+            showZone={showZone}
+            fuzzyQuery={fuzzyQuery}
+            showGeoLocation={this.props.showGeoLocation}
+            onGeoLocationSuccess={this.props.onGeoLocationSuccess}
+            onGeoLocationDisable={this.props.onGeoLocationDisable}
+            refreshOnGeoChange={this.props.refreshOnGeoChange}
+            autoFocus={this.props.autoFocus}
+            isPhone={this.props.isPhone}
+            onBlur={this.onSoftBlur}
+            handleClose={this.terminateAutoSuggest}
+            tokens={this.props.tokens}
+            onTokenChange={this.onTokenChange}
+            showWordSuggestion={showWordSuggestion}
+            showAlert={this.props.showAlert}
+            fuzzyTokens={fuzzyTokens}
+            theme={theme}
+            isFocused={this.state.isFocused}
+          />
 
-              <div
-                className={klass}
-                style={{
-                  left: leftPosition,
-                  width: showWordSuggestion
-                    ? this.props.wordSuggestionWidth
-                    : 'auto'
-                }}
-              >
-                <div className='ola-suggestions-wrapper' ref={this.registerRef}>
-                  {showSuggestionHelp ? (
-                    <div className='ola-suggestions-help'>
-                      {q ? (
-                        showWordSuggestion ? null : (
-                          translate('autosuggest_help')
-                        )
-                      ) : (
-                        <span>
-                          {translate('autosuggest_help_history')}
-                          <a
-                            onClick={this.props.clearHistory}
-                            className='ola-suggestions-clear'
-                          >
-                            {translate('autosuggest_clear_history_label')}
-                          </a>
-                        </span>
-                      )}
-                    </div>
-                  ) : null}
-                  <FuzzySuggestions
-                    results={results}
-                    onSelect={this.onFuzzySelect}
-                    onRemoveHistory={this.onRemoveHistory}
-                    activeClassName={this.props.activeClassName}
-                    fieldLabels={this.context.config.fieldLabels}
-                    q={q}
-                  />
+          <div
+            className={klass}
+            style={{
+              left: leftPosition,
+              width: showWordSuggestion
+                ? this.props.wordSuggestionWidth
+                : 'auto'
+            }}
+          >
+            <div className='ola-suggestions-wrapper' ref={this.registerRef}>
+              {showSuggestionHelp ? (
+                <div className='ola-suggestions-help'>
+                  {q ? (
+                    showWordSuggestion ? null : (
+                      translate('autosuggest_help')
+                    )
+                  ) : (
+                    <span>
+                      {translate('autosuggest_help_history')}
+                      <a
+                        onClick={this.props.clearHistory}
+                        className='ola-suggestions-clear'
+                      >
+                        {translate('autosuggest_clear_history_label')}
+                      </a>
+                    </span>
+                  )}
                 </div>
-              </div>
-
-              {!isOpen &&
-                isFocused &&
-                !queryTerm &&
-                this.props.showHelp && <QueryHelp />}
+              ) : null}
+              <FuzzySuggestions
+                results={results}
+                onSelect={this.onFuzzySelect}
+                onRemoveHistory={this.onRemoveHistory}
+                activeClassName={this.props.activeClassName}
+                fieldLabels={this.context.config.fieldLabels}
+                q={q}
+              />
             </div>
-            <style jsx>
-              {`
-                .ola-autosuggest-focus :global(.ola-search-form-container) {
-                  border-color: ${theme.primaryColor};
-                  box-shadow: none;
-                }
-              `}
-            </style>
           </div>
-        )}
-      </ThemeConsumer>
+
+          <QueryHelp
+            isVisible={
+              this.props.showHelp &&
+              !isOpen &&
+              isFocused &&
+              !queryTerm &&
+              !results.length
+            }
+          />
+        </div>
+        <style jsx>
+          {`
+            .ola-autosuggest-focus :global(.ola-search-form-container) {
+              border-color: ${theme.primaryColor};
+              box-shadow: none;
+            }
+          `}
+        </style>
+      </div>
     )
   }
 }
@@ -912,4 +914,4 @@ module.exports = connect(mapStateToProps, {
   replaceTokens,
   removeTokenFacets,
   removeIntentEngineFacets
-})(withTranslate(listensToClickOutside(AutoComplete)))
+})(withTheme(withTranslate(listensToClickOutside(AutoComplete))))

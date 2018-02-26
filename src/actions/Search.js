@@ -106,13 +106,19 @@ export function executeSearch (payload) {
     var state = getState()
     var query = state.QueryState
     var { allowedCharacters, replaceQueryParamName } = state.AppState
-    var { q, isSearchActive, facet_query } = query
-    var context = state.Context
+    var { q, isSearchActive, facet_query, page } = query
+    const context = state.Context
+    const resetSearch = page === 1
 
-    /* Remove facets from intent engine */
-    facet_query = facet_query.filter(
-      ({ fromIntentEngine }) => !fromIntentEngine
-    )
+    /**
+     * Remove facets from intent engine
+     * Only reset on first search
+     */
+    if (resetSearch) {
+      facet_query = facet_query.filter(
+        ({ fromIntentEngine }) => !fromIntentEngine
+      )
+    }
 
     /* If no query and search is not active (searchOnLoad = false) */
     if (
@@ -315,6 +321,15 @@ export function addFacet (facet, value) {
         name === facet.name && selected.indexOf(value) !== -1
     )
     if (exists) {
+      /**
+       * If the facet was added from a token and
+       * facet has already been selected by intent engine,
+       * we need to update that facet
+       */
+      if (facet.isToken) {
+        dispatch(removeFacet(facet, value))
+        dispatch(addFacet(facet, value))
+      }
       return false
     }
 
@@ -327,8 +342,18 @@ export function addFacet (facet, value) {
 }
 
 export function removeFacet (facet, value, resetAllFacets = false) {
-  return (dispatch) => {
-    let { fromIntentEngine } = facet
+  return (dispatch, getState) => {
+    /**
+     * Also check if
+     * `articles about roger` => articles is selected. But user cant remove the filter using `Checkbox` filter
+     */
+    const intentEngineFacets = getState()
+      .QueryState.facet_query.filter(
+        ({ fromIntentEngine, isToken }) => fromIntentEngine || isToken
+      )
+      .map(({ name }) => name)
+    const fromIntentEngine =
+      facet.fromIntentEngine || intentEngineFacets.indexOf(facet.name) !== -1
 
     /**
      * Add to skip_facet_fields if the facet is from intent engine

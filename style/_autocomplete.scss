@@ -66,6 +66,7 @@
     margin-top: -1px;
     margin-bottom: -1px;
     margin-right: -1px;
+    height: auto;
   }
 
   .ola-autosuggest-focus & {
@@ -227,3 +228,26 @@
     }
   }
 }
+
+/**
+ * Answer
+ */
+.ola-suggestion-hasAnswer {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Answer charts */
+.ola-answer-quick-chart {
+  display: flex;
+  align-items: baseline;
+
+  sup {
+    vertical-align: none;
+    padding-left: 2px;
+  }
+}
+  /* Value */
+  .ola-answer-quick-value {
+    font-weight: bold;
+    color: #444;
+  }

@@ -1,0 +1,14 @@
+.ola-histogram {
+  justify-content: space-around;
+  height: 50px;
+  flex-flow: row;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px #ccc solid;
+}
+
+.ola-histogram-bar {
+  background: #ccc;
+  flex: 1;
+  transition: all 0.2s ease-in;
+}

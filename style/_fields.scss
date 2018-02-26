@@ -10,6 +10,7 @@
   display: block;
   padding: 0;
   margin-bottom: 1rem;
+  max-width: 100%;
 
   @include media (tablet) {
     width: 180px;
@@ -176,4 +177,15 @@ a.ola-field-url {
 .ola-field-date,
 .ola-field-directions {
   // font-size: 0.875rem;
+}
+
+/**
+ * Text field
+ */
+
+.ola-field-text {
+  p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 }

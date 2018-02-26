@@ -25,6 +25,7 @@ function Directions (props) {
     locationFieldName,
     collectionId,
     displayIcon,
+    logPayload,
     ...rest
   } = props
 
@@ -52,7 +53,8 @@ function Directions (props) {
       eventCategory: 'Get Directions',
       eventAction: 'click',
       debounce: false,
-      snippetId
+      snippetId,
+      payload: logPayload
     })
     onClick && onClick(event)
   }

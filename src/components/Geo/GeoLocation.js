@@ -77,6 +77,7 @@ class GeoLocation extends React.Component {
       eventCategory: 'Geolocation button',
       eventAction: 'request_location',
       eventLabel: 'Geolocation',
+      payload: this.props.logPayload,
       debounce: true
     })
 

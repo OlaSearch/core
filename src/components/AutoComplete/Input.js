@@ -28,7 +28,7 @@ export default class Input extends React.Component {
 
   onClear = (event) => {
     /* Focus input */
-    this.props.onClear(() => this.input._input.focus())
+    this.props.onClear(() => this.input.focus())
   }
 
   onFocus = (event) => {
@@ -65,7 +65,7 @@ export default class Input extends React.Component {
   }
 
   onChangeZone = () => {
-    this.input._input.focus()
+    this.input.focus()
   }
 
   onKeyDown = (event) => {
@@ -78,7 +78,7 @@ export default class Input extends React.Component {
          * Clear query term
          */
         // if (!isOpen) return this.onClear(event)
-        if (!isOpen) return this.input._input.select()
+        if (!isOpen) return this.input.select()
         return this.props.handleClickOutside(event)
 
       case 39: // Right
@@ -208,7 +208,7 @@ export default class Input extends React.Component {
         {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <div className='ola-form-input-wrapper'>
           <ContentEditable
-            ref={this.registerRef}
+            innerRef={this.registerRef}
             type='text'
             value={q}
             className='ola-text-input'

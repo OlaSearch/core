@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 import withTranslate from './../decorators/withTranslate'
@@ -39,6 +40,10 @@ function FilterButton ({
 
 FilterButton.defaultProps = {
   facets: []
+}
+
+FilterButton.contextTypes = {
+  sidebar: PropTypes.bool
 }
 
 function mapStateToProps (state) {

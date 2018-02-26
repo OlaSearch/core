@@ -9,6 +9,7 @@ import {
   LAYOUT_OPTIONS
 } from './../constants/Settings'
 import xssFilters from 'xss-filters'
+import scrollIntoView from 'dom-scroll-into-view'
 
 /**
  * Returns string substituted with placeholders supplied
@@ -778,5 +779,14 @@ export function syncTokens (old_text, new_text, tokens) {
       endToken,
       value
     }
+  })
+}
+
+/**
+ * Scroll to element
+ */
+export function scrollTo (el) {
+  scrollIntoView(el, document, {
+    onlyScrollIfNeeded: true
   })
 }

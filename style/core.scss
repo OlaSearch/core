@@ -38,6 +38,7 @@
 
 /* Answer */
 @import 'answer';
+@import 'answer_quick';
 
 /* Crumbs */
 @import 'breadcrumbs';
@@ -50,3 +51,7 @@
 
 /* Pill */
 @import 'pill';
+
+/* Chart */
+@import 'chart';
+@import 'histogram';

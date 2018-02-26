@@ -51,6 +51,7 @@ class History extends React.Component {
               eventCategory: 'History button',
               eventAction: 'open',
               eventLabel: 'History',
+              payload: this.props.logPayload,
               debounce: true
             })
           )

@@ -185,5 +185,8 @@ export const DEFAULT_THEME = {
   defaultFontSize: '16px',
   mediumFontSize: '14px',
   smallFontSize: '12px',
-  titleFontSize: '20px'
+  titleFontSize: '20px',
+
+  /* Progress bar */
+  progressBarBackground: '#f86936'
 }

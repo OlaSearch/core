@@ -13,7 +13,8 @@ function AddAlert ({
   createAlert,
   deleteAlert,
   log,
-  inProgressAlert
+  inProgressAlert,
+  logPayload
 }) {
   if (!q) return null
   let exists = queryIds.some((id) => q === queriesById[id].query)
@@ -33,7 +34,8 @@ function AddAlert ({
       eventType: 'C',
       eventCategory: 'alert',
       eventAction: 'click',
-      eventLabel: exists ? 'Remove' : 'Add'
+      eventLabel: exists ? 'Remove' : 'Add',
+      payload: logPayload
     })
   }
   return (

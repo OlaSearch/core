@@ -53,6 +53,7 @@ class SpeechInput extends React.Component {
         eventType: 'C',
         eventCategory: 'Voice',
         eventAction: 'click',
+        payload: this.props.logPayload,
         eventLabel
       })
     )
