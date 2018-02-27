@@ -47,9 +47,13 @@ export function buildQueryString (params, replaceQueryParamName) {
     }
     /* Facets */
     if (name === 'facet_query') {
-      value = value.map((item) => {
-        return item.name + ':' + flatten(item.selected).join('+')
-      })
+      value = value
+        .filter(
+          ({ fromIntentEngine }) => !fromIntentEngine
+        ) /* Remove facets set by intent engine */
+        .map((item) => {
+          return item.name + ':' + flatten(item.selected).join('+')
+        })
     }
 
     /* Filters */

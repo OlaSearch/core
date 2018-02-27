@@ -1,8 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import GoogleMaps from './maputils'
+import cx from 'classnames'
 
 class AnswerMap extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      hasData: false
+    }
+  }
   static defaultProps = {
     markerIcon: null
   }
@@ -52,13 +59,15 @@ class AnswerMap extends React.Component {
   handleMapClick = (event) => {
     if (this.infowindow) this.infowindow.close()
   }
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
     return (
       nextProps.data !== this.props.data ||
-      nextProps.results !== this.props.results
+      nextProps.results !== this.props.results ||
+      this.state.hasData !== nextState.hasData
     )
   }
   componentDidUpdate (prevProps, prevState) {
+    if (prevState.hasData !== this.state.hasData) return
     this.clearAllMarkers()
     this.refreshMap()
   }
@@ -90,8 +99,19 @@ class AnswerMap extends React.Component {
         location: result[element_keys['location']]
       }))
     }
+    /* Only display markers with location */
+    data = data.filter(({ location }) => location)
 
-    data.filter(({ location }) => location).forEach(({ title, location }) => {
+    /* Check if any data exists */
+    const hasData = data.length > 0
+
+    this.setState({
+      hasData
+    })
+    /* Do nothing if no markers */
+    if (!hasData) return
+
+    data.forEach(({ title, location }) => {
       /* Get the first location */
       if (location && location.length) location = location[0]
       let [lat, lng] = location.split(',')
@@ -139,8 +159,11 @@ class AnswerMap extends React.Component {
     this.mapEl = el
   }
   render () {
+    const classes = cx('ola-answer-map', {
+      'ola-answer-map-empty': !this.state.hasData
+    })
     return (
-      <div className='ola-answer-map'>
+      <div className={classes}>
         <div ref={this.registerMap} className='ola-answer-gmap' />
       </div>
     )

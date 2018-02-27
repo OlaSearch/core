@@ -17,6 +17,7 @@ export function prepareStoreState ({ config }) {
   /* Create user cookie */
   var userSession = cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = cookies.get(USER_NEW_KEY, config.namespace)
+  var isNewSession = false
   const storeState = get(OLA_STORAGE_KEY, config.namespace) || {}
   var contextState = cookies.get(CONTEXT_STORAGE_KEY, config.namespace) || {}
   const locale =
@@ -65,13 +66,15 @@ export function prepareStoreState ({ config }) {
   }
 
   /**
-   * searchSession
+   * SearchSession:
+   * isNewSession ?
    * Session storage
    */
   var searchSession = sessionStorage.getItem(
     getKey(SEARCH_SESSION_KEY, config.namespace)
   )
   if (searchSession === null || searchSession === undefined) {
+    isNewSession = true
     searchSession = uuid()
     try {
       sessionStorage.setItem(
@@ -87,6 +90,7 @@ export function prepareStoreState ({ config }) {
     searchSession,
     userSession,
     isNewUser,
+    isNewSession,
     storeState,
     contextState,
     locale,

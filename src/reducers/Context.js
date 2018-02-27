@@ -13,6 +13,7 @@ type State = {
   searchSession: ?string,
   userId: ?string,
   isNewUser: boolean,
+  isNewSession: boolean,
   hasUsedVoice: boolean,
   filter_term_sequence: Array<string>
 }
@@ -30,6 +31,7 @@ export const initialState = {
   searchSession: null,
   userId: null,
   isNewUser: false,
+  isNewSession: false,
 
   /* Voice */
   hasUsedVoice: false,
@@ -140,6 +142,7 @@ export default (state: State = initialState, action: Object) => {
         userSession,
         searchSession,
         isNewUser,
+        isNewSession,
         userId,
         contextState
       } = action
@@ -149,7 +152,8 @@ export default (state: State = initialState, action: Object) => {
         searchSession,
         ...contextState,
         userId: userId || userSession,
-        isNewUser
+        isNewUser,
+        isNewSession
       }
 
     case types.SET_NEW_USER_STATUS:

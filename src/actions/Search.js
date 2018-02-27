@@ -105,7 +105,7 @@ export function executeSearch (payload) {
     /* Check if there is a suggested term */
     var state = getState()
     var query = state.QueryState
-    var { allowedCharacters, replaceQueryParamName } = state.AppState
+    var { allowedCharacters, replaceQueryParamName, answer } = state.AppState
     var { q, isSearchActive, facet_query, page } = query
     const context = state.Context
     const resetSearch = page === 1
@@ -113,12 +113,21 @@ export function executeSearch (payload) {
     /**
      * Remove facets from intent engine
      * Only reset on first search
+     * Todo: Remove sort as well if its set by the intent engine
      */
     if (resetSearch) {
       facet_query = facet_query.filter(
         ({ fromIntentEngine }) => !fromIntentEngine
       )
     }
+
+    /**
+     * Check if sort is set by intent engine
+     * Todo
+     * 1. Clear sort if its from the intent engine
+     * 2. make sure sortCondition
+     */
+    // const isSortFromIntentEngine = answer && answer.search && answer.search.sort
 
     /* If no query and search is not active (searchOnLoad = false) */
     if (
@@ -136,6 +145,7 @@ export function executeSearch (payload) {
     query = {
       ...query,
       facet_query
+      // sort: isSortFromIntentEngine ? '' : query.sort
     }
 
     /**

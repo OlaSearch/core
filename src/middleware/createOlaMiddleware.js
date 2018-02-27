@@ -295,6 +295,10 @@ export default function (options = {}) {
                 : true
             })
             .map((item) => {
+              /**
+               * If Intent engine selects a facet which is already selected by the user
+               * Eg: user is in page:2 with type:article. He refreshes the page. article is selected by IE and we need to tag it as fromIntentEngine
+               */
               if (answerFacetNames.indexOf(item.name) !== -1) {
                 return {
                   ...item,
@@ -403,10 +407,7 @@ export default function (options = {}) {
          */
         shouldDispatchActions &&
           next({
-            payload: {
-              ...payload,
-              originalQuery: query.q
-            },
+            payload,
             results,
             spellSuggestions,
             totalResults,
