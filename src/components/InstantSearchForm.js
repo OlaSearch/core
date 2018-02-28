@@ -145,43 +145,44 @@ class InstantSearchForm extends React.Component {
     return (
       <form className={klass} onSubmit={this.onSubmit}>
         <div className='ola-search-form-container'>
-          {showZone && <Zone onChange={this.onChangeZone} />}
-          <input
-            ref='Input'
-            type='text'
-            className='ola-text-input ola-text-input-round'
-            placeholder={_placeholder}
-            value={q}
-            aria-label='Search input'
-            autoComplete='off'
-            autoCorrect='off'
-            autoCapitalize='off'
-            spellCheck='false'
-            onFocus={this.props.onFocus}
-            onBlur={this.props.onBlur}
-            onChange={this.onChange}
-          />
-
-          {showBookmarks ? <Bookmarks /> : null}
-
-          {showGeoLocation ? (
-            <GeoLocation
-              active={false}
-              onSuccess={this.props.onGeoLocationSuccess}
-              onFailure={this.props.onGeoLocationFailure}
-              onDisable={this.props.onGeoLocationDisable}
-              onError={this.props.onGeoError}
+          <div className='ola-form-input-wrapper'>
+            {showZone && <Zone onChange={this.onChangeZone} />}
+            <input
+              ref='Input'
+              type='text'
+              className='ola-text-input'
+              placeholder={_placeholder}
+              value={q}
+              aria-label='Search input'
+              autoComplete='off'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
+              onFocus={this.props.onFocus}
+              onBlur={this.props.onBlur}
+              onChange={this.onChange}
             />
-          ) : null}
 
-          {showSpeech ? (
-            <SpeechInput
-              onResult={this.onSpeechChange}
-              onFinalResult={this.onSpeechChange}
-              isInstantSearch
-            />
-          ) : null}
+            {showBookmarks ? <Bookmarks /> : null}
 
+            {showGeoLocation ? (
+              <GeoLocation
+                active={false}
+                onSuccess={this.props.onGeoLocationSuccess}
+                onFailure={this.props.onGeoLocationFailure}
+                onDisable={this.props.onGeoLocationDisable}
+                onError={this.props.onGeoError}
+              />
+            ) : null}
+
+            {showSpeech ? (
+              <SpeechInput
+                onResult={this.onSpeechChange}
+                onFinalResult={this.onSpeechChange}
+                isInstantSearch
+              />
+            ) : null}
+          </div>
           {button}
         </div>
       </form>

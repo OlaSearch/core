@@ -1,13 +1,14 @@
 import React from 'react'
 import AutoComplete from './AutoComplete'
+import InstantSearchForm from './InstantSearchForm'
 import FilterButton from './FilterButton'
 import LayoutButton from './LayoutButton'
 
-function SearchBar (props) {
+function SearchBar ({ instant, ...props }) {
   return (
     <div className='ola-search-bar-wrapper'>
       <div className='ola-search-bar'>
-        <AutoComplete {...props} />
+        {instant ? <InstantSearchForm /> : <AutoComplete {...props} />}
         <FilterButton />
         <LayoutButton />
       </div>

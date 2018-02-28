@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
+import scrollIntoView from 'dom-scroll-into-view'
 
 class Pagination extends React.Component {
   static defaultProps = {
@@ -55,7 +56,14 @@ class Pagination extends React.Component {
       return onChangePage(page)
     }
 
-    this.pagination.parentNode.scrollIntoView()
+    /**
+     * Scroll to top
+     */
+    scrollIntoView(this.pagination.parentNode, document, {
+      alignWithTop: true,
+      onlyScrollIfNeeded: true,
+      offsetTop: 20 /* Add a slight offset */
+    })
 
     actions.changePage(page)
 

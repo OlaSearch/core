@@ -2,7 +2,8 @@
   display: flex;
 
   /* Auto suggest */
-  .ola-autosuggest {
+  .ola-autosuggest,
+  .ola-search-form {
     flex: 1;
   }
 }

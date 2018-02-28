@@ -94,6 +94,9 @@ export function prepareStoreState ({ config }) {
     storeState,
     contextState,
     locale,
+    /**
+     * Only for initial rehydration. Do not store config variables in state
+     */
     configState: {
       perPage,
       allowedCharacters,

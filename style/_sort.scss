@@ -1,0 +1,46 @@
+/**
+ * Sort
+ */
+.ola-sort {
+  float: right;
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+/**
+ * Select
+ */
+.ola-sort-select {
+  appearance: none;
+  border: none;
+  padding: 8px 1rem;
+  padding-right: 50px;
+  margin: 0;
+}
+
+/**
+ * Label
+ */
+.ola-sort-label {
+  padding-right: 1rem;
+  margin: 0;
+}
+
+/**
+ * Wrap
+ */
+.ola-sort-select-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px #ccc solid;
+  border-radius: 3px;
+  position: relative;
+
+  .ola-icon {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    margin-top: -12px;
+  }
+}
