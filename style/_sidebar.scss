@@ -1,7 +1,7 @@
 /* Sidebar */
 .ola-sidebar {
   position: fixed;
-  z-index: 1000;
+  z-index: 10000; /* chatbot is 9999 */
   right: 0;
   top: 16px;
   left: 16px;

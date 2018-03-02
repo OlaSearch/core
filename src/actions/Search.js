@@ -8,7 +8,8 @@ import {
 import {
   debounce,
   checkForAllowedCharacters,
-  castNumberToStringArray
+  castNumberToStringArray,
+  getDisplayName
 } from './../utilities'
 import omit from 'ramda/src/omit'
 import xssFilters from 'xss-filters'
@@ -236,6 +237,18 @@ export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) 
         q,
         facet_query,
         skip_intent: true
+      },
+      beforeSuccessCallback (response) {
+        return {
+          ...response,
+          facets: response.facets.map(({ values, ...rest }) => ({
+            ...rest,
+            values: values.map(({ name, ...r }) => ({
+              ...r,
+              name: getDisplayName(null, name)
+            }))
+          }))
+        }
       },
       context,
       payload: {

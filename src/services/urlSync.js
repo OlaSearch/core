@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { parseRangeValues } from './../utilities'
+import { parseRangeValues, getDisplayName } from './../utilities'
 import {
   RANGE_FACETS,
   REMOVE_FROM_QUERY_STRING,

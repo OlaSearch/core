@@ -30,7 +30,8 @@ import {
   redirect,
   getAutoCompleteResults,
   getWordPosition,
-  syncTokens
+  syncTokens,
+  getDisplayName
 } from './../../utilities'
 import withTranslate from './../../decorators/withTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -150,10 +151,15 @@ class AutoComplete extends React.Component {
       () => {
         if (!this.props.wordSuggestion) return
         /* Update cursor position */
-        let tokenIndex = this.state.startToken + fuzzyQuery.term.length
+        let tokenIndex =
+          this.state.startToken +
+          this.getFacetDisplayName(fuzzyQuery.term).length
         this.updateCursor(tokenIndex)
       }
     )
+  }
+  getFacetDisplayName = (term) => {
+    return getDisplayName(null, term)
   }
   closeAutoSuggest = () => {
     this.setState({
@@ -596,6 +602,10 @@ class AutoComplete extends React.Component {
       // To do
     }
 
+    if (isFacet) {
+      term = this.getFacetDisplayName(term)
+    }
+
     if (this.props.wordSuggestion) {
       term =
         this.state.q.substr(0, this.state.startToken) +
@@ -777,8 +787,10 @@ class AutoComplete extends React.Component {
 
     const queryTerm = fuzzyQuery
       ? showWordSuggestion
-        ? q.substr(0, startToken) + fuzzyQuery.term + q.substr(endToken) || q
-        : fuzzyQuery.term
+        ? q.substr(0, startToken) +
+            this.getFacetDisplayName(fuzzyQuery.term) +
+            q.substr(endToken) || q
+        : this.getFacetDisplayName(fuzzyQuery.term)
       : q
 
     const fuzzyTokens = fuzzyQuery ? fuzzyQuery.tokens : null

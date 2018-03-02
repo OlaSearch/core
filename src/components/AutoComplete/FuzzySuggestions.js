@@ -1,12 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { createHTMLMarkup, highlightTokens } from './../../utilities'
+import {
+  createHTMLMarkup,
+  highlightTokens,
+  getDisplayName
+} from './../../utilities'
 import {
   RE_ESCAPE,
   TYPE_DOC,
   TYPE_HISTORY,
-  TYPE_TAXONOMY
+  TYPE_TAXONOMY,
+  TYPE_FACET
 } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
 
@@ -117,6 +122,7 @@ class SuggestionItem extends React.Component {
       tokens
     } = result
     const isHistory = type === TYPE_HISTORY
+    const isFacet = type === TYPE_FACET
     const isDoc = type === TYPE_DOC
     let pattern =
       '(^' +
@@ -125,6 +131,12 @@ class SuggestionItem extends React.Component {
         .split(/\s/)
         .join('|') +
       ')'
+
+    /**
+     * Get the display name of the facet
+     * lower|ID|Normal
+     */
+    if (isFacet) term = getDisplayName(null, term)
 
     /* Create term */
     if (isDoc) {
