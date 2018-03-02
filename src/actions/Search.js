@@ -291,7 +291,7 @@ export function fetchResult (ids) {
         types.REQUEST_RESULT_SUCCESS,
         types.REQUEST_RESULT_FAILURE
       ],
-      processData: (response) => {
+      beforeSuccessCallback: (response) => {
         let { results } = response
         return {
           ...response,

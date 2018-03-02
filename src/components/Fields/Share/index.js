@@ -25,7 +25,10 @@ class Share extends React.PureComponent {
       snippetId: this.props.snippetId,
       payload: this.props.logPayload
     })
-    window.location = url
+    /**
+     * Always open a new window
+     */
+    window.open(url)
   }
   render () {
     let {

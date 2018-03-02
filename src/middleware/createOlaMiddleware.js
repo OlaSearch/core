@@ -15,6 +15,7 @@ import {
   IGNORE_INTENTS,
   SLOT_DATE
 } from './../constants/Settings'
+import { uuid } from './../utilities'
 
 export default function (options = {}) {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -26,8 +27,8 @@ export default function (options = {}) {
       payload = {},
       meta = {},
       nullResponse = null,
-      processResponse = true,
-      processData = null,
+      processData = null /* Executed once data is received from the server: Will break if intent engine is turned OFF */,
+      beforeSuccessCallback = null /* Executed after adapters have done their work */,
       shouldDispatchActions = true,
       returnWithoutDispatch = false
     } = action
@@ -181,20 +182,12 @@ export default function (options = {}) {
         const type = successType
 
         /* Check if process response is false */
-
         if (processData) {
           response = processData(response, payload, currentState)
         }
 
         /* For autocomplete */
         if (returnWithoutDispatch) return response
-
-        if (!processResponse) {
-          return next({
-            type,
-            response
-          })
-        }
 
         /* Parse only when the timestamp matches */
         var results
@@ -239,7 +232,6 @@ export default function (options = {}) {
           responseTime = response.responseTime
           version = parser.version()
         }
-
         /**
          * Set suggested term if response query is not equal to search query
          * Not release in Production yet
@@ -256,9 +248,14 @@ export default function (options = {}) {
          * Check if message has no id
          */
         if (bot && (!answer || answer.error)) {
+          /* Create a dummy message */
+          answer = {
+            id: uuid(),
+            message: query.q
+          }
           /* throw exception */
-          throw new Error(
-            'The server could not respond in time with a message ID. Please try again'
+          console.warn(
+            'The server could not respond in time with a message ID. Please try again. May be the intent engine is down. Please contact our customer support.'
           )
         }
 
@@ -397,6 +394,7 @@ export default function (options = {}) {
               originalQuery: query.q
             },
             processData,
+            beforeSuccessCallback,
             context,
             responseTime,
             facetQuery
@@ -405,28 +403,37 @@ export default function (options = {}) {
         /**
          * Success handler
          */
-        shouldDispatchActions &&
-          next({
-            payload,
-            results,
-            spellSuggestions,
-            totalResults,
-            facets,
-            type,
-            suggestedTerm,
-            qt,
-            answer,
-            mc,
-            enriched_q: enrichedQuery,
-            error: null,
-            skipSearchResultsUpdate,
-            api,
-            responseTime,
-            facetQuery,
-            sortCondition,
-            extra,
-            version
-          })
+        let successData = {
+          payload,
+          results,
+          spellSuggestions,
+          totalResults,
+          facets,
+          type,
+          suggestedTerm,
+          qt,
+          answer,
+          mc,
+          enriched_q: enrichedQuery,
+          error: null,
+          skipSearchResultsUpdate,
+          api,
+          responseTime,
+          facetQuery,
+          sortCondition,
+          extra,
+          version
+        }
+
+        /**
+         * Give the user chance to modify data before success
+         */
+        if (beforeSuccessCallback) {
+          successData = beforeSuccessCallback(successData)
+        }
+
+        /* Dispatch success */
+        shouldDispatchActions && next(successData)
 
         /**
          * Logger
@@ -465,19 +472,7 @@ export default function (options = {}) {
           dispatch(fetchAnswer(answer.callback))
         }
 
-        return {
-          results,
-          spellSuggestions,
-          totalResults,
-          facets,
-          type,
-          suggestedTerm,
-          qt,
-          answer,
-          responseTime,
-          facetQuery,
-          payload
-        }
+        return successData
       })
       .catch((error) => {
         shouldDispatchActions &&
