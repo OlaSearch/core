@@ -7,6 +7,7 @@ import { addFacet, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import Plus from '@olasearch/icons/lib/plus'
 import { CREATE_FILTER_OBJECT, SLOT_DATE } from './../../constants/Settings'
+import { getDisplayName } from './../../utilities'
 import withTheme from './../../decorators/withTheme'
 
 function AnswerToken (
@@ -116,7 +117,8 @@ function AnswerTokenBtn ({ slot, displayName, handleAddToken }) {
   const { type, value, match } = slot
   return (
     <button className='ola-btn ola-btn-slot-add' onClick={handleAdd}>
-      {displayName}: {value && type !== SLOT_DATE ? value[0] : match}
+      {displayName}:{' '}
+      {value && type !== SLOT_DATE ? getDisplayName(null, value[0]) : match}
       <Plus size={16} />
     </button>
   )

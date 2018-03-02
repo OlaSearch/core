@@ -111,7 +111,9 @@ export function createHTMLMarkup (html) {
 }
 
 export function getDisplayName (haystack, needle) {
-  if (needle.indexOf('|') !== -1) { needle = needle.substr(needle.indexOf('|') + 1) }
+  if (needle.indexOf('|') !== -1) {
+    needle = needle.substr(needle.indexOf('|') + 1)
+  }
   if (!haystack) return needle
   if (needle in haystack) return haystack[needle]
   return needle
