@@ -4,9 +4,11 @@ import Pagination from './Pagination'
 import LoadMore from './InfiniteScroll/LoadMore'
 import { changePage, executeSearch, loadMore } from './../actions/Search'
 import { bindActionCreators } from 'redux'
+import withConfig from './../decorators/withConfig'
 
-function SearchFooter (props, context) {
-  let { infiniteScroll } = context.config
+function SearchFooter (props) {
+  const { config } = props
+  let { infiniteScroll } = config
   let {
     isPhone,
     dispatch,
@@ -33,9 +35,4 @@ function SearchFooter (props, context) {
     }
   )
 }
-
-SearchFooter.contextTypes = {
-  config: PropTypes.object
-}
-
-module.exports = SearchFooter
+module.exports = withConfig(SearchFooter)

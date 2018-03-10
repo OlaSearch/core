@@ -18,4 +18,13 @@
  */
 .ola-spell-links {
   vertical-align: baseline;
+  font-style: italic;
+
+  &:after {
+    content: ', '
+  }
+
+  &:last-child:after {
+    content: ''
+  }
 }

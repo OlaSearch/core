@@ -63,7 +63,10 @@ function TextField ({
   return (
     <div className={klass}>
       <FieldLabel label={fieldLabel} />
-      <div dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)} />
+      <div
+        className='ola-field-value'
+        dangerouslySetInnerHTML={createHTMLMarkup(fieldContent)}
+      />
     </div>
   )
 }

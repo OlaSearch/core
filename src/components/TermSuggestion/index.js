@@ -24,7 +24,8 @@ function TermSuggestion ({
       (answer.data ||
         answer.callback ||
         (answer.suggestions && answer.suggestions.length))) ||
-    totalResults === 0
+    totalResults === 0 ||
+    !totalResults
   ) {
     return null
   }

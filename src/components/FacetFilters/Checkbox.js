@@ -10,11 +10,10 @@ import withToggle from './../../decorators/withToggle'
 import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
 import ReactList from 'react-list'
-import { getDisplayName } from './../../utilities'
+import { getDisplayName, sanitizeText } from './../../utilities'
 import { ALL_VALUES } from './../../constants/Settings'
 import FilterInput from './common/FilterInput'
 import FacetTitle from './common/FacetTitle'
-import xssFilters from 'xss-filters'
 
 class CheckboxFilter extends React.Component {
   constructor (props) {
@@ -64,7 +63,7 @@ class CheckboxFilter extends React.Component {
 
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: xssFilters.inHTMLData(event.target.value)
+      filterText: sanitizeText(event.target.value)
     })
   }
 

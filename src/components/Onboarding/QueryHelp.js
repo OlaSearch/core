@@ -4,12 +4,17 @@ import { connect } from 'react-redux'
 import Cross from '@olasearch/icons/lib/x'
 import { createHTMLMarkup, truncate } from './../../utilities'
 import { hideSearchHelp } from './../../actions/Ui'
+import withConfig from './../../decorators/withConfig'
 
-function QueryHelp (
-  { isVisible, isNewUser, showSearchHelp, hideSearchHelp },
-  { config: { searchHelpText } }
-) {
-  if (!isVisible || !showSearchHelp) return null
+function QueryHelp ({
+  isVisible,
+  isNewUser,
+  showSearchHelp,
+  hideSearchHelp,
+  config
+}) {
+  const { searchHelpText } = config
+  if (!isVisible || !showSearchHelp || !searchHelpText) return null
   return (
     <div className='ola-query-help'>
       <button className='ola-btn ola-btn-close' onMouseDown={hideSearchHelp}>
@@ -21,11 +26,6 @@ function QueryHelp (
     </div>
   )
 }
-
-QueryHelp.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-}
-
 function mapStateToProps (state) {
   return {
     isNewUser: state.Context.isNewUser,
@@ -33,4 +33,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { hideSearchHelp })(QueryHelp)
+module.exports = connect(mapStateToProps, { hideSearchHelp })(
+  withConfig(QueryHelp)
+)

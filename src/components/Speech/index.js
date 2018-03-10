@@ -1,7 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
+import withLogger from './../../decorators/withLogger'
 import { log } from './../../actions/Logger'
 
 class SpeechInput extends React.Component {
@@ -12,11 +15,6 @@ class SpeechInput extends React.Component {
       isSpeechSupported:
         window.SpeechRecognition || window.webkitSpeechRecognition
     }
-  }
-
-  static contextTypes = {
-    store: PropTypes.object,
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
   static defaultProps = {
@@ -48,15 +46,13 @@ class SpeechInput extends React.Component {
     let eventLabel = this.props.isInstantSearch
       ? 'instantsearch'
       : this.props.isAutosuggest ? 'autosuggest' : null
-    this.context.store.dispatch(
-      log({
-        eventType: 'C',
-        eventCategory: 'Voice',
-        eventAction: 'click',
-        payload: this.props.logPayload,
-        eventLabel
-      })
-    )
+    this.props.log({
+      eventType: 'C',
+      eventCategory: 'Voice',
+      eventAction: 'click',
+      payload: this.props.logPayload,
+      eventLabel
+    })
 
     let SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition
@@ -115,7 +111,7 @@ class SpeechInput extends React.Component {
   render () {
     let { isRecording, isSpeechSupported } = this.state
     let { translate } = this.props
-    let { voiceSearch } = this.context.config
+    let { voiceSearch } = this.props.config
     if (!isSpeechSupported || !voiceSearch) return null
 
     let klassName = classnames('ola-link-speech', {
@@ -135,4 +131,4 @@ class SpeechInput extends React.Component {
   }
 }
 
-module.exports = withTranslate(SpeechInput)
+module.exports = withLogger(withConfig(withTranslate(SpeechInput)))

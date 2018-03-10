@@ -8,6 +8,7 @@ import {
 } from './../../actions/Context'
 import { executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
 import { log } from './../../actions/Logger'
 import Navigation from '@olasearch/icons/lib/navigation'
 
@@ -21,9 +22,6 @@ class GeoLocation extends React.Component {
     active: false,
     icon: null,
     showLabel: false
-  }
-  static contextTypes = {
-    config: PropTypes.object
   }
   componentDidUpdate (prevProps) {
     if (prevProps.active !== this.props.active && prevProps.active) {
@@ -50,7 +48,7 @@ class GeoLocation extends React.Component {
       isRequestingLocation,
       hasRequestedLocation
     } = _props.Context
-    let { geoLocationKeywords } = this.context.config
+    let { geoLocationKeywords } = this.props.config
 
     if (
       !location &&
@@ -139,4 +137,4 @@ module.exports = connect(mapStateToProps, {
   log,
   removeContextLocation,
   requestGeoLocation
-})(withTranslate(GeoLocation))
+})(withConfig(withTranslate(GeoLocation)))

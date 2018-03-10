@@ -1,12 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withTranslate from './../decorators/withTranslate'
+import withConfig from './../decorators/withConfig'
 import GeoNotify from './Geo/GeoNotify'
 
-function SearchTitle (
-  { totalResults, page, perPage, isPhone, translate },
-  { config }
-) {
+function SearchTitle ({
+  totalResults,
+  page,
+  perPage,
+  isPhone,
+  translate,
+  config
+}) {
   let title = translate('title')
   let showTitle = title || totalResults > 0
   if (!showTitle) return null
@@ -36,8 +41,4 @@ function SearchTitle (
   )
 }
 
-SearchTitle.contextTypes = {
-  config: PropTypes.object
-}
-
-module.exports = withTranslate(SearchTitle)
+module.exports = withConfig(withTranslate(SearchTitle))

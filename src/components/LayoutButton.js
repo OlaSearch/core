@@ -12,6 +12,7 @@ function LayoutButton ({
   facets,
   view,
   translate,
+  totalResults,
   layoutSwitching
 }) {
   /**
@@ -29,6 +30,7 @@ function LayoutButton ({
       onClick={() => toggleView(nextView)}
       type='button'
       title={title}
+      disabled={!totalResults}
     >
       {view === 'list' ? <ViewModule /> : <ViewList />}
       <span>{title}</span>
@@ -39,6 +41,7 @@ function LayoutButton ({
 function mapStateToProps (state) {
   return {
     view: state.AppState.view,
+    totalResults: state.AppState.totalResults,
     layoutSwitching: state.AppState.layoutSwitching
   }
 }

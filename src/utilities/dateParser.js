@@ -58,7 +58,7 @@ export function isSameDay (start, end) {
   return parse(start).toDateString() === parse(end).toDateString()
 }
 
-export function formatUTC (date, mask = defaultMask, type = false) {
+export function formatUTC (date, mask = defaultMask, type = null) {
   if (date === 'NOW') return 'Today'
   if (date === '*') return type && type === 'from' ? 'Past' : 'Future'
   const d = new Date(date)
@@ -72,7 +72,7 @@ export function toUTC (date, mask = defaultMask) {
 }
 
 export function today (mask = defaultMask) {
-  return this.format(new Date(), mask)
+  return format(new Date(), mask)
 }
 
 export default {

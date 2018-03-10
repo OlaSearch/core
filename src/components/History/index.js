@@ -6,6 +6,7 @@ import listensToClickOutside from '@olasearch/react-onclickoutside'
 import HistoryItem from './HistoryItem'
 import classNames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
 import { log } from './../../actions/Logger'
 import { sortHistory } from './../../utilities'
 
@@ -140,17 +141,12 @@ function mapStateToProps (state) {
 const HistoryContainer = connect(mapStateToProps)(
   withTranslate(listensToClickOutside(History))
 )
-const HistoryWrapper = (
-  props,
-  { config: { searchHistory, searchPageUrl } }
-) => {
+const HistoryWrapper = (props) => {
+  let { searchHistory, searchPageUrl } = props.config
   if (searchHistory) {
     return <HistoryContainer searchPageUrl={searchPageUrl} {...props} />
   }
   return null
 }
-HistoryWrapper.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-}
 
-module.exports = HistoryWrapper
+module.exports = withConfig(HistoryWrapper)

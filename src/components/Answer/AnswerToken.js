@@ -3,26 +3,30 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
-import { addFacet, executeSearch } from './../../actions/Search'
+import {
+  addFacet,
+  executeSearch,
+  removeSkipFacetFields
+} from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import Plus from '@olasearch/icons/lib/plus'
 import { CREATE_FILTER_OBJECT, SLOT_DATE } from './../../constants/Settings'
 import { getDisplayName } from './../../utilities'
 import withTheme from './../../decorators/withTheme'
+import withConfig from './../../decorators/withConfig'
 
-function AnswerToken (
-  {
-    answer,
-    addFacet,
-    totalResults,
-    executeSearch,
-    facetQuery,
-    facets,
-    translate,
-    theme
-  },
-  { config }
-) {
+function AnswerToken ({
+  answer,
+  addFacet,
+  removeSkipFacetFields,
+  totalResults,
+  executeSearch,
+  facetQuery,
+  facets,
+  translate,
+  theme,
+  config
+}) {
   if (!answer || !answer.search || !answer.search.slots || !totalResults) {
     return null
   }
@@ -66,6 +70,9 @@ function AnswerToken (
     }
     /* Take the first value only */
     addFacet({ ...facet, fromIntentEngine: !!facet_query }, value[0])
+    /* Remove the field from skip_facet_fields */
+    removeSkipFacetFields(facet.name)
+    /* Search */
     executeSearch()
   }
 
@@ -106,10 +113,6 @@ function AnswerToken (
   )
 }
 
-AnswerToken.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-}
-
 function AnswerTokenBtn ({ slot, displayName, handleAddToken }) {
   function handleAdd () {
     handleAddToken(slot)
@@ -137,6 +140,8 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { addFacet, executeSearch })(
-  withTranslate(withTheme(AnswerToken))
-)
+module.exports = connect(mapStateToProps, {
+  addFacet,
+  executeSearch,
+  removeSkipFacetFields
+})(withConfig(withTranslate(withTheme(AnswerToken))))

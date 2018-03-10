@@ -17,6 +17,7 @@ import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import { checkForAllowedCharacters, trim } from './../../utilities'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 
@@ -38,10 +39,6 @@ class AutoSuggest extends React.Component {
     viewAllClassName: PropTypes.string,
     placeholder: PropTypes.string,
     facetSuggestionName: PropTypes.string
-  }
-
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
   static defaultProps = {
@@ -75,7 +72,7 @@ class AutoSuggest extends React.Component {
 
     if (!term) return dispatch(clearQueryTerm())
 
-    let { allowedCharacters } = this.context.config
+    let { allowedCharacters } = this.props.config
 
     dispatch(updateQueryTerm(term, searchInput))
 
@@ -167,7 +164,7 @@ class AutoSuggest extends React.Component {
   handleViewAll = () => {
     let { q, facet_query } = this.props.AutoSuggest
     let { dispatch, onSubmit } = this.props
-    let { searchPageUrl, history } = this.context.config
+    let { searchPageUrl, history } = this.props.config
 
     /* Close autosuggest */
     dispatch(closeAutoSuggest())
@@ -296,5 +293,5 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps)(
-  withTranslate(listensToClickOutside(AutoSuggest))
+  withConfig(withTranslate(listensToClickOutside(AutoSuggest)))
 )

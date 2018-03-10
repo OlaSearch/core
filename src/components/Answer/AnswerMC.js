@@ -5,8 +5,8 @@ import Url from './../Fields/Url'
 import { connect } from 'react-redux'
 import { fetchMc } from './../../actions/Search'
 import { createHTMLMarkup, escapeRegEx } from './../../utilities'
-import { ThemeConsumer } from './../../containers/OlaThemeContext'
 import withTheme from './../../decorators/withTheme'
+import withConfig from './../../decorators/withConfig'
 
 class AnswerMC extends React.Component {
   componentDidMount () {
@@ -33,11 +33,18 @@ class AnswerMC extends React.Component {
     return o.join('')
   }
   getSnippet = (answer) => {
+    /**
+     * highlighting an answer should be based on snippet_confidence and highlight confidence
+     */
     let {
       snippet,
       highlight,
+      snippet_confidence: snippetConfidence,
       highlight_confidence: highlightConfidence
     } = answer
+    if (snippetConfidence <= 0.5 && highlightConfidence > 0.5) {
+      return createHTMLMarkup(snippet)
+    }
     if (highlightConfidence < this.props.highlightConfidenceThreshold) {
       return createHTMLMarkup(snippet)
     }
@@ -47,15 +54,12 @@ class AnswerMC extends React.Component {
     )
     return createHTMLMarkup(html)
   }
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  }
   static defaultProps = {
     mc: {},
     payload: {},
     loader: null,
     showWhileFiltering: false,
-    highlightConfidenceThreshold: 0.3
+    highlightConfidenceThreshold: 0.65
   }
   render () {
     if (this.props.isLoadingMc && this.props.loader) {
@@ -68,7 +72,7 @@ class AnswerMC extends React.Component {
       showWhileFiltering,
       theme
     } = this.props
-    let { mcThreshold = 0.4 } = this.context.config
+    let { mcThreshold = 0.4 } = this.props.config
     /* Always parse threshold */
     mcThreshold = parseFloat(mcThreshold)
     let { answer } = mc
@@ -133,4 +137,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { fetchMc })(withTheme(AnswerMC))
+module.exports = connect(mapStateToProps, { fetchMc })(
+  withConfig(withTheme(AnswerMC))
+)

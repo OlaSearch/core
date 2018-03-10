@@ -2,6 +2,7 @@ import React from 'react'
 import withLogger from './../../../decorators/withLogger'
 import User from '@olasearch/icons/lib/user'
 import FieldLabel from './../FieldLabel'
+import { getDisplayName } from './../../../utilities'
 
 function Person ({
   result,
@@ -24,7 +25,7 @@ function Person ({
             <User size={iconSize} />
           </span>
         )}
-        <span className='ola-flex-content'>{personName}</span>
+        <span className='ola-flex-content'>{getDisplayName(personName)}</span>
       </a>
     </div>
   )

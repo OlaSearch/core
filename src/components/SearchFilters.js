@@ -12,12 +12,9 @@ import flatten from 'ramda/src/flatten'
 import equals from 'ramda/src/equals'
 import classNames from 'classnames'
 import { getFacetsToDisplay } from './../utilities'
+import withConfig from './../decorators/withConfig'
 
 class SearchFilters extends React.Component {
-  static contextTypes = {
-    config: PropTypes.object
-  }
-
   static propTypes = {
     facets: PropTypes.array.isRequired,
     selected: PropTypes.array.isRequired,
@@ -50,7 +47,7 @@ class SearchFilters extends React.Component {
       facets = getFacetsToDisplay(
         selected,
         facets,
-        this.context.config.facetsToDisplay
+        this.props.config.facetsToDisplay
       )
     }
     if (!facets.length) return null
@@ -108,4 +105,4 @@ class SearchFilters extends React.Component {
   }
 }
 
-module.exports = SearchFilters
+module.exports = withConfig(SearchFilters)

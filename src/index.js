@@ -79,4 +79,7 @@ export AnswerMC from './components/Answer/AnswerMC'
 export AnswerToken from './components/Answer/AnswerToken'
 
 /* Export theme */
-export { ThemeProvider, ThemeConsumer } from './containers/OlaThemeContext'
+export { ThemeProvider, ThemeConsumer } from './containers/ThemeContext'
+
+/* Export config providers */
+export { ConfigProvider, ConfigConsumer } from './containers/ConfigContext'

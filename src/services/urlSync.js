@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { parseRangeValues, getDisplayName } from './../utilities'
+import { parseRangeValues, getDisplayName, sanitizeText } from './../utilities'
 import {
   RANGE_FACETS,
   REMOVE_FROM_QUERY_STRING,
@@ -9,7 +9,6 @@ import {
 import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
 import flatten from 'ramda/src/flatten'
-import xssFilters from 'xss-filters'
 
 export function pushState (qs, type, replaceQueryParamName) {
   var char = getHistoryCharacter(type)
@@ -94,7 +93,7 @@ export function buildQueryString (params, replaceQueryParamName) {
 export function parseQueryString (initialState, config) {
   let loc = window.location.search /* Deprecated hash */
   var qs = queryString.parse(loc)
-  var { filters, facet_query: facetQuery, tokens } = qs
+  var { filters, facet_query: facetQuery, tokens, sort } = qs
   var facetQueryObject = { facet_query: [] }
   /**
    * Default filters from config
@@ -131,10 +130,10 @@ export function parseQueryString (initialState, config) {
       continue
     }
     /* prevent XSS */
-    qs[p] = xssFilters.inHTMLData(qs[p])
+    qs[p] = sanitizeText(qs[p])
 
     if (config.replaceQueryParamName && p === QUERY_ALT_NAME) {
-      qs['q'] = xssFilters.inHTMLData(qs[p])
+      qs['q'] = sanitizeText(qs[p])
     }
 
     if (p === 'skip_facet_fields') {
@@ -173,6 +172,7 @@ export function parseQueryString (initialState, config) {
   /**
    * Facets
    */
+
   if (facetQuery) {
     var { facets: configFacets } = config
     if (typeof facetQuery === 'string') {
@@ -180,12 +180,12 @@ export function parseQueryString (initialState, config) {
     }
     /**
      * Create facet_query
-     * 26 Feb 2018 @vinay: I was accepting only facets that are in the config file. Validate facet names from fieldMapping
+     * 26 Feb 2018 @vinay: I was accepting only facets that are in the config file. Validate facet names from fieldMapping instead
      */
     const fq = facetQuery
       .filter((item) => {
         let [name, value] = item.split(':')
-        return name in config.fieldMappings
+        return Object.values(config.fieldMappings).indexOf(name) !== -1
         // if (!value) return false
         // return find(propEq('name', name))(configFacets)
       })
@@ -201,8 +201,7 @@ export function parseQueryString (initialState, config) {
           facet = CREATE_FILTER_OBJECT({
             name,
             displayName: config.fieldLabels[name],
-            type: 'string',
-            fromIntentEngine: false
+            type: 'string'
           })
         }
 
@@ -254,6 +253,7 @@ export function parseQueryString (initialState, config) {
   return {
     ...initialState,
     ...qs,
+    sort /* Set sort */,
     ...facetQueryObject,
     ...filtersObject,
     ...tokensObject

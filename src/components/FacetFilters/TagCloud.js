@@ -82,7 +82,7 @@ function TagCloudItem ({ onSelect, value, min, max, fontSizeMin, fontSizeMax }) 
       : count / max * (fontSizeMax - fontSizeMin) + fontSizeMin
   return (
     <button
-      className='ola-btn-tag'
+      className='ola-btn ola-btn-tag'
       style={{ fontSize: size + 'px' }}
       onClick={handleClick}
     >

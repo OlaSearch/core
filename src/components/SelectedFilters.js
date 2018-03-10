@@ -10,6 +10,7 @@ import {
 import Tag from './Misc/Tag'
 import Tooltip from './Misc/Tooltip'
 import queryString from 'query-string'
+import withConfig from './../decorators/withConfig'
 
 class SelectedFilters extends React.Component {
   constructor (props) {
@@ -21,10 +22,6 @@ class SelectedFilters extends React.Component {
     this.state = {
       showGuidePopover: false //! !qString.referrer
     }
-  }
-
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
   static propTypes: {
@@ -91,7 +88,7 @@ class SelectedFilters extends React.Component {
     } = this.props
 
     var { showGuidePopover } = this.state
-    const { fieldLabels } = this.context.config
+    const { fieldLabels } = this.props.config
 
     /* Remove tabs and zones */
     facets = facets.filter(
@@ -197,4 +194,4 @@ function FilterItem ({ filter, handleRemove }) {
   return <Tag onRemove={onRemove} name={name} facet={filter} />
 }
 
-module.exports = SelectedFilters
+module.exports = withConfig(SelectedFilters)

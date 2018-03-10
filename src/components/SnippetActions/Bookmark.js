@@ -4,6 +4,8 @@ import { addBookmark, removeBookmark } from './../../actions/Bookmarks'
 import withTranslate from './../../decorators/withTranslate'
 import classnames from 'classnames'
 import { log } from './../../actions/Logger'
+import BookMark from '@olasearch/icons/lib/bookmark'
+import withConfig from './../../decorators/withConfig'
 
 class BookmarkActions extends React.Component {
   addBookmark = () => {
@@ -67,7 +69,7 @@ class BookmarkActions extends React.Component {
           title={removeLabel}
           onClick={this.removeBookmark}
         >
-          <span>{removeLabel}</span>
+          <BookMark fill='currentColor' />
         </button>
       )
     } else {
@@ -78,11 +80,16 @@ class BookmarkActions extends React.Component {
           title={addLabel}
           onClick={this.addBookmark}
         >
-          <span>{addLabel}</span>
+          <BookMark />
         </button>
       )
     }
   }
 }
 
-module.exports = withTranslate(BookmarkActions)
+const BookmarkWrapper = ({ config, ...rest }) => {
+  if (!config.bookmarking) return null
+  return <BookmarkActions {...rest} />
+}
+
+module.exports = withConfig(withTranslate(BookmarkWrapper))

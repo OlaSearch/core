@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import omit from 'ramda/src/omit'
 import withLogger from './../../../decorators/withLogger'
+import withConfig from './../../../decorators/withConfig'
 
-function Thumbnail (props, context) {
-  var { mediaQuery, cdn } = context.config
+function Thumbnail (props) {
   var {
     thumbnail,
     baseUrl,
@@ -15,8 +15,11 @@ function Thumbnail (props, context) {
     logPayload,
     snippetId,
     result,
+    config,
     ...rest
   } = props
+
+  var { mediaQuery, cdn } = config
 
   let restProps = omit(['size', 'collectionId', 'showIfEmpty'], rest)
 
@@ -78,10 +81,6 @@ function Thumbnail (props, context) {
   )
 }
 
-Thumbnail.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-}
-
 Thumbnail.propTypes = {
   thumbnail: PropTypes.string
 }
@@ -93,4 +92,4 @@ Thumbnail.defaultProps = {
   useBackgroundImage: false
 }
 
-module.exports = withLogger(Thumbnail)
+module.exports = withConfig(withLogger(Thumbnail))

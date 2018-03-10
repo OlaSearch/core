@@ -1,11 +1,10 @@
 import types from './../constants/ActionTypes'
-import xssFilters from 'xss-filters'
-import { pickDeep } from './../utilities'
+import { pickDeep, sanitizeText } from './../utilities'
 
 export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM_AUTOSUGGEST,
-    term: xssFilters.inHTMLData(term),
+    term: sanitizeText(term),
     searchInput
   }
 }

@@ -6,6 +6,7 @@ import listensToClickOutside from '@olasearch/react-onclickoutside'
 import classNames from 'classnames'
 import SearchResults from './../SearchResults'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
 import { log } from './../../actions/Logger'
 import NoBookmarks from './NoBookmarks'
 
@@ -127,12 +128,9 @@ function mapStateToProps (state) {
 const BookmarksContainer = connect(mapStateToProps)(
   withTranslate(listensToClickOutside(Bookmarks))
 )
-const BookMarksWrapper = (props, { config: { bookmarking } }) => {
-  if (bookmarking) return <BookmarksContainer {...props} />
+const BookMarksWrapper = (props) => {
+  if (props.config.bookmarking) return <BookmarksContainer {...props} />
   return null
 }
-BookMarksWrapper.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-}
 
-export default BookMarksWrapper
+export default withConfig(BookMarksWrapper)

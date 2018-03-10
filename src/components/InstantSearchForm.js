@@ -11,6 +11,7 @@ import SpeechInput from './Speech'
 import { debounce, trim } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
 import withTranslate from './../decorators/withTranslate'
+import withConfig from './../decorators/withConfig'
 import Zone from './Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../constants/Settings'
@@ -22,9 +23,9 @@ import Cross from '@olasearch/icons/lib/x'
  *
  */
 class InstantSearchForm extends React.Component {
-  constructor (props, context) {
+  constructor (props) {
     super(props)
-    let { config } = context
+    let { config } = props
     let { searchTimeoutMobile = 0, searchTimeout = 0 } = config
     let searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeout
     /**
@@ -51,10 +52,6 @@ class InstantSearchForm extends React.Component {
     urlSync: true,
     autoFocus: false,
     className: null
-  }
-
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
   static propTypes = {
@@ -200,4 +197,4 @@ module.exports = connect(mapStateToProps, {
   updateQueryTerm,
   executeSearch,
   clearQueryTerm
-})(withTranslate(InstantSearchForm))
+})(withConfig(withTranslate(InstantSearchForm)))

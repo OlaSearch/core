@@ -9,7 +9,6 @@ import classNames from 'classnames'
 import { getDisplayName, sanitizeText } from './../../utilities'
 import FilterInput from './common/FilterInput'
 import FacetTitle from './common/FacetTitle'
-import xssFilters from 'xss-filters'
 
 class LinkFilter extends React.Component {
   constructor (props) {

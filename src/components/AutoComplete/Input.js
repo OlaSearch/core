@@ -11,7 +11,8 @@ import {
   stringToColor,
   hexToRGBa,
   highlightTokens,
-  sortArrayByLength
+  sortArrayByLength,
+  getDisplayName
 } from './../../utilities'
 import InputShadow from './InputShadow'
 import GeoLocation from './../Geo/GeoLocation'
@@ -157,7 +158,7 @@ export default class Input extends React.Component {
     if (!value) return ''
     const tokens = this.props.fuzzyTokens || this.props.tokens
     const terms = tokens
-      .map(({ value }) => value)
+      .map(({ value }) => getDisplayName(value))
       .concat()
       .sort(sortArrayByLength)
 

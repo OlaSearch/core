@@ -7,7 +7,6 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 export default function (WrappedComponent) {
   class WithRoute extends React.Component {
     static contextTypes = {
-      config: PropTypes.object,
       router: PropTypes.object
     }
     static displayName = `withRoute(${getComponentDisplayName(
@@ -32,7 +31,7 @@ export default function (WrappedComponent) {
       }
     }
     onPopState = () => {
-      this.props.dispatch(initSearch({ config: this.context.config }))
+      this.props.dispatch(initSearch({ config: this.props.config }))
     }
     render () {
       return <WrappedComponent {...this.props} />

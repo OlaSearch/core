@@ -50,6 +50,7 @@ import {
 } from './../../constants/Settings'
 import QueryHelp from './../Onboarding/QueryHelp'
 import withTheme from './../../decorators/withTheme'
+import withConfig from './../../decorators/withConfig'
 
 class AutoComplete extends React.Component {
   constructor (props) {
@@ -80,10 +81,6 @@ class AutoComplete extends React.Component {
     viewAllClassName: PropTypes.string,
     placeholder: PropTypes.string,
     refreshOnGeoChange: PropTypes.bool
-  }
-
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
   static defaultProps = {
@@ -307,7 +304,7 @@ class AutoComplete extends React.Component {
     const showWordSuggestion =
       this.props.wordSuggestion && !!(hasMoreTerms && hasMoreTerms.length)
 
-    const { allowedCharacters } = this.context.config
+    const { allowedCharacters } = this.props.config
 
     /* Update state */
     if (this.props.wordSuggestion) {
@@ -348,7 +345,7 @@ class AutoComplete extends React.Component {
         /* Prepare results */
         const res = getAutoCompleteResults(
           results,
-          this.context.config.facets,
+          this.props.config.facets,
           showWordSuggestion,
           this.props.tokens
         )
@@ -492,7 +489,7 @@ class AutoComplete extends React.Component {
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
       this.props.tokens.forEach(({ value, name }) => {
-        let facet = find(propEq('name', name))(this.context.config.facets)
+        let facet = find(propEq('name', name))(this.props.config.facets)
         /* Set from query as true */
         facet.isToken = true
         this.props.addFacet(facet, value)
@@ -578,7 +575,7 @@ class AutoComplete extends React.Component {
 
     this.props.executeSearch({
       forceRedirect: this.props.forceRedirect,
-      searchPageUrl: this.context.config.searchPageUrl,
+      searchPageUrl: this.props.config.searchPageUrl,
       routeChange: !this.props.forceRedirect
     })
 
@@ -627,11 +624,12 @@ class AutoComplete extends React.Component {
     /* isFacet */
     if (isFacet) {
       facet = find(propEq('name', suggestion.taxo_label))(
-        this.context.config.facets
+        this.props.config.facets
       )
       this.props.addToken({
         startToken: this.state.startToken,
-        endToken: this.state.startToken + suggestion.term.length,
+        endToken:
+          this.state.startToken + getDisplayName(suggestion.term).length,
         isHidden: true,
         value: suggestion.term,
         name: facet.name
@@ -647,7 +645,7 @@ class AutoComplete extends React.Component {
        */
       if (suggestion.taxo_label && suggestion.taxo_term) {
         facet = find(propEq('name', suggestion.taxo_label))(
-          this.context.config.facets
+          this.props.config.facets
         )
         this.props.replaceFacet(
           facet,
@@ -661,7 +659,7 @@ class AutoComplete extends React.Component {
         /* Remove all selected facets */
         this.props.removeAllFacets()
         facet = find(propEq('name', suggestion.taxo_label))(
-          this.context.config.facets
+          this.props.config.facets
         )
         this.props.replaceFacet(
           facet,
@@ -674,7 +672,7 @@ class AutoComplete extends React.Component {
         this.props.replaceTokens(suggestion.tokens)
         for (let i = 0; i < suggestion.tokens.length; i++) {
           facet = find(propEq('name', suggestion.tokens[i].name))(
-            this.context.config.facets
+            this.props.config.facets
           )
           /**
            * Make sure to add isToken attribute
@@ -719,6 +717,7 @@ class AutoComplete extends React.Component {
     this.setState({
       isFocused: false,
       results: [],
+      fuzzyQuery: null,
       partialWord: null
     })
 
@@ -773,7 +772,7 @@ class AutoComplete extends React.Component {
     if (results.length > resultLimit) {
       results.length = isDesktop ? resultLimitDesktop : resultLimit
     }
-    const { showSuggestionHelp } = this.context.config
+    const { showSuggestionHelp } = this.props.config
     const isOpen = !results.length ? false : this.state.isOpen
     const klass = classNames('ola-suggestions', { 'ola-js-hide': !isOpen })
     const klassContainer = classNames(className, {
@@ -868,7 +867,7 @@ class AutoComplete extends React.Component {
                 onSelect={this.onFuzzySelect}
                 onRemoveHistory={this.onRemoveHistory}
                 activeClassName={this.props.activeClassName}
-                fieldLabels={this.context.config.fieldLabels}
+                fieldLabels={this.props.config.fieldLabels}
                 q={q}
               />
             </div>
@@ -926,4 +925,4 @@ module.exports = connect(mapStateToProps, {
   replaceTokens,
   removeTokenFacets,
   removeIntentEngineFacets
-})(withTheme(withTranslate(listensToClickOutside(AutoComplete))))
+})(withConfig(withTheme(withTranslate(listensToClickOutside(AutoComplete)))))

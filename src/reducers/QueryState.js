@@ -153,10 +153,7 @@ export default (state: State = initialState, action: Object) => {
               }
             }
             return item
-          }),
-          skip_facet_fields: state.skip_facet_fields.filter(
-            (item) => item !== action.facet.name
-          )
+          })
         }
       } else {
         return {
@@ -168,10 +165,7 @@ export default (state: State = initialState, action: Object) => {
               ...action.facet,
               selected: [action.value]
             }
-          ],
-          skip_facet_fields: state.skip_facet_fields.filter(
-            (item) => item !== action.facet.name
-          )
+          ]
         }
       }
 
@@ -349,6 +343,14 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         skip_facet_fields: [...state.skip_facet_fields, action.facet.name]
+      }
+
+    case types.REMOVE_SKIP_FACET_FIELDS:
+      return {
+        ...state,
+        skip_facet_fields: state.skip_facet_fields.filter(
+          (name) => name !== action.name
+        )
       }
 
     case types.CLEAR_SKIP_FACET_FIELDS:

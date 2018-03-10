@@ -245,14 +245,22 @@ export default function (options = {}) {
         }
 
         /**
-         * Check if message has no id
+         * Fail early from bot
          */
-        if (bot && (!answer || answer.error)) {
-          /* Create a dummy message */
-          answer = {
-            id: uuid(),
-            message: query.q
-          }
+
+        if (
+          bot &&
+          intentEngineEnabled &&
+          INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 &&
+          (!answer ||
+            answer.error ||
+            (answer &&
+              !answer.reply &&
+              !answer.search &&
+              !answer.card &&
+              !answer.location))
+        ) {
+          throw new Error('Something went wrong')
           /* throw exception */
           console.warn(
             'The server could not respond in time with a message ID. Please try again. May be the intent engine is down. Please contact our customer support.'
@@ -263,6 +271,7 @@ export default function (options = {}) {
          * Get facets or filters selected by intent engine
          * Always reset facets from intent engine
          */
+
         let facetQuery = currentState.QueryState.facet_query
         if (
           !bot /* Do not fill facet_query if its from bot */ &&
@@ -391,7 +400,10 @@ export default function (options = {}) {
             api,
             payload: {
               ...payload,
-              originalQuery: query.q
+              originalQuery: query.q,
+              extraParams: {
+                spellchecked: true
+              }
             },
             processData,
             beforeSuccessCallback,

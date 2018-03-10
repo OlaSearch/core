@@ -28,7 +28,7 @@ function DateField ({
   if (!date) return null
   let formattedDate = ''
   let formattedEndDate = null
-  let fallOnSameDay = false
+  let fallsOnSameDay = false
   let timeFormat = null
   try {
     formattedDate = formatDate(date, format)
@@ -48,8 +48,8 @@ function DateField ({
    * @type {[type]}
    */
   if (endDate) {
-    fallOnSameDay = isSameDay(date, endDate)
-    if (fallOnSameDay) {
+    fallsOnSameDay = isSameDay(date, endDate)
+    if (fallsOnSameDay) {
       let timeFormatMatches = TIME_REGEX.exec(format)
       timeFormat = timeFormatMatches ? timeFormatMatches[0] : null
       format = format.replace(TIME_REGEX, '').trim()
@@ -72,7 +72,7 @@ function DateField ({
           {formattedEndDate
             ? formattedEndDate === formattedDate
               ? formattedDate
-              : fallOnSameDay
+              : fallsOnSameDay
                 ? `${formatDate(date, format)}, ${formatDate(
                   date,
                   timeFormat

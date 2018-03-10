@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeConsumer } from './../containers/OlaThemeContext'
+import { ThemeConsumer } from './../containers/ThemeContext'
 
 function withTheme (WrappedComponent) {
   return (props) => (

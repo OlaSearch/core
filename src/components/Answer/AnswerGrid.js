@@ -3,17 +3,15 @@ import PropTypes from 'prop-types'
 import ListKeyValue from './common/ListKeyValue'
 import AnswerCard from './AnswerCard'
 import classNames from 'classnames'
+import withConfig from './../../decorators/withConfig'
 
-export default class AnswerGrid extends React.Component {
+class AnswerGrid extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isOpen: false,
       selectedAnswer: null
     }
-  }
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
   componentWillReceiveProps (nextProps) {
     if (nextProps.answer !== this.props.answer) {
@@ -52,8 +50,8 @@ export default class AnswerGrid extends React.Component {
             return (
               <AnswerCard
                 key={result.title}
-                cdn={this.context.config.cdn}
-                imagePlaceholder={this.context.config.imagePlaceholder}
+                cdn={this.props.config.cdn}
+                imagePlaceholder={this.props.config.imagePlaceholder}
                 result={result}
                 module={answer.module}
                 onSelect={this.showAnswerCard}
@@ -72,3 +70,5 @@ export default class AnswerGrid extends React.Component {
     )
   }
 }
+
+export default withConfig(AnswerGrid)

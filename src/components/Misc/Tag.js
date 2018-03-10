@@ -4,7 +4,8 @@ import { supplant, getDisplayName } from './../../utilities'
 import DateParser from './../../utilities/dateParser'
 import {
   DEFAULT_DISPLAY_DATE_FORMAT,
-  DEFAULT_RANGE_TEMPLATE
+  DEFAULT_RANGE_TEMPLATE,
+  NUMERICAL_RANGE
 } from './../../constants/Settings'
 import Cross from '@olasearch/icons/lib/x'
 
@@ -30,10 +31,14 @@ function Tag (props) {
         let [from, to] = name
         /* All dates will be in UTC */
         displayName = supplant(template, {
-          from: dateFormat
-            ? DateParser.formatUTC(from, dateFormat, 'from')
-            : from,
-          to: dateFormat ? DateParser.formatUTC(to, dateFormat, 'to') : to,
+          from:
+            type !== NUMERICAL_RANGE && dateFormat
+              ? DateParser.formatUTC(from, dateFormat, 'from')
+              : from,
+          to:
+            type !== NUMERICAL_RANGE && dateFormat
+              ? DateParser.formatUTC(to, dateFormat, 'to')
+              : to,
           name: facet.displayName || facet.name
         })
       }

@@ -9,10 +9,10 @@ import {
   debounce,
   checkForAllowedCharacters,
   castNumberToStringArray,
-  getDisplayName
+  getDisplayName,
+  sanitizeText
 } from './../utilities'
 import omit from 'ramda/src/omit'
-import xssFilters from 'xss-filters'
 
 /* Update Browser URL */
 const updateURL = debounce(pushState, 300)
@@ -27,7 +27,7 @@ var historyType = 'pushState'
 export function updateQueryTerm (term, searchInput, forcePageReset = true) {
   return {
     type: types.UPDATE_QUERY_TERM,
-    term: xssFilters.inHTMLData(term),
+    term: sanitizeText(term),
     searchInput,
     forcePageReset
   }
@@ -101,7 +101,7 @@ export function changeAnswerSelection (index, key, answer) {
   }
 }
 
-export function executeSearch (payload) {
+export function executeSearch (payload, options) {
   return (dispatch, getState) => {
     /* Check if there is a suggested term */
     var state = getState()
@@ -160,7 +160,7 @@ export function executeSearch (payload) {
       return
     }
 
-    dispatch({
+    return dispatch({
       types: [
         types.REQUEST_SEARCH,
         types.REQUEST_SEARCH_SUCCESS,
@@ -169,21 +169,23 @@ export function executeSearch (payload) {
       query,
       context,
       api: 'search',
-      payload
-    }).then(() => {
+      payload,
+      ...options
+    }).then((res) => {
       debouceAddHistory(dispatch)
+      /**
+       * Check if route should be enabled
+       * Implement debounce
+       * routeChange - Global configuration
+       * urlSync - Used in InstantSearch
+       */
+      if (!payload || payload.routeChange || payload.urlSync) {
+        /* Update Browser URL */
+        globalRouteChange &&
+          updateURL(query, historyType, replaceQueryParamName)
+      }
+      return res
     })
-
-    /**
-     * Check if route should be enabled
-     * Implement debounce
-     * routeChange - Global configuration
-     * urlSync - Used in InstantSearch
-     */
-    if (!payload || payload.routeChange || payload.urlSync) {
-      /* Update Browser URL */
-      globalRouteChange && updateURL(query, historyType, replaceQueryParamName)
-    }
   }
 }
 
@@ -208,7 +210,7 @@ export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) 
   fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
   /* replace backslash */
   term = term.replace(/\\/gi, '')
-  term = xssFilters.inHTMLData(term)
+  term = sanitizeText(term)
   return (dispatch, getState) => {
     const state = getState()
     const context = state.Context
@@ -350,8 +352,8 @@ export function addFacet (facet, value) {
        * we need to update that facet
        */
       if (facet.isToken) {
-        dispatch(removeFacet(facet, value))
-        dispatch(addFacet(facet, value))
+        // dispatch(removeFacet(facet, value))
+        // dispatch(addFacet(facet, value))
       }
       return false
     }
@@ -610,5 +612,12 @@ export function replaceTokens (tokens) {
   return {
     type: types.REPLACE_TOKENS,
     tokens
+  }
+}
+
+export function removeSkipFacetFields (name) {
+  return {
+    type: types.REMOVE_SKIP_FACET_FIELDS,
+    name
   }
 }

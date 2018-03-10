@@ -6,7 +6,7 @@
   bottom: 0;
   background-color: rgba(0,0,0,0.6);
   z-index: 10;
-  transition: all 0.2s ease-in;
+  transition: all 0.1s ease-in;
   visibility: visible;
   opacity: 1;
 
@@ -16,7 +16,7 @@
   }
 
   &.ola-modal-hide{
-    transition: all 0.2s ease-in;
+    transition: all 0.1s ease-in;
     visibility: hidden;
     opacity: 0;
   }

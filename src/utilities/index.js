@@ -111,6 +111,13 @@ export function createHTMLMarkup (html) {
 }
 
 export function getDisplayName (haystack, needle) {
+  if (arguments && arguments.length === 1) {
+    haystack = null
+    needle = arguments[0]
+  }
+  if (Array.isArray(needle)) {
+    return needle.map((n) => getDisplayName(haystack, n)).join(', ')
+  }
   if (needle.indexOf('|') !== -1) {
     needle = needle.substr(needle.indexOf('|') + 1)
   }
@@ -717,13 +724,18 @@ export function highlightTokens (text, tokens) {
   if (!tokens || !tokens.length) return text
   let arr = []
   let start = 0
+  /**
+   * Sort tokens by startToken
+   */
+  tokens = tokens.slice().sort((a, b) => a.startToken > b.startToken)
   for (let i = 0; i < tokens.length; i++) {
     let { startToken, endToken } = tokens[i]
     arr.push(text.substring(start, startToken))
     arr.push(
-      '<span class="ola-input-tag">' +
-        text.substring(startToken, endToken) +
-        '</span>'
+      `<span class="ola-input-tag">${text.substring(
+        startToken,
+        endToken
+      )}</span>`
     )
     start = endToken
   }

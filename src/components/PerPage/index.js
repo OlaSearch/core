@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { changePerPage, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
 
-function PerPage ({ perPage, translate, dispatch }, context) {
-  let values = context.config.perPage
+function PerPage ({ perPage, translate, dispatch, config }) {
+  let values = config.perPage
 
   function onChange (event) {
     dispatch(changePerPage(event.target.value))
@@ -27,8 +28,4 @@ function PerPage ({ perPage, translate, dispatch }, context) {
   )
 }
 
-PerPage.contextTypes = {
-  config: PropTypes.object
-}
-
-module.exports = withTranslate(PerPage)
+module.exports = withConfig(withTranslate(PerPage))

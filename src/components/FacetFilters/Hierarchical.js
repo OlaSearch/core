@@ -7,8 +7,7 @@ import {
 import withToggle from './../../decorators/withToggle'
 import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
-import { toNestedArray } from './../../utilities'
-import xssFilters from 'xss-filters'
+import { toNestedArray, sanitizeText } from './../../utilities'
 import FacetTitle from './common/FacetTitle'
 
 class HierarchicalFilter extends React.Component {
@@ -21,7 +20,7 @@ class HierarchicalFilter extends React.Component {
   }
   onChangeFilterText = (event) => {
     this.setState({
-      filterText: xssFilters.inHTMLData(event.target.value)
+      filterText: sanitizeText(event.target.value)
     })
   }
   isSelected = (name) => {

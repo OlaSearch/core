@@ -1,11 +1,15 @@
 /* Snippet */
 .ola-snippet {
   // padding: 1em 0;
-  margin-bottom: 16px;
+  margin-bottom: 16px;  
+}
 
-  /* Remove bookmarks in snippets */
-  .ola-link-bookmark-action {
-    display: none;
+/* Remove bookmarks in snippets */
+.ola-link-bookmark-action {
+  // display: none;
+
+  .ola-results-bookmark & {
+    // display: block;
   }
 }
 

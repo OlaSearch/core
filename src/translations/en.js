@@ -6,7 +6,7 @@ export default {
     showing: 'Showing {current} - {next} of {total} results',
     showing_no_results: 'Showing {total} results',
     geo_location_requesting: 'Getting current location',
-    geo_location_enabled: 'Using your location',
+    geo_location_enabled: 'Using your location (turn off)',
     geo_location_prompt: 'Share current location',
     history_label: 'My search history',
     history_empty_label: 'Your search history is empty.',
@@ -32,7 +32,7 @@ export default {
     suggestions_did_you_mean: 'Did you mean',
     autosuggest_clear_history_label: 'clear',
     suggestions_showing_results_for:
-      'Showing results for <strong>{term}</strong> instead. No results found for {q}.',
+      'Showing results for <strong>{term}</strong>. No results found for {q}.',
     suggestions_search_instead: 'Search instead for',
     facet_tabs_all_label: 'All',
 

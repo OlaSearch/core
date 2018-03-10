@@ -1,164 +1,162 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import InstantSearchForm from './../components/InstantSearchForm'
-import NoResults from './../components/Snippets/NoResults'
-import SearchResults from './../components/SearchResults'
-import SearchFilters from './../components/SearchFilters'
-import SelectedFilters from './../components/SelectedFilters'
-import Tabs from './../components/FacetFilters/Tabs'
-import SearchTitle from './../components/SearchTitle'
-import ClearAllFacets from './../components/Misc/ClearAllFacets'
-import Error from './../components/Misc/Error'
-import TermSuggestion from './../components/SpellSuggestions/TermSuggestion'
-import SpellSuggestion from './../components/SpellSuggestions/SpellSuggestion'
-import Sort from './../components/Sort'
-import SearchFooter from './../components/SearchFooter'
-import { olaRoute } from './../decorators/OlaRoute'
-import { initSearch } from './../actions/Search'
-import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import {
+  Alert,
+  AddAlert,
+  Actions,
+  AutoComplete,
+  SearchResults,
+  SearchFooter,
+  SearchFilters,
+  SelectedFilters,
+  Decorators,
+  SearchTitle,
+  NoResults,
+  SpellSuggestion,
+  TermSuggestion,
+  Sidebar,
+  FilterButton,
+  ErrorMessage,
+  SearchBar,
+  ContentWrapper,
+  SearchContent,
+  ProgressBar,
+  AnswerToken,
+  Answer,
+  Sort
+} from '@olasearch/core'
+import AlternateResults from '@olasearch/core/lib/components/Widgets/AlternateResults'
 
 class Search extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      isSidebarOpen: false
-    }
-  }
-
-  static contextTypes = {
-    config: PropTypes.object
-  }
-
   componentDidMount () {
-    this.props.dispatch(initSearch({ config: this.context.config }))
+    this.props.dispatch(
+      Actions.Search.initSearch({ config: this.props.config })
+    )
   }
-
-  toggleSidebar = () => {
-    this.setState({
-      isSidebarOpen: !this.state.isSidebarOpen
-    })
-  }
-
   render () {
     var { dispatch, AppState, QueryState, components, Device } = this.props
 
     var {
       results,
       facets,
+      isLoading,
       suggestedTerm,
       spellSuggestions,
       bookmarks,
       totalResults,
       error,
-      isLoading
+      answer,
+      mc,
+      isLoadingAnswer,
+      isSidebarOpen,
+      filterInAutoComplete
     } = AppState
 
     var {
       q,
-      facet_query: facetQuery,
+      facet_query,
       page,
-      per_page: perPage,
-      sort,
-      referrer
+      per_page,
+      referrer,
+      isSearchActive
     } = QueryState
 
-    var { isPhone } = Device
+    var { isPhone, isTablet } = Device
 
-    var { isSidebarOpen } = this.state
-
-    var klassSearchContainer = classNames({
-      'ola-search-container': true,
-      'ola-sidebar-open': isSidebarOpen
-    })
-
-    var klassModal = classNames({
-      'ola-modal-background': true,
-      'ola-modal-hide': !isSidebarOpen,
-      'ola-modal-show': isSidebarOpen
-    })
+    // console.log(JSON.stringify({
+    //   query: q,
+    //   docs: results.map(({ content, id }) => ({
+    //     content,
+    //     id
+    //   }))
+    // }))
 
     return (
       <div>
-        <div className={klassModal} onClick={this.toggleSidebar} />
-        <div className='ola-form-container ola-header-section'>
-          <a href='index.html' className='ola-logo' />
+        <SearchBar
+          q={q}
+          showAlert={false}
+          showHelp
+          wordSuggestion={filterInAutoComplete}
+        />
 
-          <InstantSearchForm
-            q={q}
-            dispatch={dispatch}
-            spellSuggestions={spellSuggestions}
-          />
-        </div>
+        <SelectedFilters
+          facets={facet_query}
+          dispatch={dispatch}
+          referrer={referrer}
+          grouped={false}
+        />
 
-        <div className={klassSearchContainer}>
-          <button
-            type='button'
-            className='ola-link-open-filter'
-            onClick={this.toggleSidebar}
-          />
+        <AnswerToken />
 
-          <div className='ola-sidebar'>
-            <h3>Refine your results</h3>
-
-            <ClearAllFacets dispatch={dispatch} selected={facetQuery} />
-
+        <ContentWrapper>
+          <Sidebar>
             <SearchFilters
               facets={facets}
-              selected={facetQuery}
+              selected={facet_query}
               dispatch={dispatch}
             />
-          </div>
+          </Sidebar>
 
-          <div className='ola-results-container'>
-            <div className='ola-title-container'>
-              <Sort dispatch={dispatch} selected={sort} />
+          <SearchContent>
+            {/* <Alert />
 
-              <SearchTitle
-                totalResults={totalResults}
-                page={page}
-                perPage={perPage}
-              />
+            <AddAlert q={q} /> */}
 
-              <TermSuggestion term={suggestedTerm} q={q} />
+            <FilterButton />
 
-              <SpellSuggestion
-                suggestions={spellSuggestions}
-                totalResults={totalResults}
-                dispatch={dispatch}
-              />
-            </div>
+            <Sort />
 
-            <Tabs facets={facets} dispatch={dispatch} selected={facetQuery} />
-
-            <SelectedFilters
-              facets={facetQuery}
-              dispatch={dispatch}
-              referrer={referrer}
+            <SearchTitle
+              totalResults={totalResults}
+              page={page}
+              perPage={per_page}
+              isLoading={isLoading}
+              isPhone={isPhone}
             />
 
-            <Error error={error} />
+            <ProgressBar />
 
-            <NoResults results={results} isLoading={isLoading} />
+            <TermSuggestion />
+
+            <SpellSuggestion
+              suggestions={spellSuggestions}
+              totalResults={totalResults}
+              dispatch={this.props.dispatch}
+            />
+
+            <Answer answer={answer} mc={mc} isLoading={isLoadingAnswer} />
+
+            <ErrorMessage error={error} />
 
             <SearchResults
-              q={q}
-              results={results}
-              bookmarks={bookmarks}
-              dispatch={dispatch}
-              components={components}
+              results={this.props.AppState.results}
+              bookmarks={this.props.AppState.bookmarks}
+              dispatch={this.props.dispatch}
             />
+
+            <NoResults
+              q={q}
+              isLoading={isLoading}
+              suggestedTerm={suggestedTerm}
+              facets={facet_query}
+              totalResults={totalResults}
+              dispatch={dispatch}
+            />
+
+            <AlternateResults />
 
             <SearchFooter
               totalResults={totalResults}
               currentPage={page}
-              perPage={perPage}
+              perPage={per_page}
               dispatch={dispatch}
               isPhone={isPhone}
+              isLoading={isLoading}
             />
-          </div>
-        </div>
+          </SearchContent>
+        </ContentWrapper>
       </div>
     )
   }
@@ -172,4 +170,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(olaRoute(Search))
+export default connect(mapStateToProps)(
+  Decorators.withConfig(Decorators.withRoute(Search))
+)

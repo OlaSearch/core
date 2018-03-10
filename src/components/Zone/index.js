@@ -10,15 +10,16 @@ import { bindActionCreators } from 'redux'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
+import withConfig from './../../decorators/withConfig'
 
 /* Create a zone facet */
 const createZoneFacet = (name) => ({ name, zone: true, type: 'string' })
 
-function Zone (props, context) {
+function Zone (props) {
   function onChange (event) {
     let { value } = event.target
     let { onChange, replaceFacet, removeFacet } = props
-    let facet = createZoneFacet(context.config.zone.filter)
+    let facet = createZoneFacet(props.config.zone.filter)
     if (value) {
       replaceFacet(facet, value)
     } else {
@@ -27,7 +28,7 @@ function Zone (props, context) {
     onChange && onChange(facet, value)
   }
 
-  let { zone: { defaultValue, values, filter } } = context.config
+  let { zone: { defaultValue, values, filter } } = props.config
   let { selected } = props
   let selectedValues = flatten(
     selected.filter((item) => item.name === filter).map((item) => item.selected)
@@ -52,10 +53,6 @@ function Zone (props, context) {
       </select>
     </div>
   )
-}
-
-Zone.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
 Zone.defaultProps = {
@@ -86,4 +83,4 @@ function mapDispatchToProps (dispatch, ownProps) {
   return bindActionCreators(actions, dispatch)
 }
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Zone)
+module.exports = connect(mapStateToProps, mapDispatchToProps)(withConfig(Zone))

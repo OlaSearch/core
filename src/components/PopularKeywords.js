@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withTranslate from './../decorators/withTranslate'
+import withConfig from './../decorators/withConfig'
 
-function PopularKeywords ({ onClick, translate }, context) {
-  let { popularKeywords } = context.config
+function PopularKeywords ({ onClick, translate, config }) {
+  let { popularKeywords } = config
   return (
     <div className='ola-popular-keywords'>
       <span className='ola-popular-label'>
@@ -17,11 +18,6 @@ function PopularKeywords ({ onClick, translate }, context) {
     </div>
   )
 }
-
-PopularKeywords.contextTypes = {
-  config: PropTypes.object
-}
-
 /**
  * Item
  */
@@ -36,4 +32,4 @@ function PopularKeywordItem ({ keyword, onClick }) {
   )
 }
 
-module.exports = withTranslate(PopularKeywords)
+module.exports = withConfig(withTranslate(PopularKeywords))

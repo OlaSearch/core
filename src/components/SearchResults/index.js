@@ -5,6 +5,7 @@ import Answer from './../Snippets/Answer'
 import { getMatchingSnippet } from './../../utilities'
 import classNames from 'classnames'
 import withTheme from './../../decorators/withTheme'
+import withConfig from './../../decorators/withConfig'
 
 class SearchResults extends React.Component {
   static propTypes = {
@@ -17,10 +18,6 @@ class SearchResults extends React.Component {
     alwaysUpdate: false,
     results: [],
     bookmarks: []
-  }
-
-  static contextTypes = {
-    config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
   shouldComponentUpdate (nextProps) {
@@ -37,9 +34,10 @@ class SearchResults extends React.Component {
       className,
       snippet: snippetOverride,
       theme,
+      config,
       ...rest
     } = this.props
-    let { snippetRules, defaultSnippet } = this.context.config
+    let { snippetRules, defaultSnippet } = config
     let klass = classNames('ola-results', className)
     return (
       <div className={klass}>
@@ -93,4 +91,4 @@ class SearchResults extends React.Component {
   }
 }
 
-module.exports = withTheme(SearchResults)
+module.exports = withConfig(withTheme(SearchResults))

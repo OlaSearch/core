@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { changeSort, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
+import withConfig from './../../decorators/withConfig'
 import ChevronDown from '@olasearch/icons/lib/chevron-down'
 
-function Sort ({ selected, translate, changeSort, executeSearch }, { config }) {
+function Sort ({ selected = '', translate, changeSort, executeSearch, config }) {
   function handleChange (event) {
     changeSort(event.target.value)
     executeSearch()
@@ -26,13 +27,16 @@ function Sort ({ selected, translate, changeSort, executeSearch }, { config }) {
           id='Ola-Element-Sort'
         >
           <option value=''>Relevancy</option>
-          {sortBy.map((sort, idx) => (
-            <option key={idx} value={sort.value}>
-              {sort.name}
+          {sortBy.map(({ name, value, direction }, idx) => (
+            <option
+              key={idx}
+              value={`${value}${direction ? ` ${direction}` : ''}`}
+            >
+              {name}
             </option>
           ))}
         </select>
-        <ChevronDown />
+        <ChevronDown size={20} />
       </div>
     </div>
   )
@@ -42,10 +46,6 @@ Sort.propTypes = {
   selected: PropTypes.string.isRequired
 }
 
-Sort.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-}
-
 function mapStateToProps (state) {
   return {
     selected: state.QueryState.sort
@@ -53,5 +53,5 @@ function mapStateToProps (state) {
 }
 
 module.exports = connect(mapStateToProps, { changeSort, executeSearch })(
-  withTranslate(Sort)
+  withConfig(withTranslate(Sort))
 )

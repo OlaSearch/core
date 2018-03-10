@@ -4,6 +4,7 @@ import withTranslate from './../../../decorators/withTranslate'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
 import MapPin from '@olasearch/icons/lib/map-pin'
+import { getDisplayName } from './../../../utilities'
 
 /**
  * Displays a Get directions button with distance
@@ -76,7 +77,7 @@ function Directions (props) {
         )}
         {locationName && (
           <span className='ola-flex-content'>
-            {locationName}{' '}
+            {getDisplayName(locationName)}{' '}
             {distance ? (
               <span className='ola-field-distance'>{distance}</span>
             ) : null}

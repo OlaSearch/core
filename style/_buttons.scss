@@ -95,6 +95,7 @@
 .ola-link-bookmark, .ola-link-bookmark-action {
   @extend %ola-icon-button;
   height: 100%; /* Its inside a flex box */
+  float: right;
 
   &:before {
   }
