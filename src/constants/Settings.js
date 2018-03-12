@@ -191,3 +191,7 @@ export const DEFAULT_THEME = {
   /* Progress bar */
   progressBarBackground: '#f86936'
 }
+
+export const ERROR_CODES = {
+  BOT_NO_EXISTS: 'Bad Request. Invalid bot id.'
+}

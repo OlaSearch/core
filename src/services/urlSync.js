@@ -183,12 +183,13 @@ export function parseQueryString (initialState, config) {
      * 26 Feb 2018 @vinay: I was accepting only facets that are in the config file. Validate facet names from fieldMapping instead
      */
     const fq = facetQuery
-      .filter((item) => {
-        let [name, value] = item.split(':')
-        return Object.values(config.fieldMappings).indexOf(name) !== -1
-        // if (!value) return false
-        // return find(propEq('name', name))(configFacets)
-      })
+      // .filter((item) => {
+      // let [name, value] = item.split(':')
+      // console.log(name, config.fieldMappings)
+      // return Object.values(config.fieldMappings).indexOf(name) !== -1
+      // if (!value) return false
+      // return find(propEq('name', name))(configFacets)
+      // })
       .map((item) => {
         /* Split the first : Date strings can contain : */
         let [name, value] = item.split(/:(.+)?/)
