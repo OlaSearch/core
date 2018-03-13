@@ -200,12 +200,12 @@ export default class Input extends React.Component {
       showWordSuggestion
     } = this.props
 
-    let klass = classNames('ola-search-form-container', {
+    let classes = classNames('ola-search-form-container', {
       'ola-search-zone-enabled': showZone
     })
     let shadowTerm = showWordSuggestion ? '' : this.getShadowTerm()
     return (
-      <div className={klass}>
+      <div className={classes}>
         {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <div className='ola-form-input-wrapper'>
           <ContentEditable

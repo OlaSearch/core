@@ -12,6 +12,7 @@ import { debounce, trim } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
 import withTranslate from './../decorators/withTranslate'
 import withConfig from './../decorators/withConfig'
+import withTheme from './../decorators/withTheme'
 import Zone from './Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../constants/Settings'
@@ -39,6 +40,10 @@ class InstantSearchForm extends React.Component {
      * Debounce search
      */
     this.searchDebounce = debounce(this.executeSearch, searchDelay)
+  }
+
+  state = {
+    isFocused: false
   }
 
   static defaultProps = {
@@ -98,6 +103,12 @@ class InstantSearchForm extends React.Component {
     if (this.props.q) this.executeSearch()
   }
 
+  onFocus = () => {
+    this.setState({
+      isFocused: true
+    })
+  }
+
   render () {
     let {
       q,
@@ -107,31 +118,15 @@ class InstantSearchForm extends React.Component {
       showZone,
       showSpeech,
       translate,
-      placeholder
+      placeholder,
+      theme
     } = this.props
 
-    let button = q ? (
-      <button
-        type='button'
-        className='ola-clear-button'
-        onClick={this.onClear}
-        aria-label='Clear'
-      >
-        <Cross />
-      </button>
-    ) : (
-      <button
-        type='button'
-        className='ola-search-button'
-        onClick={this.onClear}
-        aria-label='Submit'
-      >
-        <Search />
-      </button>
-    )
+    const { isFocused } = this.state
 
-    let klass = classNames('ola-search-form', this.props.className, {
+    let classes = classNames('ola-search-form', this.props.className, {
       'ola-search-zone-enabled': showZone,
+      'ola-search-focus': isFocused,
       'ola-speech-not-supported': !(
         window.SpeechRecognition || window.webkitSpeechRecognition
       )
@@ -140,7 +135,7 @@ class InstantSearchForm extends React.Component {
     let _placeholder = placeholder || translate('instantsearch_placeholder')
 
     return (
-      <form className={klass} onSubmit={this.onSubmit}>
+      <form className={classes} onSubmit={this.onSubmit}>
         <div className='ola-search-form-container'>
           <div className='ola-form-input-wrapper'>
             {showZone && <Zone onChange={this.onChangeZone} />}
@@ -155,12 +150,10 @@ class InstantSearchForm extends React.Component {
               autoCorrect='off'
               autoCapitalize='off'
               spellCheck='false'
-              onFocus={this.props.onFocus}
+              onFocus={this.onFocus}
               onBlur={this.props.onBlur}
               onChange={this.onChange}
             />
-
-            {showBookmarks ? <Bookmarks /> : null}
 
             {showGeoLocation ? (
               <GeoLocation
@@ -180,8 +173,30 @@ class InstantSearchForm extends React.Component {
               />
             ) : null}
           </div>
-          {button}
+          <button
+            type='button'
+            className='ola-search-button'
+            onClick={this.onClear}
+            aria-label='Submit'
+          >
+            <Search />
+          </button>
         </div>
+        <style jsx>
+          {`
+            .ola-search-button,
+            .ola-search-button:hover,
+            .ola-search-button:active,
+            .ola-search-button:focus {
+              background: ${this.props.theme.primaryColor};
+              border-color: ${this.props.theme.primaryColor};
+            }
+            .ola-search-focus :global(.ola-search-form-container) {
+              border-color: ${theme.primaryColor};
+              box-shadow: none;
+            }
+          `}
+        </style>
       </form>
     )
   }
@@ -197,4 +212,4 @@ module.exports = connect(mapStateToProps, {
   updateQueryTerm,
   executeSearch,
   clearQueryTerm
-})(withConfig(withTranslate(InstantSearchForm)))
+})(withTheme(withConfig(withTranslate(InstantSearchForm))))

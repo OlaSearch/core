@@ -8,4 +8,4 @@ test
 examples
 styleguide*
 src
-test
+__tests__

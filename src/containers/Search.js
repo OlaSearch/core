@@ -26,7 +26,6 @@ import {
   Answer,
   Sort
 } from '@olasearch/core'
-import AlternateResults from '@olasearch/core/lib/components/Widgets/AlternateResults'
 
 class Search extends React.Component {
   componentDidMount () {
@@ -64,14 +63,6 @@ class Search extends React.Component {
 
     var { isPhone, isTablet } = Device
 
-    // console.log(JSON.stringify({
-    //   query: q,
-    //   docs: results.map(({ content, id }) => ({
-    //     content,
-    //     id
-    //   }))
-    // }))
-
     return (
       <div>
         <SearchBar
@@ -100,10 +91,6 @@ class Search extends React.Component {
           </Sidebar>
 
           <SearchContent>
-            {/* <Alert />
-
-            <AddAlert q={q} /> */}
-
             <FilterButton />
 
             <Sort />
@@ -144,8 +131,6 @@ class Search extends React.Component {
               totalResults={totalResults}
               dispatch={dispatch}
             />
-
-            <AlternateResults />
 
             <SearchFooter
               totalResults={totalResults}

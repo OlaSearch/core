@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SnippetFallback from './../Snippets/Default'
-import Answer from './../Snippets/Answer'
+import AnswerSnippet from './../Snippets/Answer'
 import { getMatchingSnippet } from './../../utilities'
 import classNames from 'classnames'
 import withTheme from './../../decorators/withTheme'
@@ -38,13 +38,13 @@ class SearchResults extends React.Component {
       ...rest
     } = this.props
     let { snippetRules, defaultSnippet } = config
-    let klass = classNames('ola-results', className)
+    let classes = classNames('ola-results', className)
     return (
-      <div className={klass}>
+      <div className={classes}>
         {results.map((result, idx) => {
           let { ola_answer: isAnswer } = result
           let OlaSnippet = isAnswer
-            ? Answer
+            ? AnswerSnippet
             : snippetOverride ||
               getMatchingSnippet(snippetRules, result) ||
               defaultSnippet ||
