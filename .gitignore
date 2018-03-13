@@ -6,3 +6,5 @@ dist
 .temp_bundle_helpers
 coverage
 .nyc_output
+lib
+docs
