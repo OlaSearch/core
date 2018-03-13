@@ -3,13 +3,11 @@ Ola Search Core is a fully customisable front-end search interface that brings y
 
 [![build status](https://gitlab.com/olasearch/olasearch-core/badges/master/build.svg)](https://gitlab.com/olasearch/olasearch-core/commits/master)
 
-Pre-requisites: [https://yarnpkg.com](Yarn) package manager and Node 6+
-
 ## Installation
 
 ### 1. Install olasearch core
 ```
-yarn add @olasearch/core
+npm install @olasearch/core --save
 ```
 
 ### 2. Download configurations
@@ -25,10 +23,10 @@ Download the configurations from [https://admin.olasearch.com](https://admin.ola
 ```
 git clone https://gitlab.com/olasearch/olasearch-project-starter.git
 cd olasearch-project-starter
-yarn install
+npm install
 cd src
 # Copy the config file to `src` directory
-yarn start
+npm run start
 ```
 
 Navigate to `http://localhost:3003` to see a search interface
