@@ -31,6 +31,8 @@ npm run start
 
 Navigate to `http://localhost:3003` to see a search interface
 
+### More documentation - Coming Soon
+
 ## Collaboration guidelines
 
 Uses [Prettier](prettier.io) and [Prettier standard](https://github.com/sheerun/prettier-standard) for code formatting and linting
