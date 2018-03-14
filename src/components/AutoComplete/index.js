@@ -331,7 +331,13 @@ class AutoComplete extends React.Component {
 
     /* Which request */
     const ajaxRequest = showWordSuggestion
-      ? this.props.executeFacetSearch(term, partialWord, startToken, endToken)
+      ? this.props.executeFacetSearch(
+        term,
+        partialWord,
+        startToken,
+        endToken,
+        this.props.config.fieldTypeMapping
+      )
       : this.props.executeFuzzyAutoSuggest(term)
 
     if (

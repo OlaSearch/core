@@ -125,6 +125,11 @@ export const CREATE_FILTER_OBJECT = ({
 export const SLOT_DATE = 'OLA.DATE'
 
 /**
+ * Taxo entity type
+ */
+export const TAXO_ENTITY = 'taxo_enty'
+
+/**
  * Default theme
  */
 export const DEFAULT_THEME = {
@@ -189,7 +194,10 @@ export const DEFAULT_THEME = {
   titleFontSize: '20px',
 
   /* Progress bar */
-  progressBarBackground: '#f86936'
+  progressBarBackground: '#f86936',
+
+  /* Max image height */
+  snippetImageMaxHeight: '200px'
 }
 
 export const ERROR_CODES = {

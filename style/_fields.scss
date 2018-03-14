@@ -11,19 +11,27 @@
   padding: 0;
   margin-bottom: 1rem;
   max-width: 100%;
+  max-height: 200px;
+  text-align: center;
 
   @include media (tablet) {
     width: 180px;
+    max-height: 200px;
   }
 
-  img {
-    max-width: 100%;
-    vertical-align: top;
-  }
 
   .ola-module & {
     width: 80px;
   }
+}
+
+/**
+ * Image
+ */
+.ola-img {
+  max-height: inherit;
+  max-width: 100%;
+  vertical-align: top;
 }
 
 /**

@@ -12,6 +12,11 @@ import {
   getDisplayName,
   sanitizeText
 } from './../utilities'
+import {
+  CREATE_FILTER_OBJECT,
+  SEARCH_COLLECTION_IDENTIFIER,
+  TAXO_ENTITY
+} from './../constants/Settings'
 import omit from 'ramda/src/omit'
 
 /* Update Browser URL */
@@ -205,7 +210,13 @@ function removeTokenFromQuery (q, tokenValues) {
  * @param {String} fullTerm Full query term, default is '*'
  * @param {String} term Partial query
  */
-export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) {
+export function executeFacetSearch (
+  fullTerm = '*',
+  term,
+  startToken,
+  endToken,
+  fieldTypeMapping
+) {
   /* Splice based on tokens */
   fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
   /* replace backslash */
@@ -221,6 +232,14 @@ export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) 
       name,
       multiSelect: true
     }))
+    const facets = Object.keys(fieldTypeMapping)
+      .filter((key) => fieldTypeMapping[key] === TAXO_ENTITY)
+      .concat(SEARCH_COLLECTION_IDENTIFIER)
+      .map((name) => CREATE_FILTER_OBJECT({ name }))
+
+    /* Exit early */
+    if (!facets.length) return
+
     /* Remove tokens from the query */
     let initialStart = 0
     let q = removeTokenFromQuery(
@@ -238,7 +257,11 @@ export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) 
         ...query,
         q,
         facet_query,
-        skip_intent: true
+        facets /* Allowed facet fields */,
+        skip_spellcheck: true,
+        skip_intent: true,
+        facetPrefix: term.toLowerCase() /* Always lowercase facet term */,
+        per_page: 0
       },
       beforeSuccessCallback (response) {
         return {
@@ -253,12 +276,6 @@ export function executeFacetSearch (fullTerm = '*', term, startToken, endToken) 
         }
       },
       context,
-      payload: {
-        extraParams: {
-          facetPrefix: term.toLowerCase() /* Always lowercase facet term */,
-          per_page: 0
-        }
-      },
       meta: {
         log: false
       },

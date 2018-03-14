@@ -189,6 +189,7 @@ class InstantSearchForm extends React.Component {
             .ola-search-button:active,
             .ola-search-button:focus {
               background: ${this.props.theme.primaryColor};
+              color: white;
               border-color: ${this.props.theme.primaryColor};
             }
             .ola-search-focus :global(.ola-search-form-container) {
