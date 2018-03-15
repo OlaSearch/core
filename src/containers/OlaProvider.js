@@ -6,20 +6,18 @@ import { ThemeProvider } from './ThemeContext'
 import { ConfigProvider } from './ConfigContext'
 import { DEFAULT_THEME } from './../constants/Settings'
 
-export default function OlaProvider ({ config, store, translations, children }) {
-  if (!config || !store) {
-    throw new Error('Could not find config or store on `props` OlaProvider')
+export default function OlaProvider ({ config, translations, children }) {
+  if (!config) {
+    throw new Error('Could not find config on `props` OlaProvider')
   }
   let theme = { ...DEFAULT_THEME, ...config.theme }
   return (
     <div className='ola-search'>
-      <Provider store={store}>
-        <ConfigProvider value={config}>
-          <OlaIntlProvider translations={translations}>
-            <ThemeProvider value={theme}>{children}</ThemeProvider>
-          </OlaIntlProvider>
-        </ConfigProvider>
-      </Provider>
+      <ConfigProvider value={config}>
+        <OlaIntlProvider translations={translations}>
+          <ThemeProvider value={theme}>{children}</ThemeProvider>
+        </OlaIntlProvider>
+      </ConfigProvider>
       <style jsx>
         {`
           .ola-search {

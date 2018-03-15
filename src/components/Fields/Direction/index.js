@@ -47,6 +47,9 @@ function Directions (props) {
     )} ${translate('distance_unit')}`
     : null
 
+  /* If no location and no distance */
+  if (!locationName && !distance) return null
+
   function handleClick (event) {
     log({
       eventType: 'C',

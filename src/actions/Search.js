@@ -215,7 +215,7 @@ export function executeFacetSearch (
   term,
   startToken,
   endToken,
-  fieldTypeMapping
+  fieldTypeMapping = {}
 ) {
   /* Splice based on tokens */
   fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
