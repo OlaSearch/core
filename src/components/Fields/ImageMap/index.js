@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Thumbnail from './../Thumbnail'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
@@ -56,10 +57,29 @@ function ImageMap (props) {
   )
 }
 
-Map.defaultProps = {
+ImageMap.defaultProps = {
   apiKey: 'AIzaSyAZmAH-qvIuTeS8hgCD9jIYgjYuyoycsaY',
   width: 200,
   height: 200
+}
+
+ImageMap.propTypes = {
+  /**
+   * Latlong of the location
+   */
+  latlong: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /**
+   * Google map api key
+   */
+  apiKey: PropTypes.string,
+  /**
+   * Width of the image map
+   */
+  width: PropTypes.number,
+  /**
+   * Height of the image map
+   */
+  height: PropTypes.number
 }
 
 module.exports = withLogger(ImageMap)

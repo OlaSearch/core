@@ -1,5 +1,6 @@
 var path = require('path')
 var { version } = require('./package.json')
+const { styles, theme } = require('./styleguide/styleguide.styles')
 
 function camelCase(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
@@ -12,44 +13,60 @@ function upperFirst(string) {
 }
 
 module.exports = {
-  title: `Ola Search UI Components ${version}`,
+  title: `Ola Search UI - ${version}`,
   showUsage: true,
-  highlightTheme: 'material',
   styleguideDir: 'docs',
   styleguideComponents: {
-    Wrapper: path.join(__dirname, 'docs/wrapper')
+    Wrapper: path.join(__dirname, './styleguide/styleguide.wrapper')
   },
+  template: './styleguide/styleguide.template.html',
+  editorConfig: { theme: 'cobalt' },  
+  theme,
+  styles,
   sections: [
     {
-      name: 'Actions',
-      components: 'src/components/Fields/**/*.js'
+      name: '',
+      content: './styleguide/Docs.md'
     },
     {
-      name: 'Components',
-      sections: [
-        {
-          name: 'Fields',
-          components: 'src/components/Fields/**/*.js'
-        }
-      ]
+      name: 'Installation',
+      content: './styleguide/Installation.md'
+    },
+    {
+      name: 'Usage',
+      content: './styleguide/Usage.md'
+    },
+    {
+      name: 'Search adapters',
+      content: './styleguide/SearchAdapters.md'
+    },
+    {
+      name: 'Query monitoring',
+      components: 'src/components/Alert/*.js'
+    },
+    {
+      name: 'Snippet fields',
+      components: 'src/components/Fields/*/*.js'
     }
   ],
   require: [
     // path.resolve(__dirname, './setup.js'),
-    path.join(__dirname, './src/style/core.scss'),
+    path.join(__dirname, './style/core.scss'),
     // path.resolve(__dirname, './src/index.js')
   ],
-  // getComponentPathLine: (componentPath) => {
-  //   const dirname = path.dirname(componentPath, '.js')
-  //   const name = dirname.split('/').slice(-1)[0]
-  //   const componentName = upperFirst(camelCase(name))
+  getComponentPathLine: (componentPath) => {
+    const dirname = path.dirname(componentPath, '.js')
+    const name = dirname.split('/').slice(-1)[0]
+    const componentName = upperFirst(camelCase(name))
+    const libDirName = dirname.replace(/src/gi, 'lib')
 
-  //   return `import { ${componentName} } from '@olasearch/core'`
-  // },
+    return `import ${componentName} from '@olasearch/core/${libDirName}'`
+  },
   webpackConfig: {
+    // crossOriginLoading: true,
     resolve: {
       alias: {
-        'olasearchconfig': path.join(__dirname, 'docs/config'),
+        'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
         '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
         'OlaSearch': path.join(__dirname, './../npm-olasearch'),
       }
@@ -75,10 +92,7 @@ module.exports = {
               loader: 'style-loader',
             },
             {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1
-              }
+              loader: 'css-loader'
             },
             {
               loader: 'sass-loader'
@@ -87,6 +101,6 @@ module.exports = {
         }
       ]
     }
-  },
-  components: 'src/components/Fields/**/*.js'
+  }
 }
+

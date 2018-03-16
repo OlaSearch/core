@@ -1,14 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { createHTMLMarkup } from './../../../utilities'
 import withLogger from './../../../decorators/withLogger'
 
+/**
+ * Display search result title
+ */
 function Title ({
   result,
   isLink,
   field,
   url,
   children,
-  baseUrl,
   target,
   isBookmark,
   isAutosuggest,
@@ -21,7 +24,6 @@ function Title ({
   openInNewWindow,
   eventLabel,
   eventCategory,
-  style,
   logPayload
 }) {
   function logClick (event) {
@@ -43,16 +45,19 @@ function Title ({
   }
 
   var { highlighting } = result
-  var title = result[field || 'title']
+  var title = result[field]
 
   if (!url) url = result.url || url
   if (!url) isLink = false
-  if (baseUrl) url = baseUrl + url
 
   /* Check for highlighting */
   if (highlighting) {
     var { title: highlightedTitle } = highlighting
-    if (typeof highlightedTitle === 'object') title = highlightedTitle[0]
+    if (typeof highlightedTitle === 'object') {
+      title = highlightedTitle[0]
+    } else if (highlightedTitle) {
+      title = highlightedTitle
+    }
   }
   /* Check if it should be opened in new page */
   if (openInNewWindow) {
@@ -83,9 +88,57 @@ Title.defaultProps = {
   iconLeft: null,
   iconRight: null,
   isBookmark: false,
-  field: null,
+  isAutosuggest: false,
+  field: 'title',
   target: null,
   openInNewWindow: false
+}
+
+Title.propTypes = {
+  /**
+   * Search result
+   */
+  result: PropTypes.object.isRequired,
+  /**
+   * Add a link
+   */
+  isLink: PropTypes.bool,
+  /**
+   * Title field name
+   */
+  field: PropTypes.string,
+  /**
+   * Show child elements
+   */
+  children: PropTypes.any,
+  /**
+   * HTML target attribute for `a` link
+   */
+  target: PropTypes.oneOf(['_blank', 'self', null]),
+  /**
+   * Open the link in a new window
+   */
+  openInNewWindow: PropTypes.bool,
+  /**
+   * Field label
+   */
+  fieldLabel: PropTypes.string,
+  /**
+   * Icon Component to be displayed on the left
+   */
+  iconLeft: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /**
+   * Icon Component to be displayed on the right
+   */
+  iconRight: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /**
+   * Is the title displayed in Bookmark list
+   */
+  isBookmark: PropTypes.bool,
+  /**
+   * Is the title displayed in Autosuggest list
+   */
+  isAutosuggest: PropTypes.bool
 }
 
 module.exports = withLogger(Title)

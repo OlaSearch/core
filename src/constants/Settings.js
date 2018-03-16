@@ -134,28 +134,28 @@ export const TAXO_ENTITY = 'taxo_enty'
  */
 export const DEFAULT_THEME = {
   /* Color palette */
-  primaryColor: '#289dcc',
+  primaryColor: '#2579DA',
   primaryInvertColor: 'white',
-  secondaryColor: '#289dcc',
+  secondaryColor: '#2579DA',
   dangerColor: '#f94d3e',
   borderColor: '#ddd',
 
   /* Search */
   searchLinkColor: '#232323',
-  searchLinkHoverColor: '#289dcc',
+  searchLinkHoverColor: '#2579DA',
 
   /* Chat */
-  chatLinkColor: '#289dcc',
-  chatLinkHoverColor: '#289dcc',
+  chatLinkColor: '#2579DA',
+  chatLinkHoverColor: '#2579DA',
   chatFontFamily: "'Lato', 'Open Sans', sans-serif",
 
   chatHeaderColor: 'white',
-  chatHeaderBackground: '#289dcc',
+  chatHeaderBackground: '#2579DA',
 
-  chatBubbleBackground: '#289dcc',
-  chatBubbleBackgroundHover: '#289dcc',
+  chatBubbleBackground: '#2579DA',
+  chatBubbleBackgroundHover: '#2579DA',
 
-  chatUserMessageBackground: '#289dcc',
+  chatUserMessageBackground: '#2579DA',
   chatUserMessageColor: 'white',
   chatBotMessageBackground: '#ddd',
   chatBotMessageColor: '#444',
@@ -173,7 +173,7 @@ export const DEFAULT_THEME = {
    *
    */
   primaryButtonColor: 'white',
-  primaryButtonBackground: '#289dcc',
+  primaryButtonBackground: '#2579DA',
 
   /* Secondary button */
   /**
@@ -184,7 +184,7 @@ export const DEFAULT_THEME = {
   secondaryButtonBackground: 'white',
 
   /* Share button */
-  shareButtonColor: '#289dcc',
+  shareButtonColor: '#2579DA',
   shareButtonBackground: 'white',
 
   /* Font size */

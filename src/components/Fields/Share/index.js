@@ -10,7 +10,11 @@ import Twitter from '@olasearch/icons/lib/twitter'
 import Mail from '@olasearch/icons/lib/mail'
 import LinkedIn from '@olasearch/icons/lib/linkedin'
 import GPlus from '@olasearch/icons/lib/material-gplus'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 
+/**
+ * Displays a share button
+ */
 class Share extends React.PureComponent {
   handleClick = (e) => {
     let url = e.currentTarget.getAttribute('data-href')
@@ -40,6 +44,7 @@ class Share extends React.PureComponent {
       twitter,
       linkedIn,
       gplus,
+      label,
       ...rest
     } = this.props
     let { title, url } = result
@@ -61,7 +66,7 @@ class Share extends React.PureComponent {
           type='button'
           onClick={toggleDisplay}
         >
-          Share
+          {label}
         </button>
         <div className='ola-drop'>
           <div className='ola-drop-body'>
@@ -137,14 +142,46 @@ Share.defaultProps = {
   facebook: true,
   twitter: true,
   linkedIn: true,
-  gplus: true
+  gplus: true,
+  label: 'Share'
 }
 
 Share.contextTypes = {
   document: PropTypes.object
 }
 
-module.exports = withLogger(
+Share.propTypes = {
+  /**
+   * Search result
+   */
+  result: PropTypes.object.isRequired,
+  /**
+   * Label of the button
+   */
+  label: PropTypes.string,
+  /**
+   * Show facebook
+   */
+  facebook: PropTypes.bool,
+  /**
+   * Show twitter
+   */
+  twitter: PropTypes.bool,
+  /**
+   * Show linkedIn
+   */
+  linkedIn: PropTypes.bool,
+  /**
+   * Show gplus
+   */
+  gplus: PropTypes.bool,
+  /**
+   * Show email
+   */
+  email: PropTypes.bool
+}
+
+const ShareButton = withLogger(
   withToggle(
     listensToClickOutside(Share, {
       handleClickOutside (instance) {
@@ -159,3 +196,5 @@ module.exports = withLogger(
     })
   )
 )
+
+module.exports = hoistNonReactStatics(ShareButton, Share)

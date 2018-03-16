@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import TextField from './../TextField'
 import classNames from 'classnames'
 import withTranslate from './../../../decorators/withTranslate'
@@ -6,13 +7,15 @@ import withToggle from './../../../decorators/withToggle'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
 
+/**
+ * Displays a list of inner docs for nested documents
+ */
 function DocumentPages ({
   onClick,
   result,
   snippetId,
   log,
   pages,
-  q,
   contentField,
   translate,
   fieldLabel,
@@ -22,7 +25,6 @@ function DocumentPages ({
   logPayload
 }) {
   function onSelect (page) {
-    console.log(page, result)
     onClick && onClick(page, result)
     log({
       eventType: 'C',
@@ -68,7 +70,6 @@ function DocumentPages ({
             page={page}
             contentField={contentField}
             key={idx}
-            q={q}
           />
         ))
         : null}
@@ -82,7 +83,31 @@ function DocumentPages ({
 DocumentPages.defaultProps = {
   contentField: 'pageContent',
   pages: [],
-  showIfEmpty: false
+  showIfEmpty: false,
+  isCollapsed: true
+}
+
+DocumentPages.propTypes = {
+  /**
+   * Field where content of the page is located
+   */
+  contentField: PropTypes.string,
+  /**
+   * List of pages
+   */
+  pages: PropTypes.array,
+  /**
+   * Show this field if pages are empty
+   */
+  showIfEmpty: PropTypes.bool,
+  /**
+   * Search result
+   */
+  result: PropTypes.object,
+  /**
+   * Is this paegs hidden by default
+   */
+  isCollapsed: PropTypes.bool
 }
 
 /**

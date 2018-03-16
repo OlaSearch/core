@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Parser, QueryBuilder, Http } from '@olasearch/solr-adapter'
 import config from 'olasearchconfig'
 import { createLoggerMiddleware } from '@olasearch/logger'
+import { Provider } from 'react-redux'
 import { AutoComplete, OlaProvider, createStore } from '@olasearch/core'
 
 /* Optional loggerMiddleware */
@@ -12,6 +13,12 @@ let store = createStore(config, { Parser, QueryBuilder, Http }, {}, [loggerMiddl
 
 export default class Wrapper extends React.Component {
   render() {
-    return <OlaProvider config={config} store={store}>{this.props.children}</OlaProvider>
+    return (
+      <Provider store={store}>
+        <OlaProvider config={config}>
+          {this.props.children}
+        </OlaProvider>
+      </Provider>
+    )
   }
 }

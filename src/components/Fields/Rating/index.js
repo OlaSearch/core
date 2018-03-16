@@ -1,42 +1,70 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import Star from '@olasearch/icons/lib/star'
 import FieldLabel from './../FieldLabel'
+import withTheme from './../../../decorators/withTheme'
 
 function Rating ({
   rating,
   interval,
+  iconSize,
   activeClass,
   inActiveClass,
   emptyClass,
-  fieldLabel
+  fieldLabel,
+  theme
 }) {
-  let normalized = rating / interval
-  let star = []
-  let total = Math.max(Math.ceil(normalized), 1)
-  let maxInterval = 100 / interval
-
+  const normalized = rating / interval
+  let stars = []
+  const total = Math.max(Math.ceil(normalized), 1)
+  const maxInterval = 100 / interval
   for (let i = 0; i < total; i++) {
-    star.push(<em key={i} className={activeClass} />)
+    stars.push(<Star size={iconSize} key={i} className={activeClass} />)
   }
-
   for (let i = total; i < maxInterval; i++) {
-    star.push(<em key={i} className={inActiveClass} />)
+    stars.push(<Star size={iconSize} key={i} className={inActiveClass} />)
   }
-
-  if (!star.length) star = <em className={emptyClass} />
-
+  if (!stars.length) stars = <div className={emptyClass} />
   return (
     <div className='ola-field ola-field-rating'>
       <FieldLabel label={fieldLabel} />
-      <div className='ola-field-rating-stars'>{star}</div>
+      <div className='ola-field-rating-stars'>{stars}</div>
+      <style jsx>
+        {`
+          .ola-field-rating :global(.ola-rating-active) {
+            fill: ${theme.primaryColor};
+            color: ${theme.primaryColor};
+          }
+        `}
+      </style>
     </div>
   )
 }
 
 Rating.defaultProps = {
   interval: 20,
-  activeClass: 'ion ion-ios-star ola-rating-active',
-  inActiveClass: 'ion ion-ios-star ola-rating-inactive',
-  emptyClass: 'ion ion-ios-star'
+  iconSize: 18,
+  activeClass: 'ola-rating-active',
+  inActiveClass: 'ola-rating-inactive',
+  emptyClass: 'ola-rating-empty'
 }
 
-module.exports = Rating
+Rating.propTypes = {
+  /**
+   * Interval of the rating (between 1 and 100)
+   */
+  interval: PropTypes.number,
+  /**
+   * Rating of an item (between 1 and 100)
+   */
+  rating: PropTypes.number,
+  activeClass: PropTypes.string,
+  inActiveClass: PropTypes.string,
+  emptyClass: PropTypes.string,
+  /**
+   * Field label
+   */
+  fieldLabel: PropTypes.string
+}
+
+module.exports = withTheme(Rating)

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { createHTMLMarkup, truncate } from './../../../utilities'
 import FieldLabel from './../FieldLabel'
 
+/**
+ * Display any text with highlight
+ */
 function TextField ({
   field,
   fallbackFields,
@@ -15,8 +18,7 @@ function TextField ({
   dynamicClass,
   fieldLabel,
   className,
-  showIfEmpty,
-  placeholderText
+  showIfEmpty
 }) {
   let fieldContent = staticText || result[field]
   if (!fieldContent && fallbackFields.length) {
@@ -47,6 +49,8 @@ function TextField ({
         temp.push(`<span class='ola-hi-token'>${highlightedContent[i]}</span>`)
       }
       fieldContent = temp
+    } else if (highlightedContent) {
+      fieldContent = highlightedContent
     }
   } else if (fieldContent && fieldContent.length > length) {
     fieldContent = truncate(fieldContent, length)
@@ -77,12 +81,58 @@ TextField.defaultProps = {
   className: '',
   dynamicClass: false,
   fallbackFields: [],
-  showIfEmpty: false,
-  placeholderText: null
+  showIfEmpty: false
 }
 
 TextField.propTypes = {
-  length: PropTypes.number
+  /**
+   * Max length of the text field
+   */
+  length: PropTypes.number,
+  /**
+   * Search result
+   */
+  result: PropTypes.object,
+  /**
+   * Show Static text
+   */
+  staticText: PropTypes.string,
+  /**
+   * Prefix
+   */
+  prefix: PropTypes.string,
+  /**
+   * Suffix
+   */
+  suffix: PropTypes.string,
+  /**
+   * Show ellipsis if text field exceeds max length
+   */
+  ellipsis: PropTypes.string,
+  /**
+   * Field to display
+   */
+  field: PropTypes.string,
+  /**
+   * If the default field doesnt have content, look in fallbackFields
+   */
+  fallbackFields: PropTypes.array,
+  /**
+   * Additional class name
+   */
+  className: PropTypes.string,
+  /**
+   * Add classes with value of field content
+   */
+  dynamicClass: PropTypes.bool,
+  /**
+   * Show if empty
+   */
+  showIfEmpty: PropTypes.bool,
+  /**
+   * Field label
+   */
+  fieldLabel: PropTypes.string
 }
 
 module.exports = TextField

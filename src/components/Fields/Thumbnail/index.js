@@ -4,6 +4,9 @@ import omit from 'ramda/src/omit'
 import withLogger from './../../../decorators/withLogger'
 import withConfig from './../../../decorators/withConfig'
 
+/**
+ * Display an image as a background or using an img tag
+ */
 function Thumbnail (props) {
   var {
     thumbnail,
@@ -19,25 +22,9 @@ function Thumbnail (props) {
     ...rest
   } = props
 
-  var { mediaQuery, cdn } = config
-
   let restProps = omit(['size', 'collectionId', 'showIfEmpty'], rest)
 
   if (!thumbnail) return null
-
-  let isSvg =
-    thumbnail
-      .split('.')
-      .pop()
-      .indexOf('svg') === 0
-  /**
-   * If cdn exists
-   */
-
-  if (cdn && !baseUrl && !isSvg) {
-    baseUrl = `${cdn}/`
-    thumbnail = encodeURIComponent(thumbnail)
-  }
 
   function handleClick (event) {
     log({
@@ -82,7 +69,22 @@ function Thumbnail (props) {
 }
 
 Thumbnail.propTypes = {
-  thumbnail: PropTypes.string
+  /**
+   * URL of the image
+   */
+  thumbnail: PropTypes.string,
+  /**
+   * Add a link to the image
+   */
+  isLink: PropTypes.bool,
+  /**
+   * URL of the link
+   */
+  url: PropTypes.string,
+  /**
+   * Use background image instead of `<img >` tag
+   */
+  useBackgroundImage: PropTypes.bool
 }
 
 Thumbnail.defaultProps = {

@@ -28,41 +28,32 @@ export default function OlaProvider ({ config, translations, children }) {
             padding-bottom: ;
           }
           .ola-search
-            :global(.ola-field-date, .ola-field-person, .ola-field-distance, .ola-btn-directions, .ola-answer-slots, .ola-location-notify, .ola-field-component-label) {
+            :global(.ola-field-date, .ola-field-person, .ola-field-distance, .ola-btn-directions, .ola-answer-slots, .ola-location-notify, .ola-field-component-label, .ola-field-phone, .ola-field-sms, .ola-field-subtitles, .ola-field-pages) {
             font-size: ${theme.mediumFontSize};
           }
-          .ola-search :global(.ola-page),
-          .ola-search :global(.ola-page:hover) {
+          .ola-search :global(.ola-page, .ola-page:hover) {
             color: ${theme.secondaryButtonColor};
             background: ${theme.secondaryButtonBackground};
             border: 1px ${theme.borderColor} solid;
           }
-          .ola-search :global(.ola-page-current),
-          .ola-search :global(.ola-page-current:hover) {
+          .ola-search :global(.ola-page-current, .ola-page-current:hover) {
             background-color: #eee;
           }
-          .ola-search :global(.ola-spell-links),
-          .ola-search :global(.ola-spell-links:hover) {
+          .ola-search
+            :global(.ola-spell-links, .ola-spell-links:hover, .ola-link-show-more, .ola-link-show-more:hover, .ola-link-change-layout, .ola-link-change-layout:hover, .ola-link-open-filter, .ola-link-open-filter:hover, .ola-suggestions-clear, .ola-suggestions-clear:hover, .ola-btn-close
+              /* Help close button */, .ola-btn-directions, .ola-btn-person, .ola-btn-phone, .ola-drop-link, .ola-btn-sms, .ola-btn-subtitle, .ola-link-view-pages) {
             color: ${theme.primaryColor};
           }
-          .ola-search :global(.ola-link-show-more),
-          .ola-search :global(.ola-link-show-more:hover) {
-            color: ${theme.primaryColor};
+          .ola-search :global(.ola-link-show-more, .ola-link-show-more:hover) {
             background: none;
           }
-          .ola-search :global(.ola-link-change-layout),
-          .ola-search :global(.ola-link-change-layout:hover) {
-            color: ${theme.primaryColor};
+          .ola-search
+            :global(.ola-link-change-layout, .ola-link-change-layout:hover) {
             border: 1px ${theme.primaryColor} solid;
           }
-          .ola-search :global(.ola-link-open-filter),
-          .ola-search :global(.ola-link-open-filter:hover) {
-            color: ${theme.primaryColor};
+          .ola-search
+            :global(.ola-link-open-filter, .ola-link-open-filter:hover) {
             border: 1px ${theme.primaryColor} solid;
-          }
-          .ola-search :global(.ola-suggestions-clear),
-          .ola-search :global(.ola-suggestions-clear:hover) {
-            color: ${theme.primaryColor};
           }
 
           /* Pill */
@@ -87,6 +78,36 @@ export default function OlaProvider ({ config, translations, children }) {
           /* Progress bar */
           .ola-search :global(.react-progress-bar-percent) {
             background: ${theme.progressBarBackground};
+          }
+          .ola-search :global(.ola-field-title a) {
+            color: ${theme.searchLinkColor};
+          }
+          .ola-search
+            :global(.ola-field-title a:hover, .ola-field-title a:focus) {
+            color: ${theme.searchLinkHoverColor};
+          }
+          .ola-search :global(.ola-cta-button) {
+            color: ${theme.primaryButtonColor};
+            background: ${theme.primaryButtonBackground};
+          }
+          .ola-search :global(.ola-btn-share) {
+            color: ${theme.shareButtonColor};
+            background: ${theme.shareButtonBackground};
+          }
+          .ola-search :global(.ola-drop-link) {
+            background: white;
+          }
+          .ola-search :global(.ola-drop-link:hover) {
+            background: #eee;
+          }
+          .ola-search :global(.ola-field-img) {
+            max-height: ${theme.snippetImageMaxHeight};
+          }
+
+          /* Rating */
+          .ola-search :global(.ola-rating-active) {
+            fill: ${theme.primaryColor};
+            color: ${theme.primaryColor};
           }
         `}
       </style>

@@ -24,7 +24,9 @@ function Breadcrumbs ({ crumbs }) {
 }
 
 Breadcrumbs.propTypes = {
-  /* A string or array of breadcrumbs */
+  /**
+   * A string or array of breadcrumbs
+   */
   crumbs: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 }
 

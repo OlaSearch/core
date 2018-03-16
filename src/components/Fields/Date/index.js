@@ -86,12 +86,46 @@ function DateField ({
 }
 
 DateField.propTypes = {
+  /**
+   * Start date
+   */
   date: PropTypes.string,
+  /**
+   * End date
+   */
   endDate: PropTypes.string,
+  /**
+   * Display format of the date
+   */
   format: PropTypes.string,
+  /**
+   * Field label
+   */
   fieldLabel: PropTypes.string,
+  /**
+   * Search result
+   */
   result: PropTypes.object,
-  showIfEmpty: PropTypes.bool
+  /**
+   * Show field if empty
+   */
+  showIfEmpty: PropTypes.bool,
+  /**
+   * Field which indicates its a all day event
+   */
+  allDayEvent: PropTypes.bool,
+  /**
+   * Displays a date icon
+   */
+  displayIcon: PropTypes.bool,
+  /**
+   * Icon size
+   */
+  iconSize: PropTypes.number,
+  /**
+   * Label will be inline
+   */
+  inlineLabel: PropTypes.bool
 }
 
 DateField.defaultProps = {
@@ -99,8 +133,7 @@ DateField.defaultProps = {
   allDayEvent: false,
   showIfEmpty: false,
   displayIcon: false,
-  iconSize: 20,
-  type: 'daterange'
+  iconSize: 20
 }
 
 module.exports = DateField

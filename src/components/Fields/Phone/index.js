@@ -1,9 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { sanitizePhone } from './../../../utilities'
 import withTranslate from './../../../decorators/withTranslate'
 import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
+import PhoneIcon from '@olasearch/icons/lib/phone'
 
+/**
+ * Display a phone number link
+ */
 function Phone (props) {
   let {
     phone,
@@ -15,6 +20,8 @@ function Phone (props) {
     snippetId,
     fieldLabel,
     logPayload,
+    displayIcon,
+    iconSize,
     ...rest
   } = props
 
@@ -39,14 +46,53 @@ function Phone (props) {
       <FieldLabel label={fieldLabel} />
       <a
         href={url}
-        className='ola-cta-button ola-btn-call'
+        className='ola-flex ola-btn-phone'
         onClick={handleClick}
         {...rest}
       >
-        {label || translate('call_label')}
+        {displayIcon && (
+          <span className='ola-flex-icon'>
+            <PhoneIcon size={iconSize} />
+          </span>
+        )}
+        <span className='ola-flex-content'>
+          {label || translate('call_label')}
+        </span>
       </a>
     </div>
   )
+}
+
+Phone.defaultProps = {
+  displayIcon: false,
+  iconSize: 20
+}
+
+Phone.propTypes = {
+  /**
+   * Phone number
+   */
+  phone: PropTypes.string,
+  /**
+   * OnClick handler
+   */
+  onClick: PropTypes.func,
+  /**
+   * Field label
+   */
+  fieldLabel: PropTypes.string,
+  /**
+   * Displays a date icon
+   */
+  displayIcon: PropTypes.bool,
+  /**
+   * Icon size
+   */
+  iconSize: 20,
+  /**
+   * Search result
+   */
+  result: PropTypes.object
 }
 
 module.exports = withLogger(withTranslate(Phone))

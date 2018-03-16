@@ -1,10 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createAlert, deleteAlert } from './../../actions/Alert'
 import cx from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withLogger from './../../decorators/withLogger'
 
+/**
+ * Add a new alert button
+ */
 function AddAlert ({
   q,
   queriesById,
@@ -18,7 +22,7 @@ function AddAlert ({
 }) {
   if (!q) return null
   let exists = queryIds.some((id) => q === queriesById[id].query)
-  let classes = cx('ola-alert-add', {
+  let classes = cx('ola-btn', 'ola-alert-add', {
     'ola-alert-add-disabled': exists
   })
   function handleClick () {
@@ -49,6 +53,25 @@ function AddAlert ({
         : translate('alert_button_add')}
     </button>
   )
+}
+
+AddAlert.propTypes = {
+  /**
+   * Input query
+   */
+  q: PropTypes.string,
+  /**
+   * Array of query ids to monitor
+   */
+  queryIds: PropTypes.array,
+  /**
+   * Key value pair for each query id
+   */
+  queriesById: PropTypes.object,
+  /**
+   * Function to delete an alert
+   */
+  deleteAlert: PropTypes.func
 }
 
 function mapStateToProps (state) {

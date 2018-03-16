@@ -1,11 +1,29 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import DateParser from './../../utilities/dateParser'
 import { fetchAlerts, deleteAlert, createAlert } from './../../actions/Alert'
 
+/**
+ * Query monitoring - Show list of queries that the user is monitoring
+ */
 class Alert extends React.Component {
   componentDidMount () {
     this.props.fetchAlerts()
+  }
+  static propTypes = {
+    /**
+     * Array of query ids to monitor
+     */
+    queryIds: PropTypes.array,
+    /**
+     * Key value pair for each query id
+     */
+    queriesById: PropTypes.object,
+    /**
+     * Function to delete an alert
+     */
+    deleteAlert: PropTypes.func
   }
   render () {
     let { queryIds, queriesById, deleteAlert } = this.props

@@ -7,7 +7,7 @@ import MapPin from '@olasearch/icons/lib/map-pin'
 import { getDisplayName } from './../../../utilities'
 
 /**
- * Displays a Get directions button with distance
+ * Displays a Get directions button with distance and links to google maps
  */
 function Directions (props) {
   var {
@@ -94,19 +94,47 @@ function Directions (props) {
 }
 
 Directions.propTypes = {
+  /**
+   * Field name to find distance
+   */
   distanceFieldName: PropTypes.string,
+  /**
+   * Field name to find location name
+   */
   locationFieldName: PropTypes.string,
+  /**
+   * Show a left icon
+   */
   iconLeft: PropTypes.any,
+  /**
+   * Show a right icon
+   */
   iconRight: PropTypes.any,
+  /**
+   * Search result
+   */
   result: PropTypes.object,
+  /**
+   * Translate function
+   */
   translate: PropTypes.func,
-  fieldLabel: PropTypes.string
+  /**
+   * Field label
+   */
+  fieldLabel: PropTypes.string,
+  /**
+   * Displays a date icon
+   */
+  displayIcon: PropTypes.bool,
+  /**
+   * Icon size
+   */
+  iconSize: 20
 }
 
 Directions.defaultProps = {
   distanceFieldName: 'ola_distance',
   locationFieldName: 'ola_location',
-  result: {},
   iconSize: 20,
   displayIcon: false,
   iconRight: null,

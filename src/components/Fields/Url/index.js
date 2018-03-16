@@ -1,6 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import withLogger from './../../../decorators/withLogger'
 
+/**
+ * Displays an URL field
+ */
 function Url ({
   result,
   field,
@@ -45,6 +49,25 @@ function Url ({
 
 Url.defaultProps = {
   field: 'url'
+}
+
+Url.propTypes = {
+  /**
+   * Field to use as url
+   */
+  field: PropTypes.string,
+  /**
+   * Search result
+   */
+  result: PropTypes.object.isRequired,
+  /**
+   * Anchor link of the url
+   */
+  anchorLink: PropTypes.string,
+  /**
+   * Label of the url
+   */
+  label: PropTypes.string
 }
 
 module.exports = withLogger(Url)
