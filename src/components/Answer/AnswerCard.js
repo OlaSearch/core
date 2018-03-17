@@ -1,47 +1,78 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import Button from './common/Button'
+import Field from './common/Field'
 import classNames from 'classnames'
-import { isSvg } from './../../utilities'
 
-export default function AnswerCard ({
-  result,
-  onSelect,
-  cdn,
-  imagePlaceholder,
-  isActive,
-  module
-}) {
+/**
+ * Create an answer card
+ * @example ./src/components/Answer/AnswerCard.md
+ */
+function AnswerCard ({ card, onSelect, placeholderImage }) {
   function handleSelect () {
-    if (result.hasOwnProperty('additional_data')) return onSelect(result)
+    onSelect && onSelect(result)
   }
-
-  let { image, subtitle, title, exists } = result
-  let isClickable = !!result.additional_data
-  if (module === 'spices.facts.place.capital') {
-    image = image.length > 1 ? image[1] : image
-  }
-  let klass = classNames('ola-answer-item', {
-    'ola-answer-item-active': isActive,
-    'ola-answer-item-isSelectable': isClickable,
-    'ola-answer-item-deActive': !exists
-  })
-  image = image || imagePlaceholder
-  let bgImage = image
-    ? isSvg(image) ? image : `${cdn ? cdn + '/' : ''}${image}`
-    : null
+  let { image, subtitle, title, url, buttons = [], source, fields = [] } = card
+  image = image || placeholderImage
   return (
-    <div className={klass} onClick={handleSelect}>
-      {image ? (
-        <div
-          className='ola-answer-image'
-          style={{
-            backgroundImage: `url("${bgImage}")`
-          }}
-        />
-      ) : null}
-      <div className='ola-answer-content'>
-        <h3 className='ola-answer-title'>{title}</h3>
-        <div className='ola-answer-subtitle'>{subtitle}</div>
+    <div className='ola-answer-card' onClick={handleSelect}>
+      <div className='ola-answer-card-wrapper'>
+        {image ? (
+          <div
+            className='ola-img ola-img-bg ola-answer-image'
+            style={{
+              backgroundImage: `url("${image}")`
+            }}
+          />
+        ) : null}
+        <div className='ola-answer-content'>
+          <div className='ola-answer-header'>
+            <div className='ola-answer-title'>
+              {url ? <a href={url}>{title}</a> : title}
+            </div>
+            <div className='ola-answer-subtitle'>{subtitle}</div>
+          </div>
+          {fields.length ? (
+            <div className='ola-answer-fields'>
+              {fields.map((field, idx) => {
+                return <Field {...field} key={idx} />
+              })}
+            </div>
+          ) : null}
+          {buttons.length ? (
+            <div className='ola-answer-buttons'>
+              {buttons.map((button, idx) => {
+                return <Button {...button} key={idx} />
+              })}
+            </div>
+          ) : null}
+          {source ? (
+            <div className='ola-answer-source'>
+              <span className='ola-answer-source-label'>Source: </span>
+              <a href={source.url} className='ola-answer-source-link'>
+                {source.name}
+              </a>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   )
 }
+
+AnswerCard.propTypes = {
+  /**
+   * answer card object
+   */
+  card: PropTypes.object,
+  /**
+   * Callback when a card is clicked
+   */
+  onSelect: PropTypes.func,
+  /**
+   * Placeholder image
+   */
+  placeholderImage: PropTypes.string
+}
+
+export default AnswerCard

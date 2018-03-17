@@ -76,7 +76,7 @@ export DefaultSnippet from './components/Snippets/Default'
 /* Answers */
 export Answer from './components/Answer'
 export AnswerMC from './components/Answer/AnswerMC'
-export AnswerToken from './components/Answer/AnswerToken'
+export SlotSuggestion from './components/SlotSuggestion'
 
 /* Export theme */
 export { ThemeProvider, ThemeConsumer } from './containers/ThemeContext'

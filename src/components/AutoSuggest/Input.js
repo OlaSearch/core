@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Bookmarks from './../Bookmarks'
-import History from './../History'
 import SpeechInput from './../Speech'
 import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
+import Search from '@olasearch/icons/lib/material-search'
+import Cross from '@olasearch/icons/lib/x'
 
 export default class Input extends React.Component {
   static propTypes = {
@@ -122,23 +122,32 @@ export default class Input extends React.Component {
     return (
       <div className={klass}>
         {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
-        <input
-          ref='Input'
-          type='text'
-          value={q}
-          className='ola-text-input ola-text-input-round'
-          onChange={this.handleInputChange}
-          onFocus={this.onFocus}
-          onBlur={onBlur}
-          autoComplete='off'
-          autoCorrect='off'
-          autoCapitalize='off'
-          spellCheck='false'
-          placeholder={placeholder}
-          onKeyDown={this.onKeyDown}
-        />
+        <div className='ola-form-input-wrapper'>
+          <input
+            ref='Input'
+            type='text'
+            value={q}
+            className='ola-text-input ola-text-input-round'
+            onChange={this.handleInputChange}
+            onFocus={this.onFocus}
+            onBlur={onBlur}
+            autoComplete='off'
+            autoCorrect='off'
+            autoCapitalize='off'
+            spellCheck='false'
+            placeholder={placeholder}
+            onKeyDown={this.onKeyDown}
+          />
+        </div>
 
-        {button}
+        <button
+          type='button'
+          className='ola-search-button'
+          onClick={this.onSearchButtonClick}
+          aria-label='Search'
+        >
+          <Search />
+        </button>
 
         <SpeechInput
           onResult={this.handleSpeechChange}
@@ -146,9 +155,17 @@ export default class Input extends React.Component {
           isAutosuggest
         />
 
-        <Bookmarks onOpen={this.props.handleClose} />
-
-        <History onOpen={this.props.handleClose} />
+        <style jsx>
+          {`
+            .ola-search-button,
+            .ola-search-button:hover,
+            .ola-search-button:active,
+            .ola-search-button:focus {
+              background: ${this.props.theme.primaryColor};
+              border-color: ${this.props.theme.primaryColor};
+            }
+          `}
+        </style>
       </div>
     )
   }

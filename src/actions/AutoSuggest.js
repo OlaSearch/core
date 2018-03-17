@@ -32,7 +32,8 @@ export function executeAutoSuggest () {
 
 export function executeFuzzyAutoSuggest (q) {
   return (dispatch, getState) => {
-    var query = { q }
+    const { dictionary } = getState().AutoSuggest
+    var query = { q, 'suggest.dictionary': dictionary }
     var context = getState().Context
     return dispatch({
       types: [

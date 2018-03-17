@@ -1,15 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Parser, QueryBuilder, Http } from '@olasearch/solr-adapter'
+import store from './styleguide.store'
 import config from 'olasearchconfig'
-import { createLoggerMiddleware } from '@olasearch/logger'
 import { Provider } from 'react-redux'
-import { AutoComplete, OlaProvider, createStore } from '@olasearch/core'
-
-/* Optional loggerMiddleware */
-let loggerMiddleware = createLoggerMiddleware({ logger: config.logger })
-/* Store */
-let store = createStore(config, { Parser, QueryBuilder, Http }, {}, [loggerMiddleware])
+import { OlaProvider } from '@olasearch/core'
 
 export default class Wrapper extends React.Component {
   render() {

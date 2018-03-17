@@ -5,16 +5,16 @@ import Thumbnail from './../Fields/Thumbnail'
 import TextField from './../Fields/TextField'
 import Bookmark from './../SnippetActions/Bookmark'
 
+/**
+ * Default search result snippet, displayed only if no snippet is selected in admin console
+ * @example ./src/components/Snippets/Default.md
+ */
 function DefaultSnippet ({ result, bookmarks, dispatch, ...rest }) {
   return (
     <div className='ola-snippet'>
       <div className='ola-snippet-inner'>
         <div className='ola-snippet-image'>
-          <Thumbnail
-            thumbnail={result.thumbnail}
-            thumbnail_mobile={result.thumbnail_mobile}
-            {...rest}
-          />
+          <Thumbnail thumbnail={result.thumbnail} {...rest} />
         </div>
         <div className='ola-snippet-content'>
           <Bookmark

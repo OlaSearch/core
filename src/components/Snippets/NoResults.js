@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import withTranslate from './../../decorators/withTranslate'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
 
+/**
+ * Shown when there are no search results
+ * @example ./src/components/Snippets/NoResults.md
+ */
 function NoResults ({
   totalResults,
   isLoading,
@@ -72,10 +76,25 @@ NoResults.defaultProps = {
 }
 
 NoResults.propTypes = {
+  /**
+   * Total no of results
+   */
   totalResults: PropTypes.number,
+  /**
+   * Boolean to check if search is in progress
+   */
   isLoading: PropTypes.bool,
+  /**
+   * Search query
+   */
   q: PropTypes.string,
+  /**
+   * Spell-checked query
+   */
   suggestedTerm: PropTypes.string,
+  /**
+   * List of facets selected
+   */
   facets: PropTypes.array
 }
 

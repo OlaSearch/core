@@ -15,6 +15,10 @@ import { ALL_VALUES } from './../../constants/Settings'
 import FilterInput from './common/FilterInput'
 import FacetTitle from './common/FacetTitle'
 
+/**
+ * Displays a checkbox filter
+ * @example ./src/components/FacetFilters/Checkbox.md
+ */
 class CheckboxFilter extends React.Component {
   constructor (props) {
     super(props)
@@ -25,12 +29,13 @@ class CheckboxFilter extends React.Component {
   }
 
   static defaultProps = {
-    listType: 'uniform'
+    listType: 'uniform',
+    selected: []
   }
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    selected: PropTypes.array.isRequired,
+    selected: PropTypes.array,
     facet: PropTypes.object.isRequired
   }
 

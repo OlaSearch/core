@@ -23,7 +23,7 @@ import omit from 'ramda/src/omit'
 const updateURL = debounce(pushState, 300)
 
 /* Should route change */
-var globalRouteChange = true
+var globalRouteChange = false
 
 /* URL Parameter */
 

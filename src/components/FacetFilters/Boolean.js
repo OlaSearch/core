@@ -9,6 +9,10 @@ import withToggle from './../../decorators/withToggle'
 import classNames from 'classnames'
 import FacetTitle from './common/FacetTitle'
 
+/**
+ * Boolean filter
+ * @example ./src/components/FacetFilters/Boolean.md
+ */
 function BooleanFilter (props) {
   function onChange (event) {
     let { dispatch, facet } = props
@@ -19,18 +23,18 @@ function BooleanFilter (props) {
     dispatch(executeSearch())
   }
 
-  var { facet, selected, toggleDisplay, isCollapsed } = props
+  const { facet, selected, toggleDisplay, isCollapsed } = props
 
   if (!facet.values.length) return null
 
-  var { displayName, template } = facet
+  const { displayName, template } = facet
 
-  var klass = classNames({
+  const klass = classNames({
     'ola-facet': true,
     'ola-facet-collapsed': isCollapsed
   })
 
-  let isChecked = !!selected.length
+  const isChecked = !!selected.length
 
   return (
     <div className={klass}>
@@ -42,17 +46,21 @@ function BooleanFilter (props) {
       <div className='ola-facet-wrapper'>
         <label className='ola-checkbox ola-checkbox-label'>
           <input type='checkbox' checked={isChecked} onChange={onChange} />
-          {template}
+          <span className='ola-search-facet-name'>{template}</span>
         </label>
       </div>
     </div>
   )
 }
 
+BooleanFilter.defaultProps = {
+  selected: []
+}
+
 BooleanFilter.propTypes = {
   dispatch: PropTypes.func.isRequired,
   facet: PropTypes.object.isRequired,
-  selected: PropTypes.array.isRequired
+  selected: PropTypes.array
 }
 
 export default withToggle(BooleanFilter)

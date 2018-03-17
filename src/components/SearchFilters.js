@@ -52,14 +52,13 @@ class SearchFilters extends React.Component {
     }
     if (!facets.length) return null
 
-    let parentClass = classNames('ola-search-filters', className)
+    const classes = classNames('ola-search-filters', className)
 
     return (
-      <div className={parentClass}>
+      <div className={classes}>
         <div className='ola-search-filters-inner'>
           {facets.map((facet, index) => {
             /* Recalculate Selected values */
-
             const selectedFacets = selected
               .filter((item) => item.name === facet.name)
               .map((item) => item.selected)

@@ -1,30 +1,36 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
+/**
+ * Display a word cloud
+ * @example ./src/components/Answer/AnswerWordMap.md
+ */
 function AnswerWordMap ({
-  data,
+  card,
   maxLen,
   shuffle,
   onSelect,
   fontSizeMin,
   fontSizeMax
 }) {
+  let { elements = [] } = card
   /* Return null if nothing */
-  if (!data.length) return null
+  if (!elements.length) return null
 
   if (shuffle) {
-    data.sort(function (a, b) {
+    elements.sort(function (a, b) {
       if (a.title < b.title) return -1
       if (a.title > b.title) return 1
       return 0
     })
   }
 
-  let counts = data.map(({ title, count }) => count)
+  let counts = elements.map(({ title, count }) => count)
   let max = Math.max.apply(this, counts)
   let min = Math.min.apply(this, counts)
   return (
     <div className='ola-answer-wordmap'>
-      {data.slice(0, maxLen).map(({ title, count }, idx) => {
+      {elements.slice(0, maxLen).map(({ title, count }, idx) => {
         let size =
           count === min
             ? fontSizeMin
@@ -51,7 +57,7 @@ function WordMapItem ({ title, count, size, onSelect }) {
     <button
       style={{ fontSize: size + 'px' }}
       onClick={handleClick}
-      className='ola-answer-wordmap-item'
+      className='ola-btn ola-button-wordmap'
     >
       {title}
     </button>
@@ -63,6 +69,17 @@ AnswerWordMap.defaultProps = {
   fontSizeMax: 28,
   maxLen: 10,
   shuffle: false
+}
+
+AnswerWordMap.propTypes = {
+  /**
+   * answer card object
+   */
+  card: PropTypes.object,
+  /**
+   * Shuffle the words
+   */
+  shuffle: PropTypes.bool
 }
 
 module.exports = AnswerWordMap

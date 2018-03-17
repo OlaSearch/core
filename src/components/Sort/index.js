@@ -6,14 +6,18 @@ import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
 import ChevronDown from '@olasearch/icons/lib/chevron-down'
 
+/**
+ * Show result sorting select box
+ */
 function Sort ({ selected = '', translate, changeSort, executeSearch, config }) {
+  console.log(config)
   function handleChange (event) {
     changeSort(event.target.value)
     executeSearch()
   }
   let { sortBy } = config
   /* Do not display if there are no sort options */
-  if (!sortBy.length) return null
+  if (!sortBy || !sortBy.length) return null
   return (
     <div className='ola-sort'>
       <label className='ola-sort-label' htmlFor='Ola-Element-Sort'>
@@ -43,7 +47,10 @@ function Sort ({ selected = '', translate, changeSort, executeSearch, config }) 
 }
 
 Sort.propTypes = {
-  selected: PropTypes.string.isRequired
+  /**
+   * Active sort
+   */
+  selected: PropTypes.string
 }
 
 function mapStateToProps (state) {

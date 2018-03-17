@@ -1,7 +1,7 @@
 import types from './../constants/ActionTypes'
 import {
   buildQueryString,
-  character as hashCharacter
+  HASH_CHARACTER as hashCharacter
 } from './../services/urlSync'
 import omit from 'ramda/src/omit'
 // import flatten from 'ramda/src/flatten'

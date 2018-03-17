@@ -1,8 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { createHTMLMarkup } from './../../utilities'
 import Bookmark from './../SnippetActions/Bookmark'
 
-function DefaultAnswerSnippet ({ result, bookmarks, dispatch, ...rest }) {
+/**
+ * Shows a simple answer snippet
+ * @example ./src/components/Snippets/Answer.md
+ */
+function AnswerSnippet ({ result, bookmarks, dispatch, ...rest }) {
   let { ola_answer: answer } = result
   return (
     <div className='ola-snippet ola-snippet-static-answer'>
@@ -20,4 +25,19 @@ function DefaultAnswerSnippet ({ result, bookmarks, dispatch, ...rest }) {
   )
 }
 
-module.exports = DefaultAnswerSnippet
+AnswerSnippet.propTypes = {
+  /**
+   * The search result object
+   */
+  result: PropTypes.object,
+  /**
+   * List of bookmarked results
+   */
+  bookmarks: PropTypes.array,
+  /**
+   * Redux dispatch func
+   */
+  dispatch: PropTypes.func.isRequired
+}
+
+module.exports = AnswerSnippet

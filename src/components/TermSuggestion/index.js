@@ -52,13 +52,13 @@ function TermSuggestion ({
   )
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
-    term: state.AppState.suggestedTerm,
-    q: state.QueryState.q,
-    totalResults: state.AppState.totalResults,
+    term: ownProps.suggestedTerm || state.AppState.suggestedTerm,
+    q: ownProps.q || state.QueryState.q,
+    totalResults: ownProps.totalResult || state.AppState.totalResults,
     answer: state.AppState.answer,
-    isLoading: state.AppState.isLoading
+    isLoading: ownProps.isLoading || state.AppState.isLoading
   }
 }
 

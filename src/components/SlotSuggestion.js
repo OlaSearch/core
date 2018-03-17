@@ -7,15 +7,15 @@ import {
   addFacet,
   executeSearch,
   removeSkipFacetFields
-} from './../../actions/Search'
-import withTranslate from './../../decorators/withTranslate'
+} from './../actions/Search'
+import withTranslate from './../decorators/withTranslate'
 import Plus from '@olasearch/icons/lib/plus'
-import { CREATE_FILTER_OBJECT, SLOT_DATE } from './../../constants/Settings'
-import { getDisplayName } from './../../utilities'
-import withTheme from './../../decorators/withTheme'
-import withConfig from './../../decorators/withConfig'
+import { CREATE_FILTER_OBJECT, SLOT_DATE } from './../constants/Settings'
+import { getDisplayName } from './../utilities'
+import withTheme from './../decorators/withTheme'
+import withConfig from './../decorators/withConfig'
 
-function AnswerToken ({
+function SlotSuggestion ({
   answer,
   addFacet,
   removeSkipFacetFields,
@@ -120,14 +120,14 @@ function AnswerTokenBtn ({ slot, displayName, handleAddToken }) {
   const { type, value, match } = slot
   return (
     <button className='ola-btn ola-btn-slot-add' onClick={handleAdd}>
-      {displayName}:{' '}
+      {displayName ? displayName + ': ' : null}
       {value && type !== SLOT_DATE ? getDisplayName(null, value[0]) : match}
       <Plus size={16} />
     </button>
   )
 }
 
-AnswerToken.defaultProps = {
+SlotSuggestion.defaultProps = {
   answer: null
 }
 
@@ -144,4 +144,4 @@ module.exports = connect(mapStateToProps, {
   addFacet,
   executeSearch,
   removeSkipFacetFields
-})(withConfig(withTranslate(withTheme(AnswerToken))))
+})(withConfig(withTranslate(withTheme(SlotSuggestion))))

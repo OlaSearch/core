@@ -22,8 +22,10 @@ export function pushState (qs, type, replaceQueryParamName) {
   }
 }
 
+export const HASH_CHARACTER = '?'
+
 export function getHistoryCharacter (type) {
-  return type === 'pushState' ? '?' : '#/?'
+  return type === 'pushState' ? HASH_CHARACTER : '#/?'
 }
 
 export function replaceState (qs, type) {

@@ -46,10 +46,7 @@
   @extend %ola-icon-button;
   color: $button-primary-color;
   width: $button-search-width;
-
-  // &, &:hover, &:active, &:focus {
-  //   background: $button-primary-background;
-  // }
+  background: $button-primary-background;
 }
 
 /* Primary button */
@@ -193,4 +190,12 @@
   &, &:hover {
     background: none;
   }
+}
+
+
+/**
+ * Wordmap
+ */
+.ola-button-wordmap {
+  margin-right: 8px;
 }

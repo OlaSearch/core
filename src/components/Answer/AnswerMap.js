@@ -3,12 +3,26 @@ import PropTypes from 'prop-types'
 import GoogleMaps from './maputils'
 import cx from 'classnames'
 
+/**
+ * Displays a google map
+ * @example ./src/components/Answer/AnswerMap.md
+ */
 class AnswerMap extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       hasData: false
     }
+  }
+  static propTypes = {
+    /**
+     * Display a custom marker icon
+     */
+    markerIcon: PropTypes.any,
+    /**
+     * answer card object
+     */
+    card: PropTypes.object
   }
   static defaultProps = {
     markerIcon: null
@@ -61,7 +75,7 @@ class AnswerMap extends React.Component {
   }
   shouldComponentUpdate (nextProps, nextState) {
     return (
-      nextProps.data !== this.props.data ||
+      nextProps.card !== this.props.card ||
       nextProps.results !== this.props.results ||
       this.state.hasData !== nextState.hasData
     )
@@ -87,23 +101,23 @@ class AnswerMap extends React.Component {
     this.infowindow.open(this.map, marker)
   }
   refreshMap = () => {
-    let { data, results } = this.props
-    const { element_keys, source, title } = data
+    let { card, results } = this.props
+    let { elements = [], source, title, element_keys } = card
     const { google } = this.window
     /**
      * Source of the data
      */
     if (source) {
-      data = results.map((result) => ({
+      elements = results.map((result) => ({
         title: result[element_keys['title']],
         location: result[element_keys['location']]
       }))
     }
     /* Only display markers with location */
-    data = data.filter(({ location }) => location)
+    elements = elements.filter(({ location }) => location)
 
     /* Check if any data exists */
-    const hasData = data.length > 0
+    const hasData = elements.length > 0
 
     this.setState({
       hasData
@@ -111,13 +125,12 @@ class AnswerMap extends React.Component {
     /* Do nothing if no markers */
     if (!hasData) return
 
-    data.forEach(({ title, location }) => {
+    elements.forEach(({ title, location }) => {
       /* Get the first location */
-      if (location && location.length) location = location[0]
+      if (Array.isArray(location) && location.length) location = location[0]
       let [lat, lng] = location.split(',')
       let position = { lat: parseFloat(lat), lng: parseFloat(lng) }
       let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
-
       let marker = new google.maps.Marker({
         position,
         map: this.map,

@@ -29,7 +29,8 @@ export function prepareStoreState ({ config }) {
     replaceQueryParamName,
     sidebar,
     layoutSwitching,
-    filterInAutoComplete
+    filterInAutoComplete,
+    autocompleteDictionary
   } = config
 
   if (typeof contextState === 'string') {
@@ -103,7 +104,8 @@ export function prepareStoreState ({ config }) {
       replaceQueryParamName,
       sidebar,
       layoutSwitching,
-      filterInAutoComplete
+      filterInAutoComplete,
+      autocompleteDictionary
     },
     botState
   }

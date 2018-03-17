@@ -99,12 +99,16 @@ export const isBrowser = typeof document !== 'undefined'
 export const CREATE_FILTER_OBJECT = ({
   name,
   displayName,
-  type,
+  type = 'string',
   isCollapsed = false,
   showSelectedTag = false,
   multiSelect = true,
+  config,
   ...rest
 }) => {
+  if (config) {
+    displayName = config.fieldLabels[name.replace('_ss', '')]
+  }
   return {
     displayName,
     name,
@@ -127,7 +131,7 @@ export const SLOT_DATE = 'OLA.DATE'
 /**
  * Taxo entity type
  */
-export const TAXO_ENTITY = 'taxo_enty'
+export const TAXO_ENTITY = 'taxo_entity'
 
 /**
  * Default theme

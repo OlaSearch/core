@@ -12,6 +12,9 @@ import withConfig from './../../decorators/withConfig'
 import { log } from './../../actions/Logger'
 import Navigation from '@olasearch/icons/lib/navigation'
 
+/**
+ * Request user for his current location
+ */
 class GeoLocation extends React.Component {
   constructor (props) {
     super(props)
@@ -20,8 +23,29 @@ class GeoLocation extends React.Component {
   }
   static defaultProps = {
     active: false,
-    icon: null,
     showLabel: false
+  }
+  static propTypes = {
+    /**
+     * External prop to ask for location
+     */
+    active: PropTypes.bool,
+    /**
+     * Should label be visible
+     */
+    showLabel: PropTypes.string,
+    /**
+     * Context state
+     */
+    Context: PropTypes.object,
+    /**
+     * Current user query
+     */
+    q: PropTypes.string,
+    /**
+     * Boolean to check if search is in progress
+     */
+    isLoading: PropTypes.bool
   }
   componentDidUpdate (prevProps) {
     if (prevProps.active !== this.props.active && prevProps.active) {

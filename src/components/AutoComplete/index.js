@@ -46,12 +46,16 @@ import {
   TYPE_ENTITY,
   TYPE_QUERY,
   TYPE_DOC,
-  TYPE_FACET
+  TYPE_FACET,
+  CREATE_FILTER_OBJECT
 } from './../../constants/Settings'
 import QueryHelp from './../Onboarding/QueryHelp'
 import withTheme from './../../decorators/withTheme'
 import withConfig from './../../decorators/withConfig'
 
+/**
+ * Display an autocomplete
+ */
 class AutoComplete extends React.Component {
   constructor (props) {
     super(props)
@@ -495,7 +499,7 @@ class AutoComplete extends React.Component {
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
       this.props.tokens.forEach(({ value, name }) => {
-        let facet = find(propEq('name', name))(this.props.config.facets)
+        let facet = this.getOrCreateFacet(name)
         /* Set from query as true */
         facet.isToken = true
         this.props.addFacet(facet, value)
@@ -589,6 +593,17 @@ class AutoComplete extends React.Component {
     if (this._autosearch) clearTimeout(this._autosearch)
   }
 
+  getOrCreateFacet = (name) => {
+    let facet = find(propEq('name', name))(this.props.config.facets)
+    if (!facet) {
+      facet = CREATE_FILTER_OBJECT({
+        name,
+        config: this.props.config
+      })
+    }
+    return facet
+  }
+
   onFuzzySelect = (suggestion, options) => {
     let { type } = suggestion
     let facet
@@ -629,9 +644,7 @@ class AutoComplete extends React.Component {
 
     /* isFacet */
     if (isFacet) {
-      facet = find(propEq('name', suggestion.taxo_label))(
-        this.props.config.facets
-      )
+      facet = this.getOrCreateFacet(suggestion.taxo_label)
       this.props.addToken({
         startToken: this.state.startToken,
         endToken:
@@ -650,9 +663,7 @@ class AutoComplete extends React.Component {
        * For Barack Obama in Climate
        */
       if (suggestion.taxo_label && suggestion.taxo_term) {
-        facet = find(propEq('name', suggestion.taxo_label))(
-          this.props.config.facets
-        )
+        facet = this.getOrCreateFacet(suggestion.taxo_label)
         this.props.replaceFacet(
           facet,
           suggestion.taxo_path || suggestion.taxo_term
@@ -664,9 +675,7 @@ class AutoComplete extends React.Component {
       if (suggestion.taxo_label && suggestion.taxo_term) {
         /* Remove all selected facets */
         this.props.removeAllFacets()
-        facet = find(propEq('name', suggestion.taxo_label))(
-          this.props.config.facets
-        )
+        facet = this.getOrCreateFacet(suggestion.taxo_label)
         this.props.replaceFacet(
           facet,
           suggestion.taxo_path || suggestion.taxo_term
@@ -677,9 +686,7 @@ class AutoComplete extends React.Component {
       if (suggestion.tokens) {
         this.props.replaceTokens(suggestion.tokens)
         for (let i = 0; i < suggestion.tokens.length; i++) {
-          facet = find(propEq('name', suggestion.tokens[i].name))(
-            this.props.config.facets
-          )
+          facet = this.getOrCreateFacet(suggestion.tokens[i].name)
           /**
            * Make sure to add isToken attribute
            */

@@ -20,6 +20,7 @@ import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
 import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
+import withTheme from './../../decorators/withTheme'
 
 class AutoSuggest extends React.Component {
   constructor (props) {
@@ -244,15 +245,13 @@ class AutoSuggest extends React.Component {
             results={results}
             showZone={showZone}
             handleClose={this.handleClickOutside}
+            theme={this.props.theme}
           />
           <div className={klass}>
-            <TermSuggestion term={suggestedTerm} />
-
-            <SpellSuggestion
-              suggestions={spellSuggestions}
-              onChange={this.onChange}
+            <TermSuggestion
+              q={q}
               totalResults={totalResults}
-              dispatch={dispatch}
+              suggestedTerm={suggestedTerm}
             />
 
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
@@ -293,5 +292,5 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps)(
-  withConfig(withTranslate(listensToClickOutside(AutoSuggest)))
+  withTheme(withConfig(withTranslate(listensToClickOutside(AutoSuggest))))
 )

@@ -17,12 +17,22 @@ module.exports = {
   showUsage: true,
   styleguideDir: 'docs',
   styleguideComponents: {
+    // StyleGuideRenderer: path.join(__dirname, './styleguide/styleguide.wrapper')
     Wrapper: path.join(__dirname, './styleguide/styleguide.wrapper')
   },
   template: './styleguide/styleguide.template.html',
   editorConfig: { theme: 'cobalt' },  
   theme,
   styles,
+  context: {
+    olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),    
+    // SearchState: function (state) {
+    //   return {
+    //     AppState: state.AppState,
+    //     QueryState: state.QueryState
+    //   }
+    // }
+  },
   sections: [
     {
       name: '',
@@ -41,13 +51,45 @@ module.exports = {
       content: './styleguide/SearchAdapters.md'
     },
     {
-      name: 'Query monitoring',
-      components: 'src/components/Alert/*.js'
+      name: 'Components',
+      components: () => {
+        return [
+          'src/components/AutoComplete/index.js',
+          'src/components/AutoSuggest/index.js',
+          'src/components/Geo/GeoLocation.js',
+          'src/components/Sort/index.js',
+        ]
+      }
+    },
+    {
+      name: 'Answers',
+      content: './styleguide/AnswerFormats.md',
+      components: () => {
+        return [
+          'src/components/Answer/AnswerCard.js',
+          'src/components/Answer/AnswerList.js',
+          'src/components/Answer/AnswerLineChart.js',
+          'src/components/Answer/AnswerMap.js',
+          'src/components/Answer/AnswerWordMap.js',
+        ]
+      }
+    },
+    {
+      name: 'Snippets',
+      components: './src/components/Snippets/*.js',
     },
     {
       name: 'Snippet fields',
       components: 'src/components/Fields/*/*.js'
-    }
+    },
+    {
+      name: 'Filters',
+      components: 'src/components/FacetFilters/*.js'
+    },    
+    {
+      name: 'Query monitoring',
+      components: 'src/components/Alert/*.js'
+    },    
   ],
   require: [
     // path.resolve(__dirname, './setup.js'),

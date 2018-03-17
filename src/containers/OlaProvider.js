@@ -27,32 +27,60 @@ export default function OlaProvider ({ config, translations, children }) {
             font-size: ${theme.titleFontSize};
             padding-bottom: ;
           }
-          .ola-search
-            :global(.ola-field-date, .ola-field-person, .ola-field-distance, .ola-btn-directions, .ola-answer-slots, .ola-location-notify, .ola-field-component-label, .ola-field-phone, .ola-field-sms, .ola-field-subtitles, .ola-field-pages) {
+          .ola-search :global(.ola-field-date),
+          .ola-search :global(.ola-field-person),
+          .ola-search :global(.ola-field-distance),
+          .ola-search :global(.ola-btn-directions),
+          .ola-search :global(.ola-answer-slots),
+          .ola-search :global(.ola-location-notify),
+          .ola-search :global(.ola-field-component-label),
+          .ola-search :global(.ola-field-phone),
+          .ola-search :global(.ola-field-sms),
+          .ola-search :global(.ola-field-subtitles),
+          .ola-search :global(.ola-link-geo),
+          .ola-search :global(.ola-field-pages) {
             font-size: ${theme.mediumFontSize};
           }
-          .ola-search :global(.ola-page, .ola-page:hover) {
+          .ola-search :global(.ola-page),
+          .ola-search :global(.ola-page:hover) {
             color: ${theme.secondaryButtonColor};
             background: ${theme.secondaryButtonBackground};
             border: 1px ${theme.borderColor} solid;
           }
-          .ola-search :global(.ola-page-current, .ola-page-current:hover) {
+          .ola-search :global(.ola-page-current),
+          .ola-search :global(.ola-page-current:hover) {
             background-color: #eee;
           }
-          .ola-search
-            :global(.ola-spell-links, .ola-spell-links:hover, .ola-link-show-more, .ola-link-show-more:hover, .ola-link-change-layout, .ola-link-change-layout:hover, .ola-link-open-filter, .ola-link-open-filter:hover, .ola-suggestions-clear, .ola-suggestions-clear:hover, .ola-btn-close
-              /* Help close button */, .ola-btn-directions, .ola-btn-person, .ola-btn-phone, .ola-drop-link, .ola-btn-sms, .ola-btn-subtitle, .ola-link-view-pages) {
+          .ola-search :global(.ola-spell-links),
+          .ola-search :global(.ola-spell-links:hover),
+          .ola-search :global(.ola-link-show-more),
+          .ola-search :global(.ola-link-show-more:hover),
+          .ola-search :global(.ola-link-change-layout),
+          .ola-search :global(.ola-link-change-layout:hover),
+          .ola-search :global(.ola-link-open-filter),
+          .ola-search :global(.ola-link-open-filter:hover),
+          .ola-search :global(.ola-suggestions-clear),
+          .ola-search :global(.ola-suggestions-clear:hover),
+          .ola-search :global(.ola-btn-close),
+          .ola-search :global(.ola-btn-directions),
+          .ola-search :global(.ola-btn-person),
+          .ola-search :global(.ola-btn-phone),
+          .ola-search :global(.ola-drop-link),
+          .ola-search :global(.ola-btn-sms),
+          .ola-search :global(.ola-btn-subtitle),
+          .ola-search :global(.ola-link-view-pages) {
             color: ${theme.primaryColor};
           }
-          .ola-search :global(.ola-link-show-more, .ola-link-show-more:hover) {
+          .ola-search :global(.ola-link-show-more),
+          .ola-search :global(.ola-link-show-more:hover) {
             background: none;
           }
-          .ola-search
-            :global(.ola-link-change-layout, .ola-link-change-layout:hover) {
+          .ola-search :global(.ola-link-change-layout),
+          .ola-search :global(.ola-link-change-layout:hover) {
             border: 1px ${theme.primaryColor} solid;
           }
-          .ola-search
-            :global(.ola-link-open-filter, .ola-link-open-filter:hover) {
+          .ola-search :global(.ola-link-open-filter),
+          .ola-search :global(.ola-link-open-filter:hover) {
             border: 1px ${theme.primaryColor} solid;
           }
 
@@ -82,8 +110,8 @@ export default function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-field-title a) {
             color: ${theme.searchLinkColor};
           }
-          .ola-search
-            :global(.ola-field-title a:hover, .ola-field-title a:focus) {
+          .ola-search :global(.ola-field-title a:hover),
+          .ola-search :global(.ola-field-title a:focus) {
             color: ${theme.searchLinkHoverColor};
           }
           .ola-search :global(.ola-cta-button) {

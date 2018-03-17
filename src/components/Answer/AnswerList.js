@@ -1,46 +1,34 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withToggle from './../../decorators/withToggle'
-import AnswerField from './AnswerField'
-import AnswerButton from './AnswerButton'
+import Field from './common/Field'
+import Button from './common/Button'
+import AnswerCard from './AnswerCard'
 
-function AnswerList (props) {
-  let { isCollapsed, toggleDisplay, data, max, translate } = props
-  let { elements } = data
-  let size = elements.length
+/**
+ * Displays a list of answer cards
+ * @example ./src/components/Answer/AnswerList.md
+ */
+function AnswerList ({ card, isCollapsed, toggleDisplay, max, translate }) {
+  const { elements, source } = card
+  const size = elements.length
   return (
-    <div className='ola-answer-list-info-detail'>
+    <div className='ola-answer-list'>
       <div className='ola-answer-list-items'>
-        {elements.slice(0, isCollapsed ? undefined : max).map((item, idx) => {
-          let { title, subtitle, fields, buttons = [] } = item
-          return (
-            <div className='ola-answer-item' key={idx}>
-              <div className='ola-answer-item-wrapper'>
-                <div className='ola-answer-title'>
-                  <span className='ola-answer-title-text'>{title}</span>
-                  <div className='ola-answer-subtitle'>{subtitle}</div>
-                </div>
-
-                <div className='ola-answer-keyvalue'>
-                  {fields.map((field, idx) => {
-                    let klass = classNames(
-                      'ola-answer-row',
-                      `ola-answer-row-${field.label}`
-                    )
-                    return (
-                      <AnswerField className={klass} {...field} key={idx} />
-                    )
-                  })}
-                </div>
-                {buttons.map((button, idx) => {
-                  return <AnswerButton {...button} key={idx} />
-                })}
-              </div>
-            </div>
-          )
+        {elements.slice(0, isCollapsed ? undefined : max).map((card, idx) => {
+          return <AnswerCard card={card} key={idx} />
         })}
       </div>
+      {source ? (
+        <div className='ola-answer-source'>
+          <span className='ola-answer-source-label'>Source: </span>
+          <a href={source.url} className='ola-answer-source-link'>
+            {source.name}
+          </a>
+        </div>
+      ) : null}
       {size > max ? (
         <button className='ola-answer-link-more' onClick={toggleDisplay}>
           {isCollapsed

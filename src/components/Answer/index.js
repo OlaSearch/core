@@ -3,11 +3,9 @@ import classNames from 'classnames'
 import AnswerSuggestion from './AnswerSuggestion'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
-import AnswerGrid from './AnswerGrid'
-import AnswerGeneric from './AnswerGeneric'
+import AnswerCard from './AnswerCard'
 import AnswerList from './AnswerList'
 import AnswerMC from './AnswerMC'
-import AnswerPersonInfoDetail from './AnswerPersonInfoDetail'
 import {
   updateQueryTerm,
   executeSearch,
@@ -24,34 +22,25 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
     dispatch(setSkipIntent(true))
     dispatch(executeSearch())
   }
-  function templatePicker (template, data, module) {
+  function templatePicker (template, card, module) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
       let Component = templates[template]
-      return <Component data={data} module={module} />
+      return <Component card={card} module={module} />
     }
     switch (template) {
-      case 'table_detail':
-        return <TableDetail data={data} />
-
-      case 'person_info_grid':
-      case 'text':
-        return <AnswerGrid data={data} result={result} answer={answer} />
-
-      case 'item_detail':
-        return <ItemDetail data={data} />
-
-      case 'person_info_detail':
-        return <AnswerPersonInfoDetail data={data} />
-
       case 'list':
-        return <AnswerList data={data} />
+        return <AnswerList card={card} />
+
+      case 'map':
+        return <AnswerMap card={card} />
+
+      case 'line_chart':
+        return <AnswerLineChart card={card} />
 
       case 'generic':
-        return <AnswerGeneric {...data} />
-
       default:
-        return null
+        return <AnswerCard card={card} />
     }
   }
 
