@@ -7,9 +7,10 @@
 }
 
   /**
-   * Wraapper
+   * Wrapper
    */
-  .ola-answer-card-wrapper {
+  .ola-answer-card-wrapper,
+  .ola-answer-wordmap {
     padding: 1em;
     background: white;
     box-shadow: $sharp-box-shadow;
@@ -20,7 +21,7 @@
    * Title
    */
   .ola-answer-title {
-    margin: 0 0 8px 0;
+    margin: 0;
     font-size: 1rem;
     font-weight: 700;
   }
@@ -29,7 +30,7 @@
    * Subtitle
    */
   .ola-answer-subtitle {
-    margin: 0 0 16px 0;
+    margin: 4px 0 0 0;
   }
 
   /**
@@ -37,7 +38,7 @@
    */
   .ola-img-card {
     max-height: 300px;
-    margin-bottom: 8px;
+    margin-top: 8px;
     display: block;
   }
 
@@ -45,7 +46,7 @@
    * Button wrapper
    */
   .ola-answer-buttons {
-    padding-top: 8px;
+    padding-top: 14px;
   }
 
   /**
@@ -69,6 +70,8 @@
 
   > .ola-answer-card {
     width: 33.333%;
+    padding-right: 16px;
+    padding-bottom: 16px;
   }
 }
 
@@ -78,6 +81,7 @@
 .ola-answer-source,
 .ola-answer-footnote {
   font-size: 14px;  
+  padding-top: 14px;
 }
 
   /**
@@ -148,45 +152,3 @@
   height: 300px;
 }
 
-
-/* Tokens */
-.ola-answer-slots {
-  padding-top: 8px;
-  // padding: 0.5rem 0;
-}
-
-/* Token */
-.ola-btn-slot-add {
-  &, &:hover, &:focus, &:active {
-    background: darken($input-tag-bg, 10%);
-    padding: 10px 12px;    
-    border-radius: $base-border-radius;
-    margin: 6px 6px 0 0;
-    color: #666;
-    padding-right: 30px;
-    position: relative;
-    border: none;
-  }
-
-  .ola-icon {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    margin-top: -8px;
-    bottom: 0;
-    vertical-align: middle;
-    width: 30px;
-    text-align: center;
-  }
-}
-
-/* Answer token text */
-.ola-answer-slots-text {
-  display: block;
-  @include media (tablet) {
-    display: inline-block;
-    margin-right: 6px;
-    vertical-align: middle;
-    margin-top: 6px;
-  }
-}

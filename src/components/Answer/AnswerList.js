@@ -12,7 +12,7 @@ import AnswerCard from './AnswerCard'
  * @example ./src/components/Answer/AnswerList.md
  */
 function AnswerList ({ card, isCollapsed, toggleDisplay, max, translate }) {
-  const { elements, source } = card
+  const { elements = [], source } = card
   const size = elements.length
   return (
     <div className='ola-answer-list'>

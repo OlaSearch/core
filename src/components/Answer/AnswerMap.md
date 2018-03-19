@@ -46,6 +46,7 @@ const results = [
   card={card}
   results={results}
 />
+```
 
 Show user's current location
 
@@ -69,9 +70,10 @@ const results = [
       "schema_org_name_t": "Liverpool Victoria, UK"
   }
 ];
-const location = "-27.4756124,153.0280484"
+const location = "-27.4756124,153.0280484";
 <AnswerMap
   card={card}
   results={results}
   location={location}
 />
+```

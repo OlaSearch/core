@@ -22,7 +22,7 @@ function AnswerCard ({ card, onSelect, placeholderImage }) {
             <div className='ola-answer-title'>
               {url ? <a href={url}>{title}</a> : title}
             </div>
-            <div className='ola-answer-subtitle'>{subtitle}</div>
+            {subtitle && <div className='ola-answer-subtitle'>{subtitle}</div>}
           </div>
           {image ? <img src={image} className='ola-img ola-img-card' /> : null}
           {fields.length ? (
@@ -39,16 +39,16 @@ function AnswerCard ({ card, onSelect, placeholderImage }) {
               })}
             </div>
           ) : null}
-          {source ? (
-            <div className='ola-answer-source'>
-              <span className='ola-answer-source-label'>Source: </span>
-              <a href={source.url} className='ola-answer-source-link'>
-                {source.name}
-              </a>
-            </div>
-          ) : null}
         </div>
       </div>
+      {source ? (
+        <div className='ola-answer-source'>
+          <span className='ola-answer-source-label'>Source: </span>
+          <a href={source.url} className='ola-answer-source-link'>
+            {source.name}
+          </a>
+        </div>
+      ) : null}
     </div>
   )
 }
