@@ -62,8 +62,8 @@ class SearchResults extends React.Component {
             .ola-results :global(.ola-field-title a) {
               color: ${theme.searchLinkColor};
             }
-            .ola-results
-              :global(.ola-field-title a:hover, .ola-field-title a:focus) {
+            .ola-results :global(.ola-field-title a:hover),
+            .ola-results :global(.ola-field-title a:focus) {
               color: ${theme.searchLinkHoverColor};
             }
             .ola-results :global(.ola-cta-button) {

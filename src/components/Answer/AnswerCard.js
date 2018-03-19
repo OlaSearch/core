@@ -17,14 +17,6 @@ function AnswerCard ({ card, onSelect, placeholderImage }) {
   return (
     <div className='ola-answer-card' onClick={handleSelect}>
       <div className='ola-answer-card-wrapper'>
-        {image ? (
-          <div
-            className='ola-img ola-img-bg ola-answer-image'
-            style={{
-              backgroundImage: `url("${image}")`
-            }}
-          />
-        ) : null}
         <div className='ola-answer-content'>
           <div className='ola-answer-header'>
             <div className='ola-answer-title'>
@@ -32,6 +24,7 @@ function AnswerCard ({ card, onSelect, placeholderImage }) {
             </div>
             <div className='ola-answer-subtitle'>{subtitle}</div>
           </div>
+          {image ? <img src={image} className='ola-img ola-img-card' /> : null}
           {fields.length ? (
             <div className='ola-answer-fields'>
               {fields.map((field, idx) => {

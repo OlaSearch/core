@@ -12,6 +12,7 @@ function Thumbnail (props) {
     thumbnail,
     baseUrl,
     isLink,
+    caption,
     url,
     log,
     useBackgroundImage,
@@ -64,6 +65,7 @@ function Thumbnail (props) {
   return (
     <div className='ola-field ola-field-img'>
       {isLink ? <a {...linkProps}>{imgThumbnail}</a> : imgThumbnail}
+      {caption ? <div className='ola-field-img-caption'>{caption}</div> : null}
     </div>
   )
 }

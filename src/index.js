@@ -75,6 +75,10 @@ export DefaultSnippet from './components/Snippets/Default'
 
 /* Answers */
 export Answer from './components/Answer'
+export AnswerList from './components/Answer/AnswerList'
+export AnswerWordMap from './components/Answer/AnswerWordMap'
+export AnswerMap from './components/Answer/AnswerMap'
+export AnswerCard from './components/Answer/AnswerCard'
 export AnswerMC from './components/Answer/AnswerMC'
 export SlotSuggestion from './components/SlotSuggestion'
 
