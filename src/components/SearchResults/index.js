@@ -7,6 +7,9 @@ import classNames from 'classnames'
 import withTheme from './../../decorators/withTheme'
 import withConfig from './../../decorators/withConfig'
 
+/**
+ * Display search results
+ */
 class SearchResults extends React.Component {
   static propTypes = {
     results: PropTypes.array.isRequired,

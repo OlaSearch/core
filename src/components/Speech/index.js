@@ -5,8 +5,14 @@ import classnames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
 import withLogger from './../../decorators/withLogger'
+import withTheme from './../../decorators/withTheme'
 import { log } from './../../actions/Logger'
+import Mic from '@olasearch/icons/lib/mic'
+import MicOff from '@olasearch/icons/lib/mic-off'
 
+/**
+ * Displays a voice input button
+ */
 class SpeechInput extends React.Component {
   constructor (props) {
     super(props)
@@ -20,7 +26,8 @@ class SpeechInput extends React.Component {
   static defaultProps = {
     lang: 'en',
     continuous: true,
-    interimResults: true
+    interimResults: true,
+    iconSize: 20
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -110,25 +117,32 @@ class SpeechInput extends React.Component {
 
   render () {
     let { isRecording, isSpeechSupported } = this.state
-    let { translate } = this.props
+    let { translate, iconSize } = this.props
     let { voiceSearch } = this.props.config
     if (!isSpeechSupported || !voiceSearch) return null
 
     let klassName = classnames('ola-link-speech', {
-      'ola-link-speech-stop': isRecording
+      'ola-link-speech-isrecording': isRecording
     })
 
     return (
       <div className='ola-speech-input'>
         <button type='button' className={klassName} onClick={this.onLaunch}>
-          <span
-            className='ola-btn-hint hint--top'
-            aria-label={translate('speech_label')}
-          />
+          <Mic size={iconSize} />
         </button>
+        <style jsx>
+          {`
+            .ola-link-speech {
+              color: ${this.props.theme.primaryColor};
+            }
+            .ola-link-speech.ola-link-speech-isrecording {
+              color: ${this.props.theme.dangerColor};
+            }
+          `}
+        </style>
       </div>
     )
   }
 }
 
-module.exports = withLogger(withConfig(withTranslate(SpeechInput)))
+module.exports = withTheme(withLogger(withConfig(withTranslate(SpeechInput))))

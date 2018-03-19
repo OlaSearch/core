@@ -14,6 +14,7 @@ import Navigation from '@olasearch/icons/lib/navigation'
 
 /**
  * Request user for his current location
+ * @example ./src/components/Geo/GeoLocation.md
  */
 class GeoLocation extends React.Component {
   constructor (props) {

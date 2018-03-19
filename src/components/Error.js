@@ -2,6 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withTranslate from './../decorators/withTranslate'
 
+/**
+ * Displays an error message
+ * @example ./src/components/Error.md
+ */
 function Error ({ error, translate }) {
   if (!error) return null
   var message
@@ -20,8 +24,8 @@ function Error ({ error, translate }) {
 
   return (
     <div className='ola-error'>
-      <h2>{title}</h2>
-      {message}
+      <div className='ola-error-title'>{title}</div>
+      <div className='ola-error-message'>{message}</div>
     </div>
   )
 }

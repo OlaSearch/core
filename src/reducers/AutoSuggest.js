@@ -68,9 +68,15 @@ export default (state: State = initialState, action: Object) => {
         qt
       } = action
 
-      let isOpen =
-        (!!results.length || !!spellSuggestions.length || !!suggestedTerm) &&
-        !!state.q
+      /**
+       * Open autosuggest only if
+       * 1. Results > 0
+       * 2. Query is present
+       * @type {Boolean}
+       */
+      let isOpen = results.length > 0 && state.q !== ''
+      // (!!results.length || !!spellSuggestions.length || !!suggestedTerm) &&
+      // !!state.q
 
       return {
         ...state,

@@ -54,7 +54,12 @@ import withTheme from './../../decorators/withTheme'
 import withConfig from './../../decorators/withConfig'
 
 /**
- * Display an autocomplete
+ * Completes a partial search query from a controlled vocabulary for items matching the character string, the user types.
+ *
+ * * Displays taxonomy terms
+ * * Displays entities
+ * * Displays popular keywords
+ * * Displays rich instant answers
  */
 class AutoComplete extends React.Component {
   constructor (props) {
@@ -108,7 +113,7 @@ class AutoComplete extends React.Component {
     showHistory: true,
     showHistoryForQuery: false,
     q: '',
-    scrollOnFocus: true,
+    scrollToViewOnFocus: true,
     scrollPadding: 16,
     resultLimit: 5,
     resultLimitDesktop: 10,
@@ -703,7 +708,7 @@ class AutoComplete extends React.Component {
   }
   onFocus = (event) => {
     /* Set scroll position on phone */
-    if (this.props.isPhone && this.props.scrollOnFocus) {
+    if (this.props.isPhone && this.props.scrollToViewOnFocus) {
       document.documentElement.scrollTop = document.body.scrollTop =
         getCoords(event.target).top - this.props.scrollPadding
     }

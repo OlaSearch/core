@@ -1,9 +1,16 @@
 import React from 'react'
-import equals from 'ramda/src/equals'
+import PropTypes from 'prop-types'
 
+/**
+ * Renders an input field as contenteditable
+ * @example ./src/components/ContentEditable.md
+ */
 export default class ContentEditable extends React.Component {
   static defaultProps = {
     formatValue: null
+  }
+  static propTypes = {
+    formatValue: PropTypes.func
   }
   updateFakeEl = () => {
     this.fakeEl.innerHTML = this.props.formatValue
@@ -37,7 +44,7 @@ export default class ContentEditable extends React.Component {
       <div className='ContentEditableWrapper'>
         <input
           type='text'
-          className='ola-text-input ola-text-input-round'
+          className='ola-text-input'
           ref={this.registerRef}
           {...rest}
           value={value}

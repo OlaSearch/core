@@ -1,6 +1,7 @@
 #### Usage
 
 ```js
-<AutoSuggest
-/>
+<OlaProvider config={olaconfig}>
+  <AutoSuggest />
+</OlaProvider>
 ```

@@ -140,6 +140,12 @@ export default class Input extends React.Component {
           />
         </div>
 
+        <SpeechInput
+          onResult={this.handleSpeechChange}
+          onFinalResult={this.handleSpeechChange}
+          isAutosuggest
+        />
+
         <button
           type='button'
           className='ola-search-button'
@@ -148,12 +154,6 @@ export default class Input extends React.Component {
         >
           <Search />
         </button>
-
-        <SpeechInput
-          onResult={this.handleSpeechChange}
-          onFinalResult={this.handleSpeechChange}
-          isAutosuggest
-        />
 
         <style jsx>
           {`

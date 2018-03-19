@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Provider } from 'react-redux'
 import OlaIntlProvider from './OlaIntlProvider'
 import { ThemeProvider } from './ThemeContext'
 import { ConfigProvider } from './ConfigContext'
 import { DEFAULT_THEME } from './../constants/Settings'
 
-export default function OlaProvider ({ config, translations, children }) {
+/**
+ * Ola Provider wrapper for all Ola Components
+ */
+function OlaProvider ({ config, translations, children }) {
   if (!config) {
-    throw new Error('Could not find config on `props` OlaProvider')
+    throw new Error('Could not find config on OlaProvider `props`')
   }
   let theme = { ...DEFAULT_THEME, ...config.theme }
   return (
@@ -38,6 +40,8 @@ export default function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-field-sms),
           .ola-search :global(.ola-field-subtitles),
           .ola-search :global(.ola-link-geo),
+          .ola-search :global(.ola-autosuggest-all),
+          .ola-search :global(.ola-link-clear-filters),
           .ola-search :global(.ola-field-pages) {
             font-size: ${theme.mediumFontSize};
           }
@@ -68,6 +72,7 @@ export default function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-drop-link),
           .ola-search :global(.ola-btn-sms),
           .ola-search :global(.ola-btn-subtitle),
+          .ola-search :global(.ola-link-clear-filters),
           .ola-search :global(.ola-link-view-pages) {
             color: ${theme.primaryColor};
           }
@@ -137,8 +142,30 @@ export default function OlaProvider ({ config, translations, children }) {
             fill: ${theme.primaryColor};
             color: ${theme.primaryColor};
           }
+          /* View all */
+          .ola-search :global(.ola-autosuggest-all) {
+            background: ${theme.primaryButtonBackground};
+            color: ${theme.primaryButtonColor};
+          }
         `}
       </style>
     </div>
   )
 }
+
+OlaProvider.propTypes = {
+  /**
+   * Configuration file
+   */
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  /**
+   * Language translations
+   */
+  translations: PropTypes.object,
+  /**
+   * Component to be rendered
+   */
+  children: PropTypes.any
+}
+
+export default OlaProvider

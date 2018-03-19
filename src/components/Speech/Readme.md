@@ -2,6 +2,6 @@
 
 ```js
 <OlaProvider config={olaconfig}>
-  <AutoComplete q='beer' />
-</OlaProvider>
+  <SpeechInput />
+</OlaProvider>  
 ```

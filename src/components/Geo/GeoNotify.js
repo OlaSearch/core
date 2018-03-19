@@ -1,9 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import GeoLocation from './GeoLocation'
 import { connect } from 'react-redux'
 import { executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 
+/**
+ * Simple text nofification if geo location is turned on
+ * @example ./src/components/Geo/GeoNotify.md
+ */
 function GeoNotify ({
   answer,
   location,
@@ -29,6 +34,10 @@ function GeoNotify ({
       <GeoLocation onSuccess={executeSearch} {...rest} />
     </div>
   )
+}
+
+GeoNotify.propTypes = {
+  answer: PropTypes.object
 }
 
 function mapStateToProps (state) {

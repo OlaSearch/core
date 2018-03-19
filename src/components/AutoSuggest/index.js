@@ -22,12 +22,16 @@ import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import withTheme from './../../decorators/withTheme'
 
+/**
+ * Searches a dynamic list (unbounded) for related keywords, phrases, and items, which may or may not match the precise query string.
+ * * Displays instant search results
+ */
 class AutoSuggest extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isFocused: false,
-      fuzzyQuery: null
+      q: props.q
     }
   }
 
@@ -57,6 +61,8 @@ class AutoSuggest extends React.Component {
     if (this.props.AutoSuggest.isOpen) {
       this.props.dispatch(closeAutoSuggest())
     }
+    if (!this.state.isFocused) return
+    if (event && event.type === 'keydown') return
     this.onBlur()
   }
 
@@ -205,7 +211,8 @@ class AutoSuggest extends React.Component {
       viewAllClassName,
       facetSuggestionName,
       className,
-      translate
+      translate,
+      theme
     } = this.props
     var { isFocused } = this.state
     var {
@@ -251,7 +258,7 @@ class AutoSuggest extends React.Component {
             <TermSuggestion
               q={q}
               totalResults={totalResults}
-              suggestedTerm={suggestedTerm}
+              term={suggestedTerm}
             />
 
             <div className='ola-suggestions-wrapper' ref='suggestionsContainer'>
@@ -278,6 +285,14 @@ class AutoSuggest extends React.Component {
             </a>
           </div>
         </div>
+        <style jsx>
+          {`
+            .ola-autosuggest-focus :global(.ola-search-form-container) {
+              border-color: ${theme.primaryColor};
+              box-shadow: none;
+            }
+          `}
+        </style>
       </div>
     )
   }

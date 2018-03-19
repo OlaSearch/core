@@ -24,6 +24,7 @@ module.exports = {
   editorConfig: { theme: 'cobalt' },  
   theme,
   styles,
+  // resolver: require('react-docgen').resolver.findAllComponentDefinitions,
   context: {
     olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),    
     // SearchState: function (state) {
@@ -57,7 +58,28 @@ module.exports = {
           'src/components/AutoComplete/index.js',
           'src/components/AutoSuggest/index.js',
           'src/components/Geo/GeoLocation.js',
+          'src/components/Geo/GeoNotify.js',
           'src/components/Sort/index.js',
+          'src/components/Misc/Tag.js',
+          'src/components/Pagination/index.js',
+          'src/components/PerPage/index.js',
+          'src/components/SearchResults/index.js',
+          'src/components/Speech/index.js',
+          'src/components/SpellSuggestion/index.js',
+          'src/components/TermSuggestion/index.js',
+          'src/components/Zone/index.js',
+          'src/components/ClearAllFacets.js',
+          'src/components/ContentEditable.js',
+          'src/components/Error.js',
+          'src/components/FilterButton.js',
+        ]
+      }
+    },
+    {
+      name: 'Containers',
+      components: () => {
+        return [
+          'src/containers/OlaProvider.js',
         ]
       }
     },
@@ -79,16 +101,34 @@ module.exports = {
       components: './src/components/Snippets/*.js',
     },
     {
-      name: 'Snippet fields',
+      name: 'Fields',
       components: 'src/components/Fields/*/*.js'
     },
     {
       name: 'Filters',
       components: 'src/components/FacetFilters/*.js'
-    },    
+    },
     {
       name: 'Query monitoring',
       components: 'src/components/Alert/*.js'
+    },
+    {
+      name: 'Higher order components',
+    },
+    {
+      name: 'Enhancers',
+    },
+    {
+      name: 'Middleware',
+    },
+    {
+      name: 'Reducers',
+    },
+    {
+      name: 'Services',
+    },
+    {
+      name: 'Utilities',
     },    
   ],
   require: [

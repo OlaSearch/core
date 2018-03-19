@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import withTranslate from './../../decorators/withTranslate'
 import { connect } from 'react-redux'
 import {
@@ -7,6 +8,9 @@ import {
   executeSearch
 } from './../../actions/Search'
 
+/**
+ * Shows a spellchecked query
+ */
 function TermSuggestion ({
   term,
   answer,
@@ -52,11 +56,18 @@ function TermSuggestion ({
   )
 }
 
+TermSuggestion.propTypes = {
+  term: PropTypes.string
+}
+
 function mapStateToProps (state, ownProps) {
   return {
-    term: ownProps.suggestedTerm || state.AppState.suggestedTerm,
+    term: ownProps.term || state.AppState.suggestedTerm,
     q: ownProps.q || state.QueryState.q,
-    totalResults: ownProps.totalResult || state.AppState.totalResults,
+    totalResults:
+      typeof ownProps.totalResults !== 'undefined'
+        ? ownProps.totalResults
+        : state.AppState.totalResults,
     answer: state.AppState.answer,
     isLoading: ownProps.isLoading || state.AppState.isLoading
   }

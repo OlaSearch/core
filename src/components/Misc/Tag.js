@@ -9,6 +9,10 @@ import {
 } from './../../constants/Settings'
 import Cross from '@olasearch/icons/lib/x'
 
+/**
+ * Display a tag with a remove button
+ * @example ./src/components/Misc/Tag.md
+ */
 function Tag (props) {
   var displayName = ''
   var { name, onRemove, facet } = props

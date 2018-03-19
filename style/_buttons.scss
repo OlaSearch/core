@@ -199,3 +199,21 @@
 .ola-button-wordmap {
   margin-right: 8px;
 }
+
+/**
+ * Speech button
+ */
+
+.ola-link-speech {
+  @extend .ola-icon-button;
+  height: 100%;
+}
+
+/**
+ * Clear all filters
+ */
+
+.ola-link-clear-filters {
+  @extend .ola-icon-button;
+  height: 100%;
+}

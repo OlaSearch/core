@@ -6,6 +6,9 @@ import ChevronRight from '@olasearch/icons/lib/chevron-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import scrollIntoView from 'dom-scroll-into-view'
 
+/**
+ * Paginates search results
+ */
 class Pagination extends React.Component {
   static defaultProps = {
     ellipsis: '...',

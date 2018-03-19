@@ -1,5 +1,5 @@
 import { Parser, QueryBuilder, Http } from '@olasearch/solr-adapter'
-import config from 'olasearchconfig'
+import config from './styleguide.olaconfig'
 import { createLoggerMiddleware } from '@olasearch/logger'
 import { Provider } from 'react-redux'
 import { AutoComplete, OlaProvider, createStore, Actions } from '@olasearch/core'

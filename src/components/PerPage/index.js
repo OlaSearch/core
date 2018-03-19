@@ -4,9 +4,10 @@ import { changePerPage, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
 
-function PerPage ({ perPage, translate, dispatch, config }) {
-  let values = config.perPage
-
+/**
+ * Change how many results are displayed in one page
+ */
+function PerPage ({ perPage, values, translate, dispatch }) {
   function onChange (event) {
     dispatch(changePerPage(event.target.value))
     dispatch(executeSearch())
@@ -28,4 +29,21 @@ function PerPage ({ perPage, translate, dispatch, config }) {
   )
 }
 
-module.exports = withConfig(withTranslate(PerPage))
+PerPage.defaultProps = {
+  values: [10, 20, 30, 40, 50]
+}
+
+PerPage.propTypes = {
+  /**
+   * Selected value
+   */
+  perPage: PropTypes.number,
+  /**
+   * Possible no of results in one page
+   */
+  values: PropTypes.array,
+  translate: PropTypes.func,
+  dispatch: PropTypes.func
+}
+
+module.exports = withTranslate(PerPage)

@@ -1,5 +1,7 @@
 #### Usage
 
 ```js
-<Sort />
+<OlaProvider config={olaconfig}>
+  <Sort />
+</OlaProvider>
 ```

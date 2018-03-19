@@ -6,13 +6,7 @@ import { createHTMLMarkup, truncate } from './../../utilities'
 import { hideSearchHelp } from './../../actions/Ui'
 import withConfig from './../../decorators/withConfig'
 
-function QueryHelp ({
-  isVisible,
-  isNewUser,
-  showSearchHelp,
-  hideSearchHelp,
-  config
-}) {
+function QueryHelp ({ isVisible, showSearchHelp, hideSearchHelp, config }) {
   const { searchHelpText } = config
   if (!isVisible || !showSearchHelp || !searchHelpText) return null
   return (
@@ -28,7 +22,6 @@ function QueryHelp ({
 }
 function mapStateToProps (state) {
   return {
-    isNewUser: state.Context.isNewUser,
     showSearchHelp: state.AppState.showSearchHelp
   }
 }

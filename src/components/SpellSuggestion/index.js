@@ -8,6 +8,9 @@ import {
 import withTranslate from './../../decorators/withTranslate'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
+/**
+ * Did you mean spell suggestions
+ */
 function SpellSuggestion (props) {
   function onChange (term) {
     var { dispatch } = props

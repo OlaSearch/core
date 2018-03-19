@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "coverage": "cross-env BABEL_ENV=production babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive",
     "s3:deploy": "s3-deploy './dist/olasearch.core.min.latest.js' './dist/olasearch.init.min.js' './dist/olasearch.init.client_demo.min.js' --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/js --cache 604800,public && s3-deploy './dist/olasearch.core.min.css' './dist/olasearch.core.client_demo.min.css'  --cwd './dist/' --region ap-southeast-1 --bucket configs.olasearch.com/assets/css --cache 604800,public",
     "cdn:invalidate": "cf-invalidate E1MMHSLEW3SZPY /assets/*",
-    "docs": "styleguidist server -- --config ./styleguide/styleguide.config.js",
+    "docs": "styleguidist server",
     "docs:build": "styleguidist build",
     "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'",
     "prettier": "yarn prettier-standard && git add src/ && git status"

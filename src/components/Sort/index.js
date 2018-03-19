@@ -10,7 +10,6 @@ import ChevronDown from '@olasearch/icons/lib/chevron-down'
  * Show result sorting select box
  */
 function Sort ({ selected = '', translate, changeSort, executeSearch, config }) {
-  console.log(config)
   function handleChange (event) {
     changeSort(event.target.value)
     executeSearch()
