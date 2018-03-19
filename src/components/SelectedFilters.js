@@ -8,7 +8,6 @@ import {
   removeFacetItem
 } from './../actions/Search'
 import Tag from './Misc/Tag'
-import Tooltip from './Misc/Tooltip'
 import queryString from 'query-string'
 import withConfig from './../decorators/withConfig'
 
@@ -100,7 +99,6 @@ class SelectedFilters extends React.Component {
 
     return (
       <div className='ola-facet-tags'>
-        <Tooltip isShown={showGuidePopover} onClose={this.closeGuidePopover} />
         {showQuery && q ? (
           <div className='ola-facet-tag'>
             <span className='ola-facet-tag-name'>{q}</span>

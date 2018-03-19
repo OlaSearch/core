@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames'
-import AnswerSuggestion from './AnswerSuggestion'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
 import AnswerCard from './AnswerCard'
