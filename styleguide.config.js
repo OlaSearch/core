@@ -149,8 +149,8 @@ module.exports = {
     resolve: {
       alias: {
         'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
-        '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
-        'OlaSearch': path.join(__dirname, './../npm-olasearch'),
+        '@olasearch/core': path.join(__dirname, './src'),
+        'OlaSearch': '@olasearch/core'
       }
     },
     externals: {

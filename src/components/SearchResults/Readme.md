@@ -9,11 +9,9 @@ function mapStateToProps (state) {
 };
 const Results = connect(mapStateToProps)(({ results }) => {
   return (
-    <OlaProvider config={olaconfig}>
-      <SearchResults
-        results={results}
-      />
-    </OlaProvider>
+    <SearchResults
+      results={results}
+    />
   )
 });
 <Results />
