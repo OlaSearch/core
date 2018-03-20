@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { changePerPage, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
+import SelectBox from './../SelectBox'
 
 /**
  * Change how many results are displayed in one page
@@ -15,16 +16,14 @@ function PerPage ({ perPage, values, translate, dispatch }) {
 
   return (
     <div className='ola-per-page'>
-      <label className='ola-per-page-label'>
-        {translate('per_page_label')}
-      </label>
-      <select
-        defaultValue={perPage}
-        className='ola-per-page-select'
+      <SelectBox
+        label={translate('per_page_label')}
         onChange={onChange}
+        value={perPage}
+        inline
       >
         {values.map((value, idx) => <option key={idx}>{value}</option>)}
-      </select>
+      </SelectBox>
     </div>
   )
 }

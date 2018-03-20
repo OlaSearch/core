@@ -250,6 +250,7 @@ export default function (options = {}) {
          */
         if (
           bot &&
+          INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 &&
           answer &&
           answer.error &&
           answer.error === ERROR_CODES['BOT_NO_EXISTS']
@@ -269,18 +270,20 @@ export default function (options = {}) {
          */
         if (
           bot &&
+          INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 &&
           (!answer ||
             (answer &&
               !answer.reply &&
               !answer.search &&
               !answer.card &&
-              !answer.location))
+              !answer.location &&
+              !answer.message))
         ) {
-          /* throw exception */
-          throw new Error('Something went wrong')
           console.warn(
             'The server could not respond in time with a message ID. Please try again. May be the intent engine is down. Please contact our customer support.'
           )
+          /* throw exception */
+          throw new Error('Something went wrong')
         }
 
         /**

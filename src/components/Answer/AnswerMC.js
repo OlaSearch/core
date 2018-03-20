@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Title from './../Fields/Title'
 import Url from './../Fields/Url'
+import TextField from './../Fields/TextField'
 import { connect } from 'react-redux'
 import { fetchMc } from './../../actions/Search'
 import { createHTMLMarkup, escapeRegEx } from './../../utilities'
@@ -36,6 +37,7 @@ class AnswerMC extends React.Component {
     /**
      * highlighting an answer should be based on snippet_confidence and highlight confidence
      */
+    let { mcHighlightThreshold = 0.6 } = this.props.config
     let {
       snippet,
       highlight,
@@ -45,7 +47,7 @@ class AnswerMC extends React.Component {
     if (snippetConfidence <= 0.5 && highlightConfidence > 0.5) {
       return createHTMLMarkup(snippet)
     }
-    if (highlightConfidence < this.props.highlightConfidenceThreshold) {
+    if (highlightConfidence < this.props.mcHighlightThreshold) {
       return createHTMLMarkup(snippet)
     }
     let html = snippet.replace(
@@ -58,21 +60,18 @@ class AnswerMC extends React.Component {
     mc: {},
     payload: {},
     loader: null,
-    showWhileFiltering: false,
-    highlightConfidenceThreshold: 0.65
+    showWhileFiltering: false
   }
   render () {
     if (this.props.isLoadingMc && this.props.loader) {
       return this.props.loader
     }
+    let { mc, facetQuery, showWhileFiltering, theme } = this.props
     let {
-      mc,
-      facetQuery,
-      highlightConfidenceThreshold,
-      showWhileFiltering,
-      theme
-    } = this.props
-    let { mcThreshold = 0.4 } = this.props.config
+      mcThreshold = 0.4,
+      mcShowDoc,
+      mcHighlightThreshold = 0.6
+    } = this.props.config
     /* Always parse threshold */
     mcThreshold = parseFloat(mcThreshold)
     let { answer } = mc
@@ -84,27 +83,22 @@ class AnswerMC extends React.Component {
     }
     if (!showWhileFiltering && facetQuery.length) return null
 
-    let {
-      snippet,
-      url,
-      title,
-      snippet_confidence: confidence,
-      highlight_confidence: highlightConfidence
-    } = answer
+    let { snippet, url, title, snippet_confidence: confidence } = answer
     /* Do not show answers that are of low confidence */
-    if (
-      confidence < mcThreshold // ||
-      // highlightConfidence < highlightConfidenceThreshold
-    ) {
+    if (confidence < mcThreshold) {
       return null
     }
     return (
       <div className='ola-snippet ola-snippet-mc'>
         <div className='ola-snippet-inner'>
-          <p
-            className='ola-snippet-text'
-            dangerouslySetInnerHTML={this.getSnippet(answer)}
-          />
+          {mcShowDoc ? (
+            <TextField result={answer} field='doc' length={800} />
+          ) : (
+            <p
+              className='ola-snippet-text'
+              dangerouslySetInnerHTML={this.getSnippet(answer)}
+            />
+          )}
           <Title result={answer} />
           <Url result={answer} />
         </div>
@@ -130,10 +124,7 @@ class AnswerMC extends React.Component {
 function mapStateToProps (state) {
   return {
     isLoadingMc: state.AppState.isLoadingMc,
-    // isLoading: state.AppState.isLoading,
     facetQuery: state.QueryState.facet_query
-    /* If its a spelling mistake: Show the answer */
-    // suggestedTerm: state.AppState.suggestedTerm
   }
 }
 

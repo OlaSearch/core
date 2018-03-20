@@ -170,7 +170,7 @@ class DateRange extends React.Component {
   }
 
   render () {
-    let { facet, dateLabels, isCollapsed, toggleDisplay, isPhone } = this.props
+    let { facet, dateLabels, isCollapsed, toggle, isPhone } = this.props
     let { values } = facet
     /* Check if dates exists */
     if (!values.length) return null
@@ -185,7 +185,7 @@ class DateRange extends React.Component {
       <div className={klass}>
         <FacetTitle
           displayName={facet.displayName}
-          toggleDisplay={toggleDisplay}
+          toggle={toggle}
           isCollapsed={isCollapsed}
         />
         <div className='ola-facet-wrapper'>

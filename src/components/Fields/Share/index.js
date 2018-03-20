@@ -38,7 +38,7 @@ class Share extends React.PureComponent {
     let {
       result,
       isCollapsed,
-      toggleDisplay,
+      toggle,
       email,
       facebook,
       twitter,
@@ -64,7 +64,7 @@ class Share extends React.PureComponent {
         <button
           className='ola-btn ola-btn-share'
           type='button'
-          onClick={toggleDisplay}
+          onClick={toggle}
         >
           {label}
         </button>

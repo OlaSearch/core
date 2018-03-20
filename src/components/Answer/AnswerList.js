@@ -11,7 +11,7 @@ import AnswerCard from './AnswerCard'
  * Displays a list of answer cards
  * @example ./src/components/Answer/AnswerList.md
  */
-function AnswerList ({ card, isCollapsed, toggleDisplay, max, translate }) {
+function AnswerList ({ card, isCollapsed, toggle, max, translate }) {
   const { elements = [], source } = card
   const size = elements.length
   return (
@@ -30,7 +30,7 @@ function AnswerList ({ card, isCollapsed, toggleDisplay, max, translate }) {
         </div>
       ) : null}
       {size > max ? (
-        <button className='ola-answer-link-more' onClick={toggleDisplay}>
+        <button className='ola-answer-link-more' onClick={toggle}>
           {isCollapsed
             ? translate('answers_show_less')
             : translate('answers_show_more')}

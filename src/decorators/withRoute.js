@@ -4,6 +4,10 @@ import { initSearch } from './../actions/Search'
 import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
+/**
+ * Use React router to manage state. Fallbacks to browser history
+ * @example withRoute.md
+ */
 export default function (WrappedComponent) {
   class WithRoute extends React.Component {
     static contextTypes = {

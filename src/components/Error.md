@@ -1,7 +1,7 @@
 #### Usage
 
 ```js
-<Error
+<ErrorSnippet
   error="Something went wrong"
 />
 ```

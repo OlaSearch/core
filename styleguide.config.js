@@ -114,6 +114,7 @@ module.exports = {
     },
     {
       name: 'Higher order components',
+      components: 'src/decorators/!(index).js'
     },
     {
       name: 'Enhancers',

@@ -52,41 +52,27 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
   }
   if ((!answer || !answer.card) && !mc) return null
 
-  let { card, module, intent } = answer
+  const { card, module, intent } = answer
 
   /**
    * If the answer is from Intent engine
    */
   if (card) {
-    let { template, source } = card
+    let { template } = card
     let intentName = intent ? intent.split('.').pop() : null
     let snippetClass = classNames(
       'ola-snippet-answer',
       `ola-snippet-template-${template}`
     )
-    let answerKlass = classNames(
-      'ola-answer',
-      `ola-answer-intent-${intentName}`,
-      `ola-answer-template-${template}`
-    )
+    let answerKlass = classNames('ola-answer', {
+      [`ola-answer-intent-${intentName}`]: intentName,
+      [`ola-answer-template-${template}`]: template
+    })
     return (
       <div className={snippetClass}>
-        <AnswerSuggestion
-          answer={answer}
-          onChange={handleChange}
-          onSkipIntent={handleSkipIntent}
-        />
         <div className={answerKlass}>
           {templatePicker(template, card, module)}
         </div>
-        {source ? (
-          <div className='ola-answer-source'>
-            Source:{' '}
-            <a target='_blank' href={source.url}>
-              {source.name}
-            </a>
-          </div>
-        ) : null}
       </div>
     )
   }

@@ -10,7 +10,7 @@ import FieldLabel from './../FieldLabel'
 function ImageMap (props) {
   var {
     latlong,
-    apiKey,
+    key,
     width,
     height,
     onClick,
@@ -27,7 +27,7 @@ function ImageMap (props) {
   }
 
   let url = `https://www.google.com/maps?q=${latlong}`
-  let map = `https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=${width}x${height}&maptype=roadmap&markers=color:blue|label:A|${latlong}&key=${apiKey}`
+  let map = `https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=${width}x${height}&maptype=roadmap&markers=color:blue|label:A|${latlong}&key=${key}`
 
   function handleClick (event) {
     log({
@@ -58,7 +58,7 @@ function ImageMap (props) {
 }
 
 ImageMap.defaultProps = {
-  apiKey: 'AIzaSyAZmAH-qvIuTeS8hgCD9jIYgjYuyoycsaY',
+  key: '',
   width: 200,
   height: 200
 }
@@ -71,7 +71,7 @@ ImageMap.propTypes = {
   /**
    * Google map api key
    */
-  apiKey: PropTypes.string,
+  key: PropTypes.string,
   /**
    * Width of the image map
    */

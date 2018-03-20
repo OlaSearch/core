@@ -6,7 +6,7 @@ import { createHTMLMarkup } from './../../../utilities'
 function TableDetail (props) {
   let {
     isCollapsed,
-    toggleDisplay,
+    toggle,
     card: { record_data, record_keys, caption, footnote },
     max,
     translate
@@ -48,7 +48,7 @@ function TableDetail (props) {
         />
       ) : null}
       {size > max ? (
-        <button className='ola-answer-link-more' onClick={toggleDisplay}>
+        <button className='ola-answer-link-more' onClick={toggle}>
           {isCollapsed
             ? translate('answers_show_less')
             : translate('answers_show_more')}

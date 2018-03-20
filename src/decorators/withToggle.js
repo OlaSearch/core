@@ -2,6 +2,10 @@ import React from 'react'
 import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
+/**
+ * Show hide components
+ * @example withToggle.md
+ */
 export default function withToggle (WrappedComponent) {
   class WithToggle extends React.Component {
     constructor (props) {
@@ -35,7 +39,7 @@ export default function withToggle (WrappedComponent) {
         <WrappedComponent
           {...this.props}
           isCollapsed={this.state.isCollapsed}
-          toggleDisplay={this.toggle}
+          toggle={this.toggle}
           open={this.open}
           hide={this.hide}
         />

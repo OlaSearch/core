@@ -91,7 +91,7 @@ class LinkFilter extends React.Component {
     var {
       facet,
       selected,
-      toggleDisplay,
+      toggle,
       listType,
       translate,
       showIfEmpty,
@@ -171,7 +171,7 @@ class LinkFilter extends React.Component {
       <div className={klass}>
         <FacetTitle
           displayName={facet.displayName}
-          toggleDisplay={toggleDisplay}
+          toggle={toggle}
           isCollapsed={isCollapsed}
         />
         <div className='ola-facet-wrapper'>

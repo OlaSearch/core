@@ -15,7 +15,7 @@ function TagCloud (props) {
     facet,
     selected,
     isCollapsed,
-    toggleDisplay,
+    toggle,
     fontSizeMin,
     fontSizeMax,
     showSelectedFacetItem
@@ -40,7 +40,7 @@ function TagCloud (props) {
     <div className={klass}>
       <FacetTitle
         displayName={facet.displayName}
-        toggleDisplay={toggleDisplay}
+        toggle={toggle}
         isCollapsed={isCollapsed}
       />
       <div className='ola-facet-wrapper'>

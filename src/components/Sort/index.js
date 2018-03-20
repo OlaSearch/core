@@ -5,6 +5,7 @@ import { changeSort, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
 import ChevronDown from '@olasearch/icons/lib/chevron-down'
+import SelectBox from './../SelectBox'
 
 /**
  * Show result sorting select box
@@ -19,28 +20,22 @@ function Sort ({ selected = '', translate, changeSort, executeSearch, config }) 
   if (!sortBy || !sortBy.length) return null
   return (
     <div className='ola-sort'>
-      <label className='ola-sort-label' htmlFor='Ola-Element-Sort'>
-        {translate('sort_label')}{' '}
-      </label>
-      <div className='ola-sort-select-wrap'>
-        <select
-          className='ola-sort-select'
-          value={selected}
-          onChange={handleChange}
-          id='Ola-Element-Sort'
-        >
-          <option value=''>Relevancy</option>
-          {sortBy.map(({ name, value, direction }, idx) => (
-            <option
-              key={idx}
-              value={`${value}${direction ? ` ${direction}` : ''}`}
-            >
-              {name}
-            </option>
-          ))}
-        </select>
-        <ChevronDown size={20} />
-      </div>
+      <SelectBox
+        label={translate('sort_label')}
+        onChange={handleChange}
+        value={selected}
+        inline
+      >
+        <option value=''>Relevancy</option>
+        {sortBy.map(({ name, value, direction }, idx) => (
+          <option
+            key={idx}
+            value={`${value}${direction ? ` ${direction}` : ''}`}
+          >
+            {name}
+          </option>
+        ))}
+      </SelectBox>
     </div>
   )
 }

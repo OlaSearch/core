@@ -100,7 +100,7 @@ class CheckboxFilter extends React.Component {
 
     var {
       facet,
-      toggleDisplay,
+      toggle,
       listType,
       translate,
       showIfEmpty,
@@ -214,7 +214,7 @@ class CheckboxFilter extends React.Component {
       <div className={klass}>
         <FacetTitle
           displayName={facet.displayName}
-          toggleDisplay={toggleDisplay}
+          toggle={toggle}
           isCollapsed={isCollapsed}
         />
         <div className='ola-facet-wrapper'>

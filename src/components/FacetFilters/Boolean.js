@@ -23,7 +23,7 @@ function BooleanFilter (props) {
     dispatch(executeSearch())
   }
 
-  const { facet, selected, toggleDisplay, isCollapsed } = props
+  const { facet, selected, toggle, isCollapsed } = props
 
   if (!facet.values.length) return null
 
@@ -40,7 +40,7 @@ function BooleanFilter (props) {
     <div className={klass}>
       <FacetTitle
         displayName={facet.displayName}
-        toggleDisplay={toggleDisplay}
+        toggle={toggle}
         isCollapsed={isCollapsed}
       />
       <div className='ola-facet-wrapper'>

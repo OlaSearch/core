@@ -55,9 +55,9 @@
   .ola-answer-button {
     @extend .ola-btn-primary;
     width: 100%;
-    margin: 0 0 16px 0;
+    margin: 0 0 14px 0;
     @include media (desktop) {
-      margin: 0 16px 0 0;
+      margin: 0 14px 0 0;
       width: auto;
     }
   }
@@ -70,8 +70,8 @@
 
   > .ola-answer-card {
     width: 33.333%;
-    padding-right: 16px;
-    padding-bottom: 16px;
+    padding-right: 14px;
+    padding-bottom: 14px;
   }
 }
 

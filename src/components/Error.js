@@ -6,7 +6,7 @@ import withTranslate from './../decorators/withTranslate'
  * Displays an error message
  * @example ./src/components/Error.md
  */
-function Error ({ error, translate }) {
+function ErrorSnippet ({ error, translate }) {
   if (!error) return null
   var message
   var title
@@ -30,8 +30,8 @@ function Error ({ error, translate }) {
   )
 }
 
-Error.propTypes = {
+ErrorSnippet.propTypes = {
   error: PropTypes.object
 }
 
-module.exports = withTranslate(Error)
+module.exports = withTranslate(ErrorSnippet)

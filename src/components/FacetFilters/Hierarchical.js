@@ -54,7 +54,7 @@ class HierarchicalFilter extends React.Component {
     dispatch(executeSearch())
   }
   render () {
-    var { facet, isCollapsed, toggleDisplay } = this.props
+    var { facet, isCollapsed, toggle } = this.props
 
     var {
       values,
@@ -96,7 +96,7 @@ class HierarchicalFilter extends React.Component {
       <div className={klass}>
         <FacetTitle
           displayName={facet.displayName}
-          toggleDisplay={toggleDisplay}
+          toggle={toggle}
           isCollapsed={isCollapsed}
         />
         <div className='ola-facet-wrapper'>

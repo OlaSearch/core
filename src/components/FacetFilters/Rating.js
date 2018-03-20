@@ -27,7 +27,7 @@ function RatingFilter (props) {
     return bounds.indexOf(parseInt(name)) > -1
   }
 
-  var { facet, isCollapsed, toggleDisplay } = props
+  var { facet, isCollapsed, toggle } = props
   var { values, interval } = facet
   var klass = classNames({
     'ola-facet': true,
@@ -42,7 +42,7 @@ function RatingFilter (props) {
     <div className={klass}>
       <FacetTitle
         displayName={facet.displayName}
-        toggleDisplay={toggleDisplay}
+        toggle={toggle}
         isCollapsed={isCollapsed}
       />
       <div className='ola-facet-wrapper'>
