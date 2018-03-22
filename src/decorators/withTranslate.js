@@ -5,7 +5,6 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 
 /**
  * Translate to any language
- * @example ./withTranslate.md
  */
 export default function (WrappedComponent) {
   function WithTranslate (props, context) {

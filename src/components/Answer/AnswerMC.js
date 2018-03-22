@@ -50,7 +50,9 @@ class AnswerMC extends React.Component {
     ) {
       return createHTMLMarkup(snippet)
     }
-    if (highlightConfidence < mcHighlightThreshold) { return createHTMLMarkup(snippet) }
+    if (highlightConfidence < mcHighlightThreshold) {
+      return createHTMLMarkup(snippet)
+    }
 
     let html = snippet.replace(
       new RegExp('(' + this.createRegex(highlight) + ')', 'gi'),

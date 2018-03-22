@@ -29,3 +29,20 @@
     content: ''
   }
 }
+
+/**
+ * term suggestion
+ */
+.ola-btn-term-suggestion {
+  margin-left: 6px;
+  &, &:hover, &:active, &:focus {
+    border: none;
+    background: none;
+    color: $link-color;
+    cursor: pointer;
+    font-weight: normal;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+}

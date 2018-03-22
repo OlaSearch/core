@@ -14,7 +14,9 @@ import {
   INTENT_SUPPORTED_API_KEYS,
   IGNORE_INTENTS,
   SLOT_DATE,
-  ERROR_CODES
+  ERROR_CODES,
+  SPELLCHECK_SOURCE_UNIVERSAL,
+  SPELLCHECK_SOURCE_CONTENT
 } from './../constants/Settings'
 import { uuid } from './../utilities'
 
@@ -34,7 +36,7 @@ export default function (options = {}) {
       returnWithoutDispatch = false
     } = action
 
-    let { suggestedTerm } = action
+    let { suggestedTerm, spellCheckSource } = action
 
     // Normal action: pass it on
     if (!types) return next(action)
@@ -237,12 +239,9 @@ export default function (options = {}) {
          * Set suggested term if response query is not equal to search query
          * Not release in Production yet
          */
-        if (
-          spellCheckedQuery &&
-          response.q &&
-          spellCheckedQuery !== response.q
-        ) {
+        if (spellCheckedQuery) {
           suggestedTerm = spellCheckedQuery
+          spellCheckSource = SPELLCHECK_SOURCE_UNIVERSAL
         }
 
         /**
@@ -417,13 +416,11 @@ export default function (options = {}) {
               q: term
             },
             suggestedTerm: term,
+            spellCheckSource: SPELLCHECK_SOURCE_CONTENT,
             api,
             payload: {
               ...payload,
-              originalQuery: query.q,
-              extraParams: {
-                spellchecked: true
-              }
+              originalQuery: query.q
             },
             processData,
             beforeSuccessCallback,
@@ -443,6 +440,7 @@ export default function (options = {}) {
           facets,
           type,
           suggestedTerm,
+          spellCheckSource,
           qt,
           answer,
           mc,

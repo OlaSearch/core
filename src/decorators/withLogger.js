@@ -5,7 +5,6 @@ import { log } from './../actions/Logger'
 
 /**
  * Access log function
- * @example withLogger.md
  */
 export default function (WrappedComponent) {
   class WithLogger extends React.PureComponent {

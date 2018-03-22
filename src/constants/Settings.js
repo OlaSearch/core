@@ -217,3 +217,5 @@ export const ERROR_CODES = {
 }
 
 export const EXTERNAL_EVENT_SEARCH_DONE = 'ola:search_complete'
+export const SPELLCHECK_SOURCE_UNIVERSAL = 'universal'
+export const SPELLCHECK_SOURCE_CONTENT = 'content'

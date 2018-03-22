@@ -7,6 +7,10 @@ import {
   skipSpellcheck,
   executeSearch
 } from './../../actions/Search'
+import {
+  SPELLCHECK_SOURCE_CONTENT,
+  SPELLCHECK_SOURCE_UNIVERSAL
+} from './../../constants/Settings'
 
 /**
  * Shows a spellchecked query
@@ -19,6 +23,7 @@ function TermSuggestion ({
   className,
   q,
   updateQueryTerm,
+  spellCheckSource,
   skipSpellcheck,
   executeSearch
 }) {
@@ -36,22 +41,37 @@ function TermSuggestion ({
   return (
     <div className='ola-term-suggestion' {...className}>
       <span className='ola-term-suggestion-showing'>
-        {translate('suggestions_showing_results_for', { term, q }, true)}
+        {translate(
+          'suggestions_showing_results_for',
+          {
+            term,
+            no_results_message:
+              spellCheckSource === SPELLCHECK_SOURCE_CONTENT
+                ? translate('suggestions_no_results', { q })
+                : null
+          },
+          true
+        )}
       </span>
-      {/* <span className='ola-term-suggestion-instead'>
-        {translate('suggestions_search_instead')}{' '}
-        <button
-          className='ola-btn ola-btn-link'
-          type='button'
-          onClick={() => {
-            updateQueryTerm(q)
-            skipSpellcheck(true)
-            executeSearch()
-          }}
-        >
-          {q}
-        </button>
-      </span> */}
+      {spellCheckSource === SPELLCHECK_SOURCE_UNIVERSAL ? (
+        <span className='ola-term-suggestion-instead'>
+          {translate('suggestions_search_instead')}
+          <button
+            className='ola-btn ola-btn-term-suggestion'
+            type='button'
+            onClick={() => {
+              /* Change the query term */
+              updateQueryTerm(q)
+              /* Skip both intent engine and solr spellchecker */
+              skipSpellcheck(true)
+              /* Search */
+              executeSearch()
+            }}
+          >
+            {q}
+          </button>
+        </span>
+      ) : null}
     </div>
   )
 }
@@ -69,6 +89,7 @@ function mapStateToProps (state, ownProps) {
         ? ownProps.totalResults
         : state.AppState.totalResults,
     answer: state.AppState.answer,
+    spellCheckSource: state.AppState.spellCheckSource,
     isLoading: ownProps.isLoading || state.AppState.isLoading
   }
 }

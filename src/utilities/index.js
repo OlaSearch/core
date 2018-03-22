@@ -21,7 +21,7 @@ import scrollIntoView from 'dom-scroll-into-view'
  */
 export function supplant (s, d) {
   for (var p in d) {
-    s = s.replace(new RegExp('{' + p + '}', 'g'), d[p])
+    s = s.replace(new RegExp('{' + p + '}', 'g'), d[p] === null ? '' : d[p])
   }
   return s
 }
