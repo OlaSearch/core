@@ -366,11 +366,12 @@ export default function (options = {}) {
         if (
           !bot &&
           answer &&
-          answer.location /* Check if the intent requires location */ &&
-          !currentState.Context
-            .location /* Check if location is already present */ &&
-          !currentState.Context
-            .hasRequestedLocation /* Check if location was asked before */
+          /* Check if the intent requires location */ 
+          answer.location &&
+          /* Check if location is already present */
+          !currentState.Context.location &&
+          /* Check if location was asked before */
+          !currentState.Context.hasRequestedLocation 
         ) {
           dispatch(
             requestGeoLocation(() => {
