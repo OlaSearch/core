@@ -5,7 +5,6 @@ import withTranslate from './../decorators/withTranslate'
 
 /**
  * Clear all selected facets
- * @example ./src/components/ClearAllFacets.md
  */
 function ClearAllFacets ({ selected, dispatch, translate }) {
   function handleClick () {

@@ -6,6 +6,9 @@ import { toggleSidebar } from './../actions/Ui'
 import withTranslate from './../decorators/withTranslate'
 import Tune from '@olasearch/icons/lib/material-tune'
 
+/**
+ * Show/hide filters
+ */
 function FilterButton ({
   toggleSidebar,
   facets,

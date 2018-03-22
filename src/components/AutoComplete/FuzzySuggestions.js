@@ -4,7 +4,8 @@ import classNames from 'classnames'
 import {
   createHTMLMarkup,
   highlightTokens,
-  getDisplayName
+  getDisplayName,
+  getFieldLabel
 } from './../../utilities'
 import {
   RE_ESCAPE,
@@ -18,7 +19,7 @@ import AnswerQuick from './../Answer/AnswerQuick'
 function groupFacets (suggestions, fieldLabels) {
   let group = {}
   suggestions.forEach((s) => {
-    let label = fieldLabels[s.taxo_label] || s.taxo_label
+    let label = getFieldLabel(s.taxo_label, fieldLabels) || s.taxo_label
     if (!(label in group)) {
       group[label] = []
     }

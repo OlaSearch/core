@@ -251,9 +251,10 @@ export default function (options = {}) {
         if (
           bot &&
           INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 &&
-          answer &&
-          answer.error &&
-          answer.error === ERROR_CODES['BOT_NO_EXISTS']
+          (!intentEngineEnabled ||
+            (answer &&
+              answer.error &&
+              answer.error === ERROR_CODES['BOT_NO_EXISTS']))
         ) {
           /* Bot is disabled: Create a dummy message */
           answer = {

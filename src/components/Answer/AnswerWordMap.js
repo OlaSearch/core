@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 /**
  * Display a word cloud
- * @example ./src/components/Answer/AnswerWordMap.md
  */
 function AnswerWordMap ({
   card,

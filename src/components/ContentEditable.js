@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 /**
  * Renders an input field as contenteditable
- * @example ./src/components/ContentEditable.md
  */
 export default class ContentEditable extends React.Component {
   static defaultProps = {

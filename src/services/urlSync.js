@@ -203,7 +203,7 @@ export function parseQueryString (initialState, config) {
         if (!facet) {
           facet = CREATE_FILTER_OBJECT({
             name,
-            displayName: config.fieldLabels[name],
+            displayName: getFieldLabel(name, config.fieldLabels),
             type: 'string'
           })
         }

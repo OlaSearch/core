@@ -9,7 +9,6 @@ import AnswerCard from './AnswerCard'
 
 /**
  * Displays a list of answer cards
- * @example ./src/components/Answer/AnswerList.md
  */
 function AnswerList ({ card, isCollapsed, toggle, max, translate }) {
   const { elements = [], source } = card

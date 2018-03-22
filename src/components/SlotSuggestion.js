@@ -11,7 +11,7 @@ import {
 import withTranslate from './../decorators/withTranslate'
 import Plus from '@olasearch/icons/lib/plus'
 import { CREATE_FILTER_OBJECT, SLOT_DATE } from './../constants/Settings'
-import { getDisplayName } from './../utilities'
+import { getDisplayName, getFieldLabel } from './../utilities'
 import withTheme from './../decorators/withTheme'
 import withConfig from './../decorators/withConfig'
 
@@ -64,7 +64,7 @@ function SlotSuggestion ({
     if (!facet) {
       facet = CREATE_FILTER_OBJECT({
         name,
-        displayName: fieldLabels[name],
+        displayName: getFieldLabel(name, fieldLabels),
         type: type === SLOT_DATE ? 'daterange' : 'string'
       })
     }
@@ -90,7 +90,9 @@ function SlotSuggestion ({
           ({ name: _name }) => _name === slot.name
         )
         const displayName =
-          facet && facet.length ? facet[0].displayName : fieldLabels[slot.name]
+          facet && facet.length
+            ? facet[0].displayName
+            : getFieldLabel(slot.name, fieldLabels)
         return (
           <AnswerTokenBtn
             key={`${idx}_${name}`}

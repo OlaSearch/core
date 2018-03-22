@@ -44,12 +44,14 @@ class AnswerMC extends React.Component {
       snippet_confidence: snippetConfidence,
       highlight_confidence: highlightConfidence
     } = answer
-    if (snippetConfidence <= 0.5 && highlightConfidence > 0.5) {
+    if (
+      snippetConfidence <= 0.8 &&
+      highlightConfidence < mcHighlightThreshold
+    ) {
       return createHTMLMarkup(snippet)
     }
-    if (highlightConfidence < this.props.mcHighlightThreshold) {
-      return createHTMLMarkup(snippet)
-    }
+    if (highlightConfidence < mcHighlightThreshold) { return createHTMLMarkup(snippet) }
+
     let html = snippet.replace(
       new RegExp('(' + this.createRegex(highlight) + ')', 'gi'),
       '<strong>$1</strong>'
@@ -74,7 +76,7 @@ class AnswerMC extends React.Component {
     } = this.props.config
     /* Always parse threshold */
     mcThreshold = parseFloat(mcThreshold)
-    let { answer } = mc
+    const { answer } = mc
     /**
      * Only show if there are no facets selected
      */

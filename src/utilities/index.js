@@ -805,3 +805,19 @@ export function scrollTo (el) {
     onlyScrollIfNeeded: true
   })
 }
+
+/**
+ * Get field label
+ * post_title => 'Title'
+ * post_title_s => 'Title'
+ */
+
+export function getFieldLabel (field, fieldLabels) {
+  /* Remove field type */
+  field = field.replace(
+    /_(ss|s|tdt|t|ts|b|bs|d|ds|f|fs|i|is|p|l|ls|dr|taxo_entity)$/gi,
+    ''
+  )
+  if (field in fieldLabels) return fieldLabels[field]
+  return null
+}

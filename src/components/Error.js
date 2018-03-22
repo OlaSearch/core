@@ -4,7 +4,6 @@ import withTranslate from './../decorators/withTranslate'
 
 /**
  * Displays an error message
- * @example ./src/components/Error.md
  */
 function ErrorSnippet ({ error, translate }) {
   if (!error) return null

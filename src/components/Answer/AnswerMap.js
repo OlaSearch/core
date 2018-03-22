@@ -5,7 +5,6 @@ import cx from 'classnames'
 
 /**
  * Displays a google map
- * @example ./src/components/Answer/AnswerMap.md
  */
 class AnswerMap extends React.Component {
   constructor (props) {

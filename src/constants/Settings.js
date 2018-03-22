@@ -1,3 +1,5 @@
+import { getFieldLabel } from './../utilities'
+
 export const RANGE_FACETS = ['range', 'rating', 'daterange', 'datepicker']
 export const NUMERICAL_RANGE = 'range'
 export const OLA_STORAGE_KEY = 'o_store_'
@@ -107,7 +109,7 @@ export const CREATE_FILTER_OBJECT = ({
   ...rest
 }) => {
   if (config) {
-    displayName = config.fieldLabels[name.replace('_ss', '')]
+    displayName = getFieldLabel(name, config.fieldLabels)
   }
   return {
     displayName,
@@ -132,6 +134,12 @@ export const SLOT_DATE = 'OLA.DATE'
  * Taxo entity type
  */
 export const TAXO_ENTITY = 'taxo_entity'
+
+/**
+ * Multivalued
+ */
+
+export const SEARCH_FIELD_TYPE_TAXO = '_ss'
 
 /**
  * Default theme
@@ -207,3 +215,5 @@ export const DEFAULT_THEME = {
 export const ERROR_CODES = {
   BOT_NO_EXISTS: 'Bad Request. Invalid bot id.'
 }
+
+export const EXTERNAL_EVENT_SEARCH_DONE = 'ola:search_complete'

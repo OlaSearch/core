@@ -6,7 +6,6 @@ import TableDetail from './common/TableDetail'
 
 /**
  * Displays a line chart
- * @example ./src/components/Answer/AnswerLineChart.md
  */
 class AnswerLineChart extends React.Component {
   static propTypes = {

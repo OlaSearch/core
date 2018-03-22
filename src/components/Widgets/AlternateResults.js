@@ -4,6 +4,7 @@ import { executeSearch } from './../../actions/Search'
 import SearchResults from './../SearchResults'
 import PropTypes from 'prop-types'
 import withConfig from './../../decorators/withConfig'
+import { getFieldLabel } from './../../utilities'
 
 class AlternateResults extends React.Component {
   constructor (props) {
@@ -59,7 +60,7 @@ class AlternateResults extends React.Component {
       <div className='ola-alternate-results'>
         <p>
           But, we found {newTotalResults} results if we remove{' '}
-          <span>{fieldLabels[lastFacet]}</span> filter.
+          <span>{getFieldLabel(lastFacet, fieldLabels)}</span> filter.
         </p>
         <SearchResults results={results} />
       </div>

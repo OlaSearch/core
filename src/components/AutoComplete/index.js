@@ -801,7 +801,6 @@ class AutoComplete extends React.Component {
         window.SpeechRecognition || window.webkitSpeechRecognition
       )
     })
-
     const queryTerm = fuzzyQuery
       ? showWordSuggestion
         ? q.substr(0, startToken) +

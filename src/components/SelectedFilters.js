@@ -10,6 +10,7 @@ import {
 import Tag from './Misc/Tag'
 import queryString from 'query-string'
 import withConfig from './../decorators/withConfig'
+import { getFieldLabel } from './../utilities'
 
 class SelectedFilters extends React.Component {
   constructor (props) {
@@ -115,7 +116,7 @@ class SelectedFilters extends React.Component {
             (_, idx) =>
               options && options[idx] ? !options[idx].isHidden : true
           )
-          if (!displayName) displayName = fieldLabels[facet.name]
+          if (!displayName) displayName = getFieldLabel(facet.name, fieldLabels)
           /* Error with babel-traverse */
           const _displayName = displayName ? (
             <span className='ola-facet-tags-heading'>{displayName}</span>

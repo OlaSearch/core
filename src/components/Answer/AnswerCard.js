@@ -6,7 +6,6 @@ import classNames from 'classnames'
 
 /**
  * Create an answer card
- * @example ./src/components/Answer/AnswerCard.md
  */
 function AnswerCard ({ card, onSelect, placeholderImage }) {
   function handleSelect () {

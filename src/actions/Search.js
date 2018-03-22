@@ -15,7 +15,9 @@ import {
 import {
   CREATE_FILTER_OBJECT,
   SEARCH_COLLECTION_IDENTIFIER,
-  TAXO_ENTITY
+  TAXO_ENTITY,
+  SEARCH_FIELD_TYPE_TAXO,
+  EXTERNAL_EVENT_SEARCH_DONE
 } from './../constants/Settings'
 import omit from 'ramda/src/omit'
 
@@ -189,6 +191,12 @@ export function executeSearch (payload, options) {
         globalRouteChange &&
           updateURL(query, historyType, replaceQueryParamName)
       }
+
+      /**
+       * Do a callback after results are loaded
+       */
+      document.dispatchEvent(new Event(EXTERNAL_EVENT_SEARCH_DONE))
+
       return res
     })
   }
@@ -215,7 +223,8 @@ export function executeFacetSearch (
   term,
   startToken,
   endToken,
-  fieldTypeMapping = {}
+  fieldTypeMapping = {},
+  tokens
 ) {
   /* Splice based on tokens */
   fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
@@ -226,8 +235,12 @@ export function executeFacetSearch (
     const state = getState()
     const context = state.Context
     const query = state.QueryState
-    const { tokens } = query
-    const facet_query = tokens.map(({ value, name }) => ({
+    const { tokens: queryTokens } = query
+    /**
+     * Check if user has provided tokens
+     */
+    const tokensToFilter = tokens || queryTokens
+    const facet_query = tokensToFilter.map(({ value, name }) => ({
       selected: [value],
       name,
       multiSelect: true
@@ -235,7 +248,9 @@ export function executeFacetSearch (
     const facets = Object.keys(fieldTypeMapping)
       .filter((key) => fieldTypeMapping[key] === TAXO_ENTITY)
       .concat(SEARCH_COLLECTION_IDENTIFIER)
-      .map((name) => CREATE_FILTER_OBJECT({ name }))
+      .map((name) =>
+        CREATE_FILTER_OBJECT({ name: name + SEARCH_FIELD_TYPE_TAXO })
+      )
 
     /* Exit early */
     if (!facets.length) return
@@ -244,7 +259,7 @@ export function executeFacetSearch (
     let initialStart = 0
     let q = removeTokenFromQuery(
       fullTerm,
-      tokens.map(({ value }) => value) // .concat(term)
+      tokensToFilter.map(({ value }) => value) // .concat(term)
     )
 
     return dispatch({
