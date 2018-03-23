@@ -17,7 +17,6 @@ import FacetTitle from './common/FacetTitle'
 
 /**
  * Displays a checkbox filter
- * @example ./src/components/FacetFilters/Checkbox.md
  */
 class CheckboxFilter extends React.Component {
   constructor (props) {

@@ -11,7 +11,6 @@ import FacetTitle from './common/FacetTitle'
 
 /**
  * Boolean filter
- * @example ./src/components/FacetFilters/Boolean.md
  */
 function BooleanFilter (props) {
   function onChange (event) {

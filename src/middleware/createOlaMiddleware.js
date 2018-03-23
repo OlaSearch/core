@@ -22,10 +22,12 @@ import { uuid } from './../utilities'
 
 export default function (options = {}) {
   return ({ dispatch, getState }) => (next) => (action) => {
+    /* If no action pass it on */
+    if (!action) return next(action)
     const {
       types,
       api,
-      query,
+      query = {},
       context = {},
       payload = {},
       meta = {},
@@ -35,7 +37,6 @@ export default function (options = {}) {
       shouldDispatchActions = true,
       returnWithoutDispatch = false
     } = action
-
     let { suggestedTerm, spellCheckSource } = action
 
     // Normal action: pass it on
@@ -154,6 +155,7 @@ export default function (options = {}) {
         ? searchService[api](timestampObj, params, apiUrl, apiOptions)
         : null
     }
+
     if (typeof callApi !== 'object' || typeof callApi.then !== 'function') {
       throw new Error('Expect API call to return a promise.')
     }
@@ -366,12 +368,13 @@ export default function (options = {}) {
         if (
           !bot &&
           answer &&
-          /* Check if the intent requires location */ 
+          /* Check if the intent requires location */
+
           answer.location &&
           /* Check if location is already present */
           !currentState.Context.location &&
           /* Check if location was asked before */
-          !currentState.Context.hasRequestedLocation 
+          !currentState.Context.hasRequestedLocation
         ) {
           dispatch(
             requestGeoLocation(() => {

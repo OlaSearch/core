@@ -117,13 +117,8 @@ module.exports = {
       components: 'src/decorators/!(index).js'
     },
     {
-      name: 'Enhancers',
-    },
-    {
-      name: 'Middleware',
-    },
-    {
-      name: 'Reducers',
+      name: 'Store',
+      content: './styleguide/Store.md'
     },
     {
       name: 'Services',

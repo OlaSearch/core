@@ -26,13 +26,36 @@ export const MAKE_FILTER_ITEM = (name) => ({
   multiSelect: true
 })
 
+
+const MOCK_RESULTS = {
+  results: []
+}
+
 export const MOCK_SEARCH_ADAPTER = {
   Parser () {
   },
   QueryBuilder () {
+    return {
+      transform: () => {
+
+      }
+    }
   },
   Http () {
+    return {
+      search: function (){
+        return new Promise((resolve, reject) => 
+          resolve({
+            responseText: JSON.stringify(MOCK_RESULTS)
+          })
+        )
+      }
+    }
   }
+}
+
+export const MOCK_CONFIG = {
+  proxy: true
 }
 
 export function decodeCookie (obj) {
