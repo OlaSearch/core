@@ -24,6 +24,7 @@ const card = {
         }
       ],
       "subtitle": null,
+      image: 'https://placeimg.com/640/480/any',
       "title": "Planning and Results Management contacts"
     }
   ],

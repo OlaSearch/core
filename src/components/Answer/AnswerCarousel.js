@@ -5,29 +5,32 @@ import Field from './common/Field'
 import Header from './common/Header'
 import Source from './common/Source'
 import classNames from 'classnames'
+import Swipeable from './../Swipeable'
 
 /**
  * Create an answer card
  */
-function AnswerCard ({ card, onSelect, placeholderImage }) {
-  function handleSelect () {
-    onSelect && onSelect(result)
-  }
-  let { image, subtitle, title, url, buttons = [], source, fields = [] } = card
-  image = image || placeholderImage
+function AnswerCarousel ({ card, onSelect, placeholderImage }) {
+  let {
+    images = [],
+    subtitle,
+    title,
+    url,
+    buttons = [],
+    source,
+    fields = []
+  } = card
   return (
-    <div className='ola-answer-card' onClick={handleSelect}>
+    <div className='ola-answer-card ola-answer-carousel'>
       <div className='ola-answer-card-wrapper'>
         <div className='ola-answer-content'>
           <Header title={title} subtitle={subtitle} url={url} />
-          {image ? <img src={image} className='ola-img ola-img-card' /> : null}
-          {fields.length ? (
-            <div className='ola-answer-fields'>
-              {fields.map((field, idx) => {
-                return <Field {...field} key={idx} />
-              })}
-            </div>
-          ) : null}
+          <Swipeable itemWidth={300}>
+            {images.map(({ url, title }, idx) => {
+              return <img src={url} alt={title} key={idx} />
+            })}
+          </Swipeable>
+
           {buttons.length ? (
             <div className='ola-answer-buttons'>
               {buttons.map((button, idx) => {
@@ -42,7 +45,7 @@ function AnswerCard ({ card, onSelect, placeholderImage }) {
   )
 }
 
-AnswerCard.propTypes = {
+AnswerCarousel.propTypes = {
   /**
    * answer card object
    */
@@ -50,11 +53,7 @@ AnswerCard.propTypes = {
   /**
    * Callback when a card is clicked
    */
-  onSelect: PropTypes.func,
-  /**
-   * Placeholder image
-   */
-  placeholderImage: PropTypes.string
+  onSelect: PropTypes.func
 }
 
-export default AnswerCard
+export default AnswerCarousel

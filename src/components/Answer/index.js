@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
 import AnswerCard from './AnswerCard'
+import AnswerCarousel from './AnswerCarousel'
 import AnswerList from './AnswerList'
 import AnswerMC from './AnswerMC'
 import {
@@ -30,6 +31,9 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
     switch (template) {
       case 'list':
         return <AnswerList card={card} />
+
+      case 'carousel':
+        return <AnswerCarousel card={card} />
 
       case 'map':
         return <AnswerMap card={card} />

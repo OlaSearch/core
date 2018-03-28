@@ -102,12 +102,6 @@ function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-btn-close) {
             color: ${theme.primaryColor};
           }
-          /* Load more */
-          .ola-search :global(.ola-link-load-more) {
-            background: ${theme.primaryButtonBackground};
-            color: ${theme.primaryButtonColor};
-            font-size: ${theme.mediumFontSize};
-          }
           /* Progress bar */
           .ola-search :global(.react-progress-bar-percent) {
             background: ${theme.progressBarBackground};

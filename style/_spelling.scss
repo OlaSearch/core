@@ -10,7 +10,7 @@
 
 /* Instead */
 .ola-term-suggestion-instead {
-  font-size: 0.9375rem;
+  font-size: 14px;
 }
 
 /**
@@ -35,6 +35,7 @@
  */
 .ola-btn-term-suggestion {
   margin-left: 6px;
+  vertical-align: baseline;
   &, &:hover, &:active, &:focus {
     border: none;
     background: none;

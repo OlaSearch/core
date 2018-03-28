@@ -79,6 +79,7 @@ export AnswerList from './components/Answer/AnswerList'
 export AnswerWordMap from './components/Answer/AnswerWordMap'
 export AnswerMap from './components/Answer/AnswerMap'
 export AnswerCard from './components/Answer/AnswerCard'
+export AnswerCarousel from './components/Answer/AnswerCarousel'
 export AnswerMC from './components/Answer/AnswerMC'
 export SlotSuggestion from './components/SlotSuggestion'
 

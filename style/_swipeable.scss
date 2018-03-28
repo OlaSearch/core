@@ -1,0 +1,84 @@
+.ola-swipeable {
+  position: relative;
+}
+
+.ola-swipeable-flow {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  transform: translate3d(0,0,0);
+  position: relative;
+}
+
+.ola-swipeable-flow::-webkit-scrollbar {
+  display: none;
+  background-color: transparent;
+}
+
+  .ola-swipeable-row {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+  }
+
+  .ola-swipeable-item {
+    // max-width: 80%;
+    flex: 1 1;
+    padding: 8px;
+    // width: 80%;
+    // padding: 0 16px 16px 0;
+  }
+
+  /**
+   * Innner
+   */
+  .ola-swipeable-item-inner {
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+/**
+ * Hide next prev in mobile
+ */
+.ola-swipeable-prev,
+.ola-swipeable-next {
+  display: none;
+  @extend %ola-icon-button;  
+
+  @include media (desktop) {
+    // display: block;
+  }
+}
+
+/**
+ * Show button
+ */
+.ola-swipeable-button {
+  @extend .ola-btn;
+  text-align: center;
+  width: 60px;  
+
+  .ola-icon {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: $small-box-shadow;
+    background: white;
+  }  
+}
+
+.ola-swipeable-button-text {
+  display: block;
+  padding-top: 8px;
+  font-size: 12px;
+}
+
+.ola-swipeable-show {
+  display: flex;
+  align-items: center;
+}
