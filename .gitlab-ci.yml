@@ -8,7 +8,9 @@ pages:
   stage: deploy
   script:
   - npm run docs:build
-  - cp -r docs/* public
+  - mkdir .public
+  - cp -r docs/* .public
+  - mv .public public
   artifacts:
     paths:
     - public
