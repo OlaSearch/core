@@ -22,8 +22,8 @@ module.exports = {
   },
   template: './styleguide/styleguide.template.html',
   editorConfig: { theme: 'cobalt' },  
-  theme,
-  styles,
+  // theme,
+  // styles,
   // resolver: require('react-docgen').resolver.findAllComponentDefinitions,
   context: {
     olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),    

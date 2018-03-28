@@ -1,7 +1,16 @@
 image: node:8
 before_script:
   - npm install
-
 test:
   script:
   - npm run test
+pages:
+  stage: deploy
+  script:
+  - npm run docs:build
+  - cp -r docs/* public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
