@@ -31,14 +31,15 @@ class Swipeable extends React.Component {
     smoothScroll(
       this.scroller,
       this.state.active * this.scrollRow.children[this.state.active].clientWidth
-    ).then(() => {
-      /* Check if it can scroll left */
-      this.setState({
-        canScrollLeft: this.scroller.scrollLeft > 0,
-        canScrollRight:
-          this.scroller.scrollLeft + this.scroller.clientWidth <
-          this.scroller.scrollWidth
-      })
+    ).then(this.updateScrollState)
+  }
+  updateScrollState = () => {
+    /* Check if it can scroll left */
+    this.setState({
+      canScrollLeft: this.scroller.scrollLeft > 0,
+      canScrollRight:
+        this.scroller.scrollLeft + this.scroller.clientWidth <
+        this.scroller.scrollWidth
     })
   }
   handleNext = () => {
@@ -51,7 +52,16 @@ class Swipeable extends React.Component {
   }
   static defaultProps = {
     isCollapsed: true,
-    itemWidth: 300
+    itemWidth: 260
+  }
+  handleToggle = () => {
+    this.setState(
+      {
+        active: this.props.max
+      },
+      this.updateScrollState
+    )
+    this.props.toggle()
   }
   render () {
     const { children, itemWidth, isCollapsed, max, toggle } = this.props
@@ -85,7 +95,10 @@ class Swipeable extends React.Component {
               })}
             {!isCollapsed ? (
               <div className='ola-swipeable-item ola-swipeable-show'>
-                <button className='ola-swipeable-button' onClick={toggle}>
+                <button
+                  className='ola-swipeable-button'
+                  onClick={this.handleToggle}
+                >
                   <ArrowRight size={20} />
                   <span className='ola-swipeable-button-text'>Show all</span>
                 </button>

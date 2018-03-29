@@ -74,7 +74,7 @@ AnswerCarousel.propTypes = {
 }
 
 AnswerCarousel.defaultProps = {
-  itemWidth: 300
+  itemWidth: 260
 }
 
 export default AnswerCarousel

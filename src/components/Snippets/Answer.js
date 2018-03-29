@@ -11,16 +11,18 @@ function AnswerSnippet ({ result, bookmarks, dispatch, ...rest }) {
   let { ola_answer: answer } = result
   return (
     <div className='ola-snippet ola-snippet-static-answer'>
-      <div
-        className='ola-snippet-answer-result'
-        dangerouslySetInnerHTML={createHTMLMarkup(answer)}
-      />
-      <Bookmark
-        result={result}
-        bookmarks={bookmarks}
-        dispatch={dispatch}
-        {...rest}
-      />
+      <div className='ola-snippet-inner'>
+        <div
+          className='ola-snippet-answer-result'
+          dangerouslySetInnerHTML={createHTMLMarkup(answer)}
+        />
+        <Bookmark
+          result={result}
+          bookmarks={bookmarks}
+          dispatch={dispatch}
+          {...rest}
+        />
+      </div>
     </div>
   )
 }

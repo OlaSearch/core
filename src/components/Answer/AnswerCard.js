@@ -16,14 +16,18 @@ function AnswerCard ({ card, onSelect }) {
       <div className='ola-answer-card-wrapper'>
         <div className='ola-answer-content'>
           <Header title={title} subtitle={subtitle} url={url} />
-          {image ? <img src={image} className='ola-img ola-img-card' /> : null}
-          {fields.length ? (
-            <div className='ola-answer-fields'>
-              {fields.map((field, idx) => {
-                return <Field {...field} key={idx} />
-              })}
-            </div>
-          ) : null}
+          <div className='ola-answer-body'>
+            {image ? (
+              <img src={image} className='ola-img ola-img-card' />
+            ) : null}
+            {fields.length ? (
+              <div className='ola-answer-fields'>
+                {fields.map((field, idx) => {
+                  return <Field {...field} key={idx} />
+                })}
+              </div>
+            ) : null}
+          </div>
           {buttons.length ? (
             <div className='ola-answer-buttons'>
               {buttons.map((button, idx) => {

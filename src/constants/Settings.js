@@ -171,17 +171,20 @@ export const DEFAULT_THEME = {
   chatUserMessageColor: 'white',
   chatBotMessageBackground: '#ddd',
   chatBotMessageColor: '#444',
+  chatMessageFontSize: '14px',
 
   /* Slot */
 
   chatBotSlotButtonColor: '#444',
   chatBotSlotButtonBackground: 'white',
+  chatSlotButtonFontSize: '14px',
 
   /* Quick reply */
   chatQuickReplyColor: '#444',
   chatQuickReplyBackground: 'transparent',
   chatQuickReplyHoverColor: 'white',
   chatQuickReplyHoverBackground: '#444',
+  chatQuickReplyFontSize: '14px',
 
   chatBackground:
     '#f3f3f3 url("https://cdn.olasearch.com/assets/images/chat-bg.png")',

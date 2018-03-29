@@ -1,10 +1,19 @@
 /**
- * Answer card item
+ * Answer content
  */
 
-.ola-answer-cards {
-  
+.ola-answer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
+
+  /**
+   * Answer body
+   */
+  .ola-answer-body {
+    flex: 1;
+  }
 
   /**
    * Wrapper
@@ -22,7 +31,6 @@
    */
   .ola-answer-title {
     margin: 0;
-    font-size: 1rem;
     font-weight: 700;
   }
 
@@ -59,6 +67,10 @@
     @include media (desktop) {
       margin: 0 14px 0 0;
       width: auto;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 

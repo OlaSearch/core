@@ -22,6 +22,7 @@ function AnswerList ({
   translate,
   isDesktop,
   swipe,
+  itemWidth,
   ...rest
 }) {
   const { elements = [], source, title, subtitle, url, ...cardProps } = card
@@ -37,7 +38,7 @@ function AnswerList ({
         <div className='ola-answer-list-items'>
           {isSwipe ? (
             <Swipeable
-              itemWidth={300}
+              itemWidth={itemWidth}
               max={max}
               toggle={toggle}
               isCollapsed={isCollapsed}
@@ -69,7 +70,8 @@ function AnswerList ({
 
 AnswerList.defaultProps = {
   max: 3,
-  swipe: false
+  swipe: false,
+  itemWidth: 260
 }
 
 function mapStateToProps (state) {
