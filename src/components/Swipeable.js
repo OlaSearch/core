@@ -40,7 +40,8 @@ class Swipeable extends React.Component {
     )
   }
   static defaultProps = {
-    isCollapsed: true
+    isCollapsed: true,
+    itemWidth: 300
   }
   render () {
     const { children, itemWidth, isCollapsed, max, toggle } = this.props

@@ -6,6 +6,7 @@ import { getMatchingSnippet } from './../../utilities'
 import classNames from 'classnames'
 import withTheme from './../../decorators/withTheme'
 import withConfig from './../../decorators/withConfig'
+import Swipeable from './../Swipeable'
 
 /**
  * Display search results

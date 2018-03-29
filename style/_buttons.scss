@@ -217,3 +217,10 @@
   @extend .ola-icon-button;
   height: 100%;
 }
+
+/**
+ * Button more
+ */
+.ola-answer-link-more {
+  @extend .ola-btn-primary;
+}

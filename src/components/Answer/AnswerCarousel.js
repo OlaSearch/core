@@ -27,14 +27,20 @@ function AnswerCarousel ({ card, onSelect, placeholderImage }) {
           <Header title={title} subtitle={subtitle} url={url} />
           <Swipeable itemWidth={300}>
             {images.map(({ url, title }, idx) => {
-              return <img src={url} alt={title} key={idx} />
+              return (
+                <div className='ola-answer-carousel-item' key={idx}>
+                  <div className='ola-answer-carousel-item-wrapper'>
+                    <img src={url} alt={title} />
+                  </div>
+                </div>
+              )
             })}
           </Swipeable>
 
           {buttons.length ? (
             <div className='ola-answer-buttons'>
               {buttons.map((button, idx) => {
-                return <Button {...button} key={idx} />
+                return <Button {...button} onClick={onSelect} key={idx} />
               })}
             </div>
           ) : null}

@@ -172,8 +172,19 @@ export const DEFAULT_THEME = {
   chatBotMessageBackground: '#ddd',
   chatBotMessageColor: '#444',
 
+  /* Slot */
+
   chatBotSlotButtonColor: '#444',
   chatBotSlotButtonBackground: 'white',
+
+  /* Quick reply */
+  chatQuickReplyColor: '#444',
+  chatQuickReplyBackground: 'transparent',
+  chatQuickReplyHoverColor: 'white',
+  chatQuickReplyHoverBackground: '#444',
+
+  chatBackground:
+    '#f3f3f3 url("https://cdn.olasearch.com/assets/images/chat-bg.png")',
 
   /* Primary button */
   /**
@@ -219,3 +230,9 @@ export const ERROR_CODES = {
 export const EXTERNAL_EVENT_SEARCH_DONE = 'ola:search_complete'
 export const SPELLCHECK_SOURCE_UNIVERSAL = 'universal'
 export const SPELLCHECK_SOURCE_CONTENT = 'content'
+
+export const BUTTON_TYPE = {
+  POSTBACK: 'postback',
+  WEB: 'web_uri',
+  EMAIL: 'email'
+}

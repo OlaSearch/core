@@ -34,7 +34,8 @@
    * Innner
    */
   .ola-swipeable-item-inner {
-    overflow: hidden;
+    // overflow: hidden;
+    height: 100%;
 
     img {
       max-width: 100%;

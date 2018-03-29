@@ -21,9 +21,10 @@ function AnswerList ({
   max,
   translate,
   isDesktop,
-  swipe
+  swipe,
+  ...rest
 }) {
-  const { elements = [], source, title, subtitle, url } = card
+  const { elements = [], source, title, subtitle, url, ...cardProps } = card
   const size = elements.length
   const isSwipe = swipe || !isDesktop
   return (
@@ -38,19 +39,18 @@ function AnswerList ({
               toggle={toggle}
               isCollapsed={isCollapsed}
             >
-              {elements.map((card, idx) => {
-                return <AnswerCard card={card} key={idx} />
-              })}
+              {elements.map((item, idx) => (
+                <AnswerCard card={item} key={idx} {...rest} />
+              ))}
             </Swipeable>
           ) : (
             elements
               .slice(0, isCollapsed ? undefined : max)
-              .map((card, idx) => {
-                return <AnswerCard card={card} key={idx} />
-              })
+              .map((item, idx) => (
+                <AnswerCard card={item} key={idx} {...rest} />
+              ))
           )}
         </div>
-        <Source source={source} />
         {!isSwipe && size > max ? (
           <button className='ola-answer-link-more' onClick={toggle}>
             {isCollapsed
@@ -58,6 +58,7 @@ function AnswerList ({
               : translate('answers_show_more')}
           </button>
         ) : null}
+        <Source source={source} />
       </div>
     </div>
   )

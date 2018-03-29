@@ -1,10 +1,13 @@
 import React from 'react'
 
-export default function Button ({ url, title, type }) {
-  const href = type === 'email' ? `mailto:${url}` : url
+export default function Button (props) {
+  const { title, onClick } = props
+  function handleClick () {
+    onClick(props)
+  }
   return (
-    <a className='ola-answer-button' href={href}>
+    <button className='ola-answer-button' type='button' onClick={handleClick}>
       {title}
-    </a>
+    </button>
   )
 }

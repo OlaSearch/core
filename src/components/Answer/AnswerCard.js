@@ -5,18 +5,37 @@ import Field from './common/Field'
 import Header from './common/Header'
 import Source from './common/Source'
 import classNames from 'classnames'
+import { BUTTON_TYPE } from './../../constants/Settings'
 
 /**
  * Create an answer card
  */
-function AnswerCard ({ card, onSelect, placeholderImage }) {
-  function handleSelect () {
-    onSelect && onSelect(result)
+function AnswerCard ({ card, onSelect }) {
+  function handleClick ({ type, label, title, payload, url }) {
+    /**
+     * Label will be displayed in the bot
+     */
+    if (type === BUTTON_TYPE.POSTBACK) {
+      return (
+        onSelect &&
+        onSelect({
+          ...payload,
+          label,
+          query: label || title
+        })
+      )
+    }
+    if (type === BUTTON_TYPE.WEB) {
+      return (window.location.href = url)
+    }
+    if (type === BUTTON_TYPE.EMAIL) {
+      return (window.location.href = `mailto:${url}`)
+    }
+    onSelect && onSelect({ card })
   }
   let { image, subtitle, title, url, buttons = [], source, fields = [] } = card
-  image = image || placeholderImage
   return (
-    <div className='ola-answer-card' onClick={handleSelect}>
+    <div className='ola-answer-card'>
       <div className='ola-answer-card-wrapper'>
         <div className='ola-answer-content'>
           <Header title={title} subtitle={subtitle} url={url} />
@@ -31,7 +50,7 @@ function AnswerCard ({ card, onSelect, placeholderImage }) {
           {buttons.length ? (
             <div className='ola-answer-buttons'>
               {buttons.map((button, idx) => {
-                return <Button {...button} key={idx} />
+                return <Button {...button} onClick={handleClick} key={idx} />
               })}
             </div>
           ) : null}
@@ -50,11 +69,7 @@ AnswerCard.propTypes = {
   /**
    * Callback when a card is clicked
    */
-  onSelect: PropTypes.func,
-  /**
-   * Placeholder image
-   */
-  placeholderImage: PropTypes.string
+  onSelect: PropTypes.func
 }
 
 export default AnswerCard
