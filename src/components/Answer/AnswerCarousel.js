@@ -10,7 +10,7 @@ import Swipeable from './../Swipeable'
 /**
  * Create an answer card
  */
-function AnswerCarousel ({ card, onSelect, placeholderImage }) {
+function AnswerCarousel ({ card, onSelect, itemWidth }) {
   let {
     images = [],
     subtitle,
@@ -25,12 +25,19 @@ function AnswerCarousel ({ card, onSelect, placeholderImage }) {
       <div className='ola-answer-card-wrapper'>
         <div className='ola-answer-content'>
           <Header title={title} subtitle={subtitle} url={url} />
-          <Swipeable itemWidth={300}>
-            {images.map(({ url, title }, idx) => {
+          <Swipeable itemWidth={itemWidth}>
+            {images.map(({ src, url, title }, idx) => {
               return (
                 <div className='ola-answer-carousel-item' key={idx}>
                   <div className='ola-answer-carousel-item-wrapper'>
-                    <img src={url} alt={title} />
+                    {React.createElement(
+                      url ? 'a' : 'div',
+                      { href: url },
+                      <img src={src} alt={title} />
+                    )}
+                    {title ? (
+                      <div className='ola-answer-carousel-title'>{title}</div>
+                    ) : null}
                   </div>
                 </div>
               )
@@ -59,7 +66,15 @@ AnswerCarousel.propTypes = {
   /**
    * Callback when a card is clicked
    */
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  /**
+   * Item width
+   */
+  itemWidth: PropTypes.number
+}
+
+AnswerCarousel.defaultProps = {
+  itemWidth: 300
 }
 
 export default AnswerCarousel

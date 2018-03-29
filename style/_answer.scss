@@ -66,13 +66,13 @@
  * Answer list
  */
 .ola-answer-list-items {
-  // display: flex;
+  display: flex;
+  flex-wrap: wrap;
 
-  // > .ola-answer-card {
-  //   width: 33.333%;
-  //   padding-right: 14px;
-  //   padding-bottom: 14px;
-  // }
+  > .ola-answer-card {
+    width: 33.333%;
+    padding: 8px 16px 8px 0;
+  }
 }
 
 /**

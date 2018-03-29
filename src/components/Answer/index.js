@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
@@ -12,38 +13,73 @@ import {
   changeAnswerSelection,
   setSkipIntent
 } from './../../actions/Search'
+import { BUTTON_TYPE } from './../../constants/Settings'
 
-function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
-  function handleChange (option, index, itemKey) {
-    dispatch(changeAnswerSelection(index, itemKey, answer))
-  }
-  function handleSkipIntent () {
-    dispatch(updateQueryTerm(answer.original))
-    dispatch(setSkipIntent(true))
-    dispatch(executeSearch())
+/**
+ * Display answers
+ * @example ./Answer.md
+ */
+function Answer ({
+  result,
+  answer,
+  mc,
+  isLoading,
+  dispatch,
+  templates,
+  onSelect
+}) {
+  // function handleChange (option, index, itemKey) {
+  //   dispatch(changeAnswerSelection(index, itemKey, answer))
+  // }
+  // function handleSkipIntent () {
+  //   dispatch(updateQueryTerm(answer.original))
+  //   dispatch(setSkipIntent(true))
+  //   dispatch(executeSearch())
+  // }
+  function handleClick ({ type, label, title, payload, url }) {
+    /**
+     * Label will be displayed in the bot
+     */
+    if (type === BUTTON_TYPE.POSTBACK) {
+      return (
+        onSelect &&
+        onSelect({
+          ...payload,
+          label,
+          query: label || title
+        })
+      )
+    }
+    if (type === BUTTON_TYPE.WEB) {
+      return (window.location.href = url)
+    }
+    if (type === BUTTON_TYPE.EMAIL) {
+      return (window.location.href = `mailto:${url}`)
+    }
+    onSelect && onSelect({ card })
   }
   function templatePicker (template, card, module) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
       let Component = templates[template]
-      return <Component card={card} module={module} />
+      return <Component card={card} module={module} onSelect={handleClick} />
     }
     switch (template) {
       case 'list':
-        return <AnswerList card={card} />
+        return <AnswerList card={card} onSelect={handleClick} />
 
       case 'carousel':
-        return <AnswerCarousel card={card} />
+        return <AnswerCarousel card={card} onSelect={handleClick} />
 
       case 'map':
-        return <AnswerMap card={card} />
+        return <AnswerMap card={card} onSelect={handleClick} />
 
       case 'line_chart':
-        return <AnswerLineChart card={card} />
+        return <AnswerLineChart card={card} onSelect={handleClick} />
 
       case 'generic':
       default:
-        return <AnswerCard card={card} />
+        return <AnswerCard card={card} onSelect={handleClick} />
     }
   }
 
@@ -62,13 +98,13 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
    * If the answer is from Intent engine
    */
   if (card) {
-    let { template } = card
-    let intentName = intent ? intent.split('.').pop() : null
-    let snippetClass = classNames(
+    const { template } = card
+    const intentName = intent ? intent.split('.').pop() : null
+    const snippetClass = classNames(
       'ola-snippet-answer',
       `ola-snippet-template-${template}`
     )
-    let answerKlass = classNames('ola-answer', {
+    const answerKlass = classNames('ola-answer', {
       [`ola-answer-intent-${intentName}`]: intentName,
       [`ola-answer-template-${template}`]: template
     })
@@ -93,6 +129,21 @@ function Answer ({ result, answer, mc, isLoading, dispatch, templates }) {
 
 Answer.defaultProps = {
   answer: {}
+}
+
+Answer.propTypes = {
+  /** Answer object */
+  answer: PropTypes.object,
+  /** Search result */
+  result: PropTypes.object,
+  /** Machine comprehension result */
+  mc: PropTypes.object,
+  /** Indicates if search is currently executing */
+  isLoading: PropTypes.bool,
+  /** Custom answer template */
+  templates: PropTypes.object,
+  /** On Answer click */
+  onSelect: PropTypes.func
 }
 
 module.exports = Answer

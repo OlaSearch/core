@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import cx from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withToggle from './../../decorators/withToggle'
 import Field from './common/Field'
@@ -27,8 +27,11 @@ function AnswerList ({
   const { elements = [], source, title, subtitle, url, ...cardProps } = card
   const size = elements.length
   const isSwipe = swipe || !isDesktop
+  const classes = cx('ola-answer-list', {
+    'ola-answer-list-swipe': isSwipe
+  })
   return (
-    <div className='ola-answer-list'>
+    <div className={classes}>
       <div className='ola-answer-list-wrapper'>
         <Header title={title} subtitle={subtitle} url={url} />
         <div className='ola-answer-list-items'>

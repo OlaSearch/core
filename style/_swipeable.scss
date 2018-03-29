@@ -23,11 +23,8 @@
   }
 
   .ola-swipeable-item {
-    // max-width: 80%;
     flex: 1 1;
-    padding: 8px;
-    // width: 80%;
-    // padding: 0 16px 16px 0;
+    padding: 8px 16px 8px 0;
   }
 
   /**
@@ -48,12 +45,44 @@
 .ola-swipeable-prev,
 .ola-swipeable-next {
   display: none;
-  @extend %ola-icon-button;  
+  @extend %ola-icon-button;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  margin-top: -22px;
+  bottom: 0;
+  width: 45px;
+  height: 45px;
+  color: white;  
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 1;
+
+  .ola-swipeable:hover & {
+    opacity: 1;
+  }
+
+  &, &:focus {
+    outline: none;
+  }
+
+  &:focus, &:active, &:hover {
+    background: rgba(0,0,0,0.5);
+    color: white;
+  }
 
   @include media (desktop) {
-    // display: block;
+    display: block;
   }
 }
+
+  /**
+   * Previos
+   */
+  .ola-swipeable-prev {
+    left: 8px;
+    right: auto;
+  }
 
 /**
  * Show button
@@ -82,4 +111,12 @@
 .ola-swipeable-show {
   display: flex;
   align-items: center;
+}
+
+
+/**
+ * Answer list
+ */
+.ola-answer-list-swipe .ola-answer-list-items{
+  display: block;
 }

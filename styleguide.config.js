@@ -88,7 +88,9 @@ module.exports = {
       content: './styleguide/AnswerFormats.md',
       components: () => {
         return [
+          'src/components/Answer/index.js',
           'src/components/Answer/AnswerCard.js',
+          'src/components/Answer/AnswerCarousel.js',
           'src/components/Answer/AnswerList.js',
           'src/components/Answer/AnswerLineChart.js',
           'src/components/Answer/AnswerMap.js',

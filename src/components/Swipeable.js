@@ -1,12 +1,16 @@
 import React from 'react'
-import scrollIntoView from 'dom-scroll-into-view'
 import ArrowRight from '@olasearch/icons/lib/arrow-right'
+import ChevronLeft from '@olasearch/icons/lib/chevron-left'
+import ChevronRight from '@olasearch/icons/lib/chevron-right'
+import { smoothScroll } from './../utilities'
 
 class Swipeable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      active: 0
+      active: 0,
+      canScrollLeft: false,
+      canScrollRight: true
     }
   }
   registerRef = (el) => {
@@ -24,11 +28,17 @@ class Swipeable extends React.Component {
     )
   }
   scrollTo = () => {
-    scrollIntoView(this.scrollRow.children[this.state.active], this.scroller, {
-      allowHorizontalScroll: true,
-      onlyScrollIfNeeded: false,
-      alignWithLeft: true,
-      offsetLeft: this.props.itemWidth
+    smoothScroll(
+      this.scroller,
+      this.state.active * this.scrollRow.children[this.state.active].clientWidth
+    ).then(() => {
+      /* Check if it can scroll left */
+      this.setState({
+        canScrollLeft: this.scroller.scrollLeft > 0,
+        canScrollRight:
+          this.scroller.scrollLeft + this.scroller.clientWidth <
+          this.scroller.scrollWidth
+      })
     })
   }
   handleNext = () => {
@@ -45,15 +55,18 @@ class Swipeable extends React.Component {
   }
   render () {
     const { children, itemWidth, isCollapsed, max, toggle } = this.props
+    const { canScrollLeft, canScrollRight } = this.state
     return (
       <div className='ola-swipeable'>
-        <button
-          className='ola-swipeable-prev'
-          type='button'
-          onClick={this.handlePrev}
-        >
-          Prev
-        </button>
+        {canScrollLeft ? (
+          <button
+            className='ola-swipeable-prev'
+            type='button'
+            onClick={this.handlePrev}
+          >
+            <ChevronLeft />
+          </button>
+        ) : null}
         <div className='ola-swipeable-flow' ref={this.registerRef}>
           <div className='ola-swipeable-row' ref={this.registerRowRef}>
             {children
@@ -80,13 +93,15 @@ class Swipeable extends React.Component {
             ) : null}
           </div>
         </div>
-        <button
-          className='ola-swipeable-next'
-          type='button'
-          onClick={this.handleNext}
-        >
-          Next
-        </button>
+        {canScrollRight ? (
+          <button
+            className='ola-swipeable-next'
+            type='button'
+            onClick={this.handleNext}
+          >
+            <ChevronRight />
+          </button>
+        ) : null}
       </div>
     )
   }

@@ -233,6 +233,6 @@ export const SPELLCHECK_SOURCE_CONTENT = 'content'
 
 export const BUTTON_TYPE = {
   POSTBACK: 'postback',
-  WEB: 'web_uri',
+  WEB: 'web_url',
   EMAIL: 'email'
 }
