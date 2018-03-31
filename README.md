@@ -3,7 +3,7 @@ Ola Search Core is a fully customisable front-end search interface that brings y
 
 [![npm package](https://img.shields.io/npm/v/@olasearch/core.svg)](https://www.npmjs.com/package/@olasearch/core)
 [![npm download](https://img.shields.io/npm/dm/@olasearch/core.svg)](https://www.npmjs.org/package/@olasearch/core)
-[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/OlaSearch/core)
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/OlaSearch/core.svg?branch=master)
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 [![PeerDependencies](https://img.shields.io/david/peer/OlaSearch/core.svg)](https://david-dm.org/OlaSearch/core#info=peerDependencies&view=list)
 [![Dependencies](https://img.shields.io/david/OlaSearch/core.svg)](https://david-dm.org/OlaSearch/core)
