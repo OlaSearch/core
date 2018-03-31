@@ -39,6 +39,7 @@ export SearchBar from './components/SearchBar'
 export ContentWrapper from './components/ContentWrapper'
 export SearchContent from './components/SearchContent'
 export ProgressBar from './components/ProgressBar'
+export Swipeable from './components/Swipeable'
 
 export * as Actions from './actions'
 export * as Decorators from './decorators'

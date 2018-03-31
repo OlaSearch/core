@@ -40,6 +40,7 @@ function AnswerList ({
             <Swipeable
               itemWidth={itemWidth}
               max={max}
+              size={size}
               toggle={toggle}
               isCollapsed={isCollapsed}
             >

@@ -2,9 +2,9 @@ import React from 'react'
 import ArrowRight from '@olasearch/icons/lib/arrow-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
-import { smoothScroll } from './../utilities'
+import { smoothScroll, debounce } from './../utilities'
 
-class Swipeable extends React.Component {
+export default class Swipeable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -12,12 +12,21 @@ class Swipeable extends React.Component {
       canScrollLeft: false,
       canScrollRight: true
     }
+    this._updateScrollState = debounce(this.updateScrollState, 300)
   }
   registerRef = (el) => {
     this.scroller = el
   }
   registerRowRef = (el) => {
     this.scrollRow = el
+  }
+  componentDidMount () {
+    if (this.props.showNavigation) {
+      this.scroller.addEventListener('scroll', this._updateScrollState)
+    }
+  }
+  componentDidUpdate () {
+    // this._updateScrollState()
   }
   handlePrev = () => {
     this.setState(
@@ -34,6 +43,7 @@ class Swipeable extends React.Component {
     ).then(this.updateScrollState)
   }
   updateScrollState = () => {
+    if (!this.props.showNavigation) return
     /* Check if it can scroll left */
     this.setState({
       canScrollLeft: this.scroller.scrollLeft > 0,
@@ -52,7 +62,9 @@ class Swipeable extends React.Component {
   }
   static defaultProps = {
     isCollapsed: true,
-    itemWidth: 260
+    itemWidth: 260,
+    showNavigation: true,
+    max: undefined
   }
   handleToggle = () => {
     this.setState(
@@ -64,11 +76,20 @@ class Swipeable extends React.Component {
     this.props.toggle()
   }
   render () {
-    const { children, itemWidth, isCollapsed, max, toggle } = this.props
+    const {
+      children,
+      itemWidth,
+      isCollapsed,
+      max,
+      size,
+      toggle,
+      showNavigation
+    } = this.props
     const { canScrollLeft, canScrollRight } = this.state
+    const showMoreButton = size > max && !isCollapsed
     return (
       <div className='ola-swipeable'>
-        {canScrollLeft ? (
+        {canScrollLeft && showNavigation ? (
           <button
             className='ola-swipeable-prev'
             type='button'
@@ -93,7 +114,7 @@ class Swipeable extends React.Component {
                   </div>
                 )
               })}
-            {!isCollapsed ? (
+            {showMoreButton ? (
               <div className='ola-swipeable-item ola-swipeable-show'>
                 <button
                   className='ola-swipeable-button'
@@ -106,7 +127,7 @@ class Swipeable extends React.Component {
             ) : null}
           </div>
         </div>
-        {canScrollRight ? (
+        {canScrollRight && showNavigation ? (
           <button
             className='ola-swipeable-next'
             type='button'
@@ -119,5 +140,3 @@ class Swipeable extends React.Component {
     )
   }
 }
-
-module.exports = Swipeable
