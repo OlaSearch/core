@@ -88,9 +88,6 @@ class SearchResults extends React.Component {
             .ola-results :global(.ola-btn-person) {
               color: ${theme.primaryColor};
             }
-            .ola-results :global(.ola-field-img) {
-              max-height: ${theme.snippetImageMaxHeight};
-            }
           `}
         </style>
       </div>

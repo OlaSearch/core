@@ -7,7 +7,7 @@ import { ThemeConsumer } from './../containers/ThemeContext'
 function withTheme (WrappedComponent) {
   return (props) => (
     <ThemeConsumer>
-      {(theme) => <WrappedComponent theme={theme} {...props} />}
+      {(theme) => <WrappedComponent {...props} theme={theme} />}
     </ThemeConsumer>
   )
 }

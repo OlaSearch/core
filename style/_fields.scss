@@ -1,3 +1,5 @@
+$image-width: 200px;
+$image-height: 150px;
 /**
  * Fields
  */
@@ -10,19 +12,7 @@
   display: block;
   padding: 0;
   margin-bottom: 1rem;
-  max-width: 100%;
-  max-height: 200px;
-  text-align: center;
-
-  @include media (tablet) {
-    width: 180px;
-    max-height: 200px;
-  }
-
-
-  .ola-module & {
-    width: 80px;
-  }
+  object-fit: cover;
 }
 
   /**
@@ -48,9 +38,10 @@
  * Background images
  */
 .ola-img-bg {
-  height: 180px;
+  height: $image-height;
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: top;
+  background-repeat: no-repeat;
 }
 
 .ola-field-component-label {

@@ -126,9 +126,6 @@ export default function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-drop-link:hover) {
             background: #eee;
           }
-          .ola-search :global(.ola-field-img) {
-            max-height: ${theme.snippetImageMaxHeight};
-          }
 
           /* Rating */
           .ola-search :global(.ola-rating-active) {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import omit from 'ramda/src/omit'
 import withLogger from './../../../decorators/withLogger'
 import withConfig from './../../../decorators/withConfig'
+import { BREAKPOINT_TABLET } from './../../../constants/Settings'
 
 /**
  * Display an image as a background or using an img tag
@@ -20,6 +21,7 @@ function Thumbnail (props) {
     snippetId,
     result,
     config,
+    width,
     ...rest
   } = props
 
@@ -66,6 +68,15 @@ function Thumbnail (props) {
     <div className='ola-field ola-field-img'>
       {isLink ? <a {...linkProps}>{imgThumbnail}</a> : imgThumbnail}
       {caption ? <div className='ola-field-img-caption'>{caption}</div> : null}
+      <style jsx>
+        {`
+          @media only screen and (min-width: ${BREAKPOINT_TABLET}) {
+            .ola-field-img {
+              max-width: ${width}px;
+            }
+          }
+        `}
+      </style>
     </div>
   )
 }
@@ -86,14 +97,19 @@ Thumbnail.propTypes = {
   /**
    * Use background image instead of `<img >` tag
    */
-  useBackgroundImage: PropTypes.bool
+  useBackgroundImage: PropTypes.bool,
+  /**
+   * Width
+   */
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 
 Thumbnail.defaultProps = {
   baseUrl: '',
   isLink: false,
   url: null,
-  useBackgroundImage: false
+  useBackgroundImage: false,
+  width: 200
 }
 
 module.exports = withConfig(withLogger(Thumbnail))

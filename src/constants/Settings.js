@@ -239,3 +239,5 @@ export const BUTTON_TYPE = {
   WEB: 'web_url',
   EMAIL: 'email'
 }
+
+export const BREAKPOINT_TABLET = '768px'
