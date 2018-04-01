@@ -8,11 +8,11 @@ import { DEFAULT_THEME } from './../constants/Settings'
 /**
  * Ola Provider wrapper for all Ola Components
  */
-function OlaProvider ({ config, translations, children }) {
+export default function OlaProvider ({ config, translations, children }) {
   if (!config) {
     throw new Error('Could not find config on OlaProvider `props`')
   }
-  let theme = { ...DEFAULT_THEME, ...config.theme }
+  const theme = { ...DEFAULT_THEME, ...config.theme }
   return (
     <div className='ola-search'>
       <ConfigProvider value={config}>
@@ -27,7 +27,6 @@ function OlaProvider ({ config, translations, children }) {
           }
           .ola-search :global(.ola-field-title) {
             font-size: ${theme.titleFontSize};
-            padding-bottom: ;
           }
           .ola-search :global(.ola-field-date),
           .ola-search :global(.ola-field-person),
@@ -161,5 +160,3 @@ OlaProvider.propTypes = {
    */
   children: PropTypes.any
 }
-
-export default OlaProvider

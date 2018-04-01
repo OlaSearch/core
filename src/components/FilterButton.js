@@ -45,10 +45,6 @@ FilterButton.defaultProps = {
   facets: []
 }
 
-FilterButton.contextTypes = {
-  sidebar: PropTypes.bool
-}
-
 function mapStateToProps (state) {
   return {
     isSidebarOpen: state.AppState.isSidebarOpen,

@@ -15,7 +15,7 @@ export default function (WrappedComponent) {
     static displayName = `withRoute(${getComponentDisplayName(
       WrappedComponent
     )})`
-    componentWillMount () {
+    componentDidMount () {
       if (!this.context.router) {
         window.addEventListener('popstate', this.onPopState)
       }

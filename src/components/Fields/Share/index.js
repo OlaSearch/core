@@ -191,7 +191,7 @@ const ShareButton = withLogger(
       },
       getDocument (instance) {
         /* Bug in react - onclickoutside: Functional components dont have access to context */
-        return instance.context.document || document
+        return (instance && instance.context.document) || document
       }
     })
   )

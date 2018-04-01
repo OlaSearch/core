@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as baseTranslations from './../translations'
 import { supplant, translateKey, createHTMLMarkup } from './../utilities'
+import { TranslateProvider } from './TranslateContext'
 
 class OlaIntlProvider extends React.Component {
   constructor (props) {
     super(props)
-    let { locale, translations = {} } = props
+    const { locale, translations = {} } = props
     this.messages = {
       ...(baseTranslations[locale] ? baseTranslations[locale]['messages'] : {}),
       ...(translations[locale] ? translations[locale]['messages'] : {})
@@ -16,16 +17,13 @@ class OlaIntlProvider extends React.Component {
   static defaultProps = {
     locale: 'en'
   }
-  static childContextTypes = {
-    translate: PropTypes.func
-  }
   translate = (key, placeholders, isHTML, options = {}) => {
-    let result = translateKey(key, this.messages)
-    let tagName = options.tagName || 'div'
+    const result = translateKey(key, this.messages)
+    const tagName = options.tagName || 'div'
     if (typeof placeholders === 'undefined') {
       return result
     }
-    let finalResult = supplant(result, placeholders)
+    const finalResult = supplant(result, placeholders)
     return isHTML
       ? React.createElement(
         tagName,
@@ -34,13 +32,12 @@ class OlaIntlProvider extends React.Component {
       )
       : finalResult
   }
-  getChildContext () {
-    return {
-      translate: this.translate
-    }
-  }
   render () {
-    return Children.only(this.props.children)
+    return (
+      <TranslateProvider value={this.translate}>
+        {Children.only(this.props.children)}
+      </TranslateProvider>
+    )
   }
 }
 
