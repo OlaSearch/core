@@ -32,7 +32,7 @@ function AnswerCarousel ({ card, onSelect, itemWidth }) {
                   <div className='ola-answer-carousel-item-wrapper'>
                     {React.createElement(
                       url ? 'a' : 'div',
-                      { href: url },
+                      { href: url, className: 'ola-answer-carousel-image' },
                       <img src={src} alt={title} />
                     )}
                     {title ? (
@@ -74,7 +74,7 @@ AnswerCarousel.propTypes = {
 }
 
 AnswerCarousel.defaultProps = {
-  itemWidth: 260
+  itemWidth: 'auto'
 }
 
 export default AnswerCarousel

@@ -23,6 +23,8 @@ export default class Swipeable extends React.Component {
   componentDidMount () {
     if (this.props.showNavigation) {
       this.scroller.addEventListener('scroll', this._updateScrollState)
+      /* immediately update scroll state */
+      this.updateScrollState()
     }
   }
   componentDidUpdate () {

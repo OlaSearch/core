@@ -20,7 +20,7 @@ module.exports = {
     // StyleGuideRenderer: path.join(__dirname, './styleguide/styleguide.wrapper')
     Wrapper: path.join(__dirname, './styleguide/styleguide.wrapper')
   },
-  template: './styleguide/styleguide.template.html',
+  // template: './styleguide/styleguide.template.html',  
   editorConfig: { theme: 'cobalt' },  
   // theme,
   // styles,
