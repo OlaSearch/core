@@ -22,7 +22,7 @@ import {
   ContentWrapper,
   SearchContent,
   ProgressBar,
-  AnswerToken,
+  SlotSuggestion,
   Answer,
   Sort
 } from '@olasearch/core'
@@ -79,7 +79,7 @@ class Search extends React.Component {
           grouped={false}
         />
 
-        <AnswerToken />
+        <SlotSuggestion />
 
         <ContentWrapper>
           <Sidebar>

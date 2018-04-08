@@ -3,10 +3,22 @@ var webpack = require('webpack')
 var startYear = 2016
 var currentYear = new Date().getFullYear()
 var version = process.env.VERSION || 'latest'
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   mode: 'production',
+  optimization: {
+    minimizer: [
+      new UglifyJSPlugin({
+        uglifyOptions: {
+          /**
+           * Safari bug: Cannot declare a const twice
+           */
+          safari10: true
+        }
+      })
+    ]
+  },
   entry: [
     './src/index'
   ],

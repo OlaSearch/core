@@ -16,10 +16,10 @@
 
   /* Filters */
   .ola-search-filters {
-    max-height: calc(100% - 60px);
+    // max-height: calc(100% - 60px);
     flex: 1;
     overflow: auto;
-    padding: 1em;
+    padding: 16px;
 
     @include media (desktop) {
       padding: 0;
@@ -55,6 +55,18 @@
       display: block;
       box-shadow: none;
     }
+  }
+}
+
+/**
+ * Sidebar title
+ */
+.ola-sidebar-title {
+  padding: 16px;
+  border-bottom: 1px #ccc solid;
+
+  @include media(desktop) {
+    display: none;
   }
 }
 

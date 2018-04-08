@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 import { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } from './../constants/Settings'
 import withTheme from './../decorators/withTheme'
+import withTranslate from './../decorators/withTranslate'
 
 class Sidebar extends React.Component {
   componentDidMount () {
@@ -35,18 +36,20 @@ class Sidebar extends React.Component {
       showSidebar,
       toggleSidebar,
       isSidebarOpen,
-      theme
+      theme,
+      translate
     } = this.props
     if (!showSidebar) return null
     return (
       <div className='ola-sidebar'>
+        <div className='ola-sidebar-title'>{translate('filter_title')}</div>
         {isSidebarOpen && children}
         <button
           onClick={toggleSidebar}
           type='button'
           className='ola-close-sidebar'
         >
-          Close
+          {translate('filter_close')}
         </button>
         <style jsx>
           {`
@@ -79,4 +82,6 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, { toggleSidebar })(withTheme(Sidebar))
+export default connect(mapStateToProps, { toggleSidebar })(
+  withTranslate(withTheme(Sidebar))
+)

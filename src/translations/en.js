@@ -14,6 +14,8 @@ export default {
     bookmarks_empty_label:
       'Your bookmarks is empty. Click on `Heart` icon to add to bookmarks.',
     instantsearch_placeholder: 'Enter keywords',
+    filter_title: 'Filter your results',
+    filter_close: 'Close',
     facet_filter_placeholder: 'Filter',
     facet_filter_showmore: 'Show more',
     facet_filter_showless: 'Show less',
