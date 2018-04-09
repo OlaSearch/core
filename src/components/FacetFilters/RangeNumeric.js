@@ -19,7 +19,7 @@ function RangeNumericFilter (props) {
     }
     dispatch(executeSearch())
   }
-  var { facet, isCollapsed, toggleDisplay } = props
+  var { facet, isCollapsed, toggle } = props
   var { displayName, values } = facet
 
   var klass = classNames({
@@ -30,7 +30,7 @@ function RangeNumericFilter (props) {
     <div className={klass}>
       <FacetTitle
         displayName={facet.displayName}
-        toggleDisplay={toggleDisplay}
+        toggle={toggle}
         isCollapsed={isCollapsed}
       />
       <div className='ola-facet-wrapper'>
