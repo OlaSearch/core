@@ -21,7 +21,7 @@ function DocumentPages ({
   fieldLabel,
   showIfEmpty,
   isCollapsed,
-  toggleDisplay,
+  toggle,
   logPayload
 }) {
   function onSelect (page) {
@@ -38,8 +38,8 @@ function DocumentPages ({
     })
   }
 
-  function toggle (event) {
-    toggleDisplay()
+  function handleClick (event) {
+    toggle()
     log({
       eventType: 'C',
       result,
@@ -58,7 +58,7 @@ function DocumentPages ({
   return (
     <div className='ola-field ola-field-pages'>
       {label}
-      <a className={klass} onClick={toggle}>
+      <a className={klass} onClick={handleClick}>
         {isCollapsed
           ? translate('doc_hide_pages')
           : translate('doc_view_pages')}
