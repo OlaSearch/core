@@ -288,13 +288,16 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   */
  
  .ola-slider{
-     padding: 3em 8px 1em 8px;
+     padding: 48px 16px 16px 16px;
  }
  
  .noUi-tooltip {
-     white-space: nowrap;
-     box-shadow: $small-box-shadow;
-     border-radius: 3px;
+   white-space: nowrap;
+   box-shadow: $small-box-shadow;
+   border-radius: 3px;
+   // max-width: 90px;
+   // overflow: hidden;
+   // text-overflow: ellipsis;
  }
 
  .noUi-handle {
@@ -302,10 +305,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
  }
 
  .noUi-horizontal .noUi-handle {
-     width: 26px;
-     height: 26px;
-     left: -13px;
-     top: -8px;
+   width: 26px;
+   height: 26px;
+   left: -13px;
+   top: -8px;
  }
 
  .noUi-horizontal {

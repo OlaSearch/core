@@ -15,6 +15,7 @@ import {
   setSkipIntent
 } from './../../actions/Search'
 import { BUTTON_TYPE } from './../../constants/Settings'
+import { connect } from 'react-redux'
 
 /**
  * Display answers
@@ -23,6 +24,7 @@ import { BUTTON_TYPE } from './../../constants/Settings'
 function Answer ({
   results,
   answer,
+  location,
   mc,
   isLoading,
   dispatch,
@@ -74,7 +76,12 @@ function Answer ({
 
       case 'map':
         return (
-          <AnswerMap card={card} onSelect={handleClick} results={results} />
+          <AnswerMap
+            card={card}
+            onSelect={handleClick}
+            results={results}
+            location={location}
+          />
         )
 
       case 'line_chart':
@@ -149,4 +156,10 @@ Answer.propTypes = {
   onSelect: PropTypes.func
 }
 
-module.exports = Answer
+function mapStateToProps (state) {
+  return {
+    location: state.Context.location
+  }
+}
+
+module.exports = connect(mapStateToProps)(Answer)
