@@ -6,6 +6,12 @@ export function toggleSidebar () {
   }
 }
 
+export function openSidebar () {
+  return {
+    type: types.OPEN_SIDEBAR
+  }
+}
+
 /* Change view */
 export function toggleView (view) {
   return {

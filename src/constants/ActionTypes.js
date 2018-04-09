@@ -110,6 +110,7 @@ export default {
 
   /* Sidebar */
   TOGGLE_SIDEBAR: 'TOGGLE_SIDEBAR',
+  OPEN_SIDEBAR: 'OPEN_SIDEBAR',
 
   /* Search source */
   SET_SEARCH_SOURCE: 'SET_SEARCH_SOURCE',
@@ -143,5 +144,8 @@ export default {
   UPDATE_CONNECTION: 'UPDATE_CONNECTION',
 
   /* Search help */
-  HIDE_SEARCH_HELP: 'HIDE_SEARCH_HELP'
+  HIDE_SEARCH_HELP: 'HIDE_SEARCH_HELP',
+
+  /* Clear suggested term */
+  CLEAR_SUGGESTED_TERM: 'CLEAR_SUGGESTED_TERM'
 }

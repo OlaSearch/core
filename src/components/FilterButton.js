@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
 import withTranslate from './../decorators/withTranslate'
+import withConfig from './../decorators/withConfig'
 import Tune from '@olasearch/icons/lib/material-tune'
 
 /**
@@ -14,12 +15,12 @@ function FilterButton ({
   facets,
   isSidebarOpen,
   translate,
-  showSidebar
+  config
 }) {
   /**
    * Check if its enable
    */
-  if (!showSidebar) return null
+  if (!config.sidebar) return null
   const hasFilter = facets.some((item) => item.values.length > 0)
   const classes = cx('ola-link-open-filter', {
     'ola-link-open-filter-active': isSidebarOpen
@@ -48,11 +49,10 @@ FilterButton.defaultProps = {
 function mapStateToProps (state) {
   return {
     isSidebarOpen: state.AppState.isSidebarOpen,
-    showSidebar: state.AppState.showSidebar,
     facets: state.AppState.facets
   }
 }
 
 module.exports = connect(mapStateToProps, { toggleSidebar })(
-  withTranslate(FilterButton)
+  withConfig(withTranslate(FilterButton))
 )

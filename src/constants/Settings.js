@@ -129,6 +129,7 @@ export const CREATE_FILTER_OBJECT = ({
  * Slot types
  */
 export const SLOT_DATE = 'OLA.DATE'
+export const SLOT_NUMBER = 'OLA.NUMBER'
 
 /**
  * Taxo entity type

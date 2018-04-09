@@ -113,7 +113,12 @@ class Search extends React.Component {
               dispatch={this.props.dispatch}
             />
 
-            <Answer answer={answer} mc={mc} isLoading={isLoadingAnswer} />
+            <Answer
+              answer={answer}
+              mc={mc}
+              isLoading={isLoadingAnswer}
+              results={results}
+            />
 
             <ErrorMessage error={error} />
 

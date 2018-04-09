@@ -13,12 +13,11 @@ import {
   API_IGNORE_LOGGING,
   INTENT_SUPPORTED_API_KEYS,
   IGNORE_INTENTS,
-  SLOT_DATE,
   ERROR_CODES,
   SPELLCHECK_SOURCE_UNIVERSAL,
   SPELLCHECK_SOURCE_CONTENT
 } from './../constants/Settings'
-import { uuid } from './../utilities'
+import { uuid, getFacetTypeFromSlot } from './../utilities'
 
 export default function (options = {}) {
   return ({ dispatch, getState }) => (next) => (action) => {
@@ -308,7 +307,7 @@ export default function (options = {}) {
             .map((item) => ({
               ...item,
               selected: item.value,
-              type: item.type === SLOT_DATE ? 'daterange' : 'string',
+              type: getFacetTypeFromSlot(item.type, item.value),
               fromIntentEngine: true
             }))
           let answerFacetNames = answerFacets.map(({ name }) => name)

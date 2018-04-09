@@ -123,7 +123,9 @@ function AnswerTokenBtn ({ slot, displayName, handleAddToken }) {
   return (
     <button className='ola-btn ola-btn-slot-add' onClick={handleAdd}>
       {displayName ? displayName + ': ' : null}
-      {value && type !== SLOT_DATE ? getDisplayName(null, value[0]) : match}
+      {value && type !== SLOT_DATE
+        ? getDisplayName(null, value[0])
+        : match || value[0]}
       <Plus size={16} />
     </button>
   )

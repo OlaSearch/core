@@ -6,7 +6,9 @@ import {
   TYPE_TAXONOMY,
   TYPE_DOC,
   TYPE_FACET,
-  LAYOUT_OPTIONS
+  LAYOUT_OPTIONS,
+  SLOT_DATE,
+  SLOT_NUMBER
 } from './../constants/Settings'
 import xssFilters from 'xss-filters'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -118,6 +120,7 @@ export function getDisplayName (haystack, needle) {
   if (Array.isArray(needle)) {
     return needle.map((n) => getDisplayName(haystack, n)).join(', ')
   }
+  if (typeof needle !== 'string') needle = needle.toString()
   if (needle.indexOf('|') !== -1) {
     needle = needle.substr(needle.indexOf('|') + 1)
   }
@@ -170,7 +173,9 @@ export function getComponentDisplayName (WrappedComponent) {
 }
 
 export function translateKey (path, obj, safe) {
-  return obj[path] === null ? '' : obj[path] || path
+  return obj[path] === null
+    ? ''
+    : obj[path] || (process.env.NODE_ENV === 'production' ? '' : path)
 }
 
 export function sortHistory (a, b) {
@@ -624,7 +629,7 @@ export function getWordPosition (textInput) {
     leftPosition: textInput.offsetLeft - textInput.scrollLeft + coords.LEFT - 1,
     topPosition: textInput.offsetTop - textInput.scrollTop + coords.TOP + 14,
     word: activeWord,
-    startToken: carPos,
+    startToken: Math.max(0, carPos),
     endToken: tmpCarPos
   }
 }
@@ -891,4 +896,25 @@ export function getFieldLabel (field, fieldLabels) {
   )
   if (field in fieldLabels) return fieldLabels[field]
   return null
+}
+
+/**
+ * Get facet type
+ */
+
+export function getFacetTypeFromSlot (type, value) {
+  switch (type) {
+    case SLOT_DATE:
+      return Array.isArray(value) && Array.isArray(value[0])
+        ? 'daterange'
+        : 'string'
+
+    case SLOT_NUMBER:
+      return Array.isArray(value) && Array.isArray(value[0])
+        ? 'range'
+        : 'string'
+
+    default:
+      return 'string'
+  }
 }

@@ -25,7 +25,6 @@ type State = {
   isLoadingAlert: boolean,
   inProgressAlert: boolean,
   isSidebarOpen: boolean,
-  showSidebar: boolean,
   showSearchHelp: boolean,
   layoutSwitching: boolean,
   filterInAutoComplete: boolean,
@@ -71,7 +70,6 @@ export const initialState = {
   /* Settings */
   allowedCharacters: null,
   replaceQueryParamName: false,
-  showSidebar: true /* Global config.sidebar variable */,
   layoutSwitching: true,
   filterInAutoComplete: true,
 
@@ -235,10 +233,8 @@ export default (state: State = initialState, action: Object) => {
         namespace: state.namespace,
         allowedCharacters: state.allowedCharacters,
         replaceQueryParamName: state.replaceQueryParamName,
-        showSidebar: state.showSidebar,
         layoutSwitching: state.layoutSwitching,
-        filterInAutoComplete: state.filterInAutoComplete,
-        isSidebarOpen: state.isSidebarOpen
+        filterInAutoComplete: state.filterInAutoComplete
       }
 
     case types.OLA_REHYDRATE:
@@ -260,28 +256,25 @@ export default (state: State = initialState, action: Object) => {
         replaceQueryParamName: configState
           ? configState.replaceQueryParamName
           : state.replaceQueryParamName,
-        showSidebar: configState ? configState.sidebar : state.showSidebar,
         layoutSwitching: configState
           ? configState.layoutSwitching
           : state.layoutSwitching,
         filterInAutoComplete: configState
           ? configState.filterInAutoComplete
           : state.filterInAutoComplete,
-        /**
-         * During initial page load, should we use saved isSidebarOpen?
-         * sidebar
-         *   ? isSidebarOpen (Use from cache)
-         *   : false
-         */
-        isSidebarOpen: action.configState
-          ? configState.sidebar ? storeState.isSidebarOpen : false
-          : state.isSidebarOpen
+        isSidebarOpen: storeState ? storeState.isSidebarOpen : false
       }
 
     case types.TOGGLE_SIDEBAR:
       return {
         ...state,
         isSidebarOpen: !state.isSidebarOpen
+      }
+
+    case types.OPEN_SIDEBAR:
+      return {
+        ...state,
+        isSidebarOpen: true
       }
 
     case types.REQUEST_ALERT:
@@ -391,6 +384,12 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         showSearchHelp: false
+      }
+
+    case types.CLEAR_SUGGESTED_TERM:
+      return {
+        ...state,
+        suggestedTerm: null
       }
 
     default:

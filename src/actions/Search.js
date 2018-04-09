@@ -479,8 +479,27 @@ export function replaceFacet (facet, value) {
 }
 
 export function removeAllFacets () {
-  return {
-    type: types.REMOVE_ALL_FACETS
+  return (dispatch, getState) => {
+    /**
+     * Check if there any intent engine facets
+     */
+    let facetsFromIntentEngine = getState().QueryState.facet_query.filter(
+      ({ fromIntentEngine }) => fromIntentEngine
+    )
+    if (facetsFromIntentEngine.length) {
+      for (let i = 0; i < facetsFromIntentEngine.length; i++) {
+        dispatch({
+          type: types.ADD_SKIP_FACET_FIELDS,
+          facet: facetsFromIntentEngine[i]
+        })
+      }
+    }
+    /**
+     * Now clear all filters
+     */
+    dispatch({
+      type: types.REMOVE_ALL_FACETS
+    })
   }
 }
 
@@ -521,7 +540,15 @@ function acceptSuggestedTerm (dispatch, getState) {
   var { suggestedTerm } = getState().AppState
 
   if (suggestedTerm) {
+    dispatch(clearSuggestedTerm())
     dispatch(updateQueryTerm(suggestedTerm))
+  }
+}
+
+/* Clear suggested term */
+function clearSuggestedTerm () {
+  return {
+    type: types.CLEAR_SUGGESTED_TERM
   }
 }
 

@@ -102,7 +102,6 @@ export function prepareStoreState ({ config }) {
       perPage,
       allowedCharacters,
       replaceQueryParamName,
-      sidebar,
       layoutSwitching,
       filterInAutoComplete,
       autocompleteDictionary

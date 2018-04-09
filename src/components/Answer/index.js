@@ -6,6 +6,7 @@ import ItemDetail from './common/ItemDetail'
 import AnswerCard from './AnswerCard'
 import AnswerCarousel from './AnswerCarousel'
 import AnswerList from './AnswerList'
+import AnswerMap from './AnswerMap'
 import AnswerMC from './AnswerMC'
 import {
   updateQueryTerm,
@@ -20,7 +21,7 @@ import { BUTTON_TYPE } from './../../constants/Settings'
  * @example ./Answer.md
  */
 function Answer ({
-  result,
+  results,
   answer,
   mc,
   isLoading,
@@ -72,7 +73,9 @@ function Answer ({
         return <AnswerCarousel card={card} onSelect={handleClick} />
 
       case 'map':
-        return <AnswerMap card={card} onSelect={handleClick} />
+        return (
+          <AnswerMap card={card} onSelect={handleClick} results={results} />
+        )
 
       case 'line_chart':
         return <AnswerLineChart card={card} onSelect={handleClick} />
@@ -134,8 +137,8 @@ Answer.defaultProps = {
 Answer.propTypes = {
   /** Answer object */
   answer: PropTypes.object,
-  /** Search result */
-  result: PropTypes.object,
+  /** Search results */
+  results: PropTypes.object,
   /** Machine comprehension result */
   mc: PropTypes.object,
   /** Indicates if search is currently executing */

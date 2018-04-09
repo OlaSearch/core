@@ -172,6 +172,10 @@ class RangeFilter extends React.Component {
       }
       return value
     })
+    if (selected.length === 1) {
+      /* Always use 2 arrays */
+      selected = [selected[0], selected[0]]
+    }
 
     if (values.length) {
       min = Math.min(...values)
