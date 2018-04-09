@@ -7,28 +7,28 @@ const card = {
   subtitle: 'Result subtitle',
   images: [
     {
-      src: 'https://placeimg.com/640/480/animal',
-      url: 'https://placeimg.com/640/480/any',
+      src: 'https://placeimg.com/300/480/animal',
+      url: 'https://placeimg.com/300/480/any',
       title: 'Random image title',
     },
     {
-      src: 'https://placeimg.com/640/480/monkey',
-      url: 'https://placeimg.com/640/480/any',
+      src: 'https://placeimg.com/300/480/monkey',
+      url: 'https://placeimg.com/300/480/any',
       title: 'Random image title',
     },
     {
-      src: 'https://placeimg.com/640/480/people',
+      src: 'https://placeimg.com/300/480/people',
       title: 'Random image title',
     },
     {
-      src: 'https://placeimg.com/640/480/people',
+      src: 'https://placeimg.com/300/480/people',
       title: 'Random image title',
     },
     {
-      src: 'https://placeimg.com/640/480/me',
+      src: 'https://placeimg.com/300/480/me',
       title: 'Random image title',
     },{
-      src: 'https://placeimg.com/640/480/building',
+      src: 'https://placeimg.com/300/480/building',
       title: 'Random image title',
     }
   ],
