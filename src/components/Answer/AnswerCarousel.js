@@ -13,6 +13,8 @@ import Swipeable from './../Swipeable'
 function AnswerCarousel ({ card, onSelect, itemWidth }) {
   let {
     images = [],
+    width,
+    height,
     subtitle,
     title,
     url,
@@ -33,7 +35,12 @@ function AnswerCarousel ({ card, onSelect, itemWidth }) {
                     {React.createElement(
                       url ? 'a' : 'div',
                       { href: url, className: 'ola-answer-carousel-image' },
-                      <img src={src} alt={title} />
+                      <img
+                        src={src}
+                        alt={title}
+                        width={width}
+                        height={height}
+                      />
                     )}
                     {title ? (
                       <div className='ola-answer-carousel-title'>{title}</div>

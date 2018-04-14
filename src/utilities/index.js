@@ -112,6 +112,10 @@ export function createHTMLMarkup (html) {
   return { __html: html }
 }
 
+export function decodeHtmlEntities (text) {
+  return text.replace(/&#47;/gi, '/').replace(/&#124;/gi, '|')
+}
+
 export function getDisplayName (haystack, needle) {
   if (arguments && arguments.length === 1) {
     haystack = null
@@ -124,9 +128,9 @@ export function getDisplayName (haystack, needle) {
   if (needle.indexOf('|') !== -1) {
     needle = needle.substr(needle.indexOf('|') + 1)
   }
-  if (!haystack) return needle
-  if (needle in haystack) return haystack[needle]
-  return needle
+  if (!haystack) return decodeHtmlEntities(needle)
+  if (needle in haystack) return decodeHtmlEntities(haystack[needle])
+  return decodeHtmlEntities(needle)
 }
 
 export function getMatchingSnippet (rules, result) {
@@ -299,20 +303,25 @@ export function sanitizeText (str) {
 /**
  * Used for heirarchical facets
  */
-export function toNestedArray (data, rootLevel = 0, parentNode) {
+export function toNestedArray (
+  data,
+  rootLevel = 0,
+  parentNode,
+  delimiter = '/'
+) {
   let output = []
   for (let i = 0, len = data.length; i < len; i++) {
     var count = data[i].count
-    var items = data[i].name.split('/')
+    var items = data[i].name.split(delimiter)
     var hasParent = items.length > rootLevel
     if (hasParent) {
       let parent = rootLevel
         ? items.length === rootLevel
           ? null
-          : items.slice(0, items.length - 1).join('/') || null
-        : items.slice(0, items.length - 1).join('/') || null
+          : items.slice(0, items.length - 1).join(delimiter) || null
+        : items.slice(0, items.length - 1).join(delimiter) || null
       output.push({
-        displayName: items.pop(),
+        displayName: decodeHtmlEntities(items.pop()),
         count,
         parent,
         name: data[i].name

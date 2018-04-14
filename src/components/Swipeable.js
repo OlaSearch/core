@@ -12,7 +12,7 @@ export default class Swipeable extends React.Component {
       canScrollLeft: false,
       canScrollRight: true
     }
-    this._updateScrollState = debounce(this.updateScrollState, 300)
+    this._updateScrollState = debounce(this.updateScrollState, 100)
   }
   registerRef = (el) => {
     this.scroller = el
@@ -26,9 +26,6 @@ export default class Swipeable extends React.Component {
       /* immediately update scroll state */
       this.updateScrollState()
     }
-  }
-  componentDidUpdate () {
-    // this._updateScrollState()
   }
   handlePrev = () => {
     this.setState(
@@ -45,7 +42,7 @@ export default class Swipeable extends React.Component {
     ).then(this.updateScrollState)
   }
   updateScrollState = () => {
-    if (!this.props.showNavigation) return
+    if (!this.props.showNavigation || !this.scroller) return
     /* Check if it can scroll left */
     this.setState({
       canScrollLeft: this.scroller.scrollLeft > 0,
@@ -91,10 +88,11 @@ export default class Swipeable extends React.Component {
     const showMoreButton = size > max && !isCollapsed
     return (
       <div className='ola-swipeable'>
-        {canScrollLeft && showNavigation ? (
+        {showNavigation ? (
           <button
             className='ola-swipeable-prev'
             type='button'
+            disabled={!canScrollLeft}
             onClick={this.handlePrev}
           >
             <ChevronLeft />
@@ -129,10 +127,11 @@ export default class Swipeable extends React.Component {
             ) : null}
           </div>
         </div>
-        {canScrollRight && showNavigation ? (
+        {showNavigation ? (
           <button
             className='ola-swipeable-next'
             type='button'
+            disabled={!canScrollRight}
             onClick={this.handleNext}
           >
             <ChevronRight />

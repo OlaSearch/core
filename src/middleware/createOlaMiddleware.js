@@ -278,7 +278,8 @@ export default function (options = {}) {
               !answer.search &&
               !answer.card &&
               !answer.location &&
-              !answer.message))
+              !answer.message) ||
+            (answer && answer.empty))
         ) {
           console.warn(
             'The server could not respond in time with a message ID. Please try again. May be the intent engine is down. Please contact our customer support.'

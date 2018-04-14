@@ -78,15 +78,18 @@ function Directions (props) {
             <MapPin size={iconSize} />
           </span>
         )}
-        <span className='ola-flex-content'>
-          <span className='ola-location-name'>
-            {locationName ? getDisplayName(locationName) : null}
+        {label ? (
+          <span className='ola-flex-content'>{label}</span>
+        ) : (
+          <span className='ola-flex-content'>
+            <span className='ola-location-name'>
+              {locationName ? getDisplayName(locationName) : null}
+            </span>
+            {distance ? (
+              <span className='ola-field-distance'>{distance}</span>
+            ) : null}
           </span>
-          {distance ? (
-            <span className='ola-field-distance'>{distance}</span>
-          ) : null}
-        </span>
-        {label && <span className='ola-flex-content'>{label}</span>}
+        )}
         {iconRight && <span className='ola-flex-icon'>{iconRight}</span>}
       </a>
     </div>

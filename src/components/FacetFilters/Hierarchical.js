@@ -7,8 +7,10 @@ import {
 import withToggle from './../../decorators/withToggle'
 import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
-import { toNestedArray, sanitizeText } from './../../utilities'
+import { getDisplayName, toNestedArray, sanitizeText } from './../../utilities'
 import FacetTitle from './common/FacetTitle'
+import ChevronLeft from '@olasearch/icons/lib/chevron-left'
+import ChevronRight from '@olasearch/icons/lib/chevron-right'
 
 class HierarchicalFilter extends React.Component {
   constructor (props) {
@@ -62,7 +64,8 @@ class HierarchicalFilter extends React.Component {
       allowSingleSelection,
       rootLevel = 0,
       rollUp = false,
-      parentNode = null
+      parentNode = null,
+      facetNames
     } = facet
 
     if (typeof rollUp === 'string') rollUp = rollUp !== 'false'
@@ -137,6 +140,7 @@ function CheckboxGroup (props) {
                 handleAddFacet={handleAddFacet}
                 handleRemoveFacet={handleRemoveFacet}
                 isActive={isActive}
+                rollUp={rollUp}
               />
               {value.children && isActive ? (
                 <CheckboxGroup
@@ -159,7 +163,13 @@ function CheckboxGroup (props) {
 /**
  * Item
  */
-function CheckBoxItem ({ value, handleAddFacet, handleRemoveFacet, isActive }) {
+function CheckBoxItem ({
+  value,
+  handleAddFacet,
+  handleRemoveFacet,
+  isActive,
+  rollUp
+}) {
   function onChecked (event) {
     let { name } = value
     if (event.target.checked) {
@@ -175,6 +185,13 @@ function CheckBoxItem ({ value, handleAddFacet, handleRemoveFacet, isActive }) {
   })
   return (
     <label className={labelKlass}>
+      {isActive ? (
+        rollUp ? (
+          <ChevronLeft size={20} />
+        ) : (
+          <ChevronRight size={20} />
+        )
+      ) : null}
       <input
         type='checkbox'
         checked={isActive}

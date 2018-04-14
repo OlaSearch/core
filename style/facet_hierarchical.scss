@@ -1,0 +1,50 @@
+/**
+ * facet
+ */
+
+$width: 24px;
+
+.ola-facet-h-group-inner {
+  padding-left: $width;
+
+  .ola-checkbox-active {
+    color: $brand-color;
+    &:before {
+      display: block;
+      margin-right: $width;
+    }
+  }
+}
+
+/**
+ * Label
+ */
+.ola-facet-h-group {
+  .ola-checkbox-label .ola-search-facet-name {
+    padding-left: 0;
+  }
+
+  /* Icon */
+  .ola-icon {
+    margin-right: 4px;
+  }
+}
+  .ola-facet-checkbox-selected-heading {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .ola-facet-list > .ola-facet-h-group > .ola-facet-h-group-inner,
+  .ola-facet-list > .ola-facet-h-group > .ola-facet-h-group-inner{
+    padding-left: 0;
+  }
+
+  .ola-facet-h-group {
+    .ola-search-facet-name {
+      padding-left: 0;
+    }
+
+    .ola-checkbox {
+      padding-bottom: 4px;
+    }
+  }

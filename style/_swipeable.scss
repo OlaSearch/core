@@ -36,8 +36,6 @@
    * Innner
    */
   .ola-swipeable-item-inner {
-    // overflow: hidden;
-    // height: 100%;
     display: flex;
     flex: 1;
 
@@ -54,7 +52,7 @@
   display: none;
   @extend %ola-icon-button;
   position: absolute;
-  right: 8px;
+  right: 0;
   top: 50%;
   margin-top: -20px;
   bottom: 0;
@@ -62,19 +60,28 @@
   min-width: 40px;
   height: 40px;
   color: white;  
-  border-radius: 50%;
+  box-shadow: $small-box-shadow;
+  // border-radius: 50%;
   opacity: 0;
   z-index: 1;
-  transition: all 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
 
   .ola-swipeable:hover & {
     opacity: 1;
-    background: rgba(0,0,0,0.5);
-    color: white;
+    background: white;
+    color: $link-color;
   }
 
   &, &:focus {
     outline: none;
+  }
+
+  &[disabled]{
+    &, .ola-swipeable:hover & {
+      opacity: 0;
+      background: white;
+      box-shadow: none;
+    }
   }
 
   &:focus, &:active, &:hover {
@@ -90,7 +97,7 @@
    * Previos
    */
   .ola-swipeable-prev {
-    left: 8px;
+    left: 0;
     right: auto;
   }
 
