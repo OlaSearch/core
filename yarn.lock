@@ -82,11 +82,11 @@
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@olasearch/alite/-/alite-1.0.5.tgz#6fa2af2c24ac697acff617030aa9d8f6a2f1a2f3"
 
-"@olasearch/core@^3.0.8":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@olasearch/core/-/core-3.1.0.tgz#f1e591f2bc1c0815824cf229386a10ba3770b723"
+"@olasearch/core@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@olasearch/core/-/core-3.1.1.tgz#0dff03c1fe8c52f16acadd232f4abe16f316dcbf"
   dependencies:
-    "@olasearch/icons" "^1.0.1"
+    "@olasearch/icons" "^1.0.2"
     "@olasearch/react-onclickoutside" "^6.7.1-rc"
     "@olasearch/styled-jsx" "^2.2.6"
     babel-runtime "^6.26.0"
@@ -97,7 +97,7 @@
     ismobilejs "^0.4.1"
     nouislider "^11.0.3"
     prop-types "^15.6.1"
-    query-string "^6.0.0"
+    query-string "5.1.1"
     ramda "^0.25.0"
     react-line-progress "^1.0.3"
     react-list "^0.8.8"
@@ -105,20 +105,16 @@
     redux-logger "^3.0.6"
     xss-filters "^1.2.7"
 
-"@olasearch/icons@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@olasearch/icons/-/icons-1.0.1.tgz#e42ab3a3d856badf22b848aa5b858b114d64da74"
-
 "@olasearch/icons@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@olasearch/icons/-/icons-1.0.2.tgz#eabae18b67fc803d785f96bebf890b5fb3f87925"
 
-"@olasearch/logger@^1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@olasearch/logger/-/logger-1.3.4.tgz#69865a51b494af67de83041691e835bebd3e3b2b"
+"@olasearch/logger@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@olasearch/logger/-/logger-1.3.5.tgz#48622abd3d0f6e49a00f68d9a187946ff51b6068"
   dependencies:
     "@olasearch/alite" "^1.0.2"
-    "@olasearch/core" "^3.0.8"
+    "@olasearch/core" "^3.1.1"
 
 "@olasearch/react-onclickoutside@^6.7.1-rc":
   version "6.7.1-rc"
@@ -8001,13 +7997,6 @@ query-string@^4.1.0, query-string@^4.2.3:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.0.0.tgz#8b8f39447b73e8290d6f5e3581779218e9171142"
-  dependencies:
-    decode-uri-component "^0.2.0"
-    strict-uri-encode "^2.0.0"
-
 querystring-es3@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -9541,10 +9530,6 @@ stream-to-observable@^0.2.0:
 strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
-
-strict-uri-encode@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
 
 string-hash@1.1.3:
   version "1.1.3"

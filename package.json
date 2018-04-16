@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -73,7 +73,7 @@
     "testURL": "http://localhost/"
   },
   "devDependencies": {
-    "@olasearch/logger": "^1.3.4",
+    "@olasearch/logger": "^1.3.5",
     "@olasearch/solr-adapter": "^1.8.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -112,11 +112,8 @@
     "react": "^16.3.1",
     "react-async-load-script": "^1.0.6",
     "react-dom": "^16.3.1",
-    "react-redux": "^5.0.7",
     "react-styleguidist": "^7.0.5",
     "react-test-renderer": "^16.3.0",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
     "retire": "^1.6.0",
     "rimraf": "^2.6.2",
     "s3-deploy": "^0.10.0",
@@ -155,7 +152,10 @@
     "react-line-progress": "^1.0.3",
     "react-list": "^0.8.8",
     "react-pikaday-datepicker": "^3.0.1",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "xss-filters": "^1.2.7"
   },
   "pre-commit": [
