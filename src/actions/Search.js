@@ -10,12 +10,12 @@ import {
   checkForAllowedCharacters,
   castNumberToStringArray,
   getDisplayName,
-  sanitizeText
+  sanitizeText,
+  isTaxonomyField
 } from './../utilities'
 import {
   CREATE_FILTER_OBJECT,
   SEARCH_COLLECTION_IDENTIFIER,
-  TAXO_ENTITY,
   SEARCH_FIELD_TYPE_TAXO,
   EXTERNAL_EVENT_SEARCH_DONE
 } from './../constants/Settings'
@@ -246,7 +246,7 @@ export function executeFacetSearch (
       multiSelect: true
     }))
     const facets = Object.keys(fieldTypeMapping)
-      .filter((key) => fieldTypeMapping[key] === TAXO_ENTITY)
+      .filter((key) => isTaxonomyField(key, fieldTypeMapping))
       .concat(SEARCH_COLLECTION_IDENTIFIER)
       .map((name) =>
         CREATE_FILTER_OBJECT({ name: name + SEARCH_FIELD_TYPE_TAXO })

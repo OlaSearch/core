@@ -6,63 +6,100 @@ import Header from './common/Header'
 import Source from './common/Source'
 import classNames from 'classnames'
 import Swipeable from './../Swipeable'
+import Portal from './../Portal'
+import cx from 'classnames'
 
 /**
  * Create an answer card
  */
-function AnswerCarousel ({ card, onSelect, itemWidth }) {
-  let {
-    images = [],
-    width,
-    height,
-    subtitle,
-    title,
-    url,
-    buttons = [],
-    source,
-    fields = []
-  } = card
-  return (
-    <div className='ola-answer-card ola-answer-carousel'>
-      <div className='ola-answer-card-wrapper'>
-        <div className='ola-answer-content'>
-          <Header title={title} subtitle={subtitle} url={url} />
-          <Swipeable itemWidth={itemWidth}>
-            {images.map(({ src, url, title }, idx) => {
-              return (
-                <div className='ola-answer-carousel-item' key={idx}>
-                  <div className='ola-answer-carousel-item-wrapper'>
-                    {React.createElement(
-                      url ? 'a' : 'div',
-                      { href: url, className: 'ola-answer-carousel-image' },
-                      <img
-                        src={src}
-                        alt={title}
-                        width={width}
-                        height={height}
-                      />
-                    )}
-                    {title ? (
-                      <div className='ola-answer-carousel-title'>{title}</div>
-                    ) : null}
+class AnswerCarousel extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      modalImage: null
+    }
+  }
+  displayImage = (src) => {
+    this.setState({
+      modalImage: src
+    })
+  }
+  hideImage = () => {
+    this.setState({
+      modalImage: null
+    })
+  }
+  render () {
+    const { card, onSelect, itemWidth } = this.props
+    let {
+      images = [],
+      width,
+      height,
+      subtitle,
+      title,
+      url,
+      modal,
+      buttons = [],
+      source,
+      fields = []
+    } = card
+    return (
+      <div className='ola-answer-card ola-answer-carousel'>
+        <div className='ola-answer-card-wrapper'>
+          <div className='ola-answer-content'>
+            <Header title={title} subtitle={subtitle} url={url} />
+            <Swipeable itemWidth={itemWidth}>
+              {images.map(({ src, title }, idx) => {
+                const classes = cx('ola-answer-carousel-image', {
+                  'ola-answer-selectable': modal
+                })
+                return (
+                  <div className='ola-answer-carousel-item' key={idx}>
+                    <div className='ola-answer-carousel-item-wrapper'>
+                      {React.createElement(
+                        modal ? 'a' : 'div',
+                        {
+                          className: classes,
+                          onClick: () => modal && this.displayImage(src)
+                        },
+                        <img
+                          src={src}
+                          alt={title}
+                          width={width}
+                          height={height}
+                        />
+                      )}
+                      {title ? (
+                        <div className='ola-answer-carousel-title'>{title}</div>
+                      ) : null}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </Swipeable>
-
-          {buttons.length ? (
-            <div className='ola-answer-buttons'>
-              {buttons.map((button, idx) => {
-                return <Button {...button} onClick={onSelect} key={idx} />
+                )
               })}
-            </div>
-          ) : null}
+            </Swipeable>
+
+            {buttons.length ? (
+              <div className='ola-answer-buttons'>
+                {buttons.map((button, idx) => {
+                  return <Button {...button} onClick={onSelect} key={idx} />
+                })}
+              </div>
+            ) : null}
+            <Portal
+              isOpen={this.state.modalImage}
+              onRequestClose={this.hideImage}
+              inline
+            >
+              <div className='ola-modal-content-image'>
+                <img src={this.state.modalImage} />
+              </div>
+            </Portal>
+          </div>
         </div>
+        <Source source={source} />
       </div>
-      <Source source={source} />
-    </div>
-  )
+    )
+  }
 }
 
 AnswerCarousel.propTypes = {

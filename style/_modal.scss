@@ -24,13 +24,68 @@
 
 /* Modal close */
 .ola-modal-close {
-  @extend %ola-icon-button;
+  border: none;
+  padding: 0;
+  margin: 0;
   position: absolute;
   right: 0;
   top: 0;
-  &, &:hover {
-    background: #eee;
-  }
+  color: white;
   cursor: pointer;
+  top: 10px;
+  right: 15px;
+  width: 40px;
   height: 40px;
+  background: #000;
+  border-radius: 100%;
+  cursor: pointer;
+  box-shadow: $sharp-box-shadow;
+  background: #333;
+  color: white;
 }
+
+/**
+ * Overlay
+ */
+.ola-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 9999;
+  transition: all 0.1s ease-in;
+  animation: fadeIn 0.2s linear;
+  visibility: visible;
+  opacity: 1;
+  // display: flex;
+}
+
+  .ola-modal-body {
+    padding: 60px 0;
+  }
+
+  /**
+   * Image
+   */
+  .ola-modal-content-image {
+    text-align: center;
+    display: inline-block;
+    margin: 60px 0;
+    box-shadow: $sharp-box-shadow;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  /**
+   * Inline content
+   */
+  .ola-modal-inline {
+    text-align: center;
+    .ola-modal-content {
+      display: inline;
+    }
+  }

@@ -31,7 +31,8 @@ import {
   getAutoCompleteResults,
   getWordPosition,
   syncTokens,
-  getDisplayName
+  getDisplayName,
+  cleanQueryTerm
 } from './../../utilities'
 import withTranslate from './../../decorators/withTranslate'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -124,7 +125,7 @@ class AutoComplete extends React.Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps.q !== this.props.q) {
       this.setState({
-        q: nextProps.q,
+        q: cleanQueryTerm(nextProps.q),
         fuzzyQuery: null,
         results: []
       })
@@ -136,7 +137,7 @@ class AutoComplete extends React.Component {
       !this.state.isFocused /* Check if the input is focused: then ignore */
     ) {
       this.setState({
-        q: nextProps.q
+        q: cleanQueryTerm(nextProps.q)
       })
     }
     if (nextProps.history !== this.props.history) {
@@ -175,7 +176,7 @@ class AutoComplete extends React.Component {
   }
   updateQueryTerm = ({ term, ...rest }) => {
     this.setState({
-      q: term,
+      q: cleanQueryTerm(term),
       /* If the word you are typing has changed */
       // results: rest.startToken !== this.state.startToken ? [] : this.state.results,
       ...rest

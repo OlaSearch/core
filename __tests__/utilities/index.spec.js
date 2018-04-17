@@ -182,6 +182,42 @@ describe('Utilities', () => {
       expect(utils.getDisplayName(DISPLAY_NAME_ARRAY, 'hello')).toEqual('Hello display name')
       expect(utils.getDisplayName(DISPLAY_NAME_ARRAY, 'hello_invalid')).toEqual('hello_invalid')
     })
+
+    it('removes pipe character', () => {
+      var d = {
+        'politics': 'Politics'
+      }
+      expect(utils.getDisplayName(d, 'politics')).toEqual('Politics')
+      expect(utils.getDisplayName(d, '12|politics')).toEqual('Politics')
+    })
+    it('handles arrays', () => {
+      var d = {
+        'politics': 'Politics'
+      }
+      expect(utils.getDisplayName(d, ['politics'])).toEqual('Politics')
+      expect(utils.getDisplayName(d, ['12|politics', '12|politics'])).toEqual('Politics, Politics')
+    })
+    it('converts needle to string', () => {
+      var d = {
+        '1': 'One'
+      }
+      expect(utils.getDisplayName(d, 1)).toEqual('One')
+    })
+    it('replaces special characters / | from string', () => {
+      var d = {
+        '1': 'One &#47; hello',
+        '2': 'Two &#124; hello',
+      }
+      expect(utils.getDisplayName(d, 1)).toEqual('One / hello')
+      expect(utils.getDisplayName(d, 2)).toEqual('Two | hello')
+    })
+  })
+
+  describe ('cleanQueryTerm', () => {
+    it('removes special characters from query', () => {
+      expect(utils.cleanQueryTerm('&#47;')).toEqual('/')
+      expect(utils.cleanQueryTerm('&#124;')).toEqual('|')
+    })
   })
 
   describe('getMatchingSnippet', () => {
@@ -229,8 +265,8 @@ describe('Utilities', () => {
       expect(utils.translateKey('hello', {hello: 'Ni Hao Ma'})).toBe('Ni Hao Ma')
     })
 
-    it('returns key if translation not found', () => {
-      expect(utils.translateKey('hello there', {hello: 'Ni Hao Ma'})).toBe('hello there')
+    it('returns undefined if translation not found', () => {
+      expect(utils.translateKey('hello there', {hello: 'Ni Hao Ma'})).toBeUndefined()
     })
   })
 
@@ -302,6 +338,62 @@ describe('Utilities', () => {
       expect(utils.sanitizePhone(90291442)).toEqual('90291442')
       expect(utils.sanitizePhone(1234)).toEqual('1234')
       expect(utils.sanitizePhone('abc')).toEqual('')
+    })
+  })
+
+  describe('isFocusable', () => {
+    it('returns true for input', () => {
+      var input = document.createElement('input')
+      expect(utils.isFocusable(input)).toBe(true)
+    })
+  })
+
+  describe('getFacetTypeFromSlot', () => {
+    it('returns daterange for date facet', () => {
+      var facet = {
+        type: 'OLA.DATE'
+      }
+      var value = ['1']
+      expect(utils.getFacetTypeFromSlot(facet.type)).toEqual('string')
+      expect(utils.getFacetTypeFromSlot(facet.type, value)).toEqual('string')
+      value = [['1']]
+      expect(utils.getFacetTypeFromSlot(facet.type, value)).toEqual('daterange')
+    })
+
+    it('returns number for date facet', () => {
+      var facet = {
+        type: 'OLA.NUMBER'
+      }
+      var value = ['1']
+      expect(utils.getFacetTypeFromSlot(facet.type)).toEqual('string')
+      expect(utils.getFacetTypeFromSlot(facet.type, value)).toEqual('string')
+      value = [['1']]
+      expect(utils.getFacetTypeFromSlot(facet.type, value)).toEqual('range')
+    })
+
+    it('returns string for all others', () => {
+      var facet = {
+        type: 'random'
+      }
+      var value = ['1']
+      expect(utils.getFacetTypeFromSlot(facet.type, value)).toEqual('string')
+    })
+  })
+
+  describe('getFieldLabel', () => {
+    it('returns field labels of a field', () => {
+      var fieldLabels = {
+        post_title: 'Post title'
+      }
+      expect(utils.getFieldLabel('post_title', fieldLabels)).toEqual(fieldLabels['post_title'])
+      expect(utils.getFieldLabel('post_title_ss', fieldLabels)).toEqual(fieldLabels['post_title'])
+      expect(utils.getFieldLabel('post_title_taxo_entity', fieldLabels)).toEqual(fieldLabels['post_title'])
+    })
+    it('returns null if doesnt exist', () => {
+      var fieldLabels = {
+        post_title: 'Post title'
+      }
+      expect(utils.getFieldLabel('post_title_ddd', fieldLabels)).toBe(null)
     })
   })
 })

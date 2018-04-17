@@ -7,18 +7,7 @@ import withTranslate from './../decorators/withTranslate'
 import ViewModule from '@olasearch/icons/lib/material-view_module'
 import ViewList from '@olasearch/icons/lib/material-view_list'
 
-function LayoutButton ({
-  toggleView,
-  facets,
-  view,
-  translate,
-  totalResults,
-  layoutSwitching
-}) {
-  /**
-   * Check if its enable
-   */
-  if (!layoutSwitching) return null
+function LayoutButton ({ toggleView, facets, view, translate, totalResults }) {
   const nextView = getNextView(view)
   const classes = cx('ola-link-change-layout', {
     [`ola-link-layout-${nextView}`]: nextView
@@ -41,8 +30,7 @@ function LayoutButton ({
 function mapStateToProps (state) {
   return {
     view: state.AppState.view,
-    totalResults: state.AppState.totalResults,
-    layoutSwitching: state.AppState.layoutSwitching
+    totalResults: state.AppState.totalResults
   }
 }
 

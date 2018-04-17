@@ -65,12 +65,7 @@ class Search extends React.Component {
 
     return (
       <div>
-        <SearchBar
-          q={q}
-          showAlert={false}
-          showHelp
-          wordSuggestion={filterInAutoComplete}
-        />
+        <SearchBar q={q} wordSuggestion={filterInAutoComplete} />
 
         <SelectedFilters
           facets={facet_query}

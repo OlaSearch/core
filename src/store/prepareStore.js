@@ -28,7 +28,6 @@ export function prepareStoreState ({ config }) {
     allowedCharacters,
     replaceQueryParamName,
     sidebar,
-    layoutSwitching,
     filterInAutoComplete,
     autocompleteDictionary
   } = config
@@ -102,9 +101,9 @@ export function prepareStoreState ({ config }) {
       perPage,
       allowedCharacters,
       replaceQueryParamName,
-      layoutSwitching,
       filterInAutoComplete,
-      autocompleteDictionary
+      autocompleteDictionary,
+      sidebar
     },
     botState
   }

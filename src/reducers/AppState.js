@@ -26,7 +26,6 @@ type State = {
   inProgressAlert: boolean,
   isSidebarOpen: boolean,
   showSearchHelp: boolean,
-  layoutSwitching: boolean,
   filterInAutoComplete: boolean,
   view: 'list' | 'grid',
   allowedCharacters: string
@@ -256,13 +255,13 @@ export default (state: State = initialState, action: Object) => {
         replaceQueryParamName: configState
           ? configState.replaceQueryParamName
           : state.replaceQueryParamName,
-        layoutSwitching: configState
-          ? configState.layoutSwitching
-          : state.layoutSwitching,
         filterInAutoComplete: configState
           ? configState.filterInAutoComplete
           : state.filterInAutoComplete,
-        isSidebarOpen: storeState ? storeState.isSidebarOpen : false
+        isSidebarOpen:
+          storeState && typeof storeState.isSidebarOpen !== 'undefined'
+            ? storeState.isSidebarOpen
+            : configState && configState.sidebar
       }
 
     case types.TOGGLE_SIDEBAR:

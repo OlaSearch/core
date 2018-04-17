@@ -8,7 +8,8 @@ import {
   TYPE_FACET,
   LAYOUT_OPTIONS,
   SLOT_DATE,
-  SLOT_NUMBER
+  SLOT_NUMBER,
+  TAXO_ENTITY
 } from './../constants/Settings'
 import xssFilters from 'xss-filters'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -116,6 +117,10 @@ export function decodeHtmlEntities (text) {
   return text.replace(/&#47;/gi, '/').replace(/&#124;/gi, '|')
 }
 
+export function cleanQueryTerm (term) {
+  return decodeHtmlEntities(term)
+}
+
 export function getDisplayName (haystack, needle) {
   if (arguments && arguments.length === 1) {
     haystack = null
@@ -128,7 +133,7 @@ export function getDisplayName (haystack, needle) {
   if (needle.indexOf('|') !== -1) {
     needle = needle.substr(needle.indexOf('|') + 1)
   }
-  if (!haystack) return decodeHtmlEntities(needle)
+  if (!haystack) return needle
   if (needle in haystack) return decodeHtmlEntities(haystack[needle])
   return decodeHtmlEntities(needle)
 }
@@ -179,7 +184,12 @@ export function getComponentDisplayName (WrappedComponent) {
 export function translateKey (path, obj, safe) {
   return obj[path] === null
     ? ''
-    : obj[path] || (process.env.NODE_ENV === 'production' ? '' : path)
+    : obj[path] /* || (process.env.NODE_ENV === 'production' ? '' : path) */
+}
+
+export function isTaxonomyField (fieldName, fieldTypeMapping) {
+  if (!(fieldName in fieldTypeMapping)) return false
+  return fieldTypeMapping[fieldName] === TAXO_ENTITY
 }
 
 export function sortHistory (a, b) {
@@ -661,7 +671,7 @@ export function getAutoCompleteResults (
         let term = values[i].name
         if (tokenNames.indexOf(term) === -1) {
           res.push({
-            term,
+            term: cleanQueryTerm(term),
             suggestion_raw: term,
             type: TYPE_FACET,
             taxo_label: name
@@ -673,7 +683,10 @@ export function getAutoCompleteResults (
   }
 
   for (let i = 0, len = results.length; i < len; i++) {
-    let { payload, ...rest } = results[i]
+    let { payload, term, ...rest } = results[i]
+    /* Clean term */
+    term = cleanQueryTerm(term)
+
     if (typeof payload === 'string') payload = JSON.parse(payload)
     let isCategory =
       payload.taxo_terms &&
@@ -685,7 +698,7 @@ export function getAutoCompleteResults (
     let topClickDocs =
       i === 0 && topClicks && topClicks.length
         ? topClicks.filter((_, idx) => idx === 0).map((item) => ({
-          term: rest.term,
+          term,
           title: item.title,
           type: TYPE_DOC,
           ...item
@@ -704,6 +717,7 @@ export function getAutoCompleteResults (
         ...res,
         {
           ...rest,
+          term,
           suggestion_raw: payload.suggestion_raw,
           label: payload.label,
           answer: payload.answer,
@@ -718,6 +732,7 @@ export function getAutoCompleteResults (
         let displayName = facet ? facet.facetNames[name] || name : name
         res.push({
           ...rest,
+          term,
           taxo_term: displayName,
           isLastCategory: j === totalCategories - 1,
           isFirstCategory: j === 0,
@@ -728,7 +743,7 @@ export function getAutoCompleteResults (
         categoryFound = true
       }
     } else {
-      res = [...res, { ...rest, ...payload }, ...topClickDocs]
+      res = [...res, { ...rest, term, ...payload }, ...topClickDocs]
     }
   }
   return res
@@ -926,4 +941,16 @@ export function getFacetTypeFromSlot (type, value) {
     default:
       return 'string'
   }
+}
+
+/**
+ * Check if current element is focusable
+ */
+export function isFocusable (el) {
+  if (!el) return false
+  if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].indexOf(el.nodeName) !== -1) { return true }
+  if (el.getAttribute('href')) return true
+  const tabIndex = el.getAttribute('tabindex')
+  if (tabIndex && tabIndex !== '-1') return true
+  return false
 }
