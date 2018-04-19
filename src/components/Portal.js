@@ -53,7 +53,7 @@ class ModalPortal extends React.Component {
     }
   }
   render () {
-    const { isOpen, inline } = this.props
+    const { isOpen, inline, children } = this.props
     if (!isOpen) return null
     const contentClass = cx('ola-modal-content', this.props.contentClassName)
     const overlayClass = cx('ola-modal-overlay', {
@@ -77,7 +77,11 @@ class ModalPortal extends React.Component {
           <button className='ola-modal-close' onClick={this.requestClose}>
             <Close />
           </button>
-          <div className='ola-modal-body'>{this.props.children}</div>
+          <div className='ola-modal-body'>
+            {typeof children === 'function'
+              ? children({ requestClose: this.requestClose })
+              : children}
+          </div>
         </div>
       </div>
     )

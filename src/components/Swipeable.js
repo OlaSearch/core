@@ -26,6 +26,23 @@ export default class Swipeable extends React.Component {
       /* immediately update scroll state */
       this.updateScrollState()
     }
+    if (this.props.startIndex !== this.state.active) {
+      this.setState(
+        {
+          active: this.props.startIndex
+        },
+        this.scrollTo
+      )
+    } else {
+      if (this.props.startIndex !== null) this.scrollTo()
+    }
+  }
+  static defaultProps = {
+    isCollapsed: true,
+    itemWidth: 260,
+    showNavigation: true,
+    max: undefined,
+    startIndex: null
   }
   handlePrev = () => {
     this.setState(
@@ -36,6 +53,7 @@ export default class Swipeable extends React.Component {
     )
   }
   scrollTo = () => {
+    if (!this.scrollRow.children[this.state.active]) return
     smoothScroll(
       this.scroller,
       this.state.active * this.scrollRow.children[this.state.active].clientWidth
@@ -58,12 +76,6 @@ export default class Swipeable extends React.Component {
       },
       this.scrollTo
     )
-  }
-  static defaultProps = {
-    isCollapsed: true,
-    itemWidth: 260,
-    showNavigation: true,
-    max: undefined
   }
   handleToggle = () => {
     this.setState(

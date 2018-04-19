@@ -86,7 +86,7 @@ class AnswerCarousel extends React.Component {
               </div>
             ) : null}
             <Portal
-              isOpen={this.state.index}
+              isOpen={this.state.index !== null}
               onRequestClose={this.hideImage}
               inline
             >

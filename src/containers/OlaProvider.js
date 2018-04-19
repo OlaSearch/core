@@ -4,6 +4,7 @@ import OlaIntlProvider from './OlaIntlProvider'
 import { ThemeProvider } from './ThemeContext'
 import { ConfigProvider } from './ConfigContext'
 import { DEFAULT_THEME } from './../constants/Settings'
+import styles from './../styles'
 
 /**
  * Ola Provider wrapper for all Ola Components
@@ -137,71 +138,17 @@ export default function OlaProvider ({ config, translations, children }) {
             background: ${theme.primaryButtonBackground};
             color: ${theme.primaryButtonColor};
           }
+          /* Dynamic swipeable hover */
+          :global(.ola-swipeable:hover .ola-swipeable-prev),
+          :global(.ola-swipeable:hover .ola-swipeable-next) {
+            opacity: 1;
+            background: white;
+            color: ${theme.primaryColor};
+          }
         `}
       </style>
-      <style jsx>
-        {`
-          /**
-           * Modal can be inserted from an iframe.  (for chatbot only projects)
-           */
-          :global(.ola-modal-close) {
-            border: none;
-            padding: 0;
-            margin: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            cursor: pointer;
-            top: 16px;
-            right: 16px;
-            width: 40px;
-            height: 40px;
-            border-radius: 100%;
-            cursor: pointer;
-            box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
-            background: white;
-            color: black;
-          }
-          /* Overlay */
-          :global(.ola-modal-overlay) {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            transition: all 0.1s ease-in;
-            animation: fadeIn 0.2s linear;
-            visibility: visible;
-            opacity: 1;
-          }
-          :global(.ola-modal-overlay img) {
-            max-width: 100%;
-            vertical-align: top;
-            max-height: calc(100vh - 152px);
-            min-width: auto;
-          }
-          /* Body */
-          :global(.ola-modal-body) {
-            padding: 76px 0;
-          }
-          /* Image */
-          :global(.ola-modal-content-image) {
-            text-align: center;
-            display: inline-block;
-            margin: 76px 0;
-            box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3); /* Sharp box shadow */
-          }
-
-          /* Inline content */
-          :global(.ola-modal-inline) {
-            text-align: center;
-          }
-          :global(.ola-modal-inline .ola-modal-content) {
-            display: inline;
-          }
-        `}
+      <style jsx global>
+        {styles}
       </style>
     </div>
   )

@@ -51,7 +51,10 @@
 .ola-swipeable-prev,
 .ola-swipeable-next {
   display: none;
-  @extend %ola-icon-button;
+  background: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
   position: absolute;
   right: 0;
   top: 50%;
@@ -151,21 +154,21 @@
  */
 
 .ola-swipeable {  
-  /* On desktop */
-  margin-left: -60px;
-  margin-right: -80px;
+  // /* On desktop */
+  // margin-left: -60px;
+  // margin-right: -80px;
 
-  .olachat-bot-mobile &{
-    margin-left: -16px;
-    margin-right: -16px;
-  }
+  // .olachat-bot-mobile &{
+  //   margin-left: -16px;
+  //   margin-right: -16px;
+  // }
 }
   /**
    * Row
    */
   .ola-swipeable {
-    padding-left: 0;
-    padding-right: 0; 
+    // padding-left: 0;
+    // padding-right: 0; 
   }
 
   .ola-swipeable-flow {
@@ -197,3 +200,13 @@
   .olachat-bot-desktop .ola-swipeable-next {
     display: block;
   }
+
+
+/**
+ * Inside modal
+ */
+.ola-modal-portal {
+  .ola-swipeable-flow {
+    padding: 0;
+  }
+}
