@@ -143,12 +143,16 @@ export default class Input extends React.Component {
     let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
     if (!q) return ''
     let reg = new RegExp('^' + escapeRegEx(q), 'gi')
-    if (!reg.test(shadowTerm) || shadowTerm === q) {
-      return ''
-    } else {
+    try {
+      let exists = reg.test(shadowTerm)
+      if (!exists || shadowTerm === q) {
+        return ''
+      }
       return raw
         ? shadowTerm
         : shadowTerm.replace(new RegExp('(' + escapeRegEx(q) + ')', 'gi'), q)
+    } catch (err) {
+      console.warn(err)
     }
   }
   registerRef = (input) => {

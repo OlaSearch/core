@@ -32,8 +32,8 @@
   top: 0;
   color: white;
   cursor: pointer;
-  top: 10px;
-  right: 15px;
+  top: 16px;
+  right: 16px;
   width: 40px;
   height: 40px;
   background: #000;
@@ -61,9 +61,9 @@
   opacity: 1;
   // display: flex;
 }
-
+  $spacing: 60px + 16px;
   .ola-modal-body {
-    padding: 60px 0;
+    padding: $spacing;
   }
 
   /**
@@ -72,11 +72,14 @@
   .ola-modal-content-image {
     text-align: center;
     display: inline-block;
-    margin: 60px 0;
+    margin: $spacing 0;
     box-shadow: $sharp-box-shadow;
 
     img {
       max-width: 100%;
+      vertical-align: top;
+      max-height: calc(100vh - $spacing * 2);
+      min-width: auto;
     }
   }
 

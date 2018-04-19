@@ -125,11 +125,13 @@ class TabsFilter extends React.Component {
         />
         {tabs.map((value, idx) => {
           var isActive = selectedItems.indexOf(value.name) !== -1
+          var displayName = value.displayName || getDisplayName(value.name)
           return (
             <TabItem
               key={idx}
               facet={facet}
               value={value}
+              displayName={displayName}
               handleClick={this.handleReplaceFacet}
               isActive={isActive}
             />
@@ -162,7 +164,7 @@ function TabItemAll ({ isSelected, totalCount, label, handleClick, facet }) {
 /**
  * Tab Item
  */
-function TabItem ({ facet, value, isActive, handleClick }) {
+function TabItem ({ facet, value, displayName, isActive, handleClick }) {
   function onClick () {
     let { name, count } = value
     if (!isActive && count) handleClick(facet, name)
@@ -175,7 +177,7 @@ function TabItem ({ facet, value, isActive, handleClick }) {
   })
   return (
     <a className={klass} type='button' onClick={onClick}>
-      <span className='ola-tab-name'>{getDisplayName(facetNames, name)}</span>
+      <span className='ola-tab-name'>{displayName}</span>
       <span className='ola-search-facet-count'>{count}</span>
     </a>
   )

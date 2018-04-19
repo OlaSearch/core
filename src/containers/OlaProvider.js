@@ -152,8 +152,8 @@ export default function OlaProvider ({ config, translations, children }) {
             right: 0;
             top: 0;
             cursor: pointer;
-            top: 10px;
-            right: 15px;
+            top: 16px;
+            right: 16px;
             width: 40px;
             height: 40px;
             border-radius: 100%;
@@ -179,17 +179,19 @@ export default function OlaProvider ({ config, translations, children }) {
           :global(.ola-modal-overlay img) {
             max-width: 100%;
             vertical-align: top;
+            max-height: calc(100vh - 152px);
+            min-width: auto;
           }
           /* Body */
           :global(.ola-modal-body) {
-            padding: 60px 0;
+            padding: 76px 0;
           }
           /* Image */
           :global(.ola-modal-content-image) {
             text-align: center;
             display: inline-block;
-            margin: 60px 0;
-            box-shadow: $sharp-box-shadow;
+            margin: 76px 0;
+            box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3); /* Sharp box shadow */
           }
 
           /* Inline content */

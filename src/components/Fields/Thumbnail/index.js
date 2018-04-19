@@ -25,7 +25,10 @@ function Thumbnail (props) {
     ...rest
   } = props
 
-  let restProps = omit(['size', 'collectionId', 'showIfEmpty'], rest)
+  let restProps = omit(
+    ['size', 'collectionId', 'showIfEmpty', 'alwaysUpdate'],
+    rest
+  )
 
   if (!thumbnail) return null
 

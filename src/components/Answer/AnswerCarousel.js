@@ -16,17 +16,17 @@ class AnswerCarousel extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      modalImage: null
+      index: null
     }
   }
-  displayImage = (src) => {
+  displayImage = (index) => {
     this.setState({
-      modalImage: src
+      index
     })
   }
   hideImage = () => {
     this.setState({
-      modalImage: null
+      index: null
     })
   }
   render () {
@@ -60,7 +60,7 @@ class AnswerCarousel extends React.Component {
                         modal ? 'a' : 'div',
                         {
                           className: classes,
-                          onClick: () => modal && this.displayImage(src)
+                          onClick: () => modal && this.displayImage(idx)
                         },
                         <img
                           src={src}
@@ -86,13 +86,15 @@ class AnswerCarousel extends React.Component {
               </div>
             ) : null}
             <Portal
-              isOpen={this.state.modalImage}
+              isOpen={this.state.index}
               onRequestClose={this.hideImage}
               inline
             >
-              <div className='ola-modal-content-image'>
-                <img src={this.state.modalImage} />
-              </div>
+              <Swipeable itemWidth='100vw' startIndex={this.state.index}>
+                {images.map(({ src, title }, idx) => {
+                  return <img key={idx} src={src} alt={title} />
+                })}
+              </Swipeable>
             </Portal>
           </div>
         </div>

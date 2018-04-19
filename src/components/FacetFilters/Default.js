@@ -69,10 +69,13 @@ class LinkFilter extends React.Component {
   }
 
   itemRenderer = (values, index, key) => {
-    let { name, count } = values[index]
+    let {
+      name,
+      count,
+      displayName = getDisplayName(facetNames, name)
+    } = values[index]
     let { facet: { facetNames } } = this.props
     let isSelected = this.isSelected(name)
-    let displayName = getDisplayName(facetNames, name)
     return (
       <Item
         key={key}

@@ -9,7 +9,8 @@ import {
   LAYOUT_OPTIONS,
   SLOT_DATE,
   SLOT_NUMBER,
-  TAXO_ENTITY
+  TAXO_ENTITY,
+  SEARCH_COLLECTION_IDENTIFIER
 } from './../constants/Settings'
 import xssFilters from 'xss-filters'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -126,10 +127,11 @@ export function getDisplayName (haystack, needle) {
     haystack = null
     needle = arguments[0]
   }
+  if (!needle) return null
   if (Array.isArray(needle)) {
     return needle.map((n) => getDisplayName(haystack, n)).join(', ')
   }
-  if (typeof needle !== 'string') needle = needle.toString()
+  if (needle && typeof needle !== 'string') needle = needle.toString()
   if (needle.indexOf('|') !== -1) {
     needle = needle.substr(needle.indexOf('|') + 1)
   }
@@ -948,9 +950,28 @@ export function getFacetTypeFromSlot (type, value) {
  */
 export function isFocusable (el) {
   if (!el) return false
-  if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].indexOf(el.nodeName) !== -1) { return true }
+  if (['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].indexOf(el.nodeName) !== -1) {
+    return true
+  }
   if (el.getAttribute('href')) return true
   const tabIndex = el.getAttribute('tabindex')
   if (tabIndex && tabIndex !== '-1') return true
   return false
 }
+
+/**
+ * Remove pipes from fieldvalue for ola_collection_name and Taxo_entity
+ */
+
+// export function (fieldValue, fieldName, fieldTypeMapping) {
+//   if (fieldName === SEARCH_COLLECTION_IDENTIFIER ||
+//     (
+//       fieldTypeMapping &&
+//       fieldName in fieldTypeMapping &&
+//       fieldTypeMapping[fieldName] === TAXO_ENTITY
+//     )
+//   ) {
+//     return getDisplayName(fieldValue)
+//   }
+//   return fieldValue
+// }

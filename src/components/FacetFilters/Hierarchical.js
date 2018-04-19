@@ -7,7 +7,7 @@ import {
 import withToggle from './../../decorators/withToggle'
 import withTranslate from './../../decorators/withTranslate'
 import classNames from 'classnames'
-import { getDisplayName, toNestedArray, sanitizeText } from './../../utilities'
+import { toNestedArray, sanitizeText } from './../../utilities'
 import FacetTitle from './common/FacetTitle'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'

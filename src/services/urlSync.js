@@ -1,5 +1,10 @@
 import queryString from 'query-string'
-import { parseRangeValues, getDisplayName, sanitizeText } from './../utilities'
+import {
+  parseRangeValues,
+  getDisplayName,
+  getFieldLabel,
+  sanitizeText
+} from './../utilities'
 import {
   RANGE_FACETS,
   REMOVE_FROM_QUERY_STRING,

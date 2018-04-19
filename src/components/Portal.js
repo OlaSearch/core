@@ -77,11 +77,7 @@ class ModalPortal extends React.Component {
           <button className='ola-modal-close' onClick={this.requestClose}>
             <Close />
           </button>
-          {inline ? (
-            this.props.children
-          ) : (
-            <div className='ola-modal-body'>{this.props.children}</div>
-          )}
+          <div className='ola-modal-body'>{this.props.children}</div>
         </div>
       </div>
     )

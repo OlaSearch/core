@@ -38,6 +38,7 @@
   .ola-swipeable-item-inner {
     display: flex;
     flex: 1;
+    justify-content: center;
 
     img {
       min-width: 100%;
@@ -138,3 +139,61 @@
 .ola-answer-list-swipe .ola-answer-list-items{
   display: block;
 }
+
+
+
+/**
+ * For chatbot
+ */
+
+/**
+ * Swipeable inside chatbot
+ */
+
+.ola-swipeable {  
+  /* On desktop */
+  margin-left: -60px;
+  margin-right: -80px;
+
+  .olachat-bot-mobile &{
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+}
+  /**
+   * Row
+   */
+  .ola-swipeable {
+    padding-left: 0;
+    padding-right: 0; 
+  }
+
+  .ola-swipeable-flow {
+    padding-left: 60px;
+    padding-right: 80px;
+
+    .olachat-bot-mobile & {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  /**
+   * Inside swipeable, set height as 100%
+   */
+  .ola-swipeable {
+    .ola-answer-card, 
+    .ola-answer-carousel-item,
+    .ola-answer-card-wrapper,
+    .ola-answer-carousel-item-wrapper,
+    .ola-answer-list-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+
+  .olachat-bot-desktop .ola-swipeable-prev,
+  .olachat-bot-desktop .ola-swipeable-next {
+    display: block;
+  }

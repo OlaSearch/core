@@ -77,8 +77,11 @@ class CheckboxFilter extends React.Component {
 
   itemRenderer = (values, index) => {
     let { facet: { facetNames } } = this.props
-    let { name, count } = values[index]
-    let displayName = getDisplayName(facetNames, name)
+    let {
+      name,
+      count,
+      displayName = getDisplayName(facetNames, name)
+    } = values[index]
     let isActive = this.isSelected(name)
 
     return (
