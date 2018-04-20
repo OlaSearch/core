@@ -41,6 +41,7 @@ export SearchContent from './components/SearchContent'
 export ProgressBar from './components/ProgressBar'
 export Swipeable from './components/Swipeable'
 export Portal from './components/Portal'
+export Checkbox from './components/Checkbox'
 
 export * as Actions from './actions'
 export * as Decorators from './decorators'

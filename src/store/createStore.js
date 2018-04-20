@@ -95,7 +95,8 @@ export default function (
   }
 
   const { userSession, searchSession, isNewUser, ...rest } = prepareStoreState({
-    config
+    config,
+    device: store.getState().Device
   })
 
   /**

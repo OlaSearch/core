@@ -163,6 +163,21 @@ a.ola-field-url {
    */
   .ola-flex-icon {
     margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /**
+   * Image
+   */
+  .ola-flex-image {
+    flex-shrink: 0;
+  }
+
+  /**
+   * Item
+   */
+  .ola-flex-item {
+    margin-right: 0.5em;
   }
 
   /**
@@ -192,3 +207,48 @@ a.ola-field-url {
     padding-bottom: 0;
   }
 }
+
+
+/**
+ * Fake checkbox
+ */
+.ola-faux-checkbox {
+  align-items: flex-start;
+  .ola-checkbox-element {
+    position: absolute;
+    opacity: 0;
+  }
+}
+/**
+ * Checkbox
+ */
+.ola-checkbox-icon {
+  width: 18px;
+  height: 18px;
+  border: 2px #7E898E solid;
+  border-radius: 2px;
+  position: relative;
+  margin-top: .25rem;
+}
+
+  /**
+   * Checked checkbox
+   */
+  .ola-faux-checkbox-checked .ola-checkbox-icon:after {
+    content: " ";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 3px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /**
+   * Disabled
+   */
+  .ola-faux-checkbox-disabled .ola-checkbox-icon {    
+    border-color: #cbd0d1;
+  }

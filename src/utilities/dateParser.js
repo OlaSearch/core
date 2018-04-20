@@ -62,9 +62,9 @@ export function formatUTC (date, mask = defaultMask, type = null) {
   if (date === 'NOW') return 'Today'
   if (date === '*') return type && type === 'from' ? 'Past' : 'Future'
   const d = new Date(date)
-  const userTimezoneOffset = d.getTimezoneOffset() * 60000
-  const _d = new Date(d.getTime() + userTimezoneOffset)
-  return format(_d, mask)
+  // const userTimezoneOffset = d.getTimezoneOffset() * 60000
+  // const _d = new Date(d.getTime() + userTimezoneOffset)
+  return format(d, mask)
 }
 
 export function toUTC (date, mask = defaultMask) {

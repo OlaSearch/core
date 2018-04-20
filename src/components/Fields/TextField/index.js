@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { createHTMLMarkup, truncate } from './../../../utilities'
+import {
+  createHTMLMarkup,
+  truncate,
+  getDisplayName
+} from './../../../utilities'
+import { SEARCH_COLLECTION_IDENTIFIER } from './../../../constants/Settings'
 import FieldLabel from './../FieldLabel'
 
 /**
@@ -21,6 +26,9 @@ function TextField ({
   showIfEmpty
 }) {
   let fieldContent = staticText || result[field]
+  if (field === SEARCH_COLLECTION_IDENTIFIER) {
+    fieldContent = getDisplayName(fieldContent)
+  }
   if (!fieldContent && fallbackFields.length) {
     for (let i = 0; i < fallbackFields.length; i++) {
       let fieldName = fallbackFields[i]

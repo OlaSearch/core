@@ -140,7 +140,9 @@ class Pagination extends React.Component {
           disabled={isPrevPageDisabled}
         >
           <ChevronLeft />
-          {translate('pagination_prev_label')}
+          <span className='ola-page-text'>
+            {translate('pagination_prev_label')}
+          </span>
         </button>
         {pages.map((page, idx) => {
           return (
@@ -157,7 +159,9 @@ class Pagination extends React.Component {
           onClick={this.nextPage}
           disabled={isNextPageDisabled}
         >
-          {translate('pagination_next_label')}
+          <span className='ola-page-text'>
+            {translate('pagination_next_label')}
+          </span>
           <ChevronRight />
         </button>
       </nav>

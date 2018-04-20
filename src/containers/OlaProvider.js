@@ -29,27 +29,11 @@ export default function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-field-title) {
             font-size: ${theme.titleFontSize};
           }
-          .ola-search :global(.ola-field-date),
-          .ola-search :global(.ola-field-person),
-          .ola-search :global(.ola-field-distance),
-          .ola-search :global(.ola-btn-directions),
-          .ola-search :global(.ola-answer-slots),
-          .ola-search :global(.ola-location-notify),
-          .ola-search :global(.ola-field-component-label),
-          .ola-search :global(.ola-field-phone),
-          .ola-search :global(.ola-field-sms),
-          .ola-search :global(.ola-field-subtitles),
-          .ola-search :global(.ola-link-geo),
-          .ola-search :global(.ola-autosuggest-all),
-          .ola-search :global(.ola-link-clear-filters),
-          .ola-search :global(.ola-field-pages) {
-            font-size: ${theme.mediumFontSize};
-          }
+
           .ola-search :global(.ola-page),
           .ola-search :global(.ola-page:hover) {
             color: ${theme.secondaryButtonColor};
             background: ${theme.secondaryButtonBackground};
-            border: 1px ${theme.borderColor} solid;
           }
           .ola-search :global(.ola-page-current),
           .ola-search :global(.ola-page-current:hover) {

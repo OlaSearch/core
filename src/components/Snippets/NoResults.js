@@ -68,7 +68,11 @@ function NoResults ({
     } else message = translate('no_results_found', { q }, true)
   }
 
-  return <div className='ola-snippet ola-snippet-noresults'>{message}</div>
+  return (
+    <div className='ola-snippet ola-snippet-noresults'>
+      <div className='ola-snippet-inner'>{message}</div>
+    </div>
+  )
 }
 
 NoResults.defaultProps = {

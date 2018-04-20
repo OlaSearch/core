@@ -86,25 +86,26 @@ class DateRange extends React.Component {
     let year
     let { facet, dispatch } = this.props
     let { dateFormat = null } = facet
+    const currentDate = new Date()
 
     switch (type) {
       case 'current_year':
-        year = new Date().getFullYear()
+        year = currentDate.getFullYear()
         fromDate = new Date(year, 0, 1).getTime()
         toDate = new Date(year, 11, 31).getTime()
         break
       case 'last_year':
-        year = new Date().getFullYear() - 1
+        year = currentDate.getFullYear() - 1
         fromDate = new Date(year, 0, 1).getTime()
         toDate = new Date(year, 11, 31).getTime()
         break
       case 'last_3_years':
-        year = new Date().getFullYear()
+        year = currentDate.getFullYear()
         fromDate = new Date(year - 2, 0, 1).getTime()
         toDate = new Date(year, 11, 31).getTime()
         break
       case 'last_5_years':
-        year = new Date().getFullYear()
+        year = currentDate.getFullYear()
         fromDate = new Date(year - 5, 0, 1).getTime()
         toDate = new Date(year, 11, 31).getTime()
         break

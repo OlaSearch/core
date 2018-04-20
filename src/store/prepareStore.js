@@ -13,7 +13,7 @@ import {
   BOT_STORAGE_KEY
 } from './../constants/Settings'
 
-export function prepareStoreState ({ config }) {
+export function prepareStoreState ({ config, device }) {
   /* Create user cookie */
   var userSession = cookies.get(USER_SESSION_KEY, config.namespace)
   var isNewUser = cookies.get(USER_NEW_KEY, config.namespace)
@@ -29,7 +29,8 @@ export function prepareStoreState ({ config }) {
     replaceQueryParamName,
     sidebar,
     filterInAutoComplete,
-    autocompleteDictionary
+    autocompleteDictionary,
+    hideToggleSidebar
   } = config
 
   if (typeof contextState === 'string') {
@@ -85,6 +86,15 @@ export function prepareStoreState ({ config }) {
       console.warn(err)
     }
   }
+  const isSidebarOpen =
+    device && !device.isDesktop
+      ? false
+      : storeState && typeof storeState.isSidebarOpen !== 'undefined'
+        ? hideToggleSidebar &&
+          sidebar /* Check if toggle sidebar buttn is present */
+          ? true
+          : storeState.isSidebarOpen
+        : sidebar
 
   return {
     searchSession,
@@ -103,7 +113,8 @@ export function prepareStoreState ({ config }) {
       replaceQueryParamName,
       filterInAutoComplete,
       autocompleteDictionary,
-      sidebar
+      sidebar,
+      isSidebarOpen
     },
     botState
   }

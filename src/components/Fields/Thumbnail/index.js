@@ -8,31 +8,15 @@ import { BREAKPOINT_TABLET } from './../../../constants/Settings'
 /**
  * Display an image as a background or using an img tag
  */
-function Thumbnail (props) {
-  var {
-    thumbnail,
-    baseUrl,
-    isLink,
-    caption,
-    url,
-    log,
-    useBackgroundImage,
-    logPayload,
-    snippetId,
-    result,
-    config,
-    width,
-    ...rest
-  } = props
-
-  let restProps = omit(
-    ['size', 'collectionId', 'showIfEmpty', 'alwaysUpdate'],
-    rest
-  )
-
-  if (!thumbnail) return null
-
-  function handleClick (event) {
+class Thumbnail extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      error: false
+    }
+  }
+  handleClick = (event) => {
+    const { log, result, snippetId, logPayload } = this.props
     log({
       eventType: 'C',
       result,
@@ -42,46 +26,84 @@ function Thumbnail (props) {
       payload: logPayload
     })
   }
+  handleError = (event) => {
+    console.warn('Received 404 while showing this image', this.props.thumbnail)
+    this.setState({
+      error: true
+    })
+  }
+  render () {
+    if (this.state.error) return null
 
-  let linkProps = isLink
-    ? {
-      href: url,
-      onClick: handleClick,
-      className: 'ola-img-link'
-    }
-    : {}
+    let {
+      thumbnail,
+      baseUrl,
+      isLink,
+      caption,
+      url,
+      log,
+      useBackgroundImage,
+      logPayload,
+      snippetId,
+      result,
+      config,
+      width,
+      placeholder,
+      ...rest
+    } = this.props
 
-  let imageUrl = `${baseUrl}${thumbnail}`
-  let imgThumbnail = useBackgroundImage ? (
-    <div
-      className='ola-img ola-img-bg'
-      {...restProps}
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    />
-  ) : (
-    <img
-      className='ola-img'
-      {...restProps}
-      src={`${baseUrl}${thumbnail}`}
-      alt=''
-    />
-  )
+    let restProps = omit(
+      ['size', 'collectionId', 'showIfEmpty', 'alwaysUpdate'],
+      rest
+    )
 
-  return (
-    <div className='ola-field ola-field-img'>
-      {isLink ? <a {...linkProps}>{imgThumbnail}</a> : imgThumbnail}
-      {caption ? <div className='ola-field-img-caption'>{caption}</div> : null}
-      <style jsx>
-        {`
-          @media only screen and (min-width: ${BREAKPOINT_TABLET}) {
-            .ola-field-img {
-              max-width: ${width}px;
+    if (!thumbnail && placeholder) thumbnail = placeholder
+
+    if (!thumbnail) return null
+
+    let linkProps = isLink
+      ? {
+        href: url,
+        onClick: this.handleClick,
+        className: 'ola-img-link'
+      }
+      : {}
+
+    let imageUrl = `${baseUrl}${thumbnail}`
+    let imgThumbnail = useBackgroundImage ? (
+      <div
+        className='ola-img ola-img-bg'
+        {...restProps}
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      />
+    ) : (
+      <img
+        className='ola-img'
+        {...restProps}
+        src={`${baseUrl}${thumbnail}`}
+        alt=''
+        onError={this.handleError}
+      />
+    )
+
+    return (
+      <div className='ola-field ola-field-img'>
+        {isLink ? <a {...linkProps}>{imgThumbnail}</a> : imgThumbnail}
+        {caption ? (
+          <div className='ola-field-img-caption'>{caption}</div>
+        ) : null}
+        <style jsx>
+          {`
+            @media only screen and (min-width: ${BREAKPOINT_TABLET}) {
+              .ola-field-img {
+                max-width: ${width}px;
+              }
             }
-          }
-        `}
-      </style>
-    </div>
-  )
+          `}
+        </style>
+      </div>
+    )
+  }
 }
 
 Thumbnail.propTypes = {
@@ -112,7 +134,8 @@ Thumbnail.defaultProps = {
   isLink: false,
   url: null,
   useBackgroundImage: false,
-  width: 200
+  width: 200,
+  placeholder: null
 }
 
 module.exports = withConfig(withLogger(Thumbnail))

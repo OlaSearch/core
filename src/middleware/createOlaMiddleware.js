@@ -269,18 +269,18 @@ export default function (options = {}) {
         /**
          * Another check if bot produces bad response
          */
-        if (
+        const invalidBotResponse =
           bot &&
           INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 &&
           (!answer ||
-            (answer &&
-              !answer.reply &&
+            (!answer.reply &&
               !answer.search &&
               !answer.card &&
               !answer.location &&
-              !answer.message) ||
-            (answer && answer.empty))
-        ) {
+              !answer.message &&
+              answer.awaiting_user_input))
+
+        if (invalidBotResponse) {
           console.warn(
             'The server could not respond in time with a message ID. Please try again. May be the intent engine is down. Please contact our customer support.'
           )

@@ -27,6 +27,7 @@ $width: 24px;
   /* Icon */
   .ola-icon {
     margin-right: 4px;
+    flex-shrink: 0;
   }
 }
   .ola-facet-checkbox-selected-heading {

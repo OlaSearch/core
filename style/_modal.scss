@@ -92,3 +92,21 @@
       display: inline;
     }
   }
+
+  /**
+   * Full modal
+   */
+  .ola-modal-full {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    display: flex;
+
+    .ola-modal-body {
+      padding: 0;
+      flex: 1;
+    }
+  }

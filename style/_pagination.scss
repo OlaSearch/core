@@ -16,6 +16,7 @@
     cursor: pointer;
     color: $base-color;
     margin-right: -1px;
+    position: relative;
     border-radius: 0;  
     height: $pagination-button-height;
     min-width: $pagination-button-width;
@@ -48,6 +49,7 @@
 
   .ola-page-ellipsis{
     cursor: text;
+    margin-left: 1px;
     border: none;
   }
 

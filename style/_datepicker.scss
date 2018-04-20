@@ -237,3 +237,15 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-bottom: none;
     cursor: help;
 }
+
+
+/**
+ * Facet input
+ */
+.ola-date-custom-input {
+    input {
+        padding: 8px;
+        border: 1px #ccc solid;
+        border-radius: 2px;
+    }
+}

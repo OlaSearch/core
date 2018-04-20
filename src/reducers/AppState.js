@@ -258,10 +258,7 @@ export default (state: State = initialState, action: Object) => {
         filterInAutoComplete: configState
           ? configState.filterInAutoComplete
           : state.filterInAutoComplete,
-        isSidebarOpen:
-          storeState && typeof storeState.isSidebarOpen !== 'undefined'
-            ? storeState.isSidebarOpen
-            : configState && configState.sidebar
+        isSidebarOpen: configState && configState.isSidebarOpen
       }
 
     case types.TOGGLE_SIDEBAR:

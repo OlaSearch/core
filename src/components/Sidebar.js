@@ -67,7 +67,7 @@ class Sidebar extends React.Component {
               font-size: ${theme.mediumFontSize};
             }
             .ola-sidebar :global(.ola-facet-title) {
-              font-size: ${theme.defaultFontSize};
+              // font-size: ${theme.defaultFontSize};
             }
           `}
         </style>
