@@ -13,14 +13,40 @@ import DatePicker from 'react-pikaday-datepicker'
 import { connect } from 'react-redux'
 import FacetTitle from './common/FacetTitle'
 
+function getMinMaxValue (props) {
+  const { selected, facet } = props
+  let [fromDate, toDate] =
+    selected && selected.length === 1 ? selected[0] : selected
+  const { values } = facet
+  var dates = values.map((value) => value.name)
+  /* Convert dates to (getTime) */
+  dates = dates.map((d) => DateParser.parse(d).getTime())
+  const min = dates.length ? Math.min.apply(this, dates) : 0
+  const max = dates.length ? Math.max.apply(this, dates) : 0
+
+  /**
+   * Format date
+   */
+  if (fromDate) fromDate = DateParser.parse(fromDate).getTime()
+  if (toDate) toDate = DateParser.parse(toDate).getTime()
+
+  return {
+    min,
+    max,
+    fromDate,
+    toDate
+  }
+}
+
 class DateRange extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fromDate: '01-01-2017',
-      toDate: '01-01-2017',
+      fromDate: null,
+      toDate: null,
       minDate: null,
-      maxDate: null
+      maxDate: null,
+      dateLabel: false
     }
   }
 
@@ -28,45 +54,61 @@ class DateRange extends React.Component {
     dateLabels: [
       {
         label: 'This year',
-        id: 'current_year'
+        value: () => {
+          const year = new Date().getFullYear()
+          const fromDate = new Date(year, 0, 1).getTime()
+          const toDate = new Date(year, 11, 31).getTime()
+          return [fromDate, toDate]
+        }
       },
       {
         label: 'Last year',
-        id: 'last_year'
+        value: () => {
+          const year = new Date().getFullYear() - 1
+          const fromDate = new Date(year, 0, 1).getTime()
+          const toDate = new Date(year, 11, 31).getTime()
+          return [fromDate, toDate]
+        }
       },
       {
         label: 'Last 3 years',
-        id: 'last_3_years'
+        value: () => {
+          const year = new Date().getFullYear()
+          const fromDate = new Date(year - 2, 0, 1).getTime()
+          const toDate = new Date(year, 11, 31).getTime()
+          return [fromDate, toDate]
+        }
       },
       {
         label: 'Last 5 years',
-        id: 'last_5_years'
+        value: () => {
+          const year = new Date().getFullYear()
+          const fromDate = new Date(year - 4, 0, 1).getTime()
+          const toDate = new Date(year, 11, 31).getTime()
+          return [fromDate, toDate]
+        }
       }
     ]
   }
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     facet: PropTypes.object.isRequired,
     selected: PropTypes.array.isRequired
   }
 
-  getDateFormat = () => {
-    return this.props.isPhone ? DATE_FORMAT_MOBILE : DEFAULT_DATE_FORMAT
-  }
-
   onCustomChange = () => {
-    let fromDate = DateParser.toUTC(this.state.fromDate, this.getDateFormat())
-    let toDate = DateParser.toUTC(this.state.toDate, this.getDateFormat())
-    let { facet, dispatch } = this.props
+    const fromDate = DateParser.toUTC(this.state.fromDate)
+    const toDate = DateParser.toUTC(this.state.toDate)
+    let { facet, replaceFacet, executeSearch } = this.props
 
-    dispatch(replaceFacet(facet, [fromDate, toDate]))
-    dispatch(executeSearch())
+    replaceFacet(facet, [fromDate, toDate])
+    executeSearch()
   }
   onFromChange = (date, event) => {
     this.setState(
       {
-        fromDate: this.format(date)
+        fromDate: date.getTime(),
+        dateLabel: false
       },
       this.onCustomChange
     )
@@ -74,83 +116,36 @@ class DateRange extends React.Component {
   onToChange = (date) => {
     this.setState(
       {
-        toDate: this.format(date)
+        toDate: date.getTime(),
+        dateLabel: false
       },
       this.onCustomChange
     )
   }
 
-  onDateSelect = (type) => {
-    let fromDate
-    let toDate
-    let year
-    let { facet, dispatch } = this.props
-    let { dateFormat = null } = facet
-    const currentDate = new Date()
-
-    switch (type) {
-      case 'current_year':
-        year = currentDate.getFullYear()
-        fromDate = new Date(year, 0, 1).getTime()
-        toDate = new Date(year, 11, 31).getTime()
-        break
-      case 'last_year':
-        year = currentDate.getFullYear() - 1
-        fromDate = new Date(year, 0, 1).getTime()
-        toDate = new Date(year, 11, 31).getTime()
-        break
-      case 'last_3_years':
-        year = currentDate.getFullYear()
-        fromDate = new Date(year - 2, 0, 1).getTime()
-        toDate = new Date(year, 11, 31).getTime()
-        break
-      case 'last_5_years':
-        year = currentDate.getFullYear()
-        fromDate = new Date(year - 5, 0, 1).getTime()
-        toDate = new Date(year, 11, 31).getTime()
-        break
-    }
-
-    fromDate = dateFormat ? DateParser.toUTC(fromDate) : fromDate
-    toDate = dateFormat ? DateParser.toUTC(toDate) : toDate
-
-    dispatch(replaceFacet(facet, [fromDate, toDate]))
-    dispatch(executeSearch())
-  }
-
-  format = (date) => {
-    return DateParser.format(DateParser.parse(date), this.getDateFormat())
-  }
-  getMinMaxValue = (props) => {
-    let { selected, facet } = props
-    let [fromDate, toDate] =
-      selected && selected.length === 1 ? selected[0] : selected
-    let { values } = facet
-    let dates = values.map((value) => value.name)
-    /* Convert dates to (getTime) */
-    dates = dates.map((d) => DateParser.parse(d).getTime())
-    let min = dates.length ? Math.min.apply(this, dates) : 0
-    let max = dates.length ? Math.max.apply(this, dates) : 0
-
-    return {
-      min,
-      max,
-      fromDate,
-      toDate
-    }
-  }
-  updateDate = (props) => {
-    let { min, max, fromDate, toDate } = this.getMinMaxValue(props)
+  onDateSelect = ([fromDate, toDate]) => {
+    const { dispatch, replaceFacet, executeSearch, facet } = this.props
     this.setState({
-      fromDate: this.format(fromDate || min),
-      toDate: this.format(toDate || max)
+      dateLabel: true
     })
+    replaceFacet(facet, [DateParser.toUTC(fromDate), DateParser.toUTC(toDate)])
+    executeSearch()
   }
-  componentDidMount () {
-    this.updateDate(this.props)
-  }
-  componentWillReceiveProps (nextProps) {
-    this.updateDate(nextProps)
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const { min, max, fromDate, toDate } = getMinMaxValue(nextProps)
+    if (
+      nextProps.fromDate !== prevState.fromDate ||
+      nextProps.toDate !== prevState.toDate
+    ) {
+      return {
+        fromDate: fromDate || min,
+        toDate: toDate || max,
+        minDate: min,
+        maxDate: max
+      }
+    }
+    return null
   }
   parseDate = (dateString, onlyYear) => {
     const parts = dateString.split('-')
@@ -160,28 +155,36 @@ class DateRange extends React.Component {
     return onlyYear & (onlyYear === true) ? year : new Date(year, month, day)
   }
   toDateString = (date, format) => {
-    return DateParser.format(date, this.getDateFormat())
+    return DateParser.format(date, DEFAULT_DATE_FORMAT)
   }
 
   onMobileFromChange = (event) => {
-    this.onFromChange(event.target.value)
+    this.onFromChange(DateParser.parse(event.target.value, DATE_FORMAT_MOBILE))
   }
   onMobileToChange = (event) => {
-    this.onToChange(event.target.value)
+    this.onToChange(DateParser.parse(event.target.value, DATE_FORMAT_MOBILE))
   }
 
   render () {
-    let { facet, dateLabels, isCollapsed, toggle, isPhone } = this.props
-    let { values } = facet
+    const { facet, dateLabels, isCollapsed, toggle, isPhone } = this.props
+    let { fromDate, toDate, maxDate, minDate, dateLabel } = this.state
+    const { values } = facet
     /* Check if dates exists */
     if (!values.length) return null
-
-    let klass = classNames({
+    const klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
     })
-    let fromDate = DateParser.parse(this.state.fromDate, this.getDateFormat())
-    let toDate = DateParser.parse(this.state.toDate, this.getDateFormat())
+    /* Mobile dates */
+    const fromDateMobile = DateParser.format(fromDate, DATE_FORMAT_MOBILE)
+    const toDateMobile = DateParser.format(toDate, DATE_FORMAT_MOBILE)
+
+    /* Parse dates */
+    fromDate = DateParser.parse(fromDate)
+    toDate = DateParser.parse(toDate)
+    minDate = dateLabel ? fromDate : DateParser.parse(minDate)
+    maxDate = dateLabel ? toDate : DateParser.parse(maxDate)
+
     return (
       <div className={klass}>
         <FacetTitle
@@ -191,14 +194,10 @@ class DateRange extends React.Component {
         />
         <div className='ola-facet-wrapper'>
           <ul className='ola-date-list'>
-            {dateLabels.map((date) => {
+            {dateLabels.map((date, idx) => {
               return (
-                <li key={date.id}>
-                  <DateLabel
-                    value={date.id}
-                    label={date.label}
-                    onSelect={this.onDateSelect}
-                  />
+                <li key={idx}>
+                  <DateLabel onSelect={this.onDateSelect} {...date} />
                 </li>
               )
             })}
@@ -210,7 +209,7 @@ class DateRange extends React.Component {
                   {isPhone ? (
                     <input
                       type='date'
-                      value={DateParser.format(fromDate, DATE_FORMAT_MOBILE)}
+                      value={fromDateMobile}
                       onChange={this.onMobileFromChange}
                       max={DateParser.format(toDate, DATE_FORMAT_MOBILE)}
                     />
@@ -231,7 +230,7 @@ class DateRange extends React.Component {
                   {isPhone ? (
                     <input
                       type='date'
-                      value={DateParser.format(toDate, DATE_FORMAT_MOBILE)}
+                      value={toDateMobile}
                       onChange={this.onMobileToChange}
                       max={DateParser.format(fromDate, DATE_FORMAT_MOBILE)}
                     />
@@ -261,7 +260,7 @@ class DateRange extends React.Component {
  */
 function DateLabel ({ label, value, onSelect }) {
   function handleClick () {
-    onSelect(value)
+    onSelect(value())
   }
 
   return (
@@ -280,4 +279,6 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, null)(withToggle(DateRange))
+export default connect(mapStateToProps, { replaceFacet, executeSearch })(
+  withToggle(DateRange)
+)

@@ -67,7 +67,7 @@ export function formatUTC (date, mask = defaultMask, type = null) {
   return format(d, mask)
 }
 
-export function toUTC (date, mask = defaultMask) {
+export function toUTC (date, mask) {
   return parse(date, mask).toISOString()
 }
 
