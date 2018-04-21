@@ -63,7 +63,7 @@
 }
   $spacing: 60px + 16px;
   .ola-modal-body {
-    padding: $spacing;
+    margin: $spacing;
   }
 
   /**
@@ -110,3 +110,24 @@
       flex: 1;
     }
   }
+
+/**
+ * Overlay
+ */
+.ola-content-overlay {
+  background: rgba(0,0,0,0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $modal-overlay-zindex;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-in;
+
+  &.ola-content-overlay-active {
+    visibility: visible;
+    opacity: 1;
+  }
+}

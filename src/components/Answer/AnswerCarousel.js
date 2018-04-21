@@ -89,6 +89,7 @@ class AnswerCarousel extends React.Component {
               isOpen={this.state.index !== null}
               onRequestClose={this.hideImage}
               inline
+              focusContent={false} /* Swipeable already focuses */
             >
               <Swipeable itemWidth='100vw' startIndex={this.state.index}>
                 {images.map(({ src, title }, idx) => {

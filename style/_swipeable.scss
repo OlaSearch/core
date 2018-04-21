@@ -9,6 +9,10 @@
   transform: translate3d(0,0,0);
   position: relative;
   padding-bottom: 8px; /* Push the scrollbar */
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .ola-swipeable-flow::-webkit-scrollbar {

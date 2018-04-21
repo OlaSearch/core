@@ -32,7 +32,11 @@ class ModalPortal extends React.Component {
     this.shouldClose = null
   }
   componentDidUpdate (prevProps, prevState) {
-    if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen) {
+    if (
+      this.props.focusContent &&
+      prevProps.isOpen !== this.props.isOpen &&
+      this.props.isOpen
+    ) {
       this.focusContent()
     }
   }
@@ -77,11 +81,7 @@ class ModalPortal extends React.Component {
           <button className='ola-modal-close' onClick={this.requestClose}>
             <Close />
           </button>
-          <div className='ola-modal-body'>
-            {typeof children === 'function'
-              ? children({ requestClose: this.requestClose })
-              : children}
-          </div>
+          <div className='ola-modal-body'>{children}</div>
         </div>
       </div>
     )
@@ -98,7 +98,8 @@ class Portal extends React.Component {
     isOpen: false,
     className: 'ola-modal-portal',
     inline: false,
-    contentClassName: 'ola-modal-content-small'
+    contentClassName: 'ola-modal-content-small',
+    focusContent: true
   }
   componentDidMount () {
     document.body.appendChild(this.el)

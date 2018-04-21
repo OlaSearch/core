@@ -2,19 +2,22 @@ import React from 'react'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
+import Overlay from './Overlay'
 
-function ContentWrapper ({ toggleSidebar, isSidebarOpen, view, children }) {
+function ContentWrapper ({
+  toggleSidebar,
+  isDesktop,
+  isSidebarOpen,
+  view,
+  children
+}) {
   let classes = cx('ola-results-flex', `ola-results-view-${view}`, {
     'ola-sidebar-open': isSidebarOpen,
     'ola-sidebar-closed': !isSidebarOpen
   })
-  let modalClasses = cx('ola-modal-background', {
-    'ola-modal-show': isSidebarOpen,
-    'ola-modal-hide': !isSidebarOpen
-  })
   return (
     <div className={classes}>
-      <div className={modalClasses} onClick={toggleSidebar} />
+      <Overlay active={!isDesktop && isSidebarOpen} onDismiss={toggleSidebar} />
       {children}
     </div>
   )
@@ -23,6 +26,7 @@ function ContentWrapper ({ toggleSidebar, isSidebarOpen, view, children }) {
 function mapStateToProps (state) {
   return {
     isSidebarOpen: state.AppState.isSidebarOpen,
+    isDesktop: state.Device.isDesktop,
     view: state.AppState.view
   }
 }

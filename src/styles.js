@@ -50,7 +50,7 @@ export default css`
   }
   /* Body */
   .ola-modal-body {
-    padding: 76px 0;
+    margin: 76px 0;
   }
   /* Image */
   .ola-modal-content-image {
@@ -92,6 +92,10 @@ export default css`
     transform: translate3d(0, 0, 0);
     position: relative;
     padding-bottom: 8px; /* Push the scrollbar */
+  }
+
+  .ola-swipeable-flow:focus {
+    outline: none;
   }
 
   .ola-swipeable-flow::-webkit-scrollbar {

@@ -4,6 +4,9 @@ import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
 import { smoothScroll, debounce } from './../utilities'
 
+const LEFT_KEY = 37
+const RIGHT_KEY = 39
+
 export default class Swipeable extends React.Component {
   constructor (props) {
     super(props)
@@ -20,11 +23,18 @@ export default class Swipeable extends React.Component {
   registerRowRef = (el) => {
     this.scrollRow = el
   }
+  componentWillUnmount () {
+    this.scroller &&
+      this.scroller.removeEventListener('scroll', this._updateScrollState)
+  }
   componentDidMount () {
     if (this.props.showNavigation) {
+      /* Add keydown */
       this.scroller.addEventListener('scroll', this._updateScrollState)
       /* immediately update scroll state */
       this.updateScrollState()
+      /* Add focus */
+      this.scroller.focus()
     }
     if (this.props.startIndex !== this.state.active) {
       this.setState(
@@ -44,14 +54,6 @@ export default class Swipeable extends React.Component {
     max: undefined,
     startIndex: null
   }
-  handlePrev = () => {
-    this.setState(
-      {
-        active: Math.max(0, this.state.active - 1)
-      },
-      this.scrollTo
-    )
-  }
   scrollTo = () => {
     if (!this.scrollRow.children[this.state.active]) return
     smoothScroll(
@@ -61,6 +63,7 @@ export default class Swipeable extends React.Component {
   }
   updateScrollState = () => {
     if (!this.props.showNavigation || !this.scroller) return
+    // console.log(this.scroller.scrollLeft, this.scroller.clientWidth, this.scroller.scrollWidth)
     /* Check if it can scroll left */
     this.setState({
       canScrollLeft: this.scroller.scrollLeft > 0,
@@ -69,7 +72,17 @@ export default class Swipeable extends React.Component {
         this.scroller.scrollWidth
     })
   }
+  handlePrev = () => {
+    if (!this.state.canScrollLeft) return
+    this.setState(
+      {
+        active: Math.max(0, this.state.active - 1)
+      },
+      this.scrollTo
+    )
+  }
   handleNext = () => {
+    if (!this.state.canScrollRight) return
     this.setState(
       {
         active: Math.min(this.props.children.length - 1, this.state.active + 1)
@@ -85,6 +98,16 @@ export default class Swipeable extends React.Component {
       this.updateScrollState
     )
     this.props.toggle()
+  }
+  handleKeyDown = (event) => {
+    if (event.keyCode === RIGHT_KEY) {
+      this.handleNext()
+      event.preventDefault()
+    }
+    if (event.keyCode === LEFT_KEY) {
+      this.handlePrev()
+      event.preventDefault()
+    }
   }
   render () {
     const {
@@ -110,7 +133,12 @@ export default class Swipeable extends React.Component {
             <ChevronLeft />
           </button>
         ) : null}
-        <div className='ola-swipeable-flow' ref={this.registerRef}>
+        <div
+          className='ola-swipeable-flow'
+          tabIndex='-1'
+          onKeyDown={this.handleKeyDown}
+          ref={this.registerRef}
+        >
           <div className='ola-swipeable-row' ref={this.registerRowRef}>
             {children
               .slice(0, isCollapsed ? undefined : max)
