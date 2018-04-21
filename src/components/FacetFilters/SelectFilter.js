@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  removeFacet,
+  removeFacetItem,
   replaceFacet,
   executeSearch
 } from './../../actions/Search'
@@ -15,8 +15,14 @@ import SelectBox from './../SelectBox'
 
 class SelectFilter extends React.Component {
   handleChange = (event) => {
-    this.props.replaceFacet(this.props.facet, event.target.value)
-    this.props.executeSearch()
+    const value = event.target.value
+    const { facet, removeFacetItem, replaceFacet, executeSearch } = this.props
+    if (!value) {
+      removeFacetItem(facet)
+    } else {
+      replaceFacet(facet, value)
+    }
+    executeSearch()
   }
   static propTypes = {
     facet: PropTypes.object.isRequired,
@@ -53,6 +59,6 @@ class SelectFilter extends React.Component {
   }
 }
 
-export default connect(null, { removeFacet, replaceFacet, executeSearch })(
+export default connect(null, { removeFacetItem, replaceFacet, executeSearch })(
   withTranslate(withToggle(SelectFilter))
 )
