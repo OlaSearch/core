@@ -8,6 +8,7 @@ import Rating from './FacetFilters/Rating'
 import FacetBoolean from './FacetFilters/Boolean'
 import DatePicker from './FacetFilters/DatePicker'
 import TagCloud from './FacetFilters/TagCloud'
+import SelectFilter from './FacetFilters/SelectFilter'
 import flatten from 'ramda/src/flatten'
 import equals from 'ramda/src/equals'
 import classNames from 'classnames'
@@ -93,6 +94,9 @@ class SearchFilters extends React.Component {
 
               case 'tagcloud':
                 return <TagCloud {...passProps} />
+
+              case 'select':
+                return <SelectFilter {...passProps} />
 
               default:
                 return <Default {...passProps} />

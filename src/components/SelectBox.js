@@ -9,7 +9,7 @@ function SelectBox ({ label, inline, children, onChange, value }) {
   })
   return (
     <div className={classes}>
-      <label className='ola-select-label'>{label}</label>
+      {label && <label className='ola-select-label'>{label}</label>}
       <div className='ola-select-wrap'>
         <select
           className='ola-select-element'

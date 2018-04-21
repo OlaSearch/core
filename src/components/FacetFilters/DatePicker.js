@@ -134,10 +134,7 @@ class DateRange extends React.Component {
 
   static getDerivedStateFromProps (nextProps, prevState) {
     const { min, max, fromDate, toDate } = getMinMaxValue(nextProps)
-    if (
-      nextProps.fromDate !== prevState.fromDate ||
-      nextProps.toDate !== prevState.toDate
-    ) {
+    if (fromDate !== prevState.fromDate || toDate !== prevState.toDate) {
       return {
         fromDate: fromDate || min,
         toDate: toDate || max,
@@ -147,12 +144,12 @@ class DateRange extends React.Component {
     }
     return null
   }
-  parseDate = (dateString, onlyYear) => {
+  parseDate = (dateString) => {
     const parts = dateString.split('-')
     const day = parseInt(parts[0], 10)
     const month = parseInt(parts[1] - 1, 10)
     const year = parseInt(parts[2], 10)
-    return onlyYear & (onlyYear === true) ? year : new Date(year, month, day)
+    return new Date(year, month, day)
   }
   toDateString = (date, format) => {
     return DateParser.format(date, DEFAULT_DATE_FORMAT)

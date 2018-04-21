@@ -72,6 +72,7 @@ export DatePicker from './components/FacetFilters/DatePicker'
 export TagCloud from './components/FacetFilters/TagCloud'
 export Hierarchical from './components/FacetFilters/Hierarchical'
 export Tabs from './components/FacetFilters/Tabs'
+export SelectFilter from './components/FacetFilters/SelectFilter'
 
 /* Snippet */
 export NoResults from './components/Snippets/NoResults'
