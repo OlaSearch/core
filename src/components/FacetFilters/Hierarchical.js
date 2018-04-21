@@ -184,7 +184,7 @@ function CheckBoxItem ({
     'ola-checkbox-active': isActive
   })
   return (
-    <label className={labelKlass}>
+    <label className={labelKlass} title={displayName}>
       {isActive ? (
         rollUp ? (
           <ChevronLeft size={20} />
@@ -201,9 +201,7 @@ function CheckBoxItem ({
           position: 'absolute'
         }}
       />
-      <span className='ola-search-facet-name' title={displayName}>
-        {displayName}
-      </span>
+      <span className='ola-search-facet-name'>{displayName}</span>
       <span className='ola-search-facet-count'>{count}</span>
     </label>
   )

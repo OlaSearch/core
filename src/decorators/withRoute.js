@@ -25,10 +25,10 @@ export default function (WrappedComponent) {
         window.removeEventListener('popstate', this.onPopState)
       }
     }
-    componentWillReceiveProps (nextProps) {
+    componentDidUpdate (prevProps) {
       if (
         this.context.router &&
-        this.props.location.search !== nextProps.location.search
+        this.props.location.search !== prevProps.location.search
       ) {
         this.onPopState()
       }

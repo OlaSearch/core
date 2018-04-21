@@ -37,7 +37,7 @@ export default css`
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 9999;
-    transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in-out;
     animation: fadeIn 0.2s linear;
     visibility: visible;
     opacity: 1;

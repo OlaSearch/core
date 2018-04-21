@@ -16,15 +16,16 @@ export default function withToggle (WrappedComponent) {
     static displayName = `withToggle(${getComponentDisplayName(
       WrappedComponent
     )})`
-    componentWillReceiveProps (nextProps) {
+    static getDerivedStateFromProps (nextProps, prevState) {
       if (
         nextProps.facet &&
-        nextProps.facet.isCollapsed !== this.props.facet.isCollapsed
+        nextProps.facet.isCollapsed !== prevState.isCollapsed
       ) {
-        this.setState({
+        return {
           isCollapsed: nextProps.facet.isCollapsed
-        })
+        }
       }
+      return null
     }
     toggle = () => {
       this.setState({

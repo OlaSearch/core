@@ -257,11 +257,9 @@ function CheckBoxItem (props) {
     'ola-checkbox-active': isActive
   })
   return (
-    <label className={labelKlass}>
+    <label className={labelKlass} title={displayName}>
       <input type='checkbox' checked={isActive} onChange={onChecked} />
-      <span className='ola-search-facet-name' title={displayName}>
-        {displayName}
-      </span>
+      <span className='ola-search-facet-name'>{displayName}</span>
       {count && <span className='ola-search-facet-count'>{count}</span>}
     </label>
   )
