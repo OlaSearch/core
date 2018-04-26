@@ -52,7 +52,7 @@ class Thumbnail extends React.Component {
       ...rest
     } = this.props
 
-    let restProps = omit(
+    const restProps = omit(
       ['size', 'collectionId', 'showIfEmpty', 'alwaysUpdate'],
       rest
     )
@@ -61,7 +61,7 @@ class Thumbnail extends React.Component {
 
     if (!thumbnail) return null
 
-    let linkProps = isLink
+    const linkProps = isLink
       ? {
         href: url,
         onClick: this.handleClick,
@@ -69,8 +69,8 @@ class Thumbnail extends React.Component {
       }
       : {}
 
-    let imageUrl = `${baseUrl}${thumbnail}`
-    let imgThumbnail = useBackgroundImage ? (
+    const imageUrl = `${baseUrl}${thumbnail}`
+    const imgThumbnail = useBackgroundImage ? (
       <div
         className='ola-img ola-img-bg'
         {...restProps}

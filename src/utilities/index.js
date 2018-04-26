@@ -975,3 +975,8 @@ export function isFocusable (el) {
 //   }
 //   return fieldValue
 // }
+
+export function getDocument () {
+  if (typeof document !== undefined) return document
+  return null
+}
