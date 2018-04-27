@@ -116,9 +116,9 @@
     "@olasearch/alite" "^1.0.2"
     "@olasearch/core" "^3.1.1"
 
-"@olasearch/react-frame-portal@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@olasearch/react-frame-portal/-/react-frame-portal-3.0.2.tgz#38becd290989d8b0a119bc60b02d16b16c3a37dc"
+"@olasearch/react-frame-portal@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@olasearch/react-frame-portal/-/react-frame-portal-3.0.3.tgz#a46ae18a005d09fcbc5888c752c41e9cba46ae00"
 
 "@olasearch/react-onclickoutside@^6.7.1-rc":
   version "6.7.1-rc"
