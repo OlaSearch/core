@@ -61,7 +61,7 @@ function TextField ({
       fieldContent = highlightedContent
     }
   } else if (fieldContent && fieldContent.length > length) {
-    fieldContent = truncate(fieldContent, length)
+    fieldContent = truncate(fieldContent, length, ellipsis)
   }
   if (prefix) fieldContent = prefix + fieldContent
   if (suffix) fieldContent = fieldContent + suffix
