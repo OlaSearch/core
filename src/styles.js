@@ -7,6 +7,14 @@ import css from 'styled-jsx/css'
  */
 
 export default css`
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   /**
    * Modal can be inserted from an iframe.  (for chatbot only projects)
    */
@@ -115,6 +123,12 @@ export default css`
     padding: 8px 0 8px 0;
   }
 
+  .ola-swipeable-item .ola-field-img {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+
   /**
    * Innner
    */
@@ -169,6 +183,7 @@ export default css`
   .ola-swipeable:hover .ola-swipeable-next:disabled,
   .ola-swipeable:hover .ola-swipeable-prev:disabled {
     opacity: 0;
+    visibility: hidden;
     background: white;
     box-shadow: none;
   }

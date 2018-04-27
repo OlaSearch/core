@@ -26,8 +26,8 @@ function ImageMap (props) {
     latlong = `${latlong.lat},${latlong.lon}`
   }
 
-  let url = `https://www.google.com/maps?q=${latlong}`
-  let map = `https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=${width}x${height}&maptype=roadmap&markers=color:blue|label:A|${latlong}&key=${key}`
+  const url = `https://www.google.com/maps?q=${latlong}`
+  const map = `https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=${width}x${height}&maptype=roadmap&markers=color:blue|label:A|${latlong}&key=${key}`
 
   function handleClick (event) {
     log({

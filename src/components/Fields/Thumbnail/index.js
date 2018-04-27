@@ -16,7 +16,7 @@ class Thumbnail extends React.Component {
     }
   }
   handleClick = (event) => {
-    const { log, result, snippetId, logPayload } = this.props
+    const { log, result, snippetId, logPayload, onClick } = this.props
     log({
       eventType: 'C',
       result,
@@ -25,6 +25,10 @@ class Thumbnail extends React.Component {
       snippetId,
       payload: logPayload
     })
+    if (onClick) {
+      onClick(event)
+      event.preventDefault()
+    }
   }
   handleError = (event) => {
     console.warn('Received 404 while showing this image', this.props.thumbnail)
@@ -80,6 +84,7 @@ class Thumbnail extends React.Component {
       <img
         className='ola-img'
         {...restProps}
+        width={width}
         src={`${baseUrl}${thumbnail}`}
         alt=''
         onError={this.handleError}

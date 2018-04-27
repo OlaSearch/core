@@ -34,6 +34,12 @@
     &:last-child {
       padding-right: 0;
     }
+
+    .ola-field-img {
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
   }
 
   /**
@@ -46,6 +52,7 @@
 
     img {
       min-width: 100%;
+      max-width: none;
     }
   }
 
@@ -87,6 +94,7 @@
   &[disabled]{
     &, .ola-swipeable:hover & {
       opacity: 0;
+      visibility: hidden;
       background: white;
       box-shadow: none;
     }

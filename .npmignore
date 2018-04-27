@@ -11,3 +11,4 @@ src
 __tests__
 docs
 dist
+stats.json

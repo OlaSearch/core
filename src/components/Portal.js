@@ -50,14 +50,17 @@ class ModalPortal extends React.Component {
     this.content = ref
   }
   handleKeyDown = (event) => {
-    if (isFocusable(document.activeElement)) return
     if (event.keyCode === ESC_KEY) {
+      if (
+        isFocusable(document.activeElement) &&
+        document.activeElement.className !== this.props.closeClassName
+      ) { return }
       event.stopPropagation()
       this.requestClose(event)
     }
   }
   render () {
-    const { isOpen, inline, children } = this.props
+    const { isOpen, inline, children, focusContent } = this.props
     if (!isOpen) return null
     const contentClass = cx('ola-modal-content', this.props.contentClassName)
     const overlayClass = cx('ola-modal-overlay', {
@@ -76,12 +79,15 @@ class ModalPortal extends React.Component {
           onKeyDown={this.handleKeyDown}
           onMouseDown={this.handleContentOnMouseDown}
           onMouseUp={this.handleContentOnMouseUp}
-          tabIndex='-1'
+          tabIndex={focusContent ? -1 : undefined}
         >
-          <button className='ola-modal-close' onClick={this.requestClose}>
+          <button
+            className={this.props.closeClassName}
+            onClick={this.requestClose}
+          >
             <Close />
           </button>
-          <div className='ola-modal-body'>{children}</div>
+          <div className={this.props.bodyClassName}>{children}</div>
         </div>
       </div>
     )
@@ -97,6 +103,8 @@ class Portal extends React.Component {
   static defaultProps = {
     isOpen: false,
     className: 'ola-modal-portal',
+    closeClassName: 'ola-modal-close',
+    bodyClassName: 'ola-modal-body',
     inline: false,
     contentClassName: 'ola-modal-content-small',
     focusContent: true

@@ -36,12 +36,17 @@ export default class Swipeable extends React.Component {
       /* Add focus */
       this.scroller.focus()
     }
-    if (this.props.startIndex !== this.state.active) {
+    const { startIndex } = this.props
+    if (startIndex !== this.state.active) {
       this.setState(
         {
-          active: this.props.startIndex
+          active: startIndex
         },
-        this.scrollTo
+        () => {
+          if (startIndex === null || startIndex === 0) return
+          /* Immediately jump to the selected slide */
+          this.scrollTo(0)
+        }
       )
     } else {
       if (this.props.startIndex !== null) this.scrollTo()
@@ -54,12 +59,13 @@ export default class Swipeable extends React.Component {
     max: undefined,
     startIndex: null
   }
-  scrollTo = () => {
-    if (!this.scrollRow.children[this.state.active]) return
-    smoothScroll(
-      this.scroller,
-      this.state.active * this.scrollRow.children[this.state.active].clientWidth
-    ).then(this.updateScrollState)
+  scrollTo = (duration) => {
+    const { active } = this.state
+    if (!this.scrollRow.children[active]) return
+    const width = this.scrollRow.children[active].clientWidth
+    smoothScroll(this.scroller, active * width, duration).then(
+      this.updateScrollState
+    )
   }
   updateScrollState = () => {
     if (!this.props.showNavigation || !this.scroller) return

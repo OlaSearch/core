@@ -273,6 +273,7 @@ export default function (options = {}) {
           bot &&
           INTENT_SUPPORTED_API_KEYS.indexOf(api) !== -1 &&
           (!answer ||
+            (answer && answer.error) ||
             (!answer.reply &&
               !answer.search &&
               !answer.card &&

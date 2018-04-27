@@ -96,8 +96,8 @@
   height: auto;
   min-height: $button-default-height;
 
-  @include media (tablet) {
-  display: none;
+  @include media (desktop) {
+    display: none;
   }
 
   & {

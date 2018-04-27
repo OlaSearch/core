@@ -11,6 +11,7 @@ import Mail from '@olasearch/icons/lib/mail'
 import LinkedIn from '@olasearch/icons/lib/linkedin'
 import GPlus from '@olasearch/icons/lib/material-gplus'
 import hoistNonReactStatics from 'hoist-non-react-statics'
+import withDocument from '@olasearch/react-frame-portal/lib/withDocument'
 
 /**
  * Displays a share button
@@ -33,6 +34,9 @@ class Share extends React.PureComponent {
      * Always open a new window
      */
     window.open(url)
+  }
+  handleClickOutside = (e) => {
+    this.props.hide()
   }
   render () {
     let {
@@ -59,6 +63,7 @@ class Share extends React.PureComponent {
     let classes = cx('ola-share-links', {
       'ola-drop-open': isCollapsed
     })
+    console.log(this.props.document)
     return (
       <div className={classes}>
         <button
@@ -182,19 +187,7 @@ Share.propTypes = {
 }
 
 const ShareButton = withLogger(
-  withToggle(
-    listensToClickOutside(Share, {
-      handleClickOutside (instance) {
-        return () => {
-          instance.props.hide()
-        }
-      },
-      getDocument (instance) {
-        /* Bug in react - onclickoutside: Functional components dont have access to context */
-        return (instance && instance.context.document) || document
-      }
-    })
-  )
+  withToggle(withDocument(listensToClickOutside(Share)))
 )
 
 module.exports = hoistNonReactStatics(ShareButton, Share)

@@ -9,13 +9,13 @@ import classNames from 'classnames'
 import FacetTitle from './common/FacetTitle'
 
 function RangeNumericFilter (props) {
-  function handleClick (from, to) {
+  function handleClick (start, end) {
     let { facet, dispatch } = props
 
-    if (typeof from === 'undefined' || typeof to === 'undefined') {
+    if (typeof start === 'undefined' || typeof end === 'undefined') {
       dispatch(removeFacet(facet))
     } else {
-      dispatch(replaceFacet(facet, [from, to]))
+      dispatch(replaceFacet(facet, [start, end]))
     }
     dispatch(executeSearch())
   }
@@ -55,8 +55,8 @@ function RangeNumericFilter (props) {
  */
 function RangeNumericItem ({ value, handleClick }) {
   function onItemClick () {
-    let { from, to } = value
-    handleClick(from, to)
+    let { start, end } = value
+    handleClick(start, end)
   }
 
   let { count, name } = value

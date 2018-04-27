@@ -25,7 +25,7 @@ function TextField ({
   className,
   showIfEmpty
 }) {
-  let fieldContent = staticText || result[field]
+  var fieldContent = staticText || result[field]
   if (field === SEARCH_COLLECTION_IDENTIFIER) {
     fieldContent = getDisplayName(fieldContent)
   }
@@ -42,7 +42,7 @@ function TextField ({
   if (Array.isArray(fieldContent)) {
     fieldContent = fieldContent.join(', ')
   }
-  let { highlighting } = result
+  const { highlighting } = result
   if (showIfEmpty && !fieldContent) fieldContent = `<em>${field}</em>`
   if (!fieldContent) {
     return null
@@ -63,17 +63,20 @@ function TextField ({
   } else if (fieldContent && fieldContent.length > length) {
     fieldContent = truncate(fieldContent, length, ellipsis)
   }
-  if (prefix) fieldContent = prefix + fieldContent
-  if (suffix) fieldContent = fieldContent + suffix
-  let userClass =
+  /**
+   * Add prefix and suffix
+   */
+  fieldContent = prefix + fieldContent + suffix
+
+  const userClass =
     dynamicClass && fieldContent
       ? ` ${field}-${fieldContent.toLowerCase()}`
       : ''
-  let klass = `ola-field ola-field-text ${
+  const classes = `ola-field ola-field-text ${
     field ? `ola-field-${field}${userClass}` : 'ola-field-static'
   } ${className}`
   return (
-    <div className={klass}>
+    <div className={classes}>
       <FieldLabel label={fieldLabel} />
       <div
         className='ola-field-value'
