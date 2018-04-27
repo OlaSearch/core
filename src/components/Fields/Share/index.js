@@ -63,7 +63,6 @@ class Share extends React.PureComponent {
     let classes = cx('ola-share-links', {
       'ola-drop-open': isCollapsed
     })
-    console.log(this.props.document)
     return (
       <div className={classes}>
         <button

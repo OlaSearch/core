@@ -54,7 +54,9 @@ class ModalPortal extends React.Component {
       if (
         isFocusable(document.activeElement) &&
         document.activeElement.className !== this.props.closeClassName
-      ) { return }
+      ) {
+        return
+      }
       event.stopPropagation()
       this.requestClose(event)
     }
