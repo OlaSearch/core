@@ -11,7 +11,6 @@ import Mail from '@olasearch/icons/lib/mail'
 import LinkedIn from '@olasearch/icons/lib/linkedin'
 import GPlus from '@olasearch/icons/lib/material-gplus'
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import withDocument from '@olasearch/react-frame-portal/lib/withDocument'
 
 /**
  * Displays a share button
@@ -147,11 +146,8 @@ Share.defaultProps = {
   twitter: true,
   linkedIn: true,
   gplus: true,
-  label: 'Share'
-}
-
-Share.contextTypes = {
-  document: PropTypes.object
+  label: 'Share',
+  document: null
 }
 
 Share.propTypes = {
@@ -185,8 +181,6 @@ Share.propTypes = {
   email: PropTypes.bool
 }
 
-const ShareButton = withLogger(
-  withToggle(withDocument(listensToClickOutside(Share)))
-)
+const ShareButton = withLogger(withToggle(listensToClickOutside(Share)))
 
 module.exports = hoistNonReactStatics(ShareButton, Share)
