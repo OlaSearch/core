@@ -5,6 +5,7 @@ const card = {
   title: 'Result title',
   template: 'carousel',
   subtitle: 'Result subtitle',
+  modal: true,
   images: [
     {
       src: 'https://placeimg.com/300/480/animal',
@@ -41,6 +42,6 @@ const card = {
   ]
 };
 <AnswerCarousel
-  card={card}  
+  card={card}
 />
 ```

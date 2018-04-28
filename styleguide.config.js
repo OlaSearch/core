@@ -72,6 +72,7 @@ module.exports = {
           'src/components/ContentEditable.js',
           'src/components/Error.js',
           'src/components/FilterButton.js',
+          'src/components/Portal.js',
         ]
       }
     },
