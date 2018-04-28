@@ -70,12 +70,9 @@ class AnswerMC extends React.Component {
     if (this.props.isLoadingMc && this.props.loader) {
       return this.props.loader
     }
-    let { mc, facetQuery, showWhileFiltering, theme } = this.props
-    let {
-      mcThreshold = 0.4,
-      mcShowDoc,
-      mcHighlightThreshold = 0.6
-    } = this.props.config
+    const { mc, facetQuery, showWhileFiltering, theme } = this.props
+    const { mcShowDoc, mcHighlightThreshold = 0.6 } = this.props.config
+    var { mcThreshold } = this.props.config
     /* Always parse threshold */
     mcThreshold = parseFloat(mcThreshold)
     const { answer } = mc
@@ -87,7 +84,7 @@ class AnswerMC extends React.Component {
     }
     if (!showWhileFiltering && facetQuery.length) return null
 
-    let { snippet, url, title, snippet_confidence: confidence } = answer
+    const { snippet, url, title, snippet_confidence: confidence } = answer
     /* Do not show answers that are of low confidence */
     if (confidence < mcThreshold) {
       return null

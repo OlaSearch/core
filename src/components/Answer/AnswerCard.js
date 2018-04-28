@@ -10,7 +10,15 @@ import classNames from 'classnames'
  * Create an answer card
  */
 function AnswerCard ({ card, onSelect }) {
-  let { image, subtitle, title, url, buttons = [], source, fields = [] } = card
+  const {
+    image,
+    subtitle,
+    title,
+    url,
+    buttons = [],
+    source,
+    fields = []
+  } = card
   return (
     <div className='ola-answer-card'>
       <div className='ola-answer-card-wrapper'>

@@ -21,26 +21,31 @@ class AnswerMap extends React.Component {
     /**
      * answer card object
      */
-    card: PropTypes.object
+    card: PropTypes.object,
+    /**
+     * Window
+     */
+    window: PropTypes.object,
+    /**
+     * Document
+     */
+    document: PropTypes.object
   }
   static defaultProps = {
-    markerIcon: null
+    markerIcon: null,
+    window,
+    document
   }
   componentDidMount () {
     GoogleMaps.load(
       { apiKey: 'AIzaSyAfccsQVW0CrUzGHQ1AhQpnCYhWjZgs7bw' },
-      this.context.window,
-      this.context.document,
+      this.props.window,
+      this.props.document,
       this.initMap
     )
-    this.window = this.context.window || window
-  }
-  static contextTypes = {
-    window: PropTypes.object,
-    document: PropTypes.object
   }
   initMap = () => {
-    const { google } = this.window
+    const { google } = this.props.window
     this.map = new google.maps.Map(this.mapEl, {
       center: { lat: -34.0622928, lng: 23.3755341 },
       zoom: 4,
@@ -90,8 +95,8 @@ class AnswerMap extends React.Component {
     }
   }
   handleMarkerClick = (marker) => {
-    let { title } = marker
-    let content = `
+    const { title } = marker
+    const content = `
       <div className='ola-gmap-infowindow'>
         <p>${title}</p>
       </div>
@@ -100,9 +105,10 @@ class AnswerMap extends React.Component {
     this.infowindow.open(this.map, marker)
   }
   refreshMap = () => {
-    let { card, results } = this.props
-    let { elements = [], source, title, element_keys } = card
-    const { google } = this.window
+    const { card, results } = this.props
+    const { source, title, element_keys } = card
+    var { elements = [] } = card
+    const { google } = this.props.window
     /**
      * Source of the data
      */

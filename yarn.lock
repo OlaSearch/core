@@ -9031,11 +9031,12 @@ rxjs@^5.4.0, rxjs@^5.4.2, rxjs@^5.5.2:
   dependencies:
     symbol-observable "1.0.1"
 
-s3-deploy@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/s3-deploy/-/s3-deploy-0.11.0.tgz#5461486bfe05c256cf88018416e6ac5d30700354"
+s3-deploy@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/s3-deploy/-/s3-deploy-0.11.1.tgz#8301658d89622500ae56649fd5c25d9ea505ed83"
   dependencies:
     aws-sdk "2.3.19"
+    babel-polyfill "^6.26.0"
     chai "^4.1.2"
     co "^4.5.4"
     co-fs-extra "^1.0.1"

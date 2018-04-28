@@ -29,8 +29,8 @@ function groupFacets (suggestions, fieldLabels) {
 }
 
 export default function Suggestions ({ q, results, fieldLabels, ...rest }) {
-  let isFacet = false // results.some(({ type }) => type === 'facet')
-  let groups = isFacet ? groupFacets(results, fieldLabels) : {}
+  const isFacet = false // results.some(({ type }) => type === 'facet')
+  const groups = isFacet ? groupFacets(results, fieldLabels) : {}
   return (
     <div className='ola-fuzzy-suggestions'>
       {isFacet

@@ -16,9 +16,8 @@ export default {
     return index
   },
   getSrc (params) {
-    let { apiKey } = params
-    let src = 'https://maps.googleapis.com/maps/api/js'
-    src += `?callback=mapsCallback&key=${apiKey}&libraries=drawing`
+    const { apiKey } = params
+    const src = `https://maps.googleapis.com/maps/api/js?callback=mapsCallback&key=${apiKey}&libraries=drawing`
     return src
   },
   appendScript (params) {

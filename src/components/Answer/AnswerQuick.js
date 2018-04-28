@@ -107,7 +107,7 @@ class LineChart extends React.Component {
  * List template
  */
 function List ({ card, onSelect }) {
-  let { elements } = card
+  const { elements } = card
   function handleClick (e) {
     e.stopPropagation()
   }

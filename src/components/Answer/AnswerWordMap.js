@@ -12,7 +12,7 @@ function AnswerWordMap ({
   fontSizeMin,
   fontSizeMax
 }) {
-  let { elements = [] } = card
+  var { elements = [] } = card
   /* Return null if nothing */
   if (!elements.length) return null
 
@@ -24,9 +24,9 @@ function AnswerWordMap ({
     })
   }
 
-  let counts = elements.map(({ title, count }) => count)
-  let max = Math.max.apply(this, counts)
-  let min = Math.min.apply(this, counts)
+  const counts = elements.map(({ title, count }) => count)
+  const max = Math.max.apply(this, counts)
+  const min = Math.min.apply(this, counts)
   return (
     <div className='ola-answer-wordmap'>
       {elements.slice(0, maxLen).map(({ title, count }, idx) => {

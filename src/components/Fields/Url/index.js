@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import withLogger from './../../../decorators/withLogger'
 
 /**
@@ -34,14 +35,10 @@ function Url ({
     })
     onClick && onClick(event)
   }
-  let klassName = 'ola-field ola-field-url'
-
-  if (className) {
-    klassName = `${klassName} ${className}`
-  }
+  const classes = cx('ola-field', 'ola-field-url', className)
 
   return (
-    <a className={klassName} href={url} title={url} onClick={handleClick}>
+    <a className={classes} href={url} title={url} onClick={handleClick}>
       {label}
     </a>
   )

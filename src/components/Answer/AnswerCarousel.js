@@ -31,7 +31,7 @@ class AnswerCarousel extends React.Component {
   }
   render () {
     const { card, onSelect, itemWidth } = this.props
-    let {
+    const {
       images = [],
       width,
       height,
