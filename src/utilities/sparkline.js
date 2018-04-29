@@ -2,9 +2,8 @@ export function SparkLine () {
   if (window.HTMLCanvasElement) {
     return {
       init (options) {
-        let {
+        const {
           el,
-          data,
           endpoint,
           color = 'rgba(0,0,0,0.5)',
           fillColor = 'rgba(0, 129, 189, 0.25)',
@@ -12,19 +11,19 @@ export function SparkLine () {
           height: elHeight,
           width: elWidth
         } = options
-        var ctx = el.getContext('2d')
-        var height = elHeight - 3
-        var width = elWidth
+        var { datat } = options
+        const ctx = el.getContext('2d')
+        const height = elHeight - 3
+        const width = elWidth
         /* Transform data */
         data = scaleAndTransform(data, [0, height])
-        var total = data.length
-        var max = Math.max.apply(Math, data)
-        var min = Math.min.apply(Math, data)
-        var xstep = width / total
-        var ystep = (max - (min < 0 ? min : 0)) / height
+        const total = data.length
+        const max = Math.max.apply(Math, data)
+        const min = Math.min.apply(Math, data)
+        const xstep = width / total
+        const ystep = (max - (min < 0 ? min : 0)) / height
         var x = 0
         var y = height - data[0] / ystep
-        var i
         var d
         if (window.devicePixelRatio) {
           el.width = elWidth * window.devicePixelRatio
@@ -41,7 +40,7 @@ export function SparkLine () {
         ctx.strokeStyle = color
         ctx.moveTo(x, y)
 
-        for (i = 1; i < total; i = i + 1) {
+        for (let i = 1; i < total; i = i + 1) {
           d = data[i]
           x = x + xstep
           y = height - d / ystep + 2
@@ -83,8 +82,8 @@ function convertRange (value, [min, max], [rangeMin, rangeMax]) {
 }
 
 function scaleAndTransform (data, range) {
-  var max = Math.max.apply(Math, data)
-  var min = Math.min.apply(Math, data)
+  const max = Math.max.apply(Math, data)
+  const min = Math.min.apply(Math, data)
   return data.map((i) => {
     let d = i - (min < 0 ? min : 0)
     return convertRange(d, [min, max], range)

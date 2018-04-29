@@ -12,20 +12,21 @@ function SearchTitle ({
   translate,
   config
 }) {
-  let title = translate('title')
-  let showTitle = title || totalResults > 0
+  const title = translate('title')
+  const showTitle = title || totalResults > 0
   if (!showTitle) return null
-  let currentIdx = Math.min((page - 1) * perPage + 1, totalResults)
-  let lastIdx = Math.min(totalResults, currentIdx + parseInt(perPage) - 1)
+  const currentIdx =
+    config.infiniteScroll || isPhone
+      ? 1
+      : Math.min((page - 1) * perPage + 1, totalResults)
+  const lastIdx = Math.min(totalResults, currentIdx + parseInt(perPage) - 1)
 
-  if (config.infiniteScroll || isPhone) currentIdx = 1
-
-  let values = {
+  const values = {
     current: currentIdx,
     next: lastIdx,
     total: totalResults
   }
-  let titleDesc = totalResults
+  const titleDesc = totalResults
     ? translate('showing', values)
     : translate('showing_no_results', values)
   return (

@@ -37,7 +37,8 @@ class SearchFilters extends React.Component {
   }
 
   render () {
-    var { facets, selected, conditional, className, ...props } = this.props
+    const { selected, conditional, className, ...props } = this.props
+    var { facets } = this.props
 
     /* Remove tabs */
     facets = facets.filter(({ type }) => type !== 'tab')

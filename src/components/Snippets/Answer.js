@@ -8,7 +8,7 @@ import Bookmark from './../SnippetActions/Bookmark'
  * @example ./src/components/Snippets/Answer.md
  */
 function AnswerSnippet ({ result, bookmarks, dispatch, ...rest }) {
-  let { ola_answer: answer } = result
+  const { ola_answer: answer } = result
   return (
     <div className='ola-snippet ola-snippet-static-answer'>
       <div className='ola-snippet-inner'>

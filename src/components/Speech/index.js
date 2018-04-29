@@ -116,12 +116,12 @@ class SpeechInput extends React.Component {
   }
 
   render () {
-    let { isRecording, isSpeechSupported } = this.state
-    let { translate, iconSize } = this.props
-    let { voiceSearch } = this.props.config
+    const { isRecording, isSpeechSupported } = this.state
+    const { translate, iconSize } = this.props
+    const { voiceSearch } = this.props.config
     if (!isSpeechSupported || !voiceSearch) return null
 
-    let klassName = classnames('ola-link-speech', {
+    const klassName = classnames('ola-link-speech', {
       'ola-link-speech-isrecording': isRecording
     })
 

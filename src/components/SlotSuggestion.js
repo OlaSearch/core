@@ -32,7 +32,7 @@ function SlotSuggestion ({
   }
   /* 1. Remove slots that have been already added */
 
-  let slots = answer.search.slots
+  var slots = answer.search.slots
     .filter(({ suggest }) => suggest)
     .filter(({ name, value }) => {
       /**
@@ -44,7 +44,7 @@ function SlotSuggestion ({
   /* 2. Remove slots that doesnt have any results */
   slots = slots.filter(({ name, value }) => {
     /* 2.1 Check if facet exists */
-    let facet = find(propEq('name', name))(facets)
+    const facet = find(propEq('name', name))(facets)
     /* Facet exists */
     if (facet) {
       /* 2.2 Check if value exists */
@@ -59,8 +59,8 @@ function SlotSuggestion ({
   const { fieldLabels } = config
 
   function handleAddToken (slot) {
-    let { name, value, type, facet_query } = slot
-    let facet = find(propEq('name', name))(config.facets)
+    const { name, value, type, facet_query } = slot
+    var facet = find(propEq('name', name))(config.facets)
     if (!facet) {
       facet = CREATE_FILTER_OBJECT({
         name,

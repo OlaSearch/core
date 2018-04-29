@@ -8,8 +8,8 @@ import withConfig from './../decorators/withConfig'
 
 function SearchFooter (props) {
   const { config } = props
-  let { infiniteScroll } = config
-  let {
+  const { infiniteScroll } = config
+  const {
     isPhone,
     dispatch,
     totalResults,
@@ -21,7 +21,7 @@ function SearchFooter (props) {
     return null
   }
 
-  let boundActionCreators = bindActionCreators(
+  const boundActionCreators = bindActionCreators(
     { changePage, executeSearch, loadMore },
     dispatch
   )

@@ -26,12 +26,12 @@ class Tab extends React.Component {
     showOne: false
   }
   render () {
-    let { toggle } = this.props
-    let labels = this.props.children.map((child) => child.props.title)
+    const { toggle } = this.props
+    const labels = this.props.children.map((child) => child.props.title)
     return (
-      <div>
+      <div className='ola-tabs'>
         {toggle ? null : (
-          <nav>
+          <nav className='ola-tabs-nav'>
             {labels.map((label, index) => {
               let isActive = activeTab[0] === index
               return (
@@ -46,7 +46,7 @@ class Tab extends React.Component {
             })}
           </nav>
         )}
-        <div>
+        <div className='ola-tabs-content'>
           {children.map((child, index) => {
             let isActive = toggle
               ? activeTab.indexOf(index) !== -1
@@ -78,11 +78,11 @@ const TabLabel = ({ label, index, isActive, onClick }) => {
   function handleClick () {
     onClick(index)
   }
-  let className = cx('tabLabelClassName', {
-    [`tabLabelActiveClassName`]: isActive
+  const classes = cx('ola-tabs-label', {
+    'ola-tabs-label-active': isActive
   })
   return (
-    <button className={className} onClick={handleClick}>
+    <button className={classes} onClick={handleClick}>
       {label}
     </button>
   )

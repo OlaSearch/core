@@ -10,7 +10,7 @@ class Sidebar extends React.Component {
   componentDidMount () {
     if (document.getElementById(STYLE_TAG_ID) || this.props.isDesktop) return
     /* Add inline css */
-    var style = document.createElement('style')
+    const style = document.createElement('style')
     style.id = STYLE_TAG_ID
     style.type = 'text/css'
     style.innerHTML = this.props.isDesktop
@@ -32,7 +32,7 @@ class Sidebar extends React.Component {
     }
   }
   render () {
-    let {
+    const {
       children,
       showSidebar,
       toggleSidebar,

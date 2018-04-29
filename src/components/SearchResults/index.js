@@ -13,9 +13,14 @@ import Swipeable from './../Swipeable'
  */
 class SearchResults extends React.Component {
   static propTypes = {
+    /**
+     * Array of search results
+     */
     results: PropTypes.array.isRequired,
-    bookmarks: PropTypes.array,
-    dispatch: PropTypes.func.isRequired
+    /**
+     * List of bookmarks
+     */
+    bookmarks: PropTypes.array
   }
 
   static defaultProps = {
@@ -33,7 +38,7 @@ class SearchResults extends React.Component {
   }
 
   render () {
-    let {
+    const {
       results,
       className,
       snippet: snippetOverride,
@@ -41,19 +46,19 @@ class SearchResults extends React.Component {
       config,
       ...rest
     } = this.props
-    let { snippetRules, defaultSnippet } = config
-    let classes = classNames('ola-results', className)
+    const { snippetRules, defaultSnippet } = config
+    const classes = classNames('ola-results', className)
     return (
       <div className={classes}>
         {results.map((result, idx) => {
-          let { ola_answer: isAnswer } = result
-          let OlaSnippet = isAnswer
+          const { ola_answer: isAnswer } = result
+          const OlaSnippet = isAnswer
             ? AnswerSnippet
             : snippetOverride ||
               getMatchingSnippet(snippetRules, result) ||
               defaultSnippet ||
               SnippetFallback
-          let key = result.id || idx
+          const key = result.id || idx
           return (
             <OlaSnippet result={result} key={key} theme={theme} {...rest} />
           )

@@ -64,7 +64,7 @@ function Answer ({
   function templatePicker (template, card, module) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
-      let Component = templates[template]
+      const Component = templates[template]
       return <Component card={card} module={module} onSelect={handleClick} />
     }
     switch (template) {

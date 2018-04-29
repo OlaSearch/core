@@ -9,7 +9,7 @@ import withConfig from './../../decorators/withConfig'
 
 class BookmarkActions extends React.Component {
   addBookmark = () => {
-    let { dispatch, result } = this.props
+    const { dispatch, result } = this.props
     dispatch(addBookmark(result))
     dispatch(
       log({
@@ -25,7 +25,7 @@ class BookmarkActions extends React.Component {
   }
 
   removeBookmark = () => {
-    let { dispatch, result } = this.props
+    const { dispatch, result } = this.props
     dispatch(removeBookmark(result))
     dispatch(
       log({
@@ -52,12 +52,12 @@ class BookmarkActions extends React.Component {
     )
   }
   render () {
-    let { bookmarks, result, translate, isBookmark } = this.props
-    let isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id)
+    const { bookmarks, result, translate, isBookmark } = this.props
+    const isBookmarked = bookmarks.filter((bookmark) => bookmark.id === result.id)
       .length
-    let removeLabel = translate('remove_bookmark_label')
-    let addLabel = translate('add_bookmark_label')
-    let removeClassName = classnames({
+    const removeLabel = translate('remove_bookmark_label')
+    const addLabel = translate('add_bookmark_label')
+    const removeClassName = classnames({
       'ola-link-bookmark-action action-remove': !isBookmark,
       'ola-module-clear ola-module-bookmark-remove': isBookmark
     })

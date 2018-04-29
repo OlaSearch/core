@@ -11,7 +11,7 @@ export default class Swipeable extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      active: 0,
+      active: props.startIndex,
       canScrollLeft: false,
       canScrollRight: true
     }
@@ -36,20 +36,17 @@ export default class Swipeable extends React.Component {
       /* Add focus */
       this.scroller.focus()
     }
-    const { startIndex } = this.props
-    if (startIndex !== this.state.active) {
+    const { active } = this.state
+    if (active) {
       this.setState(
         {
-          active: startIndex
+          active
         },
         () => {
-          if (startIndex === null || startIndex === 0) return
           /* Immediately jump to the selected slide */
           this.scrollTo(0)
         }
       )
-    } else {
-      if (this.props.startIndex !== null) this.scrollTo()
     }
   }
   static defaultProps = {

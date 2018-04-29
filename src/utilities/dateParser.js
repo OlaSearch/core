@@ -14,7 +14,7 @@ export function format (date, mask = defaultMask, originalFormat) {
      * Example: 2015-12-02
      */
     if (mask === defaultMask) {
-      let d = new Date(date)
+      const d = new Date(date)
       if (
         Object.prototype.toString.call(d) === '[object Date]' &&
         !isNaN(d.getTime())
@@ -37,7 +37,7 @@ export function parse (date, mask = defaultMask) {
      * Example: 2015-12-02
      */
     if (mask === defaultMask) {
-      let d = new Date(date)
+      const d = new Date(date)
       if (
         Object.prototype.toString.call(d) === '[object Date]' &&
         !isNaN(d.getTime())

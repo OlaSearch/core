@@ -11,7 +11,7 @@ function PopularKeywords ({
   updateQueryTerm,
   executeSearch
 }) {
-  let { popularKeywords } = config
+  const { popularKeywords } = config
   if (!popularKeywords || !popularKeywords.length) return null
   function handleClick (keyword) {
     updateQueryTerm(keyword)

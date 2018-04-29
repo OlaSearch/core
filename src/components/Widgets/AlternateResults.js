@@ -15,7 +15,7 @@ class AlternateResults extends React.Component {
     }
   }
   componentDidUpdate (prevProps) {
-    let { facetQuery } = this.props
+    const { facetQuery } = this.props
 
     if (
       !this.props.isLoading &&
@@ -24,7 +24,7 @@ class AlternateResults extends React.Component {
       typeof this.state.response.totalResults ===
         'undefined' /* Only search once */
     ) {
-      let lastFacet = facetQuery[facetQuery.length - 1]['name']
+      const lastFacet = facetQuery[facetQuery.length - 1]['name']
       this.props
         .executeSearch(
           {
@@ -45,12 +45,12 @@ class AlternateResults extends React.Component {
     }
   }
   render () {
-    let { totalResults, facetQuery } = this.props
-    let { response } = this.state
-    let { results, totalResults: newTotalResults } = response
+    const { totalResults, facetQuery } = this.props
+    const { response } = this.state
+    const { results, totalResults: newTotalResults } = response
     if (!newTotalResults || this.props.facetQuery.length <= 1) return null
-    let lastFacet = facetQuery[facetQuery.length - 1]['name']
-    let { fieldLabels } = this.props.config
+    const lastFacet = facetQuery[facetQuery.length - 1]['name']
+    const { fieldLabels } = this.props.config
     /**
      * Steps
      * 1. Check if query returned zero results

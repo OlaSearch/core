@@ -118,7 +118,7 @@ export default function (
    */
   if (filters && filters.length) {
     for (let i = 0, len = filters.length; i < len; i++) {
-      let { selected } = filters[i]
+      const { selected } = filters[i]
       store.dispatch(addFilter({ filter: filters[i], selected }))
     }
   }

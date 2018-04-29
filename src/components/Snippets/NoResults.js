@@ -33,7 +33,7 @@ function NoResults ({
     dispatch(removeAllFacets())
     dispatch(executeSearch())
   }
-  let message
+  var message
   if (totalResults === 0 && suggestedTerm && facets.length > 0) {
     message = (
       <div>

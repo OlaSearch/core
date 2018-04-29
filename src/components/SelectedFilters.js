@@ -77,17 +77,10 @@ class SelectedFilters extends React.Component {
     )
   }
   render () {
-    var {
-      facets,
-      showQuery,
-      q,
-      filters,
-      showZones,
-      showTabs,
-      grouped
-    } = this.props
+    const { showQuery, q, filters, showZones, showTabs, grouped } = this.props
+    var { facets } = this.props
 
-    var { showGuidePopover } = this.state
+    const { showGuidePopover } = this.state
     const { fieldLabels } = this.props.config
 
     /* Remove tabs and zones */
@@ -189,7 +182,7 @@ function FilterItem ({ filter, handleRemove }) {
   function onRemove () {
     handleRemove(filter)
   }
-  let { name } = filter
+  const { name } = filter
   return <Tag onRemove={onRemove} name={name} facet={filter} />
 }
 

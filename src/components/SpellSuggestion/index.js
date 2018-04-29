@@ -13,7 +13,7 @@ import { SEARCH_INPUTS } from './../../constants/Settings'
  */
 function SpellSuggestion (props) {
   function onChange (term) {
-    var { dispatch } = props
+    const { dispatch } = props
     /* Update the query term */
     dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))
     /* Remove any tokens */
@@ -26,7 +26,7 @@ function SpellSuggestion (props) {
       ? props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION)
       : onChange(term)
   }
-  var { suggestions, showCount, translate } = props
+  const { suggestions, showCount, translate } = props
 
   if (!suggestions.length) return null
 
@@ -68,7 +68,7 @@ function TermItem ({ item, showCount, handleClick }) {
     handleClick(item.term)
   }
 
-  let { term, count } = item
+  const { term, count } = item
   return (
     <button type='button' className='ola-spell-links' onClick={onClick}>
       <span className='ola-spell-term'>{term}</span>

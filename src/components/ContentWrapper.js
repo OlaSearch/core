@@ -11,7 +11,7 @@ function ContentWrapper ({
   view,
   children
 }) {
-  let classes = cx('ola-results-flex', `ola-results-view-${view}`, {
+  const classes = cx('ola-results-flex', `ola-results-view-${view}`, {
     'ola-sidebar-open': isSidebarOpen,
     'ola-sidebar-closed': !isSidebarOpen
   })

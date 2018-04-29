@@ -4,14 +4,14 @@ import withToggle from './../../../decorators/withToggle'
 import { createHTMLMarkup } from './../../../utilities'
 
 function TableDetail (props) {
-  let {
+  const {
     isCollapsed,
     toggle,
     card: { record_data, record_keys, caption, footnote },
     max,
     translate
   } = props
-  let size = record_data.length
+  const size = record_data.length
   return (
     <div className='ola-answer-table-detail'>
       {caption && <h4 className='ola-answer-table-caption'>{caption}</h4>}

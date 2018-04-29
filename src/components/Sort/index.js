@@ -15,7 +15,7 @@ function Sort ({ selected = '', translate, changeSort, executeSearch, config }) 
     changeSort(event.target.value)
     executeSearch()
   }
-  let { sortBy } = config
+  const { sortBy } = config
   /* Do not display if there are no sort options */
   if (!sortBy || !sortBy.length) return null
   return (
