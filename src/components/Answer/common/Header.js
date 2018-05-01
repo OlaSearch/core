@@ -10,7 +10,6 @@ export default function Header (card) {
       <Title
         result={card}
         field='title'
-        openInNewWindow
         eventLabel={title}
         eventCategory={EVENT_CATEGORY_CARD}
         {...rest}

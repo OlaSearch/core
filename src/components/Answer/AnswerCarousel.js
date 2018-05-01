@@ -72,7 +72,7 @@ class AnswerCarousel extends React.Component {
                           height={height}
                         />
                       )}
-                      <Header title={title} onClick={() => {}} />
+                      <Header title={title} />
                     </div>
                   </div>
                 )

@@ -69,7 +69,7 @@ class Thumbnail extends React.Component {
     } = this.props
 
     const restProps = omit(
-      ['size', 'collectionId', 'showIfEmpty', 'alwaysUpdate'],
+      ['size', 'collectionId', 'showIfEmpty', 'alwaysUpdate', 'document'],
       rest
     )
 
