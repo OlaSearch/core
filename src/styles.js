@@ -120,7 +120,6 @@ export default css`
   .ola-swipeable-item {
     flex: 1 1 auto;
     display: flex;
-    padding: 8px 0 8px 0;
   }
 
   .ola-swipeable-item .ola-field-img {

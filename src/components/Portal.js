@@ -65,7 +65,7 @@ class ModalPortal extends React.Component {
     const { isOpen, inline, children, focusContent } = this.props
     if (!isOpen) return null
     const contentClass = cx(this.props.contentClassName)
-    const overlayClass = cx('ola-modal-overlay', {
+    const overlayClass = cx(this.props.overlayClassName, {
       'ola-modal-inline': inline
     })
     return (
@@ -107,6 +107,7 @@ class Portal extends React.Component {
     className: 'ola-modal-portal',
     closeClassName: 'ola-modal-close',
     bodyClassName: 'ola-modal-body',
+    overlayClassName: 'ola-modal-overlay',
     inline: false,
     contentClassName: 'ola-modal-content',
     focusContent: true

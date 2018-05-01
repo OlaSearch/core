@@ -48,7 +48,7 @@ function Title ({
   var title = result[field]
 
   if (!url) url = result.url || url
-  if (!url) isLink = false
+  if (!url && !onClick) isLink = false
 
   /* Check for highlighting */
   if (highlighting) {
@@ -91,7 +91,8 @@ Title.defaultProps = {
   isAutosuggest: false,
   field: 'title',
   target: null,
-  openInNewWindow: false
+  openInNewWindow: false,
+  onClick: null
 }
 
 Title.propTypes = {

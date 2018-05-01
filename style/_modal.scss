@@ -59,7 +59,10 @@
   animation: fadeIn 0.2s linear;
   visibility: visible;
   opacity: 1;
+
   // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
 }
   $spacing: 60px + 16px;
   .ola-modal-body {

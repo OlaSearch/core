@@ -143,6 +143,11 @@ export const TAXO_ENTITY = 'taxo_entity'
 export const SEARCH_FIELD_TYPE_TAXO = '_ss'
 
 /**
+ * Event category
+ */
+export const EVENT_CATEGORY_CARD = 'card'
+
+/**
  * Default theme
  */
 export const DEFAULT_THEME = {
@@ -161,6 +166,7 @@ export const DEFAULT_THEME = {
   chatLinkColor: '#2579DA',
   chatLinkHoverColor: '#2579DA',
   chatFontFamily: "'Lato', 'Open Sans', sans-serif",
+  chatInputFontSize: '16px',
 
   chatHeaderColor: 'white',
   chatHeaderBackground: '#2579DA',

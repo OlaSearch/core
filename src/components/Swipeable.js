@@ -2,7 +2,7 @@ import React from 'react'
 import ArrowRight from '@olasearch/icons/lib/arrow-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
-import { smoothScroll, debounce } from './../utilities'
+import { smoothScroll, debounce, isFocusable } from './../utilities'
 
 const LEFT_KEY = 37
 const RIGHT_KEY = 39
@@ -34,7 +34,10 @@ export default class Swipeable extends React.Component {
       /* immediately update scroll state */
       this.updateScrollState()
       /* Add focus */
-      this.scroller.focus()
+      /**
+       * Only add focus if user is not focused on any input
+       */
+      if (!isFocusable(this.props.document.activeElement)) this.scroller.focus()
     }
     const { active } = this.state
     if (active) {
@@ -54,7 +57,8 @@ export default class Swipeable extends React.Component {
     itemWidth: 260,
     showNavigation: true,
     max: undefined,
-    startIndex: null
+    startIndex: null,
+    document
   }
   scrollTo = (duration) => {
     const { active } = this.state

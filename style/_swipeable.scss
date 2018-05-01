@@ -6,9 +6,11 @@
   display: block;
   overflow-x: auto;
   overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   transform: translate3d(0,0,0);
   position: relative;
   padding-bottom: 8px; /* Push the scrollbar */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 
   &:focus {
     outline: none;
@@ -31,10 +33,6 @@
     display: flex;
     padding: 8px 16px 8px 0;
 
-    &:last-child {
-      padding-right: 0;
-    }
-
     .ola-field-img {
       margin: 0;
       padding: 0;
@@ -47,13 +45,9 @@
    */
   .ola-swipeable-item-inner {
     display: flex;
+    flex-direction: column;
     flex: 1;
     justify-content: center;
-
-    img {
-      min-width: 100%;
-      max-width: none;
-    }
   }
 
 /**
@@ -184,12 +178,12 @@
   }
 
   .ola-swipeable-flow {
-    padding-left: 60px;
-    padding-right: 80px;
+    // padding-left: 60px;
+    // padding-right: 80px;
 
     .olachat-bot-mobile & {
-      padding-left: 16px;
-      padding-right: 16px;
+      // padding-left: 16px;
+      // padding-right: 16px;
     }
   }
 

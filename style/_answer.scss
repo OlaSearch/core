@@ -31,7 +31,7 @@
    */
   .ola-answer-title {
     margin: 0;
-    font-weight: 700;
+    font-weight: bold;
   }
 
   /**
@@ -170,4 +170,13 @@
  */
 .ola-answer-selectable {
   cursor: pointer;
+}
+
+/**
+ * Answer header
+ */
+.ola-answer-header {
+  .ola-field-title {
+    padding: 0;
+  }
 }

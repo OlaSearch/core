@@ -21,11 +21,11 @@ export function log (params) {
   /* If log is called with no arguments */
   if (!params) throw new Error('Invalid: log was called with no arguments')
 
-  let { eventType, debounce = false, state, ...rest } = params
+  const { eventType, debounce = false, state, ...rest } = params
   /* If not event type is specified */
   if (!eventType) throw new Error('Invalid: eventType is required')
   return (dispatch, getState) => {
-    let _state = state || getState()
+    const _state = state || getState()
     if (debounce) {
       return debounceLog({ dispatch, state: _state, eventType, ...rest })
     }
@@ -37,7 +37,7 @@ export function log (params) {
  * Log submit function
  */
 export function submitLog (args) {
-  var { dispatch, state, setNewUser, ...rest } = args
+  const { dispatch, state, setNewUser, ...rest } = args
   dispatch({
     log: true,
     type: 'SEND_LOG',

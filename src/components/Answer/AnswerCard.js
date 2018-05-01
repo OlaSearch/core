@@ -4,7 +4,7 @@ import Button from './common/Button'
 import Field from './common/Field'
 import Header from './common/Header'
 import Source from './common/Source'
-import classNames from 'classnames'
+import cx from 'classnames'
 
 /**
  * Create an answer card
@@ -15,15 +15,20 @@ function AnswerCard ({ card, onSelect }) {
     subtitle,
     title,
     url,
+    image_position: imagePosition = 'bottom',
     buttons = [],
     source,
-    fields = []
+    fields = [],
+    classname
   } = card
+  const classes = cx('ola-answer-card', classname)
   return (
-    <div className='ola-answer-card'>
+    <div className={classes}>
       <div className='ola-answer-card-wrapper'>
         <div className='ola-answer-content'>
-          <Header title={title} subtitle={subtitle} url={url} />
+          {imagePosition === 'bottom' ? (
+            <Header title={title} subtitle={subtitle} url={url} />
+          ) : null}
           <div className='ola-answer-body'>
             {image ? (
               <img src={image} className='ola-img ola-img-card' />
@@ -36,6 +41,9 @@ function AnswerCard ({ card, onSelect }) {
               </div>
             ) : null}
           </div>
+          {imagePosition === 'top' ? (
+            <Header title={title} subtitle={subtitle} url={url} />
+          ) : null}
           {buttons.length ? (
             <div className='ola-answer-buttons'>
               {buttons.map((button, idx) => {

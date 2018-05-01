@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import Swipeable from './../Swipeable'
 import Portal from './../Portal'
 import cx from 'classnames'
+import Thumbnail from './../Fields/Thumbnail'
 
 /**
  * Create an answer card
@@ -41,14 +42,16 @@ class AnswerCarousel extends React.Component {
       modal,
       buttons = [],
       source,
-      fields = []
+      fields = [],
+      classname
     } = card
+    const classes = cx('ola-answer-card', 'ola-answer-carousel', classname)
     return (
-      <div className='ola-answer-card ola-answer-carousel'>
+      <div className={classes}>
         <div className='ola-answer-card-wrapper'>
           <div className='ola-answer-content'>
             <Header title={title} subtitle={subtitle} url={url} />
-            <Swipeable itemWidth={itemWidth}>
+            <Swipeable itemWidth={itemWidth} document={this.props.document}>
               {images.map(({ src, title }, idx) => {
                 const classes = cx('ola-answer-carousel-image', {
                   'ola-answer-selectable': modal
@@ -69,9 +72,7 @@ class AnswerCarousel extends React.Component {
                           height={height}
                         />
                       )}
-                      {title ? (
-                        <div className='ola-answer-carousel-title'>{title}</div>
-                      ) : null}
+                      <Header title={title} onClick={() => {}} />
                     </div>
                   </div>
                 )
@@ -93,7 +94,14 @@ class AnswerCarousel extends React.Component {
             >
               <Swipeable itemWidth='100vw' startIndex={this.state.index}>
                 {images.map(({ src, title }, idx) => {
-                  return <img key={idx} src={src} alt={title} />
+                  return (
+                    <Thumbnail
+                      key={idx}
+                      thumbnail={src}
+                      width='auto'
+                      showLoading
+                    />
+                  )
                 })}
               </Swipeable>
             </Portal>
