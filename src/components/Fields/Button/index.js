@@ -14,8 +14,6 @@ function Button ({
   result,
   snippetId,
   log,
-  target,
-  openInNewWindow,
   eventLabel,
   eventCategory,
   logPayload,
@@ -35,14 +33,8 @@ function Button ({
 
     if (onClick) return onClick(event, result)
 
-    if (target) return
     event.preventDefault()
     if (url) window.location.href = url
-  }
-
-  /* Check if it should be opened in new page */
-  if (openInNewWindow) {
-    target = '_blank'
   }
 
   let klass = classNames('ola-btn', className, {
@@ -53,12 +45,7 @@ function Button ({
   if (!label && !children) return null
   return (
     <div className='ola-field ola-field-button'>
-      <button
-        type='button'
-        className={klass}
-        onClick={handleClick}
-        target={target}
-      >
+      <button type='button' className={klass} onClick={handleClick}>
         {label || children}
       </button>
     </div>
@@ -91,10 +78,6 @@ Button.propTypes = {
    */
   result: PropTypes.object,
   /**
-   * HTML target attribute for `a` link
-   */
-  target: PropTypes.oneOf(['_blank', 'self', null]),
-  /**
    * Log function
    */
   log: PropTypes.func,
@@ -102,10 +85,6 @@ Button.propTypes = {
    * Current active snippet id
    */
   snippetId: PropTypes.string,
-  /**
-   * Opens the link in a new window
-   */
-  openInNewWindow: PropTypes.bool,
   /**
    * The name of the link clicked. Used for logging
    */
@@ -126,7 +105,6 @@ Button.propTypes = {
 
 Button.defaultProps = {
   fullWidth: false,
-  target: null,
   label: null,
   textLink: false
 }
