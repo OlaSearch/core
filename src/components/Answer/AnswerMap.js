@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import GoogleMaps from './maputils'
 import cx from 'classnames'
+import Direction from './../Fields/Direction'
 
 /**
  * Displays a google map
@@ -41,14 +42,21 @@ class AnswerMap extends React.Component {
       { apiKey: 'AIzaSyAfccsQVW0CrUzGHQ1AhQpnCYhWjZgs7bw' },
       this.props.window,
       this.props.document,
-      this.initMap
+      this.lazyInitMap
     )
+  }
+  lazyInitMap = () => {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(this.initMap)
+    })
   }
   initMap = () => {
     const { google } = this.props.window
+    const { zoom } = this.props.card
     this.map = new google.maps.Map(this.mapEl, {
       center: { lat: -34.0622928, lng: 23.3755341 },
       zoom: 4,
+      maxZoom: zoom ? parseInt(zoom) : null,
       scrollwheel: false
     })
 
@@ -88,6 +96,12 @@ class AnswerMap extends React.Component {
     if (prevState.hasData !== this.state.hasData) return
     this.clearAllMarkers()
     this.refreshMap()
+    /* Set zoom */
+    // if (this.props.card.zoom && this.props.card.zoom !== prevProps.card.zoom) {
+    //   this.map.setOptions({
+    //     maxZoom: parseInt(this.props.card.zoom)
+    //   })
+    // }
   }
   clearAllMarkers = () => {
     for (var i = 0; i < this.markers.length; i++) {
@@ -170,7 +184,6 @@ class AnswerMap extends React.Component {
     }
 
     /* Fit to bounds */
-
     this.map.fitBounds(this.bounds)
   }
   registerMap = (el) => {
@@ -180,9 +193,23 @@ class AnswerMap extends React.Component {
     const classes = cx('ola-answer-map', {
       'ola-answer-map-empty': !this.state.hasData
     })
+    const { card } = this.props
+    const { direction, elements } = card
+    const location = direction && elements.length ? elements[0].location : null
     return (
       <div className={classes}>
-        <div ref={this.registerMap} className='ola-answer-gmap' />
+        <div className='ola-answer-map-element'>
+          <div ref={this.registerMap} className='ola-answer-gmap' />
+          {location ? (
+            <Direction
+              result={{
+                location
+              }}
+              locationFieldName='location'
+              label='Get directions'
+            />
+          ) : null}
+        </div>
       </div>
     )
   }

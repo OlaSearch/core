@@ -166,7 +166,7 @@ export const DEFAULT_THEME = {
   chatLinkColor: '#2579DA',
   chatLinkHoverColor: '#2579DA',
   chatFontFamily: "'Lato', 'Open Sans', sans-serif",
-  chatInputFontSize: '16px',
+  chatInputFontSize: '14px',
 
   chatHeaderColor: 'white',
   chatHeaderBackground: '#2579DA',
@@ -180,17 +180,25 @@ export const DEFAULT_THEME = {
   chatBotMessageColor: '#444',
   chatMessageFontSize: '14px',
 
+  chatMessagePadding: '10px 14px',
+  chatSlotsPadding: '9px 14px',
+  chatQuickReplyPadding: '9px 14px',
+
+  chatMessageMinHeight: '60px',
+  chatMessageBorderRadius: '20px',
+  chatTypingIndicatorPadding: '10px 14px',
+
   /* Slot */
 
-  chatBotSlotButtonColor: '#444',
+  chatBotSlotButtonColor: '#2579DA',
   chatBotSlotButtonBackground: 'white',
   chatSlotButtonFontSize: '14px',
 
   /* Quick reply */
-  chatQuickReplyColor: '#444',
+  chatQuickReplyColor: '#2579DA',
   chatQuickReplyBackground: 'transparent',
   chatQuickReplyHoverColor: 'white',
-  chatQuickReplyHoverBackground: '#444',
+  chatQuickReplyHoverBackground: '#2579DA',
   chatQuickReplyFontSize: '14px',
 
   chatBackground:

@@ -48,7 +48,7 @@ function Directions (props) {
     : null
 
   /* If no location and no distance */
-  if (!locationName && !distance) return null
+  if (!locationName && !distance && !label) return null
 
   function handleClick (event) {
     log({

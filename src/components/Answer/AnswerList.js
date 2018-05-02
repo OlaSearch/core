@@ -25,10 +25,18 @@ function AnswerList ({
   itemWidth,
   ...rest
 }) {
-  const { elements = [], source, title, subtitle, url, ...cardProps } = card
+  const {
+    elements = [],
+    source,
+    title,
+    subtitle,
+    url,
+    classname,
+    ...cardProps
+  } = card
   const size = elements.length
   const isSwipe = swipe || !isDesktop
-  const classes = cx('ola-answer-list', {
+  const classes = cx('ola-answer-list', classname, {
     'ola-answer-list-swipe': isSwipe
   })
   return (

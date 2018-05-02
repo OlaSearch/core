@@ -35,6 +35,7 @@ export default css`
     box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     background: white;
     color: black;
+    line-height: 1;
   }
   /* Overlay */
   .ola-modal-overlay {
@@ -160,6 +161,7 @@ export default css`
     opacity: 0;
     z-index: 1;
     transition: opacity 0.2s ease-in;
+    line-height: 1;
   }
   // Desktop only
   @media only screen and (min-width: 768px) {

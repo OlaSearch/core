@@ -3,6 +3,7 @@ import ArrowRight from '@olasearch/icons/lib/arrow-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
 import { smoothScroll, debounce, isFocusable } from './../utilities'
+import cx from 'classnames'
 
 const LEFT_KEY = 37
 const RIGHT_KEY = 39
@@ -124,12 +125,14 @@ export default class Swipeable extends React.Component {
       max,
       size,
       toggle,
-      showNavigation
+      showNavigation,
+      className
     } = this.props
     const { canScrollLeft, canScrollRight } = this.state
     const showMoreButton = size > max && !isCollapsed
+    const classes = cx('ola-swipeable', className)
     return (
-      <div className='ola-swipeable'>
+      <div className={classes}>
         {showNavigation ? (
           <button
             className='ola-swipeable-prev'

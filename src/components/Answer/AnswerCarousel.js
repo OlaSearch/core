@@ -9,6 +9,7 @@ import Swipeable from './../Swipeable'
 import Portal from './../Portal'
 import cx from 'classnames'
 import Thumbnail from './../Fields/Thumbnail'
+import { BUTTON_TYPE } from './../../constants/Settings'
 
 /**
  * Create an answer card
@@ -28,6 +29,14 @@ class AnswerCarousel extends React.Component {
   hideImage = () => {
     this.setState({
       index: null
+    })
+  }
+  handleCardSelect = (event) => {
+    const label = event.target.text
+    if (!label) return
+    this.props.onSelect({
+      label,
+      type: BUTTON_TYPE.POSTBACK
     })
   }
   render () {
@@ -72,7 +81,7 @@ class AnswerCarousel extends React.Component {
                           height={height}
                         />
                       )}
-                      <Header title={title} />
+                      <Header title={title} onClick={this.handleCardSelect} />
                     </div>
                   </div>
                 )
