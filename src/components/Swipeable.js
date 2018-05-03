@@ -38,7 +38,8 @@ export default class Swipeable extends React.Component {
       /**
        * Only add focus if user is not focused on any input
        */
-      if (!isFocusable(this.props.document.activeElement)) this.scroller.focus()
+      // if (!isFocusable(this.props.document.activeElement)) this.scroller.focus()
+      if (this.props.autoFocus) this.scroller.focus()
     }
     const { active } = this.state
     if (active) {
@@ -59,6 +60,7 @@ export default class Swipeable extends React.Component {
     showNavigation: true,
     max: undefined,
     startIndex: null,
+    autoFocus: false,
     document
   }
   scrollTo = (duration) => {

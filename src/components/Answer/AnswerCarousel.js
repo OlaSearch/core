@@ -101,7 +101,11 @@ class AnswerCarousel extends React.Component {
               inline
               focusContent={false} /* Swipeable already focuses */
             >
-              <Swipeable itemWidth='100vw' startIndex={this.state.index}>
+              <Swipeable
+                itemWidth='100vw'
+                startIndex={this.state.index}
+                autoFocus
+              >
                 {images.map(({ src, title }, idx) => {
                   return (
                     <Thumbnail
