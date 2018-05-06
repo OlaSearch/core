@@ -258,6 +258,14 @@ export const BUTTON_TYPE = {
 export const BREAKPOINT_TABLET = '768px'
 export const BREAKPOINT_DESKTOP = '960px'
 
+/**
+ * 1. Background is set to white (cos of iOS bottom padding on input when focused). Input is always white in color. Re-consider this setting
+ * 2. height, min-height: 100% => Fix to prevent input from increasing height on iOS
+ * 3. margin, padding reset => same as 4
+ * 4. overflow hidden => same as 4
+ * 5. -webkit-overflow-scrolling => same as 4
+ * @type {[type]}
+ */
 export const BODY_STYLE_MODAL = `
 .${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body{
   -webkit-overflow-scrolling : touch !important;
@@ -266,4 +274,5 @@ export const BODY_STYLE_MODAL = `
   min-height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
+  background: white !important;
 `
