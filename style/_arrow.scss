@@ -1,0 +1,65 @@
+.ola-arrow {
+  position: absolute;
+  background: white;
+  // background: #88b7d5;
+  right: 10px;
+  top: 0;
+}
+
+.ola-arrow:after, .ola-arrow:before {
+  bottom: 100%;
+  left: -10px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ola-arrow:after {
+  border-color: transparent;
+  border-bottom-color: white;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.ola-arrow:before {
+  border-color: transparent;
+  border-bottom-color: #ccc;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+/**
+ * Arrow bottom
+ */
+.ola-arrow-bottom, .ola-arrow-bottom-left, .ola-arrow-bottom-right {
+  bottom: 0;
+  top: auto;
+  &:after, &:before {
+    top: 100%;
+    bottom: auto;
+  }
+  &:after {
+    border-color: transparent;
+    border-top-color: white; 
+  }
+  &:before {
+    border-color: transparent;
+    border-top-color: #ccc;  
+  }
+}
+  .ola-arrow-bottom-left {
+    right: auto;
+    left: 30px;
+  }
+
+  .ola-arrow-bottom-right {
+    right: 10px;
+    left: auto;
+  }
+
+  .ola-arrow-top-right {
+    right: 10px;
+    left: auto;
+  }

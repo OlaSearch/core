@@ -2,6 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
+function Arrow ({ position, style }) {
+  const arrowClass = getArrowClass(position)
+  const classes = cx('ola-arrow', {
+    [`ola-arrow-${arrowClass}`]: arrowClass
+  })
+  return <div className={classes} />
+}
+
 function getArrowClass (position) {
   switch (position) {
     case 'top-left':
@@ -15,20 +23,19 @@ function getArrowClass (position) {
   }
 }
 
-function Arrow ({ position, style }) {
-  const arrowClass = getArrowClass(position)
-  const classes = cx('ola-arrow', {
-    [`ola-arrow-${arrowClass}`]: arrowClass
-  })
-  return <div className={classes} />
-}
-
 Arrow.defaultProps = {
-  position: 'top'
+  position: 'top-left'
 }
 
 Arrow.propTypes = {
-  position: PropTypes.oneOf(['top', 'bottom'])
+  position: PropTypes.oneOf([
+    'top',
+    'bottom',
+    'top-left',
+    'bottom-right',
+    'top-right',
+    'bottom-left'
+  ])
 }
 
 export default Arrow

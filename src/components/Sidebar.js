@@ -1,26 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { toggleSidebar } from './../actions/Ui'
-import { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } from './../constants/Settings'
+import {
+  STYLE_TAG_ID,
+  MODAL_ROOT_CLASSNAME,
+  BODY_STYLE_MODAL
+} from './../constants/Settings'
 import withTheme from './../decorators/withTheme'
 import withConfig from './../decorators/withConfig'
 import withTranslate from './../decorators/withTranslate'
 
 class Sidebar extends React.Component {
   componentDidMount () {
-    if (document.getElementById(STYLE_TAG_ID) || this.props.isDesktop) return
+    if (this.props.isDesktop || document.getElementById(STYLE_TAG_ID)) return
     /* Add inline css */
     const style = document.createElement('style')
     style.id = STYLE_TAG_ID
     style.type = 'text/css'
-    style.innerHTML = this.props.isDesktop
-      ? ``
-      : `
-      .${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body{
-        -webkit-overflow-scrolling : touch !important;
-        overflow: hidden !important;
-        height: 100% !important;
-    `
+    style.innerHTML = BODY_STYLE_MODAL
     document.getElementsByTagName('head')[0].appendChild(style)
   }
   componentDidUpdate (prevProps) {

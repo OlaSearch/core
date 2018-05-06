@@ -257,3 +257,13 @@ export const BUTTON_TYPE = {
 
 export const BREAKPOINT_TABLET = '768px'
 export const BREAKPOINT_DESKTOP = '960px'
+
+export const BODY_STYLE_MODAL = `
+.${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body{
+  -webkit-overflow-scrolling : touch !important;
+  overflow: hidden !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+`
