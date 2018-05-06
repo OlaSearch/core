@@ -12,7 +12,6 @@ import NoBookmarks from './NoBookmarks'
 
 class Bookmarks extends React.Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     bookmarks: PropTypes.array.isRequired,
     showLabel: PropTypes.bool
   }
@@ -44,15 +43,13 @@ class Bookmarks extends React.Component {
         if (this.state.isOpen) {
           this.props.onOpen && this.props.onOpen()
 
-          this.props.dispatch(
-            log({
-              eventType: 'C',
-              eventCategory: 'Bookmark button',
-              eventAction: 'open',
-              eventLabel: 'Bookmarks',
-              debounce: true
-            })
-          )
+          this.props.log({
+            eventType: 'C',
+            eventCategory: 'Bookmark button',
+            eventAction: 'open',
+            eventLabel: 'Bookmarks',
+            debounce: true
+          })
         }
       }
     )
@@ -64,13 +61,18 @@ class Bookmarks extends React.Component {
     )
   }
   onRemove = (bookmark) => {
-    this.props.dispatch(removeBookmark(bookmark))
+    this.props.removeBookmark(bookmark)
   }
   render () {
-    var { bookmarks, dispatch, translate, showLabel } = this.props
-
-    var { isOpen } = this.state
-
+    const {
+      bookmarks,
+      removeBookmark,
+      translate,
+      showLabel,
+      render,
+      ...rest
+    } = this.props
+    const { isOpen } = this.state
     const hasBookmarks = bookmarks.length > 0
     const klass = classNames({
       'ola-module': true,
@@ -83,6 +85,10 @@ class Bookmarks extends React.Component {
     const badgeClass = classNames('ola-badge', {
       'ola-badge-active': hasBookmarks
     })
+    /**
+     * Render prop
+     */
+    if (render) return render({ bookmarks, removeBookmark, ...rest })
     return (
       <div className={bookmarkKlass}>
         <button
@@ -109,7 +115,6 @@ class Bookmarks extends React.Component {
             <SearchResults
               bookmarks={bookmarks}
               results={bookmarks}
-              dispatch={dispatch}
               isBookmark
             />
           </div>
@@ -125,7 +130,7 @@ function mapStateToProps (state) {
   }
 }
 
-const BookmarksContainer = connect(mapStateToProps)(
+const BookmarksContainer = connect(mapStateToProps, { removeBookmark, log })(
   withTranslate(listensToClickOutside(Bookmarks))
 )
 const BookMarksWrapper = (props) => {

@@ -97,7 +97,7 @@
   &:before {
   }
 
-  .ola-bookmarks-hasBookmarks  &, &.action-remove {
+  .ola-bookmarks-hasBookmarks  &, &.ola-bookmark-action-remove {
     &:before {
     }
   }
@@ -184,11 +184,24 @@
  */
 .ola-btn-close {
   position: absolute;
-  right: 8px;
-  top: 8px;
+  right: 12px;
+  top: 50%;
+  margin-top: -9px;
+  padding: 2px;
+  width: 18px;
+  height: 18px;
+  background: #999;
+  border: none;
+  border-radius: 20px;
+  color: white;
 
-  &, &:hover {
-    background: none;
+  &:hover {
+    background: #555;
+  }
+
+  .ola-icon {
+    width: 100%;
+    height: 100%;
   }
 }
 

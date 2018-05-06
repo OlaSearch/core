@@ -4,7 +4,7 @@ $padding: 10px 12px;
 .ola-drop {
   position: absolute;
   bottom: 100%;
-  left: 10px;
+  left: 0px;
   min-width: 260px;
   background: white;
   box-shadow: $sharp-box-shadow;
@@ -22,30 +22,30 @@ $padding: 10px 12px;
     margin-bottom: 12px;
   }
 
-  &:after, &:before {
-    top: 100%;
-    left: 20px;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
+  // &:after, &:before {
+  //   top: 100%;
+  //   left: 20px;
+  //   border: solid transparent;
+  //   content: " ";
+  //   height: 0;
+  //   width: 0;
+  //   position: absolute;
+  //   pointer-events: none;
+  // }
 
-  &:after {
-    border-color: rgba(136, 183, 213, 0);
-    border-top-color: #fff;
-    border-width: 8px;
-    margin-left: -8px;
-  }
+  // &:after {
+  //   border-color: rgba(136, 183, 213, 0);
+  //   border-top-color: #fff;
+  //   border-width: 8px;
+  //   margin-left: -8px;
+  // }
 
-  &:before {
-    border-color: rgba(194, 225, 245, 0);
-    border-top-color: #bbb;
-    border-width: 9px;
-    margin-left: -9px;
-  }
+  // &:before {
+  //   border-color: rgba(194, 225, 245, 0);
+  //   border-top-color: #bbb;
+  //   border-width: 9px;
+  //   margin-left: -9px;
+  // }
 }
 
   .ola-drop-title {
@@ -81,5 +81,29 @@ $padding: 10px 12px;
 
     .ola-icon {
       color: #666;      
+    }
+  }
+
+  /**
+   * Position
+   */
+  .ola-drop-position-top-right {
+    .ola-drop {
+      left: auto;
+      right: 0px;  
+    }
+  }
+
+  /**
+   * Position
+   */
+  .ola-drop-position-bottom-right {
+    .ola-drop {
+      top: 100%;
+      right: 0px;
+      bottom: auto;
+      left: auto;
+      margin-bottom: 0;
+      margin-top: 12px;
     }
   }

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import TableDetail from './common/TableDetail'
 import ItemDetail from './common/ItemDetail'
 import AnswerCard from './AnswerCard'
+// import AnswerForm from './AnswerForm'
 import AnswerCarousel from './AnswerCarousel'
 import AnswerList from './AnswerList'
 import AnswerMap from './AnswerMap'
@@ -86,6 +87,9 @@ function Answer ({
 
       case 'line_chart':
         return <AnswerLineChart card={card} onSelect={handleClick} />
+
+      // case 'form':
+      //   return <AnswerForm card={card} onSelect={handleClick} />
 
       case 'generic':
       default:

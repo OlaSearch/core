@@ -43,6 +43,8 @@ export Swipeable from './components/Swipeable'
 export Portal from './components/Portal'
 export Checkbox from './components/Checkbox'
 export Overlay from './components/Overlay'
+export Bookmarks from './components/Bookmarks'
+export Arrow from './components/Arrow'
 
 export * as Actions from './actions'
 export * as Decorators from './decorators'
@@ -86,6 +88,7 @@ export AnswerMap from './components/Answer/AnswerMap'
 export AnswerCard from './components/Answer/AnswerCard'
 export AnswerCarousel from './components/Answer/AnswerCarousel'
 export AnswerMC from './components/Answer/AnswerMC'
+// export AnswerForm from './components/Answer/AnswerForm'
 export SlotSuggestion from './components/SlotSuggestion'
 
 /* Export theme */

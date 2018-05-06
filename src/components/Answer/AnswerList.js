@@ -18,11 +18,10 @@ function AnswerList ({
   card,
   isCollapsed,
   toggle,
-  max,
   translate,
   isDesktop,
   swipe,
-  itemWidth,
+  itemWidth: defaultItemWidth,
   ...rest
 }) {
   const {
@@ -32,6 +31,7 @@ function AnswerList ({
     subtitle,
     url,
     classname,
+    max,
     ...cardProps
   } = card
   const size = elements.length
@@ -39,6 +39,7 @@ function AnswerList ({
   const classes = cx('ola-answer-list', classname, {
     'ola-answer-list-swipe': isSwipe
   })
+  const itemWidth = card.width || defaultItemWidth
   return (
     <div className={classes}>
       <div className='ola-answer-list-wrapper'>
@@ -78,7 +79,6 @@ function AnswerList ({
 }
 
 AnswerList.defaultProps = {
-  max: 3,
   swipe: false,
   itemWidth: 260
 }

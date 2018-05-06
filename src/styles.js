@@ -92,6 +92,8 @@ export default css`
    */
   .ola-swipeable {
     position: relative;
+    /* Hide scrollbar */
+    overflow: hidden;
   }
 
   .ola-swipeable-flow {
@@ -101,6 +103,7 @@ export default css`
     transform: translate3d(0, 0, 0);
     position: relative;
     padding-bottom: 8px; /* Push the scrollbar */
+    margin-bottom: -20px;
   }
 
   .ola-swipeable-flow:focus {
@@ -116,6 +119,7 @@ export default css`
     flex-direction: row;
     align-items: stretch;
     flex-wrap: nowrap;
+    padding-bottom: 20px;
   }
 
   .ola-swipeable-item {

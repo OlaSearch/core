@@ -13,6 +13,10 @@
    */
   .ola-answer-body {
     flex: 1;
+
+    .ola-answer-image-top &{
+      flex: none;
+    }
   }
 
   /**
@@ -47,7 +51,6 @@
    */
   .ola-img-card {
     max-height: 300px;
-    margin-top: 8px;
     display: block;
   }
 
@@ -56,6 +59,12 @@
    */
   .ola-answer-buttons {
     padding-top: 14px;
+    // @include media (desktop) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin: 0 -4px;
+    // }
   }
 
   /**
@@ -64,15 +73,25 @@
   .ola-answer-button {
     @extend .ola-btn-primary;
     width: 100%;
-    margin: 0 0 14px 0;
-    @include media (desktop) {
-      margin: 0 14px 0 0;
+    margin: 0 0 8px 0;
+    // @include media (desktop) {
+      margin: 0 4px 8px 4px;
       width: auto;
-    }
+      flex: 1;
+    // }
 
     &:last-child {
       margin-bottom: 0;
     }
+  }
+
+  /**
+   * With image
+   */
+  .ola-answer-button-with-image {
+    background: none;
+    flex: none;
+    flex-basis: 10%;
   }
 
 /**
@@ -202,4 +221,13 @@
     background: white;
     border-radius: 0 0 5px 5px;
   }
+}
+
+/**
+ * Input
+ */
+.ola-answer-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px #ccc solid;
 }

@@ -1,5 +1,7 @@
 .ola-swipeable {
   position: relative;
+  /* Hide scrollbar */
+  overflow: hidden;
 }
 
 .ola-swipeable-flow {
@@ -11,6 +13,7 @@
   position: relative;
   padding-bottom: 8px; /* Push the scrollbar */
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+  margin-bottom: -20px;
 
   &:focus {
     outline: none;
@@ -26,6 +29,7 @@
     flex-direction: row;
     align-items: stretch;
     flex-wrap: nowrap;
+    padding-bottom: 20px;
   }
 
   .ola-swipeable-item {

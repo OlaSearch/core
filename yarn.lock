@@ -8337,9 +8337,9 @@ react-list@^0.8.8:
   dependencies:
     prop-types "15"
 
-react-loadable@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-5.3.1.tgz#9699e9a08fed49bacd69caaa282034b62a76bcdd"
+react-loadable@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-5.4.0.tgz#3b6b7d51121a7868fd155be848a36e02084742c9"
   dependencies:
     prop-types "^15.5.0"
 
@@ -8377,9 +8377,9 @@ react-redux@^5.0.7:
     loose-envify "^1.1.0"
     prop-types "^15.6.0"
 
-react-styleguidist@^7.0.8:
-  version "7.0.8"
-  resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-7.0.8.tgz#03d51b69bf1913b92ebe46153fda1268ed1c7d21"
+react-styleguidist@^7.0.9:
+  version "7.0.9"
+  resolved "https://registry.yarnpkg.com/react-styleguidist/-/react-styleguidist-7.0.9.tgz#57b851ac61231ec4b2d1085869b42d841ff25ed8"
   dependencies:
     "@vxna/mini-html-webpack-template" "^0.1.6"
     acorn "^5.5.3"
@@ -10738,9 +10738,9 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.6.0.tgz#363eafa733710eb0ed28c512b2b9b9f5fb01e69b"
+webpack@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.7.0.tgz#a04f68dab86d5545fd0277d07ffc44e4078154c9"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^3.0.0"

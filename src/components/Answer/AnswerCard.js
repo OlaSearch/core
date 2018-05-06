@@ -21,7 +21,11 @@ function AnswerCard ({ card, onSelect }) {
     fields = [],
     classname
   } = card
-  const classes = cx('ola-answer-card', classname)
+  const classes = cx(
+    'ola-answer-card',
+    classname,
+    `ola-answer-image-${imagePosition}`
+  )
   return (
     <div className={classes}>
       <div className='ola-answer-card-wrapper'>

@@ -11,6 +11,20 @@ import Mail from '@olasearch/icons/lib/mail'
 import LinkedIn from '@olasearch/icons/lib/linkedin'
 import GPlus from '@olasearch/icons/lib/material-gplus'
 import hoistNonReactStatics from 'hoist-non-react-statics'
+import Arrow from './../../Arrow'
+
+function getArrowClass (position) {
+  switch (position) {
+    case 'top-left':
+      return 'bottom-left'
+    case 'top-right':
+      return 'bottom-right'
+    case 'bottom-right':
+      return 'top-right'
+    case 'bottom-left':
+      return 'top-left'
+  }
+}
 
 /**
  * Displays a share button
@@ -48,6 +62,8 @@ class Share extends React.PureComponent {
       linkedIn,
       gplus,
       label,
+      buttonClassName,
+      position,
       ...rest
     } = this.props
     let { title, url } = result
@@ -60,18 +76,16 @@ class Share extends React.PureComponent {
     let linkedInUrl = `https://www.linkedin.com/cws/share?url=${url}`
     let gplusUrl = `https://plus.google.com/share?url=${url}`
     let classes = cx('ola-share-links', {
-      'ola-drop-open': isCollapsed
+      'ola-drop-open': isCollapsed,
+      [`ola-drop-position-${position}`]: position
     })
     return (
       <div className={classes}>
-        <button
-          className='ola-btn ola-btn-share'
-          type='button'
-          onClick={toggle}
-        >
+        <button className={buttonClassName} type='button' onClick={toggle}>
           {label}
         </button>
         <div className='ola-drop'>
+          <Arrow position={position} />
           <div className='ola-drop-body'>
             {email && (
               <button
@@ -147,7 +161,9 @@ Share.defaultProps = {
   linkedIn: true,
   gplus: true,
   label: 'Share',
-  document: null
+  document: null,
+  buttonClassName: 'ola-btn ola-btn-share',
+  alignTo: 'left'
 }
 
 Share.propTypes = {
@@ -178,7 +194,11 @@ Share.propTypes = {
   /**
    * Show email
    */
-  email: PropTypes.bool
+  email: PropTypes.bool,
+  /**
+   * Align dropdown to
+   */
+  alignTo: PropTypes.oneOf(['right', 'left'])
 }
 
 const ShareButton = withLogger(withToggle(listensToClickOutside(Share)))

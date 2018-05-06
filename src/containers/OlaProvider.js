@@ -49,7 +49,6 @@ export default function OlaProvider ({ config, translations, children }) {
           .ola-search :global(.ola-link-open-filter:hover),
           .ola-search :global(.ola-suggestions-clear),
           .ola-search :global(.ola-suggestions-clear:hover),
-          .ola-search :global(.ola-btn-close),
           .ola-search :global(.ola-btn-directions),
           .ola-search :global(.ola-btn-person),
           .ola-search :global(.ola-btn-phone),
@@ -81,10 +80,6 @@ export default function OlaProvider ({ config, translations, children }) {
           /* Slider */
           .ola-search :global(.noUi-connect) {
             background: ${theme.primaryColor};
-          }
-          /* Help close button */
-          .ola-search :global(.ola-btn-close) {
-            color: ${theme.primaryColor};
           }
           /* Progress bar */
           .ola-search :global(.react-progress-bar-percent) {
