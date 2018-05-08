@@ -67,7 +67,7 @@
 }
   $spacing: 60px + 16px;
   .ola-modal-body {
-    margin: $spacing 0;
+    // margin: $spacing 0;
   }
 
   /**
@@ -90,12 +90,12 @@
   /**
    * Inline content
    */
-  .ola-modal-inline {
-    text-align: center;
-    .ola-modal-content {
-      display: inline;
-    }
-  }
+  // .ola-modal-inline {
+  //   text-align: center;
+  //   .ola-modal-content {
+  //     display: inline;
+  //   }
+  // }
 
   /**
    * Full modal

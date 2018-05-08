@@ -50,6 +50,9 @@ export default css`
     animation: fadeIn 0.2s linear;
     visibility: visible;
     opacity: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
   .ola-modal-overlay img {
     max-width: 100%;
@@ -59,7 +62,7 @@ export default css`
   }
   /* Body */
   .ola-modal-body {
-    margin: 76px 0;
+    // margin: 76px 0;
   }
   /* Image */
   .ola-modal-content-image {
@@ -70,12 +73,12 @@ export default css`
   }
 
   /* Inline content */
-  .ola-modal-inline {
-    text-align: center;
-  }
-  .ola-modal-inline .ola-modal-content {
-    display: inline;
-  }
+  // .ola-modal-inline {
+  //   text-align: center;
+  // }
+  // .ola-modal-inline .ola-modal-content {
+  //   display: inline;
+  // }
   /**
    * Inside modal
    */

@@ -200,6 +200,7 @@ export const DEFAULT_THEME = {
   chatQuickReplyHoverColor: 'white',
   chatQuickReplyHoverBackground: '#2579DA',
   chatQuickReplyFontSize: '14px',
+  chatBotWidth: 300,
 
   chatBackground:
     '#f3f3f3 url("https://cdn.olasearch.com/assets/images/chat-bg.png")',

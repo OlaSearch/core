@@ -35,6 +35,7 @@ class AnswerMap extends React.Component {
   static defaultProps = {
     markerIcon: null,
     window,
+    defaultZoom: 4,
     document
   }
   componentDidMount () {
@@ -51,12 +52,13 @@ class AnswerMap extends React.Component {
     })
   }
   initMap = () => {
+    const { defaultZoom } = this.props
     const { google } = this.props.window
     const { zoom } = this.props.card
     this.map = new google.maps.Map(this.mapEl, {
       center: { lat: -34.0622928, lng: 23.3755341 },
-      zoom: 4,
-      maxZoom: zoom ? parseInt(zoom) : null,
+      zoom: zoom ? parseInt(zoom) : defaultZoom,
+      // maxZoom: zoom ? parseInt(zoom) : null,
       scrollwheel: false
     })
 
@@ -73,14 +75,16 @@ class AnswerMap extends React.Component {
     this.markers = []
 
     /* Max zoom */
-    google.maps.event.addListenerOnce(this.map, 'bounds_changed', (event) => {
-      if (this.map.getZoom() > 12) {
-        this.map.setZoom(12)
-      }
-    })
+    // google.maps.event.addListenerOnce(this.map, 'bounds_changed', this.setMaxZoom)
 
     /* Add markers */
     this.refreshMap()
+  }
+  setMaxZoom = () => {
+    const { zoom } = this.props.card
+    const intZoom = parseInt(zoom)
+    if (this.map.getZoom() === intZoom) return
+    this.map.setZoom(intZoom)
   }
   handleMapClick = (event) => {
     if (this.infowindow) this.infowindow.close()
@@ -96,12 +100,6 @@ class AnswerMap extends React.Component {
     if (prevState.hasData !== this.state.hasData) return
     this.clearAllMarkers()
     this.refreshMap()
-    /* Set zoom */
-    // if (this.props.card.zoom && this.props.card.zoom !== prevProps.card.zoom) {
-    //   this.map.setOptions({
-    //     maxZoom: parseInt(this.props.card.zoom)
-    //   })
-    // }
   }
   clearAllMarkers = () => {
     for (var i = 0; i < this.markers.length; i++) {
@@ -185,6 +183,8 @@ class AnswerMap extends React.Component {
 
     /* Fit to bounds */
     this.map.fitBounds(this.bounds)
+
+    google.maps.event.addListenerOnce(this.map, 'idle', this.setMaxZoom)
   }
   registerMap = (el) => {
     this.mapEl = el
