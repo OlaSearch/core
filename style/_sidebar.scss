@@ -1,41 +1,7 @@
 /* Sidebar */
 .ola-sidebar {
-  position: fixed;
-  z-index: 10000; /* chatbot is 9999 */
-  right: 0;
-  top: 16px;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  background: #fff;
-  visibility: hidden;
-  @include prefix(transform, translate3d(110%, 0, 0), webkit ms moz);
-  // @include prefix(transition, translate3d 0.3s ease-in-out, webkit ms moz);
-  @include prefix(display, flex, webkit ms moz);
-  @include prefix(flex-direction, column, webkit ms moz); 
-
-  /* Filters */
-  .ola-search-filters {
-    // max-height: calc(100% - 60px);
-    flex: 1;
-    overflow: auto;
-    padding: 16px;
-
-    @include media (desktop) {
-      padding: 0;
-      max-height: none;
-      overflow: visible;
-    }
-  }
-
+  
   .ola-sidebar-open &{
-    @include prefix(transform, translate3d(0%, 0, 0), webkit ms moz);
-    visibility: visible;
-    background-color: white;
-    box-shadow: $elevation-4;
-
-    /* On desktop */
-    @include media(desktop){
       width: 340px;
       max-height: none;
       margin: 0;
@@ -54,9 +20,51 @@
       background-color: transparent;
       display: block;
       box-shadow: none;
-    }
   }
 }
+
+/* Filters */
+.ola-search-filters {
+  padding: 0;
+  max-height: none;
+  overflow: visible;
+}
+
+
+  /**
+   * on mobile and tablet
+   */
+  .ola-search-tablet, .ola-search-mobile {
+    .ola-sidebar {
+      position: fixed;
+      z-index: 10000; /* chatbot is 9999 */
+      right: 0;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      background: #fff;
+      visibility: hidden;
+      @include prefix(transform, translate3d(110%, 0, 0), webkit ms moz);
+      // @include prefix(transition, translate3d 0.3s ease-in-out, webkit ms moz);
+      @include prefix(display, flex, webkit ms moz);
+      @include prefix(flex-direction, column, webkit ms moz);  
+      width: auto;
+      max-width: none;
+      padding: 0;
+    }
+    .ola-sidebar-open .ola-sidebar {
+      @include prefix(transform, translate3d(0%, 0, 0), webkit ms moz);
+      visibility: visible;
+      background-color: white;
+      box-shadow: $elevation-4;
+    }
+    .ola-search-filters {
+      flex: 1;
+      overflow: auto;
+      padding: 16px;
+    }
+  }
 
 /**
  * Sidebar title
@@ -65,9 +73,10 @@
   padding: 16px;
   line-height: 1;
   border-bottom: 1px #ccc solid;
+  display: none;
 
-  @include media(desktop) {
-    display: none;
+  .ola-search-tablet &, .ola-search-mobile & {
+    display: block;
   }
 }
 
@@ -79,8 +88,9 @@
 /* Hide close sidebar on mobile */
 .ola-close-sidebar {
   box-shadow: $small-box-shadow;
-  @include media (desktop) {
-    display: none;
+  display: none;
+  .ola-search-tablet &, .ola-search-mobile & {
+    display: block;
   }
 }
 
@@ -96,28 +106,27 @@
   height: auto;
   min-height: $button-default-height;
 
-  @include media (desktop) {
-    display: none;
-  }
-
   & {
   color: $brand-color;
   }
 
   span{
-  display: none;
-  }
-
-  /* Hide in searchbar in mobile */
-  .ola-search-bar & {
-  display: none;
-  float: none;
-  margin-top: 0;
-  @include media (tablet) {
-    display: block;
-  }
+    display: none;
   }
 }
+  /**
+   * On desktop hide open filter
+   */
+  .ola-search-mobile, .ola-search-tablet {
+    .ola-search-bar .ola-link-open-filter {
+      display: none;
+    }
+  }
+  .ola-search-desktop {
+    .ola-results-container .ola-link-open-filter {
+      display: none;
+    }
+  }
 
 /* Close sidebar */
 .ola-close-sidebar {

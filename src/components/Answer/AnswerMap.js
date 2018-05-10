@@ -11,7 +11,8 @@ class AnswerMap extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      hasData: false
+      hasData: false,
+      error: false
     }
   }
   static propTypes = {
@@ -82,6 +83,7 @@ class AnswerMap extends React.Component {
   }
   setMaxZoom = () => {
     const { zoom } = this.props.card
+    if (!zoom) return
     const intZoom = parseInt(zoom)
     if (this.map.getZoom() === intZoom) return
     this.map.setZoom(intZoom)

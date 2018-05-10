@@ -86,8 +86,6 @@ class Search extends React.Component {
           </Sidebar>
 
           <SearchContent>
-            <FilterButton />
-
             <Sort />
 
             <SearchTitle

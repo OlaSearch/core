@@ -5,17 +5,31 @@ import { ThemeProvider } from './ThemeContext'
 import { ConfigProvider } from './ConfigContext'
 import { DEFAULT_THEME } from './../constants/Settings'
 import styles from './../styles'
+import { connect } from 'react-redux'
+import cx from 'classnames'
 
 /**
  * Ola Provider wrapper for all Ola Components
  */
-export default function OlaProvider ({ config, translations, children }) {
+function OlaProvider ({
+  config,
+  translations,
+  children,
+  isPhone,
+  isTablet,
+  isDesktop
+}) {
   if (!config) {
     throw new Error('Could not find config on OlaProvider `props`')
   }
   const theme = { ...DEFAULT_THEME, ...config.theme }
+  const classes = cx('ola-search', {
+    'ola-search-mobile': isPhone,
+    'ola-search-tablet': isTablet,
+    'ola-search-desktop': isDesktop
+  })
   return (
-    <div className='ola-search'>
+    <div className={classes}>
       <ConfigProvider value={config}>
         <OlaIntlProvider translations={translations}>
           <ThemeProvider value={theme}>{children}</ThemeProvider>
@@ -147,3 +161,13 @@ OlaProvider.propTypes = {
    */
   children: PropTypes.any
 }
+
+function mapStateToProps (state) {
+  return {
+    isPhone: state.Device.isPhone,
+    isTablet: state.Device.isTablet,
+    isDesktop: state.Device.isDesktop
+  }
+}
+
+export default connect(mapStateToProps)(OlaProvider)

@@ -14,8 +14,8 @@ function SearchBar ({ instantSearch, config, ...props }) {
         ) : (
           <AutoComplete {...props} />
         )}
-        {config.hideToggleSidebar ? null : <FilterButton />}
-        {config.layoutSwitching ? <LayoutButton /> : null}
+        {config.hideToggleSidebar ? null : <FilterButton {...props} />}
+        {config.layoutSwitching ? <LayoutButton {...props} /> : null}
       </div>
     </div>
   )

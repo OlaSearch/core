@@ -11,8 +11,7 @@ function SearchTitle ({
   perPage,
   isPhone,
   translate,
-  config,
-  showFilterButton
+  config
 }) {
   const title = translate('title')
   const showTitle = title || totalResults > 0
@@ -31,6 +30,7 @@ function SearchTitle ({
   const titleDesc = totalResults
     ? translate('showing', values)
     : translate('showing_no_results', values)
+  /* Container is flex */
   return (
     <div className='ola-search-heading-container'>
       <div className='ola-search-heading'>
@@ -38,15 +38,11 @@ function SearchTitle ({
         {totalResults ? (
           <small className='ola-search-heading-number'>{titleDesc}</small>
         ) : null}
+        <GeoNotify showLabel />
       </div>
-      <GeoNotify showLabel />
       <FilterButton />
     </div>
   )
-}
-
-SearchTitle.defaultProps = {
-  showFilterButton: true
 }
 
 module.exports = withConfig(withTranslate(SearchTitle))
