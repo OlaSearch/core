@@ -28,7 +28,8 @@ type State = {
   showSearchHelp: boolean,
   filterInAutoComplete: boolean,
   view: 'list' | 'grid',
-  allowedCharacters: string
+  allowedCharacters: string,
+  searchOnLoad: boolean
 }
 
 export const initialState = {
@@ -73,7 +74,9 @@ export const initialState = {
   filterInAutoComplete: true,
 
   /* View */
-  view: 'list'
+  view: 'list',
+  /* Search on load */
+  searchOnLoad: true
 }
 
 export default (state: State = initialState, action: Object) => {
@@ -233,7 +236,9 @@ export default (state: State = initialState, action: Object) => {
         allowedCharacters: state.allowedCharacters,
         replaceQueryParamName: state.replaceQueryParamName,
         layoutSwitching: state.layoutSwitching,
-        filterInAutoComplete: state.filterInAutoComplete
+        filterInAutoComplete: state.filterInAutoComplete,
+        searchOnLoad: state.searchOnLoad,
+        isSidebarOpen: state.isSidebarOpen
       }
 
     case types.OLA_REHYDRATE:
@@ -258,7 +263,8 @@ export default (state: State = initialState, action: Object) => {
         filterInAutoComplete: configState
           ? configState.filterInAutoComplete
           : state.filterInAutoComplete,
-        isSidebarOpen: configState && configState.isSidebarOpen
+        isSidebarOpen: configState && configState.isSidebarOpen,
+        searchOnLoad: configState && configState.searchOnLoad
       }
 
     case types.TOGGLE_SIDEBAR:

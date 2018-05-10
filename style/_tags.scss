@@ -4,6 +4,13 @@
   align-items: flex-start;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+
+  /**
+   * swipe
+   */
+  .ola-swipeable-item {
+    padding: 8px 8px 0 0;
+  }
 }
 
 .ola-facet-tags-group {
@@ -11,20 +18,21 @@
   -ms-flex-pack: center;
   background-color: #ebebeb;
   color: #666;
-  margin-right: 8px;
+  // margin-right: 8px;
   padding: 10px 12px;
   position: relative;
   padding-right: 36px;
-  margin-top: 8px;
+  // margin-top: 8px;
   line-height: 1.2;
   border-radius: 2px;
+  white-space: nowrap;
 
   .ola-facet-tag {
     background: transparent;
     padding: 0;
     margin: 0;
     font-size: 14px;
-    position: static;
+    position: static;    
   }
 }
 

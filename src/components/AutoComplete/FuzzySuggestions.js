@@ -15,6 +15,7 @@ import {
   TYPE_FACET
 } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
+import Link from '@olasearch/icons/lib/link'
 
 function groupFacets (suggestions, fieldLabels) {
   let group = {}
@@ -157,7 +158,7 @@ class SuggestionItem extends React.Component {
       {
         'ola-suggestion-category-last': isLastCategory,
         'ola-suggestion-category-first': isFirstCategory,
-        'ola-suggestion-category-name': taxoTerm,
+        'ola-suggestion-has-category': taxoTerm,
         'ola-suggestion-history': isHistory,
         'ola-suggestion-hasToken': tokens && tokens.length,
         'ola-suggestion-hasAnswer': answer && index === 0

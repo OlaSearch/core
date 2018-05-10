@@ -16,6 +16,7 @@ import {
   setSkipIntent
 } from './../../actions/Search'
 import { BUTTON_TYPE } from './../../constants/Settings'
+import withConfig from './../../decorators/withConfig'
 import { connect } from 'react-redux'
 
 /**
@@ -30,7 +31,8 @@ function Answer ({
   isLoading,
   dispatch,
   templates,
-  onSelect
+  onSelect,
+  config
 }) {
   // function handleChange (option, index, itemKey) {
   //   dispatch(changeAnswerSelection(index, itemKey, answer))
@@ -131,7 +133,7 @@ function Answer ({
     )
   }
 
-  if (mc) {
+  if (config.mc && mc) {
     return <AnswerMC mc={mc} />
   }
 
@@ -166,4 +168,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(Answer)
+module.exports = connect(mapStateToProps)(withConfig(Answer))

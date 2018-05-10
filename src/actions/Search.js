@@ -113,8 +113,13 @@ export function executeSearch (payload, options) {
     /* Check if there is a suggested term */
     var state = getState()
     var query = state.QueryState
-    var { allowedCharacters, replaceQueryParamName, answer } = state.AppState
-    var { q, isSearchActive, facet_query, page } = query
+    var {
+      allowedCharacters,
+      replaceQueryParamName,
+      answer,
+      searchOnLoad
+    } = state.AppState
+    var { q, facet_query, page } = query
     const context = state.Context
     const resetSearch = page === 1
 
@@ -140,7 +145,7 @@ export function executeSearch (payload, options) {
     /* If no query and search is not active (searchOnLoad = false) */
     if (
       (allowedCharacters && !checkForAllowedCharacters(q, allowedCharacters)) ||
-      !(isSearchActive || (!!q || facet_query.length))
+      !(searchOnLoad || (!!q || facet_query.length))
     ) {
       // Terminate search
       dispatch(terminateSearch())
@@ -608,16 +613,6 @@ export function initSearch ({ config, urlSync = true, payload = {} }) {
     if (!searchOnLoad) {
       let { q, facet_query } = getState().QueryState
       let shouldSearch = q || facet_query.length
-
-      /**
-       * Use
-       * !this.context.config.searchOnLoad && QueryState.isSearchActive
-       * to show hide results
-       */
-      dispatch({
-        type: types.SET_SEARCH_STATUS,
-        status: searchOnLoad
-      })
 
       if (shouldSearch) {
         dispatch(

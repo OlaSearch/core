@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import withTranslate from './../decorators/withTranslate'
 import withConfig from './../decorators/withConfig'
 import GeoNotify from './Geo/GeoNotify'
+import FilterButton from './FilterButton'
 
 function SearchTitle ({
   totalResults,
@@ -10,7 +11,8 @@ function SearchTitle ({
   perPage,
   isPhone,
   translate,
-  config
+  config,
+  showFilterButton
 }) {
   const title = translate('title')
   const showTitle = title || totalResults > 0
@@ -38,8 +40,13 @@ function SearchTitle ({
         ) : null}
       </div>
       <GeoNotify showLabel />
+      <FilterButton />
     </div>
   )
+}
+
+SearchTitle.defaultProps = {
+  showFilterButton: true
 }
 
 module.exports = withConfig(withTranslate(SearchTitle))

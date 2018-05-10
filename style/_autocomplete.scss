@@ -215,14 +215,17 @@
     border-radius: 2px;
     margin-right: 0.5rem;
     margin-top: 4px;
-    
   }
+
+  
 
   &:hover:before {
     background: white;
   }
   .ola-suggestion-item-text {
     display: block;
+    font-weight: normal;
+    color: #0081bf;
     @include media (tablet) {
       display: inline-block;
     }

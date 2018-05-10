@@ -28,6 +28,11 @@ export default class Swipeable extends React.Component {
     this.scroller &&
       this.scroller.removeEventListener('scroll', this._updateScrollState)
   }
+  componentDidUpdate (prevProps) {
+    if (prevProps.children !== this.props.children) {
+      this._updateScrollState()
+    }
+  }
   componentDidMount () {
     if (this.props.showNavigation) {
       /* Add keydown */
@@ -153,6 +158,7 @@ export default class Swipeable extends React.Component {
         >
           <div className='ola-swipeable-row' ref={this.registerRowRef}>
             {children
+              .filter((child) => child)
               .slice(0, isCollapsed ? undefined : max)
               .map((child, idx) => {
                 return (

@@ -9,8 +9,12 @@ function ContentWrapper ({
   isDesktop,
   isSidebarOpen,
   view,
-  children
+  searchOnLoad,
+  children,
+  q,
+  facet_query
 }) {
+  if (!(searchOnLoad || (!!q || facet_query.length))) return null
   const classes = cx('ola-results-flex', `ola-results-view-${view}`, {
     'ola-sidebar-open': isSidebarOpen,
     'ola-sidebar-closed': !isSidebarOpen
@@ -27,6 +31,9 @@ function mapStateToProps (state) {
   return {
     isSidebarOpen: state.AppState.isSidebarOpen,
     isDesktop: state.Device.isDesktop,
+    q: state.QueryState.q,
+    facet_query: state.QueryState.facet_query,
+    searchOnLoad: state.AppState.searchOnLoad,
     view: state.AppState.view
   }
 }

@@ -72,6 +72,7 @@ class AutoComplete extends React.Component {
       q: props.q,
       results: [],
       searchInput: null,
+      searchDone: false,
 
       /* word suggestion */
       leftPosition: props.leftPadding,
@@ -177,6 +178,7 @@ class AutoComplete extends React.Component {
   updateQueryTerm = ({ term, ...rest }) => {
     this.setState({
       q: cleanQueryTerm(term),
+      searchDone: false,
       /* If the word you are typing has changed */
       // results: rest.startToken !== this.state.startToken ? [] : this.state.results,
       ...rest
@@ -357,7 +359,10 @@ class AutoComplete extends React.Component {
       this.terminateAutoSuggest()
     } else {
       ajaxRequest.then((results) => {
-        if (!results) return
+        /**
+         * Prevents from showing autosuggestions if user has already searched
+         */
+        if (!results || this.state.searchDone) return
         /* Prepare results */
         const res = getAutoCompleteResults(
           results,
@@ -406,13 +411,15 @@ class AutoComplete extends React.Component {
   }
 
   updateCursor = (start) => {
+    if (typeof start === 'undefined' || start === null) return
     setTimeout(() => this.inputEl.input.setSelectionRange(start, start))
   }
 
   onKeyDown = (direction, event) => {
-    let { classNames, activeClassName } = this.props
-    let fullActiveClass = '.' + activeClassName
-    let nodes = this.suggestionsContainer.querySelectorAll(classNames)
+    const { results, endToken } = this.state
+    const { classNames, activeClassName } = this.props
+    const fullActiveClass = '.' + activeClassName
+    const nodes = this.suggestionsContainer.querySelectorAll(classNames)
 
     if (!nodes.length) {
       if (
@@ -423,7 +430,7 @@ class AutoComplete extends React.Component {
       }
     }
 
-    let target = this.suggestionsContainer.querySelector(fullActiveClass)
+    const target = this.suggestionsContainer.querySelector(fullActiveClass)
     let index = target ? [].indexOf.call(nodes, target) : -1
     let next
 
@@ -435,7 +442,7 @@ class AutoComplete extends React.Component {
           next.classList.remove(activeClassName)
           if (index === -1) {
             this.clearFuzzyQueryTerm()
-            this.updateCursor(this.state.endToken)
+            this.updateCursor(endToken)
           }
         } else {
           next.classList.add(activeClassName)
@@ -453,7 +460,7 @@ class AutoComplete extends React.Component {
         if (index >= nodes.length) {
           this.clearFuzzyQueryTerm()
           this.clearActiveClass()
-          this.updateCursor(this.state.endToken)
+          this.updateCursor(endToken)
         } else {
           next.classList.add(activeClassName)
         }
@@ -462,18 +469,30 @@ class AutoComplete extends React.Component {
       case 'tab':
       case 'space':
         if (this.props.wordSuggestion) {
-          if (this.state.results[index]) {
+          if (results[index]) {
             if (direction === 'tab') event.preventDefault()
-            return this.onFuzzySelect(this.state.results[index])
+            return this.onFuzzySelect(results[index])
           } else {
             if (direction === 'tab') this.onSoftBlur(event)
+            return
+          }
+        } else {
+          /* Prevent updation */
+          if (direction === 'tab') {
+            /* Update the query term */
+            if (results[index]) return this.updateQueryTerm(results[index])
+          } else {
+            /**
+             * Adding a space, do not fill the selected term
+             */
             return
           }
         }
         break
     }
 
-    let term = this.state.results[index] ? this.state.results[index] : null
+    const term = results[index] ? results[index] : null
+
     if (term) {
       this.updateFuzzyQueryTerm(term)
     }
@@ -593,6 +612,10 @@ class AutoComplete extends React.Component {
       forceRedirect: this.props.forceRedirect,
       searchPageUrl: this.props.config.searchPageUrl,
       routeChange: !this.props.forceRedirect
+    })
+
+    this.setState({
+      searchDone: true
     })
 
     /* Clear timeout */

@@ -31,7 +31,8 @@ export function prepareStoreState ({ config, device }) {
     sidebar,
     filterInAutoComplete,
     autocompleteDictionary,
-    hideToggleSidebar
+    hideToggleSidebar,
+    searchOnLoad
   } = config
 
   if (typeof contextState === 'string') {
@@ -116,7 +117,8 @@ export function prepareStoreState ({ config, device }) {
       filterInAutoComplete,
       autocompleteDictionary,
       sidebar,
-      isSidebarOpen
+      isSidebarOpen,
+      searchOnLoad
     },
     botState
   }

@@ -12,7 +12,6 @@ type State = {
   facet_query: Array<Object>,
   sort: string,
   filters: Array<Object>,
-  isSearchActive: boolean,
   searchInput: ?string,
   skip_intent: boolean,
   skip_spellcheck: boolean,
@@ -32,7 +31,6 @@ export const initialState = {
   facet_query: [],
   sort: '',
   filters: [],
-  isSearchActive: true,
   searchInput: null,
   skip_intent: false,
   skip_spellcheck: false,
@@ -291,12 +289,6 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         per_page: action.perPage
-      }
-
-    case types.SET_SEARCH_STATUS:
-      return {
-        ...state,
-        isSearchActive: action.status
       }
 
     case types.REQUEST_SEARCH_SUCCESS:

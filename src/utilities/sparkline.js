@@ -11,7 +11,7 @@ export function SparkLine () {
           height: elHeight,
           width: elWidth
         } = options
-        var { datat } = options
+        var { data } = options
         const ctx = el.getContext('2d')
         const height = elHeight - 3
         const width = elWidth
@@ -63,7 +63,7 @@ export function SparkLine () {
         ctx.moveTo(0, height + 3)
         ctx.lineTo(0, height - data[0] / ystep)
         x = 0
-        for (i = 1; i < total; i = i + 1) {
+        for (let i = 1; i < total; i = i + 1) {
           d = data[i]
           x = x + xstep
           y = height - d / ystep + 2

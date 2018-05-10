@@ -50,7 +50,7 @@ function NoResults ({
       </div>
     )
   } else {
-    if (!q && facets.length) {
+    if (facets.length) {
       message = (
         <div>
           {translate('no_results_found_filters_only', null, true, {
