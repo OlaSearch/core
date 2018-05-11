@@ -33,7 +33,8 @@ class SearchResults extends React.Component {
     if (nextProps.alwaysUpdate) return true
     return (
       this.props.results !== nextProps.results ||
-      this.props.bookmarks !== nextProps.bookmarks
+      this.props.bookmarks !== nextProps.bookmarks ||
+      this.props.isLoading !== nextProps.isLoading /* From swipe carousel */
     )
   }
 
@@ -44,25 +45,32 @@ class SearchResults extends React.Component {
       snippet: snippetOverride,
       theme,
       config,
+      swipe,
+      pagination,
       ...rest
     } = this.props
     const { snippetRules, defaultSnippet } = config
     const classes = classNames('ola-results', className)
+    const snippets = results.map((result, idx) => {
+      const { ola_answer: isAnswer } = result
+      const OlaSnippet = isAnswer
+        ? AnswerSnippet
+        : snippetOverride ||
+          getMatchingSnippet(snippetRules, result) ||
+          defaultSnippet ||
+          SnippetFallback
+      const key = result.id || idx
+      return <OlaSnippet result={result} key={key} theme={theme} {...rest} />
+    })
     return (
       <div className={classes}>
-        {results.map((result, idx) => {
-          const { ola_answer: isAnswer } = result
-          const OlaSnippet = isAnswer
-            ? AnswerSnippet
-            : snippetOverride ||
-              getMatchingSnippet(snippetRules, result) ||
-              defaultSnippet ||
-              SnippetFallback
-          const key = result.id || idx
-          return (
-            <OlaSnippet result={result} key={key} theme={theme} {...rest} />
-          )
-        })}
+        {swipe ? (
+          <Swipeable showNavigation={false}>
+            {snippets.concat(this.props.pagination)}
+          </Swipeable>
+        ) : (
+          snippets
+        )}
         <style jsx>
           {`
             .ola-results :global(.ola-field-title a) {

@@ -14,7 +14,8 @@ function LoadMore ({
   isLoading,
   beforeChangePage,
   translate,
-  theme
+  theme,
+  textBottom
 }) {
   if (currentPage * perPage >= totalResults) return null
   let klass = classNames('ola-link-load-more', {
@@ -34,8 +35,13 @@ function LoadMore ({
       disabled={isLoading}
       onClick={handleClick}
     >
-      <span className='ola-link-load-more-text'>{text}</span>
+      {textBottom ? null : (
+        <span className='ola-link-load-more-text'>{text}</span>
+      )}
       <ChevronDown />
+      {textBottom ? (
+        <span className='ola-link-load-more-text'>{text}</span>
+      ) : null}
       <style jsx>
         {`
           /* Load more */

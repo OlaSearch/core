@@ -3,6 +3,11 @@
   /* Hide scrollbar */
   overflow: hidden;
   flex: 1;
+
+  .ola-snippet {
+    flex: 1;
+    display: flex;
+  }
 }
 
 .ola-swipeable-flow {
@@ -120,21 +125,36 @@
 /**
  * Show button
  */
-.ola-swipeable-button {
+.ola-swipeable-button, .ola-swipeable-show .ola-link-load-more {
   @extend .ola-btn;
   text-align: center;
-  width: 60px;  
+  width: 100px;
 
   .ola-icon {
-    width: 40px;
-    height: 40px;
-    padding: 5px;
+    width: 60px;
+    height: 60px;
+    padding: 16px;
     border-radius: 50%;
     box-shadow: $small-box-shadow;
     margin: 3px;
     background: white;
   }  
 }
+  .olachat .ola-swipeable-show .ola-link-load-more {    
+    width: 100px;
+    .ola-link-load-more-text {
+      display: block;
+      color: #666;
+      padding: 12px 0;
+
+      &[disabled] {
+        opacity: 0.6;
+      }
+    }
+    .ola-icon {
+      transform: rotate(-90deg)
+    }
+  }
 
 .ola-swipeable-button-text {
   display: block;
@@ -145,6 +165,10 @@
 .ola-swipeable-show {
   display: flex;
   align-items: center;
+
+  .ola-swipeable-item-inner {
+    width: auto !important;
+  }
 }
 
 

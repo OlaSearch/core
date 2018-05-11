@@ -161,8 +161,11 @@ export default class Swipeable extends React.Component {
               .filter((child) => child)
               .slice(0, isCollapsed ? undefined : max)
               .map((child, idx) => {
+                const childClass = `ola-swipeable-item${
+                  child.props.isShowMore ? ' ola-swipeable-show' : ''
+                }`
                 return (
-                  <div className='ola-swipeable-item' key={idx}>
+                  <div className={childClass} key={idx}>
                     <div
                       className='ola-swipeable-item-inner'
                       style={{ width: itemWidth }}
