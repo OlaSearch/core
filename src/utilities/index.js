@@ -980,3 +980,17 @@ export function getDocument () {
   if (typeof document !== undefined) return document
   return null
 }
+
+/**
+ * Is local host
+ */
+export function isDev () {
+  const doc = getDocument()
+  if (!doc) return false
+  const { hostname } = document.location
+  return (
+    hostname === '' ||
+    ['localhost', '127.0.0.1'].indexOf(hostname) !== -1 ||
+    hostname.match(/^\d/gi)
+  )
+}
