@@ -5,12 +5,12 @@
   /* Remove underline from links */
   @if $is_link_underlined == true {
     a {
-      text-decoration: underline;
+      // text-decoration: underline;
     }
   } @else {
     // Default if it’s neither
     a {
-      text-decoration: none;
+      // text-decoration: none;
     }
   }
 

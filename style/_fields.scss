@@ -126,7 +126,10 @@ $image-height: 150px;
   margin: 0;
   padding: 0 0 $field-title-bottom-padding 0;
   font-weight: normal;
-  // font-size: $field-title-font-size;
+  
+  > a {
+    text-decoration: none;
+  }
 }
 
 /* URL */
@@ -135,6 +138,7 @@ $image-height: 150px;
   color: $base-grey-color;
   display: block;
   padding-bottom: 0;
+  text-decoration: none;
 
   @extend %nobreak;
 }

@@ -130,7 +130,7 @@ export default css`
     display: flex;
   }
 
-  .ola-swipeable-item .ola-field-img {
+  .ola-swipeable-carousel .ola-swipeable-item .ola-field-img {
     margin: 0;
     padding: 0;
     max-width: none;
@@ -171,11 +171,11 @@ export default css`
     line-height: 1;
   }
   // Desktop only
-  @media only screen and (min-width: 768px) {
-    .ola-swipeable-prev,
-    .ola-swipeable-next {
-      display: block;
-    }
+  .ola-search-desktop .ola-swipeable-prev,
+  .ola-search-desktop .ola-swipeable-next,
+  .ola-modal-desktop .ola-swipeable-prev,
+  .ola-modal-desktop .ola-swipeable-next {
+    display: block;
   }
 
   .ola-swipeable-prev:focus,

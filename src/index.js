@@ -52,7 +52,7 @@ export * as storage from './services/storage'
 export * as utilities from './utilities'
 export olaReducer from './reducers'
 export DateParser from './utilities/dateParser'
-export urlSync from './services/urlSync'
+export * as urlSync from './services/urlSync'
 
 /* Store middlewares */
 export createOlaMiddleware from './middleware/createOlaMiddleware'

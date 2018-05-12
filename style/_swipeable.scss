@@ -44,11 +44,19 @@
     padding: 8px 16px 8px 0;
 
     .ola-field-img {
-      margin: 0;
       padding: 0;
       max-width: none;
     }
   }
+
+    /**
+     * Remove image margin on ola-answer-carousel
+     */
+    .ola-answer-carousel {
+      .ola-swipeable-item .ola-field-img {
+        margin: 0;
+      }
+    }
 
   /**
    * Innner
@@ -85,6 +93,7 @@
   z-index: 1;
   transition: opacity 0.2s ease-in;
   line-height: 1;
+  display: none;
 
   .ola-swipeable:hover & {
     opacity: 1;
@@ -109,7 +118,7 @@
     
   }  
 
-  @include media (desktop) {
+  .ola-search-desktop &, .ola-modal-desktop & {
     display: block;
   }
 }

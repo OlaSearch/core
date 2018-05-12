@@ -32,6 +32,13 @@
   }
 
   /**
+   * Card wrapper
+   */
+  .ola-answer-card-wrapper {
+    flex: 1;
+  }
+
+  /**
    * Title
    */
   .ola-answer-title {
@@ -43,7 +50,7 @@
    * Subtitle
    */
   .ola-answer-subtitle {
-    margin: 4px 0 0 0;
+    // margin: 4px 0 0 0;
   }
 
   /**
@@ -104,6 +111,7 @@
   > .ola-answer-card {
     width: 33.333%;
     padding: 8px 16px 8px 0;
+    display: flex;
   }
 }
 
@@ -173,7 +181,7 @@
  */
 .ola-answer-linechart {
   height: 300px;
-  margin: 1em;
+  margin: 0 0 1rem 0;
 }
 
 
@@ -198,12 +206,12 @@
 .ola-answer-header {
   padding: 8px 0;
   flex: 1;
-  &:first-child {
-    padding-top: 0;
-  }
-  &:last-child {
-    padding-top: 0;
-  }
+  // &:first-child {
+  //   padding-top: 0;
+  // }
+  // &:last-child {
+  //   padding-top: 0;
+  // }
   .ola-field-title {
     padding: 0;
   }
@@ -230,4 +238,14 @@
   width: 100%;
   padding: 8px 12px;
   border: 1px #ccc solid;
+}
+
+/**
+ * Sup
+ */
+.ola-answer {
+  sup {
+    font-size: 16px;
+    top: auto;
+  }
 }

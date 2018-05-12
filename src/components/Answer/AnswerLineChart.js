@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import scriptLoader from 'react-async-load-script'
 import TableDetail from './common/TableDetail'
+import Source from './common/Source'
 
 /**
  * Displays a line chart
@@ -107,18 +108,23 @@ class AnswerLineChart extends React.Component {
   }
   render () {
     const { card, isScriptLoaded } = this.props
-    const { record_keys, record_data, title } = card
+    const { record_keys, record_data, title, source } = card
     const showChart = record_keys.length > 2
     const answerClass = classNames('ola-answer-linechart', {
       'ola-answer-linechart-loading': !isScriptLoaded
     })
     return (
       <div className='ola-answer-chart'>
-        {title && (
-          <div className='ola-answer-title ola-answer-chart-title'>{title}</div>
-        )}
-        <div ref={this.registerRef} className={answerClass} />
-        <TableDetail {...this.props} />
+        <div className='ola-answer-card-wrapper'>
+          {title && (
+            <div className='ola-answer-title ola-answer-chart-title'>
+              {title}
+            </div>
+          )}
+          <div ref={this.registerRef} className={answerClass} />
+          <TableDetail {...this.props} />
+        </div>
+        <Source source={source} />
       </div>
     )
   }

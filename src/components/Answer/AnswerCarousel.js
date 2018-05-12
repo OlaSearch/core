@@ -105,6 +105,7 @@ class AnswerCarousel extends React.Component {
                 itemWidth='100vw'
                 startIndex={this.state.index}
                 autoFocus
+                className='ola-swipeable-carousel'
               >
                 {images.map(({ src, title }, idx) => {
                   return (

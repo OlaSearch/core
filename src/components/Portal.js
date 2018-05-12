@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import Close from '@olasearch/icons/lib/x'
 import cx from 'classnames'
 import { isFocusable } from './../utilities'
+import { connect } from 'react-redux'
 
 const TAB_KEY = 9
 const ESC_KEY = 27
@@ -62,11 +63,22 @@ class ModalPortal extends React.Component {
     }
   }
   render () {
-    const { isOpen, inline, children, focusContent } = this.props
+    const {
+      isOpen,
+      inline,
+      children,
+      focusContent,
+      isPhone,
+      isTablet,
+      isDesktop
+    } = this.props
     if (!isOpen) return null
     const contentClass = cx(this.props.contentClassName)
     const overlayClass = cx(this.props.overlayClassName, {
-      'ola-modal-inline': inline
+      'ola-modal-inline': inline,
+      'ola-modal-mobile': isPhone,
+      'ola-modal-tablet': isTablet,
+      'ola-modal-desktop': isDesktop
     })
     return (
       <div
@@ -129,4 +141,8 @@ Portal.propTypes = {
   contentClassName: PropTypes.string
 }
 
-export default Portal
+export default connect((state) => ({
+  isDesktop: state.Device.isDesktop,
+  isTablet: state.Device.isTablet,
+  isPhone: state.Device.isPhone
+}))(Portal)

@@ -7,37 +7,35 @@ function TableDetail (props) {
   const {
     isCollapsed,
     toggle,
-    card: { record_data, record_keys, caption, footnote },
+    card: { record_data: data, record_keys: keys, caption, footnote },
     max,
     translate
   } = props
-  const size = record_data.length
+  const size = data.length
   return (
     <div className='ola-answer-table-detail'>
       {caption && <h4 className='ola-answer-table-caption'>{caption}</h4>}
       <div className='ola-answer-table-wrapper'>
         <table className='ola-answer-table'>
           <thead>
-            <tr>{record_keys.map((key, idx) => <th key={idx}>{key}</th>)}</tr>
+            <tr>{keys.map((key, idx) => <th key={idx}>{key}</th>)}</tr>
           </thead>
           <tbody>
-            {record_data
-              .slice(0, isCollapsed ? undefined : max)
-              .map((row, idx) => {
-                return (
-                  <tr key={idx}>
-                    {record_keys.map((key, idx) => {
-                      return (
-                        <td key={idx}>
-                          <div
-                            dangerouslySetInnerHTML={createHTMLMarkup(row[key])}
-                          />
-                        </td>
-                      )
-                    })}
-                  </tr>
-                )
-              })}
+            {data.slice(0, isCollapsed ? undefined : max).map((row, idx) => {
+              return (
+                <tr key={idx}>
+                  {keys.map((key, idx) => {
+                    return (
+                      <td key={key}>
+                        <div
+                          dangerouslySetInnerHTML={createHTMLMarkup(row[key])}
+                        />
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

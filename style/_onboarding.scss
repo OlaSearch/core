@@ -2,14 +2,15 @@
 .ola-query-help {
   position: relative;
   background: white;    
-  min-width: 300px;
+  width: 300px;
+  max-width: 100%;
   position: absolute;
   top: 100%;
   margin-top: 12px;
   left: 0;
   font-size: 14px;
   border-radius: 5px;
-  z-index: 1;
+  z-index: 3; /* Higher than contenteditable 2 */
   box-shadow: $sharp-box-shadow;
 
   strong {
