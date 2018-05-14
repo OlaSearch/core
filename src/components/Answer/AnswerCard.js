@@ -26,6 +26,7 @@ function AnswerCard ({ card, onSelect }) {
     classname,
     `ola-answer-image-${imagePosition}`
   )
+  const showBody = !!(image || fields.length)
   return (
     <div className={classes}>
       <div className='ola-answer-card-wrapper'>
@@ -33,18 +34,20 @@ function AnswerCard ({ card, onSelect }) {
           {imagePosition === 'bottom' ? (
             <Header title={title} subtitle={subtitle} url={url} />
           ) : null}
-          <div className='ola-answer-body'>
-            {image ? (
-              <img src={image} className='ola-img ola-img-card' />
-            ) : null}
-            {fields.length ? (
-              <div className='ola-answer-fields'>
-                {fields.map((field, idx) => {
-                  return <Field {...field} key={idx} />
-                })}
-              </div>
-            ) : null}
-          </div>
+          {showBody ? (
+            <div className='ola-answer-body'>
+              {image ? (
+                <img src={image} className='ola-img ola-img-card' />
+              ) : null}
+              {fields.length ? (
+                <div className='ola-answer-fields'>
+                  {fields.map((field, idx) => {
+                    return <Field {...field} key={idx} />
+                  })}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
           {imagePosition === 'top' ? (
             <Header title={title} subtitle={subtitle} url={url} />
           ) : null}
