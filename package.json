@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "3.3.6",
+  "version": "3.3.7",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -110,7 +110,6 @@
     "pre-commit": "^1.2.2",
     "prettier-standard": "^8.0.1",
     "react": "^16.3.2",
-    "react-async-load-script": "^1.0.6",
     "react-dom": "^16.3.2",
     "react-styleguidist": "^7.0.13",
     "react-test-renderer": "^16.3.2",
@@ -149,6 +148,7 @@
     "prop-types": "^15.6.1",
     "query-string": "5.1.1",
     "ramda": "^0.25.0",
+    "react-async-load-script": "^1.0.6",
     "react-line-progress": "^1.0.3",
     "react-list": "^0.8.8",
     "react-loadable": "^5.4.0",
