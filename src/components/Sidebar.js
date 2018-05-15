@@ -41,15 +41,19 @@ class Sidebar extends React.Component {
     if (!config.sidebar) return null
     return (
       <div className='ola-sidebar'>
-        <div className='ola-sidebar-title'>{translate('filter_title')}</div>
-        {isSidebarOpen && children}
-        <button
-          onClick={toggleSidebar}
-          type='button'
-          className='ola-close-sidebar'
-        >
-          {translate('filter_close')}
-        </button>
+        {isSidebarOpen ? (
+          <React.Fragment>
+            <div className='ola-sidebar-title'>{translate('filter_title')}</div>
+            {children}
+            <button
+              onClick={toggleSidebar}
+              type='button'
+              className='ola-close-sidebar'
+            >
+              {translate('filter_close')}
+            </button>
+          </React.Fragment>
+        ) : null}
         <style jsx>
           {`
             .ola-sidebar :global(.ola-close-sidebar) {

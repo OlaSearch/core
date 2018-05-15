@@ -130,7 +130,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-    margin: 0
+    margin: 0;
+    background: transparent;
+    display: table;
 }
 
 .pika-table th,

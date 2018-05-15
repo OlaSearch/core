@@ -1,4 +1,3 @@
-import css from 'styled-jsx/css'
 /**
  * These are the styles shared by both chatbot and search
  * Chatbot is rendered in Iframe, but Modal window is appended to parent document. Hence we need to add these styles to parent
@@ -6,7 +5,7 @@ import css from 'styled-jsx/css'
  * 2. Any component rendered from an iframe on to the parent page
  */
 
-export default css`
+export default `
   @keyframes fadeIn {
     0% {
       opacity: 0;

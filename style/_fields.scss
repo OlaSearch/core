@@ -168,6 +168,14 @@ $image-height: 150px;
 .ola-flex {
   display: flex;
 }
+  /**
+   * Flex md
+   */
+  .ola-flex-md {
+    @include media (tablet) {
+      display: flex;
+    }
+  }
 
   /**
    * Icon
@@ -198,6 +206,20 @@ $image-height: 150px;
     flex: 1;
     min-width: 0;
     @extend %nobreak;
+  }
+
+  /**
+   * Flex-contet
+   */
+  .ola-align-center {
+    align-items: center;
+  }
+
+  /**
+   * justify center
+   */
+  .ola-justify-center {
+    justify-content: center;
   }
 
 /**

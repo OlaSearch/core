@@ -201,7 +201,8 @@ export default class Input extends React.Component {
       onBlur,
       showZone,
       showGeoLocation,
-      showWordSuggestion
+      showWordSuggestion,
+      showSearchButton
     } = this.props
 
     let classes = classNames('ola-search-form-container', {
@@ -267,14 +268,16 @@ export default class Input extends React.Component {
 
         <Bookmarks onOpen={this.props.handleClose} />
 
-        <button
-          type='button'
-          className='ola-search-button'
-          onClick={this.onSearchButtonClick}
-          aria-label='Search'
-        >
-          <Search />
-        </button>
+        {showSearchButton ? (
+          <button
+            type='button'
+            className='ola-search-button'
+            onClick={this.onSearchButtonClick}
+            aria-label='Search'
+          >
+            <Search />
+          </button>
+        ) : null}
         <style jsx>
           {`
             .ola-search-button,

@@ -96,6 +96,7 @@ class AutoComplete extends React.Component {
 
   static defaultProps = {
     showBookmarks: true,
+    showSearchButton: true,
     showAlert: false,
     showHelp: true,
     refreshOnGeoChange: false,
@@ -838,7 +839,6 @@ class AutoComplete extends React.Component {
     const leftPosition = showWordSuggestion
       ? Math.max(0, this.state.leftPosition - this.props.leftPadding)
       : 0
-
     return (
       <div className={klassContainer} ref={this.registerEl}>
         <div className={this.props.containerClass}>
@@ -872,6 +872,7 @@ class AutoComplete extends React.Component {
             fuzzyTokens={fuzzyTokens}
             theme={theme}
             isFocused={this.state.isFocused}
+            showSearchButton={this.props.showSearchButton}
           />
 
           <div

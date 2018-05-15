@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withTranslate from './../../decorators/withTranslate'
 import { removeAllFacets, executeSearch } from './../../actions/Search'
+import { connect } from 'react-redux'
 
 /**
  * Shown when there are no search results
@@ -14,7 +15,8 @@ function NoResults ({
   translate,
   suggestedTerm,
   facets,
-  dispatch
+  removeAllFacets,
+  executeSearch
 }) {
   /*
     Removed `q` (23/6/17 - Vinay)
@@ -30,8 +32,8 @@ function NoResults ({
    * facets have been applied
    */
   function removeFilters () {
-    dispatch(removeAllFacets())
-    dispatch(executeSearch())
+    removeAllFacets()
+    executeSearch()
   }
   var message
   if (totalResults === 0 && suggestedTerm && facets.length > 0) {
@@ -102,4 +104,6 @@ NoResults.propTypes = {
   facets: PropTypes.array
 }
 
-module.exports = withTranslate(NoResults)
+module.exports = connect(null, { removeAllFacets, executeSearch })(
+  withTranslate(NoResults)
+)
