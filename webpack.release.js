@@ -24,7 +24,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: `olasearch.core.${version}.js`,
+    filename: `olasearch.core.min.${version}.js`,
     library: 'OlaSearch',
     libraryTarget: 'umd'
   },

@@ -6,6 +6,7 @@ import { executeFuzzyAutoSuggest } from './../../actions/AutoSuggest'
 import { clearHistory } from './../../actions/History'
 import {
   updateQueryTerm,
+  clearQueryTerm,
   replaceFacet,
   removeAllFacets,
   executeSearch,
@@ -98,6 +99,7 @@ class AutoComplete extends React.Component {
     showBookmarks: true,
     showSearchButton: true,
     showAlert: false,
+    filterOnSelect: false,
     showHelp: true,
     refreshOnGeoChange: false,
     classNames: '.ola-snippet, .ola-facet-suggestion, .ola-suggestion-item',
@@ -644,6 +646,7 @@ class AutoComplete extends React.Component {
     let isFacet = type === TYPE_FACET
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
+    const { filterOnSelect } = this.props
 
     /* Focus on the input if click event */
     if (options && options.event && options.event.type === 'click') {
@@ -692,14 +695,14 @@ class AutoComplete extends React.Component {
       /**
        * For Barack Obama in Climate
        */
-      if (suggestion.taxo_label && suggestion.taxo_term) {
+      if ((suggestion.taxo_label && suggestion.taxo_term) || filterOnSelect) {
         facet = this.getOrCreateFacet(suggestion.taxo_label)
         this.props.replaceFacet(
           facet,
           suggestion.taxo_path || suggestion.taxo_term
         )
       }
-      this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
+      if (!filterOnSelect) { this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION) }
     }
     if (isQuery || isHistory) {
       if (suggestion.taxo_label && suggestion.taxo_term) {
@@ -952,6 +955,7 @@ function mapStateToProps (state, ownProps) {
 module.exports = connect(mapStateToProps, {
   executeFuzzyAutoSuggest,
   updateQueryTerm,
+  clearQueryTerm,
   replaceFacet,
   removeAllFacets,
   executeSearch,

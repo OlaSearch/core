@@ -140,7 +140,7 @@ export default `
    */
   .ola-swipeable-item-inner {
     display: flex;
-    flex: 1;
+    flex: 1 1 auto;
     justify-content: center;
   }
 
