@@ -73,13 +73,14 @@ class SearchResults extends React.Component {
         )}
         <style jsx>
           {`
-            .ola-results :global(.ola-field-title a) {
+            .ola-results :global(.ola-field-title .ola-link) {
               color: ${theme.searchLinkColor};
             }
-            .ola-results :global(.ola-field-title a:hover),
-            .ola-results :global(.ola-field-title a:focus) {
+            .ola-results :global(.ola-field-title .ola-link:hover),
+            .ola-results :global(.ola-field-title .ola-link:focus) {
               color: ${theme.searchLinkHoverColor};
             }
+            .ola-results :global(.ola-btn-primary),
             .ola-results :global(.ola-cta-button) {
               color: ${theme.primaryButtonColor};
               background: ${theme.primaryButtonBackground};

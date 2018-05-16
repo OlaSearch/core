@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import cx from 'classnames'
 import withLogger from './../../../decorators/withLogger'
+import { LINK_TYPES, LINK_TARGETS } from './../../../constants/Settings'
 
 function Button ({
   title,
@@ -18,7 +19,11 @@ function Button ({
   eventCategory,
   logPayload,
   textLink,
-  replaceClassName
+  replaceClassName,
+  singleChild,
+  type,
+  openInNewWindow,
+  ...rest
 }) {
   if (title) label = title
   function handleClick (event) {
@@ -33,27 +38,49 @@ function Button ({
     })
 
     if (onClick) return onClick(event, result)
+    if (openInNewWindow) return
 
+    /* Prevent default */
     event.preventDefault()
+    /* Trigger a state change so we have time to submit the log */
     if (url) window.location.href = url
   }
 
-  let klass =
+  const target = openInNewWindow ? LINK_TARGETS.BLANK : undefined
+  const isLink = !!url
+  const buttonClass =
     className && replaceClassName
       ? className
-      : classNames('ola-btn', className, {
-        'ola-btn-fullwidth': fullWidth,
-        'ola-cta-button': !textLink,
-        'ola-btn-link': textLink
-      })
-  if (!label && !children) return null
-  return (
-    <div className='ola-field ola-field-button'>
-      <button type='button' className={klass} onClick={handleClick}>
-        {label || children}
-      </button>
-    </div>
+      : cx(
+        'ola-btn',
+        {
+          'ola-btn-fullwidth': fullWidth,
+          'ola-btn-primary': !textLink,
+          'ola-btn-link': textLink,
+          'ola-link': isLink,
+          [`ola-link-${type}`]: type
+        },
+        className
+      )
+
+  const tagName = isLink ? 'a' : 'button'
+  const buttonElement = React.createElement(
+    tagName,
+    {
+      type: isLink ? undefined : 'button',
+      className: buttonClass,
+      href: isLink ? url : undefined,
+      onClick: handleClick,
+      target,
+      ...rest
+    },
+    label || children
   )
+
+  /* Return null if no content */
+  if (!label && !children && !rest.dangerouslySetInnerHTML) return null
+
+  return <div className='ola-field ola-field-button'>{buttonElement}</div>
 }
 
 Button.propTypes = {
@@ -108,7 +135,11 @@ Button.propTypes = {
   /**
    * appendClassName
    */
-  replaceClassName: PropTypes.bool
+  replaceClassName: PropTypes.bool,
+  /**
+   * Is an external link
+   */
+  type: PropTypes.oneOf(LINK_TYPES.values())
 }
 
 Button.defaultProps = {

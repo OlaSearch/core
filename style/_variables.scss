@@ -1,13 +1,13 @@
-$base-color: #333;
-$base-font-size: 16px;
-$base-font-family:  'Lato', 'Open Sans', sans-serif;
-$base-line-height: 1.5;
-$base-border-color: #ddd;
-$base-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-$base-grey-color: #888;
-$base-border-radius: 3px;
-$small-box-shadow: 0 0px 3px 0 rgba(0,0,0,.3);
-$sharp-box-shadow: 0 0 3px 1px rgba(0,0,0,.3);
+$base-color: #333 !default;
+$base-font-size: 16px !default;
+$base-font-family:  'Lato', 'Open Sans', sans-serif !default;
+$base-line-height: 1.5 !default;
+$base-border-color: #ddd !default;
+$base-box-shadow: 0 2px 4px rgba(0,0,0,0.2) !default;
+$base-grey-color: #888 !default;
+$base-border-radius: 3px !default;
+$small-box-shadow: 0 0px 3px 0 rgba(0,0,0,.3) !default;
+$sharp-box-shadow: 0 0 3px 1px rgba(0,0,0,.3) !default;
 
 $modal-overlay-zindex: 5 !default;
 // $chatbot-zindex: 9999 !default;
@@ -24,48 +24,48 @@ $link-hover-color: #1A237E !default;
 
 /* Primary button */
 $button-primary-background: #3F51B5 !default;
-$button-primary-color: white;
-$button-padding: 10px 24px;
-$button-border-radius: 5px;
+$button-primary-color: white !default;
+$button-padding: 10px 24px !default;
+$button-border-radius: 5px !default;
 
 /* Icon button default width */
-$button-icon-width: 45px;
+$button-icon-width: 45px !default;
 
 /* Search button */
-$button-search-width: 40px;
-$button-default-height: 40px;
+$button-search-width: 40px !default;
+$button-default-height: 40px !default;
 
 /* Geo button */
-$button-geo-active-color: #F44336;
+$button-geo-active-color: #F44336 !default;
 
 /* Settings */
-$is_link_underlined: false;
+$is_link_underlined: false !default;
 
 /* Autocomplete */
-$autocomplete-box-shadow: $base-box-shadow;
-$autocomplete-border-color: #ccc;
-$autocomplete-font-size: 18px;
+$autocomplete-box-shadow: $base-box-shadow !default;
+$autocomplete-border-color: #ccc !default;
+$autocomplete-font-size: 18px !default;
 
 /* Facet */
-$facet-padding: 4px 0;
+$facet-padding: 4px 0 !default;
 
 /* Pagination */
-$pagination-button-width: 40px;
-$pagination-button-height: 40px;
+$pagination-button-width: 40px !default;
+$pagination-button-height: 40px !default;
 
 /* Tag background */
-$input-tag-bg: #eef7fd;
+$input-tag-bg: #eef7fd !default;
 
 /* Colors */
 $color-highlight: #ffc !default;
 
 /* Fields */
-$field-title-font-size: 1.25rem;
-$field-title-bottom-padding: 0.5rem;
-$field-bottom-padding: 1rem;
+$field-title-font-size: 1.25rem !default;
+$field-title-bottom-padding: 0.5rem !default;
+$field-bottom-padding: 1rem !default;
 
 /* Heading*/
-$search-heading-font-size: 20px;
+$search-heading-font-size: 20px !default;
 
 /* Elevation */
 $elevation-0: 0 0 0 1px rgba(16, 22, 26, 0.15),
@@ -86,8 +86,8 @@ $elevation-4: 0 0 0 1px rgba(16, 22, 26, 0.1),
 $snippet-shadow: 0 1px 3px rgba(0,0,0,0.3) !default;
 
 /* Pill */
-$pill-border-radius: 0px;
-$pill-padding: 0.5rem 1rem;
-$pill-background: #eee;
-$pill-color: $base-color;
-$pill-font-size: 0.875rem;
+$pill-border-radius: 0px !default;
+$pill-padding: 0.5rem 1rem !default;
+$pill-background: #eee !default;
+$pill-color: $base-color !default;
+$pill-font-size: 0.875rem !default;

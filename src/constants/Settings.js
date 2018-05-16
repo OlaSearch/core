@@ -234,6 +234,8 @@ export const DEFAULT_THEME = {
   mediumFontSize: '14px',
   smallFontSize: '12px',
   titleFontSize: '20px',
+  titleFontSizeTablet: '18px',
+  titleFontSizeMobile: '18px',
 
   /* Progress bar */
   progressBarBackground: '#f86936',
@@ -277,3 +279,28 @@ export const BODY_STYLE_MODAL = `
   padding: 0 !important;
   background: white !important;
 `
+
+/**
+ * Link types
+ */
+export const LINK_TYPES = {
+  DOC: 'doc',
+  PDF: 'pdf',
+  EXCEL: 'xls',
+  FILE: 'file'
+}
+
+export const LINK_TARGETS = {
+  BLANK: '_blank',
+  SELF: 'self'
+}
+
+export const EVENT_CATEGORIES = {
+  bookmarks: 'Bookmarks',
+  autosuggest: 'autosuggest',
+  serp: 'serp'
+}
+
+export const EVENT_LABELS = {
+  title: 'Title'
+}

@@ -915,6 +915,7 @@ export function smoothScroll (
  */
 
 export function getFieldLabel (field, fieldLabels) {
+  console.log(field, fieldLabels)
   /* Remove field type */
   field = field.replace(
     /_(ss|s|tdt|t|ts|b|bs|d|ds|f|fs|i|is|p|l|ls|dr|taxo_entity)$/gi,
@@ -993,4 +994,14 @@ export function isDev () {
     ['localhost', '127.0.0.1'].indexOf(hostname) !== -1 ||
     hostname.match(/^\d/gi)
   )
+}
+
+/**
+ * Type of link
+ * ola-external
+ * ola-doc
+ * ola-file
+ */
+export function getLinkType (url) {
+  console.log(url)
 }

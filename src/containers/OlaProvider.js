@@ -17,7 +17,8 @@ function OlaProvider ({
   children,
   isPhone,
   isTablet,
-  isDesktop
+  isDesktop,
+  style
 }) {
   if (!config) {
     throw new Error('Could not find config on OlaProvider `props`')
@@ -29,7 +30,7 @@ function OlaProvider ({
     'ola-search-desktop': isDesktop
   })
   return (
-    <div className={classes}>
+    <div className={classes} style={style}>
       <ConfigProvider value={config}>
         <OlaIntlProvider translations={translations}>
           <ThemeProvider value={theme}>{children}</ThemeProvider>
@@ -42,6 +43,12 @@ function OlaProvider ({
           }
           .ola-search :global(.ola-field-title) {
             font-size: ${theme.titleFontSize};
+          }
+          .ola-search-mobile :global(.ola-field-title) {
+            font-size: ${theme.titleFontSizeMobile};
+          }
+          .ola-search-tablet :global(.ola-field-title) {
+            font-size: ${theme.titleFontSizeTablet};
           }
 
           .ola-search :global(.ola-page),
@@ -99,13 +106,17 @@ function OlaProvider ({
           .ola-search :global(.react-progress-bar-percent) {
             background: ${theme.progressBarBackground};
           }
-          .ola-search :global(.ola-field-title a) {
+          .ola-search :global(.ola-btn-link) {
             color: ${theme.searchLinkColor};
           }
-          .ola-search :global(.ola-field-title a:hover),
-          .ola-search :global(.ola-field-title a:focus) {
+          .ola-search :global(.ola-field-title .ola-link) {
+            color: ${theme.searchLinkColor};
+          }
+          .ola-search :global(.ola-field-title .ola-link:hover),
+          .ola-search :global(.ola-field-title .ola-link:focus) {
             color: ${theme.searchLinkHoverColor};
           }
+          .ola-search :global(.ola-btn-primary),
           .ola-search :global(.ola-cta-button) {
             color: ${theme.primaryButtonColor};
             background: ${theme.primaryButtonBackground};

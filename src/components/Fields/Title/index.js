@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { createHTMLMarkup } from './../../../utilities'
-import withLogger from './../../../decorators/withLogger'
+import { createHTMLMarkup, getLinkType } from './../../../utilities'
+import {
+  LINK_TYPES,
+  EVENT_CATEGORIES,
+  EVENT_LABELS
+} from './../../../constants/Settings'
+import Button from './../Button'
 
 /**
  * Display search result title
@@ -12,38 +17,19 @@ function Title ({
   field,
   url,
   children,
-  target,
   isBookmark,
   isAutosuggest,
   iconLeft,
   iconRight,
-  log,
   snippetId,
   onClick,
   fieldLabel,
   openInNewWindow,
   eventLabel,
   eventCategory,
-  logPayload
+  logPayload,
+  type
 }) {
-  function logClick (event) {
-    /* Send Log */
-    let _eventCategory =
-      eventCategory ||
-      (isBookmark ? 'Bookmarks' : isAutosuggest ? 'autosuggest' : 'serp')
-    log({
-      eventType: 'C',
-      result,
-      eventCategory: _eventCategory,
-      eventAction: 'click',
-      eventLabel: eventLabel || 'Title',
-      snippetId,
-      payload: logPayload
-    })
-
-    if (onClick) onClick(event)
-  }
-
   var { highlighting } = result
   var title = result[field]
 
@@ -59,20 +45,30 @@ function Title ({
       title = highlightedTitle
     }
   }
-  /* Check if it should be opened in new page */
-  if (openInNewWindow) {
-    target = '_blank'
-  }
-
+  /* Title class */
+  const classes = 'ola-field ola-field-title'
+  /* Event category to log click events */
+  const logEventCategory =
+    eventCategory ||
+    (isBookmark
+      ? EVENT_CATEGORIES.bookmarks
+      : isAutosuggest ? EVENT_CATEGORIES.autosuggest : EVENT_CATEGORIES.serp)
+  /* Event label to log click events */
+  const logEventLabel = eventLabel || EVENT_LABELS.title
   return (
-    <h3 className='ola-field ola-field-title'>
+    <h3 className={classes}>
       {iconLeft}
       {isLink ? (
-        <a
-          href={url}
-          target={target}
-          onClick={logClick}
+        <Button
+          url={url}
+          type={type}
+          eventCategory={logEventCategory}
+          eventLabel={logEventLabel}
+          textLink={true}
+          onClick={onClick}
           dangerouslySetInnerHTML={createHTMLMarkup(title)}
+          result={result}
+          openInNewWindow={openInNewWindow}
         />
       ) : (
         <span dangerouslySetInnerHTML={createHTMLMarkup(title)} />
@@ -90,9 +86,9 @@ Title.defaultProps = {
   isBookmark: false,
   isAutosuggest: false,
   field: 'title',
-  target: null,
   openInNewWindow: false,
-  onClick: null
+  onClick: null,
+  type: null
 }
 
 Title.propTypes = {
@@ -112,10 +108,6 @@ Title.propTypes = {
    * Show child elements
    */
   children: PropTypes.any,
-  /**
-   * HTML target attribute for `a` link
-   */
-  target: PropTypes.oneOf(['_blank', 'self', null]),
   /**
    * Open the link in a new window
    */
@@ -139,7 +131,11 @@ Title.propTypes = {
   /**
    * Is the title displayed in Autosuggest list
    */
-  isAutosuggest: PropTypes.bool
+  isAutosuggest: PropTypes.bool,
+  /**
+   * Is an external link
+   */
+  type: PropTypes.oneOf(LINK_TYPES.values())
 }
 
-module.exports = withLogger(Title)
+module.exports = Title
