@@ -17,7 +17,8 @@ function Button ({
   eventLabel,
   eventCategory,
   logPayload,
-  textLink
+  textLink,
+  replaceClassName
 }) {
   if (title) label = title
   function handleClick (event) {
@@ -37,11 +38,14 @@ function Button ({
     if (url) window.location.href = url
   }
 
-  let klass = classNames('ola-btn', className, {
-    'ola-btn-fullwidth': fullWidth,
-    'ola-cta-button': !textLink,
-    'ola-btn-link': textLink
-  })
+  let klass =
+    className && replaceClassName
+      ? className
+      : classNames('ola-btn', className, {
+        'ola-btn-fullwidth': fullWidth,
+        'ola-cta-button': !textLink,
+        'ola-btn-link': textLink
+      })
   if (!label && !children) return null
   return (
     <div className='ola-field ola-field-button'>
@@ -100,13 +104,18 @@ Button.propTypes = {
   /**
    * Show a text link
    */
-  textLink: PropTypes.bool
+  textLink: PropTypes.bool,
+  /**
+   * appendClassName
+   */
+  replaceClassName: PropTypes.bool
 }
 
 Button.defaultProps = {
   fullWidth: false,
   label: null,
-  textLink: false
+  textLink: false,
+  replaceClassName: false
 }
 
 module.exports = withLogger(Button)

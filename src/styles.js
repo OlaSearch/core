@@ -169,7 +169,7 @@ export default `
     transition: opacity 0.2s ease-in;
     line-height: 1;
   }
-  // Desktop only
+  
   .ola-search-desktop .ola-swipeable-prev,
   .ola-search-desktop .ola-swipeable-next,
   .ola-modal-desktop .ola-swipeable-prev,

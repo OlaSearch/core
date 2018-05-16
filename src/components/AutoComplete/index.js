@@ -702,7 +702,9 @@ class AutoComplete extends React.Component {
           suggestion.taxo_path || suggestion.taxo_term
         )
       }
-      if (!filterOnSelect) { this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION) }
+      if (!filterOnSelect) {
+        this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
+      }
     }
     if (isQuery || isHistory) {
       if (suggestion.taxo_label && suggestion.taxo_term) {
