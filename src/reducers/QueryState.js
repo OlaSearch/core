@@ -306,10 +306,11 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         projectId: action.projectId,
-        env: action.env,
-        per_page: action.configState
-          ? action.configState.perPage
-          : initialState.per_page,
+        env: action.env || state.env,
+        per_page:
+          action.configState && action.configState.perPage
+            ? action.configState.perPage
+            : initialState.per_page,
         debug: action.debug
       }
 
@@ -322,7 +323,7 @@ export default (state: State = initialState, action: Object) => {
     case types.UPDATE_OLA_PARAMETERS:
       return {
         ...state,
-        ...action.params
+        projectId: action.projectId
       }
 
     case types.SET_SEARCH_SOURCE:

@@ -76,6 +76,8 @@ $breakpoints: (
   padding: 0;
   text-align: center;
   font-weight: normal;  
+  font-size: 100%;
+  line-height: 1;
 
   &:disabled{
     opacity: 0.6;
@@ -104,6 +106,7 @@ $breakpoints: (
     padding: 0;
     margin: 0;
     font-weight: normal;
+    font-size: 100%;
   }
 }
 
@@ -128,4 +131,9 @@ $breakpoints: (
 
 %scroll {
   -webkit-overflow-scrolling : touch;
+}
+
+%button_attrs {
+  font-size: 100%;
+  line-height: 1;
 }

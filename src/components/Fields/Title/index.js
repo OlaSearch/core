@@ -56,7 +56,7 @@ function Title ({
   /* Event label to log click events */
   const logEventLabel = eventLabel || EVENT_LABELS.title
   return (
-    <h3 className={classes}>
+    <div className={classes}>
       {iconLeft}
       {isLink ? (
         <Button
@@ -75,7 +75,7 @@ function Title ({
       )}
       {children}
       {iconRight}
-    </h3>
+    </div>
   )
 }
 

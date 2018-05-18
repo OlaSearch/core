@@ -7,6 +7,8 @@
   font-weight: normal;
   background: transparent;
   min-height: unset;
+  line-height: 1;
+  font-size: 100%;
 
   &:disabled{
     opacity: 0.6;
@@ -140,21 +142,6 @@
 }
 
 
-/* Hint */
-/**
- * Hint
- */
-
- .ola-btn-hint{
-	// position: absolute;
-	// top: 0;
-	// right:0;
-	// left: 0;
-	// bottom: 0;
-	// z-index: 1;
-}
-
-
 /* regular button */
 .ola-icon-btn {
   @extend %ola-icon-button;
@@ -173,6 +160,7 @@
 .ola-btn-fullwidth {
   width: 100%;
   text-align: center;
+  display: block;
 }
 
 /* Pages */

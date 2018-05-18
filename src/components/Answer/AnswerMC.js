@@ -14,8 +14,8 @@ class AnswerMC extends React.Component {
     this.fetch()
   }
   fetch () {
-    let { mc, payload } = this.props
-    let { key } = mc
+    const { mc, payload } = this.props
+    const { key } = mc
     if (key) this.props.fetchMc(key, payload)
   }
   componentDidUpdate (prevProps) {
@@ -24,8 +24,8 @@ class AnswerMC extends React.Component {
     }
   }
   createRegex = (term) => {
-    let arr = term.split(/\s/gi)
-    let o = []
+    const arr = term.split(/\s/gi)
+    const o = []
     for (let i = 0; i < arr.length; i++) {
       o.push(escapeRegEx(arr[i]))
       if (arr[i].length < 2) o.push('\\s')
@@ -37,8 +37,8 @@ class AnswerMC extends React.Component {
     /**
      * highlighting an answer should be based on snippet_confidence and highlight confidence
      */
-    let { mcHighlightThreshold = 0.6 } = this.props.config
-    let {
+    const { mcHighlightThreshold = 0.6 } = this.props.config
+    const {
       snippet,
       highlight,
       snippet_confidence: snippetConfidence,
@@ -54,7 +54,7 @@ class AnswerMC extends React.Component {
       return createHTMLMarkup(snippet)
     }
 
-    let html = snippet.replace(
+    const html = snippet.replace(
       new RegExp('(' + this.createRegex(highlight) + ')', 'gi'),
       '<strong>$1</strong>'
     )
@@ -70,11 +70,9 @@ class AnswerMC extends React.Component {
     if (this.props.isLoadingMc && this.props.loader) {
       return this.props.loader
     }
-    const { mc, facetQuery, showWhileFiltering, theme } = this.props
-    const { mcShowDoc, mcHighlightThreshold = 0.6 } = this.props.config
-    var { mcThreshold } = this.props.config
-    /* Always parse threshold */
-    mcThreshold = parseFloat(mcThreshold)
+    const { mc, facetQuery, showWhileFiltering, theme, config } = this.props
+    const { mcShowDoc, mcHighlightThreshold = 0.6 } = config
+    const mcThreshold = parseFloat(config.mcThreshold)
     const { answer } = mc
     /**
      * Only show if there are no facets selected
@@ -129,6 +127,15 @@ function mapStateToProps (state) {
   }
 }
 
+/**
+ * Wrapper on MC
+ */
+function McWrapper (props) {
+  const { config, mc } = props
+  if (!config.mc || !mc) return null
+  return <AnswerMC {...props} />
+}
+
 module.exports = connect(mapStateToProps, { fetchMc })(
-  withConfig(withTheme(AnswerMC))
+  withConfig(withTheme(McWrapper))
 )

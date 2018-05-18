@@ -206,6 +206,7 @@ class DateRange extends React.Component {
                   {isPhone ? (
                     <input
                       type='date'
+                      className='ola-text-input'
                       value={fromDateMobile}
                       onChange={this.onMobileFromChange}
                       max={DateParser.format(toDate, DATE_FORMAT_MOBILE)}
@@ -227,6 +228,7 @@ class DateRange extends React.Component {
                   {isPhone ? (
                     <input
                       type='date'
+                      className='ola-text-input'
                       value={toDateMobile}
                       onChange={this.onMobileToChange}
                       max={DateParser.format(fromDate, DATE_FORMAT_MOBILE)}
@@ -261,10 +263,7 @@ function DateLabel ({ label, value, onSelect }) {
   }
 
   return (
-    <button
-      className='ola-btn-unstyled ola-btn-date-select'
-      onClick={handleClick}
-    >
+    <button className='ola-btn ola-btn-date-select' onClick={handleClick}>
       {label}
     </button>
   )

@@ -23,7 +23,10 @@ function Button ({
   singleChild,
   type,
   openInNewWindow,
-  ...rest
+  dangerouslySetInnerHTML,
+  isPhone,
+  isTablet,
+  isDesktop
 }) {
   if (title) label = title
   function handleClick (event) {
@@ -46,23 +49,22 @@ function Button ({
     if (url) window.location.href = url
   }
 
+  /* Return null if no content */
+  if (!label && !children && !dangerouslySetInnerHTML) return null
+
   const target = openInNewWindow ? LINK_TARGETS.BLANK : undefined
   const isLink = !!url
-  const buttonClass =
-    className && replaceClassName
-      ? className
-      : cx(
-        'ola-btn',
-        {
-          'ola-btn-fullwidth': fullWidth,
-          'ola-btn-primary': !textLink,
-          'ola-btn-link': textLink,
-          'ola-link': isLink,
-          [`ola-link-${type}`]: type
-        },
-        className
-      )
-
+  const buttonClass = cx(
+    {
+      'ola-btn': !replaceClassName,
+      'ola-btn-fullwidth': fullWidth,
+      'ola-btn-primary': !textLink && !replaceClassName,
+      'ola-btn-link': textLink,
+      'ola-link': isLink,
+      [`ola-link-${type}`]: type
+    },
+    className
+  )
   const tagName = isLink ? 'a' : 'button'
   const buttonElement = React.createElement(
     tagName,
@@ -72,13 +74,10 @@ function Button ({
       href: isLink ? url : undefined,
       onClick: handleClick,
       target,
-      ...rest
+      dangerouslySetInnerHTML
     },
     label || children
   )
-
-  /* Return null if no content */
-  if (!label && !children && !rest.dangerouslySetInnerHTML) return null
 
   return <div className='ola-field ola-field-button'>{buttonElement}</div>
 }
@@ -100,6 +99,14 @@ Button.propTypes = {
    * Makes the button full width
    */
   fullWidth: PropTypes.bool,
+  /**
+   * Makes the button full width in mobile
+   */
+  fullWidthMobile: PropTypes.bool,
+  /**
+   * Makes the button full width in tablet
+   */
+  fullWidthTablet: PropTypes.bool,
   /**
    * Call a JS function using onClick
    */
@@ -144,6 +151,8 @@ Button.propTypes = {
 
 Button.defaultProps = {
   fullWidth: false,
+  fullWidthTablet: true,
+  fullWidthMobile: true,
   label: null,
   textLink: false,
   replaceClassName: false

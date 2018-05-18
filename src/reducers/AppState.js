@@ -267,6 +267,15 @@ export default (state: State = initialState, action: Object) => {
         searchOnLoad: configState && configState.searchOnLoad
       }
 
+    case types.UPDATE_OLA_PARAMETERS:
+      return {
+        ...state,
+        searchOnLoad:
+          action.configState && action.configState.searchOnLoad
+            ? action.configState.searchOnLoad
+            : state.searchOnLoad
+      }
+
     case types.TOGGLE_SIDEBAR:
       return {
         ...state,

@@ -141,11 +141,10 @@ export function executeSearch (payload, options) {
      * 2. make sure sortCondition
      */
     // const isSortFromIntentEngine = answer && answer.search && answer.search.sort
-
     /* If no query and search is not active (searchOnLoad = false) */
     if (
       (allowedCharacters && !checkForAllowedCharacters(q, allowedCharacters)) ||
-      !(searchOnLoad || (!!q || facet_query.length))
+      (!searchOnLoad && !q && !facet_query.length)
     ) {
       // Terminate search
       dispatch(terminateSearch())
@@ -673,5 +672,12 @@ export function removeSkipFacetFields (name) {
   return {
     type: types.REMOVE_SKIP_FACET_FIELDS,
     name
+  }
+}
+
+export function reHydrate (params) {
+  return {
+    type: types.OLA_REHYDRATE,
+    ...params
   }
 }

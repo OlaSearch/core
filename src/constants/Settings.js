@@ -186,7 +186,7 @@ export const DEFAULT_THEME = {
 
   chatMessageMinHeight: '60px',
   chatMessageBorderRadius: '20px',
-  chatTypingIndicatorPadding: '10px 14px',
+  chatTypingIndicatorPadding: '12px 14px',
 
   /* Slot */
 

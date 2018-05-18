@@ -13,7 +13,6 @@
   &, &[type="text"] {
     padding: 10px;
     font-size: $base-font-size;
-    // font-family: $base-font-family;
     @include media (desktop) {
       font-size: $autocomplete-font-size;
     }

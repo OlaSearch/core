@@ -55,6 +55,7 @@
  */
 
 .ola-facet-tag-remove{
+  @extend .ola-btn;
 	color: $base-color;
   min-width: 30px;
 	text-align: center;
