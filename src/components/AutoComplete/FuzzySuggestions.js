@@ -119,6 +119,7 @@ class SuggestionItem extends React.Component {
       term,
       title,
       taxo_term: taxoTerm,
+      taxoDisplayName,
       isLastCategory,
       isFirstCategory,
       answer,
@@ -171,7 +172,7 @@ class SuggestionItem extends React.Component {
     if (taxoTerm && type === TYPE_QUERY) {
       term = `${term} ${
         taxoTerm
-          ? `<span class="ola-suggestion-separator"> in </span><span class="ola-suggestion-category-name">${taxoTerm}</span>`
+          ? `<span class="ola-suggestion-separator"> in </span><span class="ola-suggestion-category-name">${taxoDisplayName}</span>`
           : ''
       }`
     }

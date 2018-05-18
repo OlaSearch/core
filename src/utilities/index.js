@@ -662,9 +662,9 @@ export function getAutoCompleteResults (
   tokens
 ) {
   /* Parse payload */
-  let res = []
-  let categoryFound = false
-  let tokenNames = tokens.map(({ value }) => value)
+  var res = []
+  var categoryFound = false
+  const tokenNames = tokens.map(({ value }) => value)
 
   /* Check if word suggestion is turned on */
   if (showWordSuggestion) {
@@ -690,14 +690,14 @@ export function getAutoCompleteResults (
     term = cleanQueryTerm(term)
 
     if (typeof payload === 'string') payload = JSON.parse(payload)
-    let isCategory =
+    const isCategory =
       payload.taxo_terms &&
       payload.taxo_terms.length > 0 &&
       !categoryFound &&
       payload.type !== TYPE_TAXONOMY
-    let { topClicks } = payload
+    const { topClicks } = payload
     /* Add top clicked document */
-    let topClickDocs =
+    const topClickDocs =
       i === 0 && topClicks && topClicks.length
         ? topClicks.filter((_, idx) => idx === 0).map((item) => ({
           term,
@@ -709,10 +709,10 @@ export function getAutoCompleteResults (
 
     /* If categories are found, we will need to create additional array items */
     if (isCategory) {
-      let categories = payload.taxo_terms
-      let totalCategories = categories.length
+      const categories = payload.taxo_terms
+      const totalCategories = categories.length
       /* Get the display names of the facets */
-      let facet = find(propEq('name', payload.taxo_label))(allFacets)
+      const facet = find(propEq('name', payload.taxo_label))(allFacets)
 
       /* First term in the suggestion */
       res = [
@@ -729,18 +729,21 @@ export function getAutoCompleteResults (
       ]
 
       for (let j = 0; j < totalCategories; j++) {
-        let [name] = payload.taxo_terms[j].split('|')
-        let [path] = payload.taxo_paths ? payload.taxo_paths[j].split('|') : []
-        let displayName = facet ? facet.facetNames[name] || name : name
+        const category = payload.taxo_terms[j]
+        const path = payload.taxo_paths ? payload.taxo_paths[j] : null
+        const taxoTerm = category.substr(0, category.lastIndexOf('|'))
+        const taxoPath = path ? path.substr(0, path.lastIndexOf('|')) : null
+        const displayName = getDisplayName(facet && facet.facetNames, taxoTerm)
         res.push({
           ...rest,
           term,
-          taxo_term: displayName,
+          taxo_term: taxoTerm,
+          taxoDisplayName: displayName,
           isLastCategory: j === totalCategories - 1,
           isFirstCategory: j === 0,
           ...payload,
           suggestion_raw: payload.suggestion_raw,
-          taxo_path: path
+          taxo_path: taxoPath
         })
         categoryFound = true
       }
