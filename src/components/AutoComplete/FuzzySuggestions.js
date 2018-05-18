@@ -12,6 +12,7 @@ import {
   TYPE_DOC,
   TYPE_HISTORY,
   TYPE_TAXONOMY,
+  TYPE_QUERY,
   TYPE_FACET
 } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
@@ -167,14 +168,12 @@ class SuggestionItem extends React.Component {
     /**
      * If its a category
      */
-    if (taxoTerm && type !== TYPE_TAXONOMY) {
-      term =
-        term +
-        (taxoTerm
-          ? '<span class="ola-suggestion-separator"> in </span><span class="ola-suggestion-category-name">' +
-            taxoTerm +
-            '</span>'
-          : '')
+    if (taxoTerm && type === TYPE_QUERY) {
+      term = `${term} ${
+        taxoTerm
+          ? `<span class="ola-suggestion-separator"> in </span><span class="ola-suggestion-category-name">${taxoTerm}</span>`
+          : ''
+      }`
     }
     return (
       <div className='ola-suggestion-wrapper'>

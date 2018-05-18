@@ -915,7 +915,6 @@ export function smoothScroll (
  */
 
 export function getFieldLabel (field, fieldLabels) {
-  console.log(field, fieldLabels)
   /* Remove field type */
   field = field.replace(
     /_(ss|s|tdt|t|ts|b|bs|d|ds|f|fs|i|is|p|l|ls|dr|taxo_entity)$/gi,

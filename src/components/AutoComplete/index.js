@@ -639,11 +639,11 @@ class AutoComplete extends React.Component {
   onFuzzySelect = (suggestion, options) => {
     let { type } = suggestion
     let facet
-    let isTaxonomy = type === TYPE_TAXONOMY
-    let isEntity = type === TYPE_ENTITY
-    let isQuery = type === TYPE_QUERY
-    let isHistory = type === TYPE_HISTORY
-    let isFacet = type === TYPE_FACET
+    const isTaxonomy = type === TYPE_TAXONOMY
+    const isEntity = type === TYPE_ENTITY
+    const isQuery = type === TYPE_QUERY
+    const isHistory = type === TYPE_HISTORY
+    const isFacet = type === TYPE_FACET
     let term = suggestion.suggestion_raw || suggestion.term
     let stayOpen = options && options.stayOpen
     const { filterOnSelect } = this.props
@@ -692,20 +692,18 @@ class AutoComplete extends React.Component {
     }
 
     if (isEntity || isTaxonomy) {
-      /**
-       * For Barack Obama in Climate
-       */
-      if ((suggestion.taxo_label && suggestion.taxo_term) || filterOnSelect) {
+      if (filterOnSelect && (suggestion.taxo_label && suggestion.taxo_term)) {
         facet = this.getOrCreateFacet(suggestion.taxo_label)
         this.props.replaceFacet(
           facet,
           suggestion.taxo_path || suggestion.taxo_term
         )
       }
-      if (!filterOnSelect) {
-        this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION)
-      }
+      if (!filterOnSelect) { this.props.updateQueryTerm(term, SEARCH_INPUTS.SUGGESTION) }
     }
+    /**
+     * query in entity/taxonomy
+     */
     if (isQuery || isHistory) {
       if (suggestion.taxo_label && suggestion.taxo_term) {
         /* Remove all selected facets */
