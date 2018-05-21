@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import {
   createHTMLMarkup,
   truncate,
-  getDisplayName
+  getDisplayName,
+  getFieldValue
 } from './../../../utilities'
 import { SEARCH_COLLECTION_IDENTIFIER } from './../../../constants/Settings'
 import FieldLabel from './../FieldLabel'
@@ -25,18 +26,9 @@ function TextField ({
   className,
   showIfEmpty
 }) {
-  var fieldContent = staticText || result[field]
+  var fieldContent = staticText || getFieldValue(result, field, fallbackFields)
   if (field === SEARCH_COLLECTION_IDENTIFIER) {
     fieldContent = getDisplayName(fieldContent)
-  }
-  if (!fieldContent && fallbackFields.length) {
-    for (let i = 0; i < fallbackFields.length; i++) {
-      let fieldName = fallbackFields[i]
-      if (fieldName in result && result[fieldName]) {
-        fieldContent = result[fieldName]
-        break
-      }
-    }
   }
   /* Convert array to string */
   if (Array.isArray(fieldContent)) {

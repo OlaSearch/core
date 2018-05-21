@@ -280,16 +280,6 @@ export const BODY_STYLE_MODAL = `
   background: white !important;
 `
 
-/**
- * Link types
- */
-export const LINK_TYPES = {
-  DOC: 'doc',
-  PDF: 'pdf',
-  EXCEL: 'xls',
-  FILE: 'file'
-}
-
 export const LINK_TARGETS = {
   BLANK: '_blank',
   SELF: 'self'

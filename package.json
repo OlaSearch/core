@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "3.4.4",
+  "version": "3.4.5",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +19,8 @@
     "docs": "styleguidist server",
     "docs:build": "styleguidist build",
     "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'",
-    "prettier": "yarn prettier-standard && git add src/ && git status"
+    "prettier": "yarn prettier-standard && git add src/ && git status",
+    "push": "git push origin master --tags && git push gitlab master --tags && npm publish ./"
   },
   "prettier": {
     "semi": false
@@ -78,7 +79,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
-    "babel-jest": "^22.4.3",
+    "babel-jest": "^22.4.4",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-flow": "^6.23.0",
@@ -100,7 +101,7 @@
     "flow-bin": "^0.72.0",
     "gulp": "^3.9.1",
     "isparta": "^4.0.0",
-    "jest": "^22.4.3",
+    "jest": "^22.4.4",
     "jsdom": "^11.10.0",
     "node-sass": "^4.9.0",
     "nyc": "^11.8.0",

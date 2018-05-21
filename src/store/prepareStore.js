@@ -99,13 +99,20 @@ export function prepareStoreState ({ config, device }) {
           : storeState.isSidebarOpen
         : sidebar
 
+  const { href, pathname, hostname } = window.location
+
   return {
     searchSession,
     userSession,
     isNewUser,
     isNewSession,
     storeState,
-    contextState,
+    contextState: {
+      ...contextState,
+      href,
+      pathname,
+      hostname
+    },
     locale,
     /**
      * Only for initial rehydration. Do not store config variables in state

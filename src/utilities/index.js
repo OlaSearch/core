@@ -1007,3 +1007,21 @@ export function isDev () {
 export function getLinkType (url) {
   console.log(url)
 }
+
+/**
+ * Get fallback value
+ */
+
+export function getFieldValue (result, field, fallbackFields) {
+  var fieldContent = result[field]
+  if (!fieldContent && fallbackFields.length) {
+    for (let i = 0; i < fallbackFields.length; i++) {
+      let fieldName = fallbackFields[i]
+      if (fieldName in result && result[fieldName]) {
+        fieldContent = result[fieldName]
+        break
+      }
+    }
+  }
+  return fieldContent
+}

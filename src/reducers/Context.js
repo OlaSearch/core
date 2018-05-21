@@ -1,6 +1,7 @@
 // @flow
 import types from './../constants/ActionTypes'
 import flatten from 'ramda/src/flatten'
+import { pick } from './../utilities'
 
 const LOCATION_FIELD = 'location'
 
@@ -15,7 +16,10 @@ type State = {
   isNewUser: boolean,
   isNewSession: boolean,
   hasUsedVoice: boolean,
-  filter_term_sequence: Array<string>
+  filter_term_sequence: Array<string>,
+  href: ?string,
+  hostname: ?string,
+  pathname: ?string
 }
 
 export const initialState = {
@@ -32,6 +36,11 @@ export const initialState = {
   userId: null,
   isNewUser: false,
   isNewSession: false,
+
+  /* Window */
+  href: null,
+  hostname: null,
+  pathname: null,
 
   /* Voice */
   hasUsedVoice: false,
@@ -160,6 +169,12 @@ export default (state: State = initialState, action: Object) => {
       return {
         ...state,
         isNewUser: action.isNewUser
+      }
+
+    case types.UPDATE_CONTEXT_STATE:
+      return {
+        ...state,
+        ...pick(Object.keys(initialState), action.state)
       }
 
     default:

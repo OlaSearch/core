@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import withLogger from './../../../decorators/withLogger'
-import { LINK_TYPES, LINK_TARGETS } from './../../../constants/Settings'
+import { LINK_TARGETS } from './../../../constants/Settings'
 
 function Button ({
   title,
@@ -21,9 +21,7 @@ function Button ({
   textLink,
   replaceClassName,
   singleChild,
-  type,
   openInNewWindow,
-  dangerouslySetInnerHTML,
   isPhone,
   isTablet,
   isDesktop
@@ -54,6 +52,9 @@ function Button ({
 
   const target = openInNewWindow ? LINK_TARGETS.BLANK : undefined
   const isLink = !!url
+  const stopIndex = url.lastIndexOf('.')
+  const fileExtenion =
+    stopIndex !== -1 ? url.slice(url.lastIndexOf('.') + 1) : null
   const buttonClass = cx(
     {
       'ola-btn': !replaceClassName,
@@ -61,7 +62,8 @@ function Button ({
       'ola-btn-primary': !textLink && !replaceClassName,
       'ola-btn-link': textLink,
       'ola-link': isLink,
-      [`ola-link-${type}`]: type
+      'ola-link-external': openInNewWindow,
+      [`ola-link-${fileExtenion}`]: fileExtenion
     },
     className
   )
@@ -73,8 +75,7 @@ function Button ({
       className: buttonClass,
       href: isLink ? url : undefined,
       onClick: handleClick,
-      target,
-      dangerouslySetInnerHTML
+      target
     },
     label || children
   )
@@ -142,11 +143,7 @@ Button.propTypes = {
   /**
    * appendClassName
    */
-  replaceClassName: PropTypes.bool,
-  /**
-   * Is an external link
-   */
-  type: PropTypes.oneOf(LINK_TYPES.values())
+  replaceClassName: PropTypes.bool
 }
 
 Button.defaultProps = {

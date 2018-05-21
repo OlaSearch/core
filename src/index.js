@@ -90,7 +90,7 @@ export AnswerMap from './components/Answer/AnswerMap'
 export AnswerCard from './components/Answer/AnswerCard'
 export AnswerCarousel from './components/Answer/AnswerCarousel'
 export AnswerMC from './components/Answer/AnswerMC'
-// export AnswerForm from './components/Answer/AnswerForm'
+export AnswerVideo from './components/Answer/AnswerVideo'
 export SlotSuggestion from './components/SlotSuggestion'
 
 /* Export theme */

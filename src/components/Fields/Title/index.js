@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { createHTMLMarkup, getLinkType } from './../../../utilities'
-import {
-  LINK_TYPES,
-  EVENT_CATEGORIES,
-  EVENT_LABELS
-} from './../../../constants/Settings'
+import { EVENT_CATEGORIES, EVENT_LABELS } from './../../../constants/Settings'
 import Button from './../Button'
 
 /**
@@ -28,7 +24,8 @@ function Title ({
   eventLabel,
   eventCategory,
   logPayload,
-  type
+  linkClassName,
+  textClassName
 }) {
   var { highlighting } = result
   var title = result[field]
@@ -61,17 +58,24 @@ function Title ({
       {isLink ? (
         <Button
           url={url}
-          type={type}
           eventCategory={logEventCategory}
           eventLabel={logEventLabel}
           textLink={true}
+          className={linkClassName}
           onClick={onClick}
-          dangerouslySetInnerHTML={createHTMLMarkup(title)}
           result={result}
           openInNewWindow={openInNewWindow}
-        />
+        >
+          <span
+            className={textClassName}
+            dangerouslySetInnerHTML={createHTMLMarkup(title)}
+          />
+        </Button>
       ) : (
-        <span dangerouslySetInnerHTML={createHTMLMarkup(title)} />
+        <span
+          className={textClassName}
+          dangerouslySetInnerHTML={createHTMLMarkup(title)}
+        />
       )}
       {children}
       {iconRight}
@@ -87,6 +91,7 @@ Title.defaultProps = {
   isAutosuggest: false,
   field: 'title',
   openInNewWindow: false,
+  textClassName: null,
   onClick: null,
   type: null
 }
@@ -131,11 +136,7 @@ Title.propTypes = {
   /**
    * Is the title displayed in Autosuggest list
    */
-  isAutosuggest: PropTypes.bool,
-  /**
-   * Is an external link
-   */
-  type: PropTypes.oneOf(LINK_TYPES.values())
+  isAutosuggest: PropTypes.bool
 }
 
 module.exports = Title

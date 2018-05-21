@@ -9,6 +9,7 @@ import AnswerCarousel from './AnswerCarousel'
 import AnswerList from './AnswerList'
 import AnswerMap from './AnswerMap'
 import AnswerMC from './AnswerMC'
+import AnswerVideo from './AnswerVideo'
 import {
   updateQueryTerm,
   executeSearch,
@@ -90,8 +91,8 @@ function Answer ({
       case 'line_chart':
         return <AnswerLineChart card={card} onSelect={handleClick} />
 
-      // case 'form':
-      //   return <AnswerForm card={card} onSelect={handleClick} />
+      case 'video':
+        return <AnswerVideo card={card} onSelect={handleClick} />
 
       case 'generic':
       default:
