@@ -43,6 +43,22 @@ Navigate to `http://localhost:3003` to see a search interface
 
 Uses [Prettier](prettier.io) and [Prettier standard](https://github.com/sheerun/prettier-standard) for code formatting and linting
 
+## Naming convention for Props
+
+Reference - https://dlinau.wordpress.com/2016/02/22/how-to-name-props-for-react-components/
+
+````
+1. Array – use plural nouns. e.g. items
+2. Number – use prefix num or postfix count, index etc that can imply a number. e.g. numItems, itemCount, itemIndex
+3. Bool – use prefix is, can, has
+    1. is: for visual/behavior variations. e.g. isVisible, isEnable, isActive
+    2. can: fore behavior variations or conditional visual variations. e.g. canToggle, canExpand, canHaveCancelButton
+    3. has: for toggling UI elements. e.g. hasCancelButton, hasHeader
+4. Object – use noun. e.g. item
+5. Node – use prefix node. containerNode
+6. Element – use prefix element. hoverElement
+````
+
 ## License
 
 Copyright OlaSearch Pte Ltd 2015 - 2018

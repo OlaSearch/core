@@ -86,6 +86,9 @@ export default {
     /* Distance */
     distance_unit: 'km away',
     share_location: 'Share your location to see nearby results',
-    showing_nearby_results: 'Showing results near your location'
+    showing_nearby_results: 'Showing results near your location',
+
+    /* Remove filters: No results snippet */
+    no_results_remove_filters: 'Remove filters'
   }
 }

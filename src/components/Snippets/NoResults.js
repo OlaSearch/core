@@ -16,7 +16,8 @@ function NoResults ({
   suggestedTerm,
   facets,
   removeAllFacets,
-  executeSearch
+  executeSearch,
+  canRemoveFilters
 }) {
   /*
     Removed `q` (23/6/17 - Vinay)
@@ -36,19 +37,18 @@ function NoResults ({
     executeSearch()
   }
   var message
+  const resetFilters = (
+    <button className='ola-reset-filters' type='button' onClick={removeFilters}>
+      {translate('no_results_remove_filters')}
+    </button>
+  )
   if (totalResults === 0 && suggestedTerm && facets.length > 0) {
     message = (
       <div>
         {translate('no_results_found_filters_too_restrictive', { q }, true, {
           tagName: 'span'
         })}
-        <button
-          className='ola-reset-filters'
-          type='button'
-          onClick={removeFilters}
-        >
-          Remove filters
-        </button>
+        {canRemoveFilters ? resetFilters : null}
       </div>
     )
   } else {
@@ -58,13 +58,7 @@ function NoResults ({
           {translate('no_results_found_filters_only', null, true, {
             tagName: 'span'
           })}
-          <button
-            className='ola-reset-filters'
-            type='button'
-            onClick={removeFilters}
-          >
-            Remove filters
-          </button>
+          {canRemoveFilters ? resetFilters : null}
         </div>
       )
     } else message = translate('no_results_found', { q }, true)
@@ -78,7 +72,8 @@ function NoResults ({
 }
 
 NoResults.defaultProps = {
-  facets: []
+  facets: [],
+  canRemoveFilters: true
 }
 
 NoResults.propTypes = {
@@ -101,7 +96,11 @@ NoResults.propTypes = {
   /**
    * List of facets selected
    */
-  facets: PropTypes.array
+  facets: PropTypes.array,
+  /**
+   * Can user remove filters if applied
+   */
+  canRemoveFilters: PropTypes.bool
 }
 
 module.exports = connect(null, { removeAllFacets, executeSearch })(
