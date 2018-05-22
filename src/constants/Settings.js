@@ -260,6 +260,10 @@ export const BUTTON_TYPE = {
 
 export const BREAKPOINT_TABLET = '768px'
 export const BREAKPOINT_DESKTOP = '960px'
+export const BREAKPOINT_PHONE = '480px'
+export const MEDIA_TYPE_DESTOP = 'desktop'
+export const MEDIA_TYPE_TABLET = 'tablet'
+export const MEDIA_TYPE_PHONE = 'mobile'
 
 /**
  * 1. Background is set to white (cos of iOS bottom padding on input when focused). Input is always white in color. Re-consider this setting

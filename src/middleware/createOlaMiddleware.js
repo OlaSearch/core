@@ -302,7 +302,7 @@ export default function (options = {}) {
           answer.search.slots &&
           answer.search.slots.length
         ) {
-          let answerFacets = answer.search.slots
+          const answerFacets = answer.search.slots
             .filter(
               ({ facet_query, skip }) => facet_query && !skip
             ) /* Ignore skipped slots */
@@ -312,7 +312,7 @@ export default function (options = {}) {
               type: getFacetTypeFromSlot(item.type, item.value),
               fromIntentEngine: true
             }))
-          let answerFacetNames = answerFacets.map(({ name }) => name)
+          const answerFacetNames = answerFacets.map(({ name }) => name)
           /**
            * Remove from facet Query if `fromIntentEngine: true` and name is not contained in answerFacetNames
            */

@@ -1,6 +1,6 @@
 import { cookies, get } from './../services/storage'
 import { getKey, uuid } from './../utilities'
-import { mediaNotDesktop } from './../utilities/mediaquery'
+import { isDesktopMedia } from './../utilities/mediaquery'
 import sessionStorage from './../services/sessionStorage'
 import {
   USER_SESSION_KEY,
@@ -88,9 +88,9 @@ export function prepareStoreState ({ config, device }) {
       console.warn(err)
     }
   }
-  const isMediaNotDesktop = mediaNotDesktop()
+  const isDesktopSize = isDesktopMedia()
   const isSidebarOpen =
-    (device && !device.isDesktop) || isMediaNotDesktop
+    (device && !device.isDesktop) || isDesktopSize
       ? false
       : storeState && typeof storeState.isSidebarOpen !== 'undefined'
         ? hideToggleSidebar &&
