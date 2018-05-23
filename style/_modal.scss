@@ -1,3 +1,5 @@
+$zIndex: 10;
+
 .ola-modal-background{
   position: fixed;
   top: 0;
@@ -5,7 +7,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.6);
-  z-index: 10;
+  z-index: $zIndex;
   transition: all 0.1s ease-in;
   visibility: visible;
   opacity: 1;
@@ -135,4 +137,23 @@
     visibility: visible;
     opacity: 1;
   }
+}
+
+  .ola-content-overlay-absolute {
+    position: absolute;
+  }
+
+
+/**
+ * Embed modal
+ */
+.ola-embed-frame-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }

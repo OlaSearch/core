@@ -226,3 +226,30 @@
 .ola-answer-link-more {
   @extend .ola-btn-primary;
 }
+
+/**
+ * Button play
+ */
+.ola-btn-play {
+  @extend .ola-btn;
+  background: rgba(255,255,255,0.6);
+  width: 80px;
+  height: 80px;
+  color: white;
+  border-radius: 40px;
+  box-shadow: $sharp-box-shadow;
+  text-align: center;
+  transition: all 0.2s ease-in;
+
+  &:focus, &:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .ola-answer-embed & {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -40px 0 0 -40px;
+    z-index: 6;
+  }
+}

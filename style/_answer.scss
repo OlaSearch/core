@@ -249,3 +249,14 @@
     top: auto;
   }
 }
+
+
+/**
+ * Embed card
+ */
+.ola-card-template-embed {
+  display: inline-block;
+  .ola-answer-body {
+    position: relative;
+  }
+}
