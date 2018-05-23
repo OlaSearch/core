@@ -149,26 +149,21 @@ export function getMatchingSnippet (rules, result) {
       for (let j = 0, len = rule.length; j < len; j++) {
         let { field, value } = rule[j]
         let fieldValue = result[field]
-        if (
-          !fieldValue ||
-          (fieldValue && !fieldValue.toString().match(new RegExp(value, 'gi')))
-        ) {
+        if (!fieldValue || (fieldValue && !(fieldValue === value))) {
           matched = false
         }
       }
     } else {
       for (let field in rule) {
         let fieldValue = result[field]
-        if (
-          !fieldValue ||
-          (fieldValue &&
-            !fieldValue.toString().match(new RegExp(rule[field] + '$', 'gi')))
-        ) {
+        if (!fieldValue || (fieldValue && !(fieldValue === rule[field]))) {
           matched = false
         }
       }
     }
-    if (matched) return rules[i].template
+    if (matched) {
+      return rules[i].template
+    }
   }
   return false
 }

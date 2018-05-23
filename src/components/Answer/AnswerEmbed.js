@@ -33,12 +33,18 @@ class AnswerEmbed extends React.Component {
       },
       classname
     )
-    const embedClassName = cx('ola-embed-frame', {
-      'ola-embed-frame-active': isVisible
-    })
     const embedIframe = (
       <iframe
-        className={embedClassName}
+        className='ola-embed-frame ola-embed-frame-active'
+        src={url}
+        width={width}
+        height={height}
+        frameBorder='0'
+      />
+    )
+    const embedThumbnail = (
+      <iframe
+        className='ola-embed-frame'
         src={url}
         width={width}
         height={height}
@@ -51,7 +57,8 @@ class AnswerEmbed extends React.Component {
           <Header title={title} subtitle={subtitle} url={url} />
           <div className='ola-answer-body'>
             <Overlay active={!isVisible} isAbsolute />
-            {embedIframe}
+
+            {embedThumbnail}
 
             <button
               className='ola-btn-play'
