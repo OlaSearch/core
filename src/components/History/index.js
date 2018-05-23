@@ -96,7 +96,7 @@ class History extends React.Component {
           onClick={this.toggleVisibility}
         >
           <span
-            className='ola-btn-hint hint--top'
+            className='ola-btn-hint'
             aria-label={translate('history_label')}
           />
         </button>

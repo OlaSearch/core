@@ -104,7 +104,7 @@ class Bookmarks extends React.Component {
           )}
           {showLabel && <span className={badgeClass}>{bookmarks.length}</span>}
           <span
-            className='ola-btn-hint hint--top'
+            className='ola-btn-hint'
             aria-label={translate('bookmarks_label')}
           />
         </button>
