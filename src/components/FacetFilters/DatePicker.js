@@ -199,7 +199,7 @@ class DateRange extends React.Component {
               )
             })}
             <li className='ola-date-custom'>
-              <label className='ola-btn-date-select'>Custom</label>
+              <div className='ola-date-custom-label'>Custom</div>
               <div className='ola-date-custom-input'>
                 <div className='ola-label ola-label-date'>
                   <span>From</span>

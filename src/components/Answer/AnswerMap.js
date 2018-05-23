@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import GoogleMaps from './maputils'
 import cx from 'classnames'
 import Direction from './../Fields/Direction'
+import { getDocument, isBrowser } from './../../utilities'
 
 /**
  * Displays a google map
@@ -35,9 +36,9 @@ class AnswerMap extends React.Component {
   }
   static defaultProps = {
     markerIcon: null,
-    window,
+    window: isBrowser() ? window : null,
     defaultZoom: 4,
-    document
+    document: getDocument()
   }
   componentDidMount () {
     GoogleMaps.load(

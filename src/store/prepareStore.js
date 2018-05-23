@@ -1,5 +1,5 @@
 import { cookies, get } from './../services/storage'
-import { getKey, uuid } from './../utilities'
+import { getKey, uuid, isBrowser } from './../utilities'
 import { isDesktopMedia } from './../utilities/mediaquery'
 import sessionStorage from './../services/sessionStorage'
 import {
@@ -89,8 +89,13 @@ export function prepareStoreState ({ config, device }) {
     }
   }
   const isDesktopSize = isDesktopMedia()
+  /**
+   * Hide sidebar if
+   * 1. Device is not a desktop
+   * 2. Browser width less than desktop width
+   */
   const isSidebarOpen =
-    (device && !device.isDesktop) || isDesktopSize
+    (device && !device.isDesktop) || !isDesktopSize
       ? false
       : storeState && typeof storeState.isSidebarOpen !== 'undefined'
         ? hideToggleSidebar &&
@@ -99,7 +104,7 @@ export function prepareStoreState ({ config, device }) {
           : storeState.isSidebarOpen
         : sidebar
 
-  const { href, pathname, hostname } = window.location
+  const { href, pathname, hostname } = isBrowser() ? window.location : {}
 
   return {
     searchSession,

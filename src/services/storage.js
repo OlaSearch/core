@@ -1,4 +1,4 @@
-import { getKey } from './../utilities'
+import { getKey, isBrowser } from './../utilities'
 /**
  * Use try {} catch (e) {} for localStorage because of users browser privacy settings
  */
@@ -6,7 +6,7 @@ import { getKey } from './../utilities'
  * A cookie cache to prevent accessing document.cookie
  * Accessing document.cookie adds 0.5ms to ola.rehydrate
  */
-var cookieCache = document.cookie
+var cookieCache = isBrowser() ? document.cookie : ''
 
 /* Default export */
 export function get (key, namespace) {
@@ -36,6 +36,7 @@ export function set (key, value, namespace) {
 
 export const cookies = {
   set (name, value, days, namespace) {
+    if (!isBrowser()) return null
     var expires
     /* Always encode URI for objects */
     if (typeof value === 'object') {

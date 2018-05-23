@@ -12,13 +12,13 @@
 /* Title */
 .ola-facet-title {
   user-select: none;
+  font-weight: normal;
 
   &, &:first-child {
     margin: 0;
     border-bottom: 1px #e5e5e5 solid;
     padding: 12px 1rem;
     line-height: 1;
-    font-weight: normal;
     color: $base-color;
     cursor: pointer;
     position: relative;
@@ -78,6 +78,10 @@
  * Datepicker
  */
 
+.ola-date-custom {
+  padding-top: 8px;
+}
+
 .ola-date-list {
   padding: 0;
   list-style: none;
@@ -98,8 +102,8 @@
     @include prefix(display, flex, webkit ms moz);
   }
 
-  .ola-date-custom .ola-btn-date-select {
-    color: #666;
+  .ola-date-custom-label {
+    padding-bottom: 4px;
   }
 
   .ola-date-custom-input {

@@ -2,7 +2,12 @@ import React from 'react'
 import ArrowRight from '@olasearch/icons/lib/arrow-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
-import { smoothScroll, debounce, isFocusable } from './../utilities'
+import {
+  smoothScroll,
+  debounce,
+  isFocusable,
+  getDocument
+} from './../utilities'
 import cx from 'classnames'
 
 const LEFT_KEY = 37
@@ -66,7 +71,7 @@ export default class Swipeable extends React.Component {
     max: undefined,
     startIndex: null,
     autoFocus: false,
-    document
+    document: getDocument()
   }
   scrollTo = (duration) => {
     const { active } = this.state

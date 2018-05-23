@@ -980,8 +980,12 @@ export function isFocusable (el) {
 // }
 
 export function getDocument () {
-  if (typeof document !== undefined) return document
+  if (isBrowser()) return document
   return null
+}
+
+export function isBrowser () {
+  return typeof document !== 'undefined'
 }
 
 /**

@@ -4,5 +4,6 @@
  *
  * Polyfill removed on 27/01/2018
  */
+import { isBrowser } from './../utilities'
 
-export default window.sessionStorage
+export default (isBrowser() ? window.sessionStorage : null)

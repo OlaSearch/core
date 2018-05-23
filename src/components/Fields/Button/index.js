@@ -52,7 +52,7 @@ function Button ({
 
   const target = openInNewWindow ? LINK_TARGETS.BLANK : undefined
   const isLink = !!url
-  const stopIndex = url.lastIndexOf('.')
+  const stopIndex = url ? url.lastIndexOf('.') : -1
   const fileExtenion =
     stopIndex !== -1 ? url.slice(url.lastIndexOf('.') + 1) : null
   const buttonClass = cx(
