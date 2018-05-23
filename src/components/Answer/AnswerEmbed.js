@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from './common/Button'
-import Field from './common/Field'
 import Header from './common/Header'
-import Source from './common/Source'
 import cx from 'classnames'
 import Play from '@olasearch/icons/lib/play'
 import Portal from './../Portal'
@@ -27,7 +24,7 @@ class AnswerEmbed extends React.Component {
   render () {
     const { isVisible } = this.state
     const { card, onSelect } = this.props
-    const { url, title, subtitle, classname } = card
+    const { url, title, subtitle, classname, width, height } = card
     const classes = cx(
       'ola-answer-card',
       'ola-answer-embed',
@@ -43,8 +40,8 @@ class AnswerEmbed extends React.Component {
       <iframe
         className={embedClassName}
         src={url}
-        width='100%'
-        height='300'
+        width={width}
+        height={height}
         frameBorder='0'
       />
     )
