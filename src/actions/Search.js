@@ -595,7 +595,12 @@ export function changeEnvironment (env) {
  * @param  {[type]} options [description]
  * @return {[type]}         [description]
  */
-export function initSearch ({ config, urlSync = true, payload = {} }) {
+export function initSearch ({
+  config,
+  urlSync = true,
+  payload = {},
+  options = {}
+}) {
   return (dispatch, getState) => {
     let { history, searchOnLoad = true } = config
 
@@ -614,21 +619,27 @@ export function initSearch ({ config, urlSync = true, payload = {} }) {
       let shouldSearch = q || facet_query.length
 
       if (shouldSearch) {
-        dispatch(
-          executeSearch({
-            routeChange: false,
-            ...payload
-          })
+        return dispatch(
+          executeSearch(
+            {
+              routeChange: false,
+              ...payload
+            },
+            options
+          )
         )
       } else {
         dispatch(terminateSearch())
       }
     } else {
-      dispatch(
-        executeSearch({
-          routeChange: false,
-          ...payload
-        })
+      return dispatch(
+        executeSearch(
+          {
+            routeChange: false,
+            ...payload
+          },
+          options
+        )
       )
     }
   }

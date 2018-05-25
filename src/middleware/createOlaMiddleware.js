@@ -517,6 +517,7 @@ export default function (options = {}) {
             error,
             type: failureType
           })
+        throw error
       })
   }
 }
