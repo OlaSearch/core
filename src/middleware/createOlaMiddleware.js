@@ -479,8 +479,8 @@ export default function (options = {}) {
          * searchInput = `voice`|`url`|`keyboard`
          */
         /* Query becomes empty for long conversations */
-        const isBotReply = answer && 'awaiting_user_input' in answer
-        const sendImmediateLog = isBotReply && !answer.awaiting_user_input
+        // const isBotReply = answer && 'awaiting_user_input' in answer
+        const sendImmediateLog = !!bot
         const logFn = sendImmediateLog ? submitLog : debounceLog
         if (
           logger &&
