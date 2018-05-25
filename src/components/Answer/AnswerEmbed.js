@@ -24,7 +24,7 @@ class AnswerEmbed extends React.Component {
   render () {
     const { isVisible } = this.state
     const { card, onSelect } = this.props
-    const { url, title, subtitle, classname, width, height } = card
+    const { url, title, image, subtitle, classname, width, height } = card
     const classes = cx(
       'ola-answer-card',
       'ola-answer-embed',
@@ -40,6 +40,7 @@ class AnswerEmbed extends React.Component {
         width={width}
         height={height}
         frameBorder='0'
+        allow='geolocation; microphone; camera'
       />
     )
     const embedThumbnail = (
@@ -54,11 +55,14 @@ class AnswerEmbed extends React.Component {
     return (
       <div className={classes}>
         <div className='ola-answer-card-wrapper'>
-          <Header title={title} subtitle={subtitle} url={url} />
           <div className='ola-answer-body'>
-            <Overlay active={!isVisible} isAbsolute />
+            {/* <Overlay active={!isVisible} isAbsolute /> */}
 
-            {embedThumbnail}
+            {image ? (
+              <img src={image} width={width} className='ola-embed-image' />
+            ) : (
+              embedThumbnail
+            )}
 
             <button
               className='ola-btn-play'
@@ -72,6 +76,8 @@ class AnswerEmbed extends React.Component {
               {embedIframe}
             </Portal>
           </div>
+
+          <Header title={title} subtitle={subtitle} url={url} />
         </div>
       </div>
     )

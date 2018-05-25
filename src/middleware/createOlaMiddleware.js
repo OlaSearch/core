@@ -482,6 +482,7 @@ export default function (options = {}) {
         const isBotReply = answer && 'awaiting_user_input' in answer
         const sendImmediateLog = isBotReply && !answer.awaiting_user_input
         const logFn = sendImmediateLog ? submitLog : debounceLog
+        console.log(isBotReply, sendImmediateLog)
         if (
           logger &&
           logger.enabled &&
@@ -495,6 +496,7 @@ export default function (options = {}) {
             state: getState(),
             responseTime,
             payload,
+            answer,
             tokens
           })
         }

@@ -957,23 +957,6 @@ export function isFocusable (el) {
   return false
 }
 
-/**
- * Remove pipes from fieldvalue for ola_collection_name and Taxo_entity
- */
-
-// export function (fieldValue, fieldName, fieldTypeMapping) {
-//   if (fieldName === SEARCH_COLLECTION_IDENTIFIER ||
-//     (
-//       fieldTypeMapping &&
-//       fieldName in fieldTypeMapping &&
-//       fieldTypeMapping[fieldName] === TAXO_ENTITY
-//     )
-//   ) {
-//     return getDisplayName(fieldValue)
-//   }
-//   return fieldValue
-// }
-
 export function getDocument () {
   if (isBrowser()) return document
   return null
@@ -998,13 +981,25 @@ export function isDev () {
 }
 
 /**
- * Type of link
- * ola-external
- * ola-doc
- * ola-file
+ * Get url path
  */
-export function getLinkType (url) {
-  console.log(url)
+export function getUrlPath (url) {
+  var a = document.createElement('a')
+  a.href = url
+  return [a.hostname, a.pathname]
+}
+
+/**
+ * Get file extension
+ */
+export function getFileExtension (url) {
+  if (!url || typeof url !== 'string') return null
+
+  const [host, pathName] = getUrlPath(url)
+  if (!pathName) return null
+  const stopIndex = pathName.lastIndexOf('.')
+  if (stopIndex === -1) return null
+  return pathName.slice(stopIndex + 1)
 }
 
 /**

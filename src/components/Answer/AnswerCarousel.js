@@ -32,7 +32,7 @@ class AnswerCarousel extends React.Component {
     })
   }
   handleCardSelect = (event) => {
-    const label = event.target.text
+    const label = event.target.textContent
     if (!label) return
     this.props.onSelect({
       label,

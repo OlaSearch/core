@@ -216,6 +216,9 @@
     padding: 0;
   }
 }
+  .ola-answer-body + .ola-answer-header {
+    padding-top: 8px;
+  }
 
 /**
  * Answer map
@@ -254,9 +257,18 @@
 /**
  * Embed card
  */
-.ola-card-template-embed {
-  display: inline-block;
+.ola-card-template-embed {  
+  @include media (tablet) {
+    display: inline-block;
+  }
   .ola-answer-body {
     position: relative;
   }
+}
+
+/**
+ * image
+ */
+.ola-embed-image {
+  max-width: 100%;  
 }

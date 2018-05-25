@@ -36,7 +36,7 @@ function SearchTitle ({
       <div className='ola-search-heading'>
         {title && <span className='ola-search-heading-title'>{title}</span>}
         {totalResults ? (
-          <small className='ola-search-heading-number'>{titleDesc}</small>
+          <span className='ola-search-heading-number'>{titleDesc}</span>
         ) : null}
         <GeoNotify showLabel />
       </div>

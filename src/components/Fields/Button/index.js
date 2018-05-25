@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import withLogger from './../../../decorators/withLogger'
 import { LINK_TARGETS } from './../../../constants/Settings'
+import { getFileExtension } from './../../../utilities'
 
 function Button ({
   title,
@@ -52,9 +53,7 @@ function Button ({
 
   const target = openInNewWindow ? LINK_TARGETS.BLANK : undefined
   const isLink = !!url
-  const stopIndex = url ? url.lastIndexOf('.') : -1
-  const fileExtenion =
-    stopIndex !== -1 ? url.slice(url.lastIndexOf('.') + 1) : null
+  const fileExtenion = getFileExtension(url)
   const buttonClass = cx(
     {
       'ola-btn': !replaceClassName,

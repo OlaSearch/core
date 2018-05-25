@@ -1,31 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withLogger from './../../../decorators/withLogger'
-import User from '@olasearch/icons/lib/user'
+import Tag from '@olasearch/icons/lib/tag'
 import FieldLabel from './../FieldLabel'
 import { getDisplayName } from './../../../utilities'
 import classNames from 'classnames'
+// import { connect } from 'react-redux'
+// import { addFacet, executeSearch } from './../../../actions/Search'
 
 function Pill ({
   fieldLabel,
   iconSize,
-  pillName,
+  value,
   log,
   displayIcon,
   snippetId,
+  isLink,
+  executeSearch,
   inlineLabel
 }) {
   /* If there are no pills */
-  if (!pillName || !pillName.length) return null
-  if (typeof pillName === 'string') pillName = [pillName]
+  if (!value || !value.length) return null
+  if (typeof value === 'string') value = [value]
   let classes = classNames('ola-field ola-field-pill', {
     'ola-field-label-inline': inlineLabel
   })
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />
-      {pillName.map((name, idx) => (
+      {value.map((name, idx) => (
         <span className='ola-flex ola-btn-pill' key={idx}>
+          <span className='ola-flex-icon'>
+            <Tag />
+          </span>
           <span className='ola-flex-content'>{getDisplayName(name)}</span>
         </span>
       ))}
@@ -34,17 +41,18 @@ function Pill ({
 }
 
 Pill.defaultProps = {
-  pillName: [],
+  value: [],
   displayIcon: false,
   iconSize: 20,
-  inlineLabel: false
+  inlineLabel: false,
+  isLink: false
 }
 
 Pill.propTypes = {
   /**
    * Pill name
    */
-  pillName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   /**
    * Label will be inline
    */

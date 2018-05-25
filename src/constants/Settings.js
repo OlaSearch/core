@@ -153,6 +153,7 @@ export const EVENT_CATEGORY_CARD = 'card'
 export const DEFAULT_THEME = {
   /* Color palette */
   primaryColor: '#2579DA',
+  primaryBorderColor: '#2579DA',
   primaryInvertColor: 'white',
   secondaryColor: '#2579DA',
   dangerColor: '#f94d3e',
