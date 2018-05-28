@@ -111,9 +111,9 @@ export function changeAnswerSelection (index, key, answer) {
 export function executeSearch (payload, options) {
   return (dispatch, getState) => {
     /* Check if there is a suggested term */
-    var state = getState()
+    const state = getState()
     var query = state.QueryState
-    var {
+    const {
       allowedCharacters,
       replaceQueryParamName,
       answer,
@@ -232,9 +232,10 @@ export function executeFacetSearch (
 ) {
   /* Splice based on tokens */
   fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
-  /* replace backslash */
-  term = term.replace(/\\/gi, '')
-  term = sanitizeText(term)
+  /**
+   * Santize text using xssFilters after remove backslash
+   */
+  term = sanitizeText(term.replace(/\\/gi, ''))
   return (dispatch, getState) => {
     const state = getState()
     const context = state.Context
@@ -260,8 +261,8 @@ export function executeFacetSearch (
     if (!facets.length) return
 
     /* Remove tokens from the query */
-    let initialStart = 0
-    let q = removeTokenFromQuery(
+    const initialStart = 0
+    const q = removeTokenFromQuery(
       fullTerm,
       tokensToFilter.map(({ value }) => value) // .concat(term)
     )
@@ -317,6 +318,9 @@ export function fetchAnswer (url) {
   }
 }
 
+/**
+ * Fetch machine comprehension answer
+ */
 export function fetchMc (key, payload) {
   return (dispatch, getState) => {
     dispatch({
@@ -332,6 +336,9 @@ export function fetchMc (key, payload) {
   }
 }
 
+/**
+ * Get a single result by id from the search engine
+ */
 export function fetchResult (ids) {
   if (!Array.isArray(ids)) ids = [ids]
   let q = ids.map((id) => `id:${id}`).join(' OR ')
@@ -361,12 +368,20 @@ export function fetchResult (ids) {
   }
 }
 
+/**
+ * Terminate search if
+ * 1. allowedCharacters
+ * 2. searchOnLoad = false
+ */
 export function terminateSearch () {
   return {
     type: types.TERMINATE_SEARCH
   }
 }
 
+/**
+ * Add a facet
+ */
 export function addFacet (facet, value) {
   return (dispatch, getState) => {
     acceptSuggestedTerm(dispatch, getState)
@@ -592,8 +607,6 @@ export function changeEnvironment (env) {
 
 /**
  * Initializes search
- * @param  {[type]} options [description]
- * @return {[type]}         [description]
  */
 export function initSearch ({
   config,
@@ -602,21 +615,21 @@ export function initSearch ({
   options = {}
 }) {
   return (dispatch, getState) => {
-    let { history, searchOnLoad = true } = config
+    const { history, searchOnLoad = true } = config
 
     /* History type: pushState or hash */
     historyType = history || historyType
 
     /* Always pass configuration to @parseQueryString handler */
-    urlSync && dispatch(updateStateFromQuery(config))
+    if (urlSync) dispatch(updateStateFromQuery(config))
 
     /* Global setting */
     globalRouteChange = urlSync
 
     /* De-activate search if searchOnLoad is false */
     if (!searchOnLoad) {
-      let { q, facet_query } = getState().QueryState
-      let shouldSearch = q || facet_query.length
+      const { q, facet_query } = getState().QueryState
+      const shouldSearch = q || facet_query.length
 
       if (shouldSearch) {
         return dispatch(

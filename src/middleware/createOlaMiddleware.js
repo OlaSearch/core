@@ -480,6 +480,9 @@ export default function (options = {}) {
          */
         /* Query becomes empty for long conversations */
         // const isBotReply = answer && 'awaiting_user_input' in answer
+        /**
+         * Due to debouncing, logs are not properly sent in bot. There can be shopping cart requests right after a message which causes wrong logs to be sent. Hence removed debouncing logs in chatbot
+         */
         const sendImmediateLog = !!bot
         const logFn = sendImmediateLog ? submitLog : debounceLog
         if (
