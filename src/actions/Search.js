@@ -705,3 +705,10 @@ export function reHydrate (params) {
     ...params
   }
 }
+
+export function addTimestamp (api) {
+  return {
+    type: types.ADD_TIMESTAMP,
+    api
+  }
+}

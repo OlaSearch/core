@@ -6,7 +6,10 @@ import {
   getDisplayName,
   getFieldValue
 } from './../../../utilities'
-import { SEARCH_COLLECTION_IDENTIFIER } from './../../../constants/Settings'
+import {
+  SEARCH_COLLECTION_IDENTIFIER,
+  TAXO_ENTITY
+} from './../../../constants/Settings'
 import FieldLabel from './../FieldLabel'
 
 /**
@@ -24,10 +27,16 @@ function TextField ({
   dynamicClass,
   fieldLabel,
   className,
-  showIfEmpty
+  showIfEmpty,
+  config
 }) {
   var fieldContent = staticText || getFieldValue(result, field, fallbackFields)
-  if (field === SEARCH_COLLECTION_IDENTIFIER) {
+  if (
+    field === SEARCH_COLLECTION_IDENTIFIER ||
+    (config &&
+      field in config.fieldTypeMapping &&
+      config.fieldTypeMapping[field] === TAXO_ENTITY)
+  ) {
     fieldContent = getDisplayName(fieldContent)
   }
   /* Convert array to string */

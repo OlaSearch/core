@@ -60,7 +60,15 @@ class SearchResults extends React.Component {
           defaultSnippet ||
           SnippetFallback
       const key = result.id || idx
-      return <OlaSnippet result={result} key={key} theme={theme} {...rest} />
+      return (
+        <OlaSnippet
+          result={result}
+          key={key}
+          theme={theme}
+          config={config}
+          {...rest}
+        />
+      )
     })
     return (
       <div className={classes}>

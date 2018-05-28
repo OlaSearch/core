@@ -19,6 +19,7 @@ export default (state: State = initialState, action: Object) => {
     case types.REQUEST_GUIDE:
     case types.REQUEST_AUTOSUGGEST:
     case types.REQUEST_FACET:
+    case types.ADD_TIMESTAMP:
       if (!action.api) return state
       return {
         ...state,
