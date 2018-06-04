@@ -32,10 +32,11 @@ function AnswerList ({
     url,
     classname,
     max,
+    swipe: listIsSwipe,
     ...cardProps
   } = card
   const size = elements.length
-  const isSwipe = swipe || !isDesktop
+  const isSwipe = swipe || listIsSwipe || !isDesktop
   const classes = cx('ola-answer-list', classname, {
     'ola-answer-list-swipe': isSwipe
   })
