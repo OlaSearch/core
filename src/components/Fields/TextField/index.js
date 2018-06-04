@@ -34,6 +34,7 @@ function TextField ({
   if (
     field === SEARCH_COLLECTION_IDENTIFIER ||
     (config &&
+      config.fieldTypeMapping &&
       field in config.fieldTypeMapping &&
       config.fieldTypeMapping[field] === TAXO_ENTITY)
   ) {

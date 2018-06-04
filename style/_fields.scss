@@ -208,7 +208,7 @@ $image-height: 150px;
    * Content
    */
   .ola-flex-content {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
     @extend %nobreak;
   }

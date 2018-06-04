@@ -14,15 +14,13 @@
   user-select: none;
   font-weight: normal;
 
-  &, &:first-child {
-    margin: 0;
-    border-bottom: 1px #e5e5e5 solid;
-    padding: 12px 1rem;
-    line-height: 1;
-    color: $base-color;
-    cursor: pointer;
-    position: relative;
-  }
+  margin: 0;
+  border-bottom: 1px #e5e5e5 solid;
+  padding: 12px 1rem;
+  line-height: 1;
+  color: $base-color;
+  cursor: pointer;
+  position: relative;
 
   .ola-icon {
     position: absolute;

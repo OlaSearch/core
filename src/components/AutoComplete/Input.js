@@ -278,14 +278,6 @@ export default class Input extends React.Component {
             <Search />
           </button>
         ) : null}
-        <style jsx>
-          {`
-            .ola-search-button {
-              background: ${this.props.theme.primaryColor};
-              border-color: ${this.props.theme.primaryBorderColor};
-            }
-          `}
-        </style>
       </div>
     )
   }

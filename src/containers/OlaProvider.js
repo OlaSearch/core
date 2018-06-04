@@ -66,8 +66,6 @@ function OlaProvider ({
           .ola-search :global(.ola-link-show-more:hover),
           .ola-search :global(.ola-link-change-layout),
           .ola-search :global(.ola-link-change-layout:hover),
-          .ola-search :global(.ola-link-open-filter),
-          .ola-search :global(.ola-link-open-filter:hover),
           .ola-search :global(.ola-suggestions-clear),
           .ola-search :global(.ola-suggestions-clear:hover),
           .ola-search :global(.ola-btn-directions),
@@ -88,8 +86,9 @@ function OlaProvider ({
           .ola-search :global(.ola-link-change-layout:hover) {
             border: 1px ${theme.primaryColor} solid;
           }
-          .ola-search :global(.ola-link-open-filter),
-          .ola-search :global(.ola-link-open-filter:hover) {
+          :global(.ola-link-open-filter),
+          :global(.ola-link-open-filter:hover) {
+            color: ${theme.primaryColor};
             border: 1px ${theme.primaryColor} solid;
           }
 
@@ -148,6 +147,15 @@ function OlaProvider ({
             opacity: 1;
             background: white;
             color: ${theme.primaryColor};
+          }
+
+          /* Search button */
+          :global(.ola-search-button),
+          :global(.ola-search-button:hover),
+          :global(.ola-search-button:active),
+          :global(.ola-search-button:focus) {
+            background: ${theme.primaryColor};
+            border-color: ${theme.primaryColor};
           }
         `}
       </style>

@@ -56,9 +56,11 @@
   border: 1px solid #ccc;
   margin-bottom: 0;
 
-  input, input:focus, input:active {
-    box-shadow: none;
-    outline: none;
+  .ola-text-input {
+    &, &:focus, &:active {
+      outline: none;
+      box-shadow: none;
+    }
   }
 
   /* Button inside */

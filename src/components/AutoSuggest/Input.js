@@ -154,18 +154,6 @@ export default class Input extends React.Component {
         >
           <Search />
         </button>
-
-        <style jsx>
-          {`
-            .ola-search-button,
-            .ola-search-button:hover,
-            .ola-search-button:active,
-            .ola-search-button:focus {
-              background: ${this.props.theme.primaryColor};
-              border-color: ${this.props.theme.primaryColor};
-            }
-          `}
-        </style>
       </div>
     )
   }
