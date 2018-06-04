@@ -485,6 +485,8 @@ export default function (options = {}) {
          */
         const sendImmediateLog = !!bot
         const logFn = sendImmediateLog ? submitLog : debounceLog
+        const eventSource =
+          payload.eventSource || currentState.QueryState.source || api
         if (
           logger &&
           logger.enabled &&
@@ -494,7 +496,7 @@ export default function (options = {}) {
           logFn({
             dispatch,
             eventType: 'Q',
-            eventSource: currentState.QueryState.source || api,
+            eventSource,
             state: getState(),
             responseTime,
             payload,
