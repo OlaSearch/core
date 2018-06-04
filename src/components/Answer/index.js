@@ -34,8 +34,10 @@ function Answer ({
   dispatch,
   templates,
   onSelect,
-  config
+  config,
+  isSidebarOpen
 }) {
+  const refreshTrigger = isSidebarOpen
   // function handleChange (option, index, itemKey) {
   //   dispatch(changeAnswerSelection(index, itemKey, answer))
   // }
@@ -70,14 +72,33 @@ function Answer ({
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
       const Component = templates[template]
-      return <Component card={card} module={module} onSelect={handleClick} />
+      return (
+        <Component
+          card={card}
+          module={module}
+          onSelect={handleClick}
+          refresh={refreshTrigger}
+        />
+      )
     }
     switch (template) {
       case 'list':
-        return <AnswerList card={card} onSelect={handleClick} />
+        return (
+          <AnswerList
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
 
       case 'carousel':
-        return <AnswerCarousel card={card} onSelect={handleClick} />
+        return (
+          <AnswerCarousel
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
 
       case 'map':
         return (
@@ -90,17 +111,41 @@ function Answer ({
         )
 
       case 'line_chart':
-        return <AnswerLineChart card={card} onSelect={handleClick} />
+        return (
+          <AnswerLineChart
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
 
       case 'video':
-        return <AnswerVideo card={card} onSelect={handleClick} />
+        return (
+          <AnswerVideo
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
 
       case 'embed':
-        return <AnswerEmbed card={card} onSelect={handleClick} />
+        return (
+          <AnswerEmbed
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
 
       case 'generic':
       default:
-        return <AnswerCard card={card} onSelect={handleClick} />
+        return (
+          <AnswerCard
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
     }
   }
 
@@ -169,7 +214,8 @@ Answer.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    location: state.Context.location
+    location: state.Context.location,
+    isSidebarOpen: state.AppState.isSidebarOpen
   }
 }
 

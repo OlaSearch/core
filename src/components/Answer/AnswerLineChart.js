@@ -17,7 +17,11 @@ class AnswerLineChart extends React.Component {
     /**
      * chart type
      */
-    type: PropTypes.oneOf(['bar', 'line', 'step', 'spline'])
+    type: PropTypes.oneOf(['bar', 'line', 'step', 'spline']),
+    /**
+     * Should refresh
+     */
+    refresh: PropTypes.bool
   }
   static defaultProps = {
     type: 'line'
@@ -76,6 +80,7 @@ class AnswerLineChart extends React.Component {
   shouldComponentUpdate (nextProps) {
     return (
       nextProps.card !== this.props.card ||
+      nextProps.refresh !== this.props.refresh ||
       nextProps.isScriptLoadSucceed !== this.props.isScriptLoadSucceed ||
       nextProps.isScriptLoaded !== this.props.isScriptLoaded
     )
