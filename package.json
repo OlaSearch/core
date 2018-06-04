@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "3.5.8",
+  "version": "3.5.9",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {

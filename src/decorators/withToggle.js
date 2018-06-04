@@ -19,7 +19,8 @@ export default function withToggle (WrappedComponent) {
     static getDerivedStateFromProps (nextProps, prevState) {
       if (
         nextProps.facet &&
-        nextProps.facet.isCollapsed !== prevState.isCollapsed
+        nextProps.facet.isCollapsed !== prevState.isCollapsed &&
+        nextProps.facet.isCollapsed
       ) {
         return {
           isCollapsed: nextProps.facet.isCollapsed
