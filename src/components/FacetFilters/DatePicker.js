@@ -41,11 +41,12 @@ function getMinMaxValue (props) {
 class DateRange extends React.Component {
   constructor (props) {
     super(props)
+    const { min, max, fromDate, toDate } = getMinMaxValue(props)
     this.state = {
-      fromDate: null,
-      toDate: null,
-      minDate: null,
-      maxDate: null,
+      fromDate: fromDate || min,
+      toDate: toDate || max,
+      minDate: min,
+      maxDate: max,
       dateLabel: false
     }
   }
@@ -132,17 +133,20 @@ class DateRange extends React.Component {
     executeSearch()
   }
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    const { min, max, fromDate, toDate } = getMinMaxValue(nextProps)
-    if (fromDate !== prevState.fromDate || toDate !== prevState.toDate) {
-      return {
+  updateState = (props) => {
+    const { min, max, fromDate, toDate } = getMinMaxValue(props)
+    if (fromDate !== this.state.fromDate || toDate !== this.state.toDate) {
+      this.setState({
         fromDate: fromDate || min,
         toDate: toDate || max,
         minDate: min,
         maxDate: max
-      }
+      })
     }
-    return null
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.updateState(nextProps)
   }
   parseDate = (dateString) => {
     const parts = dateString.split('-')

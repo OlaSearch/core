@@ -29,15 +29,6 @@ class History extends React.Component {
     })
   }
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (nextProps.isOpen !== prevState.isOpen) {
-      return {
-        isOpen: nextProps.isOpen
-      }
-    }
-    return null
-  }
-
   toggleVisibility = () => {
     this.setState(
       {
