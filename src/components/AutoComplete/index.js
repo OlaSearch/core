@@ -71,6 +71,7 @@ class AutoComplete extends React.Component {
       fuzzyQuery: null,
       isOpen: false,
       q: props.q,
+      prevQ: props.q,
       results: [],
       searchInput: null,
       searchDone: false,
@@ -126,26 +127,25 @@ class AutoComplete extends React.Component {
     searchTimeout: 400
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.q !== this.props.q) {
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.q !== this.props.q) {
       this.setState({
-        q: cleanQueryTerm(nextProps.q),
+        q: cleanQueryTerm(this.props.q),
         fuzzyQuery: null,
         results: []
       })
     }
-    /* Eg: page changes with empty query */
+    if (prevProps.history !== this.props.history) {
+      this.handleHistoryChange(this.props.history)
+    }
     if (
-      nextProps.q !== this.state.q &&
-      nextProps.tokens === this.props.tokens &&
+      prevProps.q !== this.state.q &&
+      prevProps.tokens === this.props.tokens &&
       !this.state.isFocused /* Check if the input is focused: then ignore */
     ) {
       this.setState({
-        q: cleanQueryTerm(nextProps.q)
+        q: cleanQueryTerm(this.props.q)
       })
-    }
-    if (nextProps.history !== this.props.history) {
-      this.handleHistoryChange(nextProps.history)
     }
   }
 

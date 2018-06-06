@@ -12,6 +12,7 @@ import classNames from 'classnames'
 import DatePicker from 'react-pikaday-datepicker'
 import { connect } from 'react-redux'
 import FacetTitle from './common/FacetTitle'
+import equals from 'ramda/src/equals'
 
 function getMinMaxValue (props) {
   const { selected, facet } = props
@@ -144,9 +145,13 @@ class DateRange extends React.Component {
       })
     }
   }
-
-  componentWillReceiveProps (nextProps) {
-    this.updateState(nextProps)
+  componentDidUpdate (prevProps, prevState) {
+    if (
+      prevProps.facet !== this.props.facet ||
+      !equals(prevProps.selected, this.props.selected)
+    ) {
+      this.updateState(this.props)
+    }
   }
   parseDate = (dateString) => {
     const parts = dateString.split('-')
