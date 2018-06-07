@@ -76,6 +76,7 @@ $image-height: 150px;
 
     > .ola-fg, > .ola-field {
       padding-right: 1em;
+      flex: 1 1 auto;
 
       &:first-child {
         padding-left: 0;
