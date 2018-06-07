@@ -8,8 +8,6 @@
  * Vinay M <vinay@olasearch.com>
  */
 
-require('./polyfill')
-
 /* Components */
 export OlaProvider from './containers/OlaProvider'
 export OlaIntlProvider from './containers/OlaIntlProvider'
