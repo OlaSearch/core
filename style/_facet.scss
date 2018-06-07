@@ -97,7 +97,7 @@
     clear: both;
     margin: 0;
     line-height: 1.2;
-    @include prefix(display, flex, webkit ms moz);
+    display: flex;
   }
 
   .ola-date-custom-label {
@@ -105,10 +105,10 @@
   }
 
   .ola-date-custom-input {
-    @include prefix(display, flex, webkit ms moz);
+    display: flex;
     font-size: 14px;
     .ola-label-date {
-      @include prefix(flex, 1, webkit ms moz);
+      flex: 1;
       margin-right: 16px;
       span {
         display: block;
@@ -130,7 +130,7 @@
    */
   .ola-facet-scroll-list {
     max-height: none;
-    overflow: visible;
+    overflow: overlay;
   }
 
 
@@ -138,11 +138,11 @@
    * facet wrapper
    */
   .ola-btn-wrap {
-    @include prefix(display, flex, webkit ms moz);
-    @include prefix(align-items, center, webkit ms moz);
+    display: flex;
+    align-items: center;
 
     .ola-facet-link {
-      @include prefix(flex, 1, webkit ms moz);
+      flex: 1;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;

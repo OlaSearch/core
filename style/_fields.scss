@@ -75,8 +75,7 @@ $image-height: 150px;
     @include flexbox;
 
     > .ola-fg, > .ola-field {
-      padding-right: 1em;
-      flex: 1 1 auto;
+      padding-right: 1em;      
 
       &:first-child {
         padding-left: 0;
@@ -88,6 +87,14 @@ $image-height: 150px;
     }
   }
 }
+
+  /**
+   * IE 10 flexbox bug causes overflow of content
+   */
+  .ola-fg {
+    -ms-flex-positive: 0;
+    -ms-flex-negative: 1;
+  }
 
 /**
  * Content
