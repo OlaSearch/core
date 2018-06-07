@@ -1,9 +1,14 @@
-.ola-search-heading-container {
+.ola-search-header {
   border-bottom: 2px solid #e5e5e5;
-  padding: 0rem 0 1rem 0;
-  margin: 0 0 1rem 0;
-  min-height: $button-default-height + 20px;
   display: flex;
+  align-items: flex-start;
+  margin: 0 0 1rem 0;
+}
+
+.ola-search-heading-container {  
+  padding: 0 1rem 0 0;  
+  display: flex;
+  flex: 1;
   align-items: flex-end;
 
   @include media (tablet) {

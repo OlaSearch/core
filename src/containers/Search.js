@@ -21,6 +21,7 @@ import {
   SearchBar,
   ContentWrapper,
   SearchContent,
+  SearchHeader,
   ProgressBar,
   SlotSuggestion,
   Answer,
@@ -86,15 +87,16 @@ class Search extends React.Component {
           </Sidebar>
 
           <SearchContent>
-            <Sort />
-
-            <SearchTitle
-              totalResults={totalResults}
-              page={page}
-              perPage={per_page}
-              isLoading={isLoading}
-              isPhone={isPhone}
-            />
+            <SearchHeader>
+              <SearchTitle
+                totalResults={totalResults}
+                page={page}
+                perPage={per_page}
+                isLoading={isLoading}
+                isPhone={isPhone}
+              />
+              <Sort />
+            </SearchHeader>
 
             <ProgressBar />
 
