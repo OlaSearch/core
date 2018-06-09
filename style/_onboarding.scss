@@ -10,7 +10,7 @@
   left: 0;
   font-size: 14px;
   border-radius: 5px;
-  z-index: 3; /* Higher than contenteditable 2 */
+  z-index: 20; /* Higher than contenteditable 2 */
   box-shadow: $sharp-box-shadow;
 
   strong {

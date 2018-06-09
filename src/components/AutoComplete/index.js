@@ -40,6 +40,7 @@ import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
 import find from 'ramda/src/find'
+import equals from 'ramda/src/equals'
 import propEq from 'ramda/src/propEq'
 import {
   SEARCH_INPUTS,
@@ -138,15 +139,16 @@ class AutoComplete extends React.Component {
     if (prevProps.history !== this.props.history) {
       this.handleHistoryChange(this.props.history)
     }
-    if (
-      prevProps.q !== this.state.q &&
-      prevProps.tokens === this.props.tokens &&
-      !this.state.isFocused /* Check if the input is focused: then ignore */
-    ) {
-      this.setState({
-        q: cleanQueryTerm(this.props.q)
-      })
-    }
+    // if (
+    //   prevProps.q !== this.state.q &&
+    //   equals(prevProps.tokens, this.props.tokens)
+    //   // Check if the input is focused: then ignore
+    //   !this.state.isFocused
+    // ) {
+    //   this.setState({
+    //     q: cleanQueryTerm(this.props.q)
+    //   })
+    // }
   }
 
   clearFuzzyQueryTerm = () => {
