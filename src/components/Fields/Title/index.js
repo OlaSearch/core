@@ -12,6 +12,7 @@ function Title ({
   isLink,
   field,
   url,
+  baseUrl,
   children,
   isBookmark,
   isAutosuggest,
@@ -58,6 +59,7 @@ function Title ({
       {isLink ? (
         <Button
           url={url}
+          baseUrl={baseUrl}
           eventCategory={logEventCategory}
           eventLabel={logEventLabel}
           textLink={true}
@@ -93,7 +95,8 @@ Title.defaultProps = {
   openInNewWindow: false,
   textClassName: null,
   onClick: null,
-  type: null
+  type: null,
+  baseUrl: null
 }
 
 Title.propTypes = {
@@ -136,7 +139,11 @@ Title.propTypes = {
   /**
    * Is the title displayed in Autosuggest list
    */
-  isAutosuggest: PropTypes.bool
+  isAutosuggest: PropTypes.bool,
+  /**
+   * Base url
+   */
+  baseUrl: PropTypes.oneOfType([null, PropTypes.string])
 }
 
 module.exports = Title

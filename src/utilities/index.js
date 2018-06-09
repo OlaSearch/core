@@ -994,7 +994,6 @@ export function getUrlPath (url) {
  */
 export function getFileExtension (url) {
   if (!url || typeof url !== 'string') return null
-
   const [host, pathName] = getUrlPath(url)
   if (!pathName) return null
   const stopIndex = pathName.lastIndexOf('.')

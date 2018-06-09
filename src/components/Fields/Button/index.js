@@ -11,6 +11,7 @@ function Button ({
   children,
   className,
   url,
+  baseUrl,
   fullWidth,
   onClick,
   result,
@@ -27,6 +28,7 @@ function Button ({
   isTablet,
   isDesktop
 }) {
+  const linkUrl = baseUrl ? `${baseUrl}${url}` : url
   if (title) label = title
   function handleClick (event) {
     log({
@@ -45,15 +47,15 @@ function Button ({
     /* Prevent default */
     event.preventDefault()
     /* Trigger a state change so we have time to submit the log */
-    if (url) window.location.href = url
+    if (linkUrl) window.location.href = linkUrl
   }
 
   /* Return null if no content */
   if (!label && !children && !dangerouslySetInnerHTML) return null
 
   const target = openInNewWindow ? LINK_TARGETS.BLANK : undefined
-  const isLink = !!url
-  const fileExtenion = getFileExtension(url)
+  const isLink = !!linkUrl
+  const fileExtenion = getFileExtension(linkUrl)
   const buttonClass = cx(
     {
       'ola-btn': !replaceClassName,
@@ -72,7 +74,7 @@ function Button ({
     {
       type: isLink ? undefined : 'button',
       className: buttonClass,
-      href: isLink ? url : undefined,
+      href: isLink ? linkUrl : undefined,
       onClick: handleClick,
       target
     },
@@ -142,7 +144,11 @@ Button.propTypes = {
   /**
    * appendClassName
    */
-  replaceClassName: PropTypes.bool
+  replaceClassName: PropTypes.bool,
+  /**
+   * Base url
+   */
+  baseUrl: PropTypes.oneOfType([null, PropTypes.string])
 }
 
 Button.defaultProps = {
@@ -151,7 +157,8 @@ Button.defaultProps = {
   fullWidthMobile: true,
   label: null,
   textLink: false,
-  replaceClassName: false
+  replaceClassName: false,
+  baseUrl: null
 }
 
 module.exports = withLogger(Button)
