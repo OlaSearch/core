@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "docs:build": "styleguidist build",
     "prettier-standard": "prettier-standard 'src/**/!(polyfill)*.js'",
     "prettier": "yarn prettier-standard && git add src/ && git status",
-    "push": "git push origin master --tags && git push gitlab master --tags && npm publish ./"
+    "push": "git push origin master --tags && git push github master --tags"
   },
   "prettier": {
     "semi": false

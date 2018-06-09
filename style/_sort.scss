@@ -6,6 +6,7 @@
   align-items: center;
   font-size: 14px;
   display: none;
+  padding-left: 1rem;
 
   @include media (tablet) {
     display: flex;
