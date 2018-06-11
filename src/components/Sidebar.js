@@ -21,7 +21,10 @@ class Sidebar extends React.Component {
     document.getElementsByTagName('head')[0].appendChild(style)
   }
   componentDidUpdate (prevProps) {
-    if (prevProps.isSidebarOpen !== this.props.isSidebarOpen) {
+    if (
+      prevProps.isSidebarOpen !== this.props.isSidebarOpen &&
+      !this.props.isDesktop
+    ) {
       document.documentElement.classList.toggle(
         MODAL_ROOT_CLASSNAME,
         this.props.isSidebarOpen

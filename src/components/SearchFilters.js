@@ -19,9 +19,7 @@ class SearchFilters extends React.Component {
   static propTypes = {
     facets: PropTypes.array.isRequired,
     selected: PropTypes.array.isRequired,
-    dispatch: PropTypes.func,
-    conditional: PropTypes.bool,
-    showSelectedFacetItem: PropTypes.bool
+    conditional: PropTypes.bool
   }
 
   static defaultProps = {

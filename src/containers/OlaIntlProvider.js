@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as baseTranslations from './../translations'
@@ -35,7 +35,7 @@ class OlaIntlProvider extends React.Component {
   render () {
     return (
       <TranslateProvider value={this.translate}>
-        {Children.only(this.props.children)}
+        {this.props.children}
       </TranslateProvider>
     )
   }

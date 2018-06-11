@@ -87,7 +87,7 @@ class Search extends React.Component {
           </Sidebar>
 
           <SearchContent>
-            <SearchHeader>
+            <SearchHeader totalResults={totalResults}>
               <SearchTitle
                 totalResults={totalResults}
                 page={page}

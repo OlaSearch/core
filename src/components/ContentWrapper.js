@@ -12,13 +12,19 @@ function ContentWrapper ({
   searchOnLoad,
   children,
   q,
+  className,
   facet_query
 }) {
   if (!(searchOnLoad || (!!q || facet_query.length))) return null
-  const classes = cx('ola-results-flex', `ola-results-view-${view}`, {
-    'ola-sidebar-open': isSidebarOpen,
-    'ola-sidebar-closed': !isSidebarOpen
-  })
+  const classes = cx(
+    'ola-results-flex',
+    `ola-results-view-${view}`,
+    {
+      'ola-sidebar-open': isSidebarOpen,
+      'ola-sidebar-closed': !isSidebarOpen
+    },
+    className
+  )
   return (
     <div className={classes}>
       <Overlay active={!isDesktop && isSidebarOpen} onDismiss={toggleSidebar} />
