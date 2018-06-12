@@ -2,6 +2,13 @@ import fecha from 'fecha'
 
 const defaultMask = 'YYYY-MM-DD'
 
+/**
+ * Formats a date object to a formatted string
+ * @param  {(string|Object)} date
+ * @param  {string} mask Default date format
+ * @param  {string} originalFormat If a date is passed in as string, provide this format
+ * @return {string}
+ */
 export function format (date, mask = defaultMask, originalFormat) {
   if (!date) return
   if (typeof date === 'number' || !isNaN(date)) {
@@ -30,6 +37,13 @@ export function format (date, mask = defaultMask, originalFormat) {
   }
   return fecha.format(date, mask)
 }
+
+/**
+ * Accepts a Date string and a string format and returns a Date object.
+ * @param  {string} date
+ * @param  {type} mask
+ * @return {Object}
+ */
 export function parse (date, mask = defaultMask) {
   try {
     /**
@@ -54,10 +68,23 @@ export function parse (date, mask = defaultMask) {
   return date
 }
 
+/**
+ * Check if two dates are in the same day and same time
+ * @param  {string}  start
+ * @param  {string}  end
+ * @return {Boolean}
+ */
 export function isSameDay (start, end) {
   return parse(start).toDateString() === parse(end).toDateString()
 }
 
+/**
+ * Formats a UTC date
+ * @param  {(string|Object)} date
+ * @param  {string} mask
+ * @param  {string} type One of `from` or `to`
+ * @return {string}
+ */
 export function formatUTC (date, mask = defaultMask, type = null) {
   if (date === 'NOW') return 'Today'
   if (date === '*') return type && type === 'from' ? 'Past' : 'Future'
@@ -67,10 +94,21 @@ export function formatUTC (date, mask = defaultMask, type = null) {
   return format(d, mask)
 }
 
+/**
+ * Convert a date to UTC
+ * @param  {(string|Object)} date
+ * @param  {string} mask
+ * @return {string}
+ */
 export function toUTC (date, mask) {
   return parse(date, mask).toISOString()
 }
 
+/**
+ * Get today's date
+ * @param  {string} mask
+ * @return {Object}
+ */
 export function today (mask = defaultMask) {
   return format(new Date(), mask)
 }

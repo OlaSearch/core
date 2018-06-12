@@ -17,9 +17,9 @@ import flatten from 'ramda/src/flatten'
 
 /**
  * Trigger a browser push state
- * @param  {object} params
+ * @param  {Object} params
  * @param  {string} type
- * @param  {boolean} replaceQueryParamName
+ * @param  {Boolean} replaceQueryParamName
  * @return {null}
  */
 export function pushState (params, type, replaceQueryParamName) {
@@ -51,7 +51,7 @@ export function getHistoryCharacter (type) {
 
 /**
  * Replace current url state. This prevents `back` button navigation
- * @param  {object} params
+ * @param  {Object} params
  * @param  {string} type
  * @return {null}
  */
@@ -71,8 +71,8 @@ export function replaceState (params, type) {
  * Some CMS do not allow `q` in query string, so we replace `q` with `keywords`.
  * Set config.replaceQueryParamName = true to do this
  *
- * @param  {object} params
- * @param  {boolean} replaceQueryParamName
+ * @param  {Object} params
+ * @param  {Boolean} replaceQueryParamName
  * @return {null}
  */
 export function buildQueryString (params, replaceQueryParamName) {
@@ -134,9 +134,9 @@ export function buildQueryString (params, replaceQueryParamName) {
 
 /**
  * Parse browser location and set initial state
- * @param  {object} initialState Initial Query State
- * @param  {object} config
- * @return {object}
+ * @param  {Object} initialState Initial Query State
+ * @param  {Object} config
+ * @return {Object}
  */
 export function parseQueryString (initialState, config) {
   const loc = window.location.search

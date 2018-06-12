@@ -9,16 +9,17 @@ import { addFilter } from './../actions/Search'
 import onlineStatusEnhancer from './../enhancer/onlineStatusEnhancer'
 
 /**
- * Create Ola Redux store
- * createStore(
- *   config,
- *   searchProvider,
- *   reducers,
- *   middlewares,
- *   Store enhancers
- * )
+ * Create Ola Redux Store
+ * @param  {Object} config Project configuration file
+ * @param  {Object} searchProvider Solr or Elastic Search provider { Parser, QueryBuilder, Http }
+ * @param  {Object} searchProvider.Parser
+ * @param  {Object} searchProvider.QueryBuilder
+ * @param  {Object} searchProvider.Http
+ * @param  {Object} reducers Redux reducers
+ * @param  {Array}  middlewares Redux store middlewares
+ * @param  {Array}  enhancers Redux store enhancers
+ * @return {object}
  */
-
 export default function (
   config,
   searchProvider,

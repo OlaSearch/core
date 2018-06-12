@@ -13,6 +13,7 @@ import {
 
 /**
  * Throttled function which is called from createOlaMiddleware.js
+ * @type {null}
  */
 export const debouncePersistState = debounce(persistState, PERSIST_TIMEOUT)
 /**
@@ -53,8 +54,11 @@ export const STATE_TYPE_KEYS = [
 ]
 
 /**
- * persistState
- * Called when any of the above actions are fired
+ * Persist state to localstorage or cookie
+ * @param  {Object} action
+ * @param  {Object} getState
+ * @param  {string} namespace
+ * @return {null}
  */
 function persistState (action, getState, namespace) {
   const state = getState()

@@ -14,6 +14,12 @@ import {
   BOT_STORAGE_KEY
 } from './../constants/Settings'
 
+/**
+ * Prepares store state for rehydration
+ * @param  {Object} options.config Project Config file
+ * @param  {string} options.device Type of user's device (isDesktop, isPhone, isTablet)
+ * @return {Object}
+ */
 export function prepareStoreState ({ config, device }) {
   /* Create user cookie */
   var userSession = cookies.get(USER_SESSION_KEY, config.namespace)

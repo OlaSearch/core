@@ -12,7 +12,7 @@ var cookieCache = isBrowser() ? document.cookie : ''
  * Get an item from localstorage
  * @param  {string} key
  * @param  {string} namespace
- * @return {object}
+ * @return {Object}
  */
 export function get (key, namespace) {
   let _key = getKey(key, namespace)
@@ -31,7 +31,7 @@ export function get (key, namespace) {
 /**
  * Set localstorage item
  * @param {string} key
- * @param {object} value
+ * @param {Object} value
  * @param {null} namespace
  */
 export function set (key, value, namespace) {

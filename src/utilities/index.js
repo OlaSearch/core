@@ -61,6 +61,16 @@ export function now () {
   return new Date().getTime()
 }
 
+/**
+ * Debounce a function
+ * Debouncing enforces that a function not be called again until a certain amount of time has passed without it being called.
+ * As in "execute this function only if 100 milliseconds have passed without it being called.
+ *
+ * @param  {Function} func
+ * @param  {number} wait
+ * @param  {Boolean} immediate
+ * @return {Function}
+ */
 export function debounce (func, wait, immediate) {
   var timeout, args, context, timestamp, result
 
@@ -92,6 +102,11 @@ export function debounce (func, wait, immediate) {
   }
 }
 
+/**
+ * Convert a array of values to a set of 2 values in an Array
+ * @param  {Array} value
+ * @return {Array}
+ */
 export function parseRangeValues (value) {
   /* [1, 2, 3, 4] => [1, 2], [3, 4] */
   var valueArray = []
@@ -104,24 +119,56 @@ export function parseRangeValues (value) {
   return valueArray
 }
 
+/**
+ * Converts everything to string
+ * @param  {Array} values
+ * @return {Array}
+ */
 export function castNumberToStringArray (values) {
   if (!Array.isArray(values)) throw new Error('Argument is Invalid')
   return values.map((item) => item.toString())
 }
 
+/**
+ * Create HTML markup for React
+ * @param  {(string|Object)} html
+ * @return {Object}
+ */
 export function createHTMLMarkup (html) {
   if (Array.isArray(html)) html = html.join('')
   return { __html: html }
 }
 
+/**
+ * Convert HTML entities to symbols
+ * (/) - Ola uses for Hierarchical faceting.
+ * (|) - Ola uses for ID Label separation. For eg: ola_collection_name: 12|Articles
+ * @param  {string} text
+ * @return {string}
+ */
 export function decodeHtmlEntities (text) {
   return text.replace(/&#47;/gi, '/').replace(/&#124;/gi, '|')
 }
 
+/**
+ * Clean string to remove HTML Entities
+ * @param  {string} term
+ * @return {string}
+ */
 export function cleanQueryTerm (term) {
   return decodeHtmlEntities(term)
 }
 
+/**
+ * Get Display name of a facet. A facet field can be stored as
+ * ola_collection_name: article
+ * OR
+ * ola_collection_name: 12|article
+ *
+ * @param  {Object} haystack
+ * @param  {string} needle
+ * @return {string}
+ */
 export function getDisplayName (haystack, needle) {
   if (arguments && arguments.length === 1) {
     haystack = null
@@ -140,6 +187,12 @@ export function getDisplayName (haystack, needle) {
   return decodeHtmlEntities(needle)
 }
 
+/**
+ * Returns a snippet based on config.snippetRules
+ * @param  {(Object|Array)} rules
+ * @param  {Object} result Search result
+ * @return {(Function|Object)}
+ */
 export function getMatchingSnippet (rules, result) {
   if (!rules) return false
   for (let i = 0, len = rules.length; i < len; i++) {
@@ -827,7 +880,8 @@ export function syncTokens (old_text, new_text, tokens) {
 }
 
 /**
- * Scroll to element
+ * Scroll to an element
+ * @param {Object} el
  */
 export function scrollTo (el) {
   scrollIntoView(el, document, {
@@ -836,7 +890,11 @@ export function scrollTo (el) {
 }
 
 /**
- * Smooth scroll
+ * Smoothly scroll to an element in the dom
+ * @param {Object} element
+ * @param {number} target
+ * @param {number} duration
+ * @param {string} direction
  */
 export function smoothScroll (
   element,
@@ -907,11 +965,14 @@ export function smoothScroll (
 }
 
 /**
- * Get field label
+ * Get Field label by removing field type suffix
  * post_title => 'Title'
  * post_title_s => 'Title'
+ *
+ * @param  {string} field
+ * @param  {Object} fieldLabels
+ * @return {(string|null)}
  */
-
 export function getFieldLabel (field, fieldLabels) {
   /* Remove field type */
   field = field.replace(
@@ -923,9 +984,11 @@ export function getFieldLabel (field, fieldLabels) {
 }
 
 /**
- * Get facet type
+ * Get the facet type for facets set by the Intent engine
+ * @param  {string} type
+ * @param  {(string|Array)} value
+ * @return {string}
  */
-
 export function getFacetTypeFromSlot (type, value) {
   switch (type) {
     case SLOT_DATE:
@@ -945,6 +1008,7 @@ export function getFacetTypeFromSlot (type, value) {
 
 /**
  * Check if current element is focusable
+ * @param {Object} el
  */
 export function isFocusable (el) {
   if (!el) return false
@@ -957,17 +1021,26 @@ export function isFocusable (el) {
   return false
 }
 
+/**
+ * Get Current Browser document
+ * @return {(Object|null)}
+ */
 export function getDocument () {
   if (isBrowser()) return document
   return null
 }
 
+/**
+ * Check if the current environment is Browser or Node
+ * @return {Boolean}
+ */
 export function isBrowser () {
   return typeof document !== 'undefined'
 }
 
 /**
  * Is local host
+ * @return {Boolean}
  */
 export function isDev () {
   const doc = getDocument()
@@ -982,6 +1055,7 @@ export function isDev () {
 
 /**
  * Get url path
+ * @param {string} url
  */
 export function getUrlPath (url) {
   var a = document.createElement('a')
@@ -991,6 +1065,7 @@ export function getUrlPath (url) {
 
 /**
  * Get file extension
+ * @param {[type]} url
  */
 export function getFileExtension (url) {
   if (!url || typeof url !== 'string') return null
@@ -1002,17 +1077,19 @@ export function getFileExtension (url) {
 }
 
 /**
- * Get fallback value
+ * Get a fields value from search result
+ * @param  {Object} result
+ * @param  {string} field Field name
+ * @param  {Array} fallbackFields List of fallback fields to try
+ * @return {string}
  */
-
 export function getFieldValue (result, field, fallbackFields) {
-  var fieldContent = result[field]
+  const fieldContent = result[field]
   if (!fieldContent && fallbackFields.length) {
     for (let i = 0; i < fallbackFields.length; i++) {
       let fieldName = fallbackFields[i]
       if (fieldName in result && result[fieldName]) {
-        fieldContent = result[fieldName]
-        break
+        return result[fieldName]
       }
     }
   }
