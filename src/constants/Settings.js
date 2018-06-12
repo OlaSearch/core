@@ -273,17 +273,18 @@ export const MEDIA_TYPE_PHONE = 'mobile'
  * 3. margin, padding reset => same as 4
  * 4. overflow hidden => same as 4
  * 5. -webkit-overflow-scrolling => same as 4
- * @type {[type]}
+ * @return {string}
  */
 export const BODY_STYLE_MODAL = `
-.${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body{
-  -webkit-overflow-scrolling : touch !important;
-  overflow: hidden !important;
-  height: 100% !important;
-  min-height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: white !important;
+  .${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body {
+    -webkit-overflow-scrolling : touch !important;
+    overflow: hidden !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
 `
 
 export const LINK_TARGETS = {
