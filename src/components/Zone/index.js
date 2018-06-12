@@ -1,86 +1,29 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { replaceFacet, removeFacet } from './../../actions/Search'
-import {
-  addFacet as addFacetAutoSuggest,
-  removeFacet as removeFacetAutoSuggest
-} from './../../actions/AutoSuggest'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import flatten from 'ramda/src/flatten'
-import find from 'ramda/src/find'
-import propEq from 'ramda/src/propEq'
-import withConfig from './../../decorators/withConfig'
+import SelectBox from './../SelectBox'
 
-/* Create a zone facet */
-const createZoneFacet = (name) => ({ name, zone: true, type: 'string' })
-
-function Zone (props) {
-  function onChange (event) {
-    let { value } = event.target
-    let { onChange, replaceFacet, removeFacet } = props
-    let facet = createZoneFacet(props.config.zone.filter)
-    if (value) {
-      replaceFacet(facet, value)
-    } else {
-      removeFacet(facet)
-    }
-    onChange && onChange(facet, value)
+class Zone extends React.Component {
+  handleChange = (event) => {}
+  static defaultProps = {
+    values: []
   }
-
-  let { zone: { defaultValue, values, filter } } = props.config
-  let { selected } = props
-  let selectedValues = flatten(
-    selected.filter((item) => item.name === filter).map((item) => item.selected)
-  )
-  let selectedValue = selectedValues.length ? selectedValues[0] : defaultValue
-  let selectedDisplayName = find(propEq('name', selectedValue))(values)[
-    'displayName'
-  ]
-
-  return (
-    <div className='ola-zone'>
-      <label className='ola-zone-label'>Select zone</label>
-      <span className='ola-zone-selected'>{selectedDisplayName}</span>
-      <select onChange={onChange} value={selectedValue}>
-        {values.map(({ name, displayName }) => {
-          return (
-            <option key={name} value={name}>
-              {displayName}
-            </option>
-          )
-        })}
-      </select>
-    </div>
-  )
-}
-
-Zone.defaultProps = {
-  selected: []
-}
-
-function mapStateToProps (state, ownProps) {
-  return {
-    selected: ownProps.isAutosuggest
-      ? state.AutoSuggest.facet_query
-      : state.QueryState.facet_query
+  render () {
+    const { values, field } = this.props
+    if (!values.length) return null
+    return (
+      <div className='ola-zone'>
+        <SelectBox onChange={this.handleChange} value={''} inline>
+          {values.map(({ name, displayName }, idx) => {
+            return (
+              <option key={idx} value={name}>
+                {displayName}
+              </option>
+            )
+          })}
+        </SelectBox>
+      </div>
+    )
   }
 }
 
-function mapDispatchToProps (dispatch, ownProps) {
-  let actions
-  if (ownProps.isAutosuggest) {
-    actions = {
-      replaceFacet: addFacetAutoSuggest,
-      removeFacet: removeFacetAutoSuggest
-    }
-  } else {
-    actions = {
-      replaceFacet,
-      removeFacet
-    }
-  }
-  return bindActionCreators(actions, dispatch)
-}
-
-module.exports = connect(mapStateToProps, mapDispatchToProps)(withConfig(Zone))
+export default connect(null, {})(Zone)
