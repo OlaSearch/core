@@ -13,19 +13,6 @@ import GPlus from '@olasearch/icons/lib/material-gplus'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import Arrow from './../../Arrow'
 
-function getArrowClass (position) {
-  switch (position) {
-    case 'top-left':
-      return 'bottom-left'
-    case 'top-right':
-      return 'bottom-right'
-    case 'bottom-right':
-      return 'top-right'
-    case 'bottom-left':
-      return 'top-left'
-  }
-}
-
 /**
  * Displays a share button
  */
@@ -52,7 +39,7 @@ class Share extends React.PureComponent {
     this.props.hide()
   }
   render () {
-    let {
+    const {
       result,
       isCollapsed,
       toggle,
@@ -66,16 +53,16 @@ class Share extends React.PureComponent {
       position,
       ...rest
     } = this.props
-    let { title, url } = result
-    let { location } = window
-    let emailUrl = `mailto:?&subject=${title}&body=${url}`
-    let facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    const { title, url } = result
+    const { location } = window
+    const emailUrl = `mailto:?&subject=${title}&body=${url}`
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       url
     )}&title=${title}&redirect_uri=${location.href}`
-    let twitterUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`
-    let linkedInUrl = `https://www.linkedin.com/cws/share?url=${url}`
-    let gplusUrl = `https://plus.google.com/share?url=${url}`
-    let classes = cx('ola-share-links', {
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`
+    const linkedInUrl = `https://www.linkedin.com/cws/share?url=${url}`
+    const gplusUrl = `https://plus.google.com/share?url=${url}`
+    const classes = cx('ola-share-links', {
       'ola-drop-open': isCollapsed,
       [`ola-drop-position-${position}`]: position
     })

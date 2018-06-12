@@ -8,7 +8,9 @@ initialState = { isOpen: false };
     isOpen={state.isOpen}
     onRequestClose={() => setState({ isOpen: false })}
   >
-    <p>Portal content</p>
+    <div style={{background:'white', padding: '2rem'}}>
+      <p>Portal content</p>
+    </div>
   </Portal>
 </div>
 ```

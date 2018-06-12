@@ -36,6 +36,7 @@ export default function (WrappedComponent) {
       }
     }
     onPopState = () => {
+      if (!this.props.dispatch) return
       this.props.dispatch(initSearch({ config: this.props.config }))
     }
     render () {

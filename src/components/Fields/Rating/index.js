@@ -4,6 +4,9 @@ import Star from '@olasearch/icons/lib/star'
 import FieldLabel from './../FieldLabel'
 import withTheme from './../../../decorators/withTheme'
 
+/**
+ * Add a star rating field
+ */
 function Rating ({
   rating,
   interval,
@@ -15,14 +18,14 @@ function Rating ({
   theme
 }) {
   const normalized = rating / interval
-  let stars = []
-  const total = Math.max(Math.ceil(normalized), 1)
+  var stars = []
+  const total = Math.max(Math.ceil(normalized), 0)
   const maxInterval = 100 / interval
   for (let i = 0; i < total; i++) {
-    stars.push(<Star size={iconSize} key={i} className={activeClass} />)
+    stars[i] = <Star size={iconSize} key={i} className={activeClass} />
   }
   for (let i = total; i < maxInterval; i++) {
-    stars.push(<Star size={iconSize} key={i} className={inActiveClass} />)
+    stars[i] = <Star size={iconSize} key={i} className={inActiveClass} />
   }
   if (!stars.length) stars = <div className={emptyClass} />
   return (

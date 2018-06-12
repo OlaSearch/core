@@ -91,6 +91,7 @@ export AnswerCarousel from './components/Answer/AnswerCarousel'
 export AnswerMC from './components/Answer/AnswerMC'
 export AnswerVideo from './components/Answer/AnswerVideo'
 export AnswerEmbed from './components/Answer/AnswerEmbed'
+export AnswerLineChart from './components/Answer/AnswerLineChart'
 export SlotSuggestion from './components/SlotSuggestion'
 
 /* Export theme */

@@ -108,6 +108,9 @@ class ModalPortal extends React.Component {
   }
 }
 
+/**
+ * Portal are modal dialogs which are appended outside the React component tree. It is always appended to the parent document, even when called from the chatbot
+ */
 class Portal extends React.Component {
   constructor (props) {
     super(props)
