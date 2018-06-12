@@ -5,7 +5,9 @@ import { getComponentDisplayName } from './../utilities'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
 /**
- * Use React router to manage state. Fallbacks to browser history
+ * Check if react router is enabled and use it to manage URL state
+ * @param  {Object} WrappedComponent
+ * @return {Object}
  */
 export default function (WrappedComponent) {
   class WithRoute extends React.Component {

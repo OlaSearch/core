@@ -5,14 +5,28 @@ import * as baseTranslations from './../translations'
 import { supplant, translateKey, createHTMLMarkup } from './../utilities'
 import { TranslateProvider } from './TranslateContext'
 
+/**
+ * Intl provider to access language translations
+ */
 class OlaIntlProvider extends React.Component {
   constructor (props) {
     super(props)
     const { locale, translations = {} } = props
+    /**
+     * Cache all translations
+     * Translations cannot be dynamically changed. Store in state only if required
+     */
     this.messages = {
       ...(baseTranslations[locale] ? baseTranslations[locale]['messages'] : {}),
       ...(translations[locale] ? translations[locale]['messages'] : {})
     }
+  }
+  static propTypes = {
+    /**
+     * Current locale
+     * @type {String}
+     */
+    locale: PropTypes.string
   }
   static defaultProps = {
     locale: 'en'

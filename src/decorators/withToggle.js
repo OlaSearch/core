@@ -4,6 +4,8 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 
 /**
  * Show hide components
+ * @param  {Object} WrappedComponent
+ * @return {Object}
  */
 export default function withToggle (WrappedComponent) {
   class WithToggle extends React.Component {

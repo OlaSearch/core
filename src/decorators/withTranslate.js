@@ -2,7 +2,9 @@ import React from 'react'
 import { TranslateConsumer } from './../containers/TranslateContext'
 
 /**
- * Access theme variables
+ * Access translate function
+ * @param  {Object} WrappedComponent
+ * @return {Object}
  */
 function withTranslate (WrappedComponent) {
   return (props) => (

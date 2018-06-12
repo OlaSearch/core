@@ -221,27 +221,57 @@ export function getMatchingSnippet (rules, result) {
   return false
 }
 
+/**
+ * Check if any characters exist in a string
+ * @param  {string} query
+ * @param  {string} characters
+ * @return {Boolean}
+ */
 export function checkForAllowedCharacters (query, characters) {
   if (!query || !characters) return true
   let _regExp = new RegExp(characters, 'gi')
   return _regExp.test(query)
 }
 
+/**
+ * Get a display name of a React Component
+ * @param  {Object} WrappedComponent
+ * @return {string}
+ */
 export function getComponentDisplayName (WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name
 }
 
+/**
+ * Get a key value from an object
+ * @param  {string} path
+ * @param  {Object} obj
+ * @param  {Boolean} safe
+ * @return {string}
+ */
 export function translateKey (path, obj, safe) {
   return obj[path] === null
     ? ''
     : obj[path] /* || (process.env.NODE_ENV === 'production' ? '' : path) */
 }
 
+/**
+ * Check if a field is taxonomy field
+ * @param  {string}  fieldName
+ * @param  {Object}  fieldTypeMapping
+ * @return {Boolean}
+ */
 export function isTaxonomyField (fieldName, fieldTypeMapping) {
   if (!(fieldName in fieldTypeMapping)) return false
   return fieldTypeMapping[fieldName] === TAXO_ENTITY
 }
 
+/**
+ * Sort search history by popularity
+ * @param  {Object} a
+ * @param  {Object} b
+ * @return {number}
+ */
 export function sortHistory (a, b) {
   let a1 = a.popularity
   let b1 = b.popularity
@@ -257,6 +287,13 @@ export function sortHistory (a, b) {
   return 0
 }
 
+/**
+ * Returns a list of facets that should be displayed in the sidebar. The rules are in config.facetsToDisplay
+ * @param  {Array} selected
+ * @param  {Array} facets
+ * @param  {Object} facetsToDisplay
+ * @return {Array}
+ */
 export function getFacetsToDisplay (selected, facets, facetsToDisplay) {
   var selections = flatten(selected.map((item) => item.selected))
   var names = []
@@ -289,6 +326,11 @@ export function getFacetsToDisplay (selected, facets, facetsToDisplay) {
     })
 }
 
+/**
+ * Create anchor tags for Sub title (h2, h3 headings in search result)
+ * @param  {string} str
+ * @return {string}
+ */
 export function sanitizeAnchor (str) {
   if (!str) return null
   if (typeof str !== 'string') str = str.toString()
@@ -301,6 +343,11 @@ export function sanitizeAnchor (str) {
     .replace(/[\s_]/gi, '-') // convert whitespaces and underscore to dash
 }
 
+/**
+ * Clean up phone number
+ * @param  {string} str
+ * @return {string}
+ */
 export function sanitizePhone (str) {
   if (typeof str !== 'string') str = str.toString()
   return str
@@ -309,11 +356,23 @@ export function sanitizePhone (str) {
     .replace(/[a-z_\s-()]/gi, '')
 }
 
+/**
+ * Remove leading and trailing spaces
+ * @param  {string} str
+ * @return {string}
+ */
 export function trim (str) {
   if (typeof str !== 'string') str = str.toString()
   return str.replace(/^\s+|\s+$/g, '')
 }
 
+/**
+ * Trigger a custom event
+ * @param  {Object} el
+ * @param  {string} name
+ * @param  {Object} options
+ * @return {null}
+ */
 export function triggerEvent (el, name, options) {
   var event
   if (window.CustomEvent) {
@@ -325,6 +384,12 @@ export function triggerEvent (el, name, options) {
   el.dispatchEvent(event)
 }
 
+/**
+ * Pick a key from a nested object
+ * @param  {Object} obj
+ * @param  {string} key
+ * @return {(string|Object)}
+ */
 export function pickDeep (obj, key) {
   if (!obj) return null
   if (Object.keys(obj).indexOf(key) !== -1) return obj[key]
@@ -334,6 +399,13 @@ export function pickDeep (obj, key) {
   return null
 }
 
+/**
+ * Truncate string
+ * @param  {string} str
+ * @param  {number} length
+ * @param  {string} ellipsis
+ * @return {string}
+ */
 export function truncate (str, length, ellipsis = '...') {
   if (str.toString().length > length) {
     return (
@@ -347,6 +419,11 @@ export function truncate (str, length, ellipsis = '...') {
   return str
 }
 
+/**
+ * Escapes special characters
+ * @param  {string} str
+ * @return {string}
+ */
 export function escapeRegEx (str) {
   return str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
 }
@@ -362,6 +439,14 @@ export function sanitizeText (str) {
 
 /**
  * Used for heirarchical facets
+ */
+/**
+ * Convert facet values to hierarchical list
+ * @param  {Array} data
+ * @param  {Number} rootLevel
+ * @param  {string} parentNode
+ * @param  {String} delimiter
+ * @return {Array}
  */
 export function toNestedArray (
   data,
@@ -417,10 +502,21 @@ export function uuid () {
   })
 }
 
+/**
+ * Creates a storage key
+ * @param  {string} key
+ * @param  {string} namespace
+ * @return {string}
+ */
 export function getKey (key, namespace) {
   return namespace ? `${key}_${namespace}` : key
 }
 
+/**
+ * Check if the image path is svg
+ * @param  {string}  path
+ * @return {Boolean}
+ */
 export function isSvg (path) {
   return (
     path
@@ -430,6 +526,11 @@ export function isSvg (path) {
   )
 }
 
+/**
+ * Get position of an element
+ * @param  {Object} element
+ * @return {Object}
+ */
 export function getCoords (element) {
   var box = element.getBoundingClientRect()
   var body = document.body
@@ -449,6 +550,12 @@ export function getCoords (element) {
   }
 }
 
+/**
+ * Rounds a decimal value to nearest
+ * @param  {string} type  Any of JS math function names
+ * @param  {(string|float)} value
+ * @param  {(any)} exp
+ */
 export function decimalAdjust (type, value, exp) {
   // If the exp is undefined or zero...
   if (typeof exp === 'undefined' || +exp === 0) {
@@ -482,22 +589,21 @@ export function isValidUrl (str) {
   return regexp.test(str)
 }
 
-export function formatText (str, label) {
-  if (isValidUrl(str)) {
-    return (
-      <a className='ola-email-link' href={str}>
-        {label}
-      </a>
-    )
-  }
-  return str
-}
-
+/**
+ * Clean numbers
+ * @param  {number} text
+ * @return {number}
+ */
 export function sanitizeNumbers (text) {
   if (typeof text !== 'string') return text
   return parseFloat(text.replace(/<(?:.*|\n)*?>/gm, ''))
 }
 
+/**
+ * Merges search results with search history (Used in autocomplete)
+ * @param  {Object} options
+ * @return {Array}
+ */
 export function mergeResultsWithHistory (options) {
   let { history, results = [], query, limit = 5, showHistoryForQuery } = options
   /* Filter history when results are empty */
@@ -574,6 +680,10 @@ export function mergeResultsWithHistory (options) {
   return [...history, ...results]
 }
 
+/**
+ * Get Cursor caret position
+ * @return {Object}
+ */
 export function getCaretPosition () {
   var x = 0
   var y = 0
@@ -595,6 +705,11 @@ export function getCaretPosition () {
   }
 }
 
+/**
+ * Redirect browser to a url
+ * @param  {string} url
+ * @return {null}
+ */
 export function redirect (url) {
   window.location.href = url
 }
@@ -616,6 +731,12 @@ export function once (fn, context) {
   }
 }
 
+/**
+ * Convert Hex to RGBA
+ * @param  {string} hex
+ * @param  {Number} opacity
+ * @return {string}
+ */
 export function hexToRGBa (hex, opacity = 0.5) {
   hex = hex.replace('#', '')
   let r = parseInt(hex.substring(0, 2), 16)
@@ -625,15 +746,30 @@ export function hexToRGBa (hex, opacity = 0.5) {
   return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')'
 }
 
+/**
+ * Convert any string to color
+ * @param  {string} str
+ * @return {string}
+ */
 export function stringToColor (str) {
   return intToRGB(hashCode(str.toLowerCase()))
 }
 
+/**
+ * Convert integer to rgb
+ * @param  {string} i
+ * @return {string}
+ */
 export function intToRGB (i) {
   var c = (i & 0x00ffffff).toString(16).toUpperCase()
   return '#' + '00000'.substring(0, 6 - c.length) + c
 }
 
+/**
+ * Hashes any string
+ * @param  {string} str
+ * @return {string}
+ */
 export function hashCode (str) {
   var hash = 0
   for (var i = 0; i < str.length; i++) {
@@ -642,6 +778,11 @@ export function hashCode (str) {
   return hash
 }
 
+/**
+ * Get word position in a input box
+ * @param  {Object} textInput
+ * @return {Object}
+ */
 export function getWordPosition (textInput) {
   /* Break early */
   if (!textInput && textInput['selectionEnd']) return
@@ -703,6 +844,14 @@ export function getWordPosition (textInput) {
   }
 }
 
+/**
+ * Creates autocomplete results
+ * @param  {Array}  results
+ * @param  {Array} allFacets
+ * @param  {Boolean} showWordSuggestion
+ * @param  {Array} tokens
+ * @return {Array}
+ */
 export function getAutoCompleteResults (
   results = [],
   allFacets,
@@ -802,6 +951,12 @@ export function getAutoCompleteResults (
   return res
 }
 
+/**
+ * Highlight tokens in text by replacing the text in span tags
+ * @param  {string} text
+ * @param  {Array} tokens
+ * @return {string}
+ */
 export function highlightTokens (text, tokens) {
   if (!tokens || !tokens.length) return text
   let arr = []
@@ -827,12 +982,24 @@ export function highlightTokens (text, tokens) {
   return arr.join('')
 }
 
+/**
+ * Sort arrays by length
+ * @param  {Array} a
+ * @param  {Array} b
+ * @return {Number}
+ */
 export function sortArrayByLength (a, b) {
   if (a.length > b.length) return -1
   if (a.length < b.length) return 1
   return 0
 }
 
+/**
+ * Pick keys from object
+ * @param  {Array} keys
+ * @param  {Object} obj
+ * @return {Object}
+ */
 export function pick (keys, obj) {
   let res = {}
   var len = keys.length
@@ -847,11 +1014,19 @@ export function pick (keys, obj) {
   return res
 }
 
+/**
+ * Cycle between layout views
+ * @param  {string} view
+ * @return {string}
+ */
 export function getNextView (view) {
   const curIndex = LAYOUT_OPTIONS.indexOf(view) + 1
   return LAYOUT_OPTIONS[curIndex >= LAYOUT_OPTIONS.length ? 0 : curIndex]
 }
 
+/**
+ * Not used. NA. Need to look into removing this fn
+ */
 export function syncTokens (old_text, new_text, tokens) {
   // http://jsbin.com/futowerilu/1/edit?js,console
   if (old_text === new_text) return tokens

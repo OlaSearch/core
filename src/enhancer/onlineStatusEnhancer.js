@@ -1,6 +1,10 @@
 import types from './../constants/ActionTypes'
 import { isBrowser } from './../constants/Settings'
 
+/**
+ * Redux store enhancer to monitor browser online/offline status and sync to redux store
+ * @return {Object}
+ */
 export default function () {
   return (createStore) => (...args) => {
     const store = createStore(...args)

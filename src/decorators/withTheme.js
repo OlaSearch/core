@@ -3,6 +3,8 @@ import { ThemeConsumer } from './../containers/ThemeContext'
 
 /**
  * Access theme variables
+ * @param  {Object} WrappedComponent
+ * @return {Object}
  */
 function withTheme (WrappedComponent) {
   return (props) => (

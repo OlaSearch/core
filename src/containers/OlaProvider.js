@@ -9,7 +9,14 @@ import { connect } from 'react-redux'
 import cx from 'classnames'
 
 /**
- * Ola Provider wrapper for all Ola Components
+ * Ola Provider to wrap any Ola Search Components
+ * @param {Object} options.config
+ * @param {Object} options.translations
+ * @param {Object} options.children
+ * @param {Boolean} options.isPhone
+ * @param {Boolean} options.isTablet
+ * @param {Boolean} options.isDesktop
+ * @param {string} options.style
  */
 function OlaProvider ({
   config,

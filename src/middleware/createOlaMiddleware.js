@@ -19,6 +19,16 @@ import {
 } from './../constants/Settings'
 import { uuid, getFacetTypeFromSlot } from './../utilities'
 
+/**
+ * Ola Middleware accepts all http requests only if action types is an array with 3 values
+ *
+ * @param  {Object} options
+ * @param  {Object} options.parser Search parser
+ * @param  {Object} options.queryBuilder Search adapter query builder
+ * @param  {Object} options.searchService Search adapter http service
+ * @param  {Object} options.config Project configuration object
+ * @return {function}
+ */
 export default function (options = {}) {
   return ({ dispatch, getState }) => (next) => (action) => {
     /* If no action pass it on */

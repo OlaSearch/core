@@ -7,6 +7,12 @@ import {
   API_IGNORE_LOGGING
 } from './../constants/Settings'
 
+/**
+ * Create a redux middleware to persist date to localstorage or cookie
+ * @param  {string} options.namespace Project namespace
+ * @param  {Array} options.types
+ * @param  {function} options.callback
+ */
 export default function ({
   namespace,
   types = STATE_TYPE_KEYS,

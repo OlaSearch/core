@@ -4,7 +4,9 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 import { log } from './../actions/Logger'
 
 /**
- * Access log function
+ * Access log function using this HOC
+ * @param  {Object} WrappedComponent
+ * @return {Object}
  */
 export default function (WrappedComponent) {
   class WithLogger extends React.PureComponent {

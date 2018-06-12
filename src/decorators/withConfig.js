@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { ConfigConsumer } from './../containers/ConfigContext'
 
 /**
- * Access project configuration object
+ * Access config variables using the HOC
+ * @param  {Object} WrappedComponent
+ * @return {Object}
  */
 function withConfig (WrappedComponent) {
   return (props) => (
