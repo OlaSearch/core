@@ -49,7 +49,9 @@
   @extend %ola-icon-button;
   color: $button-primary-color;
   width: $button-search-width;
-  background: $button-primary-background;
+  &, &:hover, &:active, &:focus {
+    background: $button-primary-background;
+  }
 }
 
 /* Primary button */

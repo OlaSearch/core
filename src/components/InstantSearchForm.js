@@ -109,6 +109,12 @@ class InstantSearchForm extends React.Component {
     })
   }
 
+  onBlur = () => {
+    this.setState({
+      isFocused: false
+    })
+  }
+
   render () {
     let {
       q,
@@ -151,7 +157,7 @@ class InstantSearchForm extends React.Component {
               autoCapitalize='off'
               spellCheck='false'
               onFocus={this.onFocus}
-              onBlur={this.props.onBlur}
+              onBlur={this.onBlur}
               onChange={this.onChange}
             />
 
@@ -173,11 +179,22 @@ class InstantSearchForm extends React.Component {
               />
             ) : null}
           </div>
+          {q && (
+            <button
+              type='button'
+              className='ola-clear-button'
+              tabIndex='-1'
+              onClick={this.onClear}
+              aria-label='Clear Search'
+            >
+              <Cross />
+            </button>
+          )}
           <button
             type='button'
             className='ola-search-button'
             onClick={this.onClear}
-            aria-label='Submit'
+            aria-label='Clear'
           >
             <Search />
           </button>

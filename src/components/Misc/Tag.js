@@ -32,19 +32,24 @@ function Tag (props) {
       if (typeof name === 'string') {
         displayName = name
       } else {
-        let [from, to] = name
+        let [fromRange, toRange] = name
+        const _from =
+          type !== NUMERICAL_RANGE && dateFormat
+            ? DateParser.formatUTC(fromRange, dateFormat, 'from')
+            : fromRange
+        const _to =
+          type !== NUMERICAL_RANGE && dateFormat
+            ? DateParser.formatUTC(toRange, dateFormat, 'to')
+            : toRange
         /* All dates will be in UTC */
-        displayName = supplant(template, {
-          from:
-            type !== NUMERICAL_RANGE && dateFormat
-              ? DateParser.formatUTC(from, dateFormat, 'from')
-              : from,
-          to:
-            type !== NUMERICAL_RANGE && dateFormat
-              ? DateParser.formatUTC(to, dateFormat, 'to')
-              : to,
-          name: facet.displayName || facet.name
-        })
+        displayName =
+          _from === _to
+            ? _from
+            : supplant(template, {
+              from: _from,
+              to: _to,
+              name: facet.displayName || facet.name
+            })
       }
       break
 
