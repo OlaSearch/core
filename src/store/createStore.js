@@ -9,7 +9,7 @@ import { addFilter } from './../actions/Search'
 import onlineStatusEnhancer from './../enhancer/onlineStatusEnhancer'
 
 /**
- * Signature
+ * Create Ola Redux store
  * createStore(
  *   config,
  *   searchProvider,
@@ -114,7 +114,8 @@ export default function (
   })
 
   /**
-   * Do we need to add any filters
+   * The config file will contain filters that needs to be added to exclude or include certain documents.
+   * There are the initial set of filters which will persist across all search activity
    */
   if (filters && filters.length) {
     for (let i = 0, len = filters.length; i < len; i++) {

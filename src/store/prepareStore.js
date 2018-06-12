@@ -88,14 +88,14 @@ export function prepareStoreState ({ config, device }) {
       console.warn(err)
     }
   }
-  const isDesktopSize = isDesktopMedia()
+  const isMediaDesktop = isDesktopMedia()
   /**
    * Hide sidebar if
    * 1. Device is not a desktop
    * 2. Browser width less than desktop width
    */
   const isSidebarOpen =
-    (device && !device.isDesktop) || !isDesktopSize
+    (device && !device.isDesktop) || !isMediaDesktop
       ? false
       : storeState && typeof storeState.isSidebarOpen !== 'undefined'
         ? hideToggleSidebar &&

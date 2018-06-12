@@ -15,31 +15,66 @@ import propEq from 'ramda/src/propEq'
 import find from 'ramda/src/find'
 import flatten from 'ramda/src/flatten'
 
-export function pushState (qs, type, replaceQueryParamName) {
+/**
+ * Trigger a browser push state
+ * @param  {object} params
+ * @param  {string} type
+ * @param  {boolean} replaceQueryParamName
+ * @return {null}
+ */
+export function pushState (params, type, replaceQueryParamName) {
   var char = getHistoryCharacter(type)
   if (window.history.pushState) {
     /* Deprecated hash */
     window.history.pushState(
       null,
       '',
-      char + buildQueryString(qs, replaceQueryParamName)
+      char + buildQueryString(params, replaceQueryParamName)
     )
   }
 }
 
+/**
+ * Hash character
+ * Edit: Remove '#' because IE 11 supports pushstate
+ */
 export const HASH_CHARACTER = '?'
 
+/**
+ * Maintain support for IE 11 and below
+ * @param  {string} type
+ * @return {string}
+ */
 export function getHistoryCharacter (type) {
   return type === 'pushState' ? HASH_CHARACTER : '#/?'
 }
 
-export function replaceState (qs, type) {
-  var char = getHistoryCharacter(type)
+/**
+ * Replace current url state. This prevents `back` button navigation
+ * @param  {object} params
+ * @param  {string} type
+ * @return {null}
+ */
+export function replaceState (params, type) {
+  const char = getHistoryCharacter(type)
   if (window.history.replaceState) {
-    window.history.replaceState(null, '', char + buildQueryString(qs))
+    window.history.replaceState(null, '', char + buildQueryString(params))
   }
 }
 
+/**
+ * Builds browser URL query string from params
+ * Eg:
+ * params = { q: 'hello' }
+ * buildQueryString(params) => ?q='hello'
+ *
+ * Some CMS do not allow `q` in query string, so we replace `q` with `keywords`.
+ * Set config.replaceQueryParamName = true to do this
+ *
+ * @param  {object} params
+ * @param  {boolean} replaceQueryParamName
+ * @return {null}
+ */
 export function buildQueryString (params, replaceQueryParamName) {
   var str = []
   /* Loop */
@@ -97,8 +132,14 @@ export function buildQueryString (params, replaceQueryParamName) {
   return str.join('&')
 }
 
+/**
+ * Parse browser location and set initial state
+ * @param  {object} initialState Initial Query State
+ * @param  {object} config
+ * @return {object}
+ */
 export function parseQueryString (initialState, config) {
-  let loc = window.location.search /* Deprecated hash */
+  const loc = window.location.search
   var qs = queryString.parse(loc)
   var { filters, facet_query: facetQuery, tokens, sort } = qs
   var facetQueryObject = { facet_query: [] }

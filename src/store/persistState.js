@@ -7,15 +7,17 @@ import {
   LOCALE_STORAGE_TTL,
   CONTEXT_STORAGE_KEY,
   CONTEXT_STORAGE_TTL,
-  OLA_STORAGE_KEY
+  OLA_STORAGE_KEY,
+  PERSIST_TIMEOUT
 } from './../constants/Settings'
 
 /**
  * Throttled function which is called from createOlaMiddleware.js
- * @type {[type]}
  */
-const PERSIST_TIMEOUT = 500
 export const debouncePersistState = debounce(persistState, PERSIST_TIMEOUT)
+/**
+ * State keys from state.AppState to track
+ */
 export const statesToTrack = [
   'history',
   'bookmarks',
@@ -26,7 +28,9 @@ export const statesToTrack = [
   'view'
 ]
 
-/* Actions to watch */
+/**
+ * Actions to watch to fire persistState
+ */
 export const STATE_TYPE_KEYS = [
   types.ADD_BOOKMARK,
   types.REMOVE_BOOKMARK,
@@ -48,9 +52,12 @@ export const STATE_TYPE_KEYS = [
   types.HIDE_SEARCH_HELP
 ]
 
-/* Based on actions: persist states to localstorage */
+/**
+ * persistState
+ * Called when any of the above actions are fired
+ */
 function persistState (action, getState, namespace) {
-  let state = getState()
+  const state = getState()
   switch (action.type) {
     case types.REQUEST_GEO_LOCATION_SUCCESS:
     case types.REQUEST_GEO_LOCATION_FAILURE:

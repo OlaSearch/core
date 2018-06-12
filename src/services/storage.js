@@ -8,7 +8,12 @@ import { getKey, isBrowser } from './../utilities'
  */
 var cookieCache = isBrowser() ? document.cookie : ''
 
-/* Default export */
+/**
+ * Get an item from localstorage
+ * @param  {string} key
+ * @param  {string} namespace
+ * @return {object}
+ */
 export function get (key, namespace) {
   let _key = getKey(key, namespace)
   try {
@@ -23,6 +28,12 @@ export function get (key, namespace) {
   }
 }
 
+/**
+ * Set localstorage item
+ * @param {string} key
+ * @param {object} value
+ * @param {null} namespace
+ */
 export function set (key, value, namespace) {
   try {
     if ('localStorage' in window) {
@@ -34,7 +45,17 @@ export function set (key, value, namespace) {
   }
 }
 
+/**
+ * Access cookies (get, set) methods
+ */
 export const cookies = {
+  /**
+   * Set a cookie
+   * @param {string} name
+   * @param {string} value
+   * @param {int} days
+   * @param {string} namespace
+   */
   set (name, value, days, namespace) {
     if (!isBrowser()) return null
     var expires
@@ -56,6 +77,12 @@ export const cookies = {
       console.warn(err)
     }
   },
+  /**
+   * Get a cookie value from the browser
+   * @param  {string} name
+   * @param  {string} namespace
+   * @return {string}
+   */
   get (name, namespace) {
     try {
       var nameEQ = `${getKey(name, namespace)}=`
@@ -73,6 +100,12 @@ export const cookies = {
       return null
     }
   },
+  /**
+   * Removes a cookie
+   * @param  {string} name
+   * @param  {string} namespace
+   * @return {undefined}
+   */
   remove (name, namespace) {
     this.set(getKey(name, namespace), '', -1)
   }

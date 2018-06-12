@@ -8,6 +8,7 @@ export const CONTEXT_STORAGE_TTL = 0.25 /* Days */
 export const LOCALE_STORAGE_KEY = 'o_locale_'
 export const BOT_STORAGE_KEY = 'o_bot_'
 export const LOCALE_STORAGE_TTL = 30 /* Days */
+export const PERSIST_TIMEOUT = 500
 export const SEARCH_SESSION_KEY = 'o_search_session'
 export const USER_SESSION_KEY = 'o_user_session' /* used for analytics only */
 export const USER_NEW_KEY = 'o_new_user'
