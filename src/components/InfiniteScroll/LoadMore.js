@@ -45,7 +45,10 @@ function LoadMore ({
       <style jsx>
         {`
           /* Load more */
-          .ola-link-load-more {
+          .ola-link-load-more,
+          .ola-link-load-more:focus,
+          .ola-link-load-more:hover,
+          .ola-link-load-more:active {
             background: ${theme.primaryButtonBackground};
             color: ${theme.primaryButtonColor};
             font-size: ${theme.mediumFontSize};

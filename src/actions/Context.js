@@ -1,5 +1,11 @@
 import types from './../constants/ActionTypes'
 
+/**
+ * Request user's location using geolocation api
+ * @param  {Function} onSuccess
+ * @param  {Function} onFailure
+ * @return {Function}
+ */
 export function requestGeoLocation (onSuccess, onFailure) {
   if (!navigator.geolocation) return
   return (dispatch, getState) => {
@@ -26,6 +32,11 @@ export function requestGeoLocation (onSuccess, onFailure) {
   }
 }
 
+/**
+ * Add a field to the context
+ * @param {string} field
+ * @param {string} value
+ */
 export function addContextField (field, value) {
   return {
     type: types.ADD_CONTEXT_FIELD,
@@ -34,6 +45,11 @@ export function addContextField (field, value) {
   }
 }
 
+/**
+ * Remove a field from the context
+ * @param  {string} field
+ * @return {Object}
+ */
 export function removeContextField (field) {
   return {
     type: types.REMOVE_CONTEXT_FIELD,
@@ -41,6 +57,10 @@ export function removeContextField (field) {
   }
 }
 
+/**
+ * Remove location from the context
+ * @return {Object}
+ */
 export function removeContextLocation () {
   return {
     type: types.REMOVE_CONTEXT_LOCATION

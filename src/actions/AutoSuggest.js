@@ -1,6 +1,12 @@
 import types from './../constants/ActionTypes'
 import { pickDeep, sanitizeText } from './../utilities'
 
+/**
+ * Update Auto Suggest query term
+ * @param  {string} term
+ * @param  {string} searchInput
+ * @return {Object}
+ */
 export function updateQueryTerm (term, searchInput) {
   return {
     type: types.UPDATE_QUERY_TERM_AUTOSUGGEST,
@@ -9,14 +15,18 @@ export function updateQueryTerm (term, searchInput) {
   }
 }
 
+/**
+ * Execute autosuggest search
+ * @return {Object}
+ */
 export function executeAutoSuggest () {
   return (dispatch, getState) => {
-    var state = getState()
-    var { q, page, per_page, facet_query } = state.AutoSuggest
-    var { replaceQueryParamName } = state.AppState
-    var context = state.Context
+    const state = getState()
+    const { q, page, per_page, facet_query } = state.AutoSuggest
+    const { replaceQueryParamName } = state.AppState
+    const context = state.Context
 
-    dispatch({
+    return dispatch({
       types: [
         types.REQUEST_AUTOSUGGEST,
         types.REQUEST_AUTOSUGGEST_SUCCESS,
@@ -30,10 +40,17 @@ export function executeAutoSuggest () {
   }
 }
 
+/**
+ * Execute a fuzzy search
+ * @param  {string} q
+ * @param  {number} limit
+ * @param  {string} contextField Filter by a specific type (query or entity)
+ * @return {Object}
+ */
 export function executeFuzzyAutoSuggest (q, limit = 10, contextField = 'query') {
   return (dispatch, getState) => {
     const { dictionary } = getState().AutoSuggest
-    var query = {
+    const query = {
       q,
       'suggest.count': limit,
       'suggest.dictionary': dictionary,
@@ -56,18 +73,31 @@ export function executeFuzzyAutoSuggest (q, limit = 10, contextField = 'query') 
   }
 }
 
+/**
+ * Clear Autosuggest query term
+ * @return {Object}
+ */
 export function clearQueryTerm () {
   return {
     type: types.CLEAR_QUERY_TERM_AUTOSUGGEST
   }
 }
 
+/**
+ * Close autosuggest
+ * @return {Object}
+ */
 export function closeAutoSuggest () {
   return {
     type: types.CLOSE_AUTOSUGGEST
   }
 }
 
+/**
+ * Add a facet to autosuggest search
+ * @param {Object} facet
+ * @param {string} value
+ */
 export function addFacet (facet, value) {
   return {
     type: types.ADD_FACET_AUTOSUGGEST,
@@ -76,6 +106,11 @@ export function addFacet (facet, value) {
   }
 }
 
+/**
+ * Remove a facet from autosuggest search
+ * @param  {Object} facet
+ * @return {Object}
+ */
 export function removeFacet (facet) {
   return {
     type: types.REMOVE_FACET_AUTOSUGGEST,
@@ -83,6 +118,10 @@ export function removeFacet (facet) {
   }
 }
 
+/**
+ * Stop autosuggest
+ * @return {Object}
+ */
 export function terminateAutoSuggest () {
   return {
     type: types.TERMINATE_AUTOSUGGEST

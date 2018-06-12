@@ -1,5 +1,8 @@
 import types from './../constants/ActionTypes'
 
+/**
+ * Fetch alerts using alerts api
+ */
 export function fetchAlerts () {
   return (dispatch, getState) => {
     const { userId } = getState().Context
@@ -39,10 +42,15 @@ export function fetchAlerts () {
   }
 }
 
+/**
+ * Delete an alert by id
+ * @param  {number} queryId
+ * @return {Object}
+ */
 export function deleteAlert (queryId) {
   return (dispatch, getState) => {
-    let payload = { queryId }
-    dispatch({
+    const payload = { queryId }
+    return dispatch({
       types: [
         types.REQUEST_DELETE_ALERT,
         types.REQUEST_DELETE_ALERT_SUCCESS,
@@ -63,10 +71,15 @@ export function deleteAlert (queryId) {
   }
 }
 
+/**
+ * Remove documents for a specific query
+ * @param  {number} queryId
+ * @return {Object}
+ */
 export function removeDocs (queryId) {
   return (dispatch, getState) => {
-    let payload = { queryId }
-    dispatch({
+    const payload = { queryId }
+    return dispatch({
       types: [
         types.REQUEST_DELETE_ALERT_DOCS,
         types.REQUEST_DELETE_ALERT_DOCS_SUCCESS,
@@ -87,11 +100,16 @@ export function removeDocs (queryId) {
   }
 }
 
+/**
+ * Create a new alert for a query
+ * @param  {string} query
+ * @return {Object}
+ */
 export function createAlert (query) {
   return (dispatch, getState) => {
     const { userId } = getState().Context
-    let payload = { userId, query }
-    dispatch({
+    const payload = { userId, query }
+    return dispatch({
       types: [
         types.REQUEST_CREATE_ALERT,
         types.REQUEST_CREATE_ALERT_SUCCESS,
@@ -126,8 +144,4 @@ export function createAlert (query) {
       api: 'alert'
     })
   }
-}
-
-export function viewedAlert (query) {
-  return (dispatch, getState) => {}
 }

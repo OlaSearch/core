@@ -1,5 +1,5 @@
 import types from './../constants/ActionTypes'
-import { debouceAddHistory } from './History'
+import { debounceAddHistory } from './History'
 import {
   parseQueryString,
   pushState,
@@ -31,6 +31,13 @@ var globalRouteChange = false
 
 var historyType = 'pushState'
 
+/**
+ * Update query term
+ * @param  {string}  term
+ * @param  {string}  searchInput
+ * @param  {Boolean} forcePageReset
+ * @return {Object}
+ */
 export function updateQueryTerm (term, searchInput, forcePageReset = true) {
   return {
     type: types.UPDATE_QUERY_TERM,
@@ -40,6 +47,11 @@ export function updateQueryTerm (term, searchInput, forcePageReset = true) {
   }
 }
 
+/**
+ * Add a new filter
+ * @param {Object} options.filter
+ * @param {(string|Array)} options.selected
+ */
 export function addFilter ({ filter, selected }) {
   return {
     type: types.ADD_FILTER,
@@ -48,6 +60,11 @@ export function addFilter ({ filter, selected }) {
   }
 }
 
+/**
+ * Remove a filter by name
+ * @param  {string} options.name
+ * @return {Object}
+ */
 export function removeFilter ({ name }) {
   return {
     type: types.REMOVE_FILTER,
@@ -55,18 +72,30 @@ export function removeFilter ({ name }) {
   }
 }
 
+/**
+ * Remove all filters
+ * @return {Object}
+ */
 export function clearFilters () {
   return {
     type: types.CLEAR_FILTERS
   }
 }
 
+/**
+ * Clear query term
+ * @return {Object}
+ */
 export function clearQueryTerm () {
   return {
     type: types.CLEAR_QUERY_TERM
   }
 }
 
+/**
+ * Action to skip intent engine
+ * @param {Object} flag
+ */
 export function setSkipIntent (flag) {
   return {
     type: types.SET_SKIP_INTENT,
@@ -74,6 +103,11 @@ export function setSkipIntent (flag) {
   }
 }
 
+/**
+ * Skip Universal spellchecker
+ * @param  {Boolean} flag
+ * @return {Object}
+ */
 export function skipSpellcheck (flag) {
   return {
     type: types.SET_SKIP_SPELLCHECK,
@@ -81,13 +115,16 @@ export function skipSpellcheck (flag) {
   }
 }
 
+/**
+ * Load more results
+ * @return {function}
+ */
 export function loadMore () {
   return (dispatch, getState) => {
     var currentPage = getState().QueryState.page
-
+    /* Increment page */
     dispatch(changePage(++currentPage))
-
-    dispatch(
+    return dispatch(
       executeSearch({
         routeChange: false,
         appendResult: true
@@ -96,6 +133,13 @@ export function loadMore () {
   }
 }
 
+/**
+ * Change answer selection. Used in intent.olasearch.com to change selection of `Barack Obama` => Michelle Obama
+ * @param  {number} index
+ * @param  {string} key
+ * @param  {Object} answer
+ * @return {function}
+ */
 export function changeAnswerSelection (index, key, answer) {
   /* Clone */
   let newAnswer = JSON.parse(JSON.stringify(answer))
@@ -108,6 +152,12 @@ export function changeAnswerSelection (index, key, answer) {
   }
 }
 
+/**
+ * Execute a search action
+ * @param  {Object} payload
+ * @param  {Object} options
+ * @return {function}
+ */
 export function executeSearch (payload, options) {
   return (dispatch, getState) => {
     /* Check if there is a suggested term */
@@ -183,7 +233,7 @@ export function executeSearch (payload, options) {
       payload,
       ...options
     }).then((res) => {
-      debouceAddHistory(dispatch)
+      debounceAddHistory(dispatch)
       /**
        * Check if route should be enabled
        * Implement debounce
@@ -304,6 +354,11 @@ export function executeFacetSearch (
   }
 }
 
+/**
+ * Fetch answer from an URL
+ * @param  {string} url
+ * @return {function}
+ */
 export function fetchAnswer (url) {
   return (dispatch, getState) => {
     dispatch({
@@ -320,6 +375,8 @@ export function fetchAnswer (url) {
 
 /**
  * Fetch machine comprehension answer
+ * @param {string} key
+ * @param {Object} payload
  */
 export function fetchMc (key, payload) {
   return (dispatch, getState) => {
@@ -338,6 +395,7 @@ export function fetchMc (key, payload) {
 
 /**
  * Get a single result by id from the search engine
+ * @param {(string|Array|number)} ids
  */
 export function fetchResult (ids) {
   if (!Array.isArray(ids)) ids = [ids]
@@ -381,6 +439,9 @@ export function terminateSearch () {
 
 /**
  * Add a facet
+ *
+ * @param {Object} facet
+ * @param {(string|number)} value
  */
 export function addFacet (facet, value) {
   return (dispatch, getState) => {
@@ -417,6 +478,13 @@ export function addFacet (facet, value) {
   }
 }
 
+/**
+ * Remove a facet
+ * @param  {Object}  facet
+ * @param  {(string|number)}  value
+ * @param  {Boolean} resetAllFacets
+ * @return {function}
+ */
 export function removeFacet (facet, value, resetAllFacets = false) {
   return (dispatch, getState) => {
     /**
@@ -464,12 +532,22 @@ export function removeFacet (facet, value, resetAllFacets = false) {
   }
 }
 
+/**
+ * Remove all facets added by intent engine
+ * @return {Object}
+ */
 export function removeIntentEngineFacets () {
   return {
     type: types.REMOVE_INTENT_ENGINE_FACETS
   }
 }
 
+/**
+ * Replace a facet's selected value
+ * @param  {Object} facet
+ * @param  {(string|number)} value
+ * @return {Object}
+ */
 export function replaceFacet (facet, value) {
   /**
    * Always convert Array to strings
@@ -497,6 +575,10 @@ export function replaceFacet (facet, value) {
   }
 }
 
+/**
+ * Remove all selected facets
+ * @return {function}
+ */
 export function removeAllFacets () {
   return (dispatch, getState) => {
     /**
@@ -522,6 +604,11 @@ export function removeAllFacets () {
   }
 }
 
+/**
+ * Remove a specific facet
+ * @param  {Object} facet
+ * @return {Object}
+ */
 export function removeFacetItem (facet) {
   return {
     type: types.REMOVE_FACET_ITEM,
@@ -529,8 +616,11 @@ export function removeFacetItem (facet) {
   }
 }
 
-/* Change page */
-
+/**
+ * Change page
+ * @param  {(number)} page
+ * @return {function}
+ */
 export function changePage (page) {
   return (dispatch, getState) => {
     acceptSuggestedTerm(dispatch, getState)
@@ -542,8 +632,11 @@ export function changePage (page) {
   }
 }
 
-/* Change per page */
-
+/**
+ * Change per page
+ * @param  {number} perPage
+ * @return {Object}
+ */
 export function changePerPage (perPage) {
   return {
     type: types.CHANGE_PER_PAGE,
@@ -551,10 +644,11 @@ export function changePerPage (perPage) {
   }
 }
 
-/*
+/**
  * When a new query is Suggested and User continues the search, update the term to the new suggested term
+ * @param  {function} dispatch
+ * @param  {function} getState
  */
-
 function acceptSuggestedTerm (dispatch, getState) {
   var { suggestedTerm } = getState().AppState
 
@@ -564,15 +658,20 @@ function acceptSuggestedTerm (dispatch, getState) {
   }
 }
 
-/* Clear suggested term */
+/**
+ * Remove suggested term
+ */
 function clearSuggestedTerm () {
   return {
     type: types.CLEAR_SUGGESTED_TERM
   }
 }
 
-/* Change sort */
-
+/**
+ * Change sort parameter
+ * @param  {string} sort
+ * @return {Object}
+ */
 export function changeSort (sort) {
   return {
     type: types.CHANGE_SORT,
@@ -591,13 +690,11 @@ export function updateStateFromQuery (config) {
   }
 }
 
-export function setStorageKey (key) {
-  return {
-    type: types.SET_STORAGE_KEY,
-    key
-  }
-}
-
+/**
+ * Change current environment
+ * @param  {string} env
+ * @return {Object}
+ */
 export function changeEnvironment (env) {
   return {
     type: types.CHANGE_ENVIRONMENT,
@@ -606,7 +703,12 @@ export function changeEnvironment (env) {
 }
 
 /**
- * Initializes search
+ * Initialize search
+ * @param  {Object}  options.config
+ * @param  {Boolean} options.urlSync
+ * @param  {Object}  options.payload
+ * @param  {Object}  options
+ * @return {function}
  */
 export function initSearch ({
   config,
@@ -658,6 +760,10 @@ export function initSearch ({
   }
 }
 
+/**
+ * Set source of the search request
+ * @param {string} source
+ */
 export function setSearchSource (source) {
   return {
     type: types.SET_SEARCH_SOURCE,
@@ -665,6 +771,10 @@ export function setSearchSource (source) {
   }
 }
 
+/**
+ * Add a token
+ * @param {Object} options
+ */
 export function addToken (options) {
   return {
     type: types.ADD_TOKEN,
@@ -672,6 +782,11 @@ export function addToken (options) {
   }
 }
 
+/**
+ * Remove a token by value
+ * @param  {string} value
+ * @return {Object}
+ */
 export function removeToken (value) {
   return {
     type: types.REMOVE_TOKEN,
@@ -679,12 +794,21 @@ export function removeToken (value) {
   }
 }
 
+/**
+ * Remove all tokens
+ * @return {Object}
+ */
 export function removeAllTokens () {
   return {
     type: types.REMOVE_ALL_TOKENS
   }
 }
 
+/**
+ * Replace all token
+ * @param  {Array} tokens
+ * @return {Object}
+ */
 export function replaceTokens (tokens) {
   return {
     type: types.REPLACE_TOKENS,
@@ -692,6 +816,11 @@ export function replaceTokens (tokens) {
   }
 }
 
+/**
+ * Skip facet field
+ * @param  {string} name
+ * @return {Object}
+ */
 export function removeSkipFacetFields (name) {
   return {
     type: types.REMOVE_SKIP_FACET_FIELDS,
@@ -699,6 +828,11 @@ export function removeSkipFacetFields (name) {
   }
 }
 
+/**
+ * Trigger a rehydrate action
+ * @param  {Object} params
+ * @return {Object}
+ */
 export function reHydrate (params) {
   return {
     type: types.OLA_REHYDRATE,
@@ -706,6 +840,10 @@ export function reHydrate (params) {
   }
 }
 
+/**
+ * Add a start timestamp to an api
+ * @param {string} api
+ */
 export function addTimestamp (api) {
   return {
     type: types.ADD_TIMESTAMP,

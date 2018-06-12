@@ -1,11 +1,17 @@
 import types from './../constants/ActionTypes'
 
+/**
+ * Toggle sidebar status
+ */
 export function toggleSidebar () {
   return {
     type: types.TOGGLE_SIDEBAR
   }
 }
 
+/**
+ * Open sidebar
+ */
 export function openSidebar () {
   return {
     type: types.OPEN_SIDEBAR

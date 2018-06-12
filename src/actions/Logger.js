@@ -15,6 +15,7 @@ import { cookies } from './../services/storage'
  * eventValue: A numeric value associated with the event (e.g. 42)
  */
 
+/* Debounced log function */
 export const debounceLog = debounce(submitLog, 1000)
 
 export function log (params) {
@@ -34,7 +35,8 @@ export function log (params) {
 }
 
 /**
- * Log submit function
+ * Submit log
+ * @param  {Object} args
  */
 export function submitLog (args) {
   const { dispatch, state, setNewUser, ...rest } = args
