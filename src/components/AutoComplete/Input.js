@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Bookmarks from './../Bookmarks'
 import SpeechInput from './../Speech'
-import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 import {
@@ -63,10 +62,6 @@ export default class Input extends React.Component {
     ) {
       setTimeout(() => this.props.onChange(event))
     }
-  }
-
-  onChangeZone = () => {
-    this.input.focus()
   }
 
   onKeyDown = (event) => {
@@ -199,19 +194,15 @@ export default class Input extends React.Component {
       q,
       placeholder,
       onBlur,
-      showZone,
       showGeoLocation,
       showWordSuggestion,
       showSearchButton
     } = this.props
 
-    let classes = classNames('ola-search-form-container', {
-      'ola-search-zone-enabled': showZone
-    })
+    let classes = classNames('ola-search-form-container')
     let shadowTerm = showWordSuggestion ? '' : this.getShadowTerm()
     return (
       <div className={classes}>
-        {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
         <div className='ola-form-input-wrapper'>
           <ContentEditable
             innerRef={this.registerRef}

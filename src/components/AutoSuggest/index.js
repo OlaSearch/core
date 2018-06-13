@@ -53,8 +53,7 @@ class AutoSuggest extends React.Component {
     activeClassName: 'ola-active',
     viewAllClassName: 'ola-autosuggest-all',
     placeholder: 'Enter keywords',
-    facetSuggestionName: '',
-    showZone: false
+    facetSuggestionName: ''
   }
 
   handleClickOutside = (event) => {
@@ -207,7 +206,6 @@ class AutoSuggest extends React.Component {
       AutoSuggest,
       bookmarks,
       showFacetSuggestions,
-      showZone,
       viewAllClassName,
       facetSuggestionName,
       className,
@@ -250,7 +248,6 @@ class AutoSuggest extends React.Component {
             handleClickOutside={this.handleClickOutside}
             onSearchButtonClick={this.props.onSearchButtonClick}
             results={results}
-            showZone={showZone}
             handleClose={this.handleClickOutside}
             theme={this.props.theme}
           />

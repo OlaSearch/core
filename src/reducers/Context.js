@@ -41,6 +41,7 @@ export const initialState = {
   href: null,
   hostname: null,
   pathname: null,
+  referrer: null,
 
   /* Voice */
   hasUsedVoice: false,

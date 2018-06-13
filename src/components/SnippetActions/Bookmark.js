@@ -8,7 +8,7 @@ import BookMark from '@olasearch/icons/lib/bookmark'
 import withConfig from './../../decorators/withConfig'
 import { connect } from 'react-redux'
 
-class BookmarkActions extends React.Component {
+class BookmarkAction extends React.Component {
   addBookmark = () => {
     const { result } = this.props
     this.props.addBookmark(result)
@@ -94,17 +94,23 @@ class BookmarkActions extends React.Component {
   }
 }
 
-const BookmarkWrapper = ({ config, ...rest }) => {
-  if (!config.bookmarking) return null
-  return <BookmarkActions {...rest} />
-}
-
 function mapStateToProps (state) {
   return {
     bookmarks: state.AppState.bookmarks
   }
 }
 
-module.exports = connect(mapStateToProps, { addBookmark, removeBookmark, log })(
-  withConfig(withTranslate(BookmarkWrapper))
-)
+const BookmarkButton = connect(mapStateToProps, {
+  addBookmark,
+  removeBookmark,
+  log
+})(withConfig(withTranslate(BookmarkAction)))
+const BookmarkWrapper = ({ config, ...rest }) => {
+  if (!config.bookmarking) return null
+  return <BookmarkButton {...rest} />
+}
+/**
+ * Export the button without checking config file
+ */
+export { BookmarkButton }
+export default withConfig(BookmarkWrapper)

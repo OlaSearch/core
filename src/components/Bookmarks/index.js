@@ -138,4 +138,8 @@ const BookMarksWrapper = (props) => {
   return null
 }
 
+/**
+ * Export the container without checking config file
+ */
+export { BookmarksContainer }
 export default withConfig(BookMarksWrapper)

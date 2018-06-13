@@ -4,7 +4,7 @@ module.exports = {
   DatePicker: require('./DatePicker'),
   LinkFilter: require('./Default'),
   Range: require('./Range'),
-  // RangeNumeric: require('./RangeNumeric'),
+  RangeNumeric: require('./RangeNumeric'),
   Rating: require('./Rating'),
   Tabs: require('./Tabs'),
   TagCloud: require('./TagCloud'),

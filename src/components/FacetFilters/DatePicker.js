@@ -39,7 +39,7 @@ function getMinMaxValue (props) {
   }
 }
 
-class DateRange extends React.Component {
+class DatePickerFilter extends React.Component {
   constructor (props) {
     super(props)
     const { min, max, fromDate, toDate } = getMinMaxValue(props)
@@ -285,5 +285,5 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, { replaceFacet, executeSearch })(
-  withToggle(DateRange)
+  withToggle(DatePickerFilter)
 )

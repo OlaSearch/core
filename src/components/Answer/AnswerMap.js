@@ -210,6 +210,7 @@ class AnswerMap extends React.Component {
               }}
               locationFieldName='location'
               label='Get directions'
+              displayIcon
             />
           ) : null}
         </div>

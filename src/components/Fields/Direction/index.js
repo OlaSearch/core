@@ -67,7 +67,7 @@ function Directions (props) {
     <div className='ola-field ola-field-directions'>
       <FieldLabel label={fieldLabel} />
       <a
-        className='ola-btn ola-flex ola-btn-directions'
+        className='ola-btn ola-flex ola-align-center ola-btn-directions'
         onClick={handleClick}
         href={url}
         target='_blank'

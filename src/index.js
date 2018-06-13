@@ -44,7 +44,7 @@ export Swipeable from './components/Swipeable'
 export Portal from './components/Portal'
 export Checkbox from './components/Checkbox'
 export Overlay from './components/Overlay'
-export Bookmarks from './components/Bookmarks'
+export Bookmarks, { BookmarksContainer } from './components/Bookmarks'
 export Arrow from './components/Arrow'
 
 export * as Actions from './actions'

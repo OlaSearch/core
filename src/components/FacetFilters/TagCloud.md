@@ -13,7 +13,7 @@ const Search = connect(mapStateToProps)(({ AppState, QueryState, dispatch }) => 
   return (
     <SearchFilters
       selected={QueryState.facet_query}
-      facets={AppState.facets.filter(({ type }) => type === 'checkbox')}
+      facets={AppState.facets.filter(({ type }) => type === 'tagcloud')}
       conditional={false}
       dispatch={dispatch}
     />

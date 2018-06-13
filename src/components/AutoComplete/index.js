@@ -108,7 +108,6 @@ class AutoComplete extends React.Component {
     activeClassName: 'ola-active',
     viewAllClassName: 'ola-autosuggest-all',
     placeholder: 'Enter keywords',
-    showZone: false,
     className: 'ola-autosuggest',
     containerClass: 'ola-autosuggest-container',
     showGeoLocation: false,
@@ -802,7 +801,6 @@ class AutoComplete extends React.Component {
 
   render () {
     const {
-      showZone,
       className,
       translate,
       resultLimit,
@@ -862,7 +860,6 @@ class AutoComplete extends React.Component {
             handleClickOutside={this.handleClickOutside}
             onSearchButtonClick={this.onSubmit}
             results={results}
-            showZone={showZone}
             fuzzyQuery={fuzzyQuery}
             showGeoLocation={this.props.showGeoLocation}
             onGeoLocationSuccess={this.props.onGeoLocationSuccess}

@@ -27,12 +27,10 @@ function BooleanFilter (props) {
   if (!facet.values.length) return null
 
   const { displayName, template } = facet
-
   const klass = classNames({
     'ola-facet': true,
     'ola-facet-collapsed': isCollapsed
   })
-
   const isChecked = !!selected.length
 
   return (

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SpeechInput from './../Speech'
-import Zone from './../Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 import Search from '@olasearch/icons/lib/material-search'
@@ -12,7 +11,6 @@ export default class Input extends React.Component {
     q: PropTypes.string,
     onChange: PropTypes.func
   }
-
   onClear = (event) => {
     event && event.preventDefault()
 
@@ -29,7 +27,6 @@ export default class Input extends React.Component {
     /* Focus input */
     this.refs.Input.focus()
   }
-
   onFocus = (event) => {
     this.props.onFocus && this.props.onFocus(event)
 
@@ -40,13 +37,8 @@ export default class Input extends React.Component {
 
     setTimeout(() => this.props.onChange(event.target.value))
   }
-
-  onChangeZone = () => {
-    this.refs.Input.focus()
-  }
-
   onKeyDown = (event) => {
-    var { onKeyDown, onSubmit, isOpen, q } = this.props
+    const { onKeyDown, onSubmit, isOpen, q } = this.props
     switch (event.which) {
       case 27: // Esc
         /**
@@ -76,13 +68,11 @@ export default class Input extends React.Component {
         return onSubmit()
     }
   }
-
   onSearchButtonClick = () => {
     return this.props.onSearchButtonClick
       ? this.props.onSearchButtonClick()
       : this.refs.Input.focus()
   }
-
   handleInputChange = (arg, searchInput) => {
     this.props.onChange(arg.target ? arg.target.value : arg, searchInput)
   }
@@ -95,13 +85,11 @@ export default class Input extends React.Component {
     )
   }
   render () {
-    var { q, placeholder, onBlur, showZone } = this.props
-
+    const { q, placeholder, onBlur } = this.props
     /**
      * Show clear or submit button
      */
-
-    var button = q ? (
+    const button = q ? (
       <button
         type='reset'
         className='ola-clear-button'
@@ -114,14 +102,9 @@ export default class Input extends React.Component {
         onClick={this.onSearchButtonClick}
       />
     )
-
-    let klass = classNames('ola-search-form-container', {
-      'ola-search-zone-enabled': showZone
-    })
-
+    const classes = classNames('ola-search-form-container')
     return (
-      <div className={klass}>
-        {showZone && <Zone isAutosuggest onChange={this.onChangeZone} />}
+      <div className={classes}>
         <div className='ola-form-input-wrapper'>
           <input
             ref='Input'
@@ -139,13 +122,11 @@ export default class Input extends React.Component {
             onKeyDown={this.onKeyDown}
           />
         </div>
-
         <SpeechInput
           onResult={this.handleSpeechChange}
           onFinalResult={this.handleSpeechChange}
           isAutosuggest
         />
-
         <button
           type='button'
           className='ola-search-button'

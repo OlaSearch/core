@@ -13,7 +13,6 @@ import GeoLocation from './Geo/GeoLocation'
 import withTranslate from './../decorators/withTranslate'
 import withConfig from './../decorators/withConfig'
 import withTheme from './../decorators/withTheme'
-import Zone from './Zone'
 import classNames from 'classnames'
 import { SEARCH_INPUTS } from './../constants/Settings'
 import { connect } from 'react-redux'
@@ -52,7 +51,6 @@ class InstantSearchForm extends React.Component {
     showBookmarks: true,
     showHistory: true,
     showSpeech: true,
-    showZone: false,
     isPhone: false,
     urlSync: true,
     autoFocus: false,
@@ -96,12 +94,6 @@ class InstantSearchForm extends React.Component {
   }
 
   onSubmit = (event) => event.preventDefault()
-  onChangeZone = () => {
-    this.refs.Input.focus()
-
-    if (this.props.onChangeZone) return this.props.onChangeZone()
-    if (this.props.q) this.executeSearch()
-  }
 
   onFocus = () => {
     this.setState({
@@ -121,7 +113,6 @@ class InstantSearchForm extends React.Component {
       showGeoLocation,
       showBookmarks,
       showHistory,
-      showZone,
       showSpeech,
       translate,
       placeholder,
@@ -131,7 +122,6 @@ class InstantSearchForm extends React.Component {
     const { isFocused } = this.state
 
     let classes = classNames('ola-search-form', this.props.className, {
-      'ola-search-zone-enabled': showZone,
       'ola-search-focus': isFocused,
       'ola-speech-not-supported': !(
         window.SpeechRecognition || window.webkitSpeechRecognition
@@ -144,7 +134,6 @@ class InstantSearchForm extends React.Component {
       <form className={classes} onSubmit={this.onSubmit}>
         <div className='ola-search-form-container'>
           <div className='ola-form-input-wrapper'>
-            {showZone && <Zone onChange={this.onChangeZone} />}
             <input
               ref='Input'
               type='text'
