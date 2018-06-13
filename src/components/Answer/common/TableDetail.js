@@ -15,7 +15,7 @@ function TableDetail (props) {
     <div className='ola-answer-table-detail'>
       {caption && <h4 className='ola-answer-table-caption'>{caption}</h4>}
       <div className='ola-answer-table-wrapper'>
-        <table className='ola-answer-table'>
+        <table className='ola-table'>
           <thead>
             <tr>{keys.map((key, idx) => <th key={idx}>{key}</th>)}</tr>
           </thead>
