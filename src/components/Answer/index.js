@@ -11,6 +11,7 @@ import AnswerMap from './AnswerMap'
 import AnswerMC from './AnswerMC'
 import AnswerVideo from './AnswerVideo'
 import AnswerEmbed from './AnswerEmbed'
+import AnswerTable from './AnswerTable'
 import {
   updateQueryTerm,
   executeSearch,
@@ -131,6 +132,15 @@ function Answer ({
       case 'embed':
         return (
           <AnswerEmbed
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
+
+      case 'table':
+        return (
+          <AnswerTable
             card={card}
             onSelect={handleClick}
             refresh={refreshTrigger}

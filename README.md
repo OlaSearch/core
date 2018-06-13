@@ -16,7 +16,7 @@ Ola Search Core is a fully customisable front-end search interface that brings y
 npm install @olasearch/core --save
 ```
 
-### 2. Download configurations
+### 2. Download configurations (If using search engine from Ola Search)
 Download the configurations from [https://admin.olasearch.com](https://admin.olasearch.com) . The configuration files contain settings for the project, filters, snippets, relevancy boosting etc.
 
 1. Login to [https://admin.olasearch.com](https://admin.olasearch.com)

@@ -7,8 +7,7 @@ function TableDetail (props) {
   const {
     isCollapsed,
     toggle,
-    card: { record_data: data, record_keys: keys, caption, footnote },
-    max,
+    card: { record_data: data, record_keys: keys, caption, footnote, max },
     translate
   } = props
   const size = data.length
