@@ -4,38 +4,79 @@ import withLogger from './../../../decorators/withLogger'
 import Tag from '@olasearch/icons/lib/tag'
 import FieldLabel from './../FieldLabel'
 import { getDisplayName } from './../../../utilities'
+import { CREATE_FILTER_OBJECT } from './../../../constants/Settings'
+import { buildQueryString, HASH_CHARACTER } from './../../../services/urlSync'
 import classNames from 'classnames'
-// import { connect } from 'react-redux'
-// import { addFacet, executeSearch } from './../../../actions/Search'
+import Button from './../Button'
+import cx from 'classnames'
 
 function Pill ({
   fieldLabel,
+  onClick,
   iconSize,
   value,
+  fieldName,
   log,
   displayIcon,
   snippetId,
   isLink,
-  executeSearch,
-  inlineLabel
+  result,
+  config,
+  inlineLabel,
+  className,
+  textClassName
 }) {
   /* If there are no pills */
   if (!value || !value.length) return null
   if (typeof value === 'string') value = [value]
-  let classes = classNames('ola-field ola-field-pill', {
+  const classes = classNames('ola-field ola-field-pill', {
     'ola-field-label-inline': inlineLabel
   })
+  function createUrl (name) {
+    const facet = CREATE_FILTER_OBJECT({ name: fieldName })
+    const selected = [name]
+    const query = {
+      facet_query: [{ ...facet, selected }]
+    }
+    return `${
+      config ? config.searchPageUrl : ''
+    }${HASH_CHARACTER}${buildQueryString(query)}`
+  }
+  function handleClick (event, name) {
+    if (onClick) return onClick(event, name)
+  }
+  const pillClasses = cx('ola-flex ola-btn-pill', className)
+  const textClasses = cx('ola-flex-content', textClassName)
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />
-      {value.map((name, idx) => (
-        <span className='ola-flex ola-btn-pill' key={idx}>
-          <span className='ola-flex-icon'>
-            <Tag />
-          </span>
-          <span className='ola-flex-content'>{getDisplayName(name)}</span>
-        </span>
-      ))}
+      {value.map((name, idx) => {
+        const displayName = getDisplayName(name)
+        const url = createUrl(name)
+        return React.createElement(
+          isLink ? Button : 'span',
+          {
+            className: pillClasses,
+            key: idx,
+            ...(isLink
+              ? {
+                result,
+                snippetId,
+                eventLabel: displayName,
+                textLink: isLink,
+                onClick: (event) => handleClick(event, name),
+                url
+              }
+              : {})
+          },
+          <React.Fragment>
+            <span className='ola-flex-icon'>
+              <Tag />
+            </span>
+            <span className={textClasses}>{displayName}</span>
+          </React.Fragment>
+        )
+      })}
     </div>
   )
 }
@@ -45,7 +86,9 @@ Pill.defaultProps = {
   displayIcon: false,
   iconSize: 20,
   inlineLabel: false,
-  isLink: false
+  isLink: false,
+  textClassName: null,
+  className: null
 }
 
 Pill.propTypes = {

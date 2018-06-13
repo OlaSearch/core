@@ -1,9 +1,23 @@
 .ola-btn-pill {
-  border-radius: $pill-border-radius;
-  background: $pill-background;
-  border: none;
-  padding: $pill-padding;
-  color: $pill-color;
-  display: inline-flex;
-  margin: 0 4px 4px 0;
+  &, &:hover, &:active, &:focus {
+    border-radius: $pill-border-radius;
+    background: $pill-background;
+    border: none;
+    padding: $pill-padding;
+    color: $pill-color;
+    display: inline-flex;
+    margin: 0 4px 4px 0;
+    line-height: normal;
+  }
+}
+
+/**
+ * Pill fields
+ */
+.ola-field-pill {
+  display: flex;
+
+  .ola-field {
+    padding: 0;
+  }
 }
