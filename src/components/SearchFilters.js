@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Default from './FacetFilters/Default'
-import FacetCheckbox from './FacetFilters/Checkbox'
+import CheckboxFilter from './FacetFilters/Checkbox'
 import Hierarchical from './FacetFilters/Hierarchical'
 import Range from './FacetFilters/Range'
 import Rating from './FacetFilters/Rating'
@@ -73,7 +73,7 @@ class SearchFilters extends React.Component {
 
             switch (type) {
               case 'checkbox':
-                return <FacetCheckbox {...passProps} />
+                return <CheckboxFilter {...passProps} />
 
               case 'hierarchical':
                 return <Hierarchical {...passProps} />

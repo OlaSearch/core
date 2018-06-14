@@ -2,7 +2,7 @@
 
 ```js
 const connect = require('react-redux').connect;
-const SearchFilters = require('./../SearchFilters');
+const SearchFilters = require('./../SearchFilters').default;
 function mapStateToProps (state) {
   return {
     AppState: state.AppState,
