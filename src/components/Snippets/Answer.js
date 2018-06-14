@@ -42,4 +42,4 @@ AnswerSnippet.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
-module.exports = AnswerSnippet
+export default AnswerSnippet

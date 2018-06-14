@@ -181,4 +181,4 @@ function AnswerQuick ({ answer, onSelect }) {
   )
 }
 
-module.exports = AnswerQuick
+export default AnswerQuick

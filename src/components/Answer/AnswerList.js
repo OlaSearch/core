@@ -90,4 +90,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(withTranslate(withToggle(AnswerList)))
+export default connect(mapStateToProps)(withTranslate(withToggle(AnswerList)))

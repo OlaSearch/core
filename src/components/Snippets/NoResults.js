@@ -103,6 +103,6 @@ NoResults.propTypes = {
   canRemoveFilters: PropTypes.bool
 }
 
-module.exports = connect(null, { removeAllFacets, executeSearch })(
+export default connect(null, { removeAllFacets, executeSearch })(
   withTranslate(NoResults)
 )

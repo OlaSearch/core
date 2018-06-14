@@ -73,4 +73,4 @@ LoadMore.defaultProps = {
   isLoading: false
 }
 
-module.exports = withTheme(withTranslate(LoadMore))
+export default withTheme(withTranslate(LoadMore))

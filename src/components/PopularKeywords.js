@@ -40,6 +40,6 @@ function KeywordItem ({ keyword, onClick }) {
   )
 }
 
-module.exports = connect(null, { updateQueryTerm, executeSearch })(
+export default connect(null, { updateQueryTerm, executeSearch })(
   withConfig(withTranslate(PopularKeywords))
 )

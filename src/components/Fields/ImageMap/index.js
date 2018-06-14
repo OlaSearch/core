@@ -82,4 +82,4 @@ ImageMap.propTypes = {
   height: PropTypes.number
 }
 
-module.exports = withLogger(ImageMap)
+export default withLogger(ImageMap)

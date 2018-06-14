@@ -75,4 +75,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(SMS)
+export default connect(mapStateToProps)(SMS)

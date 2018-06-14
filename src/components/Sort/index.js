@@ -53,6 +53,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { changeSort, executeSearch })(
+export default connect(mapStateToProps, { changeSort, executeSearch })(
   withConfig(withTranslate(Sort))
 )

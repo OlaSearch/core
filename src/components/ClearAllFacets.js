@@ -36,4 +36,4 @@ ClearAllFacets.propTypes = {
   translate: PropTypes.func
 }
 
-module.exports = withTranslate(ClearAllFacets)
+export default withTranslate(ClearAllFacets)

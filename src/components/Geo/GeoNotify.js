@@ -48,6 +48,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = withTranslate(
+export default withTranslate(
   connect(mapStateToProps, { executeSearch })(GeoNotify)
 )

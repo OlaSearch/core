@@ -64,4 +64,4 @@ Subtitles.defaultProps = {
   iconSize: 16
 }
 
-module.exports = Subtitles
+export default Subtitles

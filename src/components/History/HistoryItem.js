@@ -17,4 +17,4 @@ function HistoryItem ({ history, searchPageUrl }) {
   )
 }
 
-module.exports = HistoryItem
+export default HistoryItem

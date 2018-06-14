@@ -141,4 +141,4 @@ const HistoryWrapper = (props) => {
   return null
 }
 
-module.exports = withConfig(HistoryWrapper)
+export default withConfig(HistoryWrapper)

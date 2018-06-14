@@ -37,4 +37,4 @@ DefaultSnippet.propTypes = {
   bookmarks: PropTypes.array
 }
 
-module.exports = DefaultSnippet
+export default DefaultSnippet

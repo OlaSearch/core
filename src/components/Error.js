@@ -33,4 +33,4 @@ ErrorSnippet.propTypes = {
   error: PropTypes.object
 }
 
-module.exports = withTranslate(ErrorSnippet)
+export default withTranslate(ErrorSnippet)

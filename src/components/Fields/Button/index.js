@@ -161,4 +161,4 @@ Button.defaultProps = {
   baseUrl: null
 }
 
-module.exports = withLogger(Button)
+export default withLogger(Button)

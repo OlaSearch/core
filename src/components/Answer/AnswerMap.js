@@ -219,4 +219,4 @@ class AnswerMap extends React.Component {
   }
 }
 
-module.exports = AnswerMap
+export default AnswerMap

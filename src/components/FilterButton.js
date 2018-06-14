@@ -53,6 +53,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { toggleSidebar })(
+export default connect(mapStateToProps, { toggleSidebar })(
   withConfig(withTranslate(FilterButton))
 )

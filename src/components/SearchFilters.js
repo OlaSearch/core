@@ -5,7 +5,7 @@ import FacetCheckbox from './FacetFilters/Checkbox'
 import Hierarchical from './FacetFilters/Hierarchical'
 import Range from './FacetFilters/Range'
 import Rating from './FacetFilters/Rating'
-import FacetBoolean from './FacetFilters/Boolean'
+import BooleanFilter from './FacetFilters/Boolean'
 import DatePicker from './FacetFilters/DatePicker'
 import TagCloud from './FacetFilters/TagCloud'
 import SelectFilter from './FacetFilters/SelectFilter'
@@ -89,7 +89,7 @@ class SearchFilters extends React.Component {
                 return <Rating {...passProps} />
 
               case 'boolean':
-                return <FacetBoolean {...passProps} />
+                return <BooleanFilter {...passProps} />
 
               case 'tagcloud':
                 return <TagCloud {...passProps} />
@@ -107,4 +107,4 @@ class SearchFilters extends React.Component {
   }
 }
 
-module.exports = withConfig(SearchFilters)
+export default withConfig(SearchFilters)

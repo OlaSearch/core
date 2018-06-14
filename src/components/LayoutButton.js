@@ -34,6 +34,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { toggleView })(
+export default connect(mapStateToProps, { toggleView })(
   withTranslate(LayoutButton)
 )

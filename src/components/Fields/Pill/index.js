@@ -115,4 +115,4 @@ Pill.propTypes = {
   fieldLabel: PropTypes.string
 }
 
-module.exports = withLogger(Pill)
+export default withLogger(Pill)

@@ -157,7 +157,7 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   executeSearch,
   log,
   removeContextLocation,

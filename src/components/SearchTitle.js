@@ -45,4 +45,4 @@ function SearchTitle ({
   )
 }
 
-module.exports = withConfig(withTranslate(SearchTitle))
+export default withConfig(withTranslate(SearchTitle))

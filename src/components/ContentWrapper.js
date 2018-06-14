@@ -44,4 +44,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { toggleSidebar })(ContentWrapper)
+export default connect(mapStateToProps, { toggleSidebar })(ContentWrapper)

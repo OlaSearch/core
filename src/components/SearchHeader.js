@@ -13,4 +13,4 @@ SearchHeader.propTypes = {
   totalResults: PropTypes.number.isRequired
 }
 
-module.exports = withTranslate(SearchHeader)
+export default withTranslate(SearchHeader)

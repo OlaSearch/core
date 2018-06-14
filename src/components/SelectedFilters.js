@@ -163,4 +163,4 @@ function FilterItem ({ filter, handleRemove }) {
   return <Tag onRemove={onRemove} name={name} facet={filter} />
 }
 
-module.exports = withConfig(SelectedFilters)
+export default withConfig(SelectedFilters)

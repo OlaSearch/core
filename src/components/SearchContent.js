@@ -4,4 +4,4 @@ function SearchContent ({ children }) {
   return <div className='ola-results-container'>{children}</div>
 }
 
-module.exports = SearchContent
+export default SearchContent

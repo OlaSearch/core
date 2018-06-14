@@ -38,4 +38,4 @@ SearchBar.defaultProps = {
   wordSuggestion: false
 }
 
-module.exports = withConfig(SearchBar)
+export default withConfig(SearchBar)

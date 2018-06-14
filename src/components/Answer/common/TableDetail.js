@@ -59,4 +59,4 @@ TableDetail.defaultProps = {
   max: 5
 }
 
-module.exports = withTranslate(withToggle(TableDetail))
+export default withTranslate(withToggle(TableDetail))

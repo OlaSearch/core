@@ -148,4 +148,4 @@ TextField.propTypes = {
   fieldLabel: PropTypes.string
 }
 
-module.exports = TextField
+export default TextField

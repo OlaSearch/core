@@ -56,9 +56,9 @@ class Share extends React.PureComponent {
     const { title, url } = result
     const { location } = window
     const emailUrl = `mailto:?&subject=${title}&body=${url}`
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      url
-    )}&title=${title}&redirect_uri=${location.href}`
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&title=${title}&redirect_uri=${
+      location.href
+    }`
     const twitterUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`
     const linkedInUrl = `https://www.linkedin.com/cws/share?url=${url}`
     const gplusUrl = `https://plus.google.com/share?url=${url}`
@@ -190,4 +190,4 @@ Share.propTypes = {
 
 const ShareButton = withLogger(withToggle(listensToClickOutside(Share)))
 
-module.exports = hoistNonReactStatics(ShareButton, Share)
+export default hoistNonReactStatics(ShareButton, Share)

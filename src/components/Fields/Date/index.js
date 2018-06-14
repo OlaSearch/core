@@ -136,4 +136,4 @@ DateField.defaultProps = {
   iconSize: 20
 }
 
-module.exports = DateField
+export default DateField

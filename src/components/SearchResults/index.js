@@ -117,4 +117,4 @@ class SearchResults extends React.Component {
   }
 }
 
-module.exports = withConfig(withTheme(SearchResults))
+export default withConfig(withTheme(SearchResults))

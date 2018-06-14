@@ -168,4 +168,4 @@ Thumbnail.defaultProps = {
   placeholder: null
 }
 
-module.exports = withConfig(withLogger(Thumbnail))
+export default withConfig(withLogger(Thumbnail))

@@ -33,4 +33,4 @@ ArrayField.defaultProps = {
   separator: ','
 }
 
-module.exports = ArrayField
+export default ArrayField

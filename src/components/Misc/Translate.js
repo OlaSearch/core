@@ -9,4 +9,4 @@ Translate.defaultProps = {
   tagName: 'span'
 }
 
-module.exports = withTranslate(Translate)
+export default withTranslate(Translate)

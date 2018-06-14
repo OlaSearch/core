@@ -95,4 +95,4 @@ Phone.propTypes = {
   result: PropTypes.object
 }
 
-module.exports = withLogger(withTranslate(Phone))
+export default withLogger(withTranslate(Phone))

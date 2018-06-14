@@ -146,4 +146,4 @@ Title.propTypes = {
   baseUrl: PropTypes.oneOfType([null, PropTypes.string])
 }
 
-module.exports = Title
+export default Title

@@ -45,4 +45,4 @@ PerPage.propTypes = {
   dispatch: PropTypes.func
 }
 
-module.exports = withTranslate(PerPage)
+export default withTranslate(PerPage)

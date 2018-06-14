@@ -145,4 +145,4 @@ class SpeechInput extends React.Component {
   }
 }
 
-module.exports = withTheme(withLogger(withConfig(withTranslate(SpeechInput))))
+export default withTheme(withLogger(withConfig(withTranslate(SpeechInput))))

@@ -67,4 +67,4 @@ Url.propTypes = {
   label: PropTypes.string
 }
 
-module.exports = withLogger(Url)
+export default withLogger(Url)

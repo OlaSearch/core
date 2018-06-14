@@ -1,12 +1,10 @@
-module.exports = {
-  Boolean: require('./Boolean'),
-  Checkbox: require('./Checkbox'),
-  DatePicker: require('./DatePicker'),
-  LinkFilter: require('./Default'),
-  Range: require('./Range'),
-  RangeNumeric: require('./RangeNumeric'),
-  Rating: require('./Rating'),
-  Tabs: require('./Tabs'),
-  TagCloud: require('./TagCloud'),
-  Hierarchical: require('./Hierarchical')
-}
+export BooleanFilter from './Boolean'
+export Checkbox from './Checkbox'
+export DatePicker from './DatePicker'
+export DefaultFilter from './Default'
+export Range from './Range'
+export RangeNumeric from './RangeNumeric'
+export Rating from './Rating'
+export Tabs from './Tabs'
+export TagCloud from './TagCloud'
+export Hierarchical from './Hierarchical'

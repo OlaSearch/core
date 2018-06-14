@@ -229,4 +229,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(withConfig(Answer))
+export default connect(mapStateToProps)(withConfig(Answer))

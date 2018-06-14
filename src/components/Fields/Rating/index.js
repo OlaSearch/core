@@ -70,4 +70,4 @@ Rating.propTypes = {
   fieldLabel: PropTypes.string
 }
 
-module.exports = withTheme(Rating)
+export default withTheme(Rating)

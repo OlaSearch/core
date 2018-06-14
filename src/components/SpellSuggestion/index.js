@@ -77,4 +77,4 @@ function TermItem ({ item, showCount, handleClick }) {
   )
 }
 
-module.exports = withTranslate(SpellSuggestion)
+export default withTranslate(SpellSuggestion)

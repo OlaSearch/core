@@ -65,4 +65,4 @@ Person.propTypes = {
   result: PropTypes.object
 }
 
-module.exports = withLogger(Person)
+export default withLogger(Person)

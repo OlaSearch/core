@@ -30,4 +30,4 @@ Breadcrumbs.propTypes = {
   crumbs: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 }
 
-module.exports = Breadcrumbs
+export default Breadcrumbs

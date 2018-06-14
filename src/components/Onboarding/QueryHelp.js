@@ -26,6 +26,6 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { hideSearchHelp })(
+export default connect(mapStateToProps, { hideSearchHelp })(
   withConfig(QueryHelp)
 )

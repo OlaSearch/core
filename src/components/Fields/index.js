@@ -1,20 +1,18 @@
-module.exports = {
-  ArrayField: require('./ArrayField'),
-  Breadcrumbs: require('./Breadcrumbs'),
-  Date: require('./Date'),
-  Direction: require('./Direction'),
-  Map: require('./ImageMap'),
-  Phone: require('./Phone'),
-  SMS: require('./SMS'),
-  Rating: require('./Rating'),
-  Subtitles: require('./Subtitles'),
-  Thumbnail: require('./Thumbnail'),
-  Title: require('./Title'),
-  DocumentPages: require('./DocumentPages'),
-  Button: require('./Button'),
-  Url: require('./Url'),
-  TextField: require('./TextField'),
-  Share: require('./Share'),
-  Person: require('./Person'),
-  Pill: require('./Pill')
-}
+export ArrayField from './ArrayField'
+export Breadcrumbs from './Breadcrumbs'
+export Date from './Date'
+export Direction from './Direction'
+export Map from './ImageMap'
+export Phone from './Phone'
+export SMS from './SMS'
+export Rating from './Rating'
+export Subtitles from './Subtitles'
+export Thumbnail from './Thumbnail'
+export Title from './Title'
+export DocumentPages from './DocumentPages'
+export Button from './Button'
+export Url from './Url'
+export TextField from './TextField'
+export Share from './Share'
+export Person from './Person'
+export Pill from './Pill'

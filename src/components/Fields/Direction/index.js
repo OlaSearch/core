@@ -144,4 +144,4 @@ Directions.defaultProps = {
   fieldLabel: null
 }
 
-module.exports = withTranslate(withLogger(Directions))
+export default withTranslate(withLogger(Directions))

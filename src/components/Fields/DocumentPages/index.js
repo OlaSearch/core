@@ -128,4 +128,4 @@ function PageDetail ({ page, contentField, onSelectPage }) {
   )
 }
 
-module.exports = withTranslate(withLogger(withToggle(DocumentPages)))
+export default withTranslate(withLogger(withToggle(DocumentPages)))

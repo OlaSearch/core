@@ -14,4 +14,4 @@ function AnswerField ({ label, value, url }) {
   )
 }
 
-module.exports = AnswerField
+export default AnswerField

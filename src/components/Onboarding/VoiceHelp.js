@@ -23,4 +23,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(VoiceHelp)
+export default connect(mapStateToProps)(VoiceHelp)

@@ -93,4 +93,4 @@ Tag.defaultProps = {
   buttonLabel: 'Remove'
 }
 
-module.exports = Tag
+export default Tag

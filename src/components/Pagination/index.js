@@ -190,4 +190,4 @@ function PageNumber ({ page, isActive, selectPage }) {
   )
 }
 
-module.exports = withTranslate(Pagination)
+export default withTranslate(Pagination)

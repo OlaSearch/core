@@ -19,4 +19,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(ProgressBar)
+export default connect(mapStateToProps)(ProgressBar)

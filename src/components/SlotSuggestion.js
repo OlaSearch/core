@@ -144,7 +144,7 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   addFacet,
   executeSearch,
   removeSkipFacetFields

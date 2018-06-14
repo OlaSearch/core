@@ -136,6 +136,6 @@ function McWrapper (props) {
   return <AnswerMC {...props} />
 }
 
-module.exports = connect(mapStateToProps, { fetchMc })(
+export default connect(mapStateToProps, { fetchMc })(
   withConfig(withTheme(McWrapper))
 )

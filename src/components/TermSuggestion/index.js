@@ -94,7 +94,7 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-module.exports = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   updateQueryTerm,
   skipSpellcheck,
   executeSearch

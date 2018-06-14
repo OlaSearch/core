@@ -81,4 +81,4 @@ AnswerWordMap.propTypes = {
   shuffle: PropTypes.bool
 }
 
-module.exports = AnswerWordMap
+export default AnswerWordMap

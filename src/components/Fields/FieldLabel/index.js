@@ -16,4 +16,4 @@ FieldLabel.propTypes = {
   label: PropTypes.string
 }
 
-module.exports = FieldLabel
+export default FieldLabel

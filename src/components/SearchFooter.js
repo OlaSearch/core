@@ -35,4 +35,4 @@ function SearchFooter (props) {
     }
   )
 }
-module.exports = withConfig(SearchFooter)
+export default withConfig(SearchFooter)
