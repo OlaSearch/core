@@ -48,6 +48,9 @@ function Pill ({
       config ? config.searchPageUrl : ''
     }${HASH_CHARACTER}${buildQueryString(query)}`
   }
+  function handleClick (event, name) {
+    if (onClick) onClick(event, name)
+  }
   const pillClasses = cx('ola-flex ola-btn-pill', className)
   const textClasses = cx('ola-flex-content', textClassName)
   return (
@@ -67,7 +70,7 @@ function Pill ({
                 snippetId,
                 eventLabel: displayName,
                 textLink: isLink,
-                onClick: (event) => onClick(event, name),
+                onClick: handleClick,
                 url
               }
               : {})
