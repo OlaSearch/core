@@ -15,7 +15,7 @@ function Pill ({
   onClick,
   iconSize,
   value,
-  fieldName,
+  filterFieldName,
   log,
   displayIcon,
   snippetId,
@@ -33,7 +33,13 @@ function Pill ({
     'ola-field-label-inline': inlineLabel
   })
   function createUrl (name) {
-    const facet = CREATE_FILTER_OBJECT({ name: fieldName })
+    if (!filterFieldName) return null
+    const { fieldTypeMapping } = config
+    const filterName =
+      fieldTypeMapping && filterFieldName in fieldTypeMapping
+        ? `${filterFieldName}_${fieldTypeMapping[filterFieldName]}`
+        : filterFieldName
+    const facet = CREATE_FILTER_OBJECT({ name: filterName })
     const selected = [name]
     const query = {
       facet_query: [{ ...facet, selected }]
@@ -41,9 +47,6 @@ function Pill ({
     return `${
       config ? config.searchPageUrl : ''
     }${HASH_CHARACTER}${buildQueryString(query)}`
-  }
-  function handleClick (event, name) {
-    if (onClick) return onClick(event, name)
   }
   const pillClasses = cx('ola-flex ola-btn-pill', className)
   const textClasses = cx('ola-flex-content', textClassName)
@@ -64,15 +67,17 @@ function Pill ({
                 snippetId,
                 eventLabel: displayName,
                 textLink: isLink,
-                onClick: (event) => handleClick(event, name),
+                onClick: (event) => onClick(event, name),
                 url
               }
               : {})
           },
           <React.Fragment>
-            <span className='ola-flex-icon'>
-              <Tag />
-            </span>
+            {displayIcon ? (
+              <span className='ola-flex-icon'>
+                <Tag />
+              </span>
+            ) : null}
             <span className={textClasses}>{displayName}</span>
           </React.Fragment>
         )
@@ -87,6 +92,7 @@ Pill.defaultProps = {
   iconSize: 20,
   inlineLabel: false,
   isLink: false,
+  filterFieldName: null,
   textClassName: null,
   className: null
 }
