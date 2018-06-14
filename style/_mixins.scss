@@ -120,7 +120,7 @@ $breakpoints: (
   /* This is the dangerous one in WebKit, as it breaks things wherever */
   // word-break: break-all;
   /* Instead use this non-standard one: */
-  word-break: break-word;
+  // word-break: break-word; /* Removed on 14 June 2018 by @vinay. Because some words broke in safari and chrome */
 
   /* Adds a hyphen where the word breaks, if supported (No Blink) */
   // -ms-hyphens: auto;
