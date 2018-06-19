@@ -31,11 +31,7 @@ function SelectFilter ({
     }
     executeSearch()
   }
-  const { displayName, facetNames, sort } = facet
-  var { values } = facet
-  if (sort) {
-    values = sortFacetValues(values, sort)
-  }
+  const { displayName, values, facetNames, sort } = facet
   const classes = cx('ola-facet', {
     'ola-facet-collapsed': isCollapsed
   })

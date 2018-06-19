@@ -327,17 +327,6 @@ export function getFacetsToDisplay (selected, facets, facetsToDisplay) {
 }
 
 /**
- * Sort facet values in asc order
- * @param  {Array} values
- * @param  {string} direction
- * @return {Array}
- */
-export function sortFacetValues (values, direction = 'asc') {
-  if (direction === 'desc') return values.sort((a, b) => b.name - a.name)
-  return values.sort((a, b) => a.name - b.name)
-}
-
-/**
  * Create anchor tags for Sub title (h2, h3 headings in search result)
  * @param  {string} str
  * @return {string}
@@ -896,8 +885,11 @@ export function getAutoCompleteResults (
     let { payload, term, ...rest } = results[i]
     /* Clean term */
     term = cleanQueryTerm(term)
-
     if (payload && typeof payload === 'string') payload = JSON.parse(payload)
+    /**
+     * Add a default query payload
+     */
+    if (!payload) payload = { type: 'query' }
     const isCategory =
       payload.taxo_terms &&
       payload.taxo_terms.length > 0 &&
