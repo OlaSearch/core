@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 function NoResults ({
   totalResults,
   isLoading,
+  message,
   q,
   translate,
   suggestedTerm,
@@ -36,37 +37,45 @@ function NoResults ({
     removeAllFacets()
     executeSearch()
   }
-  var message
-  const resetFilters = (
-    <button className='ola-reset-filters' type='button' onClick={removeFilters}>
-      {translate('no_results_remove_filters')}
-    </button>
-  )
-  if (totalResults === 0 && suggestedTerm && facets.length > 0) {
-    message = (
-      <div>
-        {translate('no_results_found_filters_too_restrictive', { q }, true, {
-          tagName: 'span'
-        })}
-        {canRemoveFilters ? resetFilters : null}
-      </div>
-    )
+  var msg
+  if (message) {
+    msg = message
   } else {
-    if (facets.length) {
-      message = (
+    const resetFilters = (
+      <button
+        className='ola-reset-filters'
+        type='button'
+        onClick={removeFilters}
+      >
+        {translate('no_results_remove_filters')}
+      </button>
+    )
+    if (totalResults === 0 && suggestedTerm && facets.length > 0) {
+      msg = (
         <div>
-          {translate('no_results_found_filters_only', null, true, {
+          {translate('no_results_found_filters_too_restrictive', { q }, true, {
             tagName: 'span'
           })}
           {canRemoveFilters ? resetFilters : null}
         </div>
       )
-    } else message = translate('no_results_found', { q }, true)
+    } else {
+      if (facets.length) {
+        msg = (
+          <div>
+            {translate('no_results_found_filters_only', null, true, {
+              tagName: 'span'
+            })}
+            {canRemoveFilters ? resetFilters : null}
+          </div>
+        )
+      } else msg = translate('no_results_found', { q }, true)
+    }
   }
 
   return (
     <div className='ola-snippet ola-snippet-noresults'>
-      <div className='ola-snippet-inner'>{message}</div>
+      <div className='ola-snippet-inner'>{msg}</div>
     </div>
   )
 }
@@ -77,6 +86,10 @@ NoResults.defaultProps = {
 }
 
 NoResults.propTypes = {
+  /**
+   * Custom no results message
+   */
+  message: PropTypes.string,
   /**
    * Total no of results
    */
