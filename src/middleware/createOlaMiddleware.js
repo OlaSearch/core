@@ -172,7 +172,7 @@ export default function (options = {}) {
     return callApi
       .then((xhr) => {
         /* Validate resonse */
-        let { responseText } = xhr
+        const { responseText } = xhr
         if (xhr && 'responseURL' in xhr) {
           const responseURL = xhr.responseURL.split('?').pop()
           const timestampFromResponse = parseInt(

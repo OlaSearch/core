@@ -172,11 +172,18 @@ class DatePickerFilter extends React.Component {
   }
 
   render () {
-    const { facet, dateLabels, isCollapsed, toggle, isPhone } = this.props
+    const {
+      facet,
+      dateLabels,
+      isCollapsed,
+      toggle,
+      isPhone,
+      showIfEmpty
+    } = this.props
     let { fromDate, toDate, maxDate, minDate, dateLabel } = this.state
     const { values } = facet
     /* Check if dates exists */
-    if (!values.length) return null
+    if (!values.length && !showIfEmpty) return null
     const klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed

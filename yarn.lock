@@ -176,9 +176,9 @@
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/@olasearch/react-onclickoutside/-/react-onclickoutside-6.7.3.tgz#e084e6d9e4e8d8cb954b5161cc600271ca2f34dd"
 
-"@olasearch/solr-adapter@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@olasearch/solr-adapter/-/solr-adapter-2.0.1.tgz#82f92974b8938acdfe89ade98407f20cbca9a76b"
+"@olasearch/solr-adapter@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@olasearch/solr-adapter/-/solr-adapter-2.0.2.tgz#3ba4b0c40be622d6594739f07fb9e83dabde40c3"
   dependencies:
     "@olasearch/alite" "^1.0.5"
     query-string "^4.2.3"
@@ -8103,9 +8103,9 @@ react-line-progress@^1.0.3:
     classnames "^2.2.5"
     prop-types "^15.5.8"
 
-react-list@^0.8.9:
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/react-list/-/react-list-0.8.9.tgz#c2f24d16cca090664f61402dc62eca7081ef789f"
+react-list@^0.8.10:
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/react-list/-/react-list-0.8.10.tgz#5bd4864051409c5d3eff34110def54c05af062e6"
   dependencies:
     prop-types "15"
 
@@ -10267,9 +10267,9 @@ webpack-bundle-size-analyzer@^2.7.0:
     filesize "^3.1.2"
     humanize "0.0.9"
 
-webpack-cli@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.0.6.tgz#5d414e66c6576d4050c1e6b7ab3ecf9969106525"
+webpack-cli@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.0.8.tgz#90eddcf04a4bfc31aa8c0edc4c76785bc4f1ccd9"
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"

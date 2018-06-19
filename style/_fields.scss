@@ -85,6 +85,14 @@ $image-height: 150px;
         padding-right: 0;
       }
     }
+
+    > .ola-fg-image {
+      padding-right: 0;
+
+      > .ola-field-img {
+        margin-right: 1rem;
+      }
+    }
   }
 }
 

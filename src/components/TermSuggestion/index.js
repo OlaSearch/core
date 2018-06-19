@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withTranslate from './../../decorators/withTranslate'
+import withLogger from './../../decorators/withLogger'
 import { connect } from 'react-redux'
 import {
   updateQueryTerm,
@@ -25,7 +26,9 @@ function TermSuggestion ({
   updateQueryTerm,
   spellCheckSource,
   skipSpellcheck,
-  executeSearch
+  executeSearch,
+  log,
+  logPayload
 }) {
   if (!term) return null
   if (
@@ -60,6 +63,16 @@ function TermSuggestion ({
             className='ola-btn ola-btn-term-suggestion'
             type='button'
             onClick={() => {
+              /**
+               * Log the click event
+               */
+              log({
+                eventType: 'C',
+                eventCategory: 'SpellSearchInstead',
+                eventAction: 'click',
+                eventLabel: q,
+                payload: logPayload
+              })
               /* Change the query term */
               updateQueryTerm(q)
               /* Skip both intent engine and solr spellchecker */
@@ -98,4 +111,4 @@ export default connect(mapStateToProps, {
   updateQueryTerm,
   skipSpellcheck,
   executeSearch
-})(withTranslate(TermSuggestion))
+})(withTranslate(withLogger(TermSuggestion)))

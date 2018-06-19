@@ -1,11 +1,12 @@
 {
   "name": "@olasearch/core",
-  "version": "3.8.5",
+  "version": "3.8.6",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf dist lib",
     "watch": "BABEL_ENV=production babel --watch src --out-dir lib",
+    "watch:style": "BABEL_ENV=production babel --watch src/components/InfiniteScroll/*.js --out-dir lib/",
     "build": "BABEL_ENV=production babel src --out-dir lib",
     "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && npm run polyfill && gulp",
     "polyfill": "cross-env NODE_ENV=production webpack --config webpack.polyfill.js",
@@ -76,7 +77,7 @@
   },
   "devDependencies": {
     "@olasearch/logger": "^1.4.1",
-    "@olasearch/solr-adapter": "^2.0.1",
+    "@olasearch/solr-adapter": "^2.0.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -127,7 +128,7 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.12.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
-    "webpack-cli": "^3.0.6",
+    "webpack-cli": "^3.0.8",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.2"
   },
@@ -155,7 +156,7 @@
     "ramda": "^0.25.0",
     "react-async-load-script": "^1.0.6",
     "react-line-progress": "^1.0.3",
-    "react-list": "^0.8.9",
+    "react-list": "^0.8.10",
     "react-loadable": "^5.4.0",
     "react-pikaday-datepicker": "^3.0.1",
     "react-redux": "^5.0.7",

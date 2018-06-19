@@ -82,7 +82,8 @@ function OlaProvider ({
           .ola-search :global(.ola-btn-sms),
           .ola-search :global(.ola-btn-subtitle),
           .ola-search :global(.ola-link-clear-filters),
-          .ola-search :global(.ola-link-view-pages) {
+          .ola-search :global(.ola-link-view-pages),
+          .ola-search :global(.ola-answer-source-link) {
             color: ${theme.primaryColor};
           }
           .ola-search :global(.ola-link-show-more),

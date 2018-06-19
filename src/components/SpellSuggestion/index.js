@@ -6,29 +6,44 @@ import {
   removeAllTokens
 } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
+import withLogger from './../../decorators/withLogger'
+import { connect } from 'react-redux'
 import { SEARCH_INPUTS } from './../../constants/Settings'
 
 /**
  * Did you mean spell suggestions
  */
-function SpellSuggestion (props) {
+function SpellSuggestion ({
+  suggestions,
+  showCount,
+  translate,
+  log,
+  logPayload
+}) {
+  if (!suggestions.length) return null
   function onChange (term) {
-    const { dispatch } = props
     /* Update the query term */
-    dispatch(updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION))
+    updateQueryTerm(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION)
     /* Remove any tokens */
-    dispatch(removeAllTokens())
+    removeAllTokens()
     /* Do a search */
-    dispatch(executeSearch())
+    executeSearch()
   }
   function handleClick (term) {
+    /**
+     * Log the click event
+     */
+    log({
+      eventType: 'C',
+      eventCategory: 'SpellSuggestion',
+      eventAction: 'click',
+      eventLabel: term,
+      payload: logPayload
+    })
     props.onChange
       ? props.onChange(term, SEARCH_INPUTS.DID_YOU_MEAN_SUGGESTION)
       : onChange(term)
   }
-  const { suggestions, showCount, translate } = props
-
-  if (!suggestions.length) return null
 
   return (
     <div className='ola-spell-suggestion'>
@@ -50,7 +65,6 @@ function SpellSuggestion (props) {
 SpellSuggestion.propTypes = {
   suggestions: PropTypes.array.isRequired,
   totalResults: PropTypes.number.isRequired,
-  dispatch: PropTypes.func.isRequired,
   showCount: PropTypes.bool
 }
 
@@ -77,4 +91,8 @@ function TermItem ({ item, showCount, handleClick }) {
   )
 }
 
-export default withTranslate(SpellSuggestion)
+export default connect(null, {
+  updateQueryTerm,
+  executeSearch,
+  removeAllTokens
+})(withTranslate(withLogger(SpellSuggestion)))

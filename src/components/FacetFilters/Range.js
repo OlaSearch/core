@@ -212,10 +212,10 @@ class RangeFilter extends React.Component {
     this.sliderInput = input
   }
   render () {
-    var { facet, isCollapsed, toggle } = this.props
+    var { facet, isCollapsed, toggle, showIfEmpty } = this.props
     var { displayName, values, showHistogram } = facet
     /* Return null if there are no values */
-    if (!values.length) return null
+    if (!values.length && !showIfEmpty) return null
     var klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed

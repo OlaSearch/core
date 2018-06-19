@@ -76,7 +76,9 @@ class Thumbnail extends React.Component {
         'alwaysUpdate',
         'document',
         'canEdit',
-        'canDelete'
+        'canDelete',
+        'theme',
+        'config'
       ],
       rest
     )
