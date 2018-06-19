@@ -9,3 +9,4 @@ coverage
 lib
 docs
 stats.json
+yarn-error.log
