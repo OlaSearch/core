@@ -48,7 +48,7 @@ module.exports = {
     //       beautify: false,
     //     }
     //   }
-    // }),    
+    // }),
     new webpack.BannerPlugin({ banner: `Copyright Ola Search Pte Ltd ${startYear} - ${currentYear}`, raw: false, entryOnly: true })
   ],
   resolve: {
@@ -62,7 +62,7 @@ module.exports = {
       // 'fbjs': path.join(__dirname, './node_modules/fbjs'),
       // 'react-redux': path.join(__dirname, './node_modules/react-redux'),
       // 'redux': path.join(__dirname, './node_modules/redux'),
-      '@olasearch/icons': path.resolve(__dirname, './../ola-icons'),
+      // '@olasearch/icons': path.resolve(__dirname, './../ola-icons'),
       // 'styled-jsx': path.join(__dirname, './../../styled-jsx/src')
     },
     modules: [
