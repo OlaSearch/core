@@ -20,6 +20,7 @@ function SelectFilter ({
   removeFacetItem,
   selected,
   toggle,
+  showIfEmpty,
   isCollapsed
 }) {
   function handleChange (event) {
@@ -32,6 +33,7 @@ function SelectFilter ({
     executeSearch()
   }
   const { displayName, values, facetNames, sort } = facet
+  if (!values.length && !showIfEmpty) return null
   const classes = cx('ola-facet', {
     'ola-facet-collapsed': isCollapsed
   })
