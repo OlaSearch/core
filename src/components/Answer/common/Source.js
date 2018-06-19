@@ -7,9 +7,13 @@ export default function Source ({ source }) {
   return (
     <div className='ola-answer-source'>
       <span className='ola-answer-source-label'>Source: </span>
-      <a href={url} className='ola-answer-source-link'>
-        {name}
-      </a>
+      {url ? (
+        <a href={url} className='ola-answer-source-link'>
+          {name}
+        </a>
+      ) : (
+        <span className='ola-answer-source-link'>{name}</span>
+      )}
     </div>
   )
 }

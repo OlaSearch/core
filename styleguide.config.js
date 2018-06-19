@@ -112,6 +112,10 @@ module.exports = {
       components: 'src/components/FacetFilters/*.js'
     },
     {
+      name: 'Visualization',
+      components: 'src/components/Visualization/*.js'
+    },
+    {
       name: 'Query monitoring',
       components: 'src/components/Alert/*.js'
     },

@@ -1,0 +1,27 @@
+.ola-viz {
+  position: relative;
+}
+
+/**
+ * Loading
+ */
+.ola-viz-loading{
+  &:before {
+    content: 'Drawing chart';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1em;
+    margin-left: -40px;
+    font-size: 12px;
+    font-style: italic;
+  }
+}
+
+/**
+ * Chart
+ */
+.ola-viz-chart-el {
+  height: 300px;
+  margin: 1rem;
+}

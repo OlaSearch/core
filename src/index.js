@@ -95,6 +95,9 @@ export AnswerLineChart from './components/Answer/AnswerLineChart'
 export AnswerTable from './components/Answer/AnswerTable'
 export SlotSuggestion from './components/SlotSuggestion'
 
+/* Visualization */
+export Chart from './components/Visualization/Chart'
+
 /* Export theme */
 export { ThemeProvider, ThemeConsumer } from './containers/ThemeContext'
 

@@ -4,9 +4,10 @@ import classNames from 'classnames'
 import scriptLoader from 'react-async-load-script'
 import TableDetail from './common/TableDetail'
 import Source from './common/Source'
+import Chart from './../Visualization/Chart'
 
 /**
- * Displays a line chart
+ * Displays a chart
  */
 class AnswerLineChart extends React.Component {
   static propTypes = {
@@ -30,10 +31,10 @@ class AnswerLineChart extends React.Component {
     if (typeof text !== 'string') return text
     return text.replace(/<(?:.*|\n)*?>/gm, '')
   }
-  prepareData = (card) => {
-    let { record_keys = [], record_data = [] } = card
-    let keys = record_keys.filter((key) => key !== 'Country')
-    let data = record_data.slice(0, 5).map((item) => {
+  prepareData = () => {
+    const { record_keys = [], record_data = [] } = this.props.card
+    const keys = record_keys.filter((key) => key !== 'Country')
+    const data = record_data.slice(0, 5).map((item) => {
       let country = item['Country']
       return [].concat(
         country,
@@ -44,80 +45,25 @@ class AnswerLineChart extends React.Component {
     })
     return [['x', ...keys], ...data]
   }
-  drawChart () {
-    const { card } = this.props
-    /* Check if record_keys <= 2 */
-    /* ["Country", "2017"] => Only one value */
-    if (card.record_keys.length <= 2) {
-      this.chartRef.style.display = 'none'
-    }
-    const chartData = this.prepareData(card)
-    this.chart = bb.generate({
-      bindto: this.chartRef,
-      data: {
-        x: 'x',
-        columns: chartData,
-        type: this.props.type
-      },
-      axis: {
-        x: {
-          tick: {
-            format: (d) => d
-          }
-        }
-      },
-      bar: {
-        width: {
-          ratio: 0.5
-        }
-      },
-      padding: {
-        right: 20,
-        top: 20
-      }
-    })
-  }
   shouldComponentUpdate (nextProps) {
     return (
       nextProps.card !== this.props.card ||
-      nextProps.refresh !== this.props.refresh ||
-      nextProps.isScriptLoadSucceed !== this.props.isScriptLoadSucceed ||
-      nextProps.isScriptLoaded !== this.props.isScriptLoaded
+      nextProps.refresh !== this.props.refresh
     )
   }
   componentDidUpdate (prevProps) {
-    const { card } = this.props
-    /* Check if record_keys <= 2 */
-    /* ["Country", "2017"] => Only one value */
-    if (
-      prevProps.isScriptLoadSucceed !== this.props.isScriptLoadSucceed &&
-      this.props.isScriptLoadSucceed
-    ) {
-      return this.drawChart()
-    }
-    if (!this.chart) return
-    if (card.record_keys.length <= 2) {
+    if (this.props.card.record_keys.length <= 2) {
       return (this.chartRef.style.display = 'none')
     } else {
       this.chartRef.style.display = 'block'
     }
-
-    const chartData = this.prepareData(card)
-    this.chart.load({
-      unload: true,
-      columns: chartData
-    })
   }
   registerRef = (el) => {
     this.chartRef = el
   }
   render () {
     const { card, isScriptLoaded } = this.props
-    const { record_keys, record_data, title, source } = card
-    const showChart = record_keys.length > 2
-    const answerClass = classNames('ola-answer-linechart', {
-      'ola-answer-linechart-loading': !isScriptLoaded
-    })
+    const { title, source } = card
     return (
       <div className='ola-answer-chart'>
         <div className='ola-answer-card-wrapper'>
@@ -126,7 +72,11 @@ class AnswerLineChart extends React.Component {
               {title}
             </div>
           )}
-          <div ref={this.registerRef} className={answerClass} />
+          <Chart
+            data={this.prepareData()}
+            innerRef={this.registerRef}
+            type={this.props.type}
+          />
           <TableDetail {...this.props} />
         </div>
         <Source source={source} />
@@ -135,7 +85,4 @@ class AnswerLineChart extends React.Component {
   }
 }
 
-export default scriptLoader([
-  'https://cdn.olasearch.com/assets/vendor/d3.v4.min.js',
-  'https://cdn.olasearch.com/assets/vendor/billboard.min.js'
-])(AnswerLineChart)
+export default AnswerLineChart

@@ -97,14 +97,4 @@
 /* Line chart loading */
 .ola-answer-linechart {
   position: relative;
-  &.ola-answer-linechart-loading:before {
-    content: 'Drawing chart';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -1em;
-    margin-left: -40px;
-    font-size: 12px;
-    font-style: italic;
-  }
 }
