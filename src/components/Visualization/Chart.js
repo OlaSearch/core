@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import equals from 'ramda/src/equals'
 import scriptLoader from 'react-async-load-script'
 
 /**
@@ -63,22 +64,34 @@ class Chart extends React.Component {
       top: 20
     }
   }
-  initChart () {
-    var { type, types, data, labels, axis, padding, x } = this.props
+  createChartData = () => {
+    var { data, axis, x } = this.props
+    var categories
     if (!Array.isArray(data)) {
       const { tick } = data
       if (CATEGORY_NAME in data) {
+        categories = data[CATEGORY_NAME]
         axis = {
           x: {
             type: CATEGORY_NAME,
             tick,
-            categories: data[CATEGORY_NAME]
+            categories
           }
         }
         x = null
       }
       data = data['data']
     }
+    return {
+      data,
+      axis,
+      x,
+      categories
+    }
+  }
+  initChart () {
+    var { type, types, labels, padding } = this.props
+    const { axis, data, x } = this.createChartData()
     this.chart = bb.generate({
       bindto: this.chartRef,
       data: {
@@ -108,10 +121,11 @@ class Chart extends React.Component {
     }
     /* Prevent updating chart if there is some error */
     if (!this.chart) return
-
+    const { axis, data, categories } = this.createChartData()
     this.chart.load({
       unload: true,
-      columns: this.props.data
+      columns: data,
+      categories
     })
   }
   registerRef = (el) => {
