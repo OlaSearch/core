@@ -10,17 +10,49 @@ import scriptLoader from 'react-async-load-script'
 class Chart extends React.Component {
   static propTypes = {
     /**
-     * chart type
+     * Chart type
      */
-    type: PropTypes.oneOf(['bar', 'line', 'step', 'spline'])
+    type: PropTypes.oneOf(['bar', 'line', 'step', 'spline']),
+    /**
+     * Name of the x axis data
+     */
+    x: PropTypes.string,
+    /**
+     * Show or hide labels in the chart
+     */
+    labels: PropTypes.boolean,
+    /**
+     * Chart padding
+     */
+    padding: PropTypes.shape({
+      top: PropTypes.number,
+      right: PropTypes.number,
+      left: PropTypes.number,
+      bottom: PropTypes.number
+    }),
+    /**
+     * Axis options
+     */
+    axis: PropTypes.object
   }
   static defaultProps = {
     type: 'line',
-    labels: true,
-    x: 'x'
+    labels: false,
+    x: 'x',
+    axis: {
+      x: {
+        tick: {
+          format: (d) => d
+        }
+      }
+    },
+    padding: {
+      right: 20,
+      top: 20
+    }
   }
   initChart () {
-    const { type, types, data, labels } = this.props
+    const { type, types, data, labels, axis, padding } = this.props
     this.chart = bb.generate({
       bindto: this.chartRef,
       data: {
@@ -32,22 +64,13 @@ class Chart extends React.Component {
       bubble: {
         maxR: 50
       },
-      axis: {
-        x: {
-          tick: {
-            format: (d) => d
-          }
-        }
-      },
+      axis,
       bar: {
         width: {
           ratio: 0.5
         }
       },
-      padding: {
-        right: 20,
-        top: 20
-      }
+      padding
     })
   }
   componentDidUpdate (prevProps) {
