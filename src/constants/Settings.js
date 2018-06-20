@@ -301,3 +301,5 @@ export const EVENT_CATEGORIES = {
 export const EVENT_LABELS = {
   title: 'Title'
 }
+
+export const DEFAULT_AUTOCOMPLETE_PAYLOAD = { type: 'query' }

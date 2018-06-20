@@ -10,7 +10,8 @@ import {
   SLOT_DATE,
   SLOT_NUMBER,
   TAXO_ENTITY,
-  SEARCH_COLLECTION_IDENTIFIER
+  SEARCH_COLLECTION_IDENTIFIER,
+  DEFAULT_AUTOCOMPLETE_PAYLOAD
 } from './../constants/Settings'
 import xssFilters from 'xss-filters'
 import scrollIntoView from 'dom-scroll-into-view'
@@ -883,13 +884,8 @@ export function getAutoCompleteResults (
 
   for (let i = 0, len = results.length; i < len; i++) {
     let { payload, term, ...rest } = results[i]
-    /* Clean term */
-    term = cleanQueryTerm(term)
+    if (!payload) payload = DEFAULT_AUTOCOMPLETE_PAYLOAD
     if (payload && typeof payload === 'string') payload = JSON.parse(payload)
-    /**
-     * Add a default query payload
-     */
-    if (!payload) payload = { type: 'query' }
     const isCategory =
       payload.taxo_terms &&
       payload.taxo_terms.length > 0 &&
