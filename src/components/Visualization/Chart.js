@@ -7,6 +7,8 @@ import scriptLoader from 'react-async-load-script'
 /**
  * Displays a line chart
  */
+const CATEGORY_NAME = 'category'
+
 class Chart extends React.Component {
   static propTypes = {
     /**
@@ -33,7 +35,17 @@ class Chart extends React.Component {
     /**
      * Axis options
      */
-    axis: PropTypes.object
+    axis: PropTypes.object,
+    /**
+     * Chart data
+     */
+    data: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.shape({
+        category: PropTypes.array,
+        data: PropTypes.array
+      })
+    ])
   }
   static defaultProps = {
     type: 'line',
@@ -52,12 +64,26 @@ class Chart extends React.Component {
     }
   }
   initChart () {
-    const { type, types, data, labels, axis, padding } = this.props
+    var { type, types, data, labels, axis, padding, x } = this.props
+    if (!Array.isArray(data)) {
+      const { tick } = data
+      if (CATEGORY_NAME in data) {
+        axis = {
+          x: {
+            type: CATEGORY_NAME,
+            tick,
+            categories: data[CATEGORY_NAME]
+          }
+        }
+        x = null
+      }
+      data = data['data']
+    }
     this.chart = bb.generate({
       bindto: this.chartRef,
       data: {
-        x: this.props.x,
-        columns: this.props.data,
+        x,
+        columns: data,
         ...(types ? { types } : { type }),
         labels
       },

@@ -11,8 +11,11 @@ import {
   SLOT_NUMBER,
   TAXO_ENTITY,
   SEARCH_COLLECTION_IDENTIFIER,
-  DEFAULT_AUTOCOMPLETE_PAYLOAD
+  DEFAULT_AUTOCOMPLETE_PAYLOAD,
+  DATE_RANGE_FACETS,
+  DEFAULT_DATE_FORMAT
 } from './../constants/Settings'
+import { format as formatDate } from './dateParser'
 import xssFilters from 'xss-filters'
 import scrollIntoView from 'dom-scroll-into-view'
 
@@ -1268,4 +1271,36 @@ export function getFieldValue (result, field, fallbackFields) {
     }
   }
   return fieldContent
+}
+
+/**
+ * Converts facets to billboard chart data
+ * @param {Array} Array of facets
+ */
+export function facetToChartData (facets) {
+  /**
+   * Data format. Examples Movie genres
+   * return {
+   *   category: ['Drama', 'Action'],
+   *   data: [
+   *     ['Genre', 1, 2]
+   *   ]
+   * }
+   */
+  if (!facets.length) return null
+  const dataType = facets.map(({ type }) => type)[0]
+  const isDate = DATE_RANGE_FACETS.indexOf(dataType) !== -1
+  return {
+    category: flatten(
+      facets.map(({ values }) => values.map(({ name }) => name))
+    ),
+    data: facets.map(({ name, displayName, values }) => {
+      return [displayName, ...values.map(({ count }) => count)]
+    }),
+    tick: {
+      format: (idx, x) => {
+        return isDate ? formatDate(x, DEFAULT_DATE_FORMAT) : x
+      }
+    }
+  }
 }

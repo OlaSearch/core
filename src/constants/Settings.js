@@ -1,6 +1,7 @@
 import { getFieldLabel } from './../utilities'
 
 export const RANGE_FACETS = ['range', 'rating', 'daterange', 'datepicker']
+export const DATE_RANGE_FACETS = ['daterange', 'datepicker']
 export const NUMERICAL_RANGE = 'range'
 export const OLA_STORAGE_KEY = 'o_store_'
 export const CONTEXT_STORAGE_KEY = 'o_context_'
