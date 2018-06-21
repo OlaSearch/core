@@ -685,7 +685,9 @@ export function updateStateFromQuery (config, urlParser) {
     /**
      * Add a custom url parser
      */
-    if (urlParser && typeof urlParser === 'function') { stateFromUrl = urlParser(stateFromUrl) }
+    if (urlParser && typeof urlParser === 'function') {
+      stateFromUrl = urlParser(stateFromUrl)
+    }
 
     dispatch({
       type: types.UPDATE_STATE_FROM_QUERY,
