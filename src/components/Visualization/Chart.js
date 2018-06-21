@@ -4,13 +4,27 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import equals from 'ramda/src/equals'
 import scriptLoader from 'react-async-load-script'
+import { connect } from 'react-redux'
+import { debounce } from './../../utilities'
+import {
+  CHART_ANIMATION_TIMING,
+  CHART_CATEGORY_NAME
+} from './../../constants/Settings'
 
 /**
  * Displays a line chart
  */
-const CATEGORY_NAME = 'category'
-
 class Chart extends React.Component {
+  constructor (props) {
+    super(props)
+    /**
+     * Debouncing is necessary because, multiple prop changes can cause charts to change rapidly
+     */
+    this.debounceUpdateChart = debounce(
+      this.updateChart,
+      CHART_ANIMATION_TIMING
+    )
+  }
   static propTypes = {
     /**
      * Chart type
@@ -64,16 +78,20 @@ class Chart extends React.Component {
       top: 20
     }
   }
+  handleClick = (d) => {
+    const { index } = d
+    // console.log(d, this.props.data.category[index])
+  }
   createChartData = () => {
     var { data, axis, x } = this.props
     var categories
-    if (!Array.isArray(data)) {
-      const { tick } = data
-      if (CATEGORY_NAME in data) {
-        categories = data[CATEGORY_NAME]
+    if (data && !Array.isArray(data)) {
+      if (CHART_CATEGORY_NAME in data) {
+        const { tick } = data
+        categories = data[CHART_CATEGORY_NAME]
         axis = {
           x: {
-            type: CATEGORY_NAME,
+            type: CHART_CATEGORY_NAME,
             tick,
             categories
           }
@@ -92,10 +110,13 @@ class Chart extends React.Component {
   initChart () {
     var { type, types, labels, padding } = this.props
     const { axis, data, x } = this.createChartData()
+    /* If data is empty initially, we do not initialize the chart yet */
+    if (!data) return
     this.chart = bb.generate({
       bindto: this.chartRef,
       data: {
         x,
+        onclick: this.handleClick,
         columns: data,
         ...(types ? { types } : { type }),
         labels
@@ -104,6 +125,9 @@ class Chart extends React.Component {
         maxR: 50
       },
       axis,
+      transition: {
+        duration: CHART_ANIMATION_TIMING
+      },
       bar: {
         width: {
           ratio: 0.5
@@ -112,6 +136,9 @@ class Chart extends React.Component {
       padding
     })
   }
+  componentDidMount () {
+    this.mounted = true
+  }
   componentDidUpdate (prevProps) {
     if (
       prevProps.isScriptLoadSucceed !== this.props.isScriptLoadSucceed &&
@@ -119,9 +146,23 @@ class Chart extends React.Component {
     ) {
       return this.initChart()
     }
+    /* If the data is empty initially, we check if the component has been mounted */
+    if (
+      this.mounted &&
+      !this.chart &&
+      this.props.isScriptLoadSucceed &&
+      this.props.data
+    ) {
+      return this.initChart()
+    }
     /* Prevent updating chart if there is some error */
     if (!this.chart) return
+
+    this.debounceUpdateChart()
+  }
+  updateChart = () => {
     const { axis, data, categories } = this.createChartData()
+
     this.chart.load({
       unload: true,
       columns: data,

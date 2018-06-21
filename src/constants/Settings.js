@@ -304,3 +304,9 @@ export const EVENT_LABELS = {
 }
 
 export const DEFAULT_AUTOCOMPLETE_PAYLOAD = { type: 'query' }
+
+/**
+ * Visualizations
+ */
+export const CHART_ANIMATION_TIMING = 300
+export const CHART_CATEGORY_NAME = 'category'

@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import FieldLabel from './../FieldLabel'
 import PropTypes from 'prop-types'
 import MailIcon from '@olasearch/icons/lib/mail'
@@ -13,14 +12,11 @@ function Email ({
   iconLeft = null,
   iconRight = null,
   label,
-  Device,
   displayIcon,
   iconSize,
   fieldLabel
 }) {
-  // let { isApple, isPhone } = Device
-  // let bodyText = isApple && isApple.device ? '&body' : '?body'
-  let link = `mailto:${email}`
+  const link = `mailto:${email}`
 
   return (
     <div className='ola-field ola-field-email'>
@@ -53,25 +49,15 @@ Email.propTypes = {
   /**
    * Icon size
    */
-  iconSize: 20,
+  iconSize: PropTypes.number,
   /**
    * Search result
    */
-  result: PropTypes.object,
-  /**
-   * Body of the SMS message
-   */
-  body: PropTypes.string
+  result: PropTypes.object
 }
 
 Email.defaultProps = {
   placeholder: ''
 }
 
-function mapStateToProps (state) {
-  return {
-    Device: state.Device
-  }
-}
-
-export default connect(mapStateToProps)(Email)
+export default Email

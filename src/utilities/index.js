@@ -1277,7 +1277,7 @@ export function getFieldValue (result, field, fallbackFields) {
  * Converts facets to billboard chart data
  * @param {Array} Array of facets
  */
-export function facetToChartData (facets) {
+export function facetToChartData (facets, limit = undefined) {
   /**
    * Data format. Examples Movie genres
    * return {
@@ -1288,19 +1288,17 @@ export function facetToChartData (facets) {
    * }
    */
   if (!facets.length) return null
-  const dataType = facets.map(({ type }) => type)[0]
-  const isDate = DATE_RANGE_FACETS.indexOf(dataType) !== -1
+  const facet = facets[0]
+  const { type, name } = facet
+  // const isDate = DATE_RANGE_FACETS.indexOf(type) !== -1
   return {
     category: flatten(
-      facets.map(({ values }) => values.map(({ name }) => name))
+      facets.map(({ values }) => values.map(({ name }) => name)).slice(0, limit)
     ),
     data: facets.map(({ name, displayName, values }) => {
-      return [displayName, ...values.map(({ count }) => count)]
+      return [displayName, ...values.map(({ count }) => count).slice(0, limit)]
     }),
-    tick: {
-      format: (idx, x) => {
-        return isDate ? formatDate(x, DEFAULT_DATE_FORMAT) : x
-      }
-    }
+    name,
+    dataType: type
   }
 }

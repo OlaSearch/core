@@ -97,6 +97,7 @@ export SlotSuggestion from './components/SlotSuggestion'
 
 /* Visualization */
 export Chart from './components/Visualization/Chart'
+export VizCard from './components/Visualization/Card'
 
 /* Export theme */
 export { ThemeProvider, ThemeConsumer } from './containers/ThemeContext'
