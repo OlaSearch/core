@@ -679,9 +679,13 @@ export function changeSort (sort) {
   }
 }
 
-export function updateStateFromQuery (config) {
+export function updateStateFromQuery (config, urlParser) {
   return (dispatch, getState) => {
-    let stateFromUrl = parseQueryString(getState().QueryState, config)
+    var stateFromUrl = parseQueryString(getState().QueryState, config)
+    /**
+     * Add a custom url parser
+     */
+    if (urlParser && typeof urlParser === 'function') { stateFromUrl = urlParser(stateFromUrl) }
 
     dispatch({
       type: types.UPDATE_STATE_FROM_QUERY,
@@ -714,7 +718,8 @@ export function initSearch ({
   config,
   urlSync = true,
   payload = {},
-  options = {}
+  options = {},
+  urlParser = null
 }) {
   return (dispatch, getState) => {
     const { history, searchOnLoad = true } = config
@@ -723,7 +728,7 @@ export function initSearch ({
     historyType = history || historyType
 
     /* Always pass configuration to @parseQueryString handler */
-    if (urlSync) dispatch(updateStateFromQuery(config))
+    if (urlSync) dispatch(updateStateFromQuery(config, urlParser))
 
     /* Global setting */
     globalRouteChange = urlSync
