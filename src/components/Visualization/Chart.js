@@ -2,7 +2,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import equals from 'ramda/src/equals'
 import scriptLoader from 'react-async-load-script'
 import { connect } from 'react-redux'
 import { debounce } from './../../utilities'
@@ -136,6 +135,15 @@ class Chart extends React.Component {
       padding
     })
   }
+  updateChart = () => {
+    const { axis, data, categories } = this.createChartData()
+
+    this.chart.load({
+      unload: true,
+      columns: data,
+      categories
+    })
+  }
   componentDidMount () {
     this.mounted = true
   }
@@ -159,15 +167,6 @@ class Chart extends React.Component {
     if (!this.chart) return
 
     this.debounceUpdateChart()
-  }
-  updateChart = () => {
-    const { axis, data, categories } = this.createChartData()
-
-    this.chart.load({
-      unload: true,
-      columns: data,
-      categories
-    })
   }
   registerRef = (el) => {
     this.chartRef = el
