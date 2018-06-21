@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { createHTMLMarkup, getLinkType } from './../../../utilities'
-import { EVENT_CATEGORIES, EVENT_LABELS } from './../../../constants/Settings'
+import {
+  LOG_EVENT_CATEGORIES,
+  LOG_EVENT_LABELS
+} from './../../../constants/Settings'
 import Button from './../Button'
 
 /**
@@ -49,10 +52,12 @@ function Title ({
   const logEventCategory =
     eventCategory ||
     (isBookmark
-      ? EVENT_CATEGORIES.bookmarks
-      : isAutosuggest ? EVENT_CATEGORIES.autosuggest : EVENT_CATEGORIES.serp)
+      ? LOG_EVENT_CATEGORIES.bookmarks
+      : isAutosuggest
+        ? LOG_EVENT_CATEGORIES.autosuggest
+        : LOG_EVENT_CATEGORIES.serp)
   /* Event label to log click events */
-  const logEventLabel = eventLabel || EVENT_LABELS.title
+  const logEventLabel = eventLabel || LOG_EVENT_LABELS.title
   return (
     <div className={classes}>
       {iconLeft}

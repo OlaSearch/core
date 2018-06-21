@@ -1,24 +1,93 @@
 import { getFieldLabel } from './../utilities'
 
+/**
+ * Facet types that are used as range. {from} - {to}
+ */
 export const RANGE_FACETS = ['range', 'rating', 'daterange', 'datepicker']
+
+/**
+ * Date facet types
+ */
 export const DATE_RANGE_FACETS = ['daterange', 'datepicker']
+
+/**
+ * Numerical range type
+ */
 export const NUMERICAL_RANGE = 'range'
+
+/**
+ * Cache key suffix for ola store
+ */
 export const OLA_STORAGE_KEY = 'o_store_'
+/**
+ * Cache key to store context
+ */
 export const CONTEXT_STORAGE_KEY = 'o_context_'
+
+/**
+ * Context cache ttl
+ */
 export const CONTEXT_STORAGE_TTL = 0.25 /* Days */
+
+/**
+ * Cache key to store locale
+ */
 export const LOCALE_STORAGE_KEY = 'o_locale_'
-export const BOT_STORAGE_KEY = 'o_bot_'
+
+/**
+ * Ttl of locale storage
+ */
 export const LOCALE_STORAGE_TTL = 30 /* Days */
+
+/**
+ * Cache key to store bot settings
+ */
+export const BOT_STORAGE_KEY = 'o_bot_'
+
+/**
+ * Time to wait before adding data to cache
+ */
 export const PERSIST_TIMEOUT = 500
+
+/**
+ * Search session storage key
+ */
 export const SEARCH_SESSION_KEY = 'o_search_session'
+
+/**
+ * User session/ User id storage key
+ */
 export const USER_SESSION_KEY = 'o_user_session' /* used for analytics only */
+
+/**
+ * Cookie key to store if user is new or returning
+ */
 export const USER_NEW_KEY = 'o_new_user'
+
+/**
+ * Expire new user info after 365 days
+ */
 export const USER_SESSION_EXPIRY_DAYS = 365
-export const INTENT_SESSION_KEY = 'o_intent_session'
-export const INTENT_SESSION_EXPIRY_DAYS = 365
+
+/**
+ * Default locale
+ */
 export const DEFAULT_LOCALE = 'en'
+
+/**
+ * Layout switcher options
+ */
 export const LAYOUT_OPTIONS = ['list', 'grid']
+
+/**
+ * Some CMS does not `q` as query string /search?q=hello , We can use `keywords` instead by setting
+ * config.replaceQueryParam = true
+ */
 export const QUERY_ALT_NAME = 'keywords'
+
+/**
+ * Escape special characters
+ */
 export const RE_ESCAPE = new RegExp(
   '(\\' +
     ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\'].join(
@@ -27,6 +96,10 @@ export const RE_ESCAPE = new RegExp(
     ')',
   'g'
 )
+
+/**
+ * Remove these values from browser query string when a new search is made
+ */
 export const REMOVE_FROM_QUERY_STRING = [
   'isSearchActive',
   'searchInput',
@@ -40,34 +113,135 @@ export const REMOVE_FROM_QUERY_STRING = [
   'debug',
   'skip_facet_fields'
 ]
+
+/**
+ * Ola Collection key
+ */
 export const SEARCH_COLLECTION_IDENTIFIER = 'ola_collection_name'
+
+/**
+ * All value to display in Checkbox Filter
+ */
 export const ALL_VALUES = 'All'
+
+/**
+ * <style> id to be used to insert mobile css
+ */
 export const STYLE_TAG_ID = 'ola-styles'
+
+/**
+ * Classname injected in <html> for mobile devices
+ */
 export const MODAL_ROOT_CLASSNAME = 'ola-modal-rootActive'
+
+/**
+ * History Autocomplete type
+ */
 export const TYPE_HISTORY = 'history'
+
+/**
+ * Taxonomy Autocomplete type
+ */
 export const TYPE_TAXONOMY = 'taxonomy'
+
+/**
+ * Entity Autocomplete type
+ */
 export const TYPE_ENTITY = 'entity'
+
+/**
+ * Query Autocomplete type
+ */
 export const TYPE_QUERY = 'query'
+
+/**
+ * Document Autocomplete type
+ */
 export const TYPE_DOC = 'doc'
+
+/**
+ * Facet Autocomplete type
+ */
 export const TYPE_FACET = 'facet'
+
+/**
+ * Suggest api key
+ */
 export const FUZZY_SUGGEST_KEY = 'suggest'
+
+/**
+ * These `api` support intent
+ */
 export const INTENT_SUPPORTED_API_KEYS = ['search', 'get']
+
+/**
+ * Do not log these `api`
+ */
 export const API_IGNORE_LOGGING = ['answer', 'get', 'alert']
-export const DEFAULT_API_HANDLER = 'default'
+
+/**
+ * Date format for mobile date input
+ */
 export const DATE_FORMAT_MOBILE = 'YYYY-MM-DD'
+
+/**
+ * Default date format used everywhere
+ */
 export const DEFAULT_DATE_FORMAT = 'DD-MM-YYYY'
+
+/**
+ * Number of years to show in datepicker
+ */
 export const DATEPICKER_YEAR_RANGE = 20
+
+/**
+ * Default range template to be shown in tags
+ */
 export const DEFAULT_RANGE_TEMPLATE = '{from} - {to}'
+
+/**
+ * Default date format in tags
+ */
 export const DEFAULT_DISPLAY_DATE_FORMAT = 'DD MMMM YYYY'
 
+/**
+ * Feedback intent name
+ */
 export const FEEDBACK_INTENT = 'OLA.FeedbackIntent'
+
+/**
+ * Help intent name
+ */
 export const HELP_INTENT = 'OLA.HelpIntent'
+
+/**
+ * Profanity intent name
+ */
 export const PROFANITY_INTENT = 'OLA.ProfanityIntent'
+
+/**
+ * Unfulfilled intent name
+ */
 export const UNFILFILLED_INTENT = 'OLA.UnfulfilledIntent'
+
+/**
+ * Welcome intent name
+ */
 export const WELCOME_INTENT = 'OLA.WelcomeIntent'
+
+/**
+ * None intent name
+ */
 export const NONE_INTENT = 'OLA.NoneIntent'
+
+/**
+ * Disambiguation intent name
+ */
 export const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 
+/**
+ * Autocorrect/Spellcheck query if any of these intents are active
+ */
 export const IGNORE_INTENTS = [
   FEEDBACK_INTENT,
   HELP_INTENT,
@@ -83,7 +257,6 @@ export const IGNORE_INTENTS = [
  * SPELL_CORRECT: 'spell_suggestion',  Use suggestedTerm in logs to filter these
  * HISTORY: 'history' We are already tracking clicks on history items eventType C, eventLabel History
  */
-
 export const SEARCH_INPUTS = {
   KEYBOARD: 'keyboard',
   VOICE: 'voice',
@@ -93,7 +266,7 @@ export const SEARCH_INPUTS = {
 }
 
 /**
- * Check env
+ * Check if current env is browser
  */
 export const isBrowser = typeof document !== 'undefined'
 
@@ -247,20 +420,39 @@ export const DEFAULT_THEME = {
   snippetImageMaxHeight: '200px'
 }
 
+/**
+ * Error codes
+ */
 export const ERROR_CODES = {
   BOT_NO_EXISTS: 'Bad Request. Invalid bot id.'
 }
 
+/**
+ * Event trigger names
+ */
 export const EXTERNAL_EVENT_SEARCH_DONE = 'ola:search_complete'
+
+/**
+ * Spellcheck
+ * Ola has 2 stages of spellchecking
+ * 1. Universal spellchecker
+ * 2. Client specific spellchecker (Done by the search engine)
+ */
 export const SPELLCHECK_SOURCE_UNIVERSAL = 'universal'
 export const SPELLCHECK_SOURCE_CONTENT = 'content'
 
+/**
+ * Button types
+ */
 export const BUTTON_TYPE = {
   POSTBACK: 'postback',
   WEB: 'web_url',
   EMAIL: 'email'
 }
 
+/**
+ * Media breakpoints
+ */
 export const BREAKPOINT_TABLET = '768px'
 export const BREAKPOINT_DESKTOP = '960px'
 export const BREAKPOINT_PHONE = '480px'
@@ -288,21 +480,35 @@ export const BODY_STYLE_MODAL = `
   }
 `
 
+/**
+ * Link targets
+ */
 export const LINK_TARGETS = {
   BLANK: '_blank',
   SELF: 'self'
 }
 
-export const EVENT_CATEGORIES = {
+/**
+ * Event category for logging
+ * eventCategory
+ */
+export const LOG_EVENT_CATEGORIES = {
   bookmarks: 'Bookmarks',
   autosuggest: 'autosuggest',
   serp: 'serp'
 }
 
-export const EVENT_LABELS = {
+/**
+ * Event labels for logging
+ * eventLabel
+ */
+export const LOG_EVENT_LABELS = {
   title: 'Title'
 }
 
+/**
+ * Default autocomplete payload
+ */
 export const DEFAULT_AUTOCOMPLETE_PAYLOAD = { type: 'query' }
 
 /**
