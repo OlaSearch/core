@@ -10,6 +10,7 @@ import AnswerMC from './AnswerMC'
 import AnswerVideo from './AnswerVideo'
 import AnswerEmbed from './AnswerEmbed'
 import AnswerTable from './AnswerTable'
+import AnswerArticle from './AnswerArticle'
 // import {
 //   updateQueryTerm,
 //   executeSearch,
@@ -139,6 +140,15 @@ function Answer ({
       case 'table':
         return (
           <AnswerTable
+            card={card}
+            onSelect={handleClick}
+            refresh={refreshTrigger}
+          />
+        )
+
+      case 'article':
+        return (
+          <AnswerArticle
             card={card}
             onSelect={handleClick}
             refresh={refreshTrigger}
