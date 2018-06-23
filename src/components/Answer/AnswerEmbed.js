@@ -29,7 +29,7 @@ class AnswerEmbed extends React.Component {
       'ola-answer-card',
       'ola-answer-embed',
       {
-        [`ola-answer-embed-active`]: isVisible
+        'ola-answer-embed-active': isVisible
       },
       classname
     )

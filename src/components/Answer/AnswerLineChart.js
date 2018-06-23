@@ -62,7 +62,7 @@ class AnswerLineChart extends React.Component {
     this.chartRef = el
   }
   render () {
-    const { card, isScriptLoaded } = this.props
+    const { card } = this.props
     const { title, source } = card
     return (
       <div className='ola-answer-chart'>

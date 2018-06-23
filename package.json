@@ -10,7 +10,7 @@
     "build": "BABEL_ENV=production babel src --out-dir lib",
     "release": "cross-env NODE_ENV=production webpack --config webpack.release.js --json > stats.json && npm run polyfill && gulp",
     "polyfill": "cross-env NODE_ENV=production webpack --config webpack.polyfill.js",
-    "lint": "npm run standard && eslint src",
+    "lint": "eslint src",
     "nyc": "nyc npm run test",
     "test": "jest",
     "test:middleware": "NODE_ENV=production jest --watch __tests__/middleware",
@@ -166,6 +166,7 @@
   },
   "pre-commit": [
     "test",
-    "prettier"
+    "prettier",
+    "lint"
   ]
 }

@@ -7,7 +7,7 @@ export default function Button (props) {
     onClick && onClick(props)
   }
   const classes = cx('ola-answer-button', {
-    [`ola-answer-button-with-image`]: image
+    'ola-answer-button-with-image': image
   })
   return (
     <button className={classes} type='button' onClick={handleClick}>
