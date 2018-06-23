@@ -45,4 +45,11 @@ function SearchTitle ({
   )
 }
 
+SearchTitle.propTypes = {
+  totalResults: PropTypes.number,
+  page: PropTypes.number,
+  perPage: PropTypes.number,
+  isPhone: PropTypes.bool
+}
+
 export default withConfig(withTranslate(SearchTitle))

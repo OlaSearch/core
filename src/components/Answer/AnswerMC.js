@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Title from './../Fields/Title'
 import Url from './../Fields/Url'
 import TextField from './../Fields/TextField'
@@ -71,7 +70,7 @@ class AnswerMC extends React.Component {
       return this.props.loader
     }
     const { mc, facetQuery, showWhileFiltering, theme, config } = this.props
-    const { mcShowDoc, mcHighlightThreshold = 0.6 } = config
+    const { mcShowDoc } = config
     const mcThreshold = parseFloat(config.mcThreshold)
     const { answer } = mc
     /**
@@ -82,7 +81,7 @@ class AnswerMC extends React.Component {
     }
     if (!showWhileFiltering && facetQuery.length) return null
 
-    const { snippet, url, title, snippet_confidence: confidence } = answer
+    const { snippet_confidence: confidence } = answer
     /* Do not show answers that are of low confidence */
     if (confidence < mcThreshold) {
       return null

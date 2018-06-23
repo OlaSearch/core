@@ -1,6 +1,5 @@
 import React from 'react'
 import cx from 'classnames'
-import Check from '@olasearch/icons/lib/check'
 
 export default function Checkbox ({
   label,

@@ -46,7 +46,6 @@ class SearchResults extends React.Component {
       theme,
       config,
       swipe,
-      pagination,
       ...rest
     } = this.props
     const { snippetRules, defaultSnippet } = config

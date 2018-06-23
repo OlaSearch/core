@@ -12,7 +12,6 @@ import {
 import SearchResults from './../SearchResults'
 import Input from './Input'
 import TermSuggestion from './../TermSuggestion'
-import SpellSuggestion from './../SpellSuggestion'
 import FacetSuggestion from './FacetSuggestion'
 import { buildQueryString, getHistoryCharacter } from './../../services/urlSync'
 import { checkForAllowedCharacters, trim } from './../../utilities'

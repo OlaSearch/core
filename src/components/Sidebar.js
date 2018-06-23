@@ -34,7 +34,6 @@ class Sidebar extends React.Component {
   render () {
     const {
       children,
-      showSidebar,
       toggleSidebar,
       isSidebarOpen,
       theme,
@@ -74,10 +73,9 @@ class Sidebar extends React.Component {
   }
 }
 
-function mapStateToProps (state, ownProps) {
+function mapStateToProps (state) {
   return {
     isSidebarOpen: state.AppState.isSidebarOpen,
-    showSidebar: state.AppState.showSidebar,
     isDesktop: state.Device.isDesktop
   }
 }

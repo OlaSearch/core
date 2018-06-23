@@ -7,8 +7,8 @@ import { SEARCH_INPUTS } from './../../constants/Settings'
 import {
   escapeRegEx,
   scrollTo,
-  stringToColor,
-  hexToRGBa,
+  // stringToColor,
+  // hexToRGBa,
   highlightTokens,
   sortArrayByLength,
   getDisplayName
@@ -26,7 +26,7 @@ export default class Input extends React.Component {
     onChange: PropTypes.func
   }
 
-  onClear = (event) => {
+  onClear = () => {
     /* Focus input */
     this.props.onClear(() => this.input.focus())
   }
@@ -173,7 +173,7 @@ export default class Input extends React.Component {
       'gi'
     )
     const newTokens = []
-    value = value.replace(regX, (match, startToken) => {
+    value = value.replace(regX, (match) => {
       const escapedMatch = match.replace(/(\(|\))/gi, '\\$1')
       /* Add to list of token */
       returnTokens && newTokens.push(match)
@@ -183,7 +183,7 @@ export default class Input extends React.Component {
         })
         .reduce((acc, o) => o.name, null)
       if (!name) return match
-      const color = hexToRGBa(stringToColor(name))
+      // const color = hexToRGBa(stringToColor(name))
       return `<span class='ola-input-tag'>${match}</span>`
     })
 

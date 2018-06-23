@@ -32,16 +32,7 @@ function RatingFilter (props) {
     return bounds.indexOf(parseInt(name)) > -1
   }
 
-  const {
-    facet,
-    isCollapsed,
-    toggle,
-    activeClass,
-    inActiveClass,
-    emptyClass,
-    iconSize,
-    theme
-  } = props
+  const { facet, isCollapsed, toggle, activeClass, iconSize, theme } = props
   const { values, step } = facet
   const classes = classNames({
     'ola-facet': true,

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
@@ -34,11 +33,11 @@ function SlotSuggestion ({
 
   var slots = answer.search.slots
     .filter(({ suggest }) => suggest)
-    .filter(({ name, value }) => {
+    .filter(({ name }) => {
       /**
        * Todo. Compare values also
        */
-      return !facetQuery.some(({ name: _name, selected }) => _name === name)
+      return !facetQuery.some(({ name: _name }) => _name === name)
     })
 
   /* 2. Remove slots that doesnt have any results */

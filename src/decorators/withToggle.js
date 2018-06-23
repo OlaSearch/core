@@ -18,7 +18,7 @@ export default function withToggle (WrappedComponent) {
     static displayName = `withToggle(${getComponentDisplayName(
       WrappedComponent
     )})`
-    componentDidUpdate (prevProps, prevState) {
+    componentDidUpdate (prevProps) {
       if (!this.props.facet || !prevProps.facet) return
       if (prevProps.facet.isCollapsed !== this.props.facet.isCollapsed) {
         this.setState({

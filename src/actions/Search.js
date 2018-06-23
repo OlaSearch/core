@@ -144,7 +144,7 @@ export function changeAnswerSelection (index, key, answer) {
   /* Clone */
   let newAnswer = JSON.parse(JSON.stringify(answer))
   newAnswer['suggestions'][key].selection = index
-  return (dispatch, getState) => {
+  return (dispatch) => {
     /* Clear enriched query for Intent engine */
     dispatch({ type: types.CLEAR_ENRICHED_QUERY })
     /* Execute search */
@@ -166,7 +166,6 @@ export function executeSearch (payload, options) {
     const {
       allowedCharacters,
       replaceQueryParamName,
-      answer,
       searchOnLoad
     } = state.AppState
     var { q, facet_query, page } = query
@@ -311,7 +310,6 @@ export function executeFacetSearch (
     if (!facets.length) return
 
     /* Remove tokens from the query */
-    const initialStart = 0
     const q = removeTokenFromQuery(
       fullTerm,
       tokensToFilter.map(({ value }) => value) // .concat(term)
@@ -360,7 +358,7 @@ export function executeFacetSearch (
  * @return {function}
  */
 export function fetchAnswer (url) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       types: [
         types.REQUEST_ANSWER,
@@ -379,7 +377,7 @@ export function fetchAnswer (url) {
  * @param {Object} payload
  */
 export function fetchMc (key, payload) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       types: [
         types.REQUEST_MC,
@@ -400,7 +398,7 @@ export function fetchMc (key, payload) {
 export function fetchResult (ids) {
   if (!Array.isArray(ids)) ids = [ids]
   const q = ids.map((id) => `id:${id}`).join(' OR ')
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       types: [
         types.REQUEST_RESULT,

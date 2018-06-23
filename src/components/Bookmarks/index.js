@@ -28,7 +28,7 @@ class Bookmarks extends React.Component {
     }
   }
 
-  handleClickOutside = (event) => {
+  handleClickOutside = () => {
     this.setState({
       isOpen: false
     })

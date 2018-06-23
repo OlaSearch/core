@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { changeSort, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
-import ChevronDown from '@olasearch/icons/lib/chevron-down'
 import SelectBox from './../SelectBox'
 
 /**

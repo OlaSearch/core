@@ -17,6 +17,7 @@ function Pill ({
   value,
   filterFieldName,
   log,
+  logPayload,
   displayIcon,
   snippetId,
   isLink,
@@ -49,10 +50,25 @@ function Pill ({
     }${HASH_CHARACTER}${buildQueryString(query)}`
   }
   function handleClick (event, name) {
+    /* Log the request */
+    log({
+      eventType: 'C',
+      result,
+      eventCategory: 'pill',
+      eventAction: 'click',
+      eventLabel: name,
+      snippetId,
+      payload: logPayload
+    })
     if (onClick) onClick(event, name)
   }
   const pillClasses = cx('ola-flex ola-btn-pill', className)
   const textClasses = cx('ola-flex-content', textClassName)
+  const icon = (
+    <span className='ola-flex-icon'>
+      <Tag size={iconSize} />
+    </span>
+  )
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />
@@ -76,11 +92,7 @@ function Pill ({
               : {})
           },
           <React.Fragment>
-            {displayIcon ? (
-              <span className='ola-flex-icon'>
-                <Tag />
-              </span>
-            ) : null}
+            {displayIcon ? icon : null}
             <span className={textClasses}>{displayName}</span>
           </React.Fragment>
         )

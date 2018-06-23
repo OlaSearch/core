@@ -1,11 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import {
-  Alert,
-  AddAlert,
   Actions,
-  AutoComplete,
   SearchResults,
   SearchFooter,
   SearchFilters,
@@ -16,7 +12,6 @@ import {
   SpellSuggestion,
   TermSuggestion,
   Sidebar,
-  FilterButton,
   ErrorMessage,
   SearchBar,
   ContentWrapper,
@@ -35,7 +30,7 @@ class Search extends React.Component {
     )
   }
   render () {
-    const { dispatch, AppState, QueryState, components, Device } = this.props
+    const { dispatch, AppState, QueryState, Device } = this.props
 
     const {
       results,
@@ -49,20 +44,12 @@ class Search extends React.Component {
       answer,
       mc,
       isLoadingAnswer,
-      isSidebarOpen,
       filterInAutoComplete
     } = AppState
 
-    const {
-      q,
-      facet_query,
-      page,
-      per_page,
-      referrer,
-      isSearchActive
-    } = QueryState
+    const { q, facet_query, page, per_page, referrer } = QueryState
 
-    const { isPhone, isTablet } = Device
+    const { isPhone } = Device
 
     return (
       <div>
@@ -118,8 +105,8 @@ class Search extends React.Component {
             <ErrorMessage error={error} />
 
             <SearchResults
-              results={this.props.AppState.results}
-              bookmarks={this.props.AppState.bookmarks}
+              results={results}
+              bookmarks={bookmarks}
               dispatch={this.props.dispatch}
             />
 

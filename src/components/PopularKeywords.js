@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import withTranslate from './../decorators/withTranslate'
 import withConfig from './../decorators/withConfig'
 import { connect } from 'react-redux'
@@ -26,6 +25,7 @@ function PopularKeywords ({
     </div>
   )
 }
+
 /**
  * Item
  */

@@ -86,22 +86,6 @@ export default class Input extends React.Component {
   }
   render () {
     const { q, placeholder, onBlur } = this.props
-    /**
-     * Show clear or submit button
-     */
-    const button = q ? (
-      <button
-        type='reset'
-        className='ola-clear-button'
-        onClick={this.onClear}
-      />
-    ) : (
-      <button
-        type='button'
-        className='ola-search-button'
-        onClick={this.onSearchButtonClick}
-      />
-    )
     const classes = classNames('ola-search-form-container')
     return (
       <div className={classes}>
@@ -122,6 +106,19 @@ export default class Input extends React.Component {
             onKeyDown={this.onKeyDown}
           />
         </div>
+
+        {q && (
+          <button
+            type='button'
+            className='ola-clear-button'
+            tabIndex='-1'
+            onClick={this.onClear}
+            aria-label='Clear Search'
+          >
+            <Cross />
+          </button>
+        )}
+
         <SpeechInput
           onResult={this.handleSpeechChange}
           onFinalResult={this.handleSpeechChange}

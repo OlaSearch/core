@@ -7,7 +7,7 @@ import withTranslate from './../decorators/withTranslate'
 import ViewModule from '@olasearch/icons/lib/material-view_module'
 import ViewList from '@olasearch/icons/lib/material-view_list'
 
-function LayoutButton ({ toggleView, facets, view, translate, totalResults }) {
+function LayoutButton ({ toggleView, view, translate, totalResults }) {
   const nextView = getNextView(view)
   const classes = cx('ola-link-change-layout', {
     [`ola-link-layout-${nextView}`]: nextView

@@ -31,7 +31,7 @@ import {
   redirect,
   getAutoCompleteResults,
   getWordPosition,
-  syncTokens,
+  // syncTokens,
   getDisplayName,
   cleanQueryTerm
 } from './../../utilities'
@@ -40,7 +40,7 @@ import scrollIntoView from 'dom-scroll-into-view'
 import classNames from 'classnames'
 import FuzzySuggestions from './FuzzySuggestions'
 import find from 'ramda/src/find'
-import equals from 'ramda/src/equals'
+// import equals from 'ramda/src/equals'
 import propEq from 'ramda/src/propEq'
 import {
   SEARCH_INPUTS,
@@ -127,7 +127,7 @@ class AutoComplete extends React.Component {
     searchTimeout: 400
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps) {
     if (prevProps.q !== this.props.q) {
       this.setState({
         q: cleanQueryTerm(this.props.q),

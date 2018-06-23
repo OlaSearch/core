@@ -22,11 +22,7 @@ function Button ({
   logPayload,
   textLink,
   replaceClassName,
-  singleChild,
-  openInNewWindow,
-  isPhone,
-  isTablet,
-  isDesktop
+  openInNewWindow
 }) {
   const linkUrl = baseUrl ? `${baseUrl}${url}` : url
   if (title) label = title

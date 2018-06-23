@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { changePerPage, executeSearch } from './../../actions/Search'
 import withTranslate from './../../decorators/withTranslate'
-import withConfig from './../../decorators/withConfig'
 import SelectBox from './../SelectBox'
 
 /**

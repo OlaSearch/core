@@ -3,7 +3,7 @@ import Title from './../../Fields/Title'
 import { EVENT_CATEGORY_CARD } from './../../../constants/Settings'
 
 export default function Header (card) {
-  const { title, url, subtitle, ...rest } = card
+  const { title, subtitle, ...rest } = card
   if (!title && !subtitle) return null
   return (
     <div className='ola-answer-header'>

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Pagination from './Pagination'
 import LoadMore from './InfiniteScroll/LoadMore'
 import { changePage, executeSearch, loadMore } from './../actions/Search'

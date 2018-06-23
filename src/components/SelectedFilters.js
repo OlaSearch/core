@@ -8,35 +8,21 @@ import {
   removeFacetItem
 } from './../actions/Search'
 import Tag from './Misc/Tag'
-import queryString from 'query-string'
 import withConfig from './../decorators/withConfig'
 import { getFieldLabel } from './../utilities'
 import Swipeable from './Swipeable'
 import flatten from 'ramda/src/flatten'
 
 class SelectedFilters extends React.Component {
-  constructor (props) {
-    super(props)
-
-    /* Parse queryString to get the referrer */
-    // var qString = queryString.parse(window.location.search)
-
-    this.state = {
-      showGuidePopover: false //! !qString.referrer
-    }
-  }
-
   static propTypes: {
     facets: PropTypes.array,
     filters: PropTypes.array,
     dispatch: PropTypes.func,
     q: PropTypes.string,
-    showQuery: PropTypes.boolean,
     grouped: PropTypes.boolean
   }
 
   static defaultProps = {
-    showQuery: false,
     showTabs: true,
     showZones: true,
     grouped: true,
@@ -54,12 +40,6 @@ class SelectedFilters extends React.Component {
     dispatch(executeSearch())
   }
 
-  closeGuidePopover = () => {
-    this.setState({
-      showGuidePopover: false
-    })
-  }
-
   onRemoveQueryTag = () => {
     const { dispatch } = this.props
     dispatch(clearQueryTerm())
@@ -70,29 +50,25 @@ class SelectedFilters extends React.Component {
     dispatch(removeFilter(filter))
     dispatch(executeSearch())
   }
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate (nextProps) {
     return (
       this.props.facets !== nextProps.facets ||
       this.props.q !== nextProps.q ||
-      this.props.filters !== nextProps.filters ||
-      this.state.showGuidePopover !== nextState.showGuidePopover
+      this.props.filters !== nextProps.filters
     )
   }
   render () {
-    const { showQuery, q, filters, showZones, showTabs, grouped } = this.props
+    const { q, filters, showZones, showTabs, grouped } = this.props
     var { facets } = this.props
-
-    const { showGuidePopover } = this.state
     const { fieldLabels } = this.props.config
 
     /* Remove tabs and zones */
     facets = facets.filter(
-      ({ tab, zone, options }, idx) =>
-        (showTabs ? true : !tab) && (showZones ? true : !zone)
+      ({ tab, zone }) => (showTabs ? true : !tab) && (showZones ? true : !zone)
     )
 
     if (!facets.length && !q && !filters.length) return null
-    const facetTags = facets.map((facet, idx) => {
+    const facetTags = facets.map((facet) => {
       let { selected: tags, displayName } = facet
       const { options } = facet
       /* Remove hidden tags */

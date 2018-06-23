@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { executeSearch } from './../../actions/Search'
 import SearchResults from './../SearchResults'
-import PropTypes from 'prop-types'
 import withConfig from './../../decorators/withConfig'
 import { getFieldLabel } from './../../utilities'
 
@@ -14,7 +13,7 @@ class AlternateResults extends React.Component {
       facetQuery: props.facetQuery
     }
   }
-  componentDidUpdate (prevProps) {
+  componentDidUpdate () {
     const { facetQuery } = this.props
 
     if (
@@ -45,7 +44,7 @@ class AlternateResults extends React.Component {
     }
   }
   render () {
-    const { totalResults, facetQuery } = this.props
+    const { facetQuery } = this.props
     const { response } = this.state
     const { results, totalResults: newTotalResults } = response
     if (!newTotalResults || this.props.facetQuery.length <= 1) return null

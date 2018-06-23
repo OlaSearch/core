@@ -6,7 +6,6 @@ import cx from 'classnames'
 import { isFocusable } from './../utilities'
 import { connect } from 'react-redux'
 
-const TAB_KEY = 9
 const ESC_KEY = 27
 
 class ModalPortal extends React.Component {
@@ -32,7 +31,7 @@ class ModalPortal extends React.Component {
     }
     this.shouldClose = null
   }
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps) {
     if (
       this.props.focusContent &&
       prevProps.isOpen !== this.props.isOpen &&

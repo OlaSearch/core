@@ -114,7 +114,7 @@ DocumentPages.propTypes = {
  * Page detail
  */
 function PageDetail ({ page, contentField, onSelectPage }) {
-  function handleSelect (event) {
+  function handleSelect () {
     onSelectPage(page)
   }
   const { pageNumber } = page

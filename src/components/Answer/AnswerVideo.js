@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from './common/Button'
 import cx from 'classnames'
 
 /**
  * Create an answer card
  */
-function AnswerVideo ({ card, onSelect }) {
-  const { url, title, width, height, classname } = card
+function AnswerVideo ({ card }) {
+  const { url, width, height, classname } = card
   const classes = cx('ola-answer-video', classname)
   return (
     <div className={classes}>

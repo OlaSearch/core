@@ -48,7 +48,7 @@ export function fetchAlerts () {
  * @return {Object}
  */
 export function deleteAlert (queryId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const payload = { queryId }
     return dispatch({
       types: [
@@ -77,7 +77,7 @@ export function deleteAlert (queryId) {
  * @return {Object}
  */
 export function removeDocs (queryId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const payload = { queryId }
     return dispatch({
       types: [

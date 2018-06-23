@@ -35,7 +35,7 @@ class Thumbnail extends React.Component {
       event.preventDefault()
     }
   }
-  handleError = (event) => {
+  handleError = () => {
     console.warn('Received 404 while showing this image', this.props.thumbnail)
     this.setState({
       error: true
@@ -55,12 +55,7 @@ class Thumbnail extends React.Component {
       isLink,
       caption,
       url,
-      log,
       useBackgroundImage,
-      logPayload,
-      snippetId,
-      result,
-      config,
       width,
       placeholder,
       showLoading,
@@ -79,7 +74,11 @@ class Thumbnail extends React.Component {
         'canEdit',
         'canDelete',
         'theme',
-        'config'
+        'config',
+        'log',
+        'snippetId',
+        'logPayload',
+        'result'
       ],
       rest
     )

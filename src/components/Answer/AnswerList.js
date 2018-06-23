@@ -1,10 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withToggle from './../../decorators/withToggle'
-import Field from './common/Field'
-import Button from './common/Button'
 import Header from './common/Header'
 import Source from './common/Source'
 import AnswerCard from './AnswerCard'
@@ -32,8 +29,7 @@ function AnswerList ({
     url,
     classname,
     max,
-    swipe: listIsSwipe,
-    ...cardProps
+    swipe: listIsSwipe
   } = card
   const size = elements.length
   const isSwipe = swipe || listIsSwipe || !isDesktop

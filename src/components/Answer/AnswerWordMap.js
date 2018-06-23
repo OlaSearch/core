@@ -24,7 +24,7 @@ function AnswerWordMap ({
     })
   }
 
-  const counts = elements.map(({ title, count }) => count)
+  const counts = elements.map(({ count }) => count)
   const max = Math.max.apply(this, counts)
   const min = Math.min.apply(this, counts)
   return (
@@ -48,7 +48,7 @@ function AnswerWordMap ({
   )
 }
 
-function WordMapItem ({ title, count, size, onSelect }) {
+function WordMapItem ({ title, size, onSelect }) {
   function handleClick (title) {
     onSelect && onSelect(title)
   }

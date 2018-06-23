@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from './common/Button'
-import Field from './common/Field'
 import Header from './common/Header'
 import Source from './common/Source'
-import classNames from 'classnames'
 import Swipeable from './../Swipeable'
 import Portal from './../Portal'
 import cx from 'classnames'
@@ -51,7 +49,6 @@ class AnswerCarousel extends React.Component {
       modal,
       buttons = [],
       source,
-      fields = [],
       classname
     } = card
     const classes = cx('ola-answer-card', 'ola-answer-carousel', classname)
@@ -107,7 +104,7 @@ class AnswerCarousel extends React.Component {
                 autoFocus
                 className='ola-swipeable-carousel'
               >
-                {images.map(({ src, title }, idx) => {
+                {images.map(({ src }, idx) => {
                   return (
                     <Thumbnail
                       key={idx}

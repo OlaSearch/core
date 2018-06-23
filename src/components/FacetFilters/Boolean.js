@@ -36,7 +36,7 @@ function BooleanFilter (props) {
   return (
     <div className={klass}>
       <FacetTitle
-        displayName={facet.displayName}
+        displayName={displayName}
         toggle={toggle}
         isCollapsed={isCollapsed}
       />

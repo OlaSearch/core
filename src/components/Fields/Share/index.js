@@ -3,7 +3,6 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import withToggle from './../../../decorators/withToggle'
 import withLogger from './../../../decorators/withLogger'
-import withTheme from './../../../decorators/withTheme'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import Facebook from '@olasearch/icons/lib/facebook'
 import Twitter from '@olasearch/icons/lib/twitter'
@@ -35,7 +34,7 @@ class Share extends React.PureComponent {
      */
     window.open(url)
   }
-  handleClickOutside = (e) => {
+  handleClickOutside = () => {
     this.props.hide()
   }
   render () {
@@ -50,8 +49,7 @@ class Share extends React.PureComponent {
       gplus,
       label,
       buttonClassName,
-      position,
-      ...rest
+      position
     } = this.props
     const { title, url } = result
     const { location } = window

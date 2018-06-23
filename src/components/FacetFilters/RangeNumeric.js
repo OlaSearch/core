@@ -29,7 +29,7 @@ function RangeNumericFilter (props) {
   return (
     <div className={klass}>
       <FacetTitle
-        displayName={facet.displayName}
+        displayName={displayName}
         toggle={toggle}
         isCollapsed={isCollapsed}
       />

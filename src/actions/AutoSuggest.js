@@ -23,7 +23,6 @@ export function executeAutoSuggest () {
   return (dispatch, getState) => {
     const state = getState()
     const { q, page, per_page, facet_query } = state.AutoSuggest
-    const { replaceQueryParamName } = state.AppState
     const context = state.Context
 
     return dispatch({

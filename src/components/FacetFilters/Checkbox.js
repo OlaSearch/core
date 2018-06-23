@@ -98,9 +98,9 @@ class CheckboxFilter extends React.Component {
   }
 
   render () {
-    var { filterText, showMore } = this.state
+    const { filterText, showMore } = this.state
 
-    var {
+    const {
       facet,
       toggle,
       listType,
@@ -109,15 +109,14 @@ class CheckboxFilter extends React.Component {
       isCollapsed
     } = this.props
 
-    var {
-      values,
-      displayName,
+    const {
       allowSingleSelection,
       exclusions = [],
-      limit = 6,
       fixedValues,
       defaultValue = []
     } = facet
+
+    var { values, limit = 6 } = facet
 
     /* Parse limit */
     limit = parseInt(limit)
@@ -145,7 +144,7 @@ class CheckboxFilter extends React.Component {
         ...fixedValues
       ]
       const acceptedValues = values.filter(
-        ({ name, count }) => selectedValue.indexOf(name) !== -1
+        ({ name }) => selectedValue.indexOf(name) !== -1
       )
 
       if (!acceptedValues.length && !showIfEmpty) return null
@@ -176,15 +175,15 @@ class CheckboxFilter extends React.Component {
       item.name.toString().match(new RegExp(filterText, 'i'))
     )
 
-    var size = values.length
+    const size = values.length
 
     /* Should display show more link */
-    var shouldDisplayShowMore = size > limit
+    const shouldDisplayShowMore = size > limit
 
     /* Show more */
     if (!showMore) values = values.slice(0, limit)
 
-    var showMoreLink = shouldDisplayShowMore ? (
+    const showMoreLink = shouldDisplayShowMore ? (
       <button
         className={`ola-btn ola-link-show-more ${
           showMore ? 'ola-link-show-less' : ''
@@ -197,12 +196,12 @@ class CheckboxFilter extends React.Component {
       </button>
     ) : null
 
-    var klass = classNames({
+    const klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed,
       'ola-facet-single-select': allowSingleSelection
     })
-    var filterInput =
+    const filterInput =
       originalSize > limit ? (
         <FilterInput
           value={filterText}
@@ -210,7 +209,7 @@ class CheckboxFilter extends React.Component {
           placeholder={translate('facet_filter_placeholder')}
         />
       ) : null
-    var itemRendererBound = this.itemRenderer.bind(this, values)
+    const itemRendererBound = this.itemRenderer.bind(this, values)
 
     return (
       <div className={klass}>

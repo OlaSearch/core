@@ -1,9 +1,8 @@
-/* global bb, d3 */
+/* global bb */
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import scriptLoader from 'react-async-load-script'
-import { connect } from 'react-redux'
 import { debounce } from './../../utilities'
 import {
   CHART_ANIMATION_TIMING,
@@ -79,7 +78,7 @@ class Chart extends React.Component {
   }
   handleClick = (d) => {
     const { index } = d
-    // console.log(d, this.props.data.category[index])
+    this.props.onClick && this.props.onClick(d, this.props.data.category[index])
   }
   createChartData = () => {
     var { data, axis, x } = this.props
@@ -136,7 +135,7 @@ class Chart extends React.Component {
     })
   }
   updateChart = () => {
-    const { axis, data, categories } = this.createChartData()
+    const { data, categories } = this.createChartData()
 
     this.chart.load({
       unload: true,

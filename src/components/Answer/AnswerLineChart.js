@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import scriptLoader from 'react-async-load-script'
 import TableDetail from './common/TableDetail'
 import Source from './common/Source'
 import Chart from './../Visualization/Chart'
@@ -51,7 +49,7 @@ class AnswerLineChart extends React.Component {
       nextProps.refresh !== this.props.refresh
     )
   }
-  componentDidUpdate (prevProps) {
+  componentDidUpdate () {
     if (this.props.card.record_keys.length <= 2) {
       return (this.chartRef.style.display = 'none')
     } else {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { createHTMLMarkup, getLinkType } from './../../../utilities'
+import { createHTMLMarkup } from './../../../utilities'
 import {
   LOG_EVENT_CATEGORIES,
   LOG_EVENT_LABELS
@@ -23,7 +23,6 @@ function Title ({
   iconRight,
   snippetId,
   onClick,
-  fieldLabel,
   openInNewWindow,
   eventLabel,
   eventCategory,
@@ -72,6 +71,8 @@ function Title ({
           onClick={onClick}
           result={result}
           openInNewWindow={openInNewWindow}
+          snippetId={snippetId}
+          logPayload={logPayload}
         >
           <span
             className={textClassName}

@@ -89,7 +89,7 @@ class AnswerMap extends React.Component {
     if (this.map.getZoom() === intZoom) return
     this.map.setZoom(intZoom)
   }
-  handleMapClick = (event) => {
+  handleMapClick = () => {
     if (this.infowindow) this.infowindow.close()
   }
   shouldComponentUpdate (nextProps, nextState) {
@@ -121,7 +121,7 @@ class AnswerMap extends React.Component {
   }
   refreshMap = () => {
     const { card, results } = this.props
-    const { source, title, element_keys } = card
+    const { source, element_keys } = card
     var { elements = [] } = card
     const { google } = this.props.window
     /**
@@ -171,7 +171,8 @@ class AnswerMap extends React.Component {
       const [lat, lng] = this.props.location.split(',')
       const position = { lat: parseFloat(lat), lng: parseFloat(lng) }
       const latLngPosition = new google.maps.LatLng(position.lat, position.lng)
-      const marker = new google.maps.Marker({
+      /* Add a new marker for user's current location */
+      new google.maps.Marker({
         position,
         map: this.map,
         icon: new google.maps.MarkerImage(

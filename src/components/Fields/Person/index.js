@@ -14,15 +14,33 @@ function Person ({
   iconSize,
   personName,
   log,
+  logPayload,
   displayIcon,
   snippetId
 }) {
   if (!personName) return null
+  function handleClick (event) {
+    /* Log the request */
+    log({
+      eventType: 'C',
+      result,
+      eventCategory: 'person',
+      eventAction: 'click',
+      eventLabel: personName,
+      snippetId,
+      payload: logPayload
+    })
+    if (onClick) onClick(event, name)
+  }
   const classes = 'ola-field ola-field-person'
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />
-      <a className='ola-flex ola-btn-person' title={personName}>
+      <a
+        className='ola-flex ola-btn-person'
+        title={personName}
+        onClick={handleClick}
+      >
         {displayIcon && (
           <span className='ola-flex-icon'>
             <User size={iconSize} />

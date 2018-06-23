@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import TableDetail from './common/TableDetail'
-import ItemDetail from './common/ItemDetail'
 import AnswerCard from './AnswerCard'
 import AnswerLineChart from './AnswerLineChart'
 import AnswerCarousel from './AnswerCarousel'
@@ -12,12 +10,12 @@ import AnswerMC from './AnswerMC'
 import AnswerVideo from './AnswerVideo'
 import AnswerEmbed from './AnswerEmbed'
 import AnswerTable from './AnswerTable'
-import {
-  updateQueryTerm,
-  executeSearch,
-  changeAnswerSelection,
-  setSkipIntent
-} from './../../actions/Search'
+// import {
+//   updateQueryTerm,
+//   executeSearch,
+//   changeAnswerSelection,
+//   setSkipIntent
+// } from './../../actions/Search'
 import { BUTTON_TYPE } from './../../constants/Settings'
 import withConfig from './../../decorators/withConfig'
 import { connect } from 'react-redux'
@@ -32,7 +30,7 @@ function Answer ({
   location,
   mc,
   isLoading,
-  dispatch,
+  // dispatch,
   templates,
   onSelect,
   config,

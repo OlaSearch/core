@@ -19,9 +19,7 @@ function getMinMaxValue (props) {
   let [fromDate, toDate] =
     selected && selected.length === 1 ? selected[0] : selected
   const { values } = facet
-  var dates = values.map((value) => value.name)
-  /* Convert dates to (getTime) */
-  dates = dates.map((d) => DateParser.parse(d).getTime())
+  const dates = values.map((value) => DateParser.parse(value.name).getTime())
   const min = dates.length ? Math.min.apply(this, dates) : 0
   const max = dates.length ? Math.max.apply(this, dates) : 0
 
@@ -106,7 +104,7 @@ class DatePickerFilter extends React.Component {
     replaceFacet(facet, [fromDate, toDate])
     executeSearch()
   }
-  onFromChange = (date, event) => {
+  onFromChange = (date) => {
     this.setState(
       {
         fromDate: date.getTime(),
@@ -126,7 +124,7 @@ class DatePickerFilter extends React.Component {
   }
 
   onDateSelect = ([fromDate, toDate]) => {
-    const { dispatch, replaceFacet, executeSearch, facet } = this.props
+    const { replaceFacet, executeSearch, facet } = this.props
     this.setState({
       dateLabel: true
     })
@@ -145,7 +143,7 @@ class DatePickerFilter extends React.Component {
       })
     }
   }
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (prevProps) {
     if (
       prevProps.facet !== this.props.facet ||
       !equals(prevProps.selected, this.props.selected)
@@ -160,7 +158,7 @@ class DatePickerFilter extends React.Component {
     const year = parseInt(parts[2], 10)
     return new Date(year, month, day)
   }
-  toDateString = (date, format) => {
+  toDateString = (date) => {
     return DateParser.format(date, DEFAULT_DATE_FORMAT)
   }
 
@@ -180,7 +178,6 @@ class DatePickerFilter extends React.Component {
       isPhone,
       showIfEmpty
     } = this.props
-    let { fromDate, toDate, maxDate, minDate, dateLabel } = this.state
     const { values } = facet
     /* Check if dates exists */
     if (!values.length && !showIfEmpty) return null
@@ -189,14 +186,18 @@ class DatePickerFilter extends React.Component {
       'ola-facet-collapsed': isCollapsed
     })
     /* Mobile dates */
-    const fromDateMobile = DateParser.format(fromDate, DATE_FORMAT_MOBILE)
-    const toDateMobile = DateParser.format(toDate, DATE_FORMAT_MOBILE)
+    const fromDateMobile = DateParser.format(
+      this.state.fromDate,
+      DATE_FORMAT_MOBILE
+    )
+    const toDateMobile = DateParser.format(
+      this.state.toDate,
+      DATE_FORMAT_MOBILE
+    )
 
     /* Parse dates */
-    fromDate = DateParser.parse(fromDate)
-    toDate = DateParser.parse(toDate)
-    minDate = dateLabel ? fromDate : DateParser.parse(minDate)
-    maxDate = dateLabel ? toDate : DateParser.parse(maxDate)
+    const fromDate = DateParser.parse(this.state.fromDate)
+    const toDate = DateParser.parse(this.state.toDate)
 
     return (
       <div className={klass}>

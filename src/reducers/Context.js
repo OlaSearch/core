@@ -3,8 +3,6 @@ import types from './../constants/ActionTypes'
 import flatten from 'ramda/src/flatten'
 import { pick } from './../utilities'
 
-const LOCATION_FIELD = 'location'
-
 type State = {
   location: ?string,
   fields: Array<Object>,

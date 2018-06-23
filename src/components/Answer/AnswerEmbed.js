@@ -4,7 +4,6 @@ import Header from './common/Header'
 import cx from 'classnames'
 import Play from '@olasearch/icons/lib/play'
 import Portal from './../Portal'
-import Overlay from './../Overlay'
 
 /**
  * Create an answer card
@@ -23,7 +22,7 @@ class AnswerEmbed extends React.Component {
   }
   render () {
     const { isVisible } = this.state
-    const { card, onSelect } = this.props
+    const { card } = this.props
     const { url, title, image, subtitle, classname, width, height } = card
     const classes = cx(
       'ola-answer-card',

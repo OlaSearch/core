@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import omit from 'ramda/src/omit'
 
 /**
  * Renders an input field as contenteditable
@@ -22,7 +23,7 @@ export default class ContentEditable extends React.Component {
   registerFakeRef = (el) => {
     this.fakeEl = el
   }
-  componentDidUpdate (prevProps) {
+  componentDidUpdate () {
     this.updateFakeEl()
   }
   registerRef = (el) => {
@@ -30,14 +31,11 @@ export default class ContentEditable extends React.Component {
     this.props.innerRef && this.props.innerRef(el)
   }
   render () {
-    const {
-      formatValue,
-      onMatchChange,
-      value,
-      placeholder,
-      innerRef,
-      ...rest
-    } = this.props
+    const { value, placeholder } = this.props
+    const inputProps = omit(
+      ['formatValue', 'onMatchChange', 'innerRef'],
+      this.props
+    )
     /* iOS 8 bug where placeholder is displayed even when value is not empty */
     return (
       <div className='ContentEditableWrapper'>
@@ -45,7 +43,7 @@ export default class ContentEditable extends React.Component {
           type='text'
           className='ola-text-input'
           ref={this.registerRef}
-          {...rest}
+          {...inputProps}
           value={value}
           placeholder={value ? '' : placeholder}
         />

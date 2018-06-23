@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Cross from '@olasearch/icons/lib/x'
-import { createHTMLMarkup, truncate } from './../../utilities'
+import { createHTMLMarkup } from './../../utilities'
 import { hideSearchHelp } from './../../actions/Ui'
 import withConfig from './../../decorators/withConfig'
 
@@ -20,6 +20,14 @@ function QueryHelp ({ isVisible, showSearchHelp, hideSearchHelp, config }) {
     </div>
   )
 }
+
+QueryHelp.propTypes = {
+  isVisible: PropTypes.bool,
+  showSearchHelp: PropTypes.bool,
+  hideSearchHelp: PropTypes.bool,
+  config: PropTypes.oneOf([PropTypes.object, PropTypes.function])
+}
+
 function mapStateToProps (state) {
   return {
     showSearchHelp: state.AppState.showSearchHelp

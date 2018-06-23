@@ -11,12 +11,10 @@ import {
   RE_ESCAPE,
   TYPE_DOC,
   TYPE_HISTORY,
-  TYPE_TAXONOMY,
   TYPE_QUERY,
   TYPE_FACET
 } from './../../constants/Settings'
 import AnswerQuick from './../Answer/AnswerQuick'
-import Link from '@olasearch/icons/lib/link'
 
 function groupFacets (suggestions, fieldLabels) {
   const group = {}

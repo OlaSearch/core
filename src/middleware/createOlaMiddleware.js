@@ -73,7 +73,7 @@ export default function (options = {}) {
         config.proxy = false
         config.intentEngineEnabled = false
       }
-      let currentEngine = options.engineConfig[config.search_engine_type]
+      const currentEngine = options.engineConfig[config.search_engine_type]
       parser = new currentEngine.Parser(config)
       queryBuilder = new currentEngine.QueryBuilder(config)
       searchService = new currentEngine.SearchService(config)
@@ -346,9 +346,9 @@ export default function (options = {}) {
               return item
             })
           for (let i = 0; i < answerFacets.length; i++) {
-            let { name, selected, ...rest } = answerFacets[i]
+            const { name, selected } = answerFacets[i]
             /* Check if it already exists */
-            let exists = facetQuery.some(({ name: _name }) => _name === name)
+            const exists = facetQuery.some(({ name: _name }) => _name === name)
             if (exists) {
               facetQuery = facetQuery.map((item) => {
                 if (item.name === name) item.selected = selected
@@ -423,7 +423,7 @@ export default function (options = {}) {
           ) &&
           !currentState.QueryState.skip_spellcheck
         ) {
-          let { term } = spellSuggestions[0]
+          const { term } = spellSuggestions[0]
           return dispatch({
             types,
             query: {

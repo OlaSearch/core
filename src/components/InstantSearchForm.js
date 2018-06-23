@@ -5,8 +5,6 @@ import {
   executeSearch,
   clearQueryTerm
 } from './../actions/Search'
-import Bookmarks from './Bookmarks'
-import History from './History'
 import SpeechInput from './Speech'
 import { debounce, trim } from './../utilities'
 import GeoLocation from './Geo/GeoLocation'
@@ -48,8 +46,6 @@ class InstantSearchForm extends React.Component {
   static defaultProps = {
     minCharacters: 0,
     showGeoLocation: false,
-    showBookmarks: true,
-    showHistory: true,
     showSpeech: true,
     isPhone: false,
     urlSync: true,
@@ -111,8 +107,6 @@ class InstantSearchForm extends React.Component {
     const {
       q,
       showGeoLocation,
-      showBookmarks,
-      showHistory,
       showSpeech,
       translate,
       placeholder,

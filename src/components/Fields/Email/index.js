@@ -6,17 +6,8 @@ import MailIcon from '@olasearch/icons/lib/mail'
 /**
  * Display an Email button
  */
-function Email ({
-  email,
-  body,
-  iconLeft = null,
-  iconRight = null,
-  label,
-  displayIcon,
-  iconSize,
-  fieldLabel
-}) {
-  const link = `mailto:${email}`
+function Email ({ email, body, label, displayIcon, iconSize, fieldLabel }) {
+  const link = `mailto:${email}&body=${body}`
 
   return (
     <div className='ola-field ola-field-email'>

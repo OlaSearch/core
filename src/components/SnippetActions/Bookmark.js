@@ -24,7 +24,7 @@ class BookmarkAction extends React.Component {
   }
 
   removeBookmark = () => {
-    const { dispatch, result } = this.props
+    const { result } = this.props
     this.props.removeBookmark(result)
     this.props.log({
       eventType: 'C',

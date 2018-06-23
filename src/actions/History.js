@@ -5,17 +5,16 @@ import {
 } from './../services/urlSync'
 import omit from 'ramda/src/omit'
 // import flatten from 'ramda/src/flatten'
-import { debounce, supplant } from './../utilities'
-import DateParser from './../utilities/dateParser'
+import { debounce } from './../utilities'
 
 /**
  * Add a query to history
  * @param {Object} options
  */
-export function addHistory (options) {
+export function addHistory () {
   return (dispatch, getState) => {
     const { QueryState, AppState } = getState()
-    const { q, facet_query, tokens } = QueryState
+    const { q, tokens } = QueryState
     const { totalResults, history } = AppState
     if (!q || !totalResults || q === '*' || q.indexOf('*') !== -1) return
 

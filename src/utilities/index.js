@@ -1,4 +1,3 @@
-import React from 'react'
 import flatten from 'ramda/src/flatten'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
@@ -10,12 +9,8 @@ import {
   SLOT_DATE,
   SLOT_NUMBER,
   TAXO_ENTITY,
-  SEARCH_COLLECTION_IDENTIFIER,
-  DEFAULT_AUTOCOMPLETE_PAYLOAD,
-  DATE_RANGE_FACETS,
-  DEFAULT_DATE_FORMAT
+  DEFAULT_AUTOCOMPLETE_PAYLOAD
 } from './../constants/Settings'
-import { format as formatDate } from './dateParser'
 import xssFilters from 'xss-filters'
 import scrollIntoView from 'dom-scroll-into-view'
 
@@ -253,7 +248,7 @@ export function getComponentDisplayName (WrappedComponent) {
  * @param  {Boolean} safe
  * @return {string}
  */
-export function translateKey (path, obj, safe) {
+export function translateKey (path, obj) {
   return obj[path] === null
     ? ''
     : obj[path] /* || (process.env.NODE_ENV === 'production' ? '' : path) */
@@ -811,7 +806,6 @@ export function getWordPosition (textInput) {
   }
 
   var letter
-  var startToken = carPos
   do {
     letter = textInput.value.substring(carPos - 1, carPos)
     if (letter !== ' ') {
@@ -1103,7 +1097,7 @@ export function smoothScroll (
     return x * x * (3 - 2 * x)
   }
 
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve) => {
     // This is to keep track of where the element's scrollTop is
     // supposed to be, based on what we're doing
     var previous_top = element[scrollDir]
@@ -1237,7 +1231,10 @@ export function isDev () {
 export function getUrlPath (url) {
   var a = document.createElement('a')
   a.href = url
-  return [a.hostname, a.pathname]
+  return {
+    hostname: a.hostname,
+    pathname: a.pathname
+  }
 }
 
 /**
@@ -1246,11 +1243,11 @@ export function getUrlPath (url) {
  */
 export function getFileExtension (url) {
   if (!url || typeof url !== 'string') return null
-  const [host, pathName] = getUrlPath(url)
-  if (!pathName) return null
-  const stopIndex = pathName.lastIndexOf('.')
+  const { pathname } = getUrlPath(url)
+  if (!pathname) return null
+  const stopIndex = pathname.lastIndexOf('.')
   if (stopIndex === -1) return null
-  return pathName.slice(stopIndex + 1)
+  return pathname.slice(stopIndex + 1)
 }
 
 /**
@@ -1290,12 +1287,11 @@ export function facetToChartData (facets, limit = undefined) {
   if (!facets.length) return null
   const facet = facets[0]
   const { type, name } = facet
-  // const isDate = DATE_RANGE_FACETS.indexOf(type) !== -1
   return {
     category: flatten(
       facets.map(({ values }) => values.map(({ name }) => name)).slice(0, limit)
     ),
-    data: facets.map(({ name, displayName, values }) => {
+    data: facets.map(({ displayName, values }) => {
       return [displayName, ...values.map(({ count }) => count).slice(0, limit)]
     }),
     name,

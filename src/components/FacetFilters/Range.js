@@ -222,7 +222,7 @@ class RangeFilter extends React.Component {
     return (
       <div className={klass}>
         <FacetTitle
-          displayName={facet.displayName}
+          displayName={displayName}
           toggle={toggle}
           isCollapsed={isCollapsed}
         />

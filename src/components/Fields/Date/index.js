@@ -15,15 +15,13 @@ const TIME_REGEX = /h{1,2}\:.*/
 function DateField ({
   date,
   endDate,
-  allDayEvent,
+  // allDayEvent,
   format,
   fieldLabel,
   inlineLabel,
   displayIcon,
-  iconSize,
-  dependentField,
-  result,
-  showIfEmpty
+  iconSize
+  // showIfEmpty
 }) {
   if (!date) return null
   let formattedDate = ''

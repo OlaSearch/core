@@ -7,7 +7,7 @@ function Arrow ({ position, style }) {
   const classes = cx('ola-arrow', {
     [`ola-arrow-${arrowClass}`]: arrowClass
   })
-  return <div className={classes} />
+  return <div className={classes} style={style} />
 }
 
 function getArrowClass (position) {

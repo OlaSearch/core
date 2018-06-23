@@ -10,15 +10,13 @@ import SMSIcon from '@olasearch/icons/lib/smartphone'
 function SMS ({
   number,
   body,
-  iconLeft = null,
-  iconRight = null,
   label,
   Device,
   displayIcon,
   iconSize,
   fieldLabel
 }) {
-  const { isApple, isPhone } = Device
+  const { isApple } = Device
   const bodyText = isApple && isApple.device ? '&body' : '?body'
   const link = `sms:${number}${bodyText}=${body}`
 

@@ -1,14 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import withTranslate from './../../decorators/withTranslate'
 import withConfig from './../../decorators/withConfig'
 import withLogger from './../../decorators/withLogger'
 import withTheme from './../../decorators/withTheme'
-import { log } from './../../actions/Logger'
 import Mic from '@olasearch/icons/lib/mic'
-import MicOff from '@olasearch/icons/lib/mic-off'
 
 /**
  * Displays a voice input button
@@ -117,7 +113,7 @@ class SpeechInput extends React.Component {
 
   render () {
     const { isRecording, isSpeechSupported } = this.state
-    const { translate, iconSize } = this.props
+    const { iconSize } = this.props
     const { voiceSearch } = this.props.config
     if (!isSpeechSupported || !voiceSearch) return null
 

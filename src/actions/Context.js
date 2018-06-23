@@ -8,7 +8,7 @@ import types from './../constants/ActionTypes'
  */
 export function requestGeoLocation (onSuccess, onFailure) {
   if (!navigator.geolocation) return
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: types.REQUEST_GEO_LOCATION
     })

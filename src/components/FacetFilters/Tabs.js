@@ -169,8 +169,7 @@ function TabItem ({ facet, value, displayName, isActive, handleClick }) {
     const { name, count } = value
     if (!isActive && count) handleClick(facet, name)
   }
-  const { name, count } = value
-  const { facetNames } = facet
+  const { count } = value
   const klass = classNames({
     'ola-tabs-label': true,
     'ola-tab-active': isActive

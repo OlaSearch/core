@@ -23,7 +23,7 @@ function TableDetail (props) {
             {data.slice(0, isCollapsed ? undefined : max).map((row, idx) => {
               return (
                 <tr key={idx}>
-                  {keys.map((key, idx) => {
+                  {keys.map((key) => {
                     return (
                       <td key={key}>
                         <div

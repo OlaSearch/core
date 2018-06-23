@@ -5,7 +5,7 @@ import {
   replaceFacet,
   executeSearch
 } from './../../actions/Search'
-import { getDisplayName, sortFacetValues } from './../../utilities'
+import { getDisplayName } from './../../utilities'
 import { connect } from 'react-redux'
 import withToggle from './../../decorators/withToggle'
 import withTranslate from './../../decorators/withTranslate'
@@ -32,7 +32,7 @@ function SelectFilter ({
     }
     executeSearch()
   }
-  const { displayName, values, facetNames, sort } = facet
+  const { displayName, values, facetNames } = facet
   if (!values.length && !showIfEmpty) return null
   const classes = cx('ola-facet', {
     'ola-facet-collapsed': isCollapsed

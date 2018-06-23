@@ -36,7 +36,7 @@ class LineChart extends React.Component {
       })
     }
   }
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate (nextProps) {
     return nextProps.card !== this.props.card
   }
   componentDidUpdate () {

@@ -5,6 +5,7 @@ import withLogger from './../../../decorators/withLogger'
 import FieldLabel from './../FieldLabel'
 import MapPin from '@olasearch/icons/lib/map-pin'
 import { getDisplayName } from './../../../utilities'
+import omit from 'ramda/src/omit'
 
 /**
  * Displays a Get directions button with distance and links to google maps
@@ -24,12 +25,12 @@ function Directions (props) {
     showIfEmpty,
     distanceFieldName,
     locationFieldName,
-    collectionId,
     displayIcon,
     logPayload,
     ...rest
   } = props
 
+  const linkProps = omit(['collectionId'], rest)
   let latlong = result[locationFieldName]
   if (!latlong && !showIfEmpty) return null
   if (Array.isArray(latlong) && latlong.length) {
@@ -71,7 +72,7 @@ function Directions (props) {
         onClick={handleClick}
         href={url}
         target='_blank'
-        {...rest}
+        {...linkProps}
       >
         {displayIcon && (
           <span className='ola-flex-icon'>

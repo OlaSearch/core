@@ -57,14 +57,7 @@ class HierarchicalFilter extends React.Component {
   }
   render () {
     const { facet, isCollapsed, toggle } = this.props
-
-    const {
-      displayName,
-      allowSingleSelection,
-      rootLevel = 0,
-      parentNode = null,
-      facetNames
-    } = facet
+    const { allowSingleSelection, rootLevel = 0, parentNode = null } = facet
 
     let { values, rollUp = false } = facet
 
