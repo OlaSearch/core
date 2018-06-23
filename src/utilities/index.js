@@ -23,7 +23,7 @@ import scrollIntoView from 'dom-scroll-into-view'
  * Example: supplant('Hello {name}', { name: 'John Doe' })
  */
 export function supplant (s, d) {
-  for (var p in d) {
+  for (let p in d) {
     s = s.replace(new RegExp('{' + p + '}', 'g'), d[p] === null ? '' : d[p])
   }
   return s
@@ -73,8 +73,8 @@ export function now () {
 export function debounce (func, wait, immediate) {
   var timeout, args, context, timestamp, result
 
-  var later = function () {
-    var last = now() - timestamp
+  function later () {
+    const last = now() - timestamp
     if (last < wait && last >= 0) {
       timeout = setTimeout(later, wait - last)
     } else {
@@ -90,13 +90,12 @@ export function debounce (func, wait, immediate) {
     context = this
     args = arguments
     timestamp = now()
-    var callNow = immediate && !timeout
+    const callNow = immediate && !timeout
     if (!timeout) timeout = setTimeout(later, wait)
     if (callNow) {
       result = func.apply(context, args)
       context = args = null
     }
-
     return result
   }
 }
@@ -108,10 +107,10 @@ export function debounce (func, wait, immediate) {
  */
 export function parseRangeValues (value) {
   /* [1, 2, 3, 4] => [1, 2], [3, 4] */
-  var valueArray = []
-  var len = value.length
+  const valueArray = []
+  const len = value.length
 
-  for (var i = 0; i < len; i += 2) {
+  for (let i = 0; i < len; i += 2) {
     valueArray.push([value[i], value[i + 1]])
   }
 
@@ -195,19 +194,19 @@ export function getDisplayName (haystack, needle) {
 export function getMatchingSnippet (rules, result) {
   if (!rules) return false
   for (let i = 0, len = rules.length; i < len; i++) {
-    let rule = rules[i].rules
-    let matched = true
+    const rule = rules[i].rules
+    var matched = true
     if (Array.isArray(rule)) {
       for (let j = 0, len = rule.length; j < len; j++) {
-        let { field, value } = rule[j]
-        let fieldValue = result[field]
+        const { field, value } = rule[j]
+        const fieldValue = result[field]
         if (!fieldValue || (fieldValue && !(fieldValue === value))) {
           matched = false
         }
       }
     } else {
       for (let field in rule) {
-        let fieldValue = result[field]
+        const fieldValue = result[field]
         if (!fieldValue || (fieldValue && !(fieldValue === rule[field]))) {
           matched = false
         }
@@ -228,7 +227,7 @@ export function getMatchingSnippet (rules, result) {
  */
 export function checkForAllowedCharacters (query, characters) {
   if (!query || !characters) return true
-  let _regExp = new RegExp(characters, 'gi')
+  const _regExp = new RegExp(characters, 'gi')
   return _regExp.test(query)
 }
 
@@ -272,10 +271,10 @@ export function isTaxonomyField (fieldName, fieldTypeMapping) {
  * @return {number}
  */
 export function sortHistory (a, b) {
-  let a1 = a.popularity
-  let b1 = b.popularity
-  let a2 = a.dateAdded
-  let b2 = b.dateAdded
+  const a1 = a.popularity
+  const b1 = b.popularity
+  const a2 = a.dateAdded
+  const b2 = b.dateAdded
   if (a1 === b1) {
     if (a2 < b2) return 1
     if (a2 > b2) return -1
@@ -294,10 +293,10 @@ export function sortHistory (a, b) {
  * @return {Array}
  */
 export function getFacetsToDisplay (selected, facets, facetsToDisplay) {
-  var selections = flatten(selected.map((item) => item.selected))
+  const selections = flatten(selected.map((item) => item.selected))
   var names = []
-  var defaultNames = facetsToDisplay['*']
   var hasKey = false
+  const defaultNames = facetsToDisplay['*']
 
   /* Loop through selections and find Facets to display */
   for (let i = 0, len = selections.length; i < len; i++) {
@@ -317,8 +316,8 @@ export function getFacetsToDisplay (selected, facets, facetsToDisplay) {
   return facets
     .filter((facet) => !facet.tab && names.indexOf(facet.name) !== -1)
     .sort((a, b) => {
-      let aIndex = names.indexOf(a.name)
-      let bIndex = names.indexOf(b.name)
+      const aIndex = names.indexOf(a.name)
+      const bIndex = names.indexOf(b.name)
       if (aIndex > bIndex) return 1
       if (aIndex < bIndex) return -1
       return 0
@@ -455,9 +454,9 @@ export function toNestedArray (
 ) {
   let output = []
   for (let i = 0, len = data.length; i < len; i++) {
-    var count = data[i].count
-    var items = data[i].name.split(delimiter)
-    var hasParent = items.length > rootLevel
+    const count = data[i].count
+    const items = data[i].name.split(delimiter)
+    const hasParent = items.length > rootLevel
     if (hasParent) {
       let parent = rootLevel
         ? items.length === rootLevel
@@ -477,7 +476,7 @@ export function toNestedArray (
     var out = []
     for (let i in arr) {
       if (arr[i].parent === parent) {
-        var children = getNestedChildren(arr, arr[i].name)
+        const children = getNestedChildren(arr, arr[i].name)
         if (children.length) {
           arr[i].children = children
         }
@@ -495,8 +494,8 @@ export function toNestedArray (
  */
 export function uuid () {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    var r = (Math.random() * 16) | 0
-    var v = c === 'x' ? r : (r & 0x3) | 0x8
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
     return v.toString(16)
   })
 }
@@ -531,15 +530,15 @@ export function isSvg (path) {
  * @return {Object}
  */
 export function getCoords (element) {
-  var box = element.getBoundingClientRect()
-  var body = document.body
-  var docEl = document.documentElement
-  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop
-  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft
-  var clientTop = docEl.clientTop || body.clientTop || 0
-  var clientLeft = docEl.clientLeft || body.clientLeft || 0
-  var top = box.top + scrollTop - clientTop
-  var left = box.left + scrollLeft - clientLeft
+  const box = element.getBoundingClientRect()
+  const body = document.body
+  const docEl = document.documentElement
+  const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop
+  const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft
+  const clientTop = docEl.clientTop || body.clientTop || 0
+  const clientLeft = docEl.clientLeft || body.clientLeft || 0
+  const top = box.top + scrollTop - clientTop
+  const left = box.left + scrollLeft - clientLeft
 
   return {
     top: Math.round(top),
@@ -584,7 +583,7 @@ export function decimalAdjust (type, value, exp) {
  * @return {Boolean}
  */
 export function isValidUrl (str) {
-  var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
+  const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
   return regexp.test(str)
 }
 
@@ -604,7 +603,8 @@ export function sanitizeNumbers (text) {
  * @return {Array}
  */
 export function mergeResultsWithHistory (options) {
-  let { history, results = [], query, limit = 5, showHistoryForQuery } = options
+  var { history, results = [] } = options
+  const { limit = 5, showHistoryForQuery, query } = options
   /* Filter history when results are empty */
   const shouldShowHistoryForQuery =
     showHistoryForQuery || (!results.length && !query)
@@ -686,12 +686,12 @@ export function mergeResultsWithHistory (options) {
 export function getCaretPosition () {
   var x = 0
   var y = 0
-  var sel = window.getSelection()
+  const sel = window.getSelection()
   if (sel.rangeCount) {
-    var range = sel.getRangeAt(0).cloneRange()
+    const range = sel.getRangeAt(0).cloneRange()
     if (range.getClientRects()) {
       range.collapse(true)
-      var rect = range.getClientRects()[0]
+      const rect = range.getClientRects()[0]
       if (rect) {
         y = rect.top
         x = rect.left
@@ -738,9 +738,9 @@ export function once (fn, context) {
  */
 export function hexToRGBa (hex, opacity = 0.5) {
   hex = hex.replace('#', '')
-  let r = parseInt(hex.substring(0, 2), 16)
-  let g = parseInt(hex.substring(2, 4), 16)
-  let b = parseInt(hex.substring(4, 6), 16)
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
 
   return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')'
 }
@@ -760,7 +760,7 @@ export function stringToColor (str) {
  * @return {string}
  */
 export function intToRGB (i) {
-  var c = (i & 0x00ffffff).toString(16).toUpperCase()
+  const c = (i & 0x00ffffff).toString(16).toUpperCase()
   return '#' + '00000'.substring(0, 6 - c.length) + c
 }
 
@@ -789,12 +789,12 @@ export function getWordPosition (textInput) {
   const AUTOCOMPLETE_FAKE_ID = 'ola-autocomplete-fake-input'
 
   if (document.getElementById(AUTOCOMPLETE_FAKE_ID)) {
-    var div = document.getElementById(AUTOCOMPLETE_FAKE_ID)
+    const div = document.getElementById(AUTOCOMPLETE_FAKE_ID)
     var span = div.firstChild
   } else {
-    var div = document.createElement('div')
+    const div = document.createElement('div')
     var span = document.createElement('span')
-    var copyStyle = getComputedStyle(textInput)
+    const copyStyle = getComputedStyle(textInput)
     var coords = {}
     /* Copy styles */
     for (let i = 0; i < copyStyle.length; i++) {
@@ -813,7 +813,7 @@ export function getWordPosition (textInput) {
     }
   } while (letter && letter !== ' ' && carPos > 0)
 
-  var currentWord = textInput.value
+  const currentWord = textInput.value
   var tmpCarPos = carPos
   var char
   do {
@@ -821,7 +821,7 @@ export function getWordPosition (textInput) {
     char = currentWord.substring(tmpCarPos, tmpCarPos + 1)
   } while (char && char !== ' ')
 
-  var activeWord = textInput.value.substring(carPos, tmpCarPos)
+  const activeWord = textInput.value.substring(carPos, tmpCarPos)
 
   div.textContent = textInput.value.substr(0, carPos)
   span.textContent = textInput.value.substr(carPos) || '.'
@@ -955,14 +955,14 @@ export function getAutoCompleteResults (
  */
 export function highlightTokens (text, tokens) {
   if (!tokens || !tokens.length) return text
-  let arr = []
+  const arr = []
   let start = 0
   /**
    * Sort tokens by startToken
    */
   tokens = tokens.slice().sort((a, b) => a.startToken > b.startToken)
   for (let i = 0; i < tokens.length; i++) {
-    let { startToken, endToken } = tokens[i]
+    const { startToken, endToken } = tokens[i]
     arr.push(text.substring(start, startToken))
     arr.push(
       `<span class="ola-input-tag">${text.substring(
@@ -1084,16 +1084,16 @@ export function smoothScroll (
     return Promise.resolve()
   }
 
-  var start_time = Date.now()
-  var end_time = start_time + duration
-  var start_top = element[scrollDir]
-  var distance = target - start_top
+  const start_time = Date.now()
+  const end_time = start_time + duration
+  const start_top = element[scrollDir]
+  const distance = target - start_top
 
   // based on http://en.wikipedia.org/wiki/Smoothstep
-  var smooth_step = function (start, end, point) {
+  function smooth_step (start, end, point) {
     if (point <= start) return 0
     if (point >= end) return 1
-    var x = (point - start) / (end - start) // interpolation
+    const x = (point - start) / (end - start) // interpolation
     return x * x * (3 - 2 * x)
   }
 
@@ -1103,13 +1103,13 @@ export function smoothScroll (
     var previous_top = element[scrollDir]
 
     // This is like a think function from a game loop
-    var scroll_frame = function () {
+    function scroll_frame () {
       if (element[scrollDir] != previous_top) return
 
       // set the scrollTop for this frame
-      var now = Date.now()
-      var point = smooth_step(start_time, end_time, now)
-      var frameTop = Math.round(start_top + distance * point)
+      const now = Date.now()
+      const point = smooth_step(start_time, end_time, now)
+      const frameTop = Math.round(start_top + distance * point)
       element[scrollDir] = frameTop
 
       // check if we're done!
