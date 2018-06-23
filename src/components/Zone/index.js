@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import SelectBox from './../SelectBox'
 
 function Zone ({ values }) {
-  function handleChange () {
-
-  }
+  function handleChange () {}
   if (!values.length) return null
   return (
     <div className='ola-zone'>
