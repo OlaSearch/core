@@ -61,6 +61,11 @@ function SelectFilter ({
   )
 }
 
+SelectFilter.propTypes = {
+  selected: PropTypes.array,
+  facet: PropTypes.object.isRequired
+}
+
 export default connect(null, { removeFacetItem, replaceFacet, executeSearch })(
   withTranslate(withToggle(SelectFilter))
 )
