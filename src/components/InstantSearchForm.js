@@ -25,9 +25,9 @@ import Cross from '@olasearch/icons/lib/x'
 class InstantSearchForm extends React.Component {
   constructor (props) {
     super(props)
-    let { config } = props
-    let { searchTimeoutMobile = 0, searchTimeout = 0 } = config
-    let searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeout
+    const { config } = props
+    const { searchTimeoutMobile = 0, searchTimeout = 0 } = config
+    const searchDelay = props.isPhone ? searchTimeoutMobile : searchTimeout
     /**
      * Add url Sync option
      */
@@ -67,9 +67,9 @@ class InstantSearchForm extends React.Component {
   }
 
   onChange = (arg, searchInput) => {
-    let { updateQueryTerm, minCharacters } = this.props
-    let isEvent = !!arg.target
-    let term = isEvent ? arg.target.value : arg
+    const { updateQueryTerm, minCharacters } = this.props
+    const isEvent = !!arg.target
+    const term = isEvent ? arg.target.value : arg
 
     /* Trim */
     if (term.length && trim(term) === '') return
@@ -108,7 +108,7 @@ class InstantSearchForm extends React.Component {
   }
 
   render () {
-    let {
+    const {
       q,
       showGeoLocation,
       showBookmarks,
@@ -121,14 +121,14 @@ class InstantSearchForm extends React.Component {
 
     const { isFocused } = this.state
 
-    let classes = classNames('ola-search-form', this.props.className, {
+    const classes = classNames('ola-search-form', this.props.className, {
       'ola-search-focus': isFocused,
       'ola-speech-not-supported': !(
         window.SpeechRecognition || window.webkitSpeechRecognition
       )
     })
 
-    let _placeholder = placeholder || translate('instantsearch_placeholder')
+    const _placeholder = placeholder || translate('instantsearch_placeholder')
 
     return (
       <form className={classes} onSubmit={this.onSubmit}>

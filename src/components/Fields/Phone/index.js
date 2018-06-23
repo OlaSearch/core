@@ -10,7 +10,7 @@ import PhoneIcon from '@olasearch/icons/lib/phone'
  * Display a phone number link
  */
 function Phone (props) {
-  let {
+  const {
     phone,
     label,
     translate,
@@ -27,7 +27,7 @@ function Phone (props) {
 
   if (!phone) return null
 
-  let url = 'tel://' + sanitizePhone(phone)
+  const url = 'tel://' + sanitizePhone(phone)
 
   function handleClick (event) {
     log({

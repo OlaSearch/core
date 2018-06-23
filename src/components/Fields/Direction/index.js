@@ -10,7 +10,7 @@ import { getDisplayName } from './../../../utilities'
  * Displays a Get directions button with distance and links to google maps
  */
 function Directions (props) {
-  var {
+  const {
     translate,
     locationName,
     label,

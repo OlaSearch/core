@@ -36,7 +36,7 @@ class LinkFilter extends React.Component {
   }
 
   handleAddFacet = (value) => {
-    let { dispatch, facet } = this.props
+    const { dispatch, facet } = this.props
 
     this.setState({
       filterText: ''
@@ -47,7 +47,7 @@ class LinkFilter extends React.Component {
   }
 
   handleRemoveFacet = (value) => {
-    let { dispatch, facet } = this.props
+    const { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
     dispatch(executeSearch())
   }
@@ -69,13 +69,13 @@ class LinkFilter extends React.Component {
   }
 
   itemRenderer = (values, index, key) => {
-    let {
+    const {
       name,
       count,
       displayName = getDisplayName(facetNames, name)
     } = values[index]
-    let { facet: { facetNames } } = this.props
-    let isSelected = this.isSelected(name)
+    const { facet: { facetNames } } = this.props
+    const isSelected = this.isSelected(name)
     return (
       <Item
         key={key}

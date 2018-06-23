@@ -66,7 +66,7 @@ class AutoSuggest extends React.Component {
   }
 
   onChange = (term, searchInput) => {
-    let { dispatch, AutoSuggest } = this.props
+    const { dispatch, AutoSuggest } = this.props
 
     /* Trim text */
     if (term.length && trim(term) === '') return
@@ -78,7 +78,7 @@ class AutoSuggest extends React.Component {
 
     if (!term) return dispatch(clearQueryTerm())
 
-    let { allowedCharacters } = this.props.config
+    const { allowedCharacters } = this.props.config
 
     dispatch(updateQueryTerm(term, searchInput))
 
@@ -100,7 +100,7 @@ class AutoSuggest extends React.Component {
   }
 
   clearActiveClass = () => {
-    let nodes = this.refs.suggestionsContainer.querySelectorAll(
+    const nodes = this.refs.suggestionsContainer.querySelectorAll(
       this.props.classNames
     )
     for (let i = 0, len = nodes.length; i < len; i++) {
@@ -109,14 +109,14 @@ class AutoSuggest extends React.Component {
   }
 
   onKeyDown = (direction) => {
-    let { classNames, activeClassName } = this.props
-    let { suggestionsContainer } = this.refs
-    let fullActiveClass = '.' + activeClassName
-    let nodes = suggestionsContainer.querySelectorAll(classNames)
+    const { classNames, activeClassName } = this.props
+    const { suggestionsContainer } = this.refs
+    const fullActiveClass = '.' + activeClassName
+    const nodes = suggestionsContainer.querySelectorAll(classNames)
 
     if (!nodes.length) return
 
-    let target = suggestionsContainer.querySelector(fullActiveClass)
+    const target = suggestionsContainer.querySelector(fullActiveClass)
     let index = target ? [].indexOf.call(nodes, target) : -1
     let next
 
@@ -154,11 +154,11 @@ class AutoSuggest extends React.Component {
 
   onSubmit = (event) => {
     /* Check if there is active class */
-    let target = this.refs.suggestionsContainer.querySelector(
+    const target = this.refs.suggestionsContainer.querySelector(
       '.' + this.props.activeClassName
     )
     if (target) {
-      let linkTarget =
+      const linkTarget =
         target.nodeName === 'A' ? target : target.querySelector('a')
       if (linkTarget) linkTarget.click()
       return
@@ -168,9 +168,9 @@ class AutoSuggest extends React.Component {
   }
 
   handleViewAll = () => {
-    let { q, facet_query } = this.props.AutoSuggest
-    let { dispatch, onSubmit } = this.props
-    let { searchPageUrl, history } = this.props.config
+    const { q, facet_query } = this.props.AutoSuggest
+    const { dispatch, onSubmit } = this.props
+    const { searchPageUrl, history } = this.props.config
 
     /* Close autosuggest */
     dispatch(closeAutoSuggest())

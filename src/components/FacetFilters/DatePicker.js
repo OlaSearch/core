@@ -101,7 +101,7 @@ class DatePickerFilter extends React.Component {
   onCustomChange = () => {
     const fromDate = DateParser.toUTC(this.state.fromDate)
     const toDate = DateParser.toUTC(this.state.toDate)
-    let { facet, replaceFacet, executeSearch } = this.props
+    const { facet, replaceFacet, executeSearch } = this.props
 
     replaceFacet(facet, [fromDate, toDate])
     executeSearch()

@@ -23,7 +23,7 @@ class LineChart extends React.Component {
     this.buildSpark()
   }
   buildSpark = () => {
-    let values = this.getData()
+    const values = this.getData()
     if (values && values[0].length > 1 && this.el) {
       this.sparkline.init({
         el: this.el,
@@ -46,10 +46,7 @@ class LineChart extends React.Component {
     this.el = el
   }
   getData = () => {
-    let {
-      card: { record_data: recordData, record_keys: recordKeys }
-    } = this.props
-    recordKeys = recordKeys.filter((_, idx) => idx !== 0)
+    const recordKeys = this.props.card.record_keys.filter((_, idx) => idx !== 0)
     return recordData.map((item) => {
       return recordKeys.map((key) => sanitizeNumbers(item[key]))
     })
@@ -58,22 +55,22 @@ class LineChart extends React.Component {
     return this.props.card.record_data !== nextProps.card.record_data
   }
   getChartLabel = () => {
-    let lastKey = this.props.card.record_keys[
+    const lastKey = this.props.card.record_keys[
       this.props.card.record_keys.length - 1
     ]
-    let label = this.props.card.record_data[0][lastKey]
-    let unit = this.props.card.record_units
+    const label = this.props.card.record_data[0][lastKey]
+    const unit = this.props.card.record_units
       ? this.props.card.record_units['data']
       : ''
 
     return `<span class='ola-answer-quick-value'>${label}${unit}</span> (${lastKey})`
   }
   render () {
-    let values = this.getData()
-    let { card: { record_units: recordUnits } } = this.props
+    const values = this.getData()
+    const { card: { record_units: recordUnits } } = this.props
     if (values && values.length > 1) return null
     if (values && values[0].length > 1) {
-      let chartLabel = this.getChartLabel()
+      const chartLabel = this.getChartLabel()
       return (
         <div className='ola-answer-quick-chart'>
           <canvas
@@ -171,11 +168,11 @@ function getTemplate (card, onSelect) {
 
 function AnswerQuick ({ answer, onSelect }) {
   if (!answer) return null
-  let { card } = answer
-  let { template } = card
-  let klass = classNames('ola-answer-quick', `ola-answer-quick-${template}`)
+  const { card } = answer
+  const { template } = card
+  const classes = classNames('ola-answer-quick', `ola-answer-quick-${template}`)
   return (
-    <div className={klass} onClick={onSelect}>
+    <div className={classes} onClick={onSelect}>
       {getTemplate(card, onSelect)}
     </div>
   )

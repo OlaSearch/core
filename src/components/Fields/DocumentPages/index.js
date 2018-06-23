@@ -51,8 +51,8 @@ function DocumentPages ({
   }
 
   if (!pages.length && !showIfEmpty) return null
-  let label = <FieldLabel label={fieldLabel} />
-  let klass = classNames('ola-link-view-pages', {
+  const label = <FieldLabel label={fieldLabel} />
+  const klass = classNames('ola-link-view-pages', {
     'ola-link-view-pages-hide': isCollapsed
   })
   return (
@@ -117,7 +117,7 @@ function PageDetail ({ page, contentField, onSelectPage }) {
   function handleSelect (event) {
     onSelectPage(page)
   }
-  let { pageNumber } = page
+  const { pageNumber } = page
   return (
     <div className='ola-snippet-page'>
       <a onClick={handleSelect} className='ola-page-number'>

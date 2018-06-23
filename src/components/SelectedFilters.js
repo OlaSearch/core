@@ -45,7 +45,7 @@ class SelectedFilters extends React.Component {
   }
 
   handleRemoveFacet = (facet, value) => {
-    let { dispatch } = this.props
+    const { dispatch } = this.props
     if (facet.type === 'hierarchical') {
       dispatch(removeFacetItem(facet))
     } else {
@@ -61,12 +61,12 @@ class SelectedFilters extends React.Component {
   }
 
   onRemoveQueryTag = () => {
-    let { dispatch } = this.props
+    const { dispatch } = this.props
     dispatch(clearQueryTerm())
     dispatch(executeSearch())
   }
   handleRemoveFilter = (filter) => {
-    let { dispatch } = this.props
+    const { dispatch } = this.props
     dispatch(removeFilter(filter))
     dispatch(executeSearch())
   }
@@ -93,7 +93,8 @@ class SelectedFilters extends React.Component {
 
     if (!facets.length && !q && !filters.length) return null
     const facetTags = facets.map((facet, idx) => {
-      let { selected: tags, displayName, options } = facet
+      let { selected: tags, displayName } = facet
+      const { options } = facet
       /* Remove hidden tags */
       tags = tags.filter(
         (_, idx) => (options && options[idx] ? !options[idx].isHidden : true)

@@ -19,7 +19,7 @@ function Subtitles ({ subtitles, baseUrl, displayIcon, iconSize, fieldLabel }) {
       <FieldLabel label={fieldLabel} />
       <ul className='ola-field-subtitles-list'>
         {subtitles.map((subtitle, idx) => {
-          let url = `${baseUrl}#${sanitizeAnchor(subtitle)}`
+          const url = `${baseUrl}#${sanitizeAnchor(subtitle)}`
           return (
             <li key={idx}>
               <a href={url} className='ola-flex ola-btn-subtitle'>

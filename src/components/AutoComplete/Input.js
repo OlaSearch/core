@@ -124,7 +124,7 @@ export default class Input extends React.Component {
     this.props.onChange(arg, searchInput)
 
     /* Check if tokens have been changed */
-    let [oldTokens, newTokens] = this.formatValue(arg.target.value, true)
+    const [oldTokens, newTokens] = this.formatValue(arg.target.value, true)
     if (!newTokens || !equals(oldTokens, newTokens)) {
       setTimeout(() => this.props.onTokenChange(newTokens))
     }
@@ -134,12 +134,12 @@ export default class Input extends React.Component {
     this.props.onSubmit()
   }
   getShadowTerm = (raw = false) => {
-    let { fuzzyQuery, q, results } = this.props
-    let shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
+    const { fuzzyQuery, q, results } = this.props
+    const shadowTerm = !fuzzyQuery && q && results.length ? results[0].term : ''
     if (!q) return ''
-    let reg = new RegExp('^' + escapeRegEx(q), 'gi')
+    const reg = new RegExp('^' + escapeRegEx(q), 'gi')
     try {
-      let exists = reg.test(shadowTerm)
+      const exists = reg.test(shadowTerm)
       if (!exists || shadowTerm === q) {
         return ''
       }
@@ -165,7 +165,7 @@ export default class Input extends React.Component {
     if (!terms.length) return value
 
     /* Raw value */
-    let rawValue = value
+    const rawValue = value
 
     /* Token regex */
     const regX = new RegExp(
@@ -174,16 +174,16 @@ export default class Input extends React.Component {
     )
     const newTokens = []
     value = value.replace(regX, (match, startToken) => {
-      let escapedMatch = match.replace(/(\(|\))/gi, '\\$1')
+      const escapedMatch = match.replace(/(\(|\))/gi, '\\$1')
       /* Add to list of token */
       returnTokens && newTokens.push(match)
-      let name = tokens
+      const name = tokens
         .filter(({ value }) => {
           return value.match(new RegExp('^' + escapedMatch + '$', 'gi'))
         })
         .reduce((acc, o) => o.name, null)
       if (!name) return match
-      let color = hexToRGBa(stringToColor(name))
+      const color = hexToRGBa(stringToColor(name))
       return `<span class='ola-input-tag'>${match}</span>`
     })
 
@@ -199,8 +199,8 @@ export default class Input extends React.Component {
       showSearchButton
     } = this.props
 
-    let classes = classNames('ola-search-form-container')
-    let shadowTerm = showWordSuggestion ? '' : this.getShadowTerm()
+    const classes = classNames('ola-search-form-container')
+    const shadowTerm = showWordSuggestion ? '' : this.getShadowTerm()
     return (
       <div className={classes}>
         <div className='ola-form-input-wrapper'>

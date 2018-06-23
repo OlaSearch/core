@@ -66,14 +66,14 @@ class GeoLocation extends React.Component {
     this.props.requestGeoLocation(this.onSuccess, this.onError)
   }
   prompt = (props) => {
-    let _props = props || this.props
-    let { q, isLoading } = _props
-    let {
+    const _props = props || this.props
+    const { q, isLoading } = _props
+    const {
       location,
       isRequestingLocation,
       hasRequestedLocation
     } = _props.Context
-    let { geoLocationKeywords } = this.props.config
+    const { geoLocationKeywords } = this.props.config
 
     if (
       !location &&

@@ -18,14 +18,14 @@ function LoadMore ({
   textBottom
 }) {
   if (currentPage * perPage >= totalResults) return null
-  let klass = classNames('ola-link-load-more', {
+  const klass = classNames('ola-link-load-more', {
     'ola-link-load-more-active': isLoading
   })
   function handleClick () {
     if (beforeChangePage) beforeChangePage()
     onLoadMore ? onLoadMore() : actions.loadMore()
   }
-  let text = isLoading
+  const text = isLoading
     ? translate('load_more_button_loading')
     : translate('load_more_button')
   return (

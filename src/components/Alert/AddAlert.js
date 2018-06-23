@@ -21,8 +21,8 @@ function AddAlert ({
   logPayload
 }) {
   if (!q) return null
-  let exists = queryIds.some((id) => q === queriesById[id].query)
-  let classes = cx('ola-btn', 'ola-alert-add', {
+  const exists = queryIds.some((id) => q === queriesById[id].query)
+  const classes = cx('ola-btn', 'ola-alert-add', {
     'ola-alert-add-disabled': exists
   })
   function handleClick () {

@@ -18,7 +18,7 @@ function Person ({
   snippetId
 }) {
   if (!personName) return null
-  let classes = 'ola-field ola-field-person'
+  const classes = 'ola-field ola-field-person'
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />

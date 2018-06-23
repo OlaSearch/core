@@ -85,7 +85,7 @@ function scaleAndTransform (data, range) {
   const max = Math.max.apply(Math, data)
   const min = Math.min.apply(Math, data)
   return data.map((i) => {
-    let d = i - (min < 0 ? min : 0)
+    const d = i - (min < 0 ? min : 0)
     return convertRange(d, [min, max], range)
   })
 }

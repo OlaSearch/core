@@ -45,9 +45,9 @@ class HierarchicalFilter extends React.Component {
   }
 
   handleRemoveFacet = (value) => {
-    let { dispatch, facet } = this.props
+    const { dispatch, facet } = this.props
     value = value.split('/').slice(0, -1)
-    let path = value.join('/')
+    const path = value.join('/')
     if (value.length === parseInt(facet.rootLevel)) {
       dispatch(removeFacetItem(facet))
     } else {
@@ -56,28 +56,28 @@ class HierarchicalFilter extends React.Component {
     dispatch(executeSearch())
   }
   render () {
-    var { facet, isCollapsed, toggle } = this.props
+    const { facet, isCollapsed, toggle } = this.props
 
-    var {
-      values,
+    const {
       displayName,
       allowSingleSelection,
       rootLevel = 0,
-      rollUp = false,
       parentNode = null,
       facetNames
     } = facet
 
+    let { values, rollUp = false } = facet
+
     if (typeof rollUp === 'string') rollUp = rollUp !== 'false'
 
-    var klass = classNames({
+    const klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed,
       'ola-facet-single-select': allowSingleSelection,
       'ola-facet-not-rollup': !rollUp
     })
 
-    var originalSize = values.length
+    const originalSize = values.length
 
     /* Dont show anything when no items */
     if (!originalSize) return null
@@ -85,10 +85,10 @@ class HierarchicalFilter extends React.Component {
     /* Get Hierarchical values */
     values = toNestedArray(values, rootLevel, parentNode)
     /* Selected */
-    let selected = this.props.selected
+    const selected = this.props.selected
       .map((item) => item.split('/'))
       .reduce((o, i) => i, [])
-    let selectedPath = []
+    const selectedPath = []
     for (let i = 0, len = selected.length; i < len; i++) {
       selectedPath.push(
         selected[i - 1] ? selectedPath[i - 1] + '/' + selected[i] : selected[i]
@@ -122,15 +122,15 @@ class HierarchicalFilter extends React.Component {
  * Group
  */
 function CheckboxGroup (props) {
-  let { values, rollUp, selected, handleAddFacet, handleRemoveFacet } = props
+  const { values, rollUp, selected, handleAddFacet, handleRemoveFacet } = props
   if (!values) return null
-  let isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
+  const isAnyChecked = values.some((value) => selected.indexOf(value.name) !== -1)
 
   return (
     <div className='ola-facet-h-group'>
       {values.map((value, idx) => {
-        let index = selected.indexOf(value.name)
-        let isActive = index !== -1
+        const index = selected.indexOf(value.name)
+        const isActive = index !== -1
 
         if (isActive || !rollUp || !isAnyChecked) {
           return (
@@ -171,7 +171,7 @@ function CheckBoxItem ({
   rollUp
 }) {
   function onChecked (event) {
-    let { name } = value
+    const { name } = value
     if (event.target.checked) {
       handleAddFacet(name)
     } else {

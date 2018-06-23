@@ -52,7 +52,7 @@ var exists
 export default (state: State = initialState, action: Object) => {
   switch (action.type) {
     case types.ADD_FILTER:
-      let { filter, selected } = action
+      const { filter, selected } = action
       exists = checkIfFacetExists(state.filters, filter.name)
       if (exists) {
         return {

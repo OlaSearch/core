@@ -10,7 +10,7 @@ import FacetTitle from './common/FacetTitle'
 
 function RangeNumericFilter (props) {
   function handleClick (start, end) {
-    let { facet, dispatch } = props
+    const { facet, dispatch } = props
 
     if (typeof start === 'undefined' || typeof end === 'undefined') {
       dispatch(removeFacet(facet))
@@ -19,10 +19,10 @@ function RangeNumericFilter (props) {
     }
     dispatch(executeSearch())
   }
-  var { facet, isCollapsed, toggle } = props
-  var { displayName, values } = facet
+  const { facet, isCollapsed, toggle } = props
+  const { displayName, values } = facet
 
-  var klass = classNames({
+  const klass = classNames({
     'ola-facet': true,
     'ola-facet-collapsed': isCollapsed
   })
@@ -55,12 +55,12 @@ function RangeNumericFilter (props) {
  */
 function RangeNumericItem ({ value, handleClick }) {
   function onItemClick () {
-    let { start, end } = value
+    const { start, end } = value
     handleClick(start, end)
   }
 
-  let { count, name } = value
-  let itemKlass = classNames('ola-btn', 'ola-facet-link', {
+  const { count, name } = value
+  const itemKlass = classNames('ola-btn', 'ola-facet-link', {
     'ola-facet-link-active': false
   })
   return (

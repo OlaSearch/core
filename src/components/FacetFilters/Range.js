@@ -25,8 +25,8 @@ class RangeFilter extends React.Component {
   }
 
   onChange = (value) => {
-    var { facet, dispatch } = this.props
-    let { dateFormat } = facet
+    const { facet, dispatch } = this.props
+    const { dateFormat } = facet
 
     if (typeof value === 'string' || value.length === 1) value = [0, value[0]]
 
@@ -41,16 +41,13 @@ class RangeFilter extends React.Component {
 
   setUpSlider = () => {
     if (!this.sliderInput) return
-    var { facet, showPips, pips, pipsDensity, pipsMode } = this.props
-
-    var options = this.getSliderValues(this.props)
-
-    var { step: stepValue = 1, singleHandle, dateFormat } = facet
+    const { facet, showPips, pips, pipsDensity, pipsMode } = this.props
+    const options = this.getSliderValues(this.props)
+    let { step: stepValue = 1, singleHandle, dateFormat } = facet
 
     /* Convert to numeric value */
     let step = dateFormat ? stepValue : parseFloat(stepValue)
-
-    var { min, max, value } = options
+    let { min, max, value } = options
 
     if (min === max) {
       min -= 60
@@ -61,7 +58,7 @@ class RangeFilter extends React.Component {
     } else this.sliderInput.removeAttribute('disabled')
 
     /* Tooltip format */
-    var formatTooltip = {
+    const formatTooltip = {
       to: (value) => {
         return dateFormat
           ? DateParser.format(value, dateFormat)
@@ -71,7 +68,7 @@ class RangeFilter extends React.Component {
 
     /* Slider options */
 
-    var sliderOptions = {
+    const sliderOptions = {
       start: value,
       step,
       connect: singleHandle ? [true, false] : true,
@@ -86,7 +83,7 @@ class RangeFilter extends React.Component {
       }
     }
 
-    var pipsOptions = showPips
+    const pipsOptions = showPips
       ? {
         pips: {
           mode: pipsMode,
@@ -120,9 +117,9 @@ class RangeFilter extends React.Component {
       return this.sliderInput.setAttribute('disabled', true)
     }
 
-    var options = this.getSliderValues(this.props)
-    var { step: stepValue = 1, dateFormat } = this.props.facet
-    var { min, max, value } = options
+    const options = this.getSliderValues(this.props)
+    const { step: stepValue = 1, dateFormat } = this.props.facet
+    let { min, max, value } = options
 
     /* Convert to numeric value */
     let step = dateFormat ? stepValue : parseFloat(stepValue)
@@ -151,11 +148,12 @@ class RangeFilter extends React.Component {
   }
 
   getSliderValues (props) {
-    var { facet, selected } = props
-
-    var { values, singleHandle, dateFormat } = facet
-    var min = 0
-    var max = 0
+    const { facet } = props
+    const { singleHandle, dateFormat } = facet
+    let { values } = facet
+    let { selected } = props
+    let min = 0
+    let max = 0
 
     values = values.map((value) => {
       if (typeof value.name === 'string' && dateFormat) {
@@ -182,8 +180,8 @@ class RangeFilter extends React.Component {
       max = Math.max(...values)
     }
 
-    var arr = flatten(selected)
-    var value = arr && arr.length ? arr : [min, max]
+    const arr = flatten(selected)
+    let value = arr && arr.length ? arr : [min, max]
 
     /* If Slider only has 1 handle */
 
@@ -212,11 +210,11 @@ class RangeFilter extends React.Component {
     this.sliderInput = input
   }
   render () {
-    var { facet, isCollapsed, toggle, showIfEmpty } = this.props
-    var { displayName, values, showHistogram } = facet
+    const { facet, isCollapsed, toggle, showIfEmpty } = this.props
+    const { displayName, values, showHistogram } = facet
     /* Return null if there are no values */
     if (!values.length && !showIfEmpty) return null
-    var klass = classNames({
+    const klass = classNames({
       'ola-facet': true,
       'ola-facet-collapsed': isCollapsed
     })

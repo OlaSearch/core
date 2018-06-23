@@ -14,7 +14,7 @@ import FacetTitle from './common/FacetTitle'
  */
 function BooleanFilter (props) {
   function onChange (event) {
-    let { dispatch, facet } = props
+    const { dispatch, facet } = props
     if (event.target.checked) {
       dispatch(replaceFacet(facet, 'true'))
     } else dispatch(removeFacet(facet, 'true'))

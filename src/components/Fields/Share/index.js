@@ -18,8 +18,8 @@ import Arrow from './../../Arrow'
  */
 class Share extends React.PureComponent {
   handleClick = (e) => {
-    let url = e.currentTarget.getAttribute('data-href')
-    let type = e.currentTarget.getAttribute('data-type')
+    const url = e.currentTarget.getAttribute('data-href')
+    const type = e.currentTarget.getAttribute('data-type')
     this.props.log({
       eventType: 'C',
       result: this.props.result,

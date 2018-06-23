@@ -15,9 +15,9 @@ var cookieCache = isBrowser() ? document.cookie : ''
  * @return {Object}
  */
 export function get (key, namespace) {
-  let _key = getKey(key, namespace)
+  const _key = getKey(key, namespace)
   try {
-    let value = window.localStorage.getItem(_key)
+    const value = window.localStorage.getItem(_key)
     if (value) {
       return JSON.parse(value)
     }
@@ -64,7 +64,7 @@ export const cookies = {
       value = encodeURIComponent(JSON.stringify(value))
     }
     if (days) {
-      let date = new Date()
+      const date = new Date()
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
       expires = `; expires=${date.toGMTString()}`
     } else expires = ''

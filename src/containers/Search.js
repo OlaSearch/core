@@ -35,9 +35,9 @@ class Search extends React.Component {
     )
   }
   render () {
-    var { dispatch, AppState, QueryState, components, Device } = this.props
+    const { dispatch, AppState, QueryState, components, Device } = this.props
 
-    var {
+    const {
       results,
       facets,
       isLoading,
@@ -53,7 +53,7 @@ class Search extends React.Component {
       filterInAutoComplete
     } = AppState
 
-    var {
+    const {
       q,
       facet_query,
       page,
@@ -62,7 +62,7 @@ class Search extends React.Component {
       isSearchActive
     } = QueryState
 
-    var { isPhone, isTablet } = Device
+    const { isPhone, isTablet } = Device
 
     return (
       <div>

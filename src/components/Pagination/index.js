@@ -42,8 +42,9 @@ class Pagination extends React.Component {
   }
 
   nextPage = () => {
-    let { currentPage, totalResults, perPage } = this.props
-    let totalPages = Math.ceil(totalResults / perPage)
+    const { totalResults, perPage } = this.props
+    let { currentPage } = this.props
+    const totalPages = Math.ceil(totalResults / perPage)
 
     ++currentPage
 
@@ -53,7 +54,7 @@ class Pagination extends React.Component {
   }
 
   selectPage = (page) => {
-    let { actions, onChangePage } = this.props
+    const { actions, onChangePage } = this.props
 
     if (onChangePage) {
       return onChangePage(page)
@@ -74,7 +75,7 @@ class Pagination extends React.Component {
   }
 
   createPageList (start, end, limit, left, right, ellipsis) {
-    let list = []
+    const list = []
     for (let i = start; i <= end; i++) {
       if (i === 1 || i === parseInt(end) || end < limit) {
         list.push(i)
@@ -98,7 +99,7 @@ class Pagination extends React.Component {
     this.pagination = input
   }
   render () {
-    let {
+    const {
       totalResults,
       perPage,
       currentPage,
@@ -108,12 +109,12 @@ class Pagination extends React.Component {
       translate
     } = this.props
 
-    let currentPageInt = parseInt(currentPage)
-    let totalPages = Math.ceil(totalResults / perPage)
-    let start = 1
-    let left = Math.max(currentPageInt - edges, 0)
-    let right = Math.min(currentPageInt + edges, totalPages)
-    let pages = this.createPageList(
+    const currentPageInt = parseInt(currentPage)
+    const totalPages = Math.ceil(totalResults / perPage)
+    const start = 1
+    const left = Math.max(currentPageInt - edges, 0)
+    const right = Math.min(currentPageInt + edges, totalPages)
+    const pages = this.createPageList(
       start,
       totalPages,
       limit,
@@ -122,12 +123,12 @@ class Pagination extends React.Component {
       ellipsis
     )
 
-    let isPrevPageDisabled = currentPageInt === 1
-    let prevPageClass = classNames('ola-page ola-page-previous', {
+    const isPrevPageDisabled = currentPageInt === 1
+    const prevPageClass = classNames('ola-page ola-page-previous', {
       'ola-page-disabled': isPrevPageDisabled
     })
-    let isNextPageDisabled = currentPageInt === totalPages || !totalPages
-    let nextPageClass = classNames({
+    const isNextPageDisabled = currentPageInt === totalPages || !totalPages
+    const nextPageClass = classNames({
       'ola-page ola-page-next': true,
       'ola-page-disabled': isNextPageDisabled
     })
@@ -177,12 +178,12 @@ function PageNumber ({ page, isActive, selectPage }) {
     if (!isNaN(page)) selectPage(page)
   }
 
-  let klass = classNames({
+  const klass = classNames({
     'ola-page': true,
     'ola-page-current': isActive,
     'ola-page-ellipsis': isNaN(page)
   })
-  let isDisabled = isNaN(page) || isActive
+  const isDisabled = isNaN(page) || isActive
   return (
     <button className={klass} onClick={handleClick} disabled={isDisabled}>
       {page}

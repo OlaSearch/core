@@ -163,7 +163,7 @@ class AutoComplete extends React.Component {
       () => {
         if (!this.props.wordSuggestion) return
         /* Update cursor position */
-        let tokenIndex =
+        const tokenIndex =
           this.state.startToken +
           this.getFacetDisplayName(fuzzyQuery.term).length
         this.updateCursor(tokenIndex)
@@ -244,7 +244,7 @@ class AutoComplete extends React.Component {
     if ((!tokens || !tokens.length) && this.props.tokens.length) {
       return this.props.removeAllTokens()
     }
-    let tokensToRemove = this.props.tokens.filter(
+    const tokensToRemove = this.props.tokens.filter(
       ({ value }) => tokens.indexOf(value) === -1
     )
     tokensToRemove.forEach(({ value }) => this.props.removeToken(value))
@@ -252,11 +252,11 @@ class AutoComplete extends React.Component {
 
   onChange = (event, searchInput) => {
     /* Set the term */
-    let term = event.target ? event.target.value : event
+    const term = event.target ? event.target.value : event
     /* Get partial term */
     let startToken, endToken, leftPosition, partialWord
     if (this.props.wordSuggestion) {
-      let wordPosition = getWordPosition(event.target)
+      const wordPosition = getWordPosition(event.target)
       partialWord = wordPosition.word
       leftPosition = wordPosition.leftPosition
       startToken = wordPosition.startToken
@@ -289,7 +289,7 @@ class AutoComplete extends React.Component {
       // }
     }
 
-    let { q } = this.state
+    const { q } = this.state
 
     /* Trim text */
     if (term && term.length && trim(term) === '') return
@@ -406,7 +406,7 @@ class AutoComplete extends React.Component {
   }
 
   clearActiveClass = () => {
-    let nodes = this.suggestionsContainer.querySelectorAll(
+    const nodes = this.suggestionsContainer.querySelectorAll(
       this.props.classNames
     )
     for (let i = 0, len = nodes.length; i < len; i++) {
@@ -521,14 +521,14 @@ class AutoComplete extends React.Component {
       return this.onFuzzySelect(this.state.fuzzyQuery, options)
     }
     /* Remove facets that are tokens */
-    let activeTokens = this.props.tokens.map(
+    const activeTokens = this.props.tokens.map(
       ({ name, value }) => `${name}:${value}`
     )
 
     /* Check if there are any tokens */
     if (this.props.tokens.length) {
       this.props.tokens.forEach(({ value, name }) => {
-        let facet = this.getOrCreateFacet(name)
+        const facet = this.getOrCreateFacet(name)
         /* Set from query as true */
         facet.isToken = true
         this.props.addFacet(facet, value)
@@ -536,7 +536,7 @@ class AutoComplete extends React.Component {
     }
     /* Remove facets that are tokens */
     this.props.facet_query.filter(({ isToken }) => isToken).forEach((item) => {
-      let { selected } = item
+      const { selected } = item
       for (let i = 0; i < selected.length; i++) {
         if (activeTokens.indexOf(`${item.name}:${selected[i]}`) === -1) {
           this.props.removeFacet(item, selected[i])

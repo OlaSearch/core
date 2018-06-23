@@ -399,7 +399,7 @@ export function fetchMc (key, payload) {
  */
 export function fetchResult (ids) {
   if (!Array.isArray(ids)) ids = [ids]
-  let q = ids.map((id) => `id:${id}`).join(' OR ')
+  const q = ids.map((id) => `id:${id}`).join(' OR ')
   return (dispatch, getState) => {
     dispatch({
       types: [
@@ -408,7 +408,7 @@ export function fetchResult (ids) {
         types.REQUEST_RESULT_FAILURE
       ],
       beforeSuccessCallback: (response) => {
-        let { results } = response
+        const { results } = response
         return {
           ...response,
           extra: {
@@ -453,7 +453,7 @@ export function addFacet (facet, value) {
      */
     if (value instanceof Array) value = castNumberToStringArray(value)
     /* Check if it already exists */
-    let exists = getState().QueryState.facet_query.some(
+    const exists = getState().QueryState.facet_query.some(
       ({ name, selected }) =>
         name === facet.name && selected.indexOf(value) !== -1
     )
@@ -584,7 +584,7 @@ export function removeAllFacets () {
     /**
      * Check if there any intent engine facets
      */
-    let facetsFromIntentEngine = getState().QueryState.facet_query.filter(
+    const facetsFromIntentEngine = getState().QueryState.facet_query.filter(
       ({ fromIntentEngine }) => fromIntentEngine
     )
     if (facetsFromIntentEngine.length) {

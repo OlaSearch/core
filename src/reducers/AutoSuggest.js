@@ -74,7 +74,7 @@ export default (state: State = initialState, action: Object) => {
        * 2. Query is present
        * @type {Boolean}
        */
-      let isOpen = results.length > 0 && state.q !== ''
+      const isOpen = results.length > 0 && state.q !== ''
       // (!!results.length || !!spellSuggestions.length || !!suggestedTerm) &&
       // !!state.q
 
@@ -127,7 +127,7 @@ export default (state: State = initialState, action: Object) => {
       }
 
     case types.OLA_REHYDRATE:
-      let dict = action.configState
+      const dict = action.configState
         ? action.configState.autocompleteDictionary || state.dictionary
         : state.dictionary
       return {

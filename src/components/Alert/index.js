@@ -26,11 +26,11 @@ class Alert extends React.Component {
     deleteAlert: PropTypes.func
   }
   render () {
-    let { queryIds, queriesById, deleteAlert } = this.props
+    const { queryIds, queriesById, deleteAlert } = this.props
     return (
       <div className='ola-alerts'>
         {queryIds.map((id) => {
-          let { query, docIds, timestamp } = queriesById[id]
+          const { query, docIds, timestamp } = queriesById[id]
           return (
             <Query
               key={id}

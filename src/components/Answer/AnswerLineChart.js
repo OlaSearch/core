@@ -35,7 +35,7 @@ class AnswerLineChart extends React.Component {
     const { record_keys = [], record_data = [] } = this.props.card
     const keys = record_keys.filter((key) => key !== 'Country')
     const data = record_data.slice(0, 5).map((item) => {
-      let country = item['Country']
+      const country = item['Country']
       return [].concat(
         country,
         keys.map((key) => {

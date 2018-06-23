@@ -54,7 +54,7 @@ class CheckboxFilter extends React.Component {
   }
 
   handleRemoveFacet = (value) => {
-    let { dispatch, facet } = this.props
+    const { dispatch, facet } = this.props
     dispatch(removeFacet(facet, value))
     dispatch(executeSearch())
   }
@@ -76,13 +76,13 @@ class CheckboxFilter extends React.Component {
   }
 
   itemRenderer = (values, index) => {
-    let { facet: { facetNames } } = this.props
-    let {
+    const { facet: { facetNames } } = this.props
+    const {
       name,
       count,
       displayName = getDisplayName(facetNames, name)
     } = values[index]
-    let isActive = this.isSelected(name)
+    const isActive = this.isSelected(name)
 
     return (
       <CheckBoxItem
@@ -140,16 +140,16 @@ class CheckboxFilter extends React.Component {
        * selectedValue = ['All', 'Archived', 'Online']
        * acceptedValues = ['All', 'Online']
        */
-      let selectedValue = [
+      const selectedValue = [
         ...defaultValue.map((item) => item.replace(/(-)/gi, '')),
         ...fixedValues
       ]
-      let acceptedValues = values.filter(
+      const acceptedValues = values.filter(
         ({ name, count }) => selectedValue.indexOf(name) !== -1
       )
 
       if (!acceptedValues.length && !showIfEmpty) return null
-      let totalValueCount = acceptedValues.reduce((acc, item) => {
+      const totalValueCount = acceptedValues.reduce((acc, item) => {
         acc += item.count
         return acc
       }, 0)
@@ -243,7 +243,7 @@ class CheckboxFilter extends React.Component {
  */
 function CheckBoxItem (props) {
   function onChecked (event) {
-    let { name, handleAddFacet, handleRemoveFacet } = props
+    const { name, handleAddFacet, handleRemoveFacet } = props
     if (event.target.checked) {
       handleAddFacet(name)
     } else {
@@ -251,8 +251,8 @@ function CheckBoxItem (props) {
     }
   }
 
-  let { isActive, count, displayName } = props
-  let labelKlass = classNames({
+  const { isActive, count, displayName } = props
+  const labelKlass = classNames({
     'ola-checkbox ola-checkbox-label': true,
     'ola-checkbox-active': isActive
   })

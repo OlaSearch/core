@@ -35,8 +35,8 @@ class SpeechInput extends React.Component {
   }
 
   onLaunch = () => {
-    let { isRecording } = this.state
-    let { lang, continuous, interimResults } = this.props
+    const { isRecording } = this.state
+    const { lang, continuous, interimResults } = this.props
 
     this.setState({
       isRecording: !isRecording
@@ -50,7 +50,7 @@ class SpeechInput extends React.Component {
     /**
      * Log
      */
-    let eventLabel = this.props.isInstantSearch
+    const eventLabel = this.props.isInstantSearch
       ? 'instantsearch'
       : this.props.isAutosuggest ? 'autosuggest' : null
     this.props.log({
@@ -61,7 +61,7 @@ class SpeechInput extends React.Component {
       eventLabel
     })
 
-    let SpeechRecognition =
+    const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition
 
     this.recog = new SpeechRecognition()
@@ -100,8 +100,8 @@ class SpeechInput extends React.Component {
     switch (event && event.type) {
       case 'result':
         window.requestAnimationFrame(() => {
-          let result = event.results[event.resultIndex]
-          let item = result[0]
+          const result = event.results[event.resultIndex]
+          const item = result[0]
 
           this.props.onResult &&
             this.props.onResult(item.transcript, item.confidence)

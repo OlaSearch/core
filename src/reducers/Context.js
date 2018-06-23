@@ -59,7 +59,7 @@ export default (state: State = initialState, action: Object) => {
       }
 
     case types.REQUEST_GEO_LOCATION_SUCCESS:
-      let { coords: { latitude, longitude } } = action.payload
+      const { coords: { latitude, longitude } } = action.payload
       return {
         ...state,
         isRequestingLocation: false,
@@ -105,7 +105,7 @@ export default (state: State = initialState, action: Object) => {
       }
 
     case types.REPLACE_FACET:
-      let fts = state.filter_term_sequence.filter(
+      const fts = state.filter_term_sequence.filter(
         (item) => item.split(':')[0] === action.facet.name
       )
       return {
@@ -148,7 +148,7 @@ export default (state: State = initialState, action: Object) => {
       }
 
     case types.OLA_REHYDRATE:
-      let {
+      const {
         userSession,
         searchSession,
         isNewUser,

@@ -19,9 +19,9 @@ import AnswerQuick from './../Answer/AnswerQuick'
 import Link from '@olasearch/icons/lib/link'
 
 function groupFacets (suggestions, fieldLabels) {
-  let group = {}
+  const group = {}
   suggestions.forEach((s) => {
-    let label = getFieldLabel(s.taxo_label, fieldLabels) || s.taxo_label
+    const label = getFieldLabel(s.taxo_label, fieldLabels) || s.taxo_label
     if (!(label in group)) {
       group[label] = []
     }
@@ -111,12 +111,11 @@ class SuggestionItem extends React.Component {
     return createHTMLMarkup(term)
   }
   render () {
-    let activeClass = this.state.isActive ? this.props.activeClassName : null
-    let { index, result } = this.props
+    const activeClass = this.state.isActive ? this.props.activeClassName : null
+    const { index, result } = this.props
     if (!result) return null
-    let {
+    const {
       type,
-      term,
       title,
       taxo_term: taxoTerm,
       taxoDisplayName,
@@ -125,6 +124,7 @@ class SuggestionItem extends React.Component {
       answer,
       tokens
     } = result
+    let { term } = result
     const isHistory = type === TYPE_HISTORY
     const isFacet = type === TYPE_FACET
     const isDoc = type === TYPE_DOC
@@ -153,7 +153,7 @@ class SuggestionItem extends React.Component {
       }
     }
 
-    let klass = classNames(
+    const klass = classNames(
       'ola-suggestion-item',
       activeClass,
       `ola-suggestion-type-${type}`,

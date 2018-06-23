@@ -13,8 +13,8 @@ export function fetchAlerts () {
         types.REQUEST_ALERT_FAILURE
       ],
       processData: (response) => {
-        let queryIds = response.map(({ queryId }) => queryId)
-        let queriesById = response.reduce((acc, obj) => {
+        const queryIds = response.map(({ queryId }) => queryId)
+        const queriesById = response.reduce((acc, obj) => {
           acc[obj.queryId] = obj
           return acc
         }, {})
@@ -116,7 +116,7 @@ export function createAlert (query) {
         types.REQUEST_CREATE_ALERT_FAILURE
       ],
       processData: (response) => {
-        let { queryId, query, timestamp, docIds } = response
+        const { queryId, query, timestamp, docIds } = response
         return {
           ...response,
           extra: {

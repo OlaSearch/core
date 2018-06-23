@@ -50,8 +50,7 @@ class Thumbnail extends React.Component {
   render () {
     if (this.state.error) return null
 
-    let {
-      thumbnail,
+    const {
       baseUrl,
       isLink,
       caption,
@@ -67,6 +66,8 @@ class Thumbnail extends React.Component {
       showLoading,
       ...rest
     } = this.props
+
+    let { thumbnail } = this.props
 
     const restProps = omit(
       [

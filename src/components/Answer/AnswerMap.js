@@ -148,10 +148,10 @@ class AnswerMap extends React.Component {
     elements.forEach(({ title, location }) => {
       /* Get the first location */
       if (Array.isArray(location) && location.length) location = location[0]
-      let [lat, lng] = location.split(',')
-      let position = { lat: parseFloat(lat), lng: parseFloat(lng) }
-      let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
-      let marker = new google.maps.Marker({
+      const [lat, lng] = location.split(',')
+      const position = { lat: parseFloat(lat), lng: parseFloat(lng) }
+      const latLngPosition = new google.maps.LatLng(position.lat, position.lng)
+      const marker = new google.maps.Marker({
         position,
         map: this.map,
         title,
@@ -168,10 +168,10 @@ class AnswerMap extends React.Component {
 
     /* Final add user's location */
     if (this.props.location) {
-      let [lat, lng] = this.props.location.split(',')
-      let position = { lat: parseFloat(lat), lng: parseFloat(lng) }
-      let latLngPosition = new google.maps.LatLng(position.lat, position.lng)
-      let marker = new google.maps.Marker({
+      const [lat, lng] = this.props.location.split(',')
+      const position = { lat: parseFloat(lat), lng: parseFloat(lng) }
+      const latLngPosition = new google.maps.LatLng(position.lat, position.lng)
+      const marker = new google.maps.Marker({
         position,
         map: this.map,
         icon: new google.maps.MarkerImage(

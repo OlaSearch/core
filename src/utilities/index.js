@@ -1003,12 +1003,12 @@ export function sortArrayByLength (a, b) {
  * @return {Object}
  */
 export function pick (keys, obj) {
-  let res = {}
-  var len = keys.length
+  const res = {}
+  const len = keys.length
   var idx = -1
 
   while (++idx < len) {
-    var key = keys[idx]
+    const key = keys[idx]
     if (key in obj) {
       res[key] = obj[key]
     }
@@ -1037,7 +1037,7 @@ export function syncTokens (old_text, new_text, tokens) {
     inc = -1
   }
   return tokens.map(({ startToken, endToken, value, ...rest }) => {
-    let len = endToken - startToken
+    const len = endToken - startToken
     value = value.toLowerCase()
     let text = new_text.substring(startToken, endToken)
     let i = 0

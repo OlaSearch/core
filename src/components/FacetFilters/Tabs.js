@@ -66,7 +66,7 @@ class TabsFilter extends React.Component {
     var tabs = []
 
     for (let i = 0, len = tabsToDisplay.length; i < len; i++) {
-      let tab = values.filter((item) => item.name === tabsToDisplay[i])
+      const tab = values.filter((item) => item.name === tabsToDisplay[i])
 
       if (tab.length) {
         tabs.push({
@@ -166,12 +166,12 @@ function TabItemAll ({ isSelected, totalCount, label, handleClick, facet }) {
  */
 function TabItem ({ facet, value, displayName, isActive, handleClick }) {
   function onClick () {
-    let { name, count } = value
+    const { name, count } = value
     if (!isActive && count) handleClick(facet, name)
   }
-  let { name, count } = value
-  let { facetNames } = facet
-  let klass = classNames({
+  const { name, count } = value
+  const { facetNames } = facet
+  const klass = classNames({
     'ola-tabs-label': true,
     'ola-tab-active': isActive
   })

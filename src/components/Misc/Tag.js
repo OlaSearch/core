@@ -54,7 +54,7 @@ function Tag (props) {
       break
 
     case 'rating':
-      let index = name[0] / interval
+      const index = name[0] / interval
       displayName = label[index]
       break
 

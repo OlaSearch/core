@@ -33,7 +33,7 @@ class Tab extends React.Component {
         {toggle ? null : (
           <nav className='ola-tabs-nav'>
             {labels.map((label, index) => {
-              let isActive = activeTab[0] === index
+              const isActive = activeTab[0] === index
               return (
                 <TabLabel
                   label={labels}
@@ -48,7 +48,7 @@ class Tab extends React.Component {
         )}
         <div className='ola-tabs-content'>
           {children.map((child, index) => {
-            let isActive = toggle
+            const isActive = toggle
               ? activeTab.indexOf(index) !== -1
               : index === activeTab[0]
             return (

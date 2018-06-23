@@ -18,9 +18,9 @@ function SMS ({
   iconSize,
   fieldLabel
 }) {
-  let { isApple, isPhone } = Device
-  let bodyText = isApple && isApple.device ? '&body' : '?body'
-  let link = `sms:${number}${bodyText}=${body}`
+  const { isApple, isPhone } = Device
+  const bodyText = isApple && isApple.device ? '&body' : '?body'
+  const link = `sms:${number}${bodyText}=${body}`
 
   return (
     <div className='ola-field ola-field-sms'>
