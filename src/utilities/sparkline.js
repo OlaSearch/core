@@ -1,6 +1,13 @@
+/**
+ * Creates a sparkline on html canvas
+ */
 export function SparkLine () {
   if (window.HTMLCanvasElement) {
     return {
+      /**
+       * Initialize sparkline
+       * @param  {Object} options
+       */
       init (options) {
         const {
           el,
@@ -11,12 +18,11 @@ export function SparkLine () {
           height: elHeight,
           width: elWidth
         } = options
-        var { data } = options
         const ctx = el.getContext('2d')
         const height = elHeight - 3
         const width = elWidth
         /* Transform data */
-        data = scaleAndTransform(data, [0, height])
+        const data = scaleAndTransform(options.data, [0, height])
         const total = data.length
         const max = Math.max.apply(Math, data)
         const min = Math.min.apply(Math, data)
@@ -77,10 +83,16 @@ export function SparkLine () {
   }
 }
 
+/**
+ * Normalizes number between a range
+ */
 function convertRange (value, [min, max], [rangeMin, rangeMax]) {
   return (value - min) * (rangeMax - rangeMin) / (max - min) + rangeMin
 }
 
+/**
+ * Batch normalize
+ */
 function scaleAndTransform (data, range) {
   const max = Math.max.apply(Math, data)
   const min = Math.min.apply(Math, data)
