@@ -7,7 +7,7 @@ const card = {
   image: 'https://placeimg.com/640/480/any'
 };
 <AnswerCard
-  card={card}  
+  card={card}
 />
 ```
 
@@ -26,7 +26,7 @@ const card = {
   ]
 };
 <AnswerCard
-  card={card}  
+  card={card}
 />
 ```
 
@@ -49,6 +49,6 @@ const card = {
   }
 };
 <AnswerCard
-  card={card}  
+  card={card}
 />
 ```

@@ -20,13 +20,13 @@ module.exports = {
     // StyleGuideRenderer: path.join(__dirname, './styleguide/styleguide.wrapper')
     Wrapper: path.join(__dirname, './styleguide/styleguide.wrapper')
   },
-  // template: './styleguide/styleguide.template.html',  
-  editorConfig: { theme: 'cobalt' },  
+  // template: './styleguide/styleguide.template.html',
+  editorConfig: { theme: 'cobalt' },
   theme,
   styles,
   // resolver: require('react-docgen').resolver.findAllComponentDefinitions,
   context: {
-    olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),    
+    olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),
     // SearchState: function (state) {
     //   return {
     //     AppState: state.AppState,
@@ -96,6 +96,7 @@ module.exports = {
           'src/components/Answer/AnswerLineChart.js',
           'src/components/Answer/AnswerMap.js',
           'src/components/Answer/AnswerWordMap.js',
+          'src/components/Answer/AnswerArticle.js',
         ]
       }
     },
@@ -132,7 +133,7 @@ module.exports = {
     },
     {
       name: 'Utilities',
-    },    
+    },
   ],
   require: [
     // path.resolve(__dirname, './setup.js'),
@@ -157,7 +158,7 @@ module.exports = {
       }
     },
     externals: {
-      
+
     },
     module: {
       rules: [

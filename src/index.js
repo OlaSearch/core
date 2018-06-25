@@ -93,6 +93,7 @@ export AnswerVideo from './components/Answer/AnswerVideo'
 export AnswerEmbed from './components/Answer/AnswerEmbed'
 export AnswerLineChart from './components/Answer/AnswerLineChart'
 export AnswerTable from './components/Answer/AnswerTable'
+export AnswerArticle from './components/Answer/AnswerArticle'
 export SlotSuggestion from './components/SlotSuggestion'
 
 /* Visualization */

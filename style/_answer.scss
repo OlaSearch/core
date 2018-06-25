@@ -120,7 +120,7 @@
  */
 .ola-answer-source,
 .ola-answer-footnote {
-  font-size: 14px;  
+  font-size: 14px;
   padding-top: 14px;
 }
 
@@ -230,7 +230,7 @@
  */
 .ola-answer-map {
   .ola-field-directions {
-    padding: 0;    
+    padding: 0;
   }
   .ola-btn-directions {
     padding: 12px 16px;
@@ -262,7 +262,7 @@
 /**
  * Embed card
  */
-.ola-card-template-embed {  
+.ola-card-template-embed {
   @include media (tablet) {
     display: inline-block;
   }
@@ -275,5 +275,37 @@
  * image
  */
 .ola-embed-image {
-  max-width: 100%;  
+  max-width: 100%;
+}
+
+/**
+ * List list
+ */
+.ola-linklist-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+}
+
+/**
+ * Article
+ */
+.ola-answer-article {
+  .ola-answer-subtitle {
+    font-size: 1.2rem;    
+  }
+  .ola-answer-header {
+    padding-bottom: 1rem;
+  }
+  .ola-field-content {
+    padding-bottom: 2rem;
+  }
+}
+
+/**
+  * Article side bar's image
+  */
+.ola-answer-article-image {
+  max-width: 100%;
+  margin: 0 0 1rem 0;
 }

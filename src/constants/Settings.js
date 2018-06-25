@@ -410,6 +410,7 @@ export const DEFAULT_THEME = {
   mediumFontSize: '14px',
   smallFontSize: '12px',
   titleFontSize: '20px',
+  titleFontSizeLarge: '28px',
   titleFontSizeTablet: '18px',
   titleFontSizeMobile: '18px',
 

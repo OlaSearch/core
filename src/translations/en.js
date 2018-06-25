@@ -89,6 +89,13 @@ export default {
     showing_nearby_results: 'Showing results near your location',
 
     /* Remove filters: No results snippet */
-    no_results_remove_filters: 'Remove filters'
+    no_results_remove_filters: 'Remove filters',
+
+    /* Related articles */
+    related_articles: 'Related articles',
+
+    /* Published on */
+    published_on: 'Published on ',
+    published_by: 'By '
   }
 }

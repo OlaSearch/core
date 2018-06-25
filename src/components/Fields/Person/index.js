@@ -4,6 +4,7 @@ import withLogger from './../../../decorators/withLogger'
 import User from '@olasearch/icons/lib/user'
 import FieldLabel from './../FieldLabel'
 import { getDisplayName } from './../../../utilities'
+import classNames from 'classnames'
 
 /**
  * Displays a person
@@ -12,48 +13,84 @@ function Person ({
   result,
   fieldLabel,
   iconSize,
-  personName,
+  people,
   log,
   logPayload,
   displayIcon,
-  snippetId
+  snippetId,
+  onClick,
+  inlineLabel
 }) {
-  if (!personName) return null
-  function handleClick (event) {
+  /* Do not render if the prop people is empty */
+  if (!people || !people.length) return null
+
+  function handleClick (event, name, url) {
     /* Log the request */
     log({
       eventType: 'C',
       result,
       eventCategory: 'person',
       eventAction: 'click',
-      eventLabel: personName,
+      eventLabel: name,
       snippetId,
       payload: logPayload
     })
-    if (onClick) onClick(event, name)
+
+    if (onClick) return onClick(event, name)
+
+    /* Opens in a new window */
+    if (url) {
+      event.preventDefault()
+      window.open(url)
+    }
   }
-  const classes = 'ola-field ola-field-person'
+
+  /* Parse to an array if people attribute is a string */
+  const peopleArr = typeof people === 'string' ? [{ name: people }] : people
+  const classes = classNames('ola-field ola-field-person', {
+    'ola-field-label-inline': inlineLabel
+  })
+
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />
-      <a
-        className='ola-flex ola-btn-person'
-        title={personName}
-        onClick={handleClick}
-      >
-        {displayIcon && (
-          <span className='ola-flex-icon'>
-            <User size={iconSize} />
-          </span>
-        )}
-        <span className='ola-flex-content'>{getDisplayName(personName)}</span>
-      </a>
+      <div className='ola-field-people'>
+        <div className='ola-flex'>
+          {displayIcon && (
+            <span className='ola-flex-icon'>
+              <User size={iconSize} />
+            </span>
+          )}
+          <div className='ola-flex-content'>
+            {peopleArr.map((person, i) => (
+              <PersonComponent key={i} {...person} onClick={handleClick} />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
+/**
+ * Render a single Person component
+ * @param {Object} { name, url, onClick }
+ */
+function PersonComponent ({ name, url, onClick }) {
+  return React.createElement(
+    url ? 'a' : 'span',
+    {
+      className: 'ola-btn-person',
+      title: name,
+      href: url || undefined,
+      onClick: (e) => onClick(e, name, url)
+    },
+    <span className='ola-flex-content'>{getDisplayName(name)}</span>
+  )
+}
+
 Person.defaultProps = {
-  personName: '',
+  people: '',
   fieldLabel: '',
   displayIcon: false,
   iconSize: 20,
@@ -62,9 +99,12 @@ Person.defaultProps = {
 
 Person.propTypes = {
   /**
-   * Name of the person
+   * Name of the person | Array of Person:Object
    */
-  personName: PropTypes.string,
+  people: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.object)
+  ]),
   /**
    * Field label
    */
