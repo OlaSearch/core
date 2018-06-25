@@ -30,7 +30,7 @@ function Title ({
   linkClassName,
   textClassName
 }) {
-  var { highlighting } = result
+  const { highlighting } = result
   var title = result[field]
 
   if (!url) url = result.url || url
