@@ -789,10 +789,10 @@ export function getWordPosition (textInput) {
   const AUTOCOMPLETE_FAKE_ID = 'ola-autocomplete-fake-input'
 
   if (document.getElementById(AUTOCOMPLETE_FAKE_ID)) {
-    const div = document.getElementById(AUTOCOMPLETE_FAKE_ID)
+    var div = document.getElementById(AUTOCOMPLETE_FAKE_ID)
     var span = div.firstChild
   } else {
-    const div = document.createElement('div')
+    var div = document.createElement('div')
     var span = document.createElement('span')
     const copyStyle = getComputedStyle(textInput)
     var coords = {}
@@ -1284,15 +1284,21 @@ export function facetToChartData (facets, limit = undefined) {
    *   ]
    * }
    */
-  if (!facets.length) return null
+  if (!facets.length) return []
   const facet = facets[0]
   const { type, name } = facet
+  const categoryLimit = limit && limit + 1
   return {
     category: flatten(
-      facets.map(({ values }) => values.map(({ name }) => name)).slice(0, limit)
+      facets
+        .map(({ values }) => values.map(({ name }) => name))
+        .slice(0, categoryLimit)
     ),
-    data: facets.map(({ displayName, values }) => {
-      return [displayName, ...values.map(({ count }) => count).slice(0, limit)]
+    data: facets.map(({ name, displayName, values }) => {
+      return [
+        displayName || name,
+        ...values.map(({ count }) => count).slice(0, limit)
+      ]
     }),
     name,
     dataType: type

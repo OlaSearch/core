@@ -5,9 +5,10 @@ import classNames from 'classnames'
 import scriptLoader from 'react-async-load-script'
 import { debounce } from './../../utilities'
 import {
-  CHART_ANIMATION_TIMING,
+  CHART_DEBOUNCE_TIMING,
   CHART_CATEGORY_NAME
 } from './../../constants/Settings'
+import equals from 'ramda/src/equals'
 
 /**
  * Displays a line chart
@@ -18,10 +19,7 @@ class Chart extends React.Component {
     /**
      * Debouncing is necessary because, multiple prop changes can cause charts to change rapidly
      */
-    this.debounceUpdateChart = debounce(
-      this.updateChart,
-      CHART_ANIMATION_TIMING
-    )
+    this.debounceUpdateChart = debounce(this.updateChart, CHART_DEBOUNCE_TIMING)
   }
   static propTypes = {
     /**
@@ -109,7 +107,7 @@ class Chart extends React.Component {
     var { type, types, labels, padding } = this.props
     const { axis, data, x } = this.createChartData()
     /* If data is empty initially, we do not initialize the chart yet */
-    if (!data) return
+    if (!data || !data.length) return
     this.chart = bb.generate({
       bindto: this.chartRef,
       data: {
@@ -124,7 +122,7 @@ class Chart extends React.Component {
       },
       axis,
       transition: {
-        duration: CHART_ANIMATION_TIMING
+        duration: CHART_DEBOUNCE_TIMING
       },
       bar: {
         width: {
@@ -136,7 +134,6 @@ class Chart extends React.Component {
   }
   updateChart = () => {
     const { data, categories } = this.createChartData()
-
     this.chart.load({
       unload: true,
       columns: data,
@@ -145,6 +142,12 @@ class Chart extends React.Component {
   }
   componentDidMount () {
     this.mounted = true
+  }
+  shouldComponentUpdate (nextProps) {
+    return (
+      !equals(nextProps.data, this.props.data) ||
+      this.props.isScriptLoadSucceed !== nextProps.isScriptLoadSucceed
+    )
   }
   componentDidUpdate (prevProps) {
     if (

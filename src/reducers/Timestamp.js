@@ -15,10 +15,13 @@ export default (state: State = initialState, action: Object) => {
     default:
       return state
 
+    /**
+     * You cant execute all these actions simultaneously
+     */
     case types.REQUEST_SEARCH:
     case types.REQUEST_GUIDE:
     case types.REQUEST_AUTOSUGGEST:
-    case types.REQUEST_FACET:
+    case types.REQUEST_FACET_SUGGEST:
     case types.ADD_TIMESTAMP:
       if (!action.api) return state
       return {

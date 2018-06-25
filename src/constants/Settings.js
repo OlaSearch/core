@@ -273,7 +273,7 @@ export const isBrowser = typeof document !== 'undefined'
 /**
  * Create filter
  */
-export const CREATE_FILTER_OBJECT = ({
+export function CREATE_FILTER_OBJECT ({
   name,
   displayName,
   type = 'string',
@@ -282,7 +282,7 @@ export const CREATE_FILTER_OBJECT = ({
   multiSelect = true,
   config,
   ...rest
-}) => {
+}) {
   if (config) {
     displayName = getFieldLabel(name, config.fieldLabels)
   }
@@ -514,5 +514,5 @@ export const DEFAULT_AUTOCOMPLETE_PAYLOAD = { type: 'query' }
 /**
  * Visualizations
  */
-export const CHART_ANIMATION_TIMING = 300
+export const CHART_DEBOUNCE_TIMING = 300
 export const CHART_CATEGORY_NAME = 'category'

@@ -267,24 +267,55 @@ function removeTokenFromQuery (q, tokenValues) {
 }
 
 /**
+ * Gets value of a facet
+ * @param  {String|Array} options.facetNames
+ * @param  {String} options.q
+ * @param  {Array}  options.facetQuery
+ */
+export function getFacetValues ({ fields, q, facetQuery = [] }) {
+  const facets = fields.map((...args) => CREATE_FILTER_OBJECT(...args))
+  return (dispatch) => {
+    return dispatch({
+      types: [
+        types.REQUEST_FACET,
+        types.REQUEST_FACET_SUCCESS,
+        types.REQUEST_FACET_FAILURE
+      ],
+      query: {
+        q,
+        facets,
+        facet_query: facetQuery,
+        per_page: 0,
+        skip_spellcheck: true,
+        skip_intent: true
+      },
+      meta: {
+        log: false
+      },
+      api: 'search'
+    })
+  }
+}
+
+/**
  * Search for facet values
  * @param {String} fullTerm Full query term, default is '*'
  * @param {String} term Partial query
  */
-export function executeFacetSearch (
+export function executeFacetSearch ({
   fullTerm = '*',
   term,
   startToken,
   endToken,
   fieldTypeMapping = {},
   tokens
-) {
+}) {
   /* Splice based on tokens */
   fullTerm = fullTerm.substr(0, startToken) + fullTerm.substr(endToken)
   /**
    * Santize text using xssFilters after remove backslash
    */
-  term = sanitizeText(term.replace(/\\/gi, ''))
+  if (term) term = sanitizeText(term.replace(/\\/gi, ''))
   return (dispatch, getState) => {
     const state = getState()
     const context = state.Context
@@ -317,9 +348,9 @@ export function executeFacetSearch (
 
     return dispatch({
       types: [
-        types.REQUEST_FACET,
-        types.REQUEST_FACET_SUCCESS,
-        types.REQUEST_FACET_FAILURE
+        types.REQUEST_FACET_SUGGEST,
+        types.REQUEST_FACET_SUGGEST_SUCCESS,
+        types.REQUEST_FACET_SUGGEST_FAILURE
       ],
       query: {
         ...query,
@@ -328,7 +359,8 @@ export function executeFacetSearch (
         facets /* Allowed facet fields */,
         skip_spellcheck: true,
         skip_intent: true,
-        facetPrefix: term.toLowerCase() /* Always lowercase facet term */,
+        facetPrefix:
+          term && term.toLowerCase() /* Always lowercase facet term */,
         per_page: 0
       },
       beforeSuccessCallback (response) {
