@@ -60,18 +60,16 @@ function Person ({
   return (
     <div className={classes}>
       <FieldLabel label={fieldLabel} />
-      <div className='ola-field-people'>
-        <div className='ola-flex'>
-          {displayIcon && (
-            <span className='ola-flex-icon'>
-              <User size={iconSize} />
-            </span>
-          )}
-          <div className='ola-flex-content'>
-            {peopleArr.map((person, i) => (
-              <PersonComponent key={i} {...person} onClick={handleClick} />
-            ))}
-          </div>
+      <div className='ola-flex'>
+        {displayIcon && (
+          <span className='ola-flex-icon'>
+            <User size={iconSize} />
+          </span>
+        )}
+        <div className='ola-flex-content'>
+          {peopleArr.map((person, i) => (
+            <PersonComponent key={i} {...person} onClick={handleClick} />
+          ))}
         </div>
       </div>
     </div>
@@ -91,7 +89,7 @@ function PersonComponent ({ name, url, onClick }) {
       href: url || undefined,
       onClick: url ? (e) => onClick(e, name, url) : undefined
     },
-    <span className='ola-flex-content'>{getDisplayName(name)}</span>
+    getDisplayName(name)
   )
 }
 
