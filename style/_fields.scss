@@ -75,7 +75,7 @@ $image-height: 150px;
     @include flexbox;
 
     > .ola-fg, > .ola-field {
-      padding-right: 1em;      
+      padding-right: 1em;
 
       &:first-child {
         padding-left: 0;
@@ -147,7 +147,7 @@ $image-height: 150px;
     padding: 0;
     margin: 0;
   }
-  
+
   > a {
     text-decoration: none;
   }
@@ -179,7 +179,7 @@ $image-height: 150px;
 
 /* Button */
 .ola-field-button {
-  
+
 }
 
 
@@ -246,10 +246,15 @@ $image-height: 150px;
 /**
  * Small fields
  */
-.ola-field-person, 
+.ola-field-person,
 .ola-field-date,
 .ola-field-directions {
   // font-size: 0.875rem;
+}
+
+/* Add comma between each person */
+.ola-btn-person + .ola-btn-person:before {
+  content: ', ';
 }
 
 /**
@@ -304,7 +309,7 @@ $image-height: 150px;
   /**
    * Disabled
    */
-  .ola-faux-checkbox-disabled .ola-checkbox-icon {    
+  .ola-faux-checkbox-disabled .ola-checkbox-icon {
     border-color: #cbd0d1;
   }
 

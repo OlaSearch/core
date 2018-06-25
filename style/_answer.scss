@@ -279,53 +279,51 @@
 }
 
 /**
- * Article
- */
- .ola-answer-article {
-   display: flex;
-   flex-direction: row;
- }
-
- .ola-answer-article-aside {
-   display: flex;
-   width: 100%;
-   max-width: 188px;
-   flex-direction: column;
-   margin-right: 1rem;
- }
-
- .ola-answer-article-authors {
-   display: flex;
-   flex-direction: column
- }
-
- .ola-answer-article-info {
-   margin-bottom: 1rem;
- }
-
- .ola-answer-article-image {
-   width: 100%;
- }
-
- .ola-answer-article-related-articles {
-   padding-top: 1rem;
-   display: flex;
-   flex-direction: column;
- }
-
- /**
-  * Divider
+  * Article
   */
- .ola-divider {
-  background-color: $base-color;
- }
+.ola-answer-article {
+  display: flex;
+  flex-direction: row;
+}
 
- .ola-divider--horizontal {
-   height: 1px;
-   width: 100%;
- }
+/**
+  * Article side bar
+  */
+.ola-answer-article-aside {
+  display: flex;
+  width: 100%;
+  max-width: 188px;
+  flex-direction: column;
+  margin-right: 1rem;
+}
 
- .ola-divider--vertical {
-   width: 1px;
-   height: 100%;
- }
+/**
+  * Article side bar's authors section
+  */
+.ola-answer-article-authors {
+  display: flex;
+  flex-direction: column
+}
+
+/**
+  * Article side bar's info section
+  */
+.ola-answer-article-info {
+  margin-bottom: 1rem;
+}
+
+/**
+  * Article side bar's image
+  */
+.ola-answer-article-image {
+  width: 100%;
+}
+
+/**
+  * Article side bar's related articles section
+  */
+.ola-answer-article-related-articles {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}

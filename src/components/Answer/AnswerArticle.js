@@ -22,14 +22,6 @@ function AnswerArticle ({ card, onSelect }) {
     buttons
   } = card
 
-  // const authorList = (author && author.length) ? author.map((entry, i) => (
-  //   <Person
-  //     key={i}
-  //     {...entry}
-  //     displayIcon
-  //   />
-  // )) : null
-
   const relatedList =
     related && related.length
       ? related.map((entry, i) => <Title key={i} result={entry} />)

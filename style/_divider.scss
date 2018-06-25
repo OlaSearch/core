@@ -1,0 +1,23 @@
+
+/**
+  * Divider
+  */
+.ola-divider {
+  background-color: $base-color;
+}
+
+/**
+  * Horizontal divider
+  */
+.ola-divider--horizontal {
+  height: 1px;
+  width: 100%;
+}
+
+/**
+  * Vertical divider
+  */
+.ola-divider--vertical {
+  width: 1px;
+  height: 100%;
+}
