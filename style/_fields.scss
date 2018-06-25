@@ -243,6 +243,13 @@ $image-height: 150px;
     justify-content: center;
   }
 
+  /**
+   * justify right
+   */
+  .ola-justify-right {
+    justify-content: flex-end;
+  }
+
 /**
  * Small fields
  */

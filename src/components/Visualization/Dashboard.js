@@ -6,6 +6,7 @@ import Card from './Card'
  * Visualization dashboard component
  */
 function Dashboard ({ dashboard, ...rest }) {
+  if (!dashboard || !dashboard.length) return null
   return (
     <div className='ola-viz-dashboard'>
       {dashboard.map((card, idx) => {
@@ -19,6 +20,10 @@ function Dashboard ({ dashboard, ...rest }) {
       })}
     </div>
   )
+}
+
+Dashboard.defaultProps = {
+  dashboard: []
 }
 
 Dashboard.propTypes = {

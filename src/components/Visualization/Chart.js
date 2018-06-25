@@ -19,7 +19,10 @@ class Chart extends React.Component {
     /**
      * Debouncing is necessary because, multiple prop changes can cause charts to change rapidly
      */
-    this.debounceUpdateChart = debounce(this.updateChart, CHART_DEBOUNCE_TIMING)
+    this._updateChart = debounce(
+      () => window.requestAnimationFrame(this.updateChart),
+      CHART_DEBOUNCE_TIMING
+    )
   }
   static propTypes = {
     /**
@@ -175,7 +178,8 @@ class Chart extends React.Component {
     /* Prevent updating chart if there is some error */
     if (!this.chart) return
 
-    this.debounceUpdateChart()
+    /* Update chart */
+    this._updateChart()
   }
   registerRef = (el) => {
     this.chartRef = el

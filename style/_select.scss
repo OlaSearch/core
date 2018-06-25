@@ -2,7 +2,7 @@
  * Sort
  */
 .ola-select {  
-  margin-bottom: 8px;
+  padding-bottom: 8px;
   font-size: 14px;
 }
 
@@ -58,4 +58,11 @@
     margin-top: -10px;
     z-index: 0;
   }
+}
+
+/**
+ * Suffix
+ */
+.ola-select-suffix {
+  padding-left: 1rem;
 }

@@ -1,5 +1,5 @@
 /* ios fix where label was not clickable */
-.ola-search label > * { pointer-events:none; }
+.ola-search-mobile label > *, .ola-search-tablet label > * { pointer-events:none; }
 
 /* Facet */
 .ola-facet {

@@ -8,6 +8,7 @@ import { facetToChartData, debounce } from './../../utilities'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import { connect } from 'react-redux'
 import equals from 'ramda/src/equals'
+import SelectBox from './../SelectBox'
 
 /**
  * Visualization card
@@ -26,26 +27,30 @@ import equals from 'ramda/src/equals'
 class Card extends React.Component {
   constructor (props) {
     super(props)
+    const { card } = props
     this.state = {
       data: [],
-      isLoading: false
+      isLoading: false,
+      limit: (card && card.limit) || 5
     }
     this._fetch = debounce(this.fetch, CHART_DEBOUNCE_TIMING)
   }
   static defaultProps = {
     card: null,
     facetQuery: undefined,
-    q: null
+    q: null,
+    limits: [5, 10, 20, 30]
   }
   static propTypes = {
     facetQuery: PropTypes.array,
     q: PropTypes.string
   }
-  componentDidUpdate (prevProps) {
+  componentDidUpdate (prevProps, prevState) {
     if (
       !equals(prevProps.card, this.props.card) ||
       !equals(prevProps.facetQuery, this.props.facetQuery) ||
-      prevProps.q !== this.props.q
+      prevProps.q !== this.props.q ||
+      prevState.limit !== this.state.limit
     ) {
       this._fetch()
     }
@@ -57,7 +62,8 @@ class Card extends React.Component {
   }
   fetch = () => {
     const { card, q, facetQuery } = this.props
-    const { fields, limit } = card
+    const { fields } = card
+    const { limit } = this.state
     /**
      * Get facet values
      */
@@ -88,14 +94,30 @@ class Card extends React.Component {
     this.props.replaceFacet({ name }, value)
     this.props.executeSearch()
   }
+  handeLimitChange = (event) => {
+    this.setState({
+      limit: event.target.value
+    })
+  }
   render () {
-    const { card } = this.props
-    const { title, subtitle, url, type } = card
-    const { data } = this.state
+    const { card, limits } = this.props
+    const { title, subtitle, url, type, canChangeLimit } = card
+    const { data, limit } = this.state
     return (
       <div className='ola-viz-card'>
         <div className='ola-viz-card-wrapper'>
           <Header title={title} subtitle={subtitle} url={url} />
+          {canChangeLimit ? (
+            <SelectBox
+              value={limit}
+              onChange={this.handeLimitChange}
+              label='Showing'
+              inline
+              className='ola-viz-select'
+            >
+              {limits.map((value, idx) => <option key={idx}>{value}</option>)}
+            </SelectBox>
+          ) : null}
           <div className='ola-viz-card-body'>
             <Chart data={data} type={type} onClick={this.handleClick} />
           </div>

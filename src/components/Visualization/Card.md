@@ -11,5 +11,5 @@ const card = {
   limit: 5,
   type: 'line'
 };
-<Card card={card} />
+<Card card={card} canChangeLimit />
 ````

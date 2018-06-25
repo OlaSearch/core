@@ -3,10 +3,22 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import ChevronDown from '@olasearch/icons/lib/chevron-down'
 
-function SelectBox ({ label, inline, children, onChange, value }) {
-  const classes = cx('ola-select', {
-    'ola-select-inline': inline
-  })
+function SelectBox ({
+  label,
+  inline,
+  children,
+  onChange,
+  value,
+  suffix,
+  className
+}) {
+  const classes = cx(
+    'ola-select',
+    {
+      'ola-select-inline': inline
+    },
+    className
+  )
   return (
     <div className={classes}>
       {label && <label className='ola-select-label'>{label}</label>}
@@ -20,6 +32,7 @@ function SelectBox ({ label, inline, children, onChange, value }) {
         </select>
         <ChevronDown size={20} />
       </div>
+      {suffix && <span className='ola-select-suffix'>{suffix}</span>}
     </div>
   )
 }
