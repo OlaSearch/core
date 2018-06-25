@@ -64,6 +64,7 @@ export default {
     /* Answers */
     answers_show_more: 'View all',
     answers_show_less: 'View less',
+    related_articles: 'Related articles',
 
     /* Infinite scroll */
     load_more_button: 'Load more',

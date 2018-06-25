@@ -5,17 +5,19 @@ import Divider from './common/Divider'
 import Button from './common/Button'
 import Person from '../Fields/Person'
 import Title from '../Fields/Title'
+import DateField from '../Fields/Date'
+import withTranslate from '../../decorators/withTranslate'
 
 /**
  * Create an answer article
  */
-function AnswerArticle ({ card, onSelect }) {
+function AnswerArticle ({ card, onSelect, translate }) {
   const {
     url,
     image,
     title,
     author,
-    date_published,
+    date_published: datePublished,
     subtitle,
     content,
     related,
@@ -34,8 +36,12 @@ function AnswerArticle ({ card, onSelect }) {
           {image && <img src={image} className='ola-answer-article-image' />}
           <div className='ola-answer-article-contribution'>
             <Person people={author} displayIcon />
-            {date_published && (
-              <div className='ola-answer-article-date'>{date_published}</div>
+            {datePublished && (
+              <DateField
+                date={datePublished}
+                format='DD MMM YYYY'
+                displayIcon
+              />
             )}
             {buttons && buttons.length ? (
               <div className='ola-answer-buttons'>
@@ -48,7 +54,7 @@ function AnswerArticle ({ card, onSelect }) {
         </div>
         {related && related.length ? (
           <div className='ola-answer-card-wrapper ola-answer-article-related'>
-            <div>Related Articles</div>
+            <div>{translate('related_articles')}</div>
             <Divider horizontal />
             <div className='ola-answer-article-related-articles'>
               {relatedList}
@@ -84,4 +90,4 @@ AnswerArticle.defaultProps = {
   card: {}
 }
 
-export default AnswerArticle
+export default withTranslate(AnswerArticle)
