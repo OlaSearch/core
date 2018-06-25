@@ -44,7 +44,7 @@ function TextField ({
   if (Array.isArray(fieldContent)) {
     fieldContent = fieldContent.join(', ')
   }
-  const { highlighting } = result
+  const highlighting = result && result.highlighting
   if (showIfEmpty && !fieldContent) fieldContent = `<em>${field}</em>`
   if (!fieldContent) {
     return null

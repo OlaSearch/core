@@ -405,6 +405,7 @@ export function pickDeep (obj, key) {
  * @return {string}
  */
 export function truncate (str, length, ellipsis = '...') {
+  if (!length) return str
   if (str.toString().length > length) {
     return (
       str

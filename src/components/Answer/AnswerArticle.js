@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Header from './common/Header'
-import Divider from './common/Divider'
 import Button from './common/Button'
-import Person from '../Fields/Person'
-import Title from '../Fields/Title'
-import DateField from '../Fields/Date'
-import withTranslate from '../../decorators/withTranslate'
+import ButtonField from './../Fields/Button'
+import TextField from './../Fields/TextField'
+import Person from './../Fields/Person'
+import DateField from './../Fields/Date'
+import { DEFAULT_DISPLAY_DATE_FORMAT } from './../../constants/Settings'
+import withTranslate from './../../decorators/withTranslate'
+import withTheme from './../../decorators/withTheme'
 
 /**
  * Create an answer article
  */
-function AnswerArticle ({ card, onSelect, translate }) {
+function AnswerArticle ({ card, onSelect, translate, theme }) {
   const {
     url,
     image,
@@ -19,57 +21,56 @@ function AnswerArticle ({ card, onSelect, translate }) {
     author,
     date_published: datePublished,
     subtitle,
-    content,
-    related,
-    buttons
+    related = [],
+    buttons = []
   } = card
-
-  const relatedList =
-    related && related.length
-      ? related.map((entry, i) => <Title key={i} result={entry} />)
-      : null
 
   return (
     <div className='ola-answer-article'>
-      <div className='ola-answer-article-aside'>
-        <div className='ola-answer-card-wrapper ola-answer-article-info'>
-          {image && <img src={image} className='ola-answer-article-image' />}
-          <div className='ola-answer-article-contribution'>
-            <Person people={author} displayIcon />
-            {datePublished && (
-              <DateField
-                date={datePublished}
-                format='DD MMM YYYY'
-                displayIcon
-              />
-            )}
-            {buttons && buttons.length ? (
-              <div className='ola-answer-buttons'>
-                {buttons.map((button, idx) => (
-                  <Button {...button} onClick={onSelect} key={idx} />
-                ))}
-              </div>
-            ) : null}
-          </div>
+      <img src={image} className='ola-answer-article-image' />
+      <Header title={title} url={url} subtitle={subtitle} />
+      <Person people={author} displayIcon />
+      <DateField
+        date={datePublished}
+        format={DEFAULT_DISPLAY_DATE_FORMAT}
+        displayIcon
+        fieldLabel={translate('published_on')}
+        inlineLabel
+      />
+      {buttons.length ? (
+        <div className='ola-answer-buttons'>
+          {buttons.map((button, idx) => {
+            return <Button {...button} onClick={onSelect} key={idx} />
+          })}
         </div>
-        {related && related.length ? (
-          <div className='ola-answer-card-wrapper ola-answer-article-related'>
-            <div>{translate('related_articles')}</div>
-            <Divider horizontal />
-            <div className='ola-answer-article-related-articles'>
-              {relatedList}
-            </div>
-          </div>
-        ) : null}
-      </div>
-      <div className='ola-answer-card-wrapper ola-answer-article-main'>
-        <div className='ola-answer-article-header'>
-          <Header title={title} url={url} subtitle={subtitle} />
-        </div>
-        <Divider horizontal />
-        <div className='ola-answer-article-body'>
-          <div className='ola-answer-article-content'>{content}</div>
-        </div>
+      ) : null}
+      <TextField field='content' result={card} length={null} />
+      <LinkList links={related} title={translate('related_articles')} />
+
+      <style jsx>
+        {`
+          .ola-answer-article :global(.ola-field-title) {
+            font-size: ${theme.titleFontSizeLarge};
+          }
+        `}
+      </style>
+    </div>
+  )
+}
+
+/**
+ * Link list
+ * @param {Array} options.links
+ */
+function LinkList ({ links, title }) {
+  if (!links.length) return null
+  return (
+    <div className='ola-linklist'>
+      <div className='ola-linklist-title'>{title}</div>
+      <div className='ola-linklist-body'>
+        {links.map(({ title, url }, idx) => {
+          return <ButtonField textLink key={idx} label={title} url={url} />
+        })}
       </div>
     </div>
   )
@@ -90,4 +91,4 @@ AnswerArticle.defaultProps = {
   card: {}
 }
 
-export default withTranslate(AnswerArticle)
+export default withTheme(withTranslate(AnswerArticle))
