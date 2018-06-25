@@ -5,6 +5,10 @@ import User from '@olasearch/icons/lib/user'
 import FieldLabel from './../FieldLabel'
 import { getDisplayName } from './../../../utilities'
 
+/**
+ * Render a single Person component
+ * @param {Object} { name, url, onClick }
+ */
 function PersonComponent ({ name, url, onClick }) {
   return (
     <a
@@ -31,7 +35,7 @@ function Person ({
   snippetId,
   onClick
 }) {
-  /* Do not render if the prop is empty */
+  /* Do not render if the prop people is empty */
   if (!people || !people.length) return null
 
   function handleClick (event, name, url) {
@@ -48,9 +52,11 @@ function Person ({
 
     if (onClick) return onClick(event, name)
 
+    /* Opens in a new window */
     if (url) window.open(url)
   }
 
+  /* Parse to an array if people attribute is a string */
   const peopleArr = typeof people === 'string' ? [{ name: people }] : people
   const classes = 'ola-field ola-field-person'
 
@@ -77,7 +83,6 @@ function Person ({
 
 Person.defaultProps = {
   people: '',
-  url: '',
   fieldLabel: '',
   displayIcon: false,
   iconSize: 20,
@@ -86,16 +91,12 @@ Person.defaultProps = {
 
 Person.propTypes = {
   /**
-   * Name of the person | Array of Objects
+   * Name of the person | Array of Person:Object
    */
   people: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.object)
   ]),
-  /**
-   * URL of the person
-   */
-  url: PropTypes.string,
   /**
    * Field label
    */
