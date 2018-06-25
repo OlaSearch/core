@@ -27,25 +27,29 @@ function AnswerArticle ({ card, onSelect, translate, theme }) {
 
   return (
     <div className='ola-answer-article'>
-      <img src={image} className='ola-answer-article-image' />
-      <Header title={title} url={url} subtitle={subtitle} />
-      <Person people={author} displayIcon />
-      <DateField
-        date={datePublished}
-        format={DEFAULT_DISPLAY_DATE_FORMAT}
-        displayIcon
-        fieldLabel={translate('published_on')}
-        inlineLabel
-      />
-      {buttons.length ? (
-        <div className='ola-answer-buttons'>
-          {buttons.map((button, idx) => {
-            return <Button {...button} onClick={onSelect} key={idx} />
-          })}
-        </div>
-      ) : null}
-      <TextField field='content' result={card} length={null} />
-      <LinkList links={related} title={translate('related_articles')} />
+      <div className='ola-answer-card-wrapper'>
+        {image ? (
+          <img src={image} className='ola-answer-article-image' />
+        ) : null}
+        <Header title={title} url={url} subtitle={subtitle} />
+        <Person people={author} displayIcon />
+        <DateField
+          date={datePublished}
+          format={DEFAULT_DISPLAY_DATE_FORMAT}
+          displayIcon
+          fieldLabel={translate('published_on')}
+          inlineLabel
+        />
+        {buttons.length ? (
+          <div className='ola-answer-buttons'>
+            {buttons.map((button, idx) => {
+              return <Button {...button} onClick={onSelect} key={idx} />
+            })}
+          </div>
+        ) : null}
+        <TextField field='content' result={card} length={null} />
+        <LinkList links={related} title={translate('related_articles')} />
+      </div>
 
       <style jsx>
         {`

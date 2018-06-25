@@ -46,7 +46,13 @@ function Person ({
   }
 
   /* Parse to an array if people attribute is a string */
-  const peopleArr = typeof people === 'string' ? [{ name: people }] : people
+  const peopleArr =
+    typeof people === 'string'
+      ? [{ name: people }]
+      : people.map((person) => {
+        if (typeof person === 'string') return { name: person }
+        return person
+      })
   const classes = classNames('ola-field ola-field-person', {
     'ola-field-label-inline': inlineLabel
   })
@@ -83,7 +89,7 @@ function PersonComponent ({ name, url, onClick }) {
       className: 'ola-btn-person',
       title: name,
       href: url || undefined,
-      onClick: (e) => onClick(e, name, url)
+      onClick: url ? (e) => onClick(e, name, url) : undefined
     },
     <span className='ola-flex-content'>{getDisplayName(name)}</span>
   )

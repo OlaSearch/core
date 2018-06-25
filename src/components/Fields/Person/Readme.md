@@ -21,3 +21,13 @@ With multiple entries
   displayIcon
 />
 ```
+
+With array strings
+
+```js
+
+<Person
+  people={['Stephen Hawking', 'Jimmy Wales']}
+  displayIcon
+/>
+```
