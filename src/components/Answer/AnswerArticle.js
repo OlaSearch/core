@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 import Header from './common/Header'
 import Divider from './common/Divider'
 import Button from './common/Button'
+import Person from '../Fields/Person'
+import Title from '../Fields/Title'
 
 /**
  * Create an answer article
@@ -17,70 +18,32 @@ function AnswerArticle ({ card, onSelect }) {
     date_published,
     subtitle,
     content,
-    related_articles,
+    related,
     buttons
   } = card
 
-  /**
-   * Render the author element
-   * @param {Object} entry
-   */
-  const renderAuthor = (entry) => {
-    if (!entry) return null
+  // const authorList = (author && author.length) ? author.map((entry, i) => (
+  //   <Person
+  //     key={i}
+  //     {...entry}
+  //     displayIcon
+  //   />
+  // )) : null
 
-    const { name, url } = entry
-
-    let component = 'p'
-    let props = {
-      className: 'ola-answer-article-author'
-    }
-
-    if (url) {
-      component = 'a'
-      props.href = url
-    }
-
-    return React.createElement(component, props, name)
-  }
-
-  /**
-   * Render related article element
-   * @param {Object} entry
-   */
-  const renderRelatedArticle = (entry) => {
-    if (!entry) return null
-
-    const { title, url } = entry
-
-    return React.createElement(
-      'a',
-      {
-        className: 'ola-answer-article-related-article',
-        href: url
-      },
-      title
-    )
-  }
-
-  let authors = author.length ? author.map((entry) => renderAuthor(entry)) : null
-
-  let relatedArticles = related_articles.length
-    ? related_articles.map((entry) => renderRelatedArticle(entry))
-    : null
+  const relatedList =
+    related && related.length
+      ? related.map((entry, i) => <Title key={i} result={entry} />)
+      : null
 
   return (
     <div className='ola-answer-article'>
       <div className='ola-answer-article-aside'>
         <div className='ola-answer-card-wrapper ola-answer-article-info'>
           {image && <img src={image} className='ola-answer-article-image' />}
-
-          <p className='ola-answer-article-short-desc'>{subtitle}</p>
           <div className='ola-answer-article-contribution'>
-            {author && (
-              <div className='ola-answer-article-authors'>{authors}</div>
-            )}
+            <Person people={author} displayIcon />
             {date_published && (
-              <p className='ola-answer-article-date'>{date_published}</p>
+              <div className='ola-answer-article-date'>{date_published}</div>
             )}
             {buttons && buttons.length ? (
               <div className='ola-answer-buttons'>
@@ -91,23 +54,23 @@ function AnswerArticle ({ card, onSelect }) {
             ) : null}
           </div>
         </div>
-        {related_articles && related_articles.length ? (
+        {related && related.length ? (
           <div className='ola-answer-card-wrapper ola-answer-article-related'>
-            <p>'Related Articles' </p>
+            <div>Related Articles</div>
             <Divider horizontal />
             <div className='ola-answer-article-related-articles'>
-              {relatedArticles}
+              {relatedList}
             </div>
           </div>
         ) : null}
       </div>
       <div className='ola-answer-card-wrapper ola-answer-article-main'>
         <div className='ola-answer-article-header'>
-          <Header title={title} url={url} />
+          <Header title={title} url={url} subtitle={subtitle} />
         </div>
         <Divider horizontal />
         <div className='ola-answer-article-body'>
-          <p className='ola-answer-article-content'>{content}</p>
+          <div className='ola-answer-article-content'>{content}</div>
         </div>
       </div>
     </div>
@@ -115,7 +78,14 @@ function AnswerArticle ({ card, onSelect }) {
 }
 
 AnswerArticle.propTypes = {
-  card: PropTypes.object
+  /**
+   * answer card object
+   */
+  card: PropTypes.object,
+  /**
+   * Callback when a card is clicked
+   */
+  onSelect: PropTypes.func
 }
 
 AnswerArticle.defaultProps = {

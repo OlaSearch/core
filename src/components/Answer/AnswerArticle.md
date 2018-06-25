@@ -16,7 +16,7 @@ const card = {
     "date_published": "04 January 2017",
     "subtitle": "Search technology includes taxonomy management, text analytics, search analytics and more.",
     "content": "Search technology includes taxonomy management, text analytics, search analytics and more. These related technologies add meaning and intelligence and make the search experience more efficient and enjoyable.",
-    "related_articles": [
+    "related": [
         {
             title: 'Search experience: Selecting the right technologies',
             url: 'https://olasearch.com/articles/search-technology-more-than-just-a-search-engine'
@@ -47,7 +47,7 @@ const card = {
     "date_published": "04 January 2017",
     "short_desc": "Search technology includes taxonomy management, text analytics, search analytics and more.",
     "content": "Search technology includes taxonomy management, text analytics, search analytics and more. These related technologies add meaning and intelligence and make the search experience more efficient and enjoyable.",
-    "related_articles": [],
+    "related": [],
     "buttons": [],
 };
 
