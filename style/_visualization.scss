@@ -39,3 +39,22 @@
   .ola-viz-card {
     margin-bottom: 1rem;
   }
+
+/**
+ * Dashboard
+ */
+.ola-viz-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -1rem;
+  padding: 1rem 0;
+}
+
+  .ola-viz-item {
+    flex: 1;
+    min-width: 40%;
+  }
+
+  .ola-viz-item-inner {
+    padding: 1rem 1rem 0 1rem;
+  }

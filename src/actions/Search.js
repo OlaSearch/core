@@ -272,7 +272,7 @@ function removeTokenFromQuery (q, tokenValues) {
  * @param  {String} options.q
  * @param  {Array}  options.facetQuery
  */
-export function getFacetValues ({ fields, q, facetQuery = [] }) {
+export function getFacetValues ({ fields, q, facetQuery }) {
   const facets = fields.map((...args) => CREATE_FILTER_OBJECT(...args))
   return (dispatch) => {
     return dispatch({
@@ -284,9 +284,8 @@ export function getFacetValues ({ fields, q, facetQuery = [] }) {
       query: {
         q,
         facets,
-        facet_query: facetQuery,
+        facet_query: facetQuery || [],
         per_page: 0,
-        skip_spellcheck: true,
         skip_intent: true
       },
       meta: {

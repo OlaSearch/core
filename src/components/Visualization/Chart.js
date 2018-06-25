@@ -81,6 +81,7 @@ class Chart extends React.Component {
   createChartData = () => {
     var { data, axis, x } = this.props
     var categories
+    var names
     if (data && !Array.isArray(data)) {
       if (CHART_CATEGORY_NAME in data) {
         const { tick } = data
@@ -94,18 +95,20 @@ class Chart extends React.Component {
         }
         x = null
       }
+      names = data['names']
       data = data['data']
     }
     return {
       data,
       axis,
       x,
+      names,
       categories
     }
   }
   initChart () {
     var { type, types, labels, padding } = this.props
-    const { axis, data, x } = this.createChartData()
+    const { axis, data, x, names } = this.createChartData()
     /* If data is empty initially, we do not initialize the chart yet */
     if (!data || !data.length) return
     this.chart = bb.generate({
@@ -115,7 +118,8 @@ class Chart extends React.Component {
         onclick: this.handleClick,
         columns: data,
         ...(types ? { types } : { type }),
-        labels
+        labels,
+        names
       },
       bubble: {
         maxR: 50
@@ -133,12 +137,15 @@ class Chart extends React.Component {
     })
   }
   updateChart = () => {
-    const { data, categories } = this.createChartData()
+    const { data, categories, names } = this.createChartData()
     this.chart.load({
       unload: true,
       columns: data,
       categories
     })
+    if (names) {
+      this.chart.data.names(names)
+    }
   }
   componentDidMount () {
     this.mounted = true

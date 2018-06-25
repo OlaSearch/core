@@ -5,6 +5,7 @@ import Chart from './Chart'
 import { CHART_DEBOUNCE_TIMING } from './../../constants/Settings'
 import { getFacetValues } from './../../actions/Search'
 import { facetToChartData, debounce } from './../../utilities'
+import { replaceFacet, executeSearch } from './../../actions/Search'
 import { connect } from 'react-redux'
 import equals from 'ramda/src/equals'
 
@@ -33,14 +34,12 @@ class Card extends React.Component {
   }
   static defaultProps = {
     card: null,
-    facetQuery: [],
-    q: null,
-    limit: 20
+    facetQuery: undefined,
+    q: null
   }
   static propTypes = {
     facetQuery: PropTypes.array,
-    q: PropTypes.string,
-    limit: PropTypes.number
+    q: PropTypes.string
   }
   componentDidUpdate (prevProps) {
     if (
@@ -58,7 +57,7 @@ class Card extends React.Component {
   }
   fetch = () => {
     const { card, q, facetQuery } = this.props
-    const { fields } = card
+    const { fields, limit } = card
     /**
      * Get facet values
      */
@@ -71,12 +70,23 @@ class Card extends React.Component {
         q,
         facetQuery
       })
-      .then(({ facets }) => {
+      .then((response) => {
+        if (!response) return
+        const { facets } = response
         this.setState({
-          data: facetToChartData(facets, this.props.limit),
+          data: facetToChartData({
+            facets,
+            limit,
+            title: this.props.card.title
+          }),
           isLoading: false
         })
       })
+  }
+  handleClick = ({ id: name }, value) => {
+    if (!this.props.facetQuery) return
+    this.props.replaceFacet({ name }, value)
+    this.props.executeSearch()
   }
   render () {
     const { card } = this.props
@@ -87,7 +97,7 @@ class Card extends React.Component {
         <div className='ola-viz-card-wrapper'>
           <Header title={title} subtitle={subtitle} url={url} />
           <div className='ola-viz-card-body'>
-            <Chart data={data} type={type} />
+            <Chart data={data} type={type} onClick={this.handleClick} />
           </div>
         </div>
       </div>
@@ -95,4 +105,6 @@ class Card extends React.Component {
   }
 }
 
-export default connect(null, { getFacetValues })(Card)
+export default connect(null, { getFacetValues, replaceFacet, executeSearch })(
+  Card
+)

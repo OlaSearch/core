@@ -1274,7 +1274,7 @@ export function getFieldValue (result, field, fallbackFields) {
  * Converts facets to billboard chart data
  * @param {Array} Array of facets
  */
-export function facetToChartData (facets, limit = undefined) {
+export function facetToChartData ({ facets, limit = undefined, title }) {
   /**
    * Data format. Examples Movie genres
    * return {
@@ -1294,12 +1294,13 @@ export function facetToChartData (facets, limit = undefined) {
         .map(({ values }) => values.map(({ name }) => name))
         .slice(0, categoryLimit)
     ),
-    data: facets.map(({ name, displayName, values }) => {
-      return [
-        displayName || name,
-        ...values.map(({ count }) => count).slice(0, limit)
-      ]
+    data: facets.map(({ name, values }) => {
+      return [name, ...values.map(({ count }) => count).slice(0, limit)]
     }),
+    names: facets.reduce((o, i) => {
+      o[i.name] = i.displayName || title
+      return o
+    }, {}),
     name,
     dataType: type
   }
