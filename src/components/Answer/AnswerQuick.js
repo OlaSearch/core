@@ -47,7 +47,7 @@ class LineChart extends React.Component {
   }
   getData = () => {
     const recordKeys = this.props.card.record_keys.filter((_, idx) => idx !== 0)
-    return recordData.map((item) => {
+    return this.props.card.record_data.map((item) => {
       return recordKeys.map((key) => sanitizeNumbers(item[key]))
     })
   }
