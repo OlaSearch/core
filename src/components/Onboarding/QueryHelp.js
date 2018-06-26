@@ -25,7 +25,7 @@ QueryHelp.propTypes = {
   isVisible: PropTypes.bool,
   showSearchHelp: PropTypes.bool,
   hideSearchHelp: PropTypes.bool,
-  config: PropTypes.oneOf([PropTypes.object, PropTypes.function])
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.function])
 }
 
 function mapStateToProps (state) {
