@@ -31,11 +31,10 @@ import SelectBox from './../SelectBox'
 class Card extends React.Component {
   constructor (props) {
     super(props)
-    const { card } = props
     this.state = {
       data: [],
       isLoading: false,
-      limit: (card && card.limit) || 5
+      limit: (props.card && props.card.limit) || 5
     }
     this._fetch = debounce(this.fetch, CHART_DEBOUNCE_TIMING)
   }
@@ -96,7 +95,13 @@ class Card extends React.Component {
   }
   handleClick = ({ id: name }, value) => {
     if (!this.props.facetQuery) return
-    this.props.replaceFacet({ name }, value)
+
+    /**
+     * id or name has to be facet field name
+     */
+    const facets = this.props.card.fields.filter((field) => field.name === name)
+    if (!facets.length) return
+    this.props.replaceFacet(facets[0], value)
     this.props.executeSearch()
   }
   handeLimitChange = (event) => {
