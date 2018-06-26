@@ -72,9 +72,7 @@ class SearchResults extends React.Component {
     return (
       <div className={classes}>
         {swipe ? (
-          <Swipeable showNavigation={false}>
-            {snippets.concat(this.props.pagination)}
-          </Swipeable>
+          <Swipeable>{snippets.concat(this.props.pagination)}</Swipeable>
         ) : (
           snippets
         )}

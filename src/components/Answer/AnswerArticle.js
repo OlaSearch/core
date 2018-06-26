@@ -28,33 +28,38 @@ function AnswerArticle ({ card, onSelect, translate, theme }) {
   return (
     <div className='ola-answer-article'>
       <div className='ola-answer-card-wrapper'>
-        {image ? (
-          <img src={image} className='ola-answer-article-image' />
-        ) : null}
-        <Header title={title} url={url} subtitle={subtitle} />
-        <Person people={author} displayIcon />
-        <DateField
-          date={datePublished}
-          format={DEFAULT_DISPLAY_DATE_FORMAT}
-          displayIcon
-          fieldLabel={translate('published_on')}
-          inlineLabel
-        />
-        {buttons.length ? (
-          <div className='ola-answer-buttons'>
-            {buttons.map((button, idx) => {
-              return <Button {...button} onClick={onSelect} key={idx} />
-            })}
+        <div className='ola-flex-md'>
+          <div className='ola-flex-aside'>
+            {image ? (
+              <img src={image} className='ola-answer-article-image' />
+            ) : null}
+            <Person people={author} displayIcon />
+            <DateField
+              date={datePublished}
+              format={DEFAULT_DISPLAY_DATE_FORMAT}
+              displayIcon
+              fieldLabel={translate('published_on')}
+            />
+            {buttons.length ? (
+              <div className='ola-answer-buttons'>
+                {buttons.map((button, idx) => {
+                  return <Button {...button} onClick={onSelect} key={idx} />
+                })}
+              </div>
+            ) : null}
           </div>
-        ) : null}
-        <TextField field='content' result={card} length={null} />
-        <LinkList links={related} title={translate('related_articles')} />
+          <div className='ola-flex-content'>
+            <Header title={title} url={url} subtitle={subtitle} />
+            <TextField field='content' result={card} length={null} />
+            <LinkList links={related} title={translate('related_articles')} />
+          </div>
+        </div>
       </div>
 
       <style jsx>
         {`
           .ola-answer-article :global(.ola-field-title) {
-            font-size: ${theme.titleFontSizeLarge};
+            font-size: ${theme.largeFontSize};
           }
         `}
       </style>

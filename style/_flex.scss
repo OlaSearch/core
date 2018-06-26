@@ -1,0 +1,85 @@
+/**
+ * Flex fields
+ */
+.ola-flex {
+  display: flex;
+}
+  /**
+   * Flex md
+   */
+  .ola-flex-md {
+    @include media (tablet) {
+      display: flex;
+    }
+  }
+
+  /**
+   * Icon
+   */
+  .ola-flex-icon {
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /**
+   * Image
+   */
+  .ola-flex-image {
+    flex-shrink: 0;
+  }
+
+  /**
+   * Item
+   */
+  .ola-flex-item {
+    margin-right: 0.5em;
+  }
+
+  /**
+   * Content
+   */
+  .ola-flex-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    @extend %nobreak;
+  }
+
+  /**
+   * Flex-contet
+   */
+  .ola-align-center {
+    align-items: center;
+  }
+
+  /**
+   * justify center
+   */
+  .ola-justify-center {
+    justify-content: center;
+  }
+
+  /**
+   * justify right
+   */
+  .ola-justify-right {
+    justify-content: flex-end;
+  }
+
+  /**
+   * Reverse
+   */
+  .ola-flex-reverse {
+    flex-direction: row-reverse;
+  }
+
+/**
+ * Sidebar
+ */
+.ola-flex-aside {
+  @include media (desktop) {
+    max-width: 300px;
+    margin-right: 1rem;
+    border-right: 1px #ddd solid;
+    padding-right: 1rem;
+  }
+}

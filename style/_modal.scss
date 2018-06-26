@@ -130,7 +130,7 @@ $zIndex: 10;
   bottom: 0;
   z-index: $modal-overlay-zindex;
   opacity: 0;
-  visibility: hidden;
+  visibility: hidden; /* Because of this, when the page loads initially, the overlay remains active for 0.2s */
   transition: all 0.2s ease-in;
 
   &.ola-content-overlay-active {

@@ -2,7 +2,7 @@ import React from 'react'
 import ArrowRight from '@olasearch/icons/lib/arrow-right'
 import ChevronLeft from '@olasearch/icons/lib/chevron-left'
 import ChevronRight from '@olasearch/icons/lib/chevron-right'
-import { smoothScroll, debounce, getDocument } from './../utilities'
+import { smoothScroll, getDocument } from './../utilities'
 import cx from 'classnames'
 
 const LEFT_KEY = 37
@@ -16,7 +16,9 @@ export default class Swipeable extends React.Component {
       canScrollLeft: false,
       canScrollRight: true
     }
-    this._updateScrollState = debounce(this.updateScrollState, 100)
+    // this._updateScrollState = debounce(this.updateScrollState, 100)
+    this._updateScrollState = () =>
+      window.requestAnimationFrame(this.updateScrollState)
   }
   registerRef = (el) => {
     this.scroller = el
@@ -66,6 +68,7 @@ export default class Swipeable extends React.Component {
     max: undefined,
     startIndex: null,
     autoFocus: false,
+    showShadowOnScroll: true,
     document: getDocument()
   }
   scrollTo = (duration) => {
@@ -132,7 +135,8 @@ export default class Swipeable extends React.Component {
       max,
       size,
       showNavigation,
-      className
+      className,
+      showShadowOnScroll
     } = this.props
     const { canScrollLeft, canScrollRight } = this.state
     const showMoreButton = size > max && !isCollapsed
@@ -148,6 +152,9 @@ export default class Swipeable extends React.Component {
           >
             <ChevronLeft />
           </button>
+        ) : null}
+        {showShadowOnScroll && showNavigation && canScrollLeft ? (
+          <div className='ola-swipeable-shadow' />
         ) : null}
         <div
           className='ola-swipeable-flow'
@@ -196,6 +203,9 @@ export default class Swipeable extends React.Component {
           >
             <ChevronRight />
           </button>
+        ) : null}
+        {showShadowOnScroll && showNavigation && canScrollRight ? (
+          <div className='ola-swipeable-shadow ola-swipeable-shadow-right' />
         ) : null}
       </div>
     )

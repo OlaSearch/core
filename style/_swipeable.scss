@@ -254,3 +254,23 @@
     padding: 0;
   }
 }
+
+/* Swipeable shadow */
+.ola-swipeable-shadow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: -moz-radial-gradient(left, ellipse cover, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 90%);
+  background: -webkit-radial-gradient(left, ellipse cover, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 90%);
+  background: radial-gradient(ellipse at left, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 90%);
+  z-index: 1;
+}
+.ola-swipeable-shadow-right {
+  right: 0;
+  left: auto;
+  background: -moz-radial-gradient(right, ellipse cover, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 90%);
+  background: -webkit-radial-gradient(right, ellipse cover, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 90%);
+  background: radial-gradient(ellipse at right, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 90%);
+}
