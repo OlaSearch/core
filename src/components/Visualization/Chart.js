@@ -65,13 +65,8 @@ class Chart extends React.Component {
     type: 'line',
     labels: false,
     x: 'x',
-    axis: {
-      x: {
-        tick: {
-          format: (d) => d
-        }
-      }
-    },
+    tick: undefined,
+    axis: undefined,
     padding: {
       right: 20,
       top: 20
@@ -82,12 +77,11 @@ class Chart extends React.Component {
     this.props.onClick && this.props.onClick(d, this.props.data.category[index])
   }
   createChartData = () => {
-    var { data, axis, x } = this.props
+    var { data, axis, x, tick } = this.props
     var categories
     var names
     if (data && !Array.isArray(data)) {
       if (CHART_CATEGORY_NAME in data) {
-        const { tick } = data
         categories = data[CHART_CATEGORY_NAME]
         axis = {
           x: {

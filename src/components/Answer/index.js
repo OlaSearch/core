@@ -46,7 +46,7 @@ function Answer ({
   //   dispatch(setSkipIntent(true))
   //   dispatch(executeSearch())
   // }
-  function handleClick ({ type, label, title, payload, url }) {
+  function handleClick ({ type, label, title, payload, url, openInNewWindow }) {
     /**
      * Label will be displayed in the bot
      */
@@ -61,6 +61,7 @@ function Answer ({
       )
     }
     if (type === BUTTON_TYPE.WEB) {
+      if (openInNewWindow) return window.open(url)
       return (window.location.href = url)
     }
     if (type === BUTTON_TYPE.EMAIL) {

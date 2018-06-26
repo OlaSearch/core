@@ -51,10 +51,12 @@
  * Dashboard
  */
 .ola-viz-dashboard {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -1rem;
-  padding: 0rem 0 1rem 0;
+  @include media (tablet) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
+    padding: 0rem 0 1rem 0;
+  }
 }
 
   .ola-viz-item {

@@ -1275,7 +1275,12 @@ export function getFieldValue (result, field, fallbackFields) {
  * Converts facets to billboard chart data
  * @param {Array} Array of facets
  */
-export function facetToChartData ({ facets, limit = undefined, title }) {
+const CHART_PIE = 'pie'
+export function facetToChartData ({ facets, limit = undefined, title, type }) {
+  /**
+   * fields => Original fields
+   * facets => Response from search engine
+   */
   /**
    * Data format. Examples Movie genres
    * return {
@@ -1287,22 +1292,33 @@ export function facetToChartData ({ facets, limit = undefined, title }) {
    */
   if (!facets.length) return []
   const facet = facets[0]
-  const { type, name } = facet
+  const { type: dataType, name } = facet
   const categoryLimit = limit && limit + 1
-  return {
-    category: flatten(
-      facets
-        .map(({ values }) => values.map(({ name }) => name))
-        .slice(0, categoryLimit)
-    ),
-    data: facets.map(({ name, values }) => {
-      return [name, ...values.map(({ count }) => count).slice(0, limit)]
-    }),
-    names: facets.reduce((o, i) => {
-      o[i.name] = i.displayName || title
-      return o
-    }, {}),
-    name,
-    dataType: type
+
+  switch (type) {
+    case CHART_PIE:
+      return facets.map(({ values }) => {
+        return values.map(({ name, count }) => {
+          return [name, count]
+        })
+      })[0]
+
+    default:
+      return {
+        category: flatten(
+          facets
+            .map(({ values }) => values.map(({ name }) => name))
+            .slice(0, categoryLimit)
+        ),
+        data: facets.map(({ name, values }) => {
+          return [name, ...values.map(({ count }) => count).slice(0, limit)]
+        }),
+        names: facets.reduce((o, i) => {
+          o[i.name] = i.displayName || title
+          return o
+        }, {}),
+        name,
+        dataType
+      }
   }
 }

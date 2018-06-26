@@ -2,9 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Header from './../Answer/common/Header'
 import Chart from './Chart'
-import { CHART_DEBOUNCE_TIMING } from './../../constants/Settings'
+import {
+  CHART_DEBOUNCE_TIMING,
+  DATE_RANGE_FACETS
+} from './../../constants/Settings'
 import { getFacetValues } from './../../actions/Search'
 import { facetToChartData, debounce } from './../../utilities'
+import { format } from './../../utilities/dateParser'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import { connect } from 'react-redux'
 import equals from 'ramda/src/equals'
@@ -62,7 +66,7 @@ class Card extends React.Component {
   }
   fetch = () => {
     const { card, q, facetQuery } = this.props
-    const { fields } = card
+    const { fields, type } = card
     const { limit } = this.state
     /**
      * Get facet values
@@ -83,7 +87,8 @@ class Card extends React.Component {
           data: facetToChartData({
             facets,
             limit,
-            title: this.props.card.title
+            title: this.props.card.title,
+            type
           }),
           isLoading: false
         })
@@ -99,10 +104,16 @@ class Card extends React.Component {
       limit: event.target.value
     })
   }
+  formatTick = (i, d) => {
+    const { type, dateFormat } = this.props.card.fields[0]
+    if (DATE_RANGE_FACETS.indexOf(type) !== -1) return format(d, dateFormat)
+    return d
+  }
   render () {
     const { card, limits } = this.props
     const { title, subtitle, url, type, canChangeLimit } = card
     const { data, limit } = this.state
+    const formatTick = { format: this.formatTick }
     return (
       <div className='ola-viz-card'>
         <div className='ola-viz-card-wrapper'>
@@ -119,7 +130,12 @@ class Card extends React.Component {
             </SelectBox>
           ) : null}
           <div className='ola-viz-card-body'>
-            <Chart data={data} type={type} onClick={this.handleClick} />
+            <Chart
+              data={data}
+              type={type}
+              onClick={this.handleClick}
+              tick={formatTick}
+            />
           </div>
         </div>
       </div>

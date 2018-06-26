@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import Button from './common/Button'
 
 /**
  * Create an answer card
  */
-function AnswerVideo ({ card }) {
-  const { url, width, height, classname } = card
+function AnswerVideo ({ card, onSelect }) {
+  const { url, width, height, classname, buttons = [] } = card
   const classes = cx('ola-answer-video', classname)
   return (
     <div className={classes}>
@@ -18,6 +19,13 @@ function AnswerVideo ({ card }) {
           frameBorder='0'
           allowFullScreen
         />
+        {buttons.length ? (
+          <div className='ola-answer-buttons'>
+            {buttons.map((button, idx) => {
+              return <Button {...button} onClick={onSelect} key={idx} />
+            })}
+          </div>
+        ) : null}
       </div>
     </div>
   )

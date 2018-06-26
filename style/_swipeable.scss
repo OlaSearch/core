@@ -262,6 +262,7 @@
   top: 0;
   bottom: 0;
   width: 5px;
+  transition: all 0.2s ease-in;
   background: -moz-radial-gradient(left, ellipse cover, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 90%);
   background: -webkit-radial-gradient(left, ellipse cover, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 90%);
   background: radial-gradient(ellipse at left, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 90%);
