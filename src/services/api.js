@@ -38,7 +38,7 @@ export function alert (urlParams = null, params, config) {
  * @param  {Object} params
  * @param  {Object} config
  */
-export function mc (urlParams = null, params, url = api.mc) {
+export function mc (urlParams = null, params, config) {
   const { ajaxOptions, api } = config
   var url = api.mc
   if (urlParams) {
