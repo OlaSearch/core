@@ -18,6 +18,7 @@ import {
   SPELLCHECK_SOURCE_CONTENT
 } from './../constants/Settings'
 import { uuid, getFacetTypeFromSlot } from './../utilities'
+import OlaApi from './../services/api'
 
 /**
  * Ola Middleware accepts all http requests only if action types is an array with 3 values
@@ -114,7 +115,6 @@ export default function (options = {}) {
       projectId,
       env
     }
-
     /* ACL Rules */
     const acl = currentState.Acl
     let callApi
@@ -123,6 +123,7 @@ export default function (options = {}) {
       !bot /* 26/2/2018 @vinay: Removed this because the Intent engine selects boths `slots` and facet_query. In page 2, we are only sending facet_query, should we send slots too and skip_intent. */ /* query.page > 1 || */ &&
       // query.enriched_q !== '' ||
       query.q === ''
+
     const params = proxy
       ? {
         ...query,
@@ -160,9 +161,11 @@ export default function (options = {}) {
       /* Should returns a promise */
       callApi = api(params)
     } else {
-      callApi = searchService.hasOwnProperty(api)
-        ? searchService[api](timestampObj, params, apiUrl, apiOptions)
-        : null
+      callApi = OlaApi.hasOwnProperty(api) /* Check if the api exists in Ola */
+        ? OlaApi[api](timestampObj, params, config)
+        : searchService.hasOwnProperty(api) /* Check in search adapter */
+          ? searchService[api](timestampObj, params, apiUrl, apiOptions)
+          : null
     }
 
     if (typeof callApi !== 'object' || typeof callApi.then !== 'function') {

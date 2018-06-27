@@ -66,3 +66,28 @@ export function removeContextLocation () {
     type: types.REMOVE_CONTEXT_LOCATION
   }
 }
+
+/**
+ * Check for active contexts
+ */
+export function checkContext ({ params, payload }) {
+  return (dispatch, getState) => {
+    const currentState = getState()
+    const { Context: context, QueryState: query } = currentState
+    return dispatch({
+      context,
+      query: {
+        ...query,
+        ...params
+      },
+      payload,
+      types: [
+        types.REQUEST_CONTEXT,
+        types.REQUEST_CONTEXT_SUCCESS,
+        types.REQUEST_CONTEXT_FAILURE
+      ],
+      returnWithoutDispatch: true,
+      api: 'context'
+    })
+  }
+}

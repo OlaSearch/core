@@ -1322,3 +1322,10 @@ export function facetToChartData ({ facets, limit = undefined, title, type }) {
       }
   }
 }
+
+/**
+ * Append to
+ */
+export function urlappend (url, s) {
+  return url + (/\?/.test(url) ? '&' : '?') + s
+}
