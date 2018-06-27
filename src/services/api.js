@@ -3,6 +3,11 @@ import querystring from 'query-string'
 import { urlappend } from './../utilities'
 
 /**
+ * Default method
+ */
+const DEFAULT_REQUEST_METHOD = 'POST'
+
+/**
  * Get alerts
  * @param  {Object} urlParams
  * @param  {Object} params
@@ -14,13 +19,12 @@ export function alert (urlParams = null, params, config) {
   if (urlParams) {
     url = urlappend(url, querystring.stringify(urlParams, { strict: true }))
   }
-  const method = 'POST'
   return alite({
     ...ajaxOptions,
-    method,
+    method: DEFAULT_REQUEST_METHOD,
     url,
     data:
-      method === 'POST'
+      method === DEFAULT_REQUEST_METHOD
         ? {
           data: JSON.stringify(params)
         }
@@ -43,6 +47,7 @@ export function mc (urlParams = null, params, url = api.mc) {
   return alite({
     ...ajaxOptions,
     url,
+    method: DEFAULT_REQUEST_METHOD,
     data: {
       data: JSON.stringify(params)
     }
@@ -63,6 +68,7 @@ export function context (urlParams = null, params, config) {
   }
   return alite({
     ...ajaxOptions,
+    method: DEFAULT_REQUEST_METHOD,
     url,
     data: {
       data: JSON.stringify(params)

@@ -17,7 +17,8 @@ type State = {
   filter_term_sequence: Array<string>,
   href: ?string,
   hostname: ?string,
-  pathname: ?string
+  pathname: ?string,
+  referrer: ?string
 }
 
 export const initialState = {
