@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/core",
-  "version": "3.8.13",
+  "version": "3.8.14",
   "description": "OlaSearch is a fully customisable front-end search interface that brings your information collection to life.",
   "main": "lib/index.js",
   "scripts": {
@@ -139,6 +139,7 @@
     "redux-thunk": "^2.2.0"
   },
   "dependencies": {
+    "@olasearch/alite": "^1.0.5",
     "@olasearch/icons": "^1.0.2",
     "@olasearch/react-onclickoutside": "^6.7.3",
     "@olasearch/styled-jsx": "^2.2.7",
