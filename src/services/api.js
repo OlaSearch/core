@@ -11,7 +11,9 @@ import { urlappend } from './../utilities'
 export function alert (urlParams = null, params, config) {
   const { ajaxOptions, api } = config
   var url = api.alert
-  if (urlParams) { url = urlappend(url, querystring.stringify(urlParams, { strict: true })) }
+  if (urlParams) {
+    url = urlappend(url, querystring.stringify(urlParams, { strict: true }))
+  }
   const method = 'POST'
   return alite({
     ...ajaxOptions,
@@ -35,7 +37,9 @@ export function alert (urlParams = null, params, config) {
 export function mc (urlParams = null, params, url = api.mc) {
   const { ajaxOptions, api } = config
   var url = api.mc
-  if (urlParams) { url = urlappend(url, querystring.stringify(urlParams, { strict: true })) }
+  if (urlParams) {
+    url = urlappend(url, querystring.stringify(urlParams, { strict: true }))
+  }
   return alite({
     ...ajaxOptions,
     url,
@@ -54,7 +58,9 @@ export function mc (urlParams = null, params, url = api.mc) {
 export function context (urlParams = null, params, config) {
   const { ajaxOptions, api } = config
   var url = api.context
-  if (urlParams) { url = urlappend(url, querystring.stringify(urlParams, { strict: true })) }
+  if (urlParams) {
+    url = urlappend(url, querystring.stringify(urlParams, { strict: true }))
+  }
   return alite({
     ...ajaxOptions,
     url,
