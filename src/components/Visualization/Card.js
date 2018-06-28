@@ -37,6 +37,7 @@ class Card extends React.Component {
       limit: (props.card && props.card.limit) || 5
     }
     this._fetch = debounce(this.fetch, CHART_DEBOUNCE_TIMING)
+    this.chartRef = React.createRef()
   }
   static defaultProps = {
     card: null,
@@ -56,6 +57,13 @@ class Card extends React.Component {
       prevState.limit !== this.state.limit
     ) {
       this._fetch()
+    }
+    /**
+     * Resize the chart
+     */
+    if (this.props.isSidebarOpen !== prevProps.isSidebarOpen) {
+      if (!this.chartRef && !this.chartRef.current) return
+      this.chartRef.current.resizeChart()
     }
   }
   componentDidMount () {
@@ -112,13 +120,18 @@ class Card extends React.Component {
   formatTick = (i, d) => {
     const { type, dateFormat } = this.props.card.fields[0]
     if (DATE_RANGE_FACETS.indexOf(type) !== -1) return format(d, dateFormat)
-    return d
+    return this.state.limit > 5 ? d.substr(0, 2) : d
   }
   render () {
     const { card, limits } = this.props
     const { title, subtitle, url, type, canChangeLimit } = card
     const { data, limit } = this.state
-    const formatTick = { format: this.formatTick }
+    const formatTick = {
+      format: this.formatTick,
+      culling: {
+        max: 10
+      }
+    }
     return (
       <div className='ola-viz-card'>
         <div className='ola-viz-card-wrapper'>
@@ -140,6 +153,7 @@ class Card extends React.Component {
               type={type}
               onClick={this.handleClick}
               tick={formatTick}
+              ref={this.chartRef}
             />
           </div>
         </div>
@@ -148,6 +162,14 @@ class Card extends React.Component {
   }
 }
 
-export default connect(null, { getFacetValues, replaceFacet, executeSearch })(
-  Card
-)
+function mapStateToProps (state) {
+  return {
+    isSidebarOpen: state.AppState.isSidebarOpen
+  }
+}
+
+export default connect(mapStateToProps, {
+  getFacetValues,
+  replaceFacet,
+  executeSearch
+})(Card)

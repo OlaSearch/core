@@ -23,6 +23,10 @@ class Chart extends React.Component {
       () => window.requestAnimationFrame(this.updateChart),
       CHART_DEBOUNCE_TIMING
     )
+
+    this.state = {
+      categories: []
+    }
   }
   static propTypes = {
     /**
@@ -95,6 +99,11 @@ class Chart extends React.Component {
       names = data['names']
       data = data['data']
     }
+    /* Set categories */
+    this.setState({
+      categories
+    })
+
     return {
       data,
       axis,
@@ -130,8 +139,32 @@ class Chart extends React.Component {
           ratio: 0.5
         }
       },
+      tooltip: {
+        format: {
+          title: this.getTooltipTitle
+        }
+      },
+      color: {
+        pattern: ['#00aba2']
+      },
+      grid: {
+        x: {
+          show: true
+        },
+        y: {
+          show: true
+        }
+      },
       padding
     })
+  }
+  getTooltipTitle = (d) => {
+    if (this.state.categories) return this.state.categories[d]
+    return d
+  }
+  resizeChart = () => {
+    if (!this.chart) return
+    this.chart.resize()
   }
   updateChart = () => {
     const { data, categories, names } = this.createChartData()

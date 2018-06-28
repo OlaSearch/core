@@ -14,7 +14,7 @@
 
 .bb path, .bb line {
   fill: none;
-  stroke: #000; }
+  stroke: #cdcdcd; }
 
 .bb text {
   -webkit-user-select: none;
@@ -170,3 +170,35 @@
 
 
 /*# sourceMappingURL=billboard.css.map*/
+
+/* Overrides */
+.bb path, .bb line {
+  stroke: #cdcdcd; }
+
+.bb-grid line {
+  stroke: #eaeaea; }
+
+.bb-xgrid, .bb-ygrid {
+  stroke-dasharray: 0 0; }
+
+/**
+ * Remove ticks
+ */
+.bb-axis .tick line {
+  display: none;
+}
+.bb-axis .tick text {
+  fill: #707070;
+}
+
+/* tooltip */
+.bb-tooltip {
+  box-shadow: $small-box-shadow;
+}
+.bb-tooltip th {
+  background: #00aba2;
+  font-weight: normal;
+}
+.bb-tooltip tr {
+  border: 1px darken(#00aba2, 10%) solid;
+}
