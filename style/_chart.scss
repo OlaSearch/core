@@ -191,6 +191,13 @@
   fill: #707070;
 }
 
+/*-- Point --*/
+.bb-circle {
+  r: 5;
+  // stroke-width: 1px;
+  // stroke: white;
+}
+
 /* tooltip */
 .bb-tooltip {
   box-shadow: $small-box-shadow;
