@@ -142,6 +142,7 @@ export default `
     display: flex;
     flex: 1 1 auto;
     justify-content: center;
+    align-items: center;
   }
 
   /**

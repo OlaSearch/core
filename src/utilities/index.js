@@ -855,7 +855,7 @@ export function getAutoCompleteResults (
   results = [],
   allFacets,
   showWordSuggestion,
-  tokens
+  tokens = []
 ) {
   /* Parse payload */
   var res = []
