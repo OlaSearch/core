@@ -194,17 +194,21 @@
 /*-- Point --*/
 .bb-circle {
   r: 5;
-  // stroke-width: 1px;
-  // stroke: white;
 }
 
 /* tooltip */
 .bb-tooltip {
   box-shadow: $small-box-shadow;
+  border: none;
+  border-collapse: collapse;
 }
 .bb-tooltip th {
+  border: none;
   background: #00aba2;
   font-weight: normal;
+}
+.bb-tooltip td {
+  border-width: 0 0 0 1px;
 }
 .bb-tooltip tr {
   border: 1px darken(#00aba2, 10%) solid;

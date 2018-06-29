@@ -117,6 +117,7 @@ function Answer ({
             card={card}
             onSelect={handleClick}
             refresh={refreshTrigger}
+            chartOptions={config.chartOptions}
           />
         )
 

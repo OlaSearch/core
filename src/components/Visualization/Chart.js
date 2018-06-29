@@ -74,7 +74,9 @@ class Chart extends React.Component {
     padding: {
       right: 20,
       top: 20
-    }
+    },
+    pattern: null /* Takes and array of colors. If null, d3 will automatically generate colors */,
+    showGrid: true
   }
   handleClick = (d) => {
     const { index } = d
@@ -113,7 +115,7 @@ class Chart extends React.Component {
     }
   }
   initChart () {
-    var { type, types, labels, padding } = this.props
+    var { type, types, labels, padding, showGrid } = this.props
     const { axis, data, x, names } = this.createChartData()
     /* If data is empty initially, we do not initialize the chart yet */
     if (!data || !data.length) return
@@ -145,14 +147,14 @@ class Chart extends React.Component {
         }
       },
       color: {
-        pattern: ['#00aba2']
+        pattern: this.props.pattern
       },
       grid: {
         x: {
-          show: true
+          show: showGrid
         },
         y: {
-          show: true
+          show: showGrid
         }
       },
       padding
