@@ -45,7 +45,13 @@ function Button ({
      * 2. bot
      * 3. result (only in search snippet)
      */
-    if (bot && payload && (payload.intent || payload.slots) && result) {
+    if (
+      bot &&
+      payload &&
+      (payload.intent || payload.slots) &&
+      result &&
+      onAddMessage
+    ) {
       const botPayload = {
         ...payload,
         slots: payload.slots.map(({ name, field }) => ({
@@ -56,15 +62,13 @@ function Button ({
       /**
        * If its on a chatbot and the button is a postback button
        */
-      if (onAddMessage) {
-        event.preventDefault()
+      event.preventDefault()
 
-        return onAddMessage({
-          ...botPayload,
-          label: `Read more about ${result.title}`,
-          query: label || title
-        })
-      }
+      return onAddMessage({
+        ...botPayload,
+        label: `Read more about ${result.title}`,
+        query: label || title
+      })
     }
 
     if (onClick) return onClick(event, result)
