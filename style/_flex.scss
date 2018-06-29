@@ -77,9 +77,9 @@
  */
 .ola-flex-aside {
   @include media (desktop) {
-    max-width: 300px;
-    margin-right: 1rem;
+    min-width: 250px;
+    margin-right: 2rem;
     border-right: 1px #ddd solid;
-    padding-right: 1rem;
+    padding-right: 2rem;
   }
 }

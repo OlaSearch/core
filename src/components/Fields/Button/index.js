@@ -22,7 +22,10 @@ function Button ({
   logPayload,
   textLink,
   replaceClassName,
-  openInNewWindow
+  openInNewWindow,
+  onAddMessage,
+  bot,
+  payload
 }) {
   const linkUrl = baseUrl ? `${baseUrl}${url}` : url
   if (title) label = title
@@ -36,6 +39,33 @@ function Button ({
       snippetId,
       payload: logPayload
     })
+    /**
+     * Label will be displayed in the bot
+     * 1. payload is present
+     * 2. bot
+     * 3. result (only in search snippet)
+     */
+    if (bot && payload && (payload.intent || payload.slots) && result) {
+      const botPayload = {
+        ...payload,
+        slots: payload.slots.map(({ name, field }) => ({
+          name,
+          value: result[field]
+        }))
+      }
+      /**
+       * If its on a chatbot and the button is a postback button
+       */
+      if (onAddMessage) {
+        event.preventDefault()
+
+        return onAddMessage({
+          ...botPayload,
+          label: `Read more about ${result.title}`,
+          query: label || title
+        })
+      }
+    }
 
     if (onClick) return onClick(event, result)
     if (openInNewWindow) return

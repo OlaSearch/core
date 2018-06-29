@@ -49,7 +49,12 @@ function AnswerArticle ({ card, onSelect, translate, theme }) {
             ) : null}
           </div>
           <div className='ola-flex-content'>
-            <Header title={title} url={url} subtitle={subtitle} />
+            <Header
+              title={title}
+              url={url}
+              openInNewWindow
+              subtitle={subtitle}
+            />
             <TextField field='content' result={card} length={null} />
             <LinkList links={related} title={translate('related_articles')} />
           </div>
