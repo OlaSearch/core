@@ -56,7 +56,7 @@ function Button ({
         ...payload,
         slots: payload.slots.map(({ name, field }) => ({
           name,
-          value: result[field]
+          value: field in result ? result[field] : field
         }))
       }
       /**
