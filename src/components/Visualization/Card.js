@@ -9,6 +9,7 @@ import {
 import { getFacetValues } from './../../actions/Search'
 import { facetToChartData, debounce } from './../../utilities'
 import { format } from './../../utilities/dateParser'
+import withConfig from './../../decorators/withConfig'
 import { replaceFacet, executeSearch } from './../../actions/Search'
 import { connect } from 'react-redux'
 import equals from 'ramda/src/equals'
@@ -123,7 +124,8 @@ class Card extends React.Component {
     return this.state.limit > 5 ? d.substr(0, 2) : d
   }
   render () {
-    const { card, limits } = this.props
+    const { card, limits, config } = this.props
+    const { chartOptions } = config
     const { title, subtitle, url, type, canChangeLimit } = card
     const { data, limit } = this.state
     const formatTick = {
@@ -154,6 +156,7 @@ class Card extends React.Component {
               onClick={this.handleClick}
               tick={formatTick}
               ref={this.chartRef}
+              {...chartOptions}
             />
           </div>
         </div>
@@ -172,4 +175,4 @@ export default connect(mapStateToProps, {
   getFacetValues,
   replaceFacet,
   executeSearch
-})(Card)
+})(withConfig(Card))

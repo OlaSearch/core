@@ -416,6 +416,7 @@ export function fetchMc (key, payload) {
         types.REQUEST_MC_FAILURE
       ],
       payload,
+      rawQuery: true,
       query: { key },
       api: 'mc'
     })

@@ -638,16 +638,20 @@ class AutoComplete extends React.Component {
   }
 
   onFuzzySelect = (suggestion, options) => {
-    let { type } = suggestion
-    let facet
+    const { type } = suggestion
     const isTaxonomy = type === TYPE_TAXONOMY
     const isEntity = type === TYPE_ENTITY
     const isQuery = type === TYPE_QUERY
     const isHistory = type === TYPE_HISTORY
     const isFacet = type === TYPE_FACET
-    let term = suggestion.suggestion_raw || suggestion.term
-    let stayOpen = options && options.stayOpen
+    const stayOpen = options && options.stayOpen
     const { filterOnSelect } = this.props
+
+    /* Facets */
+    var facet
+
+    /* Term to be sent back as query */
+    let term = suggestion.suggestion_raw || suggestion.term
 
     /* Focus on the input if click event */
     if (options && options.event && options.event.type === 'click') {

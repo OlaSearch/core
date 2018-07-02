@@ -60,7 +60,7 @@ class AnswerLineChart extends React.Component {
     this.chartRef = el
   }
   render () {
-    const { card } = this.props
+    const { card, chartOptions } = this.props
     const { title, source } = card
     return (
       <div className='ola-answer-chart'>
@@ -74,6 +74,7 @@ class AnswerLineChart extends React.Component {
             data={this.prepareData()}
             innerRef={this.registerRef}
             type={this.props.type}
+            {...chartOptions}
           />
           <TableDetail {...this.props} />
         </div>

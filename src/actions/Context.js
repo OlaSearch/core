@@ -81,6 +81,7 @@ export function checkContext ({ params, payload }) {
         ...params
       },
       payload,
+      rawQuery: true,
       types: [
         types.REQUEST_CONTEXT,
         types.REQUEST_CONTEXT_SUCCESS,

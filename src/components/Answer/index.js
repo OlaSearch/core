@@ -46,7 +46,7 @@ function Answer ({
   //   dispatch(setSkipIntent(true))
   //   dispatch(executeSearch())
   // }
-  function handleClick ({ type, label, title, payload, url, openInNewWindow }) {
+  function handleClick ({ type, label, title, payload, url, new_window }) {
     /**
      * Label will be displayed in the bot
      */
@@ -61,7 +61,7 @@ function Answer ({
       )
     }
     if (type === BUTTON_TYPE.WEB) {
-      if (openInNewWindow) return window.open(url)
+      if (new_window) return window.open(url)
       return (window.location.href = url)
     }
     if (type === BUTTON_TYPE.EMAIL) {
@@ -117,6 +117,7 @@ function Answer ({
             card={card}
             onSelect={handleClick}
             refresh={refreshTrigger}
+            chartOptions={config.chartOptions}
           />
         )
 

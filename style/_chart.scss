@@ -191,14 +191,25 @@
   fill: #707070;
 }
 
+/*-- Point --*/
+.bb-circle {
+  r: 5;
+}
+
 /* tooltip */
 .bb-tooltip {
   box-shadow: $small-box-shadow;
+  border: none;
+  border-collapse: collapse;
 }
 .bb-tooltip th {
-  background: #00aba2;
+  border: none;
+  background: #2b8cbe;
   font-weight: normal;
 }
+.bb-tooltip td {
+  border-width: 0 0 0 1px;
+}
 .bb-tooltip tr {
-  border: 1px darken(#00aba2, 10%) solid;
+  border: 1px darken(#2b8cbe, 10%) solid;
 }
