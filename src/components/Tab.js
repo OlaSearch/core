@@ -1,73 +1,79 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
+import { connect } from 'react-redux'
+
+import SelectBox from './SelectBox'
 
 class Tab extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeTab: [0]
+      activeTab: props.activeTab
     }
   }
   setActiveTab = (value) => {
     this.setState({
-      activeTab:
-        this.props.toggle && !this.props.showOne
-          ? this.state.activeTab.indexOf(value) !== -1
-            ? this.state.activeTab.filter((id) => id !== value)
-            : [...this.state.activeTab, value]
-          : [value]
+      activeTab: value
     })
+  }
+  handleChange = (event) => {
+    this.setActiveTab(event.target.value)
   }
   static defaultProps = {
     toggle: false,
-    showOne: false
+    showOne: false,
+    activeTab: 0
   }
   render () {
-    const { toggle, children } = this.props
+    const { children, labels, isPhone } = this.props
     const { activeTab } = this.state
-    const labels = children.map((child) => child.props.title)
+
+    let content
+    if (!isPhone) {
+      /* Render tabs if it's not a phone */
+      content = (
+        <nav className='ola-tabs-nav'>
+          {labels.map((label, i) => (
+            <TabLabel
+              label={label}
+              index={i}
+              key={i}
+              onClick={this.setActiveTab}
+              isActive={activeTab === i}
+            />
+          ))}
+        </nav>
+      )
+    } else {
+      /* Render select box if it's a phone */
+      content = (
+        <SelectBox onChange={this.handleChange} value={activeTab}>
+          {labels.map((label, i) => {
+            return (
+              <option key={i} value={i}>
+                {label}
+              </option>
+            )
+          })}
+        </SelectBox>
+      )
+    }
 
     return (
       <div className='ola-tabs'>
-        {toggle ? null : (
-          <nav className='ola-tabs-nav'>
-            {labels.map((label, index) => {
-              const isActive = activeTab[0] === index
-              return (
-                <TabLabel
-                  label={label}
-                  index={index}
-                  key={index}
-                  onClick={this.setActiveTab}
-                  isActive={isActive}
-                />
-              )
-            })}
-          </nav>
-        )}
-        <div className='ola-tabs-content'>
-          {children.map((child, index) => {
-            const isActive = toggle
-              ? activeTab.indexOf(index) !== -1
-              : index === activeTab[0]
-            return (
-              <div key={index}>
-                {toggle ? (
-                  <TabLabel
-                    label={labels[index]}
-                    index={index}
-                    onClick={this.setActiveTab}
-                    isActive={isActive}
-                  />
-                ) : null}
-                {isActive ? child : null}
-              </div>
-            )
-          })}
-        </div>
+        {content}
+        {children[activeTab] || null}
       </div>
     )
   }
+}
+
+Tab.propTypes = {
+  toggle: PropTypes.bool,
+  showOne: PropTypes.bool,
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeTab: PropTypes.number
 }
 
 /**
@@ -88,4 +94,10 @@ const TabLabel = ({ label, index, isActive, onClick }) => {
   )
 }
 
-export default Tab
+function mapStateToProps (state) {
+  return {
+    isPhone: state.Device.isPhone
+  }
+}
+
+export default connect(mapStateToProps, {})(Tab)
