@@ -18,16 +18,15 @@ class Tab extends React.Component {
           : [value]
     })
   }
-  handleClick = (tab) => {
-    this.setActiveTab(tab, toggle, showOne)
-  }
   static defaultProps = {
     toggle: false,
     showOne: false
   }
   render () {
-    const { toggle } = this.props
-    const labels = this.props.children.map((child) => child.props.title)
+    const { toggle, children } = this.props
+    const { activeTab } = this.state
+    const labels = children.map((child) => child.props.title)
+
     return (
       <div className='ola-tabs'>
         {toggle ? null : (
@@ -36,10 +35,10 @@ class Tab extends React.Component {
               const isActive = activeTab[0] === index
               return (
                 <TabLabel
-                  label={labels}
+                  label={label}
                   index={index}
                   key={index}
-                  onClick={handleClick}
+                  onClick={this.setActiveTab}
                   isActive={isActive}
                 />
               )
@@ -52,12 +51,12 @@ class Tab extends React.Component {
               ? activeTab.indexOf(index) !== -1
               : index === activeTab[0]
             return (
-              <div>
+              <div key={index}>
                 {toggle ? (
                   <TabLabel
                     label={labels[index]}
                     index={index}
-                    onClick={handleClick}
+                    onClick={this.setActiveTab}
                     isActive={isActive}
                   />
                 ) : null}
@@ -81,6 +80,7 @@ const TabLabel = ({ label, index, isActive, onClick }) => {
   const classes = cx('ola-tabs-label', {
     'ola-tabs-label-active': isActive
   })
+
   return (
     <button className={classes} onClick={handleClick}>
       {label}
