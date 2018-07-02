@@ -26,6 +26,7 @@ export function fetchAlerts () {
           }
         }
       },
+      rawQuery: true,
       query: {},
       meta: {
         log: false,
@@ -57,6 +58,7 @@ export function deleteAlert (queryId) {
         types.REQUEST_DELETE_ALERT_FAILURE
       ],
       query: {},
+      rawQuery: true,
       meta: {
         log: false,
         apiOptions: {
@@ -86,6 +88,7 @@ export function removeDocs (queryId) {
         types.REQUEST_DELETE_ALERT_DOCS_FAILURE
       ],
       query: {},
+      rawQuery: true,
       meta: {
         log: false,
         apiOptions: {
@@ -131,6 +134,7 @@ export function createAlert (query) {
           }
         }
       },
+      rawQuery: true,
       query: {},
       meta: {
         log: false,

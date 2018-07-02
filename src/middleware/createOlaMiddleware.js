@@ -42,6 +42,7 @@ export default function (options = {}) {
       payload = {},
       meta = {},
       nullResponse = null,
+      rawQuery = false /* Always transform queries to */,
       processData = null /* Executed once data is received from the server: Will break if intent engine is turned OFF */,
       beforeSuccessCallback = null /* Executed after adapters have done their work */,
       shouldDispatchActions = true,
@@ -124,29 +125,32 @@ export default function (options = {}) {
       // query.enriched_q !== '' ||
       query.q === ''
 
-    const params = proxy
-      ? {
-        ...query,
-        bot /* Send to the intent engine */,
-        ...(skipIntentEngine ? { skip_intent: true } : {}),
-        ...payload.extraParams,
-        ...(payload.answer ? { answer: payload.answer } : {}),
-        api,
-        userId: context.userId,
-        userSession: context.userSession,
-        searchSession: context.searchSession,
-        context,
-        projectId,
-        env
-      }
-      : api === FUZZY_SUGGEST_KEY
-        ? { ...query, ...payload.extraParams }
-        : queryBuilder.transform(
-          { ...query, ...payload.extraParams },
-          null,
-          acl,
-          context
-        )
+    const params =
+      proxy || rawQuery
+        ? {
+          ...query,
+          bot /* Send to the intent engine */,
+          ...(skipIntentEngine ? { skip_intent: true } : {}),
+          ...payload.extraParams,
+          ...(payload.answer ? { answer: payload.answer } : {}),
+          api,
+          userId: context.userId,
+          userSession: context.userSession,
+          searchSession: context.searchSession,
+          context,
+          projectId,
+          env
+        }
+        : api === FUZZY_SUGGEST_KEY
+          ? /* For autocomplete */
+          { ...query, ...payload.extraParams }
+          : /* Transform query using the search adapter if intent engine is turned off */
+          queryBuilder.transform(
+            { ...query, ...payload.extraParams },
+            null,
+            acl,
+            context
+          )
 
     const shouldLog = meta.log !== false
     const apiOptions = meta.apiOptions ? meta.apiOptions : null
