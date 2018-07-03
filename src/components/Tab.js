@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { connect } from 'react-redux'
-
 import SelectBox from './SelectBox'
 
+/**
+ * Tab component
+ */
 class Tab extends React.Component {
   constructor (props) {
     super(props)
@@ -21,44 +23,34 @@ class Tab extends React.Component {
     this.setActiveTab(event.target.value)
   }
   static defaultProps = {
-    toggle: false,
-    showOne: false,
     activeTab: 0
   }
   render () {
     const { children, labels, isPhone } = this.props
     const { activeTab } = this.state
-
-    let content
-    if (!isPhone) {
-      /* Render tabs if it's not a phone */
-      content = (
-        <nav className='ola-tabs-nav'>
-          {labels.map((label, i) => (
-            <TabLabel
-              label={label}
-              index={i}
-              key={i}
-              onClick={this.setActiveTab}
-              isActive={activeTab === i}
-            />
-          ))}
-        </nav>
-      )
-    } else {
+    const content = isPhone ? (
       /* Render select box if it's a phone */
-      content = (
-        <SelectBox onChange={this.handleChange} value={activeTab}>
-          {labels.map((label, i) => {
-            return (
-              <option key={i} value={i}>
-                {label}
-              </option>
-            )
-          })}
-        </SelectBox>
-      )
-    }
+      <SelectBox onChange={this.handleChange} value={activeTab}>
+        {labels.map((label, i) => (
+          <option key={i} value={i}>
+            {label}
+          </option>
+        ))}
+      </SelectBox>
+    ) : (
+      /* Render tabs if it's not a phone */
+      <nav className='ola-tabs-nav'>
+        {labels.map((label, i) => (
+          <TabLabel
+            label={label}
+            index={i}
+            key={i}
+            onClick={this.setActiveTab}
+            isActive={activeTab === i}
+          />
+        ))}
+      </nav>
+    )
 
     return (
       <div className='ola-tabs'>
@@ -70,8 +62,6 @@ class Tab extends React.Component {
 }
 
 Tab.propTypes = {
-  toggle: PropTypes.bool,
-  showOne: PropTypes.bool,
   labels: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeTab: PropTypes.number
 }
@@ -79,7 +69,7 @@ Tab.propTypes = {
 /**
  * Tab Label
  */
-const TabLabel = ({ label, index, isActive, onClick }) => {
+function TabLabel ({ label, index, isActive, onClick }) {
   function handleClick () {
     onClick(index)
   }
@@ -100,4 +90,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {})(Tab)
+export default connect(mapStateToProps)(Tab)
