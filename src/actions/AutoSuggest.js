@@ -53,7 +53,6 @@ export function executeFuzzyAutoSuggest ({
   config = {}
 }) {
   return (dispatch, getState) => {
-    console.log(config)
     const { autocompleteDictionary: dictionary = 'olaSuggester' } = config
     const query = {
       q,
