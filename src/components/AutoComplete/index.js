@@ -354,7 +354,10 @@ class AutoComplete extends React.Component {
         endToken,
         fieldTypeMapping: this.props.config.fieldTypeMapping
       })
-      : this.props.executeFuzzyAutoSuggest(term)
+      : this.props.executeFuzzyAutoSuggest({
+        q: term,
+        config: this.props.config
+      })
 
     if (
       allowedCharacters &&

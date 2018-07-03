@@ -46,9 +46,15 @@ export function executeAutoSuggest () {
  * @param  {string} contextField Filter by a specific type (query or entity)
  * @return {Object}
  */
-export function executeFuzzyAutoSuggest (q, limit = 10, contextField = 'query') {
+export function executeFuzzyAutoSuggest ({
+  q,
+  limit = 10,
+  contextField = 'query',
+  config = {}
+}) {
   return (dispatch, getState) => {
-    const { dictionary } = getState().AutoSuggest
+    console.log(config)
+    const { autocompleteDictionary: dictionary = 'olaSuggester' } = config
     const query = {
       q,
       'suggest.count': limit,

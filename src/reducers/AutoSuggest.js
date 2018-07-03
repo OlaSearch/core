@@ -16,8 +16,7 @@ type State = {
   isLoading: boolean,
   isOpen: boolean,
   qt: ?number,
-  searchInput: ?string,
-  dictionary: ?string
+  searchInput: ?string
 }
 
 export const initialState = {
@@ -33,8 +32,7 @@ export const initialState = {
   isLoading: false,
   isOpen: false,
   qt: null,
-  searchInput: null,
-  dictionary: 'olaSuggester'
+  searchInput: null
 }
 
 export default (state: State = initialState, action: Object) => {
@@ -124,15 +122,6 @@ export default (state: State = initialState, action: Object) => {
             selected: [action.value]
           }
         ]
-      }
-
-    case types.OLA_REHYDRATE:
-      const dict = action.configState
-        ? action.configState.autocompleteDictionary || state.dictionary
-        : state.dictionary
-      return {
-        ...state,
-        dictionary: dict
       }
 
     case types.REMOVE_FACET_AUTOSUGGEST:
