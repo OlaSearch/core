@@ -46,6 +46,7 @@ export Checkbox from './components/Checkbox'
 export Overlay from './components/Overlay'
 export Bookmarks, { BookmarksContainer } from './components/Bookmarks'
 export Arrow from './components/Arrow'
+export Tab from './components/Tab'
 
 export * as Actions from './actions'
 export * as Decorators from './decorators'
