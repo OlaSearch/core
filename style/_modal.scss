@@ -63,9 +63,9 @@ $zIndex: 10;
   visibility: visible;
   opacity: 1;
 
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
   $spacing: 60px + 16px;
   .ola-modal-body {

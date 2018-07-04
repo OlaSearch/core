@@ -95,7 +95,6 @@ class AnswerCarousel extends React.Component {
             <Portal
               isOpen={this.state.index !== null}
               onRequestClose={this.hideImage}
-              inline
               focusContent={false} /* Swipeable already focuses */
             >
               <Swipeable
