@@ -130,7 +130,8 @@
    */
   .ola-facet-scroll-list {
     max-height: none;
-    overflow: overlay;
+    overflow: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
   }
 
 
