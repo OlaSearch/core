@@ -180,7 +180,7 @@ export function getDisplayName (haystack, needle) {
   if (needle.indexOf('|') !== -1) {
     needle = needle.substr(needle.indexOf('|') + 1)
   }
-  if (!haystack) return needle
+  if (!haystack) return decodeHtmlEntities(needle)
   if (needle in haystack) return decodeHtmlEntities(haystack[needle])
   return decodeHtmlEntities(needle)
 }
